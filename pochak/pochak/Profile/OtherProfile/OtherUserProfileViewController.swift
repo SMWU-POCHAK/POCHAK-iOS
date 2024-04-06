@@ -21,7 +21,9 @@ class OtherUserProfileViewController: UIViewController {
     @IBOutlet weak var followerCount: UILabel!
     @IBOutlet weak var followingCount: UILabel!
     @IBOutlet weak var followToggleBtn: UIButton!
+    @IBOutlet weak var postListTabmanView: UIView!
     
+
     let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
     var recievedHandle: String?
 
@@ -41,19 +43,12 @@ class OtherUserProfileViewController: UIViewController {
         viewFollowerList()
         viewFollowingList()
         
-        // Back 버튼 커스텀
-        let backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
-        backBarButtonItem.tintColor = .black
-        self.navigationItem.backBarButtonItem = backBarButtonItem
-        
-        // settingButton
-        let settingButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
-        settingButton.setImage(UIImage(named: "settingIcon"), for: .normal)
-//        settingButton.addTarget(self, action: #selector(clickSettingButton), for: .touchUpInside)
-        
-        let barButton = UIBarButtonItem(customView: settingButton)
-        //assign button to navigationbar
-        self.navigationItem.rightBarButtonItem = barButton
+        // 포스트 탭맨 뷰
+        postListTabmanView.translatesAutoresizingMaskIntoConstraints = false
+        postListTabmanView.topAnchor.constraint(equalTo: self.followToggleBtn.bottomAnchor, constant: 20).isActive = true
+        postListTabmanView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
+        postListTabmanView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
+        postListTabmanView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
                 
         // API
         loadProfileData()
