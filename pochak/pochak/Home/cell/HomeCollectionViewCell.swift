@@ -14,6 +14,17 @@ class HomeCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        self.prepare(image: nil)
+    }
+    
+    // MARK: - Helpers
+    func prepare(image: UIImage?){
+        self.imageView.image = image
+    }
 
     // 각 게시글의 사진을 미리 보기 해야 하기 위한 메소드
     //public func setupData(_ imageURLStr: String?){

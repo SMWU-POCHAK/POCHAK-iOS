@@ -77,12 +77,12 @@
 		<key>Kingfisher.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>15</integer>
+			<integer>12</integer>
 		</dict>
 		<key>Pageboy.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>12</integer>
+			<integer>11</integer>
 		</dict>
 		<key>Pods-pochak-pochakUITests.xcscheme</key>
 		<dict>
@@ -117,7 +117,7 @@
 		<key>Realm.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>11</integer>
+			<integer>14</integer>
 		</dict>
 		<key>RealmSwift.xcscheme_^#shared#^_</key>
 		<dict>
@@ -127,7 +127,7 @@
 		<key>Tabman.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>14</integer>
+			<integer>15</integer>
 		</dict>
 	</dict>
 </dict>
