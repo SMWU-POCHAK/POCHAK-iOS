@@ -30,7 +30,12 @@ class OtherUserProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // Back 버튼 커스텀
+        let backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
+        backBarButtonItem.tintColor = .black
+        self.navigationItem.backBarButtonItem = backBarButtonItem
+        
         // 프로픨 디자인
         profileBackground.layer.cornerRadius = 50
         profileImage.layer.cornerRadius = 46
@@ -38,7 +43,7 @@ class OtherUserProfileViewController: UIViewController {
         // 둥근 모서리 적용
         whiteBackground.layer.cornerRadius = 8
         followToggleBtn.layer.cornerRadius = 8
-    
+        
         // 팔로워 / 팔로잉 레이블 선택
         viewFollowerList()
         viewFollowingList()
@@ -49,7 +54,7 @@ class OtherUserProfileViewController: UIViewController {
         postListTabmanView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
         postListTabmanView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
         postListTabmanView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
-                
+        
         // API
         loadProfileData()
         
@@ -60,12 +65,24 @@ class OtherUserProfileViewController: UIViewController {
         followToggleBtn.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 14) // 폰트 설정
         followToggleBtn.layer.cornerRadius = 5
         
+        // 네비게이션 바 설정
+        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationItem.title = "@" + (recievedHandle ?? "handle not found")
+        self.navigationController?.navigationBar.topItem?.title = ""
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        
     }
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
         
         // API
         loadProfileData()
+        
+        // 네비게이션 바 설정
+        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationItem.title = "@" + (recievedHandle ?? "handle not found")
+        self.navigationController?.navigationBar.topItem?.title = ""
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
     }
     
     private func loadProfileData() {
@@ -74,7 +91,7 @@ class OtherUserProfileViewController: UIViewController {
 //        let name = UserDefaultsManager.getData(type: String.self, forKey: .name) ?? "name not found"
 //        let message = UserDefaultsManager.getData(type: String.self, forKey: .message) ?? "message not found"
 //        
-        self.userHandle.text = "@" + (recievedHandle ?? "handle not found")
+//        self.userHandle.text = "@" + (recievedHandle ?? "handle not found")
 //        self.userName.text = name
 //        self.userMessage.text = message
 //        
@@ -99,9 +116,7 @@ class OtherUserProfileViewController: UIViewController {
             self.postCount.text = String(resultData.totalPostNum ?? 0)
             self.followerCount.text = String(resultData.followerCount ?? 0)
             self.followingCount.text = String(resultData.followingCount ?? 0)
-            
-            print("new tosdifasofoasuhfd~~~~~~~~~~~~~~~~~", resultData.isFollow)
-            
+                    
             if resultData.isFollow == true {
                 // 버튼 레이아웃
                 self.followToggleBtn.setTitle("팔로잉", for: .normal)

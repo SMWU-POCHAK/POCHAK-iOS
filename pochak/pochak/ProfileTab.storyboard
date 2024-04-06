@@ -774,7 +774,7 @@
                         <outlet property="postListTabmanView" destination="Nu7-Hu-QaT" id="GzI-hn-4YZ"/>
                         <outlet property="profileBackground" destination="ORo-fh-fM5" id="SeA-Ae-Y8T"/>
                         <outlet property="profileImage" destination="w1h-9D-Wgk" id="igq-6q-EIR"/>
-                        <outlet property="userHandle" destination="ObF-kh-isp" id="yoZ-by-DgL"/>
+                        <outlet property="userHandle" destination="ObF-kh-isp" id="ZF6-2G-jVN"/>
                         <outlet property="userMessage" destination="Wre-Lz-Jv2" id="ifM-x6-V6d"/>
                         <outlet property="userName" destination="z4R-1F-ADt" id="7WQ-EP-w91"/>
                         <outlet property="whiteBackground" destination="Tv1-2d-9jt" id="BQ8-aq-b3b"/>

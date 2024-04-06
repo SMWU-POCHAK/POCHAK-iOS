@@ -19,10 +19,11 @@ class FollowListViewController: TabmanViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // MARK: - Add Navigation Item
-        
-        // Title : 데이터 받아와서 넣기
-        self.navigationItem.title = handle ?? ""
+        // 네비게이션 바 설정
+        self.navigationController?.navigationBar.tintColor = .black
+        self.navigationController?.navigationBar.topItem?.title = ""
+        self.navigationItem.title = handle ?? "handle not found"
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
         
         // Tabman 사용
         // tab에 보여질 VC 추가
@@ -67,6 +68,16 @@ class FollowListViewController: TabmanViewController {
         }
         
         addBar(bar, dataSource: self, at:.top)
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool){
+        super.viewWillAppear(animated)
+        // 네비게이션 바 설정
+        self.navigationController?.navigationBar.tintColor = .black
+        self.navigationItem.title = handle ?? "handle not found"
+        self.navigationController?.navigationBar.topItem?.title = ""
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
     }
     
 }

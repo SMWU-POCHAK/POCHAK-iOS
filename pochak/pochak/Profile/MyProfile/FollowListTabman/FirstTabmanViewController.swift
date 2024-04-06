@@ -21,6 +21,7 @@ class FirstTabmanViewController: UIViewController{
 
         // MARK: - Collection View 구현
         setupCollectionView()
+        
     }
     
     override func viewWillAppear(_ animated: Bool){
@@ -73,6 +74,14 @@ extension FirstTabmanViewController : UICollectionViewDelegate, UICollectionView
         // delegate 위임받음
         cell.delegate = self
         return cell
+    }
+    
+    // 유저 프로필 클릭시 이동
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let otherUserProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else {return}
+        self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
+        guard let cell: FollowerCollectionViewCell = self.followerCollectionView.cellForItem(at: indexPath) as? FollowerCollectionViewCell else {return}
+        otherUserProfileVC.recievedHandle = cell.userId.text
     }
 
 }

@@ -67,6 +67,7 @@ class FollowerCollectionViewCell: UICollectionViewCell {
         deleteBtn.setTitleColor(UIColor(named: "gray07"), for: .normal)
         deleteBtn.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 14) // 폰트 설정
         deleteBtn.layer.cornerRadius = 5
+        
     }
 
 }
