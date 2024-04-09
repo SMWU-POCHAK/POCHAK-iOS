@@ -21,14 +21,21 @@ class OtherUserProfileViewController: UIViewController {
     @IBOutlet weak var followerCount: UILabel!
     @IBOutlet weak var followingCount: UILabel!
     @IBOutlet weak var followToggleBtn: UIButton!
+    @IBOutlet weak var postListTabmanView: UIView!
     
+
     let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
     var recievedHandle: String?
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // Back 버튼 커스텀
+        let backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
+        backBarButtonItem.tintColor = .black
+        self.navigationItem.backBarButtonItem = backBarButtonItem
+        
         // 프로픨 디자인
         profileBackground.layer.cornerRadius = 50
         profileImage.layer.cornerRadius = 46
@@ -36,25 +43,18 @@ class OtherUserProfileViewController: UIViewController {
         // 둥근 모서리 적용
         whiteBackground.layer.cornerRadius = 8
         followToggleBtn.layer.cornerRadius = 8
-    
+        
         // 팔로워 / 팔로잉 레이블 선택
         viewFollowerList()
         viewFollowingList()
         
-        // Back 버튼 커스텀
-        let backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
-        backBarButtonItem.tintColor = .black
-        self.navigationItem.backBarButtonItem = backBarButtonItem
+        // 포스트 탭맨 뷰
+        postListTabmanView.translatesAutoresizingMaskIntoConstraints = false
+        postListTabmanView.topAnchor.constraint(equalTo: self.followToggleBtn.bottomAnchor, constant: 20).isActive = true
+        postListTabmanView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
+        postListTabmanView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
+        postListTabmanView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
         
-        // settingButton
-        let settingButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
-        settingButton.setImage(UIImage(named: "settingIcon"), for: .normal)
-//        settingButton.addTarget(self, action: #selector(clickSettingButton), for: .touchUpInside)
-        
-        let barButton = UIBarButtonItem(customView: settingButton)
-        //assign button to navigationbar
-        self.navigationItem.rightBarButtonItem = barButton
-                
         // API
         loadProfileData()
         
@@ -65,12 +65,25 @@ class OtherUserProfileViewController: UIViewController {
         followToggleBtn.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 14) // 폰트 설정
         followToggleBtn.layer.cornerRadius = 5
         
+        // 네비게이션 바 설정
+        self.navigationItem.title = recievedHandle ?? "handle not found"
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        // , .font: UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.heavy)
+        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.topItem?.title = ""
+        
     }
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
         
         // API
         loadProfileData()
+        
+        // 네비게이션 바 설정
+        self.navigationItem.title = recievedHandle ?? "handle not found"
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.topItem?.title = ""
     }
     
     private func loadProfileData() {
@@ -79,7 +92,7 @@ class OtherUserProfileViewController: UIViewController {
 //        let name = UserDefaultsManager.getData(type: String.self, forKey: .name) ?? "name not found"
 //        let message = UserDefaultsManager.getData(type: String.self, forKey: .message) ?? "message not found"
 //        
-        self.userHandle.text = "@" + (recievedHandle ?? "handle not found")
+//        self.userHandle.text = "@" + (recievedHandle ?? "handle not found")
 //        self.userName.text = name
 //        self.userMessage.text = message
 //        
@@ -104,9 +117,7 @@ class OtherUserProfileViewController: UIViewController {
             self.postCount.text = String(resultData.totalPostNum ?? 0)
             self.followerCount.text = String(resultData.followerCount ?? 0)
             self.followingCount.text = String(resultData.followingCount ?? 0)
-            
-            print("new tosdifasofoasuhfd~~~~~~~~~~~~~~~~~", resultData.isFollow)
-            
+                    
             if resultData.isFollow == true {
                 // 버튼 레이아웃
                 self.followToggleBtn.setTitle("팔로잉", for: .normal)

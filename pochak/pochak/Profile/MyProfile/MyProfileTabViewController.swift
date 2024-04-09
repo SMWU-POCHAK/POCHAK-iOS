@@ -25,6 +25,8 @@ class MyProfileTabViewController: TabmanViewController {
     @IBOutlet weak var followerCount: UILabel!
     @IBOutlet weak var followingCount: UILabel!
     @IBOutlet weak var shareBtn: UIButton!
+    @IBOutlet weak var postListTabmanView: UIView!
+    @IBOutlet weak var updateProfileBtn: UIButton!
     
     let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
     override func viewDidLoad() {
@@ -51,17 +53,25 @@ class MyProfileTabViewController: TabmanViewController {
         let settingButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
         settingButton.setImage(UIImage(named: "settingIcon"), for: .normal)
         settingButton.addTarget(self, action: #selector(clickSettingButton), for: .touchUpInside)
-        
-        let barButton = UIBarButtonItem(customView: settingButton)
-        //assign button to navigationbar
-        self.navigationItem.rightBarButtonItem = barButton
+        /// always assign button to storyboard FIRST!!!!
+        self.view.addSubview(settingButton)
+        /// add constraints
+        settingButton.translatesAutoresizingMaskIntoConstraints = false
+        settingButton.centerYAnchor.constraint(equalTo: self.userHandle.centerYAnchor).isActive = true
+        settingButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
         
         // shareButton
         self.shareBtn.titleLabel?.font = UIFont(name: "Pretendard-Medium", size: 14)
         
+        // 포스트 탭맨 뷰 constraint 설정
+        postListTabmanView.translatesAutoresizingMaskIntoConstraints = false
+        postListTabmanView.topAnchor.constraint(equalTo: self.whiteBackground2.bottomAnchor, constant: 20).isActive = true
+        postListTabmanView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
+        postListTabmanView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
+        postListTabmanView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
+
         // API
         loadProfileData()
-    
     }
     
     override func viewWillAppear(_ animated: Bool){
@@ -69,7 +79,6 @@ class MyProfileTabViewController: TabmanViewController {
         // API
         loadProfileData()
     }
-    
     
     private func loadProfileData() {
 //        let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
@@ -117,7 +126,12 @@ class MyProfileTabViewController: TabmanViewController {
         })
     }
     
-
+    // 프로필 수정
+    
+    @IBAction func updateProfile(_ sender: Any) {
+        print("updateProfile Button Clicked!!")
+    }
+    
     // MARK: - view Follower / Following List
     //  UITapGestureRecognizer 사용
     private func viewFollowerList() {

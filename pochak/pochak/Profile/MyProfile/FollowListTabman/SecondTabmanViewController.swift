@@ -65,6 +65,14 @@ extension SecondTabmanViewController : UICollectionViewDelegate, UICollectionVie
         return cell
     }
     
+    // 유저 프로필 클릭시 이동
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let otherUserProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else {return}
+        self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
+        guard let cell: FollowingCollectionViewCell = self.followingCollectionView.cellForItem(at: indexPath) as? FollowingCollectionViewCell else {return}
+        otherUserProfileVC.recievedHandle = cell.userId.text
+    }
+    
     
 }
 
