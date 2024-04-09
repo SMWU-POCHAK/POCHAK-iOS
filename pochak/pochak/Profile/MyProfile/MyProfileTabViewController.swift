@@ -26,7 +26,7 @@ class MyProfileTabViewController: TabmanViewController {
     @IBOutlet weak var followingCount: UILabel!
     @IBOutlet weak var shareBtn: UIButton!
     @IBOutlet weak var postListTabmanView: UIView!
-    
+    @IBOutlet weak var updateProfileBtn: UIButton!
     
     let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
     override func viewDidLoad() {
@@ -126,7 +126,12 @@ class MyProfileTabViewController: TabmanViewController {
         })
     }
     
-
+    // 프로필 수정
+    
+    @IBAction func updateProfile(_ sender: Any) {
+        print("updateProfile Button Clicked!!")
+    }
+    
     // MARK: - view Follower / Following List
     //  UITapGestureRecognizer 사용
     private func viewFollowerList() {

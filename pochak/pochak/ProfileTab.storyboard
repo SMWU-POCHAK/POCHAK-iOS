@@ -30,7 +30,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="426"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2GB-qC-Gq0">
-                                        <rect key="frame" x="146.66666666666666" y="84" width="100" height="100"/>
+                                        <rect key="frame" x="146.66666666666666" y="71.666666666666671" width="100" height="100.00000000000001"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Sro-VX-bHh">
                                                 <rect key="frame" x="3" y="3" width="94" height="94"/>
@@ -39,20 +39,34 @@
                                                     <constraint firstAttribute="width" constant="94" id="nAP-vM-4Ac"/>
                                                 </constraints>
                                             </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tb0-Cf-Xff">
+                                                <rect key="frame" x="69" y="68.999999999999986" width="30" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="30" id="Bo8-Bf-L2S"/>
+                                                    <constraint firstAttribute="height" constant="30" id="REn-Jv-0M0"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" image="chooseImage"/>
+                                                <connections>
+                                                    <action selector="updateProfile:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Qc5-sW-rVd"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="Sro-VX-bHh" firstAttribute="centerX" secondItem="2GB-qC-Gq0" secondAttribute="centerX" id="20c-qa-OZJ"/>
+                                            <constraint firstItem="tb0-Cf-Xff" firstAttribute="leading" secondItem="Sro-VX-bHh" secondAttribute="trailing" constant="-28" id="3AS-5p-jLf"/>
                                             <constraint firstAttribute="width" constant="100" id="4Wq-7j-7ni"/>
                                             <constraint firstItem="Sro-VX-bHh" firstAttribute="centerY" secondItem="2GB-qC-Gq0" secondAttribute="centerY" id="D6M-e3-W8F"/>
+                                            <constraint firstItem="tb0-Cf-Xff" firstAttribute="top" secondItem="Sro-VX-bHh" secondAttribute="bottom" constant="-28" id="K9p-x8-uoQ"/>
                                             <constraint firstAttribute="height" constant="100" id="V1T-AJ-EEZ"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4au-cV-IAw">
-                                        <rect key="frame" x="35" y="254.66666666666663" width="323" height="50"/>
+                                        <rect key="frame" x="35" y="242.33333333333337" width="323" height="50"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="sTB-4q-upk">
-                                                <rect key="frame" x="146" y="8.0000000000000284" width="31.333333333333343" height="33.666666666666664"/>
+                                                <rect key="frame" x="146" y="8" width="31.333333333333343" height="33.666666666666664"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="팔로워" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AZj-78-WTx">
                                                         <rect key="frame" x="0.0" y="0.0" width="31.333333333333332" height="14.333333333333334"/>
@@ -61,7 +75,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4A4-qH-cYk">
-                                                        <rect key="frame" x="0.0" y="19.333333333333314" width="31.333333333333332" height="14.333333333333336"/>
+                                                        <rect key="frame" x="0.0" y="19.333333333333343" width="31.333333333333332" height="14.333333333333336"/>
                                                         <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="12"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -69,7 +83,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="7fD-9l-3zy">
-                                                <rect key="frame" x="250.66666666666671" y="8.0000000000000284" width="31.333333333333343" height="33.666666666666664"/>
+                                                <rect key="frame" x="250.66666666666671" y="8" width="31.333333333333343" height="33.666666666666664"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="팔로잉" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ODm-y3-RCO">
                                                         <rect key="frame" x="0.0" y="0.0" width="31.333333333333332" height="14.333333333333334"/>
@@ -78,7 +92,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KT5-NJ-dPk">
-                                                        <rect key="frame" x="0.0" y="19.333333333333314" width="31.333333333333332" height="14.333333333333336"/>
+                                                        <rect key="frame" x="0.0" y="19.333333333333343" width="31.333333333333332" height="14.333333333333336"/>
                                                         <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="12"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -86,7 +100,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="iiF-02-69b">
-                                                <rect key="frame" x="41" y="8.0000000000000284" width="31.333333333333329" height="33.666666666666664"/>
+                                                <rect key="frame" x="41" y="8" width="31.333333333333329" height="33.666666666666664"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="게시글" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gBQ-2g-hJL">
                                                         <rect key="frame" x="0.0" y="0.0" width="31.333333333333332" height="14.333333333333334"/>
@@ -95,7 +109,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Nz-46-9EE">
-                                                        <rect key="frame" x="0.0" y="19.333333333333314" width="31.333333333333332" height="14.333333333333336"/>
+                                                        <rect key="frame" x="0.0" y="19.333333333333343" width="31.333333333333332" height="14.333333333333336"/>
                                                         <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="12"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -116,7 +130,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v4H-Ku-RWI">
-                                        <rect key="frame" x="35" y="313.66666666666669" width="323" height="40"/>
+                                        <rect key="frame" x="35" y="301.33333333333331" width="323" height="40"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5IW-33-tfk">
                                                 <rect key="frame" x="112.66666666666666" y="2" width="42" height="36"/>
@@ -124,7 +138,7 @@
                                                 <buttonConfiguration key="configuration" style="plain" image="linkCopyIcon"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sMa-Lo-hXo">
-                                                <rect key="frame" x="146.66666666666666" y="5.6666666666666288" width="30" height="29"/>
+                                                <rect key="frame" x="146.66666666666666" y="5.6666666666666856" width="30" height="29"/>
                                                 <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="14"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" title=" ">
@@ -142,19 +156,19 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JfN-RN-YQE">
-                                        <rect key="frame" x="20" y="60" width="4.6666666666666679" height="24"/>
-                                        <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="20"/>
+                                        <rect key="frame" x="20" y="50" width="4.3333333333333321" height="21.666666666666671"/>
+                                        <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="18"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DjP-Ai-epc">
-                                        <rect key="frame" x="0.0" y="194" width="393" height="21.666666666666657"/>
+                                        <rect key="frame" x="0.0" y="181.66666666666666" width="393" height="21.666666666666657"/>
                                         <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="18"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FR9-sG-gxh">
-                                        <rect key="frame" x="0.0" y="225.66666666666666" width="393" height="17"/>
+                                        <rect key="frame" x="0.0" y="213.33333333333334" width="393" height="17"/>
                                         <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="14"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -163,7 +177,7 @@
                                 <color key="backgroundColor" name="navy00"/>
                                 <constraints>
                                     <constraint firstItem="v4H-Ku-RWI" firstAttribute="leading" secondItem="u3R-QJ-Lfh" secondAttribute="leading" constant="35" id="0Kw-1E-PDx"/>
-                                    <constraint firstItem="JfN-RN-YQE" firstAttribute="top" secondItem="u3R-QJ-Lfh" secondAttribute="top" constant="60" id="51X-mV-lc2"/>
+                                    <constraint firstItem="JfN-RN-YQE" firstAttribute="top" secondItem="u3R-QJ-Lfh" secondAttribute="top" constant="50" id="51X-mV-lc2"/>
                                     <constraint firstItem="2GB-qC-Gq0" firstAttribute="top" secondItem="JfN-RN-YQE" secondAttribute="bottom" id="EtR-Hj-Mvg"/>
                                     <constraint firstItem="DjP-Ai-epc" firstAttribute="top" secondItem="2GB-qC-Gq0" secondAttribute="bottom" constant="10" id="FBZ-7C-Q40"/>
                                     <constraint firstItem="FR9-sG-gxh" firstAttribute="top" secondItem="DjP-Ai-epc" secondAttribute="bottom" constant="10" id="GJK-yu-Yhh"/>
@@ -214,6 +228,7 @@
                         <outlet property="profileBackground" destination="2GB-qC-Gq0" id="xQH-i8-nfC"/>
                         <outlet property="profileImage" destination="Sro-VX-bHh" id="Nkv-i7-jGD"/>
                         <outlet property="shareBtn" destination="sMa-Lo-hXo" id="qsJ-BK-man"/>
+                        <outlet property="updateProfileBtn" destination="tb0-Cf-Xff" id="NGQ-0C-vSQ"/>
                         <outlet property="userHandle" destination="JfN-RN-YQE" id="mED-to-pV4"/>
                         <outlet property="userMessage" destination="FR9-sG-gxh" id="r2G-jx-KTE"/>
                         <outlet property="userName" destination="DjP-Ai-epc" id="gDN-LA-0Ck"/>

@@ -67,6 +67,8 @@ class PostListViewController: TabmanViewController {
 //        bar.layout.alignment = .centerDistributed
         /* Baritem 등록 */
         addBar(bar, dataSource: self, at:.top)
+        
+        
     }
 }
 
@@ -84,11 +86,9 @@ extension PostListViewController: PageboyViewControllerDataSource, TMBarDataSour
     }
 
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-        return nil
-        // return .at(index: 0) -> index를 통해 처음에 보이는 탭을 설정할 수 있다.
+        return .at(index: 0)
     }
     
-    // 추가 구현해야 하는 기능
     // 팔로워 / 팔로잉에 따라 defualtPage 다르게 하기
     func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
         switch index {
