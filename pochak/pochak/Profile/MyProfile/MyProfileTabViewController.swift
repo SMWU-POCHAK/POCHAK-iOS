@@ -53,22 +53,17 @@ class MyProfileTabViewController: TabmanViewController {
         let settingButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
         settingButton.setImage(UIImage(named: "settingIcon"), for: .normal)
         settingButton.addTarget(self, action: #selector(clickSettingButton), for: .touchUpInside)
-//        // constraint 설정
-//        settingButton.translatesAutoresizingMaskIntoConstraints = false
-//        settingButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 60).isActive = true
-////        settingButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
-//        settingButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
-//        settingButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
-
+        /// always assign button to storyboard FIRST!!!!
+        self.view.addSubview(settingButton)
+        /// add constraints
+        settingButton.translatesAutoresizingMaskIntoConstraints = false
+        settingButton.centerYAnchor.constraint(equalTo: self.userHandle.centerYAnchor).isActive = true
+        settingButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
         
-        let barButton = UIBarButtonItem(customView: settingButton)
-        //assign button to navigationbar
-        self.navigationItem.rightBarButtonItem = barButton
-//        
         // shareButton
         self.shareBtn.titleLabel?.font = UIFont(name: "Pretendard-Medium", size: 14)
         
-        // 포스트 탭맨 뷰
+        // 포스트 탭맨 뷰 constraint 설정
         postListTabmanView.translatesAutoresizingMaskIntoConstraints = false
         postListTabmanView.topAnchor.constraint(equalTo: self.whiteBackground2.bottomAnchor, constant: 20).isActive = true
         postListTabmanView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
@@ -77,7 +72,6 @@ class MyProfileTabViewController: TabmanViewController {
 
         // API
         loadProfileData()
-    
     }
     
     override func viewWillAppear(_ animated: Bool){
@@ -85,7 +79,6 @@ class MyProfileTabViewController: TabmanViewController {
         // API
         loadProfileData()
     }
-    
     
     private func loadProfileData() {
 //        let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""

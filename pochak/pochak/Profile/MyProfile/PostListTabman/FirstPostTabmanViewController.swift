@@ -88,4 +88,13 @@ extension FirstPostTabmanViewController : UICollectionViewDelegate, UICollection
         return CGSize(width: width, height: width * 4 / 3)
     }
     
+    // 포스트 클릭시 이동
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let postTabSb = UIStoryboard(name: "PostTab", bundle: nil)
+        guard let postVC = postTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
+            else { return }
+        postVC.receivedPostId = imageArray[indexPath.item].postId
+        self.navigationController?.pushViewController(postVC, animated: true)
+    }
+    
 }

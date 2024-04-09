@@ -66,10 +66,11 @@ class OtherUserProfileViewController: UIViewController {
         followToggleBtn.layer.cornerRadius = 5
         
         // 네비게이션 바 설정
-        self.navigationController?.navigationBar.tintColor = .white
-        self.navigationItem.title = "@" + (recievedHandle ?? "handle not found")
-        self.navigationController?.navigationBar.topItem?.title = ""
+        self.navigationItem.title = recievedHandle ?? "handle not found"
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        // , .font: UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.heavy)
+        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.topItem?.title = ""
         
     }
     override func viewWillAppear(_ animated: Bool){
@@ -79,10 +80,10 @@ class OtherUserProfileViewController: UIViewController {
         loadProfileData()
         
         // 네비게이션 바 설정
-        self.navigationController?.navigationBar.tintColor = .white
-        self.navigationItem.title = "@" + (recievedHandle ?? "handle not found")
-        self.navigationController?.navigationBar.topItem?.title = ""
+        self.navigationItem.title = recievedHandle ?? "handle not found"
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.topItem?.title = ""
     }
     
     private func loadProfileData() {
