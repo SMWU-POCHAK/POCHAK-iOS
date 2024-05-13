@@ -15,6 +15,13 @@
 		0820B1912A63A18100604DA8 /* ReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0820B18F2A63A18100604DA8 /* ReplyTableViewCell.xib */; };
 		0823B0742A5B0E780085002F /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823B0722A5B0E780085002F /* CommentTableViewCell.swift */; };
 		0823B0752A5B0E780085002F /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0823B0732A5B0E780085002F /* CommentTableViewCell.xib */; };
+		0844649C2BF0F25900949850 /* PostMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0844649B2BF0F25900949850 /* PostMenuViewController.swift */; };
+		0844D7EB2BF218A5001154AC /* ReportViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0844D7E92BF218A5001154AC /* ReportViewCell.swift */; };
+		0844D7EC2BF218A5001154AC /* ReportViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0844D7EA2BF218A5001154AC /* ReportViewCell.xib */; };
+		0844D7EF2BF219F6001154AC /* DeleteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0844D7ED2BF219F6001154AC /* DeleteViewCell.swift */; };
+		0844D7F02BF219F6001154AC /* DeleteViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0844D7EE2BF219F6001154AC /* DeleteViewCell.xib */; };
+		0844D7F32BF21A80001154AC /* CancelViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0844D7F12BF21A80001154AC /* CancelViewCell.swift */; };
+		0844D7F42BF21A80001154AC /* CancelViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0844D7F22BF21A80001154AC /* CancelViewCell.xib */; };
 		084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */; };
 		084AF4C82A5D831100C6454A /* HomeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */; };
 		0893E1622B09083C003CF3D8 /* PostDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0893E1612B09083C003CF3D8 /* PostDataService.swift */; };
@@ -160,6 +167,13 @@
 		0820B18F2A63A18100604DA8 /* ReplyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReplyTableViewCell.xib; sourceTree = "<group>"; };
 		0823B0722A5B0E780085002F /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		0823B0732A5B0E780085002F /* CommentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
+		0844649B2BF0F25900949850 /* PostMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMenuViewController.swift; sourceTree = "<group>"; };
+		0844D7E92BF218A5001154AC /* ReportViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewCell.swift; sourceTree = "<group>"; };
+		0844D7EA2BF218A5001154AC /* ReportViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportViewCell.xib; sourceTree = "<group>"; };
+		0844D7ED2BF219F6001154AC /* DeleteViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteViewCell.swift; sourceTree = "<group>"; };
+		0844D7EE2BF219F6001154AC /* DeleteViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeleteViewCell.xib; sourceTree = "<group>"; };
+		0844D7F12BF21A80001154AC /* CancelViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelViewCell.swift; sourceTree = "<group>"; };
+		0844D7F22BF21A80001154AC /* CancelViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CancelViewCell.xib; sourceTree = "<group>"; };
 		084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCollectionViewCell.xib; sourceTree = "<group>"; };
 		0893E1612B09083C003CF3D8 /* PostDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDataService.swift; sourceTree = "<group>"; };
@@ -331,6 +345,7 @@
 		0823B0762A5D6BC20085002F /* Post */ = {
 			isa = PBXGroup;
 			children = (
+				0844649A2BF0F21200949850 /* PostMenu */,
 				08DD9EC02B454343004CCD5F /* FollowDataManager */,
 				08FD3A3A2B3ADF4600574880 /* CommentDataManager */,
 				08D98C482AFEE8C100E9A097 /* LikesDataManager */,
@@ -380,6 +395,28 @@
 			children = (
 				084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */,
 				084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */,
+			);
+			path = cell;
+			sourceTree = "<group>";
+		};
+		0844649A2BF0F21200949850 /* PostMenu */ = {
+			isa = PBXGroup;
+			children = (
+				0844D7E82BF21880001154AC /* cell */,
+				0844649B2BF0F25900949850 /* PostMenuViewController.swift */,
+			);
+			path = PostMenu;
+			sourceTree = "<group>";
+		};
+		0844D7E82BF21880001154AC /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				0844D7E92BF218A5001154AC /* ReportViewCell.swift */,
+				0844D7EA2BF218A5001154AC /* ReportViewCell.xib */,
+				0844D7ED2BF219F6001154AC /* DeleteViewCell.swift */,
+				0844D7EE2BF219F6001154AC /* DeleteViewCell.xib */,
+				0844D7F12BF21A80001154AC /* CancelViewCell.swift */,
+				0844D7F22BF21A80001154AC /* CancelViewCell.xib */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -905,6 +942,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAF9184F2AA462C50037C270 /* SearchResultTableViewCell.xib in Resources */,
+				0844D7F42BF21A80001154AC /* CancelViewCell.xib in Resources */,
 				EAFB4B892A5147B400E0F2FA /* PostTab.storyboard in Resources */,
 				089C758D2A51728A003AAB94 /* Pretendard-Bold.ttf in Resources */,
 				0820B1912A63A18100604DA8 /* ReplyTableViewCell.xib in Resources */,
@@ -921,8 +959,10 @@
 				3769D6C42B3C3A1600294CD1 /* FollowerCollectionViewCell.xib in Resources */,
 				EAAACDB62A5168280041B1B9 /* Main.storyboard in Resources */,
 				EAFB4B8B2A5147C400E0F2FA /* AlarmTab.storyboard in Resources */,
+				0844D7F02BF219F6001154AC /* DeleteViewCell.xib in Resources */,
 				089C75892A51728A003AAB94 /* Pretendard-Thin.ttf in Resources */,
 				EA1718372A592BE3009168E6 /* AlarmCollectionViewCell.xib in Resources */,
+				0844D7EC2BF218A5001154AC /* ReportViewCell.xib in Resources */,
 				EA1B0B642A49D23B00F86FBC /* Assets.xcassets in Resources */,
 				0823B0752A5B0E780085002F /* CommentTableViewCell.xib in Resources */,
 				089C758A2A51728A003AAB94 /* Pretendard-Black.ttf in Resources */,
@@ -1094,12 +1134,15 @@
 				37D311E52B567AE000A1D7C1 /* OtherUserProfileViewController.swift in Sources */,
 				3769D6BF2B3C349D00294CD1 /* SecondTabmanViewController.swift in Sources */,
 				373235562B692C790042EF94 /* DeleteFollowerDataModel.swift in Sources */,
+				0844D7EF2BF219F6001154AC /* DeleteViewCell.swift in Sources */,
 				373235542B692C6D0042EF94 /* DeleteFollowerDataManager.swift in Sources */,
 				08DD9EC42B454405004CCD5F /* FollowDataService.swift in Sources */,
 				371D33782B4E83E90084FF6A /* UserDefaultsManager.swift in Sources */,
 				373815162A89E6D30032066A /* SocialJoinViewController.swift in Sources */,
 				EA1289082B3B2823002EC93E /* AlarmDataModel.swift in Sources */,
+				0844D7EB2BF218A5001154AC /* ReportViewCell.swift in Sources */,
 				379A6A342B569DFA0087FAAC /* AuthenticationCredential.swift in Sources */,
+				0844649C2BF0F25900949850 /* PostMenuViewController.swift in Sources */,
 				37D311DC2B53135000A1D7C1 /* LogoutDataModel.swift in Sources */,
 				37A284C12B52FC910023EB9D /* UpdateProfileViewController.swift in Sources */,
 				3738151A2A8A09DA0032066A /* MakeProfileViewController.swift in Sources */,
@@ -1134,6 +1177,7 @@
 				3732354E2B691E610042EF94 /* FollowToggleDataManager.swift in Sources */,
 				3769D6BD2B3C348800294CD1 /* FirstTabmanViewController.swift in Sources */,
 				EA1B0B5B2A49D23A00F86FBC /* AppDelegate.swift in Sources */,
+				0844D7F32BF21A80001154AC /* CancelViewCell.swift in Sources */,
 				37D311D52B53056700A1D7C1 /* MyProfileUpdateDataManager.swift in Sources */,
 				3769D6B92B3C345800294CD1 /* MyProfileTabViewController.swift in Sources */,
 				08FD3A392B357E6400574880 /* LikedUsersDataService.swift in Sources */,
