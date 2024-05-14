@@ -39,6 +39,8 @@
 		08C02EEA2BF3798F00627C21 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C02EE82BF3798F00627C21 /* ReportViewController.swift */; };
 		08C02EF12BF37D2F00627C21 /* ReportTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C02EEF2BF37D2F00627C21 /* ReportTableViewCell.swift */; };
 		08C02EF22BF37D2F00627C21 /* ReportTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08C02EF02BF37D2F00627C21 /* ReportTableViewCell.xib */; };
+		08C02EF62BF3945000627C21 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C02EF52BF3945000627C21 /* UIFont+.swift */; };
+		08C02EF82BF394B800627C21 /* UIAlertController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C02EF72BF394B800627C21 /* UIAlertController+.swift */; };
 		08D98C472AFEE8B300E9A097 /* PostDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D98C462AFEE8B300E9A097 /* PostDataModel.swift */; };
 		08D98C4A2AFEE8D700E9A097 /* LikedUsersDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D98C492AFEE8D700E9A097 /* LikedUsersDataModel.swift */; };
 		08DD9EC22B454356004CCD5F /* FollowDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DD9EC12B454356004CCD5F /* FollowDataModel.swift */; };
@@ -194,6 +196,8 @@
 		08C02EE82BF3798F00627C21 /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		08C02EEF2BF37D2F00627C21 /* ReportTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTableViewCell.swift; sourceTree = "<group>"; };
 		08C02EF02BF37D2F00627C21 /* ReportTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportTableViewCell.xib; sourceTree = "<group>"; };
+		08C02EF52BF3945000627C21 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
+		08C02EF72BF394B800627C21 /* UIAlertController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+.swift"; sourceTree = "<group>"; };
 		08D98C462AFEE8B300E9A097 /* PostDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDataModel.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		08D98C492AFEE8D700E9A097 /* LikedUsersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedUsersDataModel.swift; sourceTree = "<group>"; };
 		08DD9EC12B454356004CCD5F /* FollowDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowDataModel.swift; sourceTree = "<group>"; };
@@ -460,6 +464,16 @@
 				08C02EF02BF37D2F00627C21 /* ReportTableViewCell.xib */,
 			);
 			path = cell;
+			sourceTree = "<group>";
+		};
+		08C02EF32BF3942300627C21 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0801765D2A74F4B0005E6953 /* UITextView+Extension.swift */,
+				08C02EF52BF3945000627C21 /* UIFont+.swift */,
+				08C02EF72BF394B800627C21 /* UIAlertController+.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		08D98C452AFEE87E00E9A097 /* PostDataManager */ = {
@@ -747,6 +761,7 @@
 		EA1B0B592A49D23A00F86FBC /* pochak */ = {
 			isa = PBXGroup;
 			children = (
+				08C02EF32BF3942300627C21 /* Extensions */,
 				3769D6B72B3C342900294CD1 /* Profile */,
 				EAF918522AA468FF0037C270 /* Network */,
 				373815142A89E6BE0032066A /* Onboarding */,
@@ -769,7 +784,6 @@
 				EAFB4B882A5147B400E0F2FA /* PostTab.storyboard */,
 				EAFB4B8A2A5147C400E0F2FA /* AlarmTab.storyboard */,
 				EAFB4B8E2A514B2600E0F2FA /* TabbarController.swift */,
-				0801765D2A74F4B0005E6953 /* UITextView+Extension.swift */,
 				379A6A3D2B5FA07D0087FAAC /* NavigationController.swift */,
 			);
 			path = pochak;
@@ -1183,8 +1197,10 @@
 				084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */,
 				37C3AF4A2B3CB2C700B4C79C /* MyProfilePochakPostModel.swift in Sources */,
 				EAFB4B8F2A514B2600E0F2FA /* TabbarController.swift in Sources */,
+				08C02EF82BF394B800627C21 /* UIAlertController+.swift in Sources */,
 				EAF9184E2AA462C50037C270 /* SearchResultTableViewCell.swift in Sources */,
 				EA12890A2B3B2836002EC93E /* AlarmDataService.swift in Sources */,
+				08C02EF62BF3945000627C21 /* UIFont+.swift in Sources */,
 				EABD20652A6CF5CC007543E9 /* TagCollectionViewCell.swift in Sources */,
 				0823B0742A5B0E780085002F /* CommentTableViewCell.swift in Sources */,
 				0801765E2A74F4B0005E6953 /* UITextView+Extension.swift in Sources */,
