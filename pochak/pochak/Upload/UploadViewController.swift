@@ -122,26 +122,32 @@ class UploadViewController: UIViewController,UISearchBarDelegate{
             taggedUserHandles.append(taggedUserHandle)
         }
         
-        UploadDataService.shared.upload(postImage: imageData, caption: captionText, taggedMemberHandleList: taggedUserHandles){
-            response in
-                switch response {
-                case .success(let data):
-                    print("success")
-                    print(data)
-                    if let navController = self.navigationController {
-                        navController.popViewController(animated: true)
-                    }
-                    self.tabBarController?.selectedIndex = 0
-                case .requestErr(let err):
-                    print(err)
-                case .pathErr:
-                    print("pathErr")
-                case .serverErr:
-                    print("serverErr")
-                case .networkFail:
-                    print("networkFail")
-                }
+        showProgressBar()
+
+        UploadDataService.shared.upload(postImage: imageData, caption: captionText, taggedMemberHandleList: taggedUserHandles) { [self] response in
+            // 함수 호출 후 프로그래스 바 숨기기
+            defer {
+                hideProgressBar()
             }
+            
+            switch response {
+            case .success(let data):
+                print("success")
+                print(data)
+                if let navController = self.navigationController {
+                    navController.popViewController(animated: true)
+                }
+                self.tabBarController?.selectedIndex = 0
+            case .requestErr(let err):
+                print(err)
+            case .pathErr:
+                print("pathErr")
+            case .serverErr:
+                print("serverErr")
+            case .networkFail:
+                print("networkFail")
+            }
+        }
     }
     private func setupCollectionView(){
         //delegate 연결
@@ -357,4 +363,22 @@ extension UploadViewController: UITableViewDelegate,UITableViewDataSource{
         self.tagSearch.text = ""
     }
 
+}
+
+extension UploadViewController {
+    func showProgressBar() {
+        // 프로그래스 바를 추가할 부분
+        let progressBar = UIActivityIndicatorView(style: .large)
+        progressBar.center = view.center
+        progressBar.startAnimating()
+        view.addSubview(progressBar)
+    }
+    
+    func hideProgressBar() {
+        // 프로그래스 바를 제거할 부분
+        if let progressBar = view.subviews.first(where: { $0 is UIActivityIndicatorView }) as? UIActivityIndicatorView {
+            progressBar.stopAnimating()
+            progressBar.removeFromSuperview()
+        }
+    }
 }

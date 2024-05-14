@@ -125,6 +125,7 @@ extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDel
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCollectionViewCell", for: indexPath) as? HomeCollectionViewCell
         else{ return UICollectionViewCell()}
         
+        //cell.prepare()
         /* 추후 수정 필요*/
         // cell.setupData()
 //        cell.imageView.kf.setImage(with: imageArray[indexPath.item].imgUrl)
@@ -133,7 +134,7 @@ extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDel
             if let data = try? Data(contentsOf: URL(string: (self?.postList[indexPath.item].postImage)!)!) {
                 if let image = UIImage(data: data){
                     DispatchQueue.main.async {
-                        cell.imageView.image = image
+                        cell.prepare(image: image)
                         cell.imageView.contentMode = .scaleAspectFill
                     }
                 }

@@ -21,5 +21,5 @@ struct APIConstants{
     
     static let suyeonToken : String = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdS55ZW9ubl8iLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzA5NTUzNzE3LCJleHAiOjE3ODczMTM3MTd9.1z__UGnchm_UcZ7Znv-VtzZYpuyv77FXn0rGiJ_3UIY"
     
-    static let suyeonHandle: String = "su.yeonnn_"
+    static let suyeonHandle: String = "su.yeonn_"
 }
