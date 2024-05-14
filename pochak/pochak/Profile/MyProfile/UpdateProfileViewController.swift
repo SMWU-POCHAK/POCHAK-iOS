@@ -39,7 +39,7 @@ class UpdateProfileViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = barButton
         
         // Title
-        self.navigationItem.title = "설정"
+        self.navigationItem.title = "프로필 수정"
         
         // textfied 항목 채워넣기
         nameTextField.text = name
@@ -99,78 +99,7 @@ class UpdateProfileViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    // MARK: - 로그아웃
-    
-    @IBAction func logOut(_ sender: Any) {
-        // 알람! : 회원정보가 없습니다 회원가입하시겠습니까?
-        let alert = UIAlertController(title:"로그아웃 하시겠습니까?",message: "",preferredStyle: UIAlertController.Style.alert)
-        let cancle = UIAlertAction(title: "취소", style: .destructive, handler: nil)
-        let ok = UIAlertAction(title: "확인", style: .default, handler: {
-            action in
-            // API
-            LogoutDataManager.shared.logoutDataManager(
-                { resultData in
-                let message = resultData.message
-                print(message)
-            })
-             // Keychain Delete
-            do {
-                try KeychainManager.delete(account: "accessToken")
-                try KeychainManager.delete(account: "refreshToken")
-            } catch {
-                print(error)
-            }
-            
-            // UserDefulats Delete
-            // enum -> CaseIterable 설정해두면 allCases로 내부요소 접근 가능
-            UserDefaultsManager.UserDefaultsKeys.allCases.forEach { key in
-                if("\(key)" == "handle"){
-                    // forEach는 반복문이 아니기 때문에 break 혹은 continue 사용 불가
-                    return
-                }else{
-                    UserDefaultsManager.removeData(key: key)
-                }
-            }
-            // Main으로 화면 전환
-            self.toMainPage()
-        })
-        alert.addAction(cancle)
-        alert.addAction(ok)
-        present(alert, animated: true, completion: nil)
-    }
-    
-    // MARK: - 회원탈퇴
-    @IBAction func deleteAccount(_ sender: Any) {
-        // 알람! : 회원정보가 없습니다 회원가입하시겠습니까?
-        let alert = UIAlertController(title:"회원을 탈퇴 하시겠습니까? :((",message: "",preferredStyle: UIAlertController.Style.alert)
-        let cancle = UIAlertAction(title: "취소", style: .destructive, handler: nil)
-        let ok = UIAlertAction(title: "확인", style: .default, handler: {
-            action in
-            // API
-            DeleteAccountDataManager.shared.deleteAccountDataManager(
-                { resultData in
-                let message = resultData.message
-                print(message)
-            })
-            
-            // Keychain Delete
-            do {
-                try KeychainManager.delete(account: "accessToken")
-                try KeychainManager.delete(account: "refreshToken")
-            } catch {
-                print(error)
-            }
-            // UserDefulats Delete
-            UserDefaultsManager.UserDefaultsKeys.allCases.forEach { key in
-                UserDefaultsManager.removeData(key: key)
-            }
-            self.toMainPage()
-        })
-        alert.addAction(cancle)
-        alert.addAction(ok)
-        present(alert,animated: true,completion: nil)
-    }
-    
+        
     // MARK: - 프로필 사진 설정
     /*
     1. 권한 설정 : Info.plist > Photo Library Usage 권한 추가
@@ -185,16 +114,6 @@ class UpdateProfileViewController: UIViewController {
         present(self.imagePickerController, animated: true, completion: nil)
     }
     
-    // 회원가입 페이지로 이동
-    private func toMainPage(){
-        // Main.storyboard 가져오기
-        let mainVCBundle = UIStoryboard.init(name: "Main", bundle: nil)
-        // NavigationController 연결 안되는 문제 -> 해결 : inherit module from target 옵션 체크
-        guard let mainVC = mainVCBundle.instantiateViewController(withIdentifier: "NavigationVC") as? NavigationController else { return }
-        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainVC, animated: false)
-    }
-
-   
     
 }
 

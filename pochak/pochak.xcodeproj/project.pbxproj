@@ -49,6 +49,8 @@
 		373235562B692C790042EF94 /* DeleteFollowerDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373235552B692C790042EF94 /* DeleteFollowerDataModel.swift */; };
 		373815162A89E6D30032066A /* SocialJoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373815152A89E6D30032066A /* SocialJoinViewController.swift */; };
 		3738151A2A8A09DA0032066A /* MakeProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373815192A8A09DA0032066A /* MakeProfileViewController.swift */; };
+		3747E9722BF3827500364BED /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3747E9712BF3827500364BED /* SettingsViewController.swift */; };
+		3747E9742BF3864600364BED /* TermsOfUseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3747E9732BF3864600364BED /* TermsOfUseViewController.swift */; };
 		3769D6AF2B3C2FD500294CD1 /* GoogleLoginDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6AE2B3C2FD500294CD1 /* GoogleLoginDataManager.swift */; };
 		3769D6B22B3C300D00294CD1 /* GoogleLoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6B12B3C300D00294CD1 /* GoogleLoginModel.swift */; };
 		3769D6B42B3C301B00294CD1 /* JoinDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6B32B3C301B00294CD1 /* JoinDataManager.swift */; };
@@ -195,6 +197,8 @@
 		373235552B692C790042EF94 /* DeleteFollowerDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFollowerDataModel.swift; sourceTree = "<group>"; };
 		373815152A89E6D30032066A /* SocialJoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialJoinViewController.swift; sourceTree = "<group>"; };
 		373815192A8A09DA0032066A /* MakeProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeProfileViewController.swift; sourceTree = "<group>"; };
+		3747E9712BF3827500364BED /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		3747E9732BF3864600364BED /* TermsOfUseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseViewController.swift; sourceTree = "<group>"; };
 		3769D6AE2B3C2FD500294CD1 /* GoogleLoginDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginDataManager.swift; sourceTree = "<group>"; };
 		3769D6B12B3C300D00294CD1 /* GoogleLoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginModel.swift; sourceTree = "<group>"; };
 		3769D6B32B3C301B00294CD1 /* JoinDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinDataManager.swift; sourceTree = "<group>"; };
@@ -513,8 +517,10 @@
 		3769D6C92B3C50D200294CD1 /* MyProfile */ = {
 			isa = PBXGroup;
 			children = (
-				37A284C02B52FC910023EB9D /* UpdateProfileViewController.swift */,
 				3769D6B82B3C345800294CD1 /* MyProfileTabViewController.swift */,
+				37A284C02B52FC910023EB9D /* UpdateProfileViewController.swift */,
+				3747E9712BF3827500364BED /* SettingsViewController.swift */,
+				3747E9732BF3864600364BED /* TermsOfUseViewController.swift */,
 				37D311DD2B566C3D00A1D7C1 /* DeleteAccountDataManager */,
 				37D311D82B53131D00A1D7C1 /* LogoutDataManager */,
 				37D311D32B53053C00A1D7C1 /* MyProfileUpdateDataManager */,
@@ -1136,6 +1142,7 @@
 				EA1B0B5B2A49D23A00F86FBC /* AppDelegate.swift in Sources */,
 				37D311D52B53056700A1D7C1 /* MyProfileUpdateDataManager.swift in Sources */,
 				3769D6B92B3C345800294CD1 /* MyProfileTabViewController.swift in Sources */,
+				3747E9742BF3864600364BED /* TermsOfUseViewController.swift in Sources */,
 				08FD3A392B357E6400574880 /* LikedUsersDataService.swift in Sources */,
 				081228CA2A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift in Sources */,
 				3769D6D02B3C569C00294CD1 /* FirstPostTabmanViewController.swift in Sources */,
@@ -1143,6 +1150,7 @@
 				3769D6B42B3C301B00294CD1 /* JoinDataManager.swift in Sources */,
 				37D311DA2B53134200A1D7C1 /* LogoutDataManager.swift in Sources */,
 				EA1B0B5D2A49D23A00F86FBC /* SceneDelegate.swift in Sources */,
+				3747E9722BF3827500364BED /* SettingsViewController.swift in Sources */,
 				3769D6D22B3C56F100294CD1 /* SecondPostTabmanViewController.swift in Sources */,
 				371D337A2B4E8D1F0084FF6A /* KeychainManager.swift in Sources */,
 				EAF918542AA4692E0037C270 /* NetworkResult.swift in Sources */,

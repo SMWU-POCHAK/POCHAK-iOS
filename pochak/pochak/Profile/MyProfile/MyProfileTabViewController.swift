@@ -27,6 +27,7 @@ class MyProfileTabViewController: TabmanViewController {
     @IBOutlet weak var shareBtn: UIButton!
     @IBOutlet weak var postListTabmanView: UIView!
     @IBOutlet weak var updateProfileBtn: UIButton!
+    @IBOutlet weak var topUIView: UIView!
     
     let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
     override func viewDidLoad() {
@@ -49,12 +50,13 @@ class MyProfileTabViewController: TabmanViewController {
         backBarButtonItem.tintColor = .black
         self.navigationItem.backBarButtonItem = backBarButtonItem
         
-        // settingButton
+        // 설정 버튼
         let settingButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
         settingButton.setImage(UIImage(named: "settingIcon"), for: .normal)
         settingButton.addTarget(self, action: #selector(clickSettingButton), for: .touchUpInside)
         /// always assign button to storyboard FIRST!!!!
-        self.view.addSubview(settingButton)
+        self.topUIView.isUserInteractionEnabled = true // 이제 subview로 이벤트를 전달함
+        self.topUIView.addSubview(settingButton) // view 계층 잘 파악하기
         /// add constraints
         settingButton.translatesAutoresizingMaskIntoConstraints = false
         settingButton.centerYAnchor.constraint(equalTo: self.userHandle.centerYAnchor).isActive = true
@@ -127,12 +129,12 @@ class MyProfileTabViewController: TabmanViewController {
     }
     
     // 프로필 수정
-    
     @IBAction func updateProfile(_ sender: Any) {
-        print("updateProfile Button Clicked!!")
+        print("------- updateProfile clicked -------")
+        guard let updateProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "UpdateProfileVC") as? UpdateProfileViewController else {return}
+        self.navigationController?.pushViewController(updateProfileVC, animated: true)
     }
     
-    // MARK: - view Follower / Following List
     //  UITapGestureRecognizer 사용
     private func viewFollowerList() {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewFollowerTapped))
@@ -159,12 +161,9 @@ class MyProfileTabViewController: TabmanViewController {
     }
 
     
-    @objc private func clickSettingButton(_ sender: UIButton) {
-        let accessToken = GetToken().getAccessToken()
-        print(accessToken)
-        guard let updateProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "UpdateProfileVC") as? UpdateProfileViewController else {return}
-        self.navigationController?.pushViewController(updateProfileVC, animated: true)
+    @objc private func clickSettingButton() {
+        print("------- clickSettingButton clicked -------")
+        guard let settingsVC = self.storyboard?.instantiateViewController(withIdentifier: "SettingsVC") as? SettingsViewController else {return}
+        self.navigationController?.pushViewController(settingsVC, animated: true)
     }
 }
-
-
