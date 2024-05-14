@@ -26,6 +26,7 @@
                         <rect key="frame" x="0.0" y="10" width="50" height="50"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="50" id="Mqe-Xt-30h"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="faN-de-dCb"/>
                             <constraint firstAttribute="width" constant="50" id="y7G-O7-XIM"/>
                         </constraints>
                     </imageView>
@@ -60,7 +61,7 @@
                 <outlet property="comment" destination="cKV-Nk-oDf" id="zaw-9u-Vxq"/>
                 <outlet property="img" destination="2p9-2b-8ug" id="o9q-cs-3RS"/>
             </connections>
-            <point key="canvasLocation" x="320.61068702290078" y="37.323943661971832"/>
+            <point key="canvasLocation" x="319.84732824427482" y="36.971830985915496"/>
         </collectionViewCell>
     </objects>
 </document>
