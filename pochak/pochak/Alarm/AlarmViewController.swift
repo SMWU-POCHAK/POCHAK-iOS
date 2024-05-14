@@ -44,6 +44,11 @@ class AlarmViewController: UIViewController {
             nibName: "OtherCollectionViewCell",
             bundle: nil),
             forCellWithReuseIdentifier: OtherCollectionViewCell.identifier)
+        
+        collectionView.register(UINib(
+            nibName: "PochakAlarmCollectionViewCell",
+            bundle: nil),
+            forCellWithReuseIdentifier: PochakAlarmCollectionViewCell.identifier)
     }
 
     func loadAlarmData(){
@@ -91,7 +96,7 @@ extension AlarmViewController: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // MARK: - 누군가 날 게시물에 태그했을 경우 TAG_APPROVAL
         if(self.alarmList[indexPath.item].alarmType == AlarmType.tagApproval){
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AlarmCollectionViewCell.identifier, for: indexPath) as? AlarmCollectionViewCell else{
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PochakAlarmCollectionViewCell.identifier, for: indexPath) as? PochakAlarmCollectionViewCell else{
                 fatalError("셀 타입 캐스팅 실패")
             }
             if let userSentAlarmHandle = self.alarmList[indexPath.item].ownerHandle {
@@ -104,22 +109,18 @@ extension AlarmViewController: UICollectionViewDelegate, UICollectionViewDataSou
             }
             
             // Set up button actions
-           cell.acceptButtonAction = {
+            cell.previewBtnAction = {
                // Handle accept button tap
-               if let tagId = self.alarmList[indexPath.item].tagId {
-                   // 옵셔널이 아닌 문자열 값을 추출하여 사용합니다.
-                   self.postTagData(tagId: tagId, isAccept: true)
-               }
-           }
-
-            cell.refuseButtonAction = {
-                // Handle refuse button tap
-                if let tagId = self.alarmList[indexPath.item].tagId {
-                    // 옵셔널이 아닌 문자열 값을 추출하여 사용합니다.
-                    self.postTagData(tagId: tagId, isAccept: false)
-                }
+            
+                // 게시물로 이동
+                let postTabSb = UIStoryboard(name: "PostTab", bundle: nil)
+                guard let postVC = postTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
+                else { return }
+                
+                postVC.receivedPostId = self.alarmList[indexPath.item].postId
+                self.navigationController?.pushViewController(postVC, animated: true)
             }
-
+    
             return cell
         }
         // MARK: - 댓글(내가 올린 게시물에 댓글이 달렸을 경우 OWNER_COMMENT)
@@ -297,6 +298,10 @@ extension AlarmViewController: UICollectionViewDelegate, UICollectionViewDataSou
 }
     
 extension AlarmViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 2.5, left: 24, bottom: 2.5, right: 24)
+        }
     
     // 위 아래 간격
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
