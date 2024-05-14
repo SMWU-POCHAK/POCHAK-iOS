@@ -311,7 +311,7 @@ extension AlarmViewController: UICollectionViewDelegateFlowLayout {
     // cell 사이즈( 옆 라인을 고려하여 설정 )
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let width = collectionView.frame.width
+        let width = collectionView.frame.width - 48
         
         let size = CGSize(width: width, height: width)
         return size
