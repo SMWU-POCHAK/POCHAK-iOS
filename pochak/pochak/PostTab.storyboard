@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -417,11 +417,11 @@
                                             <constraint firstAttribute="width" constant="35" id="YkT-IM-y4O"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mna-aT-U1Q">
-                                        <rect key="frame" x="305.66666666666674" y="23" width="25.333333333333314" height="17"/>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mna-aT-U1Q">
+                                        <rect key="frame" x="300.66666666666669" y="23" width="36.333333333333314" height="17"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="완료">
+                                        <buttonConfiguration key="configuration" style="plain" title="업로드">
                                             <fontDescription key="titleFontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="14"/>
                                             <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
                                         </buttonConfiguration>
@@ -429,8 +429,8 @@
                                             <action selector="postNewCommentBtnTapped:" destination="Lyl-go-KQg" eventType="touchUpInside" id="2Is-aH-lVw"/>
                                         </connections>
                                     </button>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="qMX-go-Y6c">
-                                        <rect key="frame" x="83" y="15" width="207.66666666666663" height="33"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="qMX-go-Y6c">
+                                        <rect key="frame" x="82.999999999999986" y="15" width="202.66666666666663" height="33"/>
                                         <color key="backgroundColor" name="gray0.5"/>
                                         <color key="textColor" systemColor="labelColor"/>
                                         <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="14"/>
@@ -444,7 +444,7 @@
                                     <constraint firstAttribute="bottom" secondItem="qMX-go-Y6c" secondAttribute="bottom" constant="15" id="G8S-1N-9tx"/>
                                     <constraint firstItem="Mna-aT-U1Q" firstAttribute="centerY" secondItem="oVB-kM-fHM" secondAttribute="centerY" id="NMH-bI-KgZ"/>
                                     <constraint firstItem="qMX-go-Y6c" firstAttribute="top" secondItem="oVB-kM-fHM" secondAttribute="top" constant="15" id="OQg-Yh-L7B"/>
-                                    <constraint firstAttribute="trailing" secondItem="Mna-aT-U1Q" secondAttribute="trailing" constant="44.030000000000001" id="Qji-5r-PHP"/>
+                                    <constraint firstAttribute="trailing" secondItem="Mna-aT-U1Q" secondAttribute="trailing" constant="38" id="Qji-5r-PHP"/>
                                     <constraint firstItem="qMX-go-Y6c" firstAttribute="centerY" secondItem="oVB-kM-fHM" secondAttribute="centerY" id="Qwr-gJ-Ouw"/>
                                     <constraint firstItem="z9b-Wc-2EA" firstAttribute="centerY" secondItem="oVB-kM-fHM" secondAttribute="centerY" id="lee-gx-zxT"/>
                                     <constraint firstItem="Mna-aT-U1Q" firstAttribute="leading" secondItem="qMX-go-Y6c" secondAttribute="trailing" constant="15" id="nIb-Uo-gxB"/>
