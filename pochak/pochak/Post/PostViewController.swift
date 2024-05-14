@@ -64,6 +64,10 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         self.navigationController?.navigationBar.topItem?.backButtonTitle = ""
         self.navigationController?.navigationBar.tintColor = .black
         
+        // bar button item 추가 (신고하기 메뉴 등)
+        let barButton = UIBarButtonItem(image: UIImage(systemName:  "ellipsis"), style: .plain, target: self, action: #selector(moreActionButtonDidTap))
+        self.navigationItem.rightBarButtonItem = barButton
+        
         // 프로필 사진 동그랗게 -> 크기 반만큼 radius
         profileImageView.layer.cornerRadius = 25
         
@@ -151,9 +155,6 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     //        print(arr)
         self.pochakUser.text = postDataResult.ownerHandle + " 님이 포착"
         
-        // 삭제 메뉴 등록
-        setDeleteMenu(postOwnerHandle: postDataResult.ownerHandle)
-        
         // 포스트 내용
         self.postOwnerHandleLabel.text = postDataResult.ownerHandle
         self.postContent.text = postDataResult.caption
@@ -214,66 +215,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         
         return moveToOthersProfile
     }
-    
-    // 포스트 작성자가 조회할 때만 되게 함. (현재는 dayeonHandle로 고정)
-    func setDeleteMenu(postOwnerHandle: String){
-        if (postOwnerHandle == APIConstants.dayeonHandle){
-            pullDownMenuBtn.setImage(UIImage(systemName:  "ellipsis"), for: .normal)
-            let barButton = UIBarButtonItem(image: UIImage(systemName:  "ellipsis"), style: .plain, target: self, action: nil)
-            self.navigationItem.rightBarButtonItem = barButton
-            
-            // Menu 만들기
-            let deletePost = UIAction(title: "게시글 삭제하기", attributes: .destructive) { action in
-                // 삭제하겠습니까? alert 만들기
-                let alert = UIAlertController(title: "정말 게시글을 삭제하시겠습니까?", message: nil, preferredStyle: UIAlertController.Style.alert)
-                let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-                let confirmAction = UIAlertAction(title: "삭제", style: .destructive) { action in
-                    print("=== delete!! ===")
-                    // 삭제 api 호출
-                    PostDataService.shared.deletePost(self.receivedPostId!) { response in
-                        switch (response){
-                        case .success(let deletePostResponse):
-                            self.deletePostResponse = deletePostResponse as? PostDeleteResponse
-                            // 삭제 실패한 경우
-                            if(!self.deletePostResponse.isSuccess){
-                                let alert = UIAlertController(title: "알림", message: "게시물 삭제가 제대로 이루어지지 않았습니다. 다시 시도해주세요.", preferredStyle: .alert)
-                                let action = UIAlertAction(title: "OK", style: UIAlertAction.Style.default)
-                                alert.addAction(action)
-                                self.present(alert, animated: true)
-                                
-                                print(self.deletePostResponse.message)
-                                return
-                            }
-                            print(self.deletePostResponse.message)
-                        case .requestErr(let message):
-                            print("requestErr", message)
-                        case .pathErr:
-                            print("pathErr")
-                        case .serverErr:
-                            print("serverErr")
-                        case .networkFail:
-                            print("networkFail")
-                        }
-                    }
-                    // 이전 화면으로 돌아가기
-                    self.navigationController?.popViewController(animated: true)
-                }
-                
-                alert.addAction(cancelAction)
-                alert.addAction(confirmAction)
-                
-                self.present(alert, animated: true)
-            }
-            
-            //self.pullDownMenuBtn.menu = UIMenu(title: "", children: [deletePost])
-            barButton.menu = UIMenu(title: "", children: [deletePost])
-            //barButton.
-            // 추가적인 설정
-            pullDownMenuBtn.showsMenuAsPrimaryAction = true  // 버튼을 클릭하거나 선택하면 팝업 메뉴 표시
-            pullDownMenuBtn.changesSelectionAsPrimaryAction = true  // 버튼을 클릭하거나 선택하면 팝업 메뉴 표시
-        }
-    }
-    
+       
     // MARK: - Actions
     @IBAction func followinBtnTapped(_ sender: Any) {
         FollowDataService.shared.postFollow(postOwnerHandle) { response in
@@ -395,6 +337,24 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         //postVC.receivedData = imageArray[indexPath.item].partitionKey!.replacingOccurrences(of: "#", with: "%23")
         
         //present(profileTabVC, animated: true)
+    }
+    
+    @objc func moreActionButtonDidTap(){
+        let storyboard = UIStoryboard(name: "PostTab", bundle: nil)
+        let postMenuVC = storyboard.instantiateViewController(withIdentifier: "PostMenuVC") as! PostMenuViewController
+        postMenuVC.setPostIdAndOwner(postId: receivedPostId!, postOwner: postOwnerHandle)
+        let sheet = postMenuVC.sheetPresentationController
+        //postMenuVC.modalPresentationStyle = .pageSheet
+        
+        let multiplier = 0.25
+        let fraction = UISheetPresentationController.Detent.custom { context in
+            self.view.bounds.height * multiplier
+        }
+        sheet?.detents = [fraction]
+        sheet?.prefersGrabberVisible = true
+        sheet?.prefersScrollingExpandsWhenScrolledToEdge = false
+
+        present(postMenuVC, animated: true)
     }
 }
 
