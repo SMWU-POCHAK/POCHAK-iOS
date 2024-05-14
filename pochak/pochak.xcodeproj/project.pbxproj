@@ -36,6 +36,9 @@
 		089C75902A51728A003AAB94 /* Pretendard-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75872A51728A003AAB94 /* Pretendard-ExtraLight.ttf */; };
 		08B679612B528CB600F8D585 /* CommentTableViewFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08B679602B528CB600F8D585 /* CommentTableViewFooterView.xib */; };
 		08B679632B528D7500F8D585 /* CommentTableViewFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B679622B528D7500F8D585 /* CommentTableViewFooterView.swift */; };
+		08C02EEA2BF3798F00627C21 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C02EE82BF3798F00627C21 /* ReportViewController.swift */; };
+		08C02EF12BF37D2F00627C21 /* ReportTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C02EEF2BF37D2F00627C21 /* ReportTableViewCell.swift */; };
+		08C02EF22BF37D2F00627C21 /* ReportTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08C02EF02BF37D2F00627C21 /* ReportTableViewCell.xib */; };
 		08D98C472AFEE8B300E9A097 /* PostDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D98C462AFEE8B300E9A097 /* PostDataModel.swift */; };
 		08D98C4A2AFEE8D700E9A097 /* LikedUsersDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D98C492AFEE8D700E9A097 /* LikedUsersDataModel.swift */; };
 		08DD9EC22B454356004CCD5F /* FollowDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DD9EC12B454356004CCD5F /* FollowDataModel.swift */; };
@@ -188,6 +191,9 @@
 		089C75872A51728A003AAB94 /* Pretendard-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.ttf"; sourceTree = "<group>"; };
 		08B679602B528CB600F8D585 /* CommentTableViewFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableViewFooterView.xib; sourceTree = "<group>"; };
 		08B679622B528D7500F8D585 /* CommentTableViewFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewFooterView.swift; sourceTree = "<group>"; };
+		08C02EE82BF3798F00627C21 /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
+		08C02EEF2BF37D2F00627C21 /* ReportTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTableViewCell.swift; sourceTree = "<group>"; };
+		08C02EF02BF37D2F00627C21 /* ReportTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportTableViewCell.xib; sourceTree = "<group>"; };
 		08D98C462AFEE8B300E9A097 /* PostDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDataModel.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		08D98C492AFEE8D700E9A097 /* LikedUsersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedUsersDataModel.swift; sourceTree = "<group>"; };
 		08DD9EC12B454356004CCD5F /* FollowDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowDataModel.swift; sourceTree = "<group>"; };
@@ -402,6 +408,7 @@
 		0844649A2BF0F21200949850 /* PostMenu */ = {
 			isa = PBXGroup;
 			children = (
+				08C02EE52BF3796100627C21 /* Report */,
 				0844D7E82BF21880001154AC /* cell */,
 				0844649B2BF0F25900949850 /* PostMenuViewController.swift */,
 			);
@@ -435,6 +442,24 @@
 				089C75802A517289003AAB94 /* Pretendard-Thin.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		08C02EE52BF3796100627C21 /* Report */ = {
+			isa = PBXGroup;
+			children = (
+				08C02EEC2BF37D0400627C21 /* cell */,
+				08C02EE82BF3798F00627C21 /* ReportViewController.swift */,
+			);
+			path = Report;
+			sourceTree = "<group>";
+		};
+		08C02EEC2BF37D0400627C21 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				08C02EEF2BF37D2F00627C21 /* ReportTableViewCell.swift */,
+				08C02EF02BF37D2F00627C21 /* ReportTableViewCell.xib */,
+			);
+			path = cell;
 			sourceTree = "<group>";
 		};
 		08D98C452AFEE87E00E9A097 /* PostDataManager */ = {
@@ -961,6 +986,7 @@
 				EAFB4B8B2A5147C400E0F2FA /* AlarmTab.storyboard in Resources */,
 				0844D7F02BF219F6001154AC /* DeleteViewCell.xib in Resources */,
 				089C75892A51728A003AAB94 /* Pretendard-Thin.ttf in Resources */,
+				08C02EF22BF37D2F00627C21 /* ReportTableViewCell.xib in Resources */,
 				EA1718372A592BE3009168E6 /* AlarmCollectionViewCell.xib in Resources */,
 				0844D7EC2BF218A5001154AC /* ReportViewCell.xib in Resources */,
 				EA1B0B642A49D23B00F86FBC /* Assets.xcassets in Resources */,
@@ -1124,6 +1150,7 @@
 				EA0107B32A5ECB8A00A3AE85 /* PostCollectionViewCell.swift in Sources */,
 				EADE01862B383A9700CECD5B /* PostTabDataService.swift in Sources */,
 				EA01079A2A59556800A3AE85 /* CommentViewController.swift in Sources */,
+				08C02EF12BF37D2F00627C21 /* ReportTableViewCell.swift in Sources */,
 				37D311E32B56754D00A1D7C1 /* GetToken.swift in Sources */,
 				08D98C472AFEE8B300E9A097 /* PostDataModel.swift in Sources */,
 				3769D6C32B3C3A1600294CD1 /* FollowerCollectionViewCell.swift in Sources */,
@@ -1133,6 +1160,7 @@
 				3769D6B22B3C300D00294CD1 /* GoogleLoginModel.swift in Sources */,
 				37D311E52B567AE000A1D7C1 /* OtherUserProfileViewController.swift in Sources */,
 				3769D6BF2B3C349D00294CD1 /* SecondTabmanViewController.swift in Sources */,
+				08C02EEA2BF3798F00627C21 /* ReportViewController.swift in Sources */,
 				373235562B692C790042EF94 /* DeleteFollowerDataModel.swift in Sources */,
 				0844D7EF2BF219F6001154AC /* DeleteViewCell.swift in Sources */,
 				373235542B692C6D0042EF94 /* DeleteFollowerDataManager.swift in Sources */,

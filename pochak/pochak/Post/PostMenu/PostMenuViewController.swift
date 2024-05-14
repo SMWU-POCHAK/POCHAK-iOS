@@ -37,6 +37,13 @@ class PostMenuViewController: UIViewController {
         setupTableView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let selectedIndexPath = menuTableView.indexPathForSelectedRow {
+            menuTableView.deselectRow(at: selectedIndexPath, animated: animated)
+        }
+    }
+    
     // MARK: - Functions
     
     func setPostIdAndOwner(postId: Int, postOwner: String){
@@ -86,6 +93,35 @@ extension PostMenuViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 48
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            let storyboard = UIStoryboard(name: "PostTab", bundle: nil)
+            let reportVC = storyboard.instantiateViewController(withIdentifier: "ReportVC") as! ReportViewController
+            reportVC.setPostId(postId!)  // 신고하는 게시물 아이디 넘겨주기
+            
+            let sheet = reportVC.sheetPresentationController
+ 
+            sheet?.detents = [.medium(), .large()]
+            sheet?.prefersGrabberVisible = true
+            
+            // postMenuVC를 보여주고 있는 뷰컨트롤러를 찾고
+            guard let parentVC = presentingViewController else { return }
+            print(parentVC)
+            // postMenuVC를 dismiss 후 pvc에서 present
+            dismiss(animated: true) {
+                parentVC.present(reportVC, animated: true)
+            }
+            print("신고하기")
+        }
+        else if tableView.numberOfRows(inSection: 0) == 3 && indexPath.row == 1 {
+            print("삭제하기")
+        }
+        else {
+            dismiss(animated: true)
+            print("취소하기")
+        }
     }
     
 }
