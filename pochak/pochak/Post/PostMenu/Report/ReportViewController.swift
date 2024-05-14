@@ -43,8 +43,8 @@ class ReportViewController: UIViewController {
     
     private func makeAlertController() -> UIAlertController{
         let alertVC = UIAlertController(title: "신고가 완료되었습니다.", message: "신고해주셔서 감사합니다.\n빠른 시일 내에 해결하겠습니다.", preferredStyle: UIAlertController.Style.alert)
-        alertVC.setTitleFont()
-        alertVC.setMessageFont()
+        //alertVC.setTitleFont()
+        //alertVC.setMessageFont()
         
         alertVC.addAction(UIAlertAction(title: "확인", style: .cancel) { _ in
             // reportVC dismiss -> 포스트 상세 보기로 다시 가기
