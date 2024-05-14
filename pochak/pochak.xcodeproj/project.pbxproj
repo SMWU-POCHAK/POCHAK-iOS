@@ -111,6 +111,8 @@
 		EA1B0B722A49D23B00F86FBC /* pochakTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1B0B712A49D23B00F86FBC /* pochakTests.swift */; };
 		EA1B0B7C2A49D23B00F86FBC /* pochakUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1B0B7B2A49D23B00F86FBC /* pochakUITests.swift */; };
 		EA1B0B7E2A49D23B00F86FBC /* pochakUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1B0B7D2A49D23B00F86FBC /* pochakUITestsLaunchTests.swift */; };
+		EA7EE1D82BF38921009486CC /* PochakAlarmCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7EE1D62BF38921009486CC /* PochakAlarmCollectionViewCell.swift */; };
+		EA7EE1D92BF38921009486CC /* PochakAlarmCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA7EE1D72BF38921009486CC /* PochakAlarmCollectionViewCell.xib */; };
 		EA817AB62B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA817AB52B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift */; };
 		EA99B63C2A5143A800EBA2AD /* CameraTab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA99B63B2A5143A800EBA2AD /* CameraTab.storyboard */; };
 		EA9F5CB22B0EF7BB0021951F /* UploadDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9F5CB12B0EF7BB0021951F /* UploadDataModel.swift */; };
@@ -265,6 +267,8 @@
 		EA1B0B772A49D23B00F86FBC /* pochakUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pochakUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA1B0B7B2A49D23B00F86FBC /* pochakUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pochakUITests.swift; sourceTree = "<group>"; };
 		EA1B0B7D2A49D23B00F86FBC /* pochakUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pochakUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		EA7EE1D62BF38921009486CC /* PochakAlarmCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakAlarmCollectionViewCell.swift; sourceTree = "<group>"; };
+		EA7EE1D72BF38921009486CC /* PochakAlarmCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PochakAlarmCollectionViewCell.xib; sourceTree = "<group>"; };
 		EA817AB52B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		EA99B63B2A5143A800EBA2AD /* CameraTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CameraTab.storyboard; sourceTree = "<group>"; };
 		EA9F5CB12B0EF7BB0021951F /* UploadDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadDataModel.swift; sourceTree = "<group>"; };
@@ -656,6 +660,8 @@
 				EA0107A62A5CF73900A3AE85 /* AlarmViewController.swift */,
 				EA0107AC2A5EC23900A3AE85 /* OtherCollectionViewCell.swift */,
 				EA0107AD2A5EC23900A3AE85 /* OtherCollectionViewCell.xib */,
+				EA7EE1D62BF38921009486CC /* PochakAlarmCollectionViewCell.swift */,
+				EA7EE1D72BF38921009486CC /* PochakAlarmCollectionViewCell.xib */,
 			);
 			path = Alarm;
 			sourceTree = "<group>";
@@ -904,6 +910,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA7EE1D92BF38921009486CC /* PochakAlarmCollectionViewCell.xib in Resources */,
 				EAF9184F2AA462C50037C270 /* SearchResultTableViewCell.xib in Resources */,
 				EAFB4B892A5147B400E0F2FA /* PostTab.storyboard in Resources */,
 				089C758D2A51728A003AAB94 /* Pretendard-Bold.ttf in Resources */,
@@ -1061,6 +1068,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA7EE1D82BF38921009486CC /* PochakAlarmCollectionViewCell.swift in Sources */,
 				EA01079E2A59556800A3AE85 /* PostViewController.swift in Sources */,
 				3769D6AF2B3C2FD500294CD1 /* GoogleLoginDataManager.swift in Sources */,
 				EA0107AE2A5EC23900A3AE85 /* OtherCollectionViewCell.swift in Sources */,
