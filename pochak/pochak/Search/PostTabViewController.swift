@@ -169,23 +169,23 @@ extension PostTabViewController: UICollectionViewDelegateFlowLayout {
         switch section {
             
         case 0:
-            return CGFloat(0)
+            return 0
         default:
-            return CGFloat(4)
+            return 5
         }
     }
 
         
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-            return UIEdgeInsets(top: 2, left: 1, bottom: 2, right: 1)
+        return UIEdgeInsets(top: 2.5, left: 24, bottom: 2.5, right: 24)
         }
     // 옆 간격
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         switch section {
             case 0:
-                return CGFloat(0)
+                return 6
             default:
-                return CGFloat(1)
+                return 5
             }
         }
 
@@ -193,37 +193,15 @@ extension PostTabViewController: UICollectionViewDelegateFlowLayout {
     // cell 사이즈( 옆 라인을 고려하여 설정 )
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let width = (collectionView.frame.width - 6) / 2 // 첫 번째 섹션의 셀 너비
+        let width = (collectionView.frame.width - 54) / 2 // 첫 번째 섹션의 셀 너비
         let height = width * 4 / 3 // 셀의 가로:세로 비율
         
         if indexPath.section == 0 {
             return CGSize(width: width, height: height) // 첫 번째 섹션의 셀 크기
         } else {
-            let secWidth = (collectionView.frame.width - 10) / 3 // 두 번째 섹션의 셀 너비
+            let secWidth = (collectionView.frame.width - 58) / 3 // 두 번째 섹션의 셀 너비
             let secHeight = secWidth * 4 / 3 // 셀의 가로:세로 비율
             return CGSize(width: secWidth, height: secHeight) // 두 번째 섹션의 셀 크기
         }
     }
 }
-
-//extension PostTabViewController: UISearchControllerDelegate {
-//    func willPresentSearchController(_ searchController: UISearchController) {
-//        // 검색창이 표시될 때 실행되는 메서드
-//        if searchController.searchBar.text?.isEmpty ?? true {
-//            // 검색창에 아무런 텍스트가 없으면 최근 검색어 뷰를 보여줍니다.
-//            self.resultVC.isHidden = false
-//        }
-//    }
-//}
-//
-//extension PostTabViewController: UISearchBarDelegate {
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchText.isEmpty {
-//            // 검색창에 아무런 텍스트가 없으면 최근 검색어 뷰를 보여줍니다.
-//            self.resultVC.isHidden = false
-//        } else {
-//            // 검색창에 텍스트가 입력되었으면 최근 검색어 뷰를 숨깁니다.
-//            self.resultVC.isHidden = true
-//        }
-//    }
-//}
