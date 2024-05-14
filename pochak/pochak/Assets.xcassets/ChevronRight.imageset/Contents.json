@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "PochakYourMoment1.png",
+      "filename" : "ChevronRight.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "PochakYourMoment2.png",
+      "filename" : "ChevronRight@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "PochakYourMoment3.png",
+      "filename" : "ChevronRight@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "PochakYourMoment1.png",
+      "filename" : "TrashIcon.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "PochakYourMoment2.png",
+      "filename" : "TrashIcon@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "PochakYourMoment3.png",
+      "filename" : "TrashIcon@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
