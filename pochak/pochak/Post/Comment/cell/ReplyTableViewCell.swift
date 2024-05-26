@@ -9,11 +9,10 @@ import UIKit
 
 class ReplyTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var replyCommentTextView: MentionTextView!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var userHandleLabel: UILabel!
     @IBOutlet weak var timePassedLabel: UILabel!
-    @IBOutlet weak var contentLabel: MentionTextView!
+    @IBOutlet weak var replyLabel: UILabel!
     @IBOutlet weak var childCommentBtn: UIButton!
     
     var loggedinUserHandle: String?
@@ -31,14 +30,14 @@ class ReplyTableViewCell: UITableViewCell {
         // 현재 로그인된 유저 핸들 가져오기
         loggedinUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
         
-        // replyCommentTextView의 inset 제거
-        replyCommentTextView.textContainerInset = .zero
-        replyCommentTextView.textContainer.lineFragmentPadding = 0
-        
-        // replyCommentTextView에서 아이디 찾기
-        replyCommentTextView.findOutMetionedId()
-        
-        replyCommentTextView.delegate = self
+//        // replyCommentTextView의 inset 제거
+//        replyCommentTextView.textContainerInset = .zero
+//        replyCommentTextView.textContainer.lineFragmentPadding = 0
+//        
+//        // replyCommentTextView에서 아이디 찾기
+//        replyCommentTextView.findOutMetionedId()
+//        
+//        replyCommentTextView.delegate = self
         // 이미지뷰 반만큼 radius 적용 -> 동그랗게
         profileImageView.layer.cornerRadius = 10
     }
@@ -111,7 +110,7 @@ class ReplyTableViewCell: UITableViewCell {
         // 유저 핸들
         userHandleLabel.text = commentData.handle
         
-        replyCommentTextView.text = commentData.content
+        replyLabel.text = commentData.content
         
         // comment.uploadedTime 값: 2023-12-27T19:03:32.701
         // 시간 계산
@@ -160,15 +159,15 @@ class ReplyTableViewCell: UITableViewCell {
 
 // MARK: - Extensions
 // commentTextView를 위한 delegate
-extension ReplyTableViewCell: UITextViewDelegate {
-    
-    func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        
-        if let mentionTextView = textView as? MentionTextView,
-           let text = Int(url.debugDescription) {
-            print(mentionTextView.idArray[text])
-            return false
-        }
-        return false
-    }
-}
+//extension ReplyTableViewCell: UITextViewDelegate {
+//    
+//    func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+//        
+//        if let mentionTextView = textView as? MentionTextView,
+//           let text = Int(url.debugDescription) {
+//            print(mentionTextView.idArray[text])
+//            return false
+//        }
+//        return false
+//    }
+//}

@@ -10,7 +10,7 @@ import UIKit
 class CommentTableViewCell: UITableViewCell {
 
     // MARK: - Properties
-    @IBOutlet weak var commentTextView: MentionTextView!
+    @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var commentUserHandleLabel: UILabel!
     @IBOutlet weak var timePassedLabel: UILabel!
@@ -36,17 +36,17 @@ class CommentTableViewCell: UITableViewCell {
         
         /* commentTextView 초기화 */
         
-        // commentTextView의 inset 제거
-        commentTextView.textContainerInset = .zero
-        commentTextView.textContainer.lineFragmentPadding = 0
-        
-        
-//        commentTextView.delegate = (self.textView(commentTextView, shouldInteractWith: <#T##URL#>, in: <#T##NSRange#>, interaction: <#T##UITextItemInteraction#>) as! any UITextViewDelegate)
-        
-        // commentTextView에서 아이디 찾기
-        commentTextView.findOutMetionedId()
-        
-        commentTextView.delegate = self
+//        // commentTextView의 inset 제거
+//        commentTextView.textContainerInset = .zero
+//        commentTextView.textContainer.lineFragmentPadding = 0
+//        
+//        
+////        commentTextView.delegate = (self.textView(commentTextView, shouldInteractWith: <#T##URL#>, in: <#T##NSRange#>, interaction: <#T##UITextItemInteraction#>) as! any UITextViewDelegate)
+//        
+//        // commentTextView에서 아이디 찾기
+//        commentTextView.findOutMetionedId()
+//        
+//        commentTextView.delegate = self
         
         // 크기 반만큼 radius
         profileImageView.layer.cornerRadius = 17.5
@@ -111,7 +111,7 @@ class CommentTableViewCell: UITableViewCell {
             }
         
         self.commentUserHandleLabel.text = comment.handle
-        self.commentTextView.text = comment.content
+        self.commentLabel.text = comment.content
         
         /* 로그인된 유저의 댓글인 경우 삭제 버튼 생성*/
         if(comment.handle == loggedinUserHandle){
