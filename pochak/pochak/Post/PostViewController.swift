@@ -356,6 +356,28 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
 
         present(postMenuVC, animated: true)
     }
+    
+    @IBAction func commentButtonDidTap(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "PostTab", bundle: nil)
+        let commentVC = storyboard.instantiateViewController(withIdentifier: "CommentVC") as! CommentViewController
+        
+        commentVC.modalPresentationStyle = .pageSheet
+        commentVC.postId = receivedPostId
+        commentVC.postUserHandle = postDataResult.ownerHandle
+        
+        // half sheet
+        if let sheet = commentVC.sheetPresentationController {
+            //지원할 크기 지정
+            sheet.detents = [.medium(), .large()]
+            //크기 변하는거 감지
+            sheet.delegate = self
+                   
+            //시트 상단에 그래버 표시 (기본 값은 false)
+            sheet.prefersGrabberVisible = true
+        }
+                
+        present(commentVC, animated: true)
+    }
 }
 
 
