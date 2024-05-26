@@ -21,7 +21,7 @@ class ReplyTableViewCell: UITableViewCell {
     var parentCommentId: Int!
     
     // comment view controller에서 받는 댓글 입력창
-    var editingCommentTextView: UITextView!
+    var editingCommentTextField: UITextField!
     var tableView: UITableView!
     var commentVC: CommentViewController!
     
@@ -68,7 +68,7 @@ class ReplyTableViewCell: UITableViewCell {
                     self.backgroundColor = oldColor
                 }
         })
-        editingCommentTextView.becomeFirstResponder()
+        editingCommentTextField.becomeFirstResponder()
     }
     
     // MARK: - Helpers

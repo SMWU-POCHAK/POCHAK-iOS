@@ -13,7 +13,7 @@ class CommentViewController: UIViewController {
     // MARK: - Properties
     @IBOutlet weak var CommentInputViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var commentView: UIView!
-    @IBOutlet weak var commentTextView: UITextView!
+    @IBOutlet weak var commentTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var userProfileImageView: UIImageView!
@@ -44,24 +44,12 @@ class CommentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // UserDefaults에서 현재 로그인된 유저 핸들 가져오기
+        // TODO: UserDefaults에서 현재 로그인된 유저 핸들 가져오기
 //        loggedinUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
 //        print("current logged in user handle is : \(loggedinUserHandle)")
         
         // 테이블 뷰 세팅
         setUpTableView()
-        
-        /* 1번만 실행돼도 되는 초기화 과정 */
-        // commentView의 댓글 입력 창(uitextview) inset 제거
-        commentTextView.textContainerInset = .zero
-        commentTextView.textContainer.lineFragmentPadding = 0
-        // delegate 설정
-        commentTextView.delegate = self
-        // 최대 줄 설정
-        //commentTextView.textContainer.maximumNumberOfLines = 5
-        // placeholder 설정
-        commentTextView.text = textViewPlaceHolder
-        commentTextView.textColor = UIColor(named: "gray03")
         
         /* Keyboard 보여지고 숨겨질 때 발생되는 이벤트 등록 */
         NotificationCenter.default.addObserver(  // 키보드 보여질 때
@@ -226,36 +214,18 @@ class CommentViewController: UIViewController {
         }
     }
     
-//    private func updateDynamicHeight(){
-//        //        let width = commentTextView.superview?.frame.width
-//        //        let height = commentTextView.superview?.frame.height
-//        //        commentTextView.superview?.frame = CGRect(x: <#T##Int#>, y: <#T##Int#>, width: <#T##Int#>, height: <#T##Int#>)
-//        commentTextView.constraints.forEach { (constraint) in
-//
-//            /// 180 이하일때는 더 이상 줄어들지 않게하기
-//            if estimatedSize.height <= 180 {
-//
-//            }
-//            else {
-//                if constraint.firstAttribute == .height {
-//                    constraint.constant = estimatedSize.height
-//                }
-//            }
-//        }
-//    }
-    
     // MARK: - Actions
+    
     @IBAction func postNewCommentBtnTapped(_ sender: UIButton) {
-        // 대댓글인지 댓글인지 확인해야 함
-        print(commentTextView.text!)
+        let commentContent = commentTextField.text ?? ""
         
-        // api 연결, 오류 나면 알림창 띄우기
+        // 대댓글인지 댓글인지 확인해야 함
+        print(commentContent)
         
         // 댓글 내용이 있는 경우에만 POST 요청
-        if(!commentTextView.text.isEmpty && commentTextView.text! != textViewPlaceHolder){
-            print("textview is not empty")
+        if commentContent != "" {
             // 임시로 parentCommentSK는 nil로 지정
-            CommentDataService.shared.postComment(postId!, commentTextView.text, self.isPostingChildComment ? self.parentCommentId : nil) { (response) in
+            CommentDataService.shared.postComment(postId!, commentContent, self.isPostingChildComment ? self.parentCommentId : nil) { (response) in
                 switch(response){
                 case .success(let data):
                     self.postCommentResponse = (data as! PostCommentResponse)
@@ -284,10 +254,10 @@ class CommentViewController: UIViewController {
         }
         
         // 댓글창 비우기
-        //commentTextView.text = ""
+        commentTextField.text = ""
         
         // 키보드 내리기
-        commentTextView.endEditing(true)
+        commentTextField.endEditing(true)
         
         // 뷰컨트롤러 새로고침하기(데이터 다시 받아오기)
         
@@ -336,7 +306,7 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as? CommentTableViewCell else{
                 return UITableViewCell()
             }
-            cell.editingCommentTextView = self.commentTextView
+            cell.editingCommentTextField = self.commentTextField
             cell.tableView = self.tableView
             cell.commentVC = self
             cell.setupData(cellData[finalIndex])
@@ -348,7 +318,7 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
                     as? ReplyTableViewCell else{
                 return UITableViewCell()
             }
-            cell.editingCommentTextView = self.commentTextView
+            cell.editingCommentTextField = self.commentTextField
             cell.tableView = self.tableView
             cell.commentVC = self
             cell.setupData(cellData[finalIndex])
@@ -422,62 +392,5 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
     // grouped 스타일 테이블뷰이기 때문에 자동 생성되는 헤더 높이를 0으로
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return .leastNonzeroMagnitude
-    }
-}
-
-// MARK: - Extension (UITextView 동적 높이 조절)
-extension CommentViewController: UITextViewDelegate {
-    func textViewDidChange(_ textView: UITextView) {
-        let size = CGSize(width: textView.frame.width, height: .infinity)
-        let estimatedSize = textView.sizeThatFits(size)
-        
-        //let maxHeight:CGFloat = 100.0  // textView의 최대 높이
-        
-        //let currentLineCnt = Int(estimatedSize.height / (textView.font!.lineHeight))
-        
-        textView.constraints.forEach { (constraint) in
-            
-            // -> 뭐가 문젠지 몰라서 일단 보류
-//            // 최대 높이보다 크면 더 이상 늘어나지 않게 하기
-//            if estimatedSize.height >= maxHeight {
-//                print("==============")
-//                print("최대 높이보다 큽니다")
-//                textView.isScrollEnabled = true
-//                print("현재 scroll가능 여부: \(textView.isScrollEnabled)")
-//                if constraint.firstAttribute == .height {
-//                    constraint.constant = 100.0
-//                }
-//                print("height: \(textView.frame.height)")
-//
-//            }
-//            else {  // 최대 높이보다는 작은 경우 크게
-//                print("==============")
-//                print("최대 높이보다 작습니다.")
-//                textView.isScrollEnabled = false
-//                if constraint.firstAttribute == .height {
-//                    constraint.constant = estimatedSize.height
-//                }
-//                print("height: \(textView.frame.height)")
-            
-            if constraint.firstAttribute == .height {
-                constraint.constant = estimatedSize.height
-            }
-        }
-    }
-    
-    // 입력 시작되면
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == UIColor(named: "gray03") {
-            textView.text = nil // 텍스트를 날려줌(placeholder 날리기)
-            textView.textColor = UIColor.black
-        }
-        
-    }
-    // UITextView의 placeholder
-    func textViewDidEndEditing(_ textView: UITextView) {
-//        if textView.text.isEmpty {
-            textView.text = textViewPlaceHolder
-            textView.textColor = UIColor(named: "gray03")
-//        }
     }
 }

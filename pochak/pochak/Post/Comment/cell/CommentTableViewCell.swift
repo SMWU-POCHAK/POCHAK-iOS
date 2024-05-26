@@ -23,7 +23,7 @@ class CommentTableViewCell: UITableViewCell {
     var commentId: Int!
     
     // comment view controller에서 받는 댓글 입력창
-    var editingCommentTextView: UITextView!
+    var editingCommentTextField: UITextField!
     var tableView: UITableView!
     
     let seeChildCommentBtn = UIButton()
@@ -86,7 +86,7 @@ class CommentTableViewCell: UITableViewCell {
                     self.backgroundColor = oldColor
                 }
         })
-        editingCommentTextView.becomeFirstResponder()
+        editingCommentTextField.becomeFirstResponder()
     }
     
     // MARK: - Helpers
