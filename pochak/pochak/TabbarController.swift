@@ -11,20 +11,41 @@ class TabbarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.selectedIndex = 0
-        self.tabBar.tintColor = UIColor(named: "navy00")
-        // Do any additional setup after loading the view.
+        setTabbar()
+        setTabbarShadow()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func setTabbar(){
+        self.selectedIndex = 0
+        self.tabBar.tintColor = UIColor(named: "navy00")
     }
-    */
+    
+    func setTabbarShadow(){
+        let appearance = UITabBarAppearance()
+        // set tabbar opacity
+        appearance.configureWithOpaqueBackground()
 
+        // remove tabbar border line
+        appearance.shadowColor = UIColor.clear
+
+        // set tabbar background color
+        appearance.backgroundColor = .white
+
+        tabBar.standardAppearance = appearance
+
+        if #available(iOS 15.0, *) {
+                // set tabbar opacity
+                tabBar.scrollEdgeAppearance = tabBar.standardAppearance
+        }
+
+        // set tabbar tintColor
+        tabBar.tintColor = .black
+
+        // set tabbar shadow
+        tabBar.layer.masksToBounds = false
+        tabBar.layer.shadowColor = UIColor.black.cgColor
+        tabBar.layer.shadowOpacity = 0.3
+        tabBar.layer.shadowOffset = CGSize(width: 0, height: 0)
+        tabBar.layer.shadowRadius = 6
+    }
 }
