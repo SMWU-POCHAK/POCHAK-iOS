@@ -29,7 +29,7 @@ class HomeTabViewController: UIViewController {
         setupCollectionView()
         
         // 내비게이션 바에 로고 이미지
-        let logoImage = UIImage(named: "logo_full.png")
+        let logoImage = UIImage(named: "logo_full")
         let logoImageView = UIImageView(image: logoImage)
 
         logoImageView.contentMode = .scaleAspectFit
@@ -41,16 +41,6 @@ class HomeTabViewController: UIViewController {
         // self.navigationController?.navigationBar.standardAppearance.shadowImage = UIImage() -> 안됨...
         self.navigationController?.navigationBar.standardAppearance.shadowColor = .white  // 스크롤하지 않는 상태
         self.navigationController?.navigationBar.scrollEdgeAppearance?.shadowColor = .white  // 스크롤하고 있는 상태
-        
-        // info 버튼
-        //create a new button
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
-        button.setImage(UIImage(named: "ic_info"), for: .normal)
-        button.addTarget(self, action: #selector(infoBtnTapped), for: .touchUpInside)
-        
-        let barButton = UIBarButtonItem(customView: button)
-        //assign button to navigationbar
-        self.navigationItem.rightBarButtonItem = barButton
         
         // back 버튼 커스텀
         self.navigationItem.backButtonTitle = ""
@@ -64,11 +54,7 @@ class HomeTabViewController: UIViewController {
     }
     
     // MARK: - Action
-    @objc func infoBtnTapped(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "HomeTab", bundle: nil)
-        let infoVC = storyboard.instantiateViewController(withIdentifier: "InfoVC") as! InfoViewController
-        self.navigationController?.pushViewController(infoVC, animated: true)
-    }
+
     
     // MARK: - Helper
     private func setupCollectionView() {
