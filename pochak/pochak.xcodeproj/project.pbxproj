@@ -24,6 +24,8 @@
 		0844D7F42BF21A80001154AC /* CancelViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0844D7F22BF21A80001154AC /* CancelViewCell.xib */; };
 		084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */; };
 		084AF4C82A5D831100C6454A /* HomeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */; };
+		0876E23E2C274256008DE88F /* NoPostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */; };
+		0876E23F2C274256008DE88F /* NoPostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */; };
 		0893E1622B09083C003CF3D8 /* PostDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0893E1612B09083C003CF3D8 /* PostDataService.swift */; };
 		089C75882A51728A003AAB94 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C757F2A517289003AAB94 /* Pretendard-Regular.ttf */; };
 		089C75892A51728A003AAB94 /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75802A517289003AAB94 /* Pretendard-Thin.ttf */; };
@@ -184,6 +186,8 @@
 		0844D7F22BF21A80001154AC /* CancelViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CancelViewCell.xib; sourceTree = "<group>"; };
 		084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCollectionViewCell.xib; sourceTree = "<group>"; };
+		0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoPostCollectionViewCell.swift; sourceTree = "<group>"; };
+		0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoPostCollectionViewCell.xib; sourceTree = "<group>"; };
 		0893E1612B09083C003CF3D8 /* PostDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDataService.swift; sourceTree = "<group>"; };
 		089C757F2A517289003AAB94 /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.ttf"; sourceTree = "<group>"; };
 		089C75802A517289003AAB94 /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.ttf"; sourceTree = "<group>"; };
@@ -410,6 +414,8 @@
 			children = (
 				084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */,
 				084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */,
+				0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */,
+				0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -1000,6 +1006,7 @@
 				EAFB4B872A5147A300E0F2FA /* ProfileTab.storyboard in Resources */,
 				EA0107B42A5ECB8A00A3AE85 /* PostCollectionViewCell.xib in Resources */,
 				3769D6C82B3C4F0900294CD1 /* FollowingCollectionViewCell.xib in Resources */,
+				0876E23F2C274256008DE88F /* NoPostCollectionViewCell.xib in Resources */,
 				089C75882A51728A003AAB94 /* Pretendard-Regular.ttf in Resources */,
 				EA99B63C2A5143A800EBA2AD /* CameraTab.storyboard in Resources */,
 				EAFB4B842A51478600E0F2FA /* HomeTab.storyboard in Resources */,
@@ -1210,6 +1217,7 @@
 				08C02EF82BF394B800627C21 /* UIAlertController+.swift in Sources */,
 				EAF9184E2AA462C50037C270 /* SearchResultTableViewCell.swift in Sources */,
 				EA12890A2B3B2836002EC93E /* AlarmDataService.swift in Sources */,
+				0876E23E2C274256008DE88F /* NoPostCollectionViewCell.swift in Sources */,
 				08C02EF62BF3945000627C21 /* UIFont+.swift in Sources */,
 				EABD20652A6CF5CC007543E9 /* TagCollectionViewCell.swift in Sources */,
 				0823B0742A5B0E780085002F /* CommentTableViewCell.swift in Sources */,
