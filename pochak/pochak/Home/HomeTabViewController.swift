@@ -19,6 +19,9 @@ class HomeTabViewController: UIViewController {
     private var homeDataResponse: HomeDataResponse!
     private var homeDataResult: HomeDataResult!
     
+    private let minimumLineSpacing: CGFloat = 9
+    private let minimumInterItemSpacing: CGFloat = 8
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -142,18 +145,18 @@ extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDel
     
     // cell의 위 아래 간격을 정함
     func collectionView(_ collectionView: UICollectionView, layout: UICollectionViewLayout, minimumLineSpacingForSectionAt: Int) -> CGFloat {
-        return 5
+        return minimumLineSpacing
     }
     
     // cell 양 옆 간격
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 5
+        return minimumInterItemSpacing
     }
     
     // cell 크기 지정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let width = CGFloat((collectionView.frame.width - 58) / 3)  // 24+24+5+5 = 58
+        let width = CGFloat((collectionView.frame.width - 20 * 2 - minimumInterItemSpacing * 2) / 3)  // 20은 양 끝 간격
         return CGSize(width: width, height: width * 4 / 3)  // 3:4 비율로
     }
 }
