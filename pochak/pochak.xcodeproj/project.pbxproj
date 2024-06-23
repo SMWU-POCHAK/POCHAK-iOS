@@ -47,6 +47,7 @@
 		08D98C4A2AFEE8D700E9A097 /* LikedUsersDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D98C492AFEE8D700E9A097 /* LikedUsersDataModel.swift */; };
 		08DD9EC22B454356004CCD5F /* FollowDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DD9EC12B454356004CCD5F /* FollowDataModel.swift */; };
 		08DD9EC42B454405004CCD5F /* FollowDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DD9EC32B454405004CCD5F /* FollowDataService.swift */; };
+		08EB5D252C280CFE00E35C16 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB5D242C280CFE00E35C16 /* UIImage+.swift */; };
 		08FD3A392B357E6400574880 /* LikedUsersDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FD3A382B357E6400574880 /* LikedUsersDataService.swift */; };
 		08FD3A3C2B3AF94A00574880 /* CommentDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FD3A3B2B3AF94A00574880 /* CommentDataModel.swift */; };
 		08FD3A3E2B3AFE7B00574880 /* CommentDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FD3A3D2B3AFE7B00574880 /* CommentDataService.swift */; };
@@ -209,6 +210,7 @@
 		08D98C492AFEE8D700E9A097 /* LikedUsersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedUsersDataModel.swift; sourceTree = "<group>"; };
 		08DD9EC12B454356004CCD5F /* FollowDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowDataModel.swift; sourceTree = "<group>"; };
 		08DD9EC32B454405004CCD5F /* FollowDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowDataService.swift; sourceTree = "<group>"; };
+		08EB5D242C280CFE00E35C16 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		08FD3A382B357E6400574880 /* LikedUsersDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedUsersDataService.swift; sourceTree = "<group>"; };
 		08FD3A3B2B3AF94A00574880 /* CommentDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDataModel.swift; sourceTree = "<group>"; };
 		08FD3A3D2B3AFE7B00574880 /* CommentDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDataService.swift; sourceTree = "<group>"; };
@@ -483,6 +485,7 @@
 				0801765D2A74F4B0005E6953 /* UITextView+Extension.swift */,
 				08C02EF52BF3945000627C21 /* UIFont+.swift */,
 				08C02EF72BF394B800627C21 /* UIAlertController+.swift */,
+				08EB5D242C280CFE00E35C16 /* UIImage+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1175,6 +1178,7 @@
 				373235502B691E6A0042EF94 /* FollowToggleDataModel.swift in Sources */,
 				3769D6C72B3C4F0900294CD1 /* FollowingCollectionViewCell.swift in Sources */,
 				373235472B68F93E0042EF94 /* FollowListDataManager.swift in Sources */,
+				08EB5D252C280CFE00E35C16 /* UIImage+.swift in Sources */,
 				EAF885292B567F4F00BA184A /* RecentSearchModel.swift in Sources */,
 				08DD9EC22B454356004CCD5F /* FollowDataModel.swift in Sources */,
 				08D98C4A2AFEE8D700E9A097 /* LikedUsersDataModel.swift in Sources */,
