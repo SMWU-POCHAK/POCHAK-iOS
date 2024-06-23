@@ -503,8 +503,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="더보기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7B-OC-7cT">
+                                <rect key="frame" x="161.66666666666666" y="86" width="52" height="24"/>
+                                <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="48" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="QCS-0R-jE3" userLabel="MenuTable View">
-                                <rect key="frame" x="0.0" y="78" width="375" height="700"/>
+                                <rect key="frame" x="0.0" y="126" width="375" height="652"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="separatorColor" name="gray01"/>
                                 <inset key="separatorInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
@@ -513,10 +519,12 @@
                         <viewLayoutGuide key="safeArea" id="Ay6-eC-VB1"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="U7B-OC-7cT" firstAttribute="centerX" secondItem="Ay6-eC-VB1" secondAttribute="centerX" id="9Qm-k1-48U"/>
                             <constraint firstItem="QCS-0R-jE3" firstAttribute="leading" secondItem="Ay6-eC-VB1" secondAttribute="leading" id="LOt-Bs-KMO"/>
                             <constraint firstItem="Ay6-eC-VB1" firstAttribute="trailing" secondItem="QCS-0R-jE3" secondAttribute="trailing" id="ZtD-ki-Fys"/>
+                            <constraint firstItem="QCS-0R-jE3" firstAttribute="top" secondItem="U7B-OC-7cT" secondAttribute="bottom" constant="16" id="bEZ-0h-mAe"/>
+                            <constraint firstItem="U7B-OC-7cT" firstAttribute="top" secondItem="Ay6-eC-VB1" secondAttribute="top" constant="36" id="euf-0L-r3K"/>
                             <constraint firstItem="Ay6-eC-VB1" firstAttribute="bottom" secondItem="QCS-0R-jE3" secondAttribute="bottom" id="le2-hD-LCG"/>
-                            <constraint firstItem="QCS-0R-jE3" firstAttribute="top" secondItem="Ay6-eC-VB1" secondAttribute="top" constant="28" id="ySl-8g-CFl"/>
                         </constraints>
                     </view>
                     <connections>

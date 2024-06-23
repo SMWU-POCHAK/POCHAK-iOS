@@ -376,9 +376,16 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         let sheet = postMenuVC.sheetPresentationController
         //postMenuVC.modalPresentationStyle = .pageSheet
         
-        let multiplier = 0.25
+        /* 메뉴 개수에 맞도록 sheet 높이 설정 */
+        let label = UILabel()
+        label.font = UIFont(name: "Pretendard-Bold", size: 20)
+        label.text = "더보기"
+        label.sizeToFit()
+        
+        let cellCount = (postOwnerHandle == APIConstants.dayeonHandle) ? 3 : 2
+        let height = label.frame.height + CGFloat(36 + 16 + 48 * cellCount)
         let fraction = UISheetPresentationController.Detent.custom { context in
-            self.view.bounds.height * multiplier
+            height
         }
         sheet?.detents = [fraction]
         sheet?.prefersGrabberVisible = true

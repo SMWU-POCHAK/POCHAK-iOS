@@ -12,12 +12,13 @@ class PostMenuViewController: UIViewController {
     // MARK: - Views
 
     @IBOutlet weak var menuTableView: UITableView!
-    private var currentUserIsOwner = false
     
     // MARK: - Properties
     
     private var postId: Int?
     private var postOwner: String?
+    
+    private var currentUserIsOwner = false
 
     // MARK: - Lifecycle
     
