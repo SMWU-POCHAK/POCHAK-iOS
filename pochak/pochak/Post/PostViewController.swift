@@ -46,6 +46,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     private var deletePostResponse: PostDeleteResponse!
     
     // MARK: - lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -149,8 +150,13 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         }
         
         // 내비게이션 바 타이틀 세팅
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-bold", size: 20)!]
-        self.navigationItem.title = postDataResult.ownerHandle+" 님의 게시물"
+        let label = UILabel()
+        label.font = UIFont(name: "Pretendard-Bold", size: 20)
+        label.text = postDataResult.ownerHandle + " 님의 게시물"
+//        self.navigationItem.title = postDataResult.ownerHandle+" 님의 게시물"
+//        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 20)!]
+        
+        self.navigationItem.titleView = label
         
         // 태그된 사용자, 포착한 사용자
         self.taggedUsers.text = ""
