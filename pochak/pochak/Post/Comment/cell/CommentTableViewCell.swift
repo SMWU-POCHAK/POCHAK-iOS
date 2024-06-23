@@ -10,6 +10,7 @@ import UIKit
 class CommentTableViewCell: UITableViewCell {
 
     // MARK: - Properties
+    
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var commentUserHandleLabel: UILabel!
@@ -32,7 +33,9 @@ class CommentTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        loggedinUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
+        // TODO: 로그인 완성되면 수정
+        //loggedinUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
+        loggedinUserHandle = "dxxynni"
         
         /* commentTextView 초기화 */
         
@@ -49,7 +52,7 @@ class CommentTableViewCell: UITableViewCell {
 //        commentTextView.delegate = self
         
         // 크기 반만큼 radius
-        profileImageView.layer.cornerRadius = 17.5
+        profileImageView.layer.cornerRadius = 40 / 2
         
         // 사용자(아이디로) 멘션 기능 (댓글에서 아이디 탐지)
         //taggedId = commentLabel.findOutMentionedId()
@@ -68,6 +71,7 @@ class CommentTableViewCell: UITableViewCell {
     }
     
     // MARK: - Actions
+    
     @IBAction func postChildCmmtBtnDidTap(_ sender: UIButton) {
         // 부모 댓글을 단다는 것을 comment vc에 알려야 함
         commentVC.isPostingChildComment = true
@@ -89,7 +93,12 @@ class CommentTableViewCell: UITableViewCell {
         editingCommentTextField.becomeFirstResponder()
     }
     
+    @objc func deleteButtonDidTap(){
+        print("댓글 삭제!")
+    }
+    
     // MARK: - Helpers
+    
     func setupData(_ comment: UICommentData){
         // 현재 댓글 아이디 저장
         self.commentId = comment.commentId
@@ -114,19 +123,22 @@ class CommentTableViewCell: UITableViewCell {
         self.commentLabel.text = comment.content
         
         /* 로그인된 유저의 댓글인 경우 삭제 버튼 생성*/
+        print("댓글 핸들: \(comment.handle), 로그인 유저 핸들: \(loggedinUserHandle)")
         if(comment.handle == loggedinUserHandle){
             self.addSubview(deleteButton)
             
             // 오토레이아웃 설정
             deleteButton.translatesAutoresizingMaskIntoConstraints = false
             
-            deleteButton.leadingAnchor.constraint(equalTo: self.childCommentBtn.trailingAnchor, constant: 5.0).isActive = true
+            deleteButton.leadingAnchor.constraint(equalTo: self.childCommentBtn.trailingAnchor, constant: 12.0).isActive = true
             deleteButton.centerYAnchor.constraint(equalTo: self.childCommentBtn.centerYAnchor).isActive = true
             
             deleteButton.setTitle("삭제", for: .normal)
-            deleteButton.setTitleColor(UIColor(named: "gray04"), for: .normal)
+            deleteButton.setTitleColor(UIColor(named: "gray05"), for: .normal)
             deleteButton.backgroundColor = .clear
-            deleteButton.titleLabel?.font = UIFont(name: "Pretendard-Medium", size: 11.0)
+            deleteButton.titleLabel?.font = UIFont(name: "Pretendard-Medium", size: 13.0)
+            
+            deleteButton.addTarget(self, action: #selector(deleteButtonDidTap), for: .touchUpInside)
         }
         
         // comment.uploadedTime 값: 2023-12-27T19:03:32.701
@@ -175,6 +187,7 @@ class CommentTableViewCell: UITableViewCell {
 
 
 // MARK: - Extensions
+
 // commentTextView를 위한 delegate
 extension CommentTableViewCell: UITextViewDelegate {
     
