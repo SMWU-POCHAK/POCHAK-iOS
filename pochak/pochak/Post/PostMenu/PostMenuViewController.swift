@@ -117,21 +117,33 @@ extension PostMenuViewController: UITableViewDelegate, UITableViewDataSource {
             print("신고하기")
         }
         else if tableView.numberOfRows(inSection: 0) == 3 && indexPath.row == 1 {
-            let alert = UIAlertController(title: "게시물을 삭제하시겠습니까?", message: "게시물 삭제시, 복구가 어렵습니다.\n그래도 삭제하시겠습니까?", preferredStyle: .alert)
-            //alert.setTitleFont()
-            //alert.setMessageFont()
-            alert.addAction(UIAlertAction(title: "취소", style: .destructive))
-            alert.addAction(UIAlertAction(title: "삭제하기", style: .default, handler: { action in
-                // TODO: 게시글 삭제 api 연결 -> 화면 나가기 -> 홈으로 이동
-                print("삭제!!!")
-            }))
-            self.present(alert, animated: true, completion: nil)
-            print("삭제하기")
+            showAlert(alertType: .confirmAndCancel,
+                      titleText: "게시물을 삭제하시겠습니까?",
+                      messageText: "게시물 삭제 시, 복구가 어렵습니다.\n그래도 하시겠습니까?",
+                      cancelButtonText: "취소",
+                      confirmButtonText: "삭제하기"
+            )
         }
         else {
             dismiss(animated: true)
             print("취소하기")
         }
     }
+    
+}
+
+// MARK: - Extension; Custom Alert
+
+extension PostMenuViewController: CustomAlertDelegate {
+    
+    func confirmAction() {
+        // TODO: 게시글 삭제 api 연결 -> 화면 나가기 -> 홈으로 이동
+        print("삭제하기 선택됨")
+    }
+    
+    func cancel() {
+        print("취소하기 선택됨")
+    }
+    
     
 }
