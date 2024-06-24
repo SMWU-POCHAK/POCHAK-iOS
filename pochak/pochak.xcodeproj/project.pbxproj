@@ -15,6 +15,8 @@
 		0820B1912A63A18100604DA8 /* ReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0820B18F2A63A18100604DA8 /* ReplyTableViewCell.xib */; };
 		0823B0742A5B0E780085002F /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823B0722A5B0E780085002F /* CommentTableViewCell.swift */; };
 		0823B0752A5B0E780085002F /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0823B0732A5B0E780085002F /* CommentTableViewCell.xib */; };
+		083249762C2956A000A77C03 /* CustomAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 083249752C2956A000A77C03 /* CustomAlertViewController.storyboard */; };
+		083249782C295E4000A77C03 /* CustomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083249772C295E4000A77C03 /* CustomAlertViewController.swift */; };
 		0844649C2BF0F25900949850 /* PostMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0844649B2BF0F25900949850 /* PostMenuViewController.swift */; };
 		0844D7EB2BF218A5001154AC /* ReportViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0844D7E92BF218A5001154AC /* ReportViewCell.swift */; };
 		0844D7EC2BF218A5001154AC /* ReportViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0844D7EA2BF218A5001154AC /* ReportViewCell.xib */; };
@@ -178,6 +180,8 @@
 		0820B18F2A63A18100604DA8 /* ReplyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReplyTableViewCell.xib; sourceTree = "<group>"; };
 		0823B0722A5B0E780085002F /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		0823B0732A5B0E780085002F /* CommentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
+		083249752C2956A000A77C03 /* CustomAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomAlertViewController.storyboard; sourceTree = "<group>"; };
+		083249772C295E4000A77C03 /* CustomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewController.swift; sourceTree = "<group>"; };
 		0844649B2BF0F25900949850 /* PostMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMenuViewController.swift; sourceTree = "<group>"; };
 		0844D7E92BF218A5001154AC /* ReportViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewCell.swift; sourceTree = "<group>"; };
 		0844D7EA2BF218A5001154AC /* ReportViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportViewCell.xib; sourceTree = "<group>"; };
@@ -486,6 +490,8 @@
 				08C02EF52BF3945000627C21 /* UIFont+.swift */,
 				08C02EF72BF394B800627C21 /* UIAlertController+.swift */,
 				08EB5D242C280CFE00E35C16 /* UIImage+.swift */,
+				083249752C2956A000A77C03 /* CustomAlertViewController.storyboard */,
+				083249772C295E4000A77C03 /* CustomAlertViewController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1011,6 +1017,7 @@
 				3769D6C82B3C4F0900294CD1 /* FollowingCollectionViewCell.xib in Resources */,
 				0876E23F2C274256008DE88F /* NoPostCollectionViewCell.xib in Resources */,
 				089C75882A51728A003AAB94 /* Pretendard-Regular.ttf in Resources */,
+				083249762C2956A000A77C03 /* CustomAlertViewController.storyboard in Resources */,
 				EA99B63C2A5143A800EBA2AD /* CameraTab.storyboard in Resources */,
 				EAFB4B842A51478600E0F2FA /* HomeTab.storyboard in Resources */,
 				EA1B0B672A49D23B00F86FBC /* LaunchScreen.storyboard in Resources */,
@@ -1232,6 +1239,7 @@
 				EA1289132B3C4F1F002EC93E /* SearchDataModel.swift in Sources */,
 				0820B1902A63A18100604DA8 /* ReplyTableViewCell.swift in Sources */,
 				08FD3A412B3C70BC00574880 /* HomeDataModel.swift in Sources */,
+				083249782C295E4000A77C03 /* CustomAlertViewController.swift in Sources */,
 				0893E1622B09083C003CF3D8 /* PostDataService.swift in Sources */,
 				37C3AF482B3CB2B300B4C79C /* MyProfilePochakedPostModel.swift in Sources */,
 				EAF8852B2B569B6600BA184A /* RecentSearchRealmManager.swift in Sources */,
