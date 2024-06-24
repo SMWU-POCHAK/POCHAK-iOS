@@ -9,17 +9,19 @@ import UIKit
 
 class CommentTableViewCell: UITableViewCell {
 
-    // MARK: - Properties
+    // MARK: - Views
     
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var commentUserHandleLabel: UILabel!
     @IBOutlet weak var timePassedLabel: UILabel!
     @IBOutlet weak var childCommentBtn: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
+    
+    // MARK: - Properties
     
     var taggedId: String = ""
     var loggedinUserHandle: String?
-    var deleteButton = UIButton()
     var commentVC: CommentViewController!
     var commentId: Int!
     
@@ -75,7 +77,7 @@ class CommentTableViewCell: UITableViewCell {
         editingCommentTextField.becomeFirstResponder()
     }
     
-    @objc func deleteButtonDidTap(){
+    @IBAction func deleteButtonDidTap(){
         print("댓글 삭제!")
     }
     
@@ -104,23 +106,11 @@ class CommentTableViewCell: UITableViewCell {
         self.commentUserHandleLabel.text = comment.handle
         self.commentLabel.text = comment.content
         
-        /* 로그인된 유저의 댓글인 경우 삭제 버튼 생성*/
+        /* 로그인된 유저의 댓글이 아닌 경우 삭제 버튼 hide */
         print("댓글 핸들: \(comment.handle), 로그인 유저 핸들: \(loggedinUserHandle)")
-        if(comment.handle == loggedinUserHandle){
-            self.addSubview(deleteButton)
-            
-            // 오토레이아웃 설정
-            deleteButton.translatesAutoresizingMaskIntoConstraints = false
-            
-            deleteButton.leadingAnchor.constraint(equalTo: self.childCommentBtn.trailingAnchor, constant: 12.0).isActive = true
-            deleteButton.centerYAnchor.constraint(equalTo: self.childCommentBtn.centerYAnchor).isActive = true
-            
-            deleteButton.setTitle("삭제", for: .normal)
-            deleteButton.setTitleColor(UIColor(named: "gray05"), for: .normal)
-            deleteButton.backgroundColor = .clear
-            deleteButton.titleLabel?.font = UIFont(name: "Pretendard-Medium", size: 13.0)
-            
-            deleteButton.addTarget(self, action: #selector(deleteButtonDidTap), for: .touchUpInside)
+        if(comment.handle != loggedinUserHandle){
+            deleteButton.isHidden = true
+            deleteButton.isEnabled = false
         }
         
         // comment.uploadedTime 값: 2023-12-27T19:03:32.701

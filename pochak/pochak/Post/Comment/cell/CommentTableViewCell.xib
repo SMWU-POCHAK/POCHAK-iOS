@@ -49,37 +49,54 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vZe-Hw-lMG">
-                        <rect key="frame" x="72" y="75.333333333333329" width="48.333333333333343" height="15.666666666666671"/>
-                        <color key="tintColor" name="gray05"/>
-                        <state key="normal" title="Button"/>
-                        <buttonConfiguration key="configuration" style="plain" title="답글 달기">
-                            <fontDescription key="titleFontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="13"/>
-                            <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                        </buttonConfiguration>
-                        <connections>
-                            <action selector="postChildCmmtBtnDidTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ZEZ-aO-jah"/>
-                        </connections>
-                    </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="foJ-ks-awg">
-                        <rect key="frame" x="72" y="47.333333333333336" width="263" height="23.000000000000007"/>
+                        <rect key="frame" x="72" y="47.333333333333336" width="263" height="20.000000000000007"/>
                         <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="UF4-G1-Xnw">
+                        <rect key="frame" x="72" y="75.333333333333329" width="83" height="15.666666666666671"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vZe-Hw-lMG">
+                                <rect key="frame" x="0.0" y="0.0" width="48.333333333333336" height="15.666666666666666"/>
+                                <color key="tintColor" name="gray05"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="답글 달기">
+                                    <fontDescription key="titleFontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="13"/>
+                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="postChildCmmtBtnDidTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ZEZ-aO-jah"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f0N-4r-MUZ">
+                                <rect key="frame" x="60.333333333333336" y="0.0" width="22.666666666666664" height="15.666666666666666"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="삭제">
+                                    <fontDescription key="titleFontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="13"/>
+                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
+                                    <color key="baseForegroundColor" name="gray05"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="deleteButtonDidTap" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LBf-Qx-mjD"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </stackView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="E9W-52-dmE" firstAttribute="leading" secondItem="JIn-LI-pv1" secondAttribute="trailing" constant="8" id="1X4-Ja-3fX"/>
                     <constraint firstItem="E9W-52-dmE" firstAttribute="centerY" secondItem="JIn-LI-pv1" secondAttribute="centerY" id="3UJ-iB-xZY"/>
-                    <constraint firstItem="vZe-Hw-lMG" firstAttribute="leading" secondItem="foJ-ks-awg" secondAttribute="leading" id="8fN-u2-f0q"/>
                     <constraint firstAttribute="trailing" secondItem="foJ-ks-awg" secondAttribute="trailing" constant="20" id="Arf-ul-FtE"/>
-                    <constraint firstAttribute="bottom" secondItem="vZe-Hw-lMG" secondAttribute="bottom" constant="13" id="CwB-uF-YKd"/>
                     <constraint firstItem="foJ-ks-awg" firstAttribute="top" secondItem="JIn-LI-pv1" secondAttribute="bottom" constant="8" id="Ghs-kP-43G"/>
                     <constraint firstItem="xKW-KP-ndO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="M2w-ya-V1W"/>
+                    <constraint firstAttribute="bottom" secondItem="UF4-G1-Xnw" secondAttribute="bottom" constant="13" id="MBa-Rg-iA3"/>
+                    <constraint firstItem="UF4-G1-Xnw" firstAttribute="top" secondItem="foJ-ks-awg" secondAttribute="bottom" constant="8" id="NNo-GE-1Jl"/>
                     <constraint firstItem="foJ-ks-awg" firstAttribute="leading" secondItem="JIn-LI-pv1" secondAttribute="leading" id="PI4-SD-VWP"/>
                     <constraint firstItem="JIn-LI-pv1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="Pzd-BN-9tZ"/>
+                    <constraint firstItem="UF4-G1-Xnw" firstAttribute="leading" secondItem="foJ-ks-awg" secondAttribute="leading" id="U6g-cl-dga"/>
                     <constraint firstItem="JIn-LI-pv1" firstAttribute="leading" secondItem="xKW-KP-ndO" secondAttribute="trailing" constant="12" id="aNM-bg-taa"/>
-                    <constraint firstItem="vZe-Hw-lMG" firstAttribute="top" secondItem="foJ-ks-awg" secondAttribute="bottom" constant="5" id="cch-Z0-csT"/>
                     <constraint firstItem="xKW-KP-ndO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="t10-XN-CgK"/>
                 </constraints>
             </tableViewCellContentView>
@@ -88,6 +105,7 @@
                 <outlet property="childCommentBtn" destination="vZe-Hw-lMG" id="a0f-ou-5DU"/>
                 <outlet property="commentLabel" destination="foJ-ks-awg" id="MoQ-vg-1kT"/>
                 <outlet property="commentUserHandleLabel" destination="JIn-LI-pv1" id="edV-GF-5rw"/>
+                <outlet property="deleteButton" destination="f0N-4r-MUZ" id="Ivw-it-aZb"/>
                 <outlet property="profileImageView" destination="xKW-KP-ndO" id="UTk-iD-GIL"/>
                 <outlet property="timePassedLabel" destination="E9W-52-dmE" id="Gqu-ut-Wby"/>
             </connections>
