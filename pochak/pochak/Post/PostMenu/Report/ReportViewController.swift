@@ -85,9 +85,23 @@ extension ReportViewController: UITableViewDelegate, UITableViewDataSource {
         
         // TODO: 신고 기능 api 연결 후 completion으로 알림창 띄우기
         
-        let alert = makeAlertController()
+        showAlert(alertType: .confirmOnly,
+                  titleText: "신고가 완료되었습니다.",
+                  messageText: "신고해주셔서 감사합니다.\n빠른 시일 내에 해결하겠습니다.",
+                  confirmButtonText: "확인")
         
-        self.present(alert, animated: true, completion: nil)
+//        let alert = makeAlertController()
+//        
+//        self.present(alert, animated: true, completion: nil)
     }
     
+}
+
+extension ReportViewController: CustomAlertDelegate {
+    func confirmAction() {
+        print("신고하기 완료")
+    }
+    
+    func cancel() {
+    }
 }
