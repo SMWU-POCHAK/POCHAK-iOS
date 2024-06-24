@@ -12,15 +12,6 @@ class CommentViewController: UIViewController {
 
     // MARK: - Properties
     
-    @IBOutlet weak var CommentInputViewBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var commentView: UIView!
-    @IBOutlet weak var commentTextField: UITextField!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var userProfileImageView: UIImageView!
-    
-    @IBOutlet weak var noCommentView: UIView!
-    
     let textViewPlaceHolder = "이 게시물에 댓글을 달아보세요"
     //var loggedinUserHandle: String!  // 현재 로그인된 유저의 아이디
     
@@ -43,7 +34,17 @@ class CommentViewController: UIViewController {
     
     private var postCommentResponse: PostCommentResponse?
     
+    // MARK: - Views
+    
     private var noComment: Bool = true
+    @IBOutlet weak var CommentInputViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var commentView: UIView!
+    @IBOutlet weak var commentTextField: UITextField!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var userProfileImageView: UIImageView!
+    
+    @IBOutlet weak var noCommentView: UIView!
     
     // MARK: - Lifecycle
     
@@ -76,7 +77,7 @@ class CommentViewController: UIViewController {
         loadCommentData()
     }
     
-    // MARK: - Helpers
+    // MARK: - Functions
     
     // TODO: 바깥 영역 터치 시 키보드 안 내려가는 문제 해결 필요
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
