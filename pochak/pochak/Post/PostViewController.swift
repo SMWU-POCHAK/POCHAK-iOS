@@ -50,13 +50,6 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // TODO: 로그인된 유저가 게시글의 소유자인 경우에만 실행하도록 고치기
-        //let loggedinUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
-        //if(loggedinUserHandle == postOwnerHandle){
-//            setupPullDownMenu()
-        // 내비게이션 바에 오른쪽 아이템 추가 (ellipsis)
-        
-        
         /* 1번만 해도 되는 초기화들.. */
         // 크기에 맞게
         scrollView.updateContentSize()
@@ -81,10 +74,6 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         
         // 프로필 사진 동그랗게 -> 크기 반만큼 radius
         profileImageView.layer.cornerRadius = 25
-        
-//        // 좋아요 누른 사람 수 라벨에 대한 제스쳐 등록 -> 액션 연결
-//        let howManyLikesLabelGesture = UITapGestureRecognizer(target: self, action: #selector(showPeopleWhoLiked))
-//        labelHowManyLikes.addGestureRecognizer(howManyLikesLabelGesture)
         
         // 다른 프로필로 이동하는 제스쳐 등록 -> 액션 연결
         // 프로필 사진, 유저 핸들 모두에 등록
@@ -153,9 +142,6 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         let label = UILabel()
         label.font = UIFont(name: "Pretendard-Bold", size: 20)
         label.text = postDataResult.ownerHandle + " 님의 게시물"
-//        self.navigationItem.title = postDataResult.ownerHandle+" 님의 게시물"
-//        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 20)!]
-        
         self.navigationItem.titleView = label
         
         // 태그된 사용자, 포착한 사용자
@@ -168,9 +154,8 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
                 self.taggedUsers.text! += handle + " 님 • "
             }
         }
-        // 태그된 사용자에 프로필 이동 제스쳐 등록하기
-    //        let arr = taggedUsers.text?.split(separator: " • ")  // T를 기준으로 자름, ["2023-12-27", "19:03:32.701"]
-    //        print(arr)
+        
+        // TODO: 태그된 사용자에 프로필 이동 제스쳐 등록하기
         self.pochakUser.text = postDataResult.ownerHandle + "님이 포착"
         
         // 포스트 내용
@@ -190,11 +175,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         // 좋아요 버튼 (내가 눌렀는지 안했는지)
         self.likeButton.isSelected = postDataResult.isLike
         
-        // 좋아요 누른 사람 수
-//        self.labelHowManyLikes.text = "\(postDataResult.likeCount)명"
-        
         // 팔로잉 버튼
-        //self.isFollowing = postDataResult.isFollow
         if(self.postDataResult.isFollow == nil){
             self.followingBtn.isHidden = true
         }
@@ -242,19 +223,9 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         
         // half sheet
         if let sheet = commentVC.sheetPresentationController {
-            //지원할 크기 지정
             sheet.detents = [.medium(), .large()]
-            //크기 변하는거 감지
             sheet.delegate = self
-                   
-            //시트 상단에 그래버 표시 (기본 값은 false)
             sheet.prefersGrabberVisible = true
-                    
-            //처음 크기 지정 (기본 값은 가장 작은 크기)
-            //sheet.selectedDetentIdentifier = .large
-                    
-            //뒤 배경 흐리게 제거 (기본 값은 모든 크기에서 배경 흐리게 됨)
-            //sheet.largestUndimmedDetentIdentifier = .medium
         }
                 
         present(commentVC, animated: true)
@@ -305,29 +276,6 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
             }
         }
     }
-    
-//    @objc func showPeopleWhoLiked(sender: UITapGestureRecognizer){
-//        let storyboard = UIStoryboard(name: "PostTab", bundle: nil)
-//        let postLikesVC = storyboard.instantiateViewController(withIdentifier: "PostLikesVC") as! PostLikesViewController
-//        
-//        postLikesVC.postId = self.receivedPostId
-//        postLikesVC.postOwnerHandle = self.postDataResult.ownerHandle
-//        postLikesVC.modalPresentationStyle = .pageSheet
-//        // 좋아요 누른 사람 페이지에 포스트 아이디, 포스트 게시자 아이디 전달
-//        
-//        
-//        // half sheet
-//        if let sheet = postLikesVC.sheetPresentationController {
-//            //지원할 크기 지정
-//            sheet.detents = [.medium(), .large()]
-//            //크기 변하는거 감지
-//            sheet.delegate = self
-//            //시트 상단에 그래버 표시 (기본 값은 false)
-//            sheet.prefersGrabberVisible = true
-//        }
-//        
-//        present(postLikesVC, animated: true)
-//    }
 
     @IBAction func likeBtnTapped(_ sender: Any) {
         LikedUsersDataService.shared.postLikeRequest(receivedPostId!){(response) in
@@ -344,7 +292,6 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
                     return
                 }
                 print(self.likePostResponse.message)
-                //self.btnLike.isSelected.toggle()
                 self.loadPostDetailData()
                 
             case .requestErr(let message):
@@ -380,7 +327,6 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         let postMenuVC = storyboard.instantiateViewController(withIdentifier: "PostMenuVC") as! PostMenuViewController
         postMenuVC.setPostIdAndOwner(postId: receivedPostId!, postOwner: postOwnerHandle)
         let sheet = postMenuVC.sheetPresentationController
-        //postMenuVC.modalPresentationStyle = .pageSheet
         
         /* 메뉴 개수에 맞도록 sheet 높이 설정 */
         let label = UILabel()

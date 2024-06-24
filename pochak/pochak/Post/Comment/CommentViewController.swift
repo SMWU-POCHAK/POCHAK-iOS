@@ -78,6 +78,7 @@ class CommentViewController: UIViewController {
     
     // MARK: - Helpers
     
+    // TODO: 바깥 영역 터치 시 키보드 안 내려가는 문제 해결 필요
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
         self.tableView.endEditing(true)
@@ -236,7 +237,6 @@ class CommentViewController: UIViewController {
         let animationDuration = notification.userInfo![ UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
                 
         UIView.animate(withDuration: animationDuration) {
-                //self.CommentInputViewBottomConstraint.constant = CGFloat(34)
             self.CommentInputViewBottomConstraint.constant = 0
             self.view.layoutIfNeeded()
         }
@@ -286,8 +286,6 @@ class CommentViewController: UIViewController {
         
         // 키보드 내리기
         commentTextField.endEditing(true)
-        
-        // 뷰컨트롤러 새로고침하기(데이터 다시 받아오기)
         
         // 댓글 종류 초기화
         self.isPostingChildComment = false
@@ -361,7 +359,6 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
         let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier:
                       "CommentTableViewFooterView") as! CommentTableViewFooterView
         // footer에게 CommentViewController 전달
-        //footerView.tableView = self.tableView
         footerView.commentVC = self
         footerView.postId = self.postId
 
@@ -397,14 +394,6 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
 //        else{
 //            return 600
 //        }
-//    }
-    
-    // 이 cell이 보여질 때 어떻게 할지 -> 나중에 필요하면 작성
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        guard let tableViewCell = cell as? CommentTableViewCell else{
-//            return
-//        }
-//        tableViewCell.setCollectionViewDataSourceDelegate(dataSourceDelegate: self, forRow: indexPath.row)
 //    }
     
     // 이상한 여백 제거?

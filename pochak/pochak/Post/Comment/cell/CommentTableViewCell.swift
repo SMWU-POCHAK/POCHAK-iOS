@@ -37,31 +37,13 @@ class CommentTableViewCell: UITableViewCell {
         //loggedinUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
         loggedinUserHandle = "dxxynni"
         
-        /* commentTextView 초기화 */
-        
-//        // commentTextView의 inset 제거
-//        commentTextView.textContainerInset = .zero
-//        commentTextView.textContainer.lineFragmentPadding = 0
-//        
-//        
-////        commentTextView.delegate = (self.textView(commentTextView, shouldInteractWith: <#T##URL#>, in: <#T##NSRange#>, interaction: <#T##UITextItemInteraction#>) as! any UITextViewDelegate)
-//        
-//        // commentTextView에서 아이디 찾기
-//        commentTextView.findOutMetionedId()
-//        
-//        commentTextView.delegate = self
-        
         // 크기 반만큼 radius
         profileImageView.layer.cornerRadius = 40 / 2
         
-        // 사용자(아이디로) 멘션 기능 (댓글에서 아이디 탐지)
-        //taggedId = commentLabel.findOutMentionedId()
-        
+        // TODO: 사용자 프로필로 이동..
         // label이 터치 인식할 수 있도록 gesture recognizer 추가
         //let recognizer = UITapGestureRecognizer(target: self, action: #selector(taggedIdTapped))
         //commentLabel.addGestureRecognizer(recognizer)
-        
-        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -183,21 +165,4 @@ class CommentTableViewCell: UITableViewCell {
         }
     }
 
-}
-
-
-// MARK: - Extensions
-
-// commentTextView를 위한 delegate
-extension CommentTableViewCell: UITextViewDelegate {
-    
-    func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        
-        if let mentionTextView = textView as? MentionTextView,
-           let text = Int(url.debugDescription) {
-            print(mentionTextView.idArray[text])
-            return false
-        }
-        return false
-    }
 }

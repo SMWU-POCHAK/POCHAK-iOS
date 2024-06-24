@@ -11,19 +11,23 @@ class ReplyTableViewCell: UITableViewCell {
 
     // MARK: - Properties
     
-    @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var userHandleLabel: UILabel!
-    @IBOutlet weak var timePassedLabel: UILabel!
-    @IBOutlet weak var replyLabel: UILabel!
-    
     var loggedinUserHandle: String?
     var deleteButton = UIButton()
     var parentCommentId: Int!
     
+    // MARK: - Views
+    
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var userHandleLabel: UILabel!
+    @IBOutlet weak var timePassedLabel: UILabel!
+    @IBOutlet weak var replyLabel: UILabel!
+
     // comment view controller에서 받는 댓글 입력창
     var editingCommentTextField: UITextField!
     var tableView: UITableView!
     var commentVC: CommentViewController!
+    
+    // MARK: - Init
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,14 +35,6 @@ class ReplyTableViewCell: UITableViewCell {
         // 현재 로그인된 유저 핸들 가져오기
         loggedinUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
         
-//        // replyCommentTextView의 inset 제거
-//        replyCommentTextView.textContainerInset = .zero
-//        replyCommentTextView.textContainer.lineFragmentPadding = 0
-//        
-//        // replyCommentTextView에서 아이디 찾기
-//        replyCommentTextView.findOutMetionedId()
-//        
-//        replyCommentTextView.delegate = self
         // 이미지뷰 반만큼 radius 적용 -> 동그랗게
         profileImageView.layer.cornerRadius = 36 / 2
     }
@@ -94,22 +90,6 @@ class ReplyTableViewCell: UITableViewCell {
                 }
             }
         
-//        /* 로그인된 유저의 댓글인 경우 삭제 버튼 생성*/
-//        if(commentData.handle == "dxxynni"){
-//            self.addSubview(deleteButton)
-//            
-//            // 오토 레이아웃 설정
-//            deleteButton.translatesAutoresizingMaskIntoConstraints = false
-//            
-//            deleteButton.leadingAnchor.constraint(equalTo: self.childCommentBtn.trailingAnchor, constant: 5.0).isActive = true
-//            deleteButton.centerYAnchor.constraint(equalTo: self.childCommentBtn.centerYAnchor).isActive = true
-//            
-//            deleteButton.setTitle("삭제", for: .normal)
-//            deleteButton.setTitleColor(UIColor(named: "gray04"), for: .normal)
-//            deleteButton.backgroundColor = .clear
-//            deleteButton.titleLabel?.font = UIFont(name: "Pretendard-Medium", size: 11.0)
-//        }
-        
         // 유저 핸들
         userHandleLabel.text = commentData.handle
         
@@ -158,19 +138,3 @@ class ReplyTableViewCell: UITableViewCell {
         }
     }
 }
-
-
-// MARK: - Extensions
-// commentTextView를 위한 delegate
-//extension ReplyTableViewCell: UITextViewDelegate {
-//    
-//    func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-//        
-//        if let mentionTextView = textView as? MentionTextView,
-//           let text = Int(url.debugDescription) {
-//            print(mentionTextView.idArray[text])
-//            return false
-//        }
-//        return false
-//    }
-//}

@@ -12,8 +12,6 @@ class HomeTabViewController: UIViewController {
     
     // MARK: - Properties
     
-    @IBOutlet weak var collectionView: UICollectionView!
-    
     private var postList: [HomeDataPostList]! = []
     private var isLastPage: Bool = false
     private var currentFetchingPage: Int = 0
@@ -23,6 +21,10 @@ class HomeTabViewController: UIViewController {
     private let minimumLineSpacing: CGFloat = 9
     private let minimumInterItemSpacing: CGFloat = 8
     private var noPost: Bool = false
+    
+    // MARK: - Views
+    
+    @IBOutlet weak var collectionView: UICollectionView!
     
     // MARK: - Lifecycle
     
@@ -43,8 +45,6 @@ class HomeTabViewController: UIViewController {
         self.navigationItem.titleView = logoImageView
         
         // 네비게이션 바 줄 없애기
-        //self.navigationController?.navigationBar.shadowImage = UIImage() -> 안됨
-        // self.navigationController?.navigationBar.standardAppearance.shadowImage = UIImage() -> 안됨...
         self.navigationController?.navigationBar.standardAppearance.shadowColor = .white  // 스크롤하지 않는 상태
         self.navigationController?.navigationBar.scrollEdgeAppearance?.shadowColor = .white  // 스크롤하고 있는 상태
         
@@ -62,7 +62,7 @@ class HomeTabViewController: UIViewController {
     // MARK: - Action
 
     
-    // MARK: - Helper
+    // MARK: - Functions
     
     private func setupCollectionView() {
         collectionView.delegate = self
@@ -109,7 +109,7 @@ class HomeTabViewController: UIViewController {
 
 }
 
-// MARK: - Extensions
+// MARK: - Extensions; CollectionView
 
 extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -126,11 +126,7 @@ extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDel
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCollectionViewCell", for: indexPath) as? HomeCollectionViewCell
             else{ return UICollectionViewCell()}
             
-            //cell.prepare()
             /* 추후 수정 필요*/
-            // cell.setupData()
-            //        cell.imageView.kf.setImage(with: imageArray[indexPath.item].imgUrl)
-            //url = URL(string: imageArray[indexPath.item].imgUrl)
             DispatchQueue.global().async { [weak self] in
                 if let data = try? Data(contentsOf: URL(string: (self?.postList[indexPath.item].postImage)!)!) {
                     if let image = UIImage(data: data){
@@ -181,6 +177,9 @@ extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDel
     }
 }
 
+// MARK: - Extension; UIScrollView
+
+// TODO: 데이터 가져오는 에러 해결 필요
 extension HomeTabViewController: UIScrollViewDelegate {
     // 스크롤이 끝까지 닿았는지 판단 .. 50% 로?
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
