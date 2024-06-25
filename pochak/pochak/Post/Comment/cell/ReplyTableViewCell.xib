@@ -45,8 +45,8 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1h" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kGg-BT-6f2">
-                        <rect key="frame" x="201" y="11.999999999999998" width="16.666666666666657" height="19.333333333333329"/>
-                        <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="16"/>
+                        <rect key="frame" x="201" y="13.666666666666668" width="13.333333333333343" height="15.666666666666668"/>
+                        <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="13"/>
                         <color key="textColor" name="gray04"/>
                         <nil key="highlightedColor"/>
                     </label>

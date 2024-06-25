@@ -140,7 +140,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         
         // 내비게이션 바 타이틀 세팅
         let label = UILabel()
-        label.font = UIFont(name: "Pretendard-Bold", size: 20)
+        label.font = UIFont(name: "Pretendard-Bold", size: 18)
         label.text = postDataResult.ownerHandle + " 님의 게시물"
         self.navigationItem.titleView = label
         
