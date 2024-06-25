@@ -11,9 +11,9 @@ import Kingfisher
 class PostTabViewController: UIViewController, UISearchBarDelegate{
 
     @IBOutlet weak var collectionView: UICollectionView!
-    
-    let searchBar = UISearchBar()
-    
+        
+    @IBOutlet weak var searchBarView: UIView!
+    @IBOutlet weak var searchBar: UISearchBar!
     private var postTabDataResponse: PostTabDataResponse!
     private var postTabDataResult: PostTabDataResult!
     private var postList: [PostTabDataPostList]! = []
@@ -24,7 +24,7 @@ class PostTabViewController: UIViewController, UISearchBarDelegate{
         
         setupCollectionView()
         setUpSearchController()
-        
+        setSearchBarView()
         setupData()
    // Do any additional setup after loading the view.
     }
@@ -76,12 +76,28 @@ class PostTabViewController: UIViewController, UISearchBarDelegate{
             }
     }
     
-    private func setUpSearchController() {
-        self.searchBar.placeholder = "Search User"
+    func setUpSearchController() {
+        self.navigationController?.isNavigationBarHidden = true
         self.searchBar.delegate = self
-        self.navigationItem.titleView = searchBar
+        self.searchBar.setBackgroundColor(UIColor(named: "gray0.5"))
 
-   }
+        self.searchBar.setLeftImage(UIImage(named: "search"), tintColor: UIColor(named: "gray06"))
+        
+        if let textFieldInsideSearchBar = self.searchBar.value(forKey: "searchField") as? UITextField {
+            textFieldInsideSearchBar.textColor = UIColor.red // 원하는 색으로 변경
+            textFieldInsideSearchBar.attributedPlaceholder = NSAttributedString(
+                string: "검색어를 입력해주세요.", // 원하는 placeholder 텍스트
+                attributes: [NSAttributedString.Key.foregroundColor: UIColor(named: "gray03")] // 원하는 색으로 변경
+            )
+        }
+        searchBar.searchTextPositionAdjustment = UIOffset(horizontal: 10, vertical: 0)
+    }
+    
+    func setSearchBarView(){
+        self.searchBarView.layer.cornerRadius = 7
+        self.searchBarView.clipsToBounds = true
+    }
+    
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         // 최근 검색어 화면으로 전환
