@@ -35,6 +35,10 @@ class PostTabViewController: UIViewController, UISearchBarDelegate{
         // Clear search bar text and resign first responder when returning to this page
         self.searchBar.resignFirstResponder()
         self.navigationController?.isNavigationBarHidden = true
+        
+        // back 버튼 커스텀
+        self.navigationItem.backButtonTitle = ""
+        self.navigationController?.navigationBar.tintColor = .black
     }
 
 
