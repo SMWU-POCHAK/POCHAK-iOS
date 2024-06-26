@@ -146,9 +146,7 @@ extension ReportViewController: UITableViewDelegate, UITableViewDataSource {
         
         print("신고 사유: \(cell.reportType?.rawValue)")
         print("신고 게시물 아이디: \(postId)")
-        
-        // TODO: 신고 기능 api 연결 후 completion으로 알림창 띄우기
-        
+                
         PostDataService.shared.reportPost(postId: postId!, reportType: cell.reportType!) { [weak self] result in
             switch result {
             case .success(let data):
@@ -176,7 +174,6 @@ extension ReportViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ReportViewController: CustomAlertDelegate {
     func confirmAction() {
-        print("신고하기 완료!!")
         goBackToHome()
     }
     

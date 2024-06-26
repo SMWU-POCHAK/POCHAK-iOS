@@ -136,12 +136,10 @@ extension PostMenuViewController: UITableViewDelegate, UITableViewDataSource {
             
             // postMenuVC를 보여주고 있는 뷰컨트롤러를 찾고
             guard let parentVC = presentingViewController else { return }
-            print(parentVC)
             // postMenuVC를 dismiss 후 pvc에서 present
             dismiss(animated: true) {
                 parentVC.present(reportVC, animated: true)
             }
-            print("신고하기")
         }
         else if tableView.numberOfRows(inSection: 0) == 3 && indexPath.row == 1 {
             showAlert(alertType: .confirmAndCancel,
@@ -153,7 +151,6 @@ extension PostMenuViewController: UITableViewDelegate, UITableViewDataSource {
         }
         else {
             dismiss(animated: true)
-            print("취소하기")
         }
     }
     
@@ -164,9 +161,6 @@ extension PostMenuViewController: UITableViewDelegate, UITableViewDataSource {
 extension PostMenuViewController: CustomAlertDelegate {
     
     func confirmAction() {
-        // TODO: 게시글 삭제 api 연결 -> 화면 나가기 -> 홈으로 이동
-        print("삭제하기 선택됨")
-        //goBackToHome()
         PostDataService.shared.deletePost(postId!) { [weak self] response in
             switch(response){
             case .success(let postDeleteResponse):
@@ -197,6 +191,4 @@ extension PostMenuViewController: CustomAlertDelegate {
     func cancel() {
         print("취소하기 선택됨")
     }
-    
-    
 }
