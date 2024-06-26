@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -97,13 +97,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="실시간 인기 포스트" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pmz-HU-PyW">
-                                <rect key="frame" x="24" y="114" width="104" height="17"/>
-                                <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="14"/>
+                                <rect key="frame" x="20" y="178" width="133" height="21.666666666666657"/>
+                                <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="eIq-0Q-Vpp" userLabel="CollectionView">
-                                <rect key="frame" x="0.0" y="143" width="375" height="586"/>
+                                <rect key="frame" x="0.0" y="215.66666666666669" width="375" height="513.33333333333326"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fbe-5S-ELW">
                                     <size key="itemSize" width="128" height="128"/>
@@ -113,21 +113,45 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5l0-IY-yuB">
+                                <rect key="frame" x="20" y="106" width="335" height="48"/>
+                                <subviews>
+                                    <searchBar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFill" searchBarStyle="minimal" text="" placeholder="검색어를 입력해주세요." translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8b5-Yo-PFw">
+                                        <rect key="frame" x="0.0" y="-4" width="335" height="56"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="V7h-eB-hdn" id="jqP-hg-aSa"/>
+                                        </connections>
+                                    </searchBar>
+                                </subviews>
+                                <color key="backgroundColor" name="gray0.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="Ap3-6n-K4W"/>
+                                    <constraint firstAttribute="trailing" secondItem="8b5-Yo-PFw" secondAttribute="trailing" id="lyh-Im-dPy"/>
+                                    <constraint firstItem="8b5-Yo-PFw" firstAttribute="centerY" secondItem="5l0-IY-yuB" secondAttribute="centerY" id="ooo-V4-KQc"/>
+                                    <constraint firstItem="8b5-Yo-PFw" firstAttribute="leading" secondItem="5l0-IY-yuB" secondAttribute="leading" id="oq4-4J-zza"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Gha-Wy-mRW"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="5l0-IY-yuB" firstAttribute="leading" secondItem="Gha-Wy-mRW" secondAttribute="leading" constant="20" id="2R4-vh-g5i"/>
                             <constraint firstItem="Gha-Wy-mRW" firstAttribute="trailing" secondItem="eIq-0Q-Vpp" secondAttribute="trailing" id="FHN-oH-Zg6"/>
                             <constraint firstItem="Gha-Wy-mRW" firstAttribute="bottom" secondItem="eIq-0Q-Vpp" secondAttribute="bottom" id="FN5-g9-iOe"/>
+                            <constraint firstItem="Pmz-HU-PyW" firstAttribute="top" secondItem="5l0-IY-yuB" secondAttribute="bottom" constant="24" id="JlH-c6-mfZ"/>
                             <constraint firstItem="eIq-0Q-Vpp" firstAttribute="leading" secondItem="Gha-Wy-mRW" secondAttribute="leading" id="MDH-DH-0SP"/>
-                            <constraint firstItem="Pmz-HU-PyW" firstAttribute="top" secondItem="Gha-Wy-mRW" secondAttribute="top" constant="20" id="Q42-eg-2T9"/>
-                            <constraint firstItem="Pmz-HU-PyW" firstAttribute="leading" secondItem="Gha-Wy-mRW" secondAttribute="leading" constant="24" id="cah-KY-05H"/>
-                            <constraint firstItem="eIq-0Q-Vpp" firstAttribute="top" secondItem="Pmz-HU-PyW" secondAttribute="bottom" constant="12" id="rT3-aD-sa1"/>
+                            <constraint firstItem="5l0-IY-yuB" firstAttribute="top" secondItem="Gha-Wy-mRW" secondAttribute="top" constant="12" id="cRE-56-gfv"/>
+                            <constraint firstItem="Pmz-HU-PyW" firstAttribute="leading" secondItem="Gha-Wy-mRW" secondAttribute="leading" constant="20" id="cah-KY-05H"/>
+                            <constraint firstItem="eIq-0Q-Vpp" firstAttribute="top" secondItem="Pmz-HU-PyW" secondAttribute="bottom" constant="16" id="rT3-aD-sa1"/>
+                            <constraint firstItem="Gha-Wy-mRW" firstAttribute="trailing" secondItem="5l0-IY-yuB" secondAttribute="trailing" constant="20" id="vjq-oP-sgF"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="2xG-Ek-uMU"/>
                     <connections>
                         <outlet property="collectionView" destination="eIq-0Q-Vpp" id="7D6-zr-NDT"/>
+                        <outlet property="searchBar" destination="8b5-Yo-PFw" id="BFv-K8-CMt"/>
+                        <outlet property="searchBarView" destination="5l0-IY-yuB" id="Qem-tR-Kwg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="goF-jl-DKC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

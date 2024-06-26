@@ -54,6 +54,8 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         // 크기에 맞게
         scrollView.updateContentSize()
         
+        self.navigationController?.isNavigationBarHidden = false
+
         // 네비게이션 바 밑줄 없애기
         self.navigationController?.navigationBar.standardAppearance.shadowColor = .white  // 스크롤하지 않는 상태
         self.navigationController?.navigationBar.scrollEdgeAppearance?.shadowColor = .white  // 스크롤하고 있는 상태
