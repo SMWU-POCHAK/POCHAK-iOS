@@ -32,6 +32,7 @@ class RecentSearchViewController: UIViewController, UISearchResultsUpdating {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("==RecentSearchViewController==")
+        self.navigationController?.isNavigationBarHidden = false
         self.navigationItem.hidesBackButton = true
         setupTableView()
         setUpSearchController()
@@ -44,11 +45,24 @@ class RecentSearchViewController: UIViewController, UISearchResultsUpdating {
     
         
         searchController = UISearchController(searchResultsController: resultVC)
-        searchController.searchBar.tintColor = .black
         searchController.searchResultsUpdater  = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.searchBarStyle = UISearchBar.Style.prominent
-        searchController.searchBar.placeholder = "Search User"
+        
+        searchController.searchBar.setBackgroundColor(UIColor(named: "gray0.5"))
+
+        searchController.searchBar.setLeftImage(UIImage(named: "search"), tintColor: UIColor(named: "gray06"))
+        
+        if let textFieldInsideSearchBar = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+            textFieldInsideSearchBar.textColor = UIColor.red // 원하는 색으로 변경
+            textFieldInsideSearchBar.attributedPlaceholder = NSAttributedString(
+                string: "검색어를 입력해주세요.", // 원하는 placeholder 텍스트
+                attributes: [NSAttributedString.Key.foregroundColor: UIColor(named: "gray03")] // 원하는 색으로 변경
+            )
+        }
+        searchController.searchBar.searchTextPositionAdjustment = UIOffset(horizontal: 10, vertical: 0)
+        
+        
         // Change Cancel button value
         searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
         searchController.searchBar.autocapitalizationType = .none
