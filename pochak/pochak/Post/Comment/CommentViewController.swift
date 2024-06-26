@@ -97,42 +97,49 @@ class CommentViewController: UIViewController {
             switch(response){
             case .success(let commentDataResponse):
                 self?.commentDataResponse = commentDataResponse as? CommentDataResponse
-                self?.commentDataResult = (self?.commentDataResponse?.result)!
-                self?.parentCommentList = self?.commentDataResult?.parentCommentList  // 데이터로 넘어온 부모 댓글(+자식댓글)리스트
-
-                self?.noComment = true
-                self?.uiCommentList.removeAll()
-                //self.childCommentCntList.removeAll()
-                
-                // 댓글 존재할 때만
-                if(self?.parentCommentList?.count != 0){
-                    self?.noComment = false
-                    // 부모 댓글 자체를 부모 댓글인지의 여부가 있는 UICommentData형으로 만들어서 추가
-                    for parentData in self?.parentCommentList ?? [] {
-                        self?.uiCommentList.append(UICommentData(commentId: parentData.commentId, profileImage: parentData.profileImage, handle: parentData.handle, createdDate: parentData.createdDate, content: parentData.content, isParent: true, parentId: nil))
-                        
-                        // 부모 댓글의 자식 댓글을 리스트에 추가
-                        for childData in parentData.childCommentList {
-                            self?.uiCommentList.append(UICommentData(commentId: childData.commentId, profileImage: childData.profileImage, handle: childData.handle, createdDate: childData.createdDate, content: childData.content, isParent: false, parentId: parentData.commentId))
+                if self?.commentDataResponse?.isSuccess == true {
+                    self?.commentDataResult = (self?.commentDataResponse?.result)!
+                    self?.parentCommentList = self?.commentDataResult?.parentCommentList  // 데이터로 넘어온 부모 댓글(+자식댓글)리스트
+                    
+                    self?.noComment = true
+                    self?.uiCommentList.removeAll()
+                    //self.childCommentCntList.removeAll()
+                    
+                    // 댓글 존재할 때만
+                    if(self?.parentCommentList?.count != 0){
+                        self?.noComment = false
+                        // 부모 댓글 자체를 부모 댓글인지의 여부가 있는 UICommentData형으로 만들어서 추가
+                        for parentData in self?.parentCommentList ?? [] {
+                            self?.uiCommentList.append(UICommentData(commentId: parentData.commentId, profileImage: parentData.profileImage, handle: parentData.handle, createdDate: parentData.createdDate, content: parentData.content, isParent: true, parentId: nil))
+                            
+                            // 부모 댓글의 자식 댓글을 리스트에 추가
+                            for childData in parentData.childCommentList {
+                                self?.uiCommentList.append(UICommentData(commentId: childData.commentId, profileImage: childData.profileImage, handle: childData.handle, createdDate: childData.createdDate, content: childData.content, isParent: false, parentId: parentData.commentId))
+                            }
                         }
                     }
+                    print("=== loading comment data ===")
+                    print(self?.uiCommentList)
+                    
+                    print("=== init ui ===")
+                    self?.initUI()
+                    
+                    // title 내용 설정
+                    self?.titleLabel.text = (self?.postUserHandle ?? "사용자") + " 님의 게시물 댓글"
                 }
-                print("=== loading comment data ===")
-                print(self?.uiCommentList)
-                
-                print("=== init ui ===")
-                self?.initUI()
-                
-                // title 내용 설정
-                self?.titleLabel.text = (self?.postUserHandle ?? "사용자") + " 님의 게시물 댓글"
+                else {
+                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패했습니다."), animated: true)
+                }
             case .requestErr(let message):
                 print("requestErr", message)
             case .pathErr:
                 print("pathErr")
             case .serverErr:
-                print("serveErr")
+                print("serverErr")
+                self?.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
             case .networkFail:
                 print("networkFail")
+                self?.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
             }
         }
         
@@ -161,7 +168,6 @@ class CommentViewController: UIViewController {
     }
     
     private func setUpTableView(){
-        print("=== setting up table view ===")
         // tableView의 프로토콜
         tableView.delegate = self
         tableView.dataSource = self
@@ -187,8 +193,6 @@ class CommentViewController: UIViewController {
         
         // 댓글이 없을 때의 셀
         tableView.register(UINib(nibName: "NoCommentTableViewCell", bundle: nil), forCellReuseIdentifier: "NoCommentTableViewCell")
-        
-        print("=== tableview setup done ===")
     }
     
     public func toUICommentData(){
@@ -260,21 +264,23 @@ class CommentViewController: UIViewController {
                     self.postCommentResponse = (data as! PostCommentResponse)
                     // 만약 실패한 경우 실패했다고 알림창
                     if(self.postCommentResponse?.isSuccess == false){
-                        let alert = UIAlertController(title: "댓글 등록에 실패하였습니다.", message: "다시 시도해주세요.", preferredStyle: UIAlertController.Style.alert)
-                        let action = UIAlertAction(title: "OK", style: UIAlertAction.Style.default)
-                        alert.addAction(action)
-                        self.present(alert, animated: true)
+                        self.present(UIAlertController.networkErrorAlert(title: "댓글 등록에 실패하였습니다."), animated: true)
+                        return
                     }
-                    print("=== 새 댓글 등록, 데이터 업데이트 ===")
-                    self.loadCommentData()
+                    else {
+                        print("=== 새 댓글 등록, 데이터 업데이트 ===")
+                        self.loadCommentData()
+                    }
                 case .requestErr(let message):
                     print("requestErr", message)
                 case .pathErr:
                     print("pathErr")
                 case .serverErr:
                     print("serverErr")
+                    self.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
                 case .networkFail:
                     print("networkFail")
+                    self.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
                 }
             }
         }

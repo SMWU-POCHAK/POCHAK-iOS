@@ -84,15 +84,23 @@ class CommentTableViewCell: UITableViewCell {
             switch result {
             case .success(let data):
                 print("댓글 삭제 성공, data: \(data as! DeleteCommentResponse)")
-                self?.commentVC.loadCommentData()
+                let data = data as! DeleteCommentResponse
+                if data.isSuccess == true {
+                    self?.commentVC.loadCommentData()
+                }
+                else{
+                    self?.commentVC.present(UIAlertController.networkErrorAlert(title: "댓글 삭제에 실패하였습니다."), animated: true)
+                }
             case .requestErr(let message):
                 print("requestErr", message)
             case .pathErr:
                 print("pathErr")
             case .serverErr:
                 print("serverErr")
+                self?.commentVC.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
             case .networkFail:
                 print("networkFail")
+                self?.commentVC?.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
             }
         }
     }

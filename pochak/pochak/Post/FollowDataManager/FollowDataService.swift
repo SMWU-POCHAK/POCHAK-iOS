@@ -5,6 +5,7 @@
 //  Created by Suyeon Hwang on 1/3/24.
 //
 
+import UIKit
 import Alamofire
 
 struct FollowDataService {

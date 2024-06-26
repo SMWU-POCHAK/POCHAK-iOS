@@ -55,9 +55,9 @@ struct ChildCommentData: Codable {
 // MARK: - 대댓글 조회 Data Model
 
 struct ChildCommentDataResponse: Codable {
-    let isSuccess: Bool?
-    let code: String?
-    let message: String?
+    let isSuccess: Bool
+    let code: String
+    let message: String
     var result: ChildCommentDataResult
 }
 

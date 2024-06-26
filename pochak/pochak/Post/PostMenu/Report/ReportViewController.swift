@@ -111,13 +111,6 @@ class ReportViewController: UIViewController {
         }
     }
     
-    private func failAlert(_ title: String){
-        let alert = UIAlertController(title: title, message: "다시 시도해주세요.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
-            self.dismiss(animated: true)
-        }))
-    }
-    
     func setPostId(_ postId: Int){
         self.postId = postId
     }
@@ -150,22 +143,29 @@ extension ReportViewController: UITableViewDelegate, UITableViewDataSource {
         PostDataService.shared.reportPost(postId: postId!, reportType: cell.reportType!) { [weak self] result in
             switch result {
             case .success(let data):
-                print(data as! PostReportResponse)
-                self?.showAlert(alertType: .confirmOnly,
-                          titleText: "신고가 완료되었습니다.",
-                          messageText: "신고해주셔서 감사합니다.\n빠른 시일 내에 해결하겠습니다.",
-                          confirmButtonText: "확인")
-                
+                let data = data as! PostReportResponse
+                print(data)
+                if data.isSuccess == true {
+                    self?.showAlert(alertType: .confirmOnly,
+                                    titleText: "신고가 완료되었습니다.",
+                                    messageText: "신고해주셔서 감사합니다.\n빠른 시일 내에 해결하겠습니다.",
+                                    confirmButtonText: "확인"
+                                    )
+                }
+                else{
+                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패했습니다."), animated: true)
+                }
+                return
             case .requestErr(let message):
                 print("requestErr", message)
             case .pathErr:
                 print("pathErr")
             case .serverErr:
                 print("serverErr")
-                self?.failAlert("서버에 문제가 있습니다.")
+                self?.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
             case .networkFail:
                 print("networkFail")
-                self?.failAlert("네트워크 연결에 문제가 있습니다.")
+                self?.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
             }
         }
     }
