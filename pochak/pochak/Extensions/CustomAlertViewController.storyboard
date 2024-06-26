@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Pretendard-Bold.ttf">
+            <string>Pretendard-Bold</string>
+        </array>
+        <array key="Pretendard-Medium.ttf">
+            <string>Pretendard-Medium</string>
+        </array>
+        <array key="Pretendard-Regular.ttf">
+            <string>Pretendard-Regular</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Custom Alert View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="CustomAlertViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="CustomAlertViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dtF-lG-Cz3">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <subviews>
+                                    <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="qWx-OF-1mT">
+                                        <rect key="frame" x="61.666666666666657" y="339" width="270" height="174"/>
+                                        <subviews>
+                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bkz-CV-z9X">
+                                                <rect key="frame" x="0.0" y="0.0" width="270" height="128"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="mYC-7I-bUa">
+                                                        <rect key="frame" x="106.6666666666667" y="28" width="56.666666666666671" height="82"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ow8-Av-cXB">
+                                                                <rect key="frame" x="11.666666666666657" y="0.0" width="33.333333333333336" height="33.333333333333336"/>
+                                                                <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="18"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8UP-jJ-7ms">
+                                                                <rect key="frame" x="0.0" y="48.333333333333314" width="56.666666666666664" height="33.666666666666657"/>
+                                                                <string key="text">message
+message</string>
+                                                                <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="14"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstItem="mYC-7I-bUa" firstAttribute="top" secondItem="Bkz-CV-z9X" secondAttribute="top" constant="28" id="4Sf-su-3pA"/>
+                                                    <constraint firstItem="mYC-7I-bUa" firstAttribute="centerX" secondItem="Bkz-CV-z9X" secondAttribute="centerX" id="SF0-vl-O6B"/>
+                                                    <constraint firstAttribute="bottom" secondItem="mYC-7I-bUa" secondAttribute="bottom" constant="18" id="Ufd-23-Jsb"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q2V-mn-Py8">
+                                                <rect key="frame" x="0.0" y="128" width="270" height="1"/>
+                                                <color key="backgroundColor" name="gray01"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="z3c-ED-3ZF"/>
+                                                </constraints>
+                                            </view>
+                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RmN-8r-t3u">
+                                                <rect key="frame" x="0.0" y="129" width="270" height="45"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bQi-mP-r0U">
+                                                        <rect key="frame" x="0.0" y="0.0" width="134.33333333333334" height="45"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="134.5" id="x5H-pH-h7F"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="16"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" title="cancel">
+                                                            <color key="titleColor" name="gray05"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="cancelButtonDidTap:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="cMO-RT-LPV"/>
+                                                        </connections>
+                                                    </button>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ssn-K3-Vw6">
+                                                        <rect key="frame" x="134.33333333333334" y="0.0" width="1" height="45"/>
+                                                        <color key="backgroundColor" name="gray01"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="45" id="c3z-Ka-Zkb"/>
+                                                            <constraint firstAttribute="width" constant="1" id="oMF-Gs-NFf"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wVp-5s-N08">
+                                                        <rect key="frame" x="135.33333333333337" y="0.0" width="134.66666666666663" height="45"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="134.5" id="tjL-NB-LWk"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="16"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" title="confirm">
+                                                            <color key="titleColor" red="1" green="0.72156862749999995" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="confirmButtonDidTap:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="dNe-gK-feK"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="45" id="rhy-wh-mae"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="270" id="aiH-uD-cWd"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="qWx-OF-1mT" firstAttribute="centerY" secondItem="dtF-lG-Cz3" secondAttribute="centerY" id="MTt-QB-H5T"/>
+                                    <constraint firstItem="qWx-OF-1mT" firstAttribute="centerX" secondItem="dtF-lG-Cz3" secondAttribute="centerX" id="Y1e-rE-pWh"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="dtF-lG-Cz3" secondAttribute="bottom" id="348-sA-gam"/>
+                            <constraint firstItem="dtF-lG-Cz3" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="Auj-Fx-pH3"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="dtF-lG-Cz3" secondAttribute="trailing" id="b2e-ur-LRo"/>
+                            <constraint firstItem="dtF-lG-Cz3" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="zWl-5X-m4V"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="buttonBorderLineView" destination="ssn-K3-Vw6" id="0hp-OE-icG"/>
+                        <outlet property="buttonStackView" destination="RmN-8r-t3u" id="nxu-UL-hro"/>
+                        <outlet property="cancelButton" destination="bQi-mP-r0U" id="mUS-U7-fJm"/>
+                        <outlet property="confirmButton" destination="wVp-5s-N08" id="Ybt-TO-spO"/>
+                        <outlet property="confirmButtonWidthAnchor" destination="tjL-NB-LWk" id="w17-fk-WYG"/>
+                        <outlet property="messageLabel" destination="8UP-jJ-7ms" id="nIq-mp-xPZ"/>
+                        <outlet property="titleLabel" destination="ow8-Av-cXB" id="bTc-3Z-rQk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="110.68702290076335" y="3.5211267605633805"/>
+        </scene>
+    </scenes>
+    <resources>
+        <namedColor name="gray01">
+            <color red="0.9137254901960784" green="0.92549019607843142" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="gray05">
+            <color red="0.42352941176470588" green="0.45882352941176469" blue="0.49019607843137253" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
