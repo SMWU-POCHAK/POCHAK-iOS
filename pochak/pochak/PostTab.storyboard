@@ -100,7 +100,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="실시간 인기 포스트" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pmz-HU-PyW">
-                                <rect key="frame" x="24" y="178" width="133" height="21.666666666666657"/>
+                                <rect key="frame" x="20" y="178" width="133" height="21.666666666666657"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -145,7 +145,7 @@
                             <constraint firstItem="Pmz-HU-PyW" firstAttribute="top" secondItem="5l0-IY-yuB" secondAttribute="bottom" constant="24" id="JlH-c6-mfZ"/>
                             <constraint firstItem="eIq-0Q-Vpp" firstAttribute="leading" secondItem="Gha-Wy-mRW" secondAttribute="leading" id="MDH-DH-0SP"/>
                             <constraint firstItem="5l0-IY-yuB" firstAttribute="top" secondItem="Gha-Wy-mRW" secondAttribute="top" constant="12" id="cRE-56-gfv"/>
-                            <constraint firstItem="Pmz-HU-PyW" firstAttribute="leading" secondItem="Gha-Wy-mRW" secondAttribute="leading" constant="24" id="cah-KY-05H"/>
+                            <constraint firstItem="Pmz-HU-PyW" firstAttribute="leading" secondItem="Gha-Wy-mRW" secondAttribute="leading" constant="20" id="cah-KY-05H"/>
                             <constraint firstItem="eIq-0Q-Vpp" firstAttribute="top" secondItem="Pmz-HU-PyW" secondAttribute="bottom" constant="16" id="rT3-aD-sa1"/>
                             <constraint firstItem="Gha-Wy-mRW" firstAttribute="trailing" secondItem="5l0-IY-yuB" secondAttribute="trailing" constant="20" id="vjq-oP-sgF"/>
                         </constraints>
