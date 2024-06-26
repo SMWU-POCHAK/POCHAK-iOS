@@ -145,18 +145,17 @@ struct CommentDataService {
     
     /// 댓글 삭제하기
     /// - Parameters:
-    ///   - postId: <#postId description#>
-    ///   - commentUploadedTime: <#commentUploadedTime description#>
-    ///   - parentCommentUploadedTime: <#parentCommentUploadedTime description#>
-    ///   - completion: <#completion description#>
-    func deleteComment(_ postId: String, _ commentUploadedTime: String, _ parentCommentUploadedTime: String?, completion: @escaping (NetworkResult<Any>) -> Void){
+    ///   - postId: 삭제하려는 댓글이 달린 게시글 아이디
+    ///   - commentId: 삭제하려는 댓글 아이디
+    ///   - completion: 댓글 삭제 후 핸들러
+    func deleteComment(postId: Int, commentId: Int, completion: @escaping (NetworkResult<Any>) -> Void){
+        let parameters: Parameters = ["commentId" : commentId]
         
-        let dataRequest = AF.request(APIConstants.baseURL+"/api/v1/post/"+postId+"/comment",
+        let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/posts/\(postId)/comments",
                                     method: .delete,
-                                    parameters: makeDeleteCommentBodyParameter(commentUploadedTime: commentUploadedTime, parentCommentUploadedTime: parentCommentUploadedTime),
-                                    encoding: JSONEncoding.default,
+                                    parameters: parameters,
                                     headers: header)
-        
+
         dataRequest.responseData { dataResponse in
             switch dataResponse.result{
             case .success:

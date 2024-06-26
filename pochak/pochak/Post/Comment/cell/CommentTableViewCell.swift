@@ -24,6 +24,7 @@ class CommentTableViewCell: UITableViewCell {
     var loggedinUserHandle: String?
     var commentVC: CommentViewController!
     var commentId: Int!
+    var postId: Int!
     
     // comment view controller에서 받는 댓글 입력창
     var editingCommentTextField: UITextField!
@@ -31,7 +32,8 @@ class CommentTableViewCell: UITableViewCell {
     
     let seeChildCommentBtn = UIButton()
     
-    // MARK: - Action
+    // MARK: - Init
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -78,7 +80,29 @@ class CommentTableViewCell: UITableViewCell {
     }
     
     @IBAction func deleteButtonDidTap(){
-        print("댓글 삭제!")
+        CommentDataService.shared.deleteComment(postId: self.postId, commentId: self.commentId) { [weak self] result in
+            switch result {
+            case .success(let data):
+                print("댓글 삭제 성공, data: \(data as! DeleteCommentResponse)")
+                let data = data as! DeleteCommentResponse
+                if data.isSuccess == true {
+                    self?.commentVC.loadCommentData()
+                }
+                else{
+                    self?.commentVC.present(UIAlertController.networkErrorAlert(title: "댓글 삭제에 실패하였습니다."), animated: true)
+                }
+            case .requestErr(let message):
+                print("requestErr", message)
+            case .pathErr:
+                print("pathErr")
+            case .serverErr:
+                print("serverErr")
+                self?.commentVC.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
+            case .networkFail:
+                print("networkFail")
+                self?.commentVC?.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
+            }
+        }
     }
     
     // MARK: - Helpers

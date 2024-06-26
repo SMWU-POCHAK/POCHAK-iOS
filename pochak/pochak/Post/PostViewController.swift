@@ -9,7 +9,7 @@ import UIKit
 
 class PostViewController: UIViewController, UISheetPresentationControllerDelegate {
     
-    // MARK: - Properties
+    // MARK: - Views
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -27,8 +27,9 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     @IBOutlet weak var commentContentLabel: UILabel!
     @IBOutlet weak var moreCommentButton: UIButton!
     
+    // MARK: - Properties
+    
     var receivedPostId: Int?
-    //var currentPostId: Int!//= "POST%23eb472472-97ea-40ab-97e7-c5fdf57136a0"
     var postOwnerHandle: String = ""  // 나중에 여기저기에서 사용할 수 있도록.. 미리 게시자 아이디 저장
     
     let pullDownMenuBtn = UIButton()
@@ -45,6 +46,8 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     
     private var deletePostResponse: PostDeleteResponse!
     
+    private let postStoryBoard = UIStoryboard(name: "PostTab", bundle: nil)
+    
     // MARK: - lifecycle
     
     override func viewDidLoad() {
@@ -54,25 +57,8 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         // 크기에 맞게
         scrollView.updateContentSize()
         
+        setupNavigationBar()
         self.navigationController?.isNavigationBarHidden = false
-
-        // 네비게이션 바 밑줄 없애기
-        self.navigationController?.navigationBar.standardAppearance.shadowColor = .white  // 스크롤하지 않는 상태
-        self.navigationController?.navigationBar.scrollEdgeAppearance?.shadowColor = .white  // 스크롤하고 있는 상태
-
-        // back button 커스텀
-        self.navigationController?.navigationBar.topItem?.backButtonTitle = ""
-        self.navigationController?.navigationBar.tintColor = .black
-        let backbutton = UIBarButtonItem(image: UIImage(named: "ChevronLeft"), style: .done, target: self, action: #selector(goBack))
-        self.navigationItem.leftBarButtonItem = backbutton
-
-        // left bar button을 추가하면 기존에 되던 스와이프 pop 기능이 해제됨
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
-        
-        // bar button item 추가 (신고하기 메뉴 등)
-        let barButton = UIBarButtonItem(image: UIImage(named: "MoreIcon"), style: .plain, target: self, action: #selector(moreActionButtonDidTap))
-        self.navigationItem.rightBarButtonItem = barButton
         
         // 프로필 사진 동그랗게 -> 크기 반만큼 radius
         profileImageView.layer.cornerRadius = 25
@@ -98,8 +84,6 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
             // receivedData를 사용하여 원하는 작업을 수행합니다.
             // 예를 들어, 데이터를 표시하거나 다른 로직에 활용할 수 있습니다.
             print("Received Data: \(data)")
-            //currentPostId = data
-            //currentPostId = 2  // 임시로 2로 저장
         } else {
             print("No data received.")
         }
@@ -107,7 +91,27 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         loadPostDetailData()
     }
     
-    // MARK: - Helpers
+    // MARK: - Functions
+    
+    private func setupNavigationBar(){
+        // 네비게이션 바 밑줄 없애기
+        self.navigationController?.navigationBar.standardAppearance.shadowColor = .white  // 스크롤하지 않는 상태
+        self.navigationController?.navigationBar.scrollEdgeAppearance?.shadowColor = .white  // 스크롤하고 있는 상태
+
+        // back button 커스텀
+        self.navigationController?.navigationBar.topItem?.backButtonTitle = ""
+        self.navigationController?.navigationBar.tintColor = .black
+        let backbutton = UIBarButtonItem(image: UIImage(named: "ChevronLeft"), style: .done, target: self, action: #selector(goBack))
+        self.navigationItem.leftBarButtonItem = backbutton
+
+        // left bar button을 추가하면 기존에 되던 스와이프 pop 기능이 해제됨
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
+        // bar button item 추가 (신고하기 메뉴 등)
+        let barButton = UIBarButtonItem(image: UIImage(named: "MoreIcon"), style: .plain, target: self, action: #selector(moreActionButtonDidTap))
+        self.navigationItem.rightBarButtonItem = barButton
+    }
     
     private func initUI(){
         // 크키에 맞게
@@ -188,9 +192,9 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         }
     }
     
+    /// 게시글 상세 데이터 조회하기
     func loadPostDetailData(){
         PostDataService.shared.getPostDetail(receivedPostId!) { (response) in
-            // NetworkResult형 enum으로 분기 처리
             switch(response){
             case .success(let postData):
                 self.postDataResponse = postData as? PostDataResponse
@@ -203,8 +207,10 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
                 print("pathErr")
             case .serverErr:
                 print("serverErr")
+                self.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
             case .networkFail:
                 print("networkFail")
+                self.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
             }
         }
     }
@@ -216,8 +222,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     }
     
     private func showCommentVC() {
-        let storyboard = UIStoryboard(name: "PostTab", bundle: nil)
-        let commentVC = storyboard.instantiateViewController(withIdentifier: "CommentVC") as! CommentViewController
+        let commentVC = postStoryBoard.instantiateViewController(withIdentifier: "CommentVC") as! CommentViewController
         
         commentVC.modalPresentationStyle = .pageSheet
         commentVC.postId = receivedPostId
@@ -260,10 +265,8 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
             case .success(let followData):
                 self.followPostResponse = followData as? FollowDataResponse
                 if(!self.followPostResponse.isSuccess){
-                    let alert = UIAlertController(title: "요청에 실패하였습니다.", message: "다시 시도해주세요.", preferredStyle: UIAlertController.Style.alert)
-                    let action = UIAlertAction(title: "OK", style: UIAlertAction.Style.default)
-                    alert.addAction(action)
-                    self.present(alert, animated: true)
+                    self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                    return
                 }
                 // 바뀐 데이터 반영 위해 다시 포스트 상세 데이터 로드
                 self.loadPostDetailData()
@@ -273,8 +276,10 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
                 print("pathErr")
             case .serverErr:
                 print("serverErr")
+                self.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
             case .networkFail:
                 print("networkFail")
+                self.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
             }
         }
     }
@@ -285,12 +290,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
             case .success(let likePostResponse):
                 self.likePostResponse = likePostResponse as? LikePostDataResponse
                 if(!self.likePostResponse.isSuccess!){
-                    // 인스턴스 생성
-                    let alert = UIAlertController(title: "알림", message: "좋아요가 반영되지 못했습니다.", preferredStyle: .alert)
-                    let action = UIAlertAction(title: "OK", style: UIAlertAction.Style.default)
-                    alert.addAction(action)
-                    self.present(alert, animated: true)
-                    print(self.likePostResponse.message)
+                    self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
                     return
                 }
                 print(self.likePostResponse.message)
@@ -302,8 +302,10 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
                 print("pathErr")
             case .serverErr:
                 print("serverErr")
+                self.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
             case .networkFail:
                 print("networkFail")
+                self.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
             }
         }
     }
@@ -325,8 +327,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     }
     
     @objc func moreActionButtonDidTap(){
-        let storyboard = UIStoryboard(name: "PostTab", bundle: nil)
-        let postMenuVC = storyboard.instantiateViewController(withIdentifier: "PostMenuVC") as! PostMenuViewController
+        let postMenuVC = postStoryBoard.instantiateViewController(withIdentifier: "PostMenuVC") as! PostMenuViewController
         postMenuVC.setPostIdAndOwner(postId: receivedPostId!, postOwner: postOwnerHandle)
         let sheet = postMenuVC.sheetPresentationController
         
