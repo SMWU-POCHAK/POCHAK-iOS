@@ -90,7 +90,7 @@ class CommentViewController: UIViewController {
         tableView.keyboardDismissMode = .onDrag
     }
     
-    private func loadCommentData(){
+    func loadCommentData(){
         print("postid: \(postId)")
         CommentDataService.shared.getComments(postId!, page: 0) { [weak self] (response) in
             // NetworkResult형 enum으로 분기 처리
@@ -337,6 +337,7 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
             cell.editingCommentTextField = self.commentTextField
             cell.tableView = self.tableView
             cell.commentVC = self
+            cell.postId = self.postId
             cell.setupData(cellData[finalIndex])
             return cell
         }
