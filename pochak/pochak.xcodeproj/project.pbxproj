@@ -125,7 +125,6 @@
 		EA1B0B722A49D23B00F86FBC /* pochakTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1B0B712A49D23B00F86FBC /* pochakTests.swift */; };
 		EA1B0B7C2A49D23B00F86FBC /* pochakUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1B0B7B2A49D23B00F86FBC /* pochakUITests.swift */; };
 		EA1B0B7E2A49D23B00F86FBC /* pochakUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1B0B7D2A49D23B00F86FBC /* pochakUITestsLaunchTests.swift */; };
-		EA6306CD2C28320F000DB0A7 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6306CC2C28320F000DB0A7 /* CustomTabBar.swift */; };
 		EA6306D52C2ADBC7000DB0A7 /* UISearchBar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6306D42C2ADBC7000DB0A7 /* UISearchBar+Extension.swift */; };
 		EA7EE1D82BF38921009486CC /* PochakAlarmCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7EE1D62BF38921009486CC /* PochakAlarmCollectionViewCell.swift */; };
 		EA7EE1D92BF38921009486CC /* PochakAlarmCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA7EE1D72BF38921009486CC /* PochakAlarmCollectionViewCell.xib */; };
@@ -149,7 +148,6 @@
 		EAFB4B872A5147A300E0F2FA /* ProfileTab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAFB4B862A5147A300E0F2FA /* ProfileTab.storyboard */; };
 		EAFB4B892A5147B400E0F2FA /* PostTab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAFB4B882A5147B400E0F2FA /* PostTab.storyboard */; };
 		EAFB4B8B2A5147C400E0F2FA /* AlarmTab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAFB4B8A2A5147C400E0F2FA /* AlarmTab.storyboard */; };
-		EAFB4B8F2A514B2600E0F2FA /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFB4B8E2A514B2600E0F2FA /* TabbarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -297,7 +295,6 @@
 		EA1B0B772A49D23B00F86FBC /* pochakUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pochakUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA1B0B7B2A49D23B00F86FBC /* pochakUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pochakUITests.swift; sourceTree = "<group>"; };
 		EA1B0B7D2A49D23B00F86FBC /* pochakUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pochakUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		EA6306CC2C28320F000DB0A7 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		EA6306D42C2ADBC7000DB0A7 /* UISearchBar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Extension.swift"; sourceTree = "<group>"; };
 		EA7EE1D62BF38921009486CC /* PochakAlarmCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakAlarmCollectionViewCell.swift; sourceTree = "<group>"; };
 		EA7EE1D72BF38921009486CC /* PochakAlarmCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PochakAlarmCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -321,7 +318,6 @@
 		EAFB4B862A5147A300E0F2FA /* ProfileTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfileTab.storyboard; sourceTree = "<group>"; };
 		EAFB4B882A5147B400E0F2FA /* PostTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PostTab.storyboard; sourceTree = "<group>"; };
 		EAFB4B8A2A5147C400E0F2FA /* AlarmTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AlarmTab.storyboard; sourceTree = "<group>"; };
-		EAFB4B8E2A514B2600E0F2FA /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
 		F9A6AE07B1A942C2FFC48F28 /* Pods-pochak-pochakUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pochak-pochakUITests.release.xcconfig"; path = "Target Support Files/Pods-pochak-pochakUITests/Pods-pochak-pochakUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -778,7 +774,6 @@
 		EA1B0B592A49D23A00F86FBC /* pochak */ = {
 			isa = PBXGroup;
 			children = (
-				EA6306CB2C2831ED000DB0A7 /* Tabbar */,
 				08C02EF32BF3942300627C21 /* Extensions */,
 				3769D6B72B3C342900294CD1 /* Profile */,
 				EAF918522AA468FF0037C270 /* Network */,
@@ -833,15 +828,6 @@
 				EA12890B2B3BF1A7002EC93E /* RecentSearchViewController.swift */,
 			);
 			path = Search;
-			sourceTree = "<group>";
-		};
-		EA6306CB2C2831ED000DB0A7 /* Tabbar */ = {
-			isa = PBXGroup;
-			children = (
-				EAFB4B8E2A514B2600E0F2FA /* TabbarController.swift */,
-				EA6306CC2C28320F000DB0A7 /* CustomTabBar.swift */,
-			);
-			path = Tabbar;
 			sourceTree = "<group>";
 		};
 		EA817AB42B3C979D00E741E4 /* cell */ = {
@@ -1224,8 +1210,6 @@
 				3769D6B62B3C302C00294CD1 /* JoinDataModel.swift in Sources */,
 				084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */,
 				37C3AF4A2B3CB2C700B4C79C /* MyProfilePochakPostModel.swift in Sources */,
-				EA6306CD2C28320F000DB0A7 /* CustomTabBar.swift in Sources */,
-				EAFB4B8F2A514B2600E0F2FA /* TabbarController.swift in Sources */,
 				08C02EF82BF394B800627C21 /* UIAlertController+.swift in Sources */,
 				EAF9184E2AA462C50037C270 /* SearchResultTableViewCell.swift in Sources */,
 				EA12890A2B3B2836002EC93E /* AlarmDataService.swift in Sources */,
