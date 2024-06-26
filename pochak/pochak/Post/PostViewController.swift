@@ -8,20 +8,24 @@
 import UIKit
 
 class PostViewController: UIViewController, UISheetPresentationControllerDelegate {
-    // MARK: - properties
+    
+    // MARK: - Properties
+    
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var btnLike: UIButton!
+    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var commentButton: UIButton!
     @IBOutlet weak var followingBtn: UIButton!
-    @IBOutlet weak var labelHowManyLikes: UILabel!
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var postOwnerHandleLabel: UILabel!
     @IBOutlet weak var postContent: UILabel!
-    @IBOutlet weak var mainCommentHandle: UILabel!
-    @IBOutlet weak var mainCommentContent: UILabel!
     @IBOutlet weak var taggedUsers: UILabel!
     @IBOutlet weak var pochakUser: UILabel!
-    @IBOutlet weak var moreCommentsBtn: UIButton!
+    
+    @IBOutlet weak var borderLineView: UIView!
+    @IBOutlet weak var commentUserHandleLabel: UILabel!
+    @IBOutlet weak var commentContentLabel: UILabel!
+    @IBOutlet weak var moreCommentButton: UIButton!
     
     var receivedPostId: Int?
     //var currentPostId: Int!//= "POST%23eb472472-97ea-40ab-97e7-c5fdf57136a0"
@@ -42,15 +46,9 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     private var deletePostResponse: PostDeleteResponse!
     
     // MARK: - lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // 로그인된 유저가 게시글의 소유자인 경우에만 실행하도록 고치기
-        //let loggedinUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
-        //if(loggedinUserHandle == postOwnerHandle){
-//            setupPullDownMenu()
-        // 내비게이션 바에 오른쪽 아이템 추가 (ellipsis)
-        
         
         /* 1번만 해도 되는 초기화들.. */
         // 크기에 맞게
@@ -63,17 +61,19 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         // back button 커스텀
         self.navigationController?.navigationBar.topItem?.backButtonTitle = ""
         self.navigationController?.navigationBar.tintColor = .black
+        let backbutton = UIBarButtonItem(image: UIImage(named: "ChevronLeft"), style: .done, target: self, action: #selector(goBack))
+        self.navigationItem.leftBarButtonItem = backbutton
+
+        // left bar button을 추가하면 기존에 되던 스와이프 pop 기능이 해제됨
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
         
         // bar button item 추가 (신고하기 메뉴 등)
-        let barButton = UIBarButtonItem(image: UIImage(systemName:  "ellipsis"), style: .plain, target: self, action: #selector(moreActionButtonDidTap))
+        let barButton = UIBarButtonItem(image: UIImage(named: "MoreIcon"), style: .plain, target: self, action: #selector(moreActionButtonDidTap))
         self.navigationItem.rightBarButtonItem = barButton
         
         // 프로필 사진 동그랗게 -> 크기 반만큼 radius
         profileImageView.layer.cornerRadius = 25
-        
-        // 좋아요 누른 사람 수 라벨에 대한 제스쳐 등록 -> 액션 연결
-        let howManyLikesLabelGesture = UITapGestureRecognizer(target: self, action: #selector(showPeopleWhoLiked))
-        labelHowManyLikes.addGestureRecognizer(howManyLikesLabelGesture)
         
         // 다른 프로필로 이동하는 제스쳐 등록 -> 액션 연결
         // 프로필 사진, 유저 핸들 모두에 등록
@@ -104,7 +104,9 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         
         loadPostDetailData()
     }
+    
     // MARK: - Helpers
+    
     private func initUI(){
         // 크키에 맞게
 //        scrollView.updateContentSize()
@@ -137,8 +139,10 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         }
         
         // 내비게이션 바 타이틀 세팅
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-bold", size: 20)!]
-        self.navigationItem.title = postDataResult.ownerHandle+" 님의 게시물"
+        let label = UILabel()
+        label.font = UIFont(name: "Pretendard-Bold", size: 18)
+        label.text = postDataResult.ownerHandle + " 님의 게시물"
+        self.navigationItem.titleView = label
         
         // 태그된 사용자, 포착한 사용자
         self.taggedUsers.text = ""
@@ -150,35 +154,28 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
                 self.taggedUsers.text! += handle + " 님 • "
             }
         }
-        // 태그된 사용자에 프로필 이동 제스쳐 등록하기
-    //        let arr = taggedUsers.text?.split(separator: " • ")  // T를 기준으로 자름, ["2023-12-27", "19:03:32.701"]
-    //        print(arr)
-        self.pochakUser.text = postDataResult.ownerHandle + " 님이 포착"
+        
+        // TODO: 태그된 사용자에 프로필 이동 제스쳐 등록하기
+        self.pochakUser.text = postDataResult.ownerHandle + "님이 포착"
         
         // 포스트 내용
         self.postOwnerHandleLabel.text = postDataResult.ownerHandle
         self.postContent.text = postDataResult.caption
         
         
-        // 댓글 미리보기
-        // 등록된 댓글이 없으면 없다는 내용 띄우고 댓글 더보기 버튼 삭제??
+        // 댓글 미리보기 -> 있으면 보여주기
         if(postDataResult.recentComment == nil){
-            self.mainCommentHandle.text = nil
-            self.mainCommentContent.text = "아직 등록된 댓글이 없습니다."
+            self.hideCommentViews(isHidden: true)
         }
         else{
-            self.mainCommentHandle.text = postDataResult.recentComment?.handle
-            self.mainCommentContent.text = postDataResult.recentComment?.content
+            self.hideCommentViews(isHidden: false)
+            self.setCommentViewContents()
         }
         
         // 좋아요 버튼 (내가 눌렀는지 안했는지)
-        self.btnLike.isSelected = postDataResult.isLike
-        
-        // 좋아요 누른 사람 수
-        self.labelHowManyLikes.text = "\(postDataResult.likeCount)명"
+        self.likeButton.isSelected = postDataResult.isLike
         
         // 팔로잉 버튼
-        //self.isFollowing = postDataResult.isFollow
         if(self.postDataResult.isFollow == nil){
             self.followingBtn.isHidden = true
         }
@@ -215,9 +212,47 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         
         return moveToOthersProfile
     }
+    
+    private func showCommentVC() {
+        let storyboard = UIStoryboard(name: "PostTab", bundle: nil)
+        let commentVC = storyboard.instantiateViewController(withIdentifier: "CommentVC") as! CommentViewController
+        
+        commentVC.modalPresentationStyle = .pageSheet
+        commentVC.postId = receivedPostId
+        commentVC.postUserHandle = postDataResult.ownerHandle
+        
+        // half sheet
+        if let sheet = commentVC.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.delegate = self
+            sheet.prefersGrabberVisible = true
+        }
+                
+        present(commentVC, animated: true)
+    }
+    
+    /// 댓글이 없을 때는 댓글 관련 뷰를 보여주면 안되므로 + 댓글 버튼의 이미지는 비활성 이미지로
+    private func hideCommentViews(isHidden: Bool) {
+        borderLineView.isHidden = isHidden
+        commentUserHandleLabel.isHidden = isHidden
+        commentContentLabel.isHidden = isHidden
+        moreCommentButton.isHidden = isHidden
+        moreCommentButton.isUserInteractionEnabled = !isHidden
+        
+        // 댓글이 있으면 -> 댓글 버튼 활성화 이미지로 변경
+        if !isHidden {
+            commentButton.setImage(UIImage(named: "CommentFilledIcon"), for: .normal)
+        }
+    }
+    
+    private func setCommentViewContents() {
+        commentUserHandleLabel.text = postDataResult.recentComment?.handle
+        commentContentLabel.text = postDataResult.recentComment?.content
+    }
        
     // MARK: - Actions
-    @IBAction func followinBtnTapped(_ sender: Any) {
+    
+    @IBAction func followingBtnTapped(_ sender: Any) {
         FollowDataService.shared.postFollow(postOwnerHandle) { response in
             switch(response) {
             case .success(let followData):
@@ -241,57 +276,6 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
             }
         }
     }
-    
-    @objc func showPeopleWhoLiked(sender: UITapGestureRecognizer){
-        let storyboard = UIStoryboard(name: "PostTab", bundle: nil)
-        let postLikesVC = storyboard.instantiateViewController(withIdentifier: "PostLikesVC") as! PostLikesViewController
-        
-        postLikesVC.postId = self.receivedPostId
-        postLikesVC.postOwnerHandle = self.postDataResult.ownerHandle
-        postLikesVC.modalPresentationStyle = .pageSheet
-        // 좋아요 누른 사람 페이지에 포스트 아이디, 포스트 게시자 아이디 전달
-        
-        
-        // half sheet
-        if let sheet = postLikesVC.sheetPresentationController {
-            //지원할 크기 지정
-            sheet.detents = [.medium(), .large()]
-            //크기 변하는거 감지
-            sheet.delegate = self
-            //시트 상단에 그래버 표시 (기본 값은 false)
-            sheet.prefersGrabberVisible = true
-        }
-        
-        present(postLikesVC, animated: true)
-    }
-    
-    @IBAction func moreCommentsBtnTapped(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "PostTab", bundle: nil)
-        let commentVC = storyboard.instantiateViewController(withIdentifier: "CommentVC") as! CommentViewController
-        
-        commentVC.modalPresentationStyle = .pageSheet
-        commentVC.postId = receivedPostId
-        commentVC.postUserHandle = postDataResult.ownerHandle
-        
-        // half sheet
-        if let sheet = commentVC.sheetPresentationController {
-            //지원할 크기 지정
-            sheet.detents = [.medium(), .large()]
-            //크기 변하는거 감지
-            sheet.delegate = self
-                   
-            //시트 상단에 그래버 표시 (기본 값은 false)
-            sheet.prefersGrabberVisible = true
-                    
-            //처음 크기 지정 (기본 값은 가장 작은 크기)
-            //sheet.selectedDetentIdentifier = .large
-                    
-            //뒤 배경 흐리게 제거 (기본 값은 모든 크기에서 배경 흐리게 됨)
-            //sheet.largestUndimmedDetentIdentifier = .medium
-        }
-                
-        present(commentVC, animated: true)
-    }
 
     @IBAction func likeBtnTapped(_ sender: Any) {
         LikedUsersDataService.shared.postLikeRequest(receivedPostId!){(response) in
@@ -308,7 +292,6 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
                     return
                 }
                 print(self.likePostResponse.message)
-                //self.btnLike.isSelected.toggle()
                 self.loadPostDetailData()
                 
             case .requestErr(let message):
@@ -344,11 +327,17 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         let postMenuVC = storyboard.instantiateViewController(withIdentifier: "PostMenuVC") as! PostMenuViewController
         postMenuVC.setPostIdAndOwner(postId: receivedPostId!, postOwner: postOwnerHandle)
         let sheet = postMenuVC.sheetPresentationController
-        //postMenuVC.modalPresentationStyle = .pageSheet
         
-        let multiplier = 0.25
+        /* 메뉴 개수에 맞도록 sheet 높이 설정 */
+        let label = UILabel()
+        label.font = UIFont(name: "Pretendard-Bold", size: 20)
+        label.text = "더보기"
+        label.sizeToFit()
+        
+        let cellCount = (postOwnerHandle == APIConstants.dayeonHandle) ? 3 : 2
+        let height = label.frame.height + CGFloat(36 + 16 + 48 * cellCount)
         let fraction = UISheetPresentationController.Detent.custom { context in
-            self.view.bounds.height * multiplier
+            height
         }
         sheet?.detents = [fraction]
         sheet?.prefersGrabberVisible = true
@@ -357,31 +346,24 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         present(postMenuVC, animated: true)
     }
     
+    /// 댓글 버튼을 눌렀을 때
     @IBAction func commentButtonDidTap(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "PostTab", bundle: nil)
-        let commentVC = storyboard.instantiateViewController(withIdentifier: "CommentVC") as! CommentViewController
-        
-        commentVC.modalPresentationStyle = .pageSheet
-        commentVC.postId = receivedPostId
-        commentVC.postUserHandle = postDataResult.ownerHandle
-        
-        // half sheet
-        if let sheet = commentVC.sheetPresentationController {
-            //지원할 크기 지정
-            sheet.detents = [.medium(), .large()]
-            //크기 변하는거 감지
-            sheet.delegate = self
-                   
-            //시트 상단에 그래버 표시 (기본 값은 false)
-            sheet.prefersGrabberVisible = true
-        }
-                
-        present(commentVC, animated: true)
+        showCommentVC()
+    }
+    
+    /// 더보기 버튼을 눌렀을 때
+    @IBAction func moreCommentButtonDidTap(_ sender: Any) {
+        showCommentVC()
+    }
+    
+    @objc func goBack(){
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
 
 // MARK: - Extensions
+
 extension ViewController: UISheetPresentationControllerDelegate {
     func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
         //크기 변경 됐을 경우
@@ -408,4 +390,8 @@ extension UIScrollView {
         // 최종 계산 영역의 크기를 반환
         return totalRect.union(view.frame)
     }
+}
+
+extension PostViewController: UIGestureRecognizerDelegate {
+
 }

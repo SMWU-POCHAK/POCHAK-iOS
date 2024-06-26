@@ -8,15 +8,18 @@
 import UIKit
 
 class CommentTableViewFooterView: UITableViewHeaderFooterView {
-    //var tableView: UITableView!
-    //var data: [CommentData]!
+    
+    // MARK: - Properties
+    
     var commentVC: CommentViewController!
     var postId: Int!
     var curCommentId: Int!
-    
+
     private var childCommentDataResponse: ChildCommentDataResponse!
     private var childCommentDataList: [ChildCommentData]!
     private var tempChildCommentList = [ChildCommentData]()
+    
+    // MARK: - Views
     
     @IBOutlet weak var seeChildCommentsBtn: UIButton!
     /*
@@ -26,6 +29,9 @@ class CommentTableViewFooterView: UITableViewHeaderFooterView {
      // Drawing code
      }
      */
+    
+    // MARK: - Actions
+    
     @IBAction func seeChildCommentsBtnDidTap(_ sender: UIButton) {
         print("---대댓글 보기 버튼 눌림---")
         // 이 액션 함수를 호출한 버튼이 테이블 뷰의 어디에 위치했는지 알아내기
@@ -100,14 +106,4 @@ class CommentTableViewFooterView: UITableViewHeaderFooterView {
             }
         }
     }
-    
-    //    override init(reuseIdentifier: String?) {
-    //        super.init(reuseIdentifier: reuseIdentifier)
-    //        //configureContents()
-    //    }
-    //
-    //    required init?(coder: NSCoder) {
-    //        //fatalError("init(coder:) has not been implemented")
-    //        super.init(coder: coder)
-    //    }
 }

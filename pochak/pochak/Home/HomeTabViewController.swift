@@ -9,9 +9,8 @@ import UIKit
 import Kingfisher
 
 class HomeTabViewController: UIViewController {
-    // MARK: - Properties
     
-    @IBOutlet weak var collectionView: UICollectionView!
+    // MARK: - Properties
     
     private var postList: [HomeDataPostList]! = []
     private var isLastPage: Bool = false
@@ -19,7 +18,16 @@ class HomeTabViewController: UIViewController {
     private var homeDataResponse: HomeDataResponse!
     private var homeDataResult: HomeDataResult!
     
+    private let minimumLineSpacing: CGFloat = 9
+    private let minimumInterItemSpacing: CGFloat = 8
+    private var noPost: Bool = false
+    
+    // MARK: - Views
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,7 +37,7 @@ class HomeTabViewController: UIViewController {
         setupCollectionView()
         
         // 내비게이션 바에 로고 이미지
-        let logoImage = UIImage(named: "logo_full.png")
+        let logoImage = UIImage(named: "logo_full")
         let logoImageView = UIImageView(image: logoImage)
 
         logoImageView.contentMode = .scaleAspectFit
@@ -37,20 +45,8 @@ class HomeTabViewController: UIViewController {
         self.navigationItem.titleView = logoImageView
         
         // 네비게이션 바 줄 없애기
-        //self.navigationController?.navigationBar.shadowImage = UIImage() -> 안됨
-        // self.navigationController?.navigationBar.standardAppearance.shadowImage = UIImage() -> 안됨...
         self.navigationController?.navigationBar.standardAppearance.shadowColor = .white  // 스크롤하지 않는 상태
         self.navigationController?.navigationBar.scrollEdgeAppearance?.shadowColor = .white  // 스크롤하고 있는 상태
-        
-        // info 버튼
-        //create a new button
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
-        button.setImage(UIImage(named: "ic_info"), for: .normal)
-        button.addTarget(self, action: #selector(infoBtnTapped), for: .touchUpInside)
-        
-        let barButton = UIBarButtonItem(customView: button)
-        //assign button to navigationbar
-        self.navigationItem.rightBarButtonItem = barButton
         
         // back 버튼 커스텀
         self.navigationItem.backButtonTitle = ""
@@ -64,20 +60,19 @@ class HomeTabViewController: UIViewController {
     }
     
     // MARK: - Action
-    @objc func infoBtnTapped(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "HomeTab", bundle: nil)
-        let infoVC = storyboard.instantiateViewController(withIdentifier: "InfoVC") as! InfoViewController
-        self.navigationController?.pushViewController(infoVC, animated: true)
-    }
+
     
-    // MARK: - Helper
+    // MARK: - Functions
+    
     private func setupCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
             
-        // collection view에 셀 등록
         collectionView.register(
             UINib(nibName: "HomeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "HomeCollectionViewCell")
+        collectionView.register(
+            
+            UINib(nibName: "NoPostCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "NoPostCollectionViewCell")
     }
     
     private func setupData(){
@@ -90,6 +85,9 @@ class HomeTabViewController: UIViewController {
                 self.homeDataResult = self.homeDataResponse.result
                 print(self.homeDataResult!)
                 self.postList = self.homeDataResult.postList
+                if self.postList.count == 0 {
+                    self.noPost = true
+                }
                 print(self.postList)
                 self.isLastPage = self.homeDataResult.pageInfo.lastPage
                 
@@ -111,71 +109,81 @@ class HomeTabViewController: UIViewController {
 
 }
 
-// MARK: - Extensions
+// MARK: - Extensions; CollectionView
+
 extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
-    // section 당 아이템 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return postList.count
+        return noPost ? 1 : postList.count
     }
     
-    // cell 등록
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCollectionViewCell", for: indexPath) as? HomeCollectionViewCell
-        else{ return UICollectionViewCell()}
-        
-        //cell.prepare()
-        /* 추후 수정 필요*/
-        // cell.setupData()
-//        cell.imageView.kf.setImage(with: imageArray[indexPath.item].imgUrl)
-        //url = URL(string: imageArray[indexPath.item].imgUrl)
-        DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: URL(string: (self?.postList[indexPath.item].postImage)!)!) {
-                if let image = UIImage(data: data){
-                    DispatchQueue.main.async {
-                        cell.prepare(image: image)
-                        cell.imageView.contentMode = .scaleAspectFill
+        if noPost {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NoPostCollectionViewCell", for: indexPath) as? NoPostCollectionViewCell else { return UICollectionViewCell() }
+            return cell
+        }
+        else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCollectionViewCell", for: indexPath) as? HomeCollectionViewCell
+            else{ return UICollectionViewCell()}
+            
+            /* 추후 수정 필요*/
+            DispatchQueue.global().async { [weak self] in
+                if let data = try? Data(contentsOf: URL(string: (self?.postList[indexPath.item].postImage)!)!) {
+                    if let image = UIImage(data: data){
+                        DispatchQueue.main.async {
+                            cell.prepare(image: image)
+                            cell.imageView.contentMode = .scaleAspectFill
+                        }
                     }
                 }
             }
+            return cell
         }
-        return cell
     }
     
-    /* 서버 연결 후 수정 */
-    // cell 클릭 시 해당 게시물로 이동
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let postTabSb = UIStoryboard(name: "PostTab", bundle: nil)
-        guard let postVC = postTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
+        if !noPost {
+            let postTabSb = UIStoryboard(name: "PostTab", bundle: nil)
+            guard let postVC = postTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
             else { return }
-        
-        postVC.receivedPostId = postList[indexPath.item].postId
-        self.navigationController?.pushViewController(postVC, animated: true)
+            
+            postVC.receivedPostId = postList[indexPath.item].postId
+            self.navigationController?.pushViewController(postVC, animated: true)
+        }
     }
     
     // cell의 위 아래 간격을 정함
     func collectionView(_ collectionView: UICollectionView, layout: UICollectionViewLayout, minimumLineSpacingForSectionAt: Int) -> CGFloat {
-        return 5
+        return noPost ? 0 : minimumLineSpacing
     }
     
     // cell 양 옆 간격
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 5
+        return noPost ? 0 : minimumInterItemSpacing
     }
     
     // cell 크기 지정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let width = CGFloat((collectionView.frame.width - 58) / 3)  // 24+24+5+5 = 58
-        return CGSize(width: width, height: width * 4 / 3)  // 3:4 비율로
+        if noPost {
+            let mainBound = UIScreen.main.bounds.size
+            let width = mainBound.width
+            let height = self.collectionView.bounds.height
+            return CGSize(width: width, height: height)
+        }
+        else {
+            let width = CGFloat((collectionView.frame.width - 20 * 2 - minimumInterItemSpacing * 2) / 3)  // 20은 양 끝 간격
+            return CGSize(width: width, height: width * 4 / 3)  // 3:4 비율로
+        }
     }
 }
 
+// MARK: - Extension; UIScrollView
+
+// TODO: 데이터 가져오는 에러 해결 필요
 extension HomeTabViewController: UIScrollViewDelegate {
     // 스크롤이 끝까지 닿았는지 판단 .. 50% 로?
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (collectionView.contentOffset.y > (collectionView.contentSize.height - collectionView.bounds.size.height)){
+        if (!noPost && collectionView.contentOffset.y > (collectionView.contentSize.height - collectionView.bounds.size.height)){
             if (!isLastPage) {
                 setupData()
             }

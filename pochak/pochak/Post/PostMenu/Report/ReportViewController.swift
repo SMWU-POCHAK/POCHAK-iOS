@@ -41,19 +41,6 @@ class ReportViewController: UIViewController {
                                  forCellReuseIdentifier: ReportTableViewCell.identifier)
     }
     
-    private func makeAlertController() -> UIAlertController{
-        let alertVC = UIAlertController(title: "신고가 완료되었습니다.", message: "신고해주셔서 감사합니다.\n빠른 시일 내에 해결하겠습니다.", preferredStyle: UIAlertController.Style.alert)
-        //alertVC.setTitleFont()
-        //alertVC.setMessageFont()
-        
-        alertVC.addAction(UIAlertAction(title: "확인", style: .cancel) { _ in
-            // reportVC dismiss -> 포스트 상세 보기로 다시 가기
-            self.dismiss(animated: true)
-        })
-        
-        return alertVC
-    }
-    
     func setPostId(_ postId: Int){
         self.postId = postId
     }
@@ -85,9 +72,19 @@ extension ReportViewController: UITableViewDelegate, UITableViewDataSource {
         
         // TODO: 신고 기능 api 연결 후 completion으로 알림창 띄우기
         
-        let alert = makeAlertController()
-        
-        self.present(alert, animated: true, completion: nil)
+        showAlert(alertType: .confirmOnly,
+                  titleText: "신고가 완료되었습니다.",
+                  messageText: "신고해주셔서 감사합니다.\n빠른 시일 내에 해결하겠습니다.",
+                  confirmButtonText: "확인")
     }
     
+}
+
+extension ReportViewController: CustomAlertDelegate {
+    func confirmAction() {
+        print("신고하기 완료")
+    }
+    
+    func cancel() {
+    }
 }
