@@ -92,7 +92,8 @@ class PostTabViewController: UIViewController, UISearchBarDelegate{
             textFieldInsideSearchBar.textColor = UIColor.red // 원하는 색으로 변경
             textFieldInsideSearchBar.attributedPlaceholder = NSAttributedString(
                 string: "검색어를 입력해주세요.", // 원하는 placeholder 텍스트
-                attributes: [NSAttributedString.Key.foregroundColor: UIColor(named: "gray03")] // 원하는 색으로 변경
+                attributes: [NSAttributedString.Key.foregroundColor: UIColor(named: "gray03"),
+                             NSAttributedString.Key.font: UIFont(name: "Pretendard-Medium", size: 16)] // 원하는 색으로 변경
             )
         }
         searchBar.searchTextPositionAdjustment = UIOffset(horizontal: 10, vertical: 0)

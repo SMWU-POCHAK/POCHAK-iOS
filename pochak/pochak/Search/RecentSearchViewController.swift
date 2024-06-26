@@ -54,10 +54,13 @@ class RecentSearchViewController: UIViewController, UISearchResultsUpdating {
         searchController.searchBar.setLeftImage(UIImage(named: "search"), tintColor: UIColor(named: "gray06"))
         
         if let textFieldInsideSearchBar = searchController.searchBar.value(forKey: "searchField") as? UITextField {
-            textFieldInsideSearchBar.textColor = UIColor.red // 원하는 색으로 변경
+            textFieldInsideSearchBar.textColor = UIColor.black
+            textFieldInsideSearchBar.font = UIFont(name: "Pretendard-Medium", size: 16)
             textFieldInsideSearchBar.attributedPlaceholder = NSAttributedString(
                 string: "검색어를 입력해주세요.", // 원하는 placeholder 텍스트
-                attributes: [NSAttributedString.Key.foregroundColor: UIColor(named: "gray03")] // 원하는 색으로 변경
+                attributes: [NSAttributedString.Key.foregroundColor: UIColor(named: "gray03"),
+                             NSAttributedString.Key.font: UIFont(name: "Pretendard-Medium", size: 16) ] // 원하는 색으로 변경
+                
             )
         }
         searchController.searchBar.searchTextPositionAdjustment = UIOffset(horizontal: 10, vertical: 0)
