@@ -6,6 +6,7 @@
 //
 
 // MARK: - Post Detail
+
 struct PostDataResponse: Codable {
     let isSuccess: Bool
     let code: String
@@ -34,9 +35,10 @@ struct RecentComment: Codable {
 }
 
 // MARK: - Post Delete
+
 struct PostDeleteResponse: Codable {
-  let isSuccess : Bool
-  let code : String
-  let message : String
+    let isSuccess : Bool
+    let code : String
+    let message : String
 }
 

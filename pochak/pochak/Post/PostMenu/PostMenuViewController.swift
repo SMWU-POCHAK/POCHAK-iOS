@@ -19,7 +19,9 @@ class PostMenuViewController: UIViewController {
     private var postOwner: String?
     
     private var currentUserIsOwner = false
-
+    
+    private var postDeleteResponse: PostDeleteResponse?
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -59,6 +61,24 @@ class PostMenuViewController: UIViewController {
         menuTableView.register(UINib(nibName: "ReportViewCell", bundle: nil), forCellReuseIdentifier: "ReportViewCell")
         menuTableView.register(UINib(nibName: "DeleteViewCell", bundle: nil), forCellReuseIdentifier: "DeleteViewCell")
         menuTableView.register(UINib(nibName: "CancelViewCell", bundle: nil), forCellReuseIdentifier: "CancelViewCell")
+    }
+    
+    /// 게시글 삭제 혹은 신고 후 홈으로 돌아가기
+    private func goBackToHome(){
+        // 1. postMenuVC를 보여주고 있는 뷰컨트롤러를 찾고 (=tabbar controller)
+        if let tabBarController = self.presentingViewController as? UITabBarController,
+           // 2. 선택된 뷰컨트롤러에 접근 (=navigation controller)
+           let navigationController = tabBarController.selectedViewController as? UINavigationController {
+            print(navigationController.viewControllers)
+            // 3. 부모의 부모 뷰컨트롤러 (= home tab view controller)에 접근
+            if let grandparentViewController = navigationController.viewControllers.dropLast().last {
+                print(grandparentViewController)
+                // 모달을 해제하고 그 후 네비게이션 스택에서 원하는 뷰컨트롤러로 이동
+                self.dismiss(animated: true) {
+                    navigationController.popToViewController(grandparentViewController, animated: true)
+                }
+            }
+        }
     }
 
 }
@@ -139,6 +159,30 @@ extension PostMenuViewController: CustomAlertDelegate {
     func confirmAction() {
         // TODO: 게시글 삭제 api 연결 -> 화면 나가기 -> 홈으로 이동
         print("삭제하기 선택됨")
+        //goBackToHome()
+        PostDataService.shared.deletePost(postId!) { [weak self] response in
+            switch(response){
+            case .success(let postDeleteResponse):
+                self?.postDeleteResponse = postDeleteResponse as? PostDeleteResponse
+                if self?.postDeleteResponse?.isSuccess == false {
+                    let alert = UIAlertController(title: "게시글 삭제에 실패하였습니다.", message: "다시 시도해주세요.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
+                        self?.dismiss(animated: true)
+                    }))
+                }
+                else {
+                    self?.goBackToHome()
+                }
+            case .requestErr(let message):
+                print("requestErr", message)
+            case .pathErr:
+                print("pathErr")
+            case .serverErr:
+                print("serverErr")
+            case .networkFail:
+                print("networkFail")
+            }
+        }
     }
     
     func cancel() {
