@@ -42,3 +42,10 @@ struct PostDeleteResponse: Codable {
     let message : String
 }
 
+// MARK: - Post Report
+
+struct PostReportResponse: Codable {
+    let isSuccess: Bool
+    let code: String
+    let message: String
+}
