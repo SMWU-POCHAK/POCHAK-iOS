@@ -58,6 +58,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         scrollView.updateContentSize()
         
         setupNavigationBar()
+        self.navigationController?.isNavigationBarHidden = false
         
         // 프로필 사진 동그랗게 -> 크기 반만큼 radius
         profileImageView.layer.cornerRadius = 25
