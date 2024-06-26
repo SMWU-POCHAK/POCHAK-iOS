@@ -80,6 +80,13 @@ class PostMenuViewController: UIViewController {
             }
         }
     }
+    
+    private func failAlert(_ title: String){
+        let alert = UIAlertController(title: title, message: "다시 시도해주세요.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
+            self.dismiss(animated: true)
+        }))
+    }
 
 }
 
@@ -179,8 +186,10 @@ extension PostMenuViewController: CustomAlertDelegate {
                 print("pathErr")
             case .serverErr:
                 print("serverErr")
+                self?.failAlert("서버에 문제가 있습니다.")
             case .networkFail:
                 print("networkFail")
+                self?.failAlert("네트워크 연결에 문제가 있습니다.")
             }
         }
     }
