@@ -12,6 +12,17 @@ class HomeTabViewController: UIViewController {
     
     // MARK: - Properties
     
+    public var changeHasBeenMade: Bool = false {
+        willSet {
+            if(newValue){
+                print("삭제돼서 다시 로딩할 예정")
+                self.currentFetchingPage = 0
+                self.postList.removeAll()
+                self.setupData()
+            }
+        }
+    }
+    
     private var postList: [HomeDataPostList]! = []
     private var isLastPage: Bool = false
     private var currentFetchingPage: Int = 0
@@ -113,6 +124,7 @@ class HomeTabViewController: UIViewController {
                 print("networkFail")
             }
         }
+        changeHasBeenMade = false
     }
 
 }
