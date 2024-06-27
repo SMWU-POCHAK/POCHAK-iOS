@@ -46,24 +46,8 @@ class HomeTabViewController: UIViewController {
         currentFetchingPage = 0
         setupData()
         
-        // set up collection view
+        setupNavigationBar()
         setupCollectionView()
-        
-        // 내비게이션 바에 로고 이미지
-        let logoImage = UIImage(named: "logo_full")
-        let logoImageView = UIImageView(image: logoImage)
-
-        logoImageView.contentMode = .scaleAspectFit
-
-        self.navigationItem.titleView = logoImageView
-        
-        // 네비게이션 바 줄 없애기
-        self.navigationController?.navigationBar.standardAppearance.shadowColor = .white  // 스크롤하지 않는 상태
-        self.navigationController?.navigationBar.scrollEdgeAppearance?.shadowColor = .white  // 스크롤하고 있는 상태
-        
-        // back 버튼 커스텀
-        self.navigationItem.backButtonTitle = ""
-        self.navigationController?.navigationBar.tintColor = .black
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -77,15 +61,29 @@ class HomeTabViewController: UIViewController {
     
     // MARK: - Functions
     
+    private func setupNavigationBar() {
+        let logoImageView = UIImageView(image: UIImage(named: "logo_full"))
+        logoImageView.contentMode = .scaleAspectFit
+        self.navigationItem.titleView = logoImageView
+        
+        // 네비게이션 바 줄 없애기
+        self.navigationController?.navigationBar.standardAppearance.shadowColor = .white  // 스크롤하지 않는 상태
+        self.navigationController?.navigationBar.scrollEdgeAppearance?.shadowColor = .white  // 스크롤하고 있는 상태
+        
+        // back 버튼 커스텀
+        self.navigationItem.backButtonTitle = ""
+        self.navigationController?.navigationBar.tintColor = .black
+    }
+    
     private func setupCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
             
         collectionView.register(
-            UINib(nibName: "HomeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "HomeCollectionViewCell")
+            UINib(nibName: HomeCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
         collectionView.register(
             
-            UINib(nibName: "NoPostCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "NoPostCollectionViewCell")
+            UINib(nibName: NoPostCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: NoPostCollectionViewCell.identifier)
     }
     
     private func setupData(){
@@ -96,7 +94,6 @@ class HomeTabViewController: UIViewController {
             case .success(let data):
                 self.homeDataResponse = data as? HomeDataResponse
                 self.homeDataResult = self.homeDataResponse.result
-//                self.postList = self.homeDataResult.postList
                 self.homeDataResult.postList.map { data in
                     self.postList.append(data)
                 }
@@ -120,13 +117,14 @@ class HomeTabViewController: UIViewController {
                 print("pathErr")
             case .serverErr:
                 print("serverErr")
+                self.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
             case .networkFail:
                 print("networkFail")
+                self.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
             }
         }
         changeHasBeenMade = false
     }
-
 }
 
 // MARK: - Extensions; CollectionView
@@ -139,14 +137,13 @@ extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if noPost {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NoPostCollectionViewCell", for: indexPath) as? NoPostCollectionViewCell else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NoPostCollectionViewCell.identifier, for: indexPath) as? NoPostCollectionViewCell else { return UICollectionViewCell() }
             return cell
         }
         else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCollectionViewCell", for: indexPath) as? HomeCollectionViewCell
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as? HomeCollectionViewCell
             else{ return UICollectionViewCell()}
             
-            /* 추후 수정 필요*/
             DispatchQueue.global().async { [weak self] in
                 if let data = try? Data(contentsOf: URL(string: (self?.postList[indexPath.item].postImage)!)!) {
                     if let image = UIImage(data: data){
@@ -199,7 +196,6 @@ extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDel
 
 // MARK: - Extension; UIScrollView
 
-// TODO: 데이터 가져오는 에러 해결 필요
 extension HomeTabViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (!noPost && collectionView.contentOffset.y > (collectionView.contentSize.height - collectionView.bounds.size.height)){
