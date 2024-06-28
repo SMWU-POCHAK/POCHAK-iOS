@@ -172,19 +172,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="전체 삭제" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jUU-fS-To3">
-                                <rect key="frame" x="292" y="123.00000000000001" width="60" height="18.666666666666671"/>
+                                <rect key="frame" x="295" y="134" width="60" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="2dU-9A-N49"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="16"/>
                                 <color key="textColor" name="gray04"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="최근 검색어" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eU6-yU-EU7">
-                                <rect key="frame" x="20" y="123.00000000000001" width="74" height="18.666666666666671"/>
+                                <rect key="frame" x="20" y="134" width="74" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="CcC-1E-Ze1"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="16"/>
                                 <color key="textColor" name="gray04"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="wA0-Be-353">
-                                <rect key="frame" x="24" y="159.66666666666669" width="327" height="618.33333333333326"/>
+                                <rect key="frame" x="0.0" y="170" width="375" height="608"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Ws-Fy-fr6" userLabel="SearchContainerView">
@@ -198,16 +204,16 @@
                         <viewLayoutGuide key="safeArea" id="TXI-7d-z2V"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="eU6-yU-EU7" firstAttribute="top" secondItem="1Ws-Fy-fr6" secondAttribute="bottom" constant="13" id="C6B-Gf-thd"/>
+                            <constraint firstItem="eU6-yU-EU7" firstAttribute="top" secondItem="1Ws-Fy-fr6" secondAttribute="bottom" constant="24" id="C6B-Gf-thd"/>
                             <constraint firstItem="eU6-yU-EU7" firstAttribute="leading" secondItem="TXI-7d-z2V" secondAttribute="leading" constant="20" id="OzZ-qZ-R14"/>
                             <constraint firstItem="1Ws-Fy-fr6" firstAttribute="top" secondItem="TXI-7d-z2V" secondAttribute="top" constant="12" id="QGe-pM-lyD"/>
                             <constraint firstItem="TXI-7d-z2V" firstAttribute="bottom" secondItem="wA0-Be-353" secondAttribute="bottom" id="WGy-ga-je4"/>
-                            <constraint firstItem="wA0-Be-353" firstAttribute="leading" secondItem="TXI-7d-z2V" secondAttribute="leading" constant="24" id="YK8-Fz-3EU"/>
+                            <constraint firstItem="wA0-Be-353" firstAttribute="leading" secondItem="TXI-7d-z2V" secondAttribute="leading" id="YK8-Fz-3EU"/>
                             <constraint firstItem="TXI-7d-z2V" firstAttribute="trailing" secondItem="1Ws-Fy-fr6" secondAttribute="trailing" constant="20" id="aRG-g8-9ev"/>
-                            <constraint firstItem="TXI-7d-z2V" firstAttribute="trailing" secondItem="wA0-Be-353" secondAttribute="trailing" constant="24" id="bSK-Gw-fid"/>
-                            <constraint firstItem="jUU-fS-To3" firstAttribute="top" secondItem="1Ws-Fy-fr6" secondAttribute="bottom" constant="13" id="bnT-7D-w1S"/>
-                            <constraint firstItem="TXI-7d-z2V" firstAttribute="trailing" secondItem="jUU-fS-To3" secondAttribute="trailing" constant="23" id="pee-oN-zIj"/>
-                            <constraint firstItem="wA0-Be-353" firstAttribute="top" secondItem="jUU-fS-To3" secondAttribute="bottom" constant="18" id="qLh-a6-qCX"/>
+                            <constraint firstItem="TXI-7d-z2V" firstAttribute="trailing" secondItem="wA0-Be-353" secondAttribute="trailing" id="bSK-Gw-fid"/>
+                            <constraint firstItem="jUU-fS-To3" firstAttribute="top" secondItem="1Ws-Fy-fr6" secondAttribute="bottom" constant="24" id="bnT-7D-w1S"/>
+                            <constraint firstItem="TXI-7d-z2V" firstAttribute="trailing" secondItem="jUU-fS-To3" secondAttribute="trailing" constant="20" id="pee-oN-zIj"/>
+                            <constraint firstItem="wA0-Be-353" firstAttribute="top" secondItem="jUU-fS-To3" secondAttribute="bottom" constant="16" id="qLh-a6-qCX"/>
                             <constraint firstItem="1Ws-Fy-fr6" firstAttribute="leading" secondItem="TXI-7d-z2V" secondAttribute="leading" constant="20" id="uvL-wN-nfI"/>
                         </constraints>
                     </view>
