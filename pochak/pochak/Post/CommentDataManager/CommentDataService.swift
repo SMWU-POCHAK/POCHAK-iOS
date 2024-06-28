@@ -83,28 +83,20 @@ struct CommentDataService {
         /* 헤더 있는 자리 */
         print("-get child comments-")
         
-        let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/posts/\(postId)/comments\(commentId)",
+        let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/posts/\(postId)/comments/\(commentId)",
                                     method: .get,
                                     parameters: ["page": page],
                                     encoding: URLEncoding.default,
                                     headers: header)
-        print("dataRequest:")
-        print(dataRequest)
-        print("dataReqeust.responseData:")
-        print(dataRequest.response)
         dataRequest.responseData { dataResponse in
-            print("responseData")
             switch dataResponse.result{
             case .success:
                 // 성공 시 통신 자체의 상태코드와 데이터(value) 수신
                 guard let statusCode = dataResponse.response?.statusCode else {return}
                 guard let value = dataResponse.value else {return}
                 let networkResult = self.judgeStatus(by: statusCode, value, dataType: "ChildCommentData")  // 통신의 결과(성공이면 데이터, 아니면 에러내용)
-                print("get child comment, status code")
-                print(statusCode)
                 completion(networkResult)
             case .failure:
-                print("service fail")
                 completion(.networkFail)
             }
         }
