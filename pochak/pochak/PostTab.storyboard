@@ -96,13 +96,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="실시간 인기 포스트" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pmz-HU-PyW">
-                                <rect key="frame" x="20" y="178" width="133" height="21.666666666666657"/>
+                                <rect key="frame" x="20" y="178" width="134.66666666666666" height="21"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="eIq-0Q-Vpp" userLabel="CollectionView">
-                                <rect key="frame" x="0.0" y="215.66666666666669" width="375" height="513.33333333333326"/>
+                                <rect key="frame" x="0.0" y="215" width="375" height="514"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fbe-5S-ELW">
                                     <size key="itemSize" width="128" height="128"/>
@@ -115,8 +115,8 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5l0-IY-yuB">
                                 <rect key="frame" x="20" y="106" width="335" height="48"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="검색어를 입력해주세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wox-xS-WlB">
-                                        <rect key="frame" x="48" y="14" width="146.66666666666666" height="20"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="검색어를 입력해주세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wox-xS-WlB">
+                                        <rect key="frame" x="48" y="15" width="153" height="19"/>
                                         <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="16"/>
                                         <color key="textColor" name="gray03"/>
                                         <nil key="highlightedColor"/>
@@ -132,10 +132,10 @@
                                 <color key="backgroundColor" name="gray0.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="Ap3-6n-K4W"/>
+                                    <constraint firstItem="wox-xS-WlB" firstAttribute="centerY" secondItem="5l0-IY-yuB" secondAttribute="centerY" id="N9W-rh-VhO"/>
                                     <constraint firstItem="l21-dv-xAE" firstAttribute="centerY" secondItem="5l0-IY-yuB" secondAttribute="centerY" id="XWP-Bi-q5m"/>
                                     <constraint firstItem="wox-xS-WlB" firstAttribute="leading" secondItem="l21-dv-xAE" secondAttribute="trailing" constant="12" id="aVf-cX-54V"/>
                                     <constraint firstItem="l21-dv-xAE" firstAttribute="leading" secondItem="5l0-IY-yuB" secondAttribute="leading" constant="12" id="rpO-dt-DOG"/>
-                                    <constraint firstItem="wox-xS-WlB" firstAttribute="top" secondItem="5l0-IY-yuB" secondAttribute="top" constant="14" id="vRz-Zt-7So"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -172,23 +172,23 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="전체 삭제" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jUU-fS-To3">
-                                <rect key="frame" x="292" y="120.00000000000001" width="60" height="18.666666666666671"/>
+                                <rect key="frame" x="292" y="123.00000000000001" width="60" height="18.666666666666671"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="16"/>
                                 <color key="textColor" name="gray04"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="최근 검색어" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eU6-yU-EU7">
-                                <rect key="frame" x="20" y="120.00000000000001" width="74" height="18.666666666666671"/>
+                                <rect key="frame" x="20" y="123.00000000000001" width="74" height="18.666666666666671"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="16"/>
                                 <color key="textColor" name="gray04"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="wA0-Be-353">
-                                <rect key="frame" x="24" y="156.66666666666669" width="327" height="621.33333333333326"/>
+                                <rect key="frame" x="24" y="159.66666666666669" width="327" height="618.33333333333326"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Ws-Fy-fr6" userLabel="SearchContainerView">
-                                <rect key="frame" x="20" y="59" width="335" height="48"/>
+                                <rect key="frame" x="20" y="62" width="335" height="48"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="G5V-YL-HfL"/>
@@ -200,7 +200,7 @@
                         <constraints>
                             <constraint firstItem="eU6-yU-EU7" firstAttribute="top" secondItem="1Ws-Fy-fr6" secondAttribute="bottom" constant="13" id="C6B-Gf-thd"/>
                             <constraint firstItem="eU6-yU-EU7" firstAttribute="leading" secondItem="TXI-7d-z2V" secondAttribute="leading" constant="20" id="OzZ-qZ-R14"/>
-                            <constraint firstItem="1Ws-Fy-fr6" firstAttribute="top" secondItem="TXI-7d-z2V" secondAttribute="top" constant="9" id="QGe-pM-lyD"/>
+                            <constraint firstItem="1Ws-Fy-fr6" firstAttribute="top" secondItem="TXI-7d-z2V" secondAttribute="top" constant="12" id="QGe-pM-lyD"/>
                             <constraint firstItem="TXI-7d-z2V" firstAttribute="bottom" secondItem="wA0-Be-353" secondAttribute="bottom" id="WGy-ga-je4"/>
                             <constraint firstItem="wA0-Be-353" firstAttribute="leading" secondItem="TXI-7d-z2V" secondAttribute="leading" constant="24" id="YK8-Fz-3EU"/>
                             <constraint firstItem="TXI-7d-z2V" firstAttribute="trailing" secondItem="1Ws-Fy-fr6" secondAttribute="trailing" constant="20" id="aRG-g8-9ev"/>
