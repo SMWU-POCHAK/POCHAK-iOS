@@ -267,6 +267,7 @@ extension RecentSearchViewController:UITableViewDelegate, UITableViewDataSource 
             print(recentSearchTerm)
             print(recentSearchTerm.term)
             cell.userHandle.text = recentSearchTerm.term
+            cell.userName.text = recentSearchTerm.name
             cell.configure(with: recentSearchTerm.profileImg)
             cell.deleteBtn.isHidden = false
             
@@ -281,10 +282,12 @@ extension RecentSearchViewController:UITableViewDelegate, UITableViewDataSource 
                tableView.reloadData()
            }
         } else if tableView == self.resultVC.tableView {
-            let urls = self.searchResultData.map { $0.profileUrl }
-            let handles = self.searchResultData.map { $0.userHandle }
+            let urls = self.searchResultData.map { $0.profileImage }
+            let handles = self.searchResultData.map { $0.handle }
+            let names = self.searchResultData.map { $0.name }
             
             cell.userHandle.text = handles[indexPath.item]
+            cell.userName.text = names[indexPath.item]
             cell.configure(with: urls[indexPath.item])
             cell.deleteBtn.isHidden = true
         }
@@ -294,9 +297,10 @@ extension RecentSearchViewController:UITableViewDelegate, UITableViewDataSource 
         if tableView == self.tableView {
             let selectedUserData = recentSearchTerms[indexPath.row] // 선택한 셀의 데이터 가져오기
             let handle = selectedUserData.term
+            let name = selectedUserData.name
             let profileImg = selectedUserData.profileImg
             
-            realmManager.addRecentSearch(term: handle, profileImg: profileImg)
+            realmManager.addRecentSearch(term: handle, profileImg: profileImg, name: name)
             self.tableView.reloadData()
             // 화면전환
             // TODO: handle 전달
@@ -308,10 +312,11 @@ extension RecentSearchViewController:UITableViewDelegate, UITableViewDataSource 
             
         } else if tableView == self.resultVC.tableView {
             let selectedUserData = searchResultData[indexPath.row] // 선택한 셀의 데이터 가져오기
-            let handle = selectedUserData.userHandle
-            let profileImg = selectedUserData.profileUrl
+            let handle = selectedUserData.handle
+            let name = selectedUserData.name
+            let profileImg = selectedUserData.profileImage
 
-            realmManager.addRecentSearch(term: handle, profileImg: profileImg)
+            realmManager.addRecentSearch(term: handle, profileImg: profileImg, name: name)
             self.tableView.reloadData()
 
             // 화면전환 -> handle 전달

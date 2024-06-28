@@ -7,6 +7,7 @@
 
 import UIKit
 import GoogleSignIn
+import RealmSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,7 +24,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ]
         appearance.setTitleTextAttributes(attributes as [NSAttributedString.Key : Any], for: .normal)
         appearance.setTitleTextAttributes(attributes as [NSAttributedString.Key : Any], for: .selected)
-
+        
+        let config = Realm.Configuration(
+            schemaVersion: 2, // Update schema version to the latest version you want to use
+            migrationBlock: { migration, oldSchemaVersion in
+                print("Old Schema Version: \(oldSchemaVersion)")
+                if oldSchemaVersion < 2 {
+                    migration.enumerateObjects(ofType: RecentSearchModel.className()) { oldObject, newObject in
+                        newObject!["name"] = "" // Set default value for the new 'name' property
+                    }
+                }
+            }
+        )
+    
+        Realm.Configuration.defaultConfiguration = config
+        _ = try! Realm()
+                
         return true
     }
 
