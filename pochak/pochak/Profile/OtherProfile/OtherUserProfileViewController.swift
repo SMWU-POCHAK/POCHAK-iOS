@@ -31,10 +31,17 @@ class OtherUserProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Back 버튼 커스텀
-        let backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
-        backBarButtonItem.tintColor = .black
-        self.navigationItem.backBarButtonItem = backBarButtonItem
+        self.navigationController?.isNavigationBarHidden = false
+        
+        // back button 커스텀
+        self.navigationController?.navigationBar.topItem?.backButtonTitle = ""
+        self.navigationController?.navigationBar.tintColor = .black
+        let backbutton = UIBarButtonItem(image: UIImage(named: "ChevronLeft"), style: .done, target: self, action: #selector(goBack))
+        self.navigationItem.leftBarButtonItem = backbutton
+
+        // left bar button을 추가하면 기존에 되던 스와이프 pop 기능이 해제됨
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
         
         // 프로픨 디자인
         profileBackground.layer.cornerRadius = 50
@@ -194,8 +201,16 @@ class OtherUserProfileViewController: UIViewController {
         self.navigationController?.pushViewController(followListVC, animated: true)
     }
     
+    @objc func goBack(){
+        self.navigationController?.popViewController(animated: true)
+    }
+    
 //    @objc private func clickSettingButton(_ sender: UIButton) {
 //        guard let updateProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "UpdateProfileVC") as? UpdateProfileViewController else {return}
 //        self.navigationController?.pushViewController(updateProfileVC, animated: true)
 //    }
+}
+
+extension OtherUserProfileViewController: UIGestureRecognizerDelegate {
+
 }
