@@ -31,7 +31,6 @@
 		089C758B2A51728A003AAB94 /* Pretendard-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75822A51728A003AAB94 /* Pretendard-SemiBold.ttf */; };
 		089C758C2A51728A003AAB94 /* Pretendard-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75832A51728A003AAB94 /* Pretendard-Medium.ttf */; };
 		089C758D2A51728A003AAB94 /* Pretendard-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75842A51728A003AAB94 /* Pretendard-Bold.ttf */; };
-		089C758E2A51728A003AAB94 /* Pretendard-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75852A51728A003AAB94 /* Pretendard-ExtraBold.ttf */; };
 		089C758F2A51728A003AAB94 /* Pretendard-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75862A51728A003AAB94 /* Pretendard-Light.ttf */; };
 		089C75902A51728A003AAB94 /* Pretendard-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75872A51728A003AAB94 /* Pretendard-ExtraLight.ttf */; };
 		08B679612B528CB600F8D585 /* CommentTableViewFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08B679602B528CB600F8D585 /* CommentTableViewFooterView.xib */; };
@@ -85,6 +84,7 @@
 		379A6A3A2B56BDBF0087FAAC /* Authenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A6A392B56BDBF0087FAAC /* Authenticator.swift */; };
 		379A6A3E2B5FA07D0087FAAC /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A6A3D2B5FA07D0087FAAC /* NavigationController.swift */; };
 		37A284C12B52FC910023EB9D /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A284C02B52FC910023EB9D /* UpdateProfileViewController.swift */; };
+		37BBFDF12C2EB43D003D8DA5 /* Pretendard-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75852A51728A003AAB94 /* Pretendard-ExtraBold.ttf */; };
 		37C3AF482B3CB2B300B4C79C /* MyProfilePochakedPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C3AF472B3CB2B300B4C79C /* MyProfilePochakedPostModel.swift */; };
 		37C3AF4A2B3CB2C700B4C79C /* MyProfilePochakPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C3AF492B3CB2C700B4C79C /* MyProfilePochakPostModel.swift */; };
 		37C3AF4B2B3CB49E00B4C79C /* MyProfilePostDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C3AF452B3CB29A00B4C79C /* MyProfilePostDataManager.swift */; };
@@ -999,6 +999,7 @@
 				089C758D2A51728A003AAB94 /* Pretendard-Bold.ttf in Resources */,
 				0820B1912A63A18100604DA8 /* ReplyTableViewCell.xib in Resources */,
 				089C758F2A51728A003AAB94 /* Pretendard-Light.ttf in Resources */,
+				37BBFDF12C2EB43D003D8DA5 /* Pretendard-ExtraBold.ttf in Resources */,
 				081228CB2A699B5A00DFA094 /* LikedPeopleListTableViewCell.xib in Resources */,
 				EAFB4B872A5147A300E0F2FA /* ProfileTab.storyboard in Resources */,
 				EA0107B42A5ECB8A00A3AE85 /* PostCollectionViewCell.xib in Resources */,
@@ -1026,7 +1027,6 @@
 				3769D6D62B3C59F900294CD1 /* ProfilePostCollectionViewCell.xib in Resources */,
 				EABD20662A6CF5CC007543E9 /* TagCollectionViewCell.xib in Resources */,
 				089C758B2A51728A003AAB94 /* Pretendard-SemiBold.ttf in Resources */,
-				089C758E2A51728A003AAB94 /* Pretendard-ExtraBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

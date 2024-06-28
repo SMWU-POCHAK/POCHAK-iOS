@@ -34,8 +34,8 @@ class MyProfileTabViewController: TabmanViewController {
         super.viewDidLoad()
 
         // 프로픨 디자인
-        profileBackground.layer.cornerRadius = 50
-        profileImage.layer.cornerRadius = 46
+        profileBackground.layer.cornerRadius = 58
+        profileImage.layer.cornerRadius = 55
         
         // 흰색 배경 디자인
         whiteBackground1.layer.cornerRadius = 8
