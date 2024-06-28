@@ -10,12 +10,13 @@ import Foundation
 struct IdSearchData: Codable {
     let profileimgUrl: String
     let userHandle: String
-    let id: String
+    let memberId: String
 }
 
 
 struct idSearchResponse:Codable{
-    let profileUrl: String
-    let id: String
-    let userHandle: String
+    let memberId : String
+    let profileImage : String
+    let handle : String
+    let name : String
 }
