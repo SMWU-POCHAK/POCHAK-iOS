@@ -27,24 +27,6 @@ struct CommentDataService {
         }
     }
     
-    
-    /// 댓글 삭제 시 서버에 전달할 Body 생성
-    /// - Parameters:
-    ///   - commentUploadedTime: 삭제하려는 댓글(대댓글) 업로드 시간
-    ///   - parentCommentUploadedTime: 대댓글을 삭제하는 경우 대댓글의 부모 댓글 업로드 시간
-    /// - Returns: 만들어진 Body Parameters
-    private func makeDeleteCommentBodyParameter(commentUploadedTime: String, parentCommentUploadedTime: String?) -> Parameters{
-        // 대댓글 삭제인 경우
-        if(parentCommentUploadedTime != nil){
-            return ["commentUploadedTime": commentUploadedTime, "parentCommentUploadedTime": parentCommentUploadedTime!]
-        }
-        // 댓글 삭제인 경우
-        else{
-            return ["commentUploadedTime": commentUploadedTime]
-        }
-    }
-    
-    
     /// 댓글 조회
     /// - Parameters:
     ///   - postId: 조회하고자 하는 댓글이 등록된 게시글 아이디
