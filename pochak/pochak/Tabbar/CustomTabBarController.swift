@@ -7,33 +7,40 @@
 
 import UIKit
 
-class TabbarController: UITabBarController {
+class CustomTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setTabBarHeight()
+//        setTabBarHeight()
         setTabbar()
         setTabbarShadow()
-        adjustTabBarItemTextPosition()
-        
     }
     
-    func setTabbar(){
+    private func setTabbar(){
         self.selectedIndex = 0
         self.tabBar.tintColor = UIColor(named: "navy00")
     }
-    
+
     private func setTabBarHeight() {
-        
+        // 탭바 높이 조정
         let customTabBar = CustomTabBar()
         let hasBottomInset = UIApplication.shared.windows.first?.safeAreaInsets.bottom ?? 0 > 0
-        customTabBar.customHeight = hasBottomInset ? 98 : 58 // 베젤이 있는 경우와 없는 경우의 높이 설정
+        customTabBar.customHeight = hasBottomInset ? 90 : 56 // 베젤이 있는 경우와 없는 경우의 높이 설정
         setValue(customTabBar, forKey: "tabBar")
         
     }
     
-    func setTabbarShadow(){
+    private func setTabbarShadow(){
         let appearance = UITabBarAppearance()
+        
+        let tabBarItemAppearance = UITabBarItemAppearance()
+
+        tabBarItemAppearance.normal.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Medium", size: 13)]
+        tabBarItemAppearance.selected.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Medium", size: 13)]
+        
+        appearance.stackedLayoutAppearance = tabBarItemAppearance
+
+        
         // set tabbar opacity
         appearance.configureWithOpaqueBackground()
 
@@ -60,13 +67,4 @@ class TabbarController: UITabBarController {
         tabBar.layer.shadowOffset = CGSize(width: 0, height: 4)  // Shadow height of 4px
         tabBar.layer.shadowRadius = 20
     }
-    
-    func adjustTabBarItemTextPosition() {
-            guard let items = tabBar.items else { return }
-
-            // Adjust title position for all tab bar items
-            for item in items {
-                item.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -5) // 텍스트를 위로 5만큼 이동
-            }
-        }
 }
