@@ -70,11 +70,10 @@
             </objects>
             <point key="canvasLocation" x="1977" y="1393"/>
         </scene>
-        <!--게시글-->
+        <!--Navigation Controller-->
         <scene sceneID="d62-hJ-VQo">
             <objects>
                 <navigationController storyboardIdentifier="PostTab" id="Ncd-i5-fAB" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="게시글" image="post" selectedImage="post_fill" id="E0w-ie-eqR"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="VxO-x9-iP1">
                         <rect key="frame" x="0.0" y="50" width="375" height="44"/>
@@ -91,7 +90,7 @@
         <!--Post Tab View Controller-->
         <scene sceneID="Xlr-Dx-qIQ">
             <objects>
-                <viewController id="V7h-eB-hdn" customClass="PostTabViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PostTabViewController" id="V7h-eB-hdn" customClass="PostTabViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UId-Wq-M4L">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -640,8 +639,6 @@
         <image name="LikeFilledIcon" width="32" height="32"/>
         <image name="LikeIcon" width="32" height="32"/>
         <image name="NoCommentIcon" width="84" height="84"/>
-        <image name="post" width="24" height="24"/>
-        <image name="post_fill" width="24" height="24"/>
         <namedColor name="gray0.5">
             <color red="0.94117647058823528" green="0.94901960784313721" blue="0.95686274509803926" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

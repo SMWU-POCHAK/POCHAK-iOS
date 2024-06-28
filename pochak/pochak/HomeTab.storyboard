@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,7 +12,7 @@
         <!--Home Tab View Controller-->
         <scene sceneID="B4z-8G-upW">
             <objects>
-                <viewController id="OmP-Fg-2wp" customClass="HomeTabViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeTabViewController" id="OmP-Fg-2wp" customClass="HomeTabViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lXC-lj-nnc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -47,11 +47,10 @@
             </objects>
             <point key="canvasLocation" x="1590" y="653"/>
         </scene>
-        <!--홈-->
+        <!--Navigation Controller-->
         <scene sceneID="dR1-Gu-trL">
             <objects>
                 <navigationController storyboardIdentifier="HomeTab" id="pZH-TV-E91" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="홈" image="home_logo" selectedImage="home_logo_fill" id="a3n-uF-VSQ"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Unu-cE-kon">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -73,8 +72,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="home_logo" width="15.666666984558105" height="18"/>
-        <image name="home_logo_fill" width="15.666666984558105" height="18"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
