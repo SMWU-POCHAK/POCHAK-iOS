@@ -73,6 +73,8 @@ class PostMenuViewController: UIViewController {
             // 3. 부모의 부모 뷰컨트롤러 (= home tab view controller)에 접근
             if let grandparentViewController = navigationController.viewControllers.dropLast().last {
                 print(grandparentViewController)
+                let vc = grandparentViewController as! HomeTabViewController
+                vc.changeHasBeenMade = true
                 // 모달을 해제하고 그 후 네비게이션 스택에서 원하는 뷰컨트롤러로 이동
                 self.dismiss(animated: true) {
                     navigationController.popToViewController(grandparentViewController, animated: true)

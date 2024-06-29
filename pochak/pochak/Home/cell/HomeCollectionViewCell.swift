@@ -8,6 +8,10 @@
 import UIKit
 
 class HomeCollectionViewCell: UICollectionViewCell {
+    
+    // MARK: - Properties
+    
+    static let identifier = "HomeCollectionViewCell"
 
     // MARK: - Views
     

@@ -91,18 +91,34 @@ extension FirstTabmanViewController : UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: followerCollectionView.bounds.width,
-                      height: 80)
+                      height: 70)
     }
+    
+    // cell 간 간격 설정
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+            return 0
+        }
+
     
 }
 
 // cell 삭제 로직
 extension FirstTabmanViewController: RemoveImageDelegate {
     func removeFromCollectionView(at indexPath: IndexPath, _ handle: String) {
-        // 알람! : 팔로워에서 삭제하시겠습니까?
-        let alert = UIAlertController(title:"팔로워를 삭제하시겠습니까?",message: "",preferredStyle: UIAlertController.Style.alert)
-        let cancle = UIAlertAction(title: "취소", style: .default, handler: nil)
-        let ok = UIAlertAction(title: "삭제", style: .destructive, handler: {
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+        let titleAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 18), NSAttributedString.Key.foregroundColor: UIColor.black]
+        let titleString = NSAttributedString(string: "팔로워를 삭제하시겠습니까?", attributes: titleAttributes as [NSAttributedString.Key : Any])
+        
+        let messageAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Regular", size: 14), NSAttributedString.Key.foregroundColor: UIColor.black]
+        let messageString = NSAttributedString(string: "팔로워를 삭제하면, 팔로워와 관련된 사진이 사라집니다.", attributes: messageAttributes as [NSAttributedString.Key : Any])
+        
+        alert.setValue(titleString, forKey: "attributedTitle")
+        alert.setValue(messageString, forKey: "attributedMessage")
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .default, handler: nil)
+        cancelAction.setValue(UIColor(named: "gray05"), forKey: "titleTextColor")
+        
+        let okAction = UIAlertAction(title: "삭제하기", style: .default, handler: {
             action in
             // API
             DeleteFollowerDataManager.shared.deleteFollowerDataManager(handle, { resultData in
@@ -114,8 +130,10 @@ extension FirstTabmanViewController: RemoveImageDelegate {
             self.imageArray.remove(at: indexPath.row)
             self.followerCollectionView.reloadData()
         })
-        alert.addAction(cancle)
-        alert.addAction(ok)
+        okAction.setValue(UIColor(named: "yellow00"), forKey: "titleTextColor")
+
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil) // present는 VC에서만 동작
     }
 }

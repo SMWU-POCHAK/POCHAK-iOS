@@ -15,15 +15,19 @@ class FollowListViewController: TabmanViewController {
     var viewControllers: [UIViewController] = []
     var index: Int = 0
     var handle : String?
+    var followerCount : Int = 0
+    var followingCount : Int = 0
+
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // 네비게이션 바 설정
         self.navigationController?.navigationBar.tintColor = .black
-        self.navigationController?.navigationBar.topItem?.title = ""
+//        self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationItem.title = handle ?? "handle not found"
-        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
+        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.red, NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 20) ?? UIFont.systemFont(ofSize: 20, weight: .bold)]
         
         // Tabman 사용
         // tab에 보여질 VC 추가
@@ -50,7 +54,7 @@ class FollowListViewController: TabmanViewController {
         bar.indicator.tintColor = UIColor(named: "yellow00")
         
         // padding 설정
-        bar.layout.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 15, right: 0)
+        bar.layout.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
         // tap center
         bar.layout.alignment = .centerDistributed
@@ -61,10 +65,10 @@ class FollowListViewController: TabmanViewController {
         
         // tap 선택 / 미선택
         bar.buttons.customize { (button) in
-            button.tintColor = .gray
-            button.selectedTintColor = .black
-            button.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
-            button.selectedFont = UIFont.systemFont(ofSize: 15, weight: .semibold)
+            button.tintColor = UIColor(named: "gray04")
+            button.selectedTintColor = UIColor(named: "navy00")
+            button.font = UIFont(name: "Pretendard-Bold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .semibold)
+            button.selectedFont =  UIFont(name: "Pretendard-Bold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .semibold)
         }
         
         addBar(bar, dataSource: self, at:.top)
@@ -104,9 +108,9 @@ extension FollowListViewController: PageboyViewControllerDataSource, TMBarDataSo
     func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
         switch index {
            case 0:
-               return TMBarItem(title: "팔로워")
+               return TMBarItem(title: "\(followerCount) 팔로워")
            case 1:
-               return TMBarItem(title: "팔로잉")
+               return TMBarItem(title: "\(followingCount) 팔로잉")
            default:
                let title = "Page \(index)"
               return TMBarItem(title: title)
