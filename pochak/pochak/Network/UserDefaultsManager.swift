@@ -17,6 +17,8 @@ class UserDefaultsManager {
         case handle
         case message
         case profileImgUrl
+        case followerCount
+        case followingCount
     }
     
     static func setData<T>(value: T, key: UserDefaultsKeys) {

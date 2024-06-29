@@ -36,7 +36,7 @@ class PostListViewController: TabmanViewController {
         bar.backgroundView.style = .clear
         
         // tab 밑 bar 색깔 & 크기
-        bar.indicator.weight = .custom(value: 2)
+        bar.indicator.weight = .custom(value: 4)
         bar.indicator.tintColor = UIColor(named: "yellow00")
         
         // padding 설정
@@ -47,7 +47,7 @@ class PostListViewController: TabmanViewController {
         
         // 배경색
         bar.backgroundView.style = .clear
-        bar.backgroundColor = UIColor(named: "navy00")
+        bar.backgroundColor = UIColor(named: "gray01")
         
         // tap 사이 간격
         bar.layout.contentMode = .fit //  버튼 화면에 딱 맞도록 구현
@@ -55,10 +55,10 @@ class PostListViewController: TabmanViewController {
         
         // tap 선택 / 미선택
         bar.buttons.customize { (button) in
-            button.tintColor = .gray
-            button.selectedTintColor = UIColor(named: "yellow00")
-            button.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
-            button.selectedFont = UIFont.systemFont(ofSize: 15, weight: .semibold)
+            button.tintColor = UIColor(named: "gray04")
+            button.selectedTintColor = UIColor(named: "navy00")
+            button.font = UIFont(name: "Pretendard-Bold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .semibold)
+            button.selectedFont =  UIFont(name: "Pretendard-Bold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .semibold)
         }
 //        let bar = TMBar.TabBar()
 //        // 배경색

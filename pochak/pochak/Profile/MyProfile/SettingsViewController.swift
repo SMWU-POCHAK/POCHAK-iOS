@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SettingsViewController: UINavigationController {
+class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,15 +23,20 @@ class SettingsViewController: UINavigationController {
     
     @IBAction func moveToTermsOfUsePage(_ sender: Any) {
         print("------- moveToTermsOfUsePage clicked -------")
-        guard let termsOfUseVC = self.storyboard?.instantiateViewController(withIdentifier: "TermsOfUseVC") as? TermsOfUseViewController else {return}
-        self.navigationController?.pushViewController(termsOfUseVC, animated: true)
     }
     
     @IBAction func logOut(_ sender: Any) {
         // 알람! : 회원정보가 없습니다 회원가입하시겠습니까?
-        let alert = UIAlertController(title:"로그아웃 하시겠습니까?",message: "",preferredStyle: UIAlertController.Style.alert)
-        let cancle = UIAlertAction(title: "취소", style: .destructive, handler: nil)
-        let ok = UIAlertAction(title: "확인", style: .default, handler: {
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+        let titleAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 18), NSAttributedString.Key.foregroundColor: UIColor.black]
+        let titleString = NSAttributedString(string: "로그아웃 하시겠습니까?", attributes: titleAttributes as [NSAttributedString.Key : Any])
+        
+        alert.setValue(titleString, forKey: "attributedTitle")
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .default, handler: nil)
+        cancelAction.setValue(UIColor(named: "gray05"), forKey: "titleTextColor")
+        
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: {
             action in
             // API
             LogoutDataManager.shared.logoutDataManager(
@@ -60,17 +65,29 @@ class SettingsViewController: UINavigationController {
             // Main으로 화면 전환
             self.toMainPage()
         })
-        alert.addAction(cancle)
-        alert.addAction(ok)
+        okAction.setValue(UIColor(named: "yellow00"), forKey: "titleTextColor")
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
         present(alert, animated: true, completion: nil)
     }
     
     
     @IBAction func deleteAccount(_ sender: Any) {
-        // 알람! : 회원정보가 없습니다 회원가입하시겠습니까?
-        let alert = UIAlertController(title:"회원 탈퇴하시겠습니까?",message: "회원탈퇴 시, 개인정보 및 기존에 업로드된 피드 정보가 모두 사라집니다.",preferredStyle: UIAlertController.Style.alert)
-        let cancle = UIAlertAction(title: "취소", style: .destructive, handler: nil)
-        let ok = UIAlertAction(title: "탈퇴하기", style: .default, handler: {
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+        let titleAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 18), NSAttributedString.Key.foregroundColor: UIColor.black]
+        let titleString = NSAttributedString(string: "회원 탈퇴하시겠습니까?", attributes: titleAttributes as [NSAttributedString.Key : Any])
+        
+        let messageAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Regular", size: 14), NSAttributedString.Key.foregroundColor: UIColor.black]
+        let messageString = NSAttributedString(string: "회원 탈퇴 시, 개인정보 및 기존에 업로드된 피드 정보가 모두 사라집니다.", attributes: messageAttributes as [NSAttributedString.Key : Any])
+        
+        alert.setValue(titleString, forKey: "attributedTitle")
+        alert.setValue(messageString, forKey: "attributedMessage")
+        
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .default, handler: nil)
+        cancelAction.setValue(UIColor(named: "gray05"), forKey: "titleTextColor")
+        
+        let okAction = UIAlertAction(title: "탈퇴하기", style: .default, handler: {
             action in
             // API
             DeleteAccountDataManager.shared.deleteAccountDataManager(
@@ -92,8 +109,10 @@ class SettingsViewController: UINavigationController {
             }
             self.toMainPage()
         })
-        alert.addAction(cancle)
-        alert.addAction(ok)
+        okAction.setValue(UIColor(named: "yellow00"), forKey: "titleTextColor")
+        
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
         present(alert,animated: true,completion: nil)
     }
     
