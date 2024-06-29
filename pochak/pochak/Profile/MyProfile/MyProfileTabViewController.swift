@@ -14,20 +14,22 @@ class MyProfileTabViewController: UIViewController {
     @IBOutlet weak var followerList: UIStackView!
     @IBOutlet weak var followingList: UIStackView!
     @IBOutlet weak var whiteBackground1: UIView!
-    @IBOutlet weak var whiteBackground2: UIView!
     @IBOutlet weak var userHandle: UILabel!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userMessage: UILabel!
     @IBOutlet weak var postCount: UILabel!
     @IBOutlet weak var followerCount: UILabel!
     @IBOutlet weak var followingCount: UILabel!
-    @IBOutlet weak var shareBtn: UIButton!
     @IBOutlet weak var postListTabmanView: UIView!
     @IBOutlet weak var updateProfileBtn: UIButton!
     @IBOutlet weak var topUIView: UIView!
     @IBOutlet weak var settingBtn: UIButton!
     
+    // 필요한 데이터 불러온 후 변수에 저장
     let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
+    // let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
+    let handle = APIConstants.dayeonHandle // 임시 핸들
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,7 +40,6 @@ class MyProfileTabViewController: UIViewController {
         
         // 흰색 배경 디자인
         whiteBackground1.layer.cornerRadius = 8
-        whiteBackground2.layer.cornerRadius = 8
     
         // 팔로워 / 팔로잉 레이블 선택
         viewFollowerList()
@@ -49,24 +50,9 @@ class MyProfileTabViewController: UIViewController {
         backBarButtonItem.tintColor = .black
         self.navigationItem.backBarButtonItem = backBarButtonItem
         
-//        // 설정 버튼
-//        let settingButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
-//        settingButton.setImage(UIImage(named: "settingIcon"), for: .normal)
-//        settingButton.addTarget(self, action: #selector(clickSettingButton), for: .touchUpInside)
-//        /// always assign button to storyboard FIRST!!!!
-//        self.topUIView.isUserInteractionEnabled = true // 이제 subview로 이벤트를 전달함
-//        self.topUIView.addSubview(settingButton) // view 계층 잘 파악하기
-//        /// add constraints
-//        settingButton.translatesAutoresizingMaskIntoConstraints = false
-//        settingButton.centerYAnchor.constraint(equalTo: self.userHandle.centerYAnchor).isActive = true
-//        settingButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
-        
-        // shareButton
-        self.shareBtn.titleLabel?.font = UIFont(name: "Pretendard-Medium", size: 14)
-        
         // 포스트 탭맨 뷰 constraint 설정
         postListTabmanView.translatesAutoresizingMaskIntoConstraints = false
-        postListTabmanView.topAnchor.constraint(equalTo: self.whiteBackground2.bottomAnchor, constant: 20).isActive = true
+        postListTabmanView.topAnchor.constraint(equalTo: self.whiteBackground1.bottomAnchor, constant: 5).isActive = true
         postListTabmanView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
         postListTabmanView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
         postListTabmanView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
@@ -79,29 +65,24 @@ class MyProfileTabViewController: UIViewController {
         super.viewWillAppear(animated)
         // API
         loadProfileData()
-        // 네비게이션 바 숨기기
+        
+        // 뷰가 나타날 때에는 네비게이션 바 숨기기
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
 
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        // 뷰가 사라질 때에는 네비게이션 바 다시 보여주기
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     private func loadProfileData() {
-//        let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
-        let handle = "dxxynni" // 임시 핸들
-//        self.userHandle.text = "@" + handle
-        self.userHandle.text = "@dxxynni"
-        
-//        let message = UserDefaultsManager.getData(type: String.self, forKey: .message) ?? ""
-//        self.userMessage.text = message
-//        
-//        let name = UserDefaultsManager.getData(type: String.self, forKey: .name) ?? ""
-//        self.userName.text = name
+        // let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
+        self.userHandle.text = "@\(handle)"
 
-        print("handle 있는지 검사-------------------")
+        print("------------------- loadProfileData() 안에 handle 있는지 검사 -------------------")
         print(handle)
         MyProfilePostDataManager.shared.myProfileUserAndPochakedPostDataManager(handle,{ [self]resultData in
       
@@ -119,16 +100,15 @@ class MyProfileTabViewController: UIViewController {
                 }
             }
 
-            self.profileImage.contentMode = .scaleAspectFill // 원 면적에 사진 크기 맞춤
+            // 1. 데이터 뷰에 반영
+            self.profileImage.contentMode = .scaleAspectFill /* 원 면적에 사진 크기 맞춤 */
             self.userName.text = String(resultData.name ?? "")
             self.userMessage.text = String(resultData.message ?? "")
-            self.shareBtn.setTitle("pochak.site/@" + String(resultData.handle ?? ""), for: .normal)
-            // font not changing? 스토리보드에서 버튼 style을 default로 변경
-            self.shareBtn.titleLabel?.font = UIFont(name: "Pretendard-Medium", size: 14)
             self.postCount.text = String(resultData.totalPostNum ?? 0)
             self.followerCount.text = String(resultData.followerCount ?? 0)
             self.followingCount.text = String(resultData.followingCount ?? 0)
             
+            // 2. UserDefaultsManager에 데이터 저장 후 관리
             UserDefaultsManager.setData(value: resultData.name, key: .name)
             UserDefaultsManager.setData(value: resultData.message, key: .message)
             UserDefaultsManager.setData(value: resultData.followerCount, key: .followerCount)
@@ -136,26 +116,23 @@ class MyProfileTabViewController: UIViewController {
         })
     }
     
-    // Setting Button
     @IBAction func clickSettingBtn(_ sender: Any) {
         guard let settingsVC = self.storyboard?.instantiateViewController(withIdentifier: "SettingsVC") as? SettingsViewController else {return}
         self.navigationController?.pushViewController(settingsVC, animated: true)
     }
     
-    // 프로필 수정
     @IBAction func updateProfile(_ sender: Any) {
 
         guard let updateProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "UpdateProfileVC") as? UpdateProfileViewController else {return}
         self.navigationController?.pushViewController(updateProfileVC, animated: true)
     }
     
-    //  UITapGestureRecognizer 사용
-    private func viewFollowerList() {
+    private func viewFollowerList() { /*  UITapGestureRecognizer 사용 */
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewFollowerTapped))
         followerList.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    private func viewFollowingList() {
+    private func viewFollowingList() { /*  UITapGestureRecognizer 사용 */
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewFollowingTapped))
         followingList.addGestureRecognizer(tapGestureRecognizer)
     }
@@ -163,7 +140,7 @@ class MyProfileTabViewController: UIViewController {
     @objc private func viewFollowerTapped(){
         guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC") as? FollowListViewController else {return}
         followListVC.index = 0
-        followListVC.handle = "dxxynni"
+        followListVC.handle = handle
         followListVC.followerCount = UserDefaultsManager.getData(type: Int.self, forKey: .followerCount) ?? 0
         followListVC.followingCount = UserDefaultsManager.getData(type: Int.self, forKey: .followingCount) ?? 0
         self.navigationController?.pushViewController(followListVC, animated: true)
@@ -172,16 +149,10 @@ class MyProfileTabViewController: UIViewController {
     @objc private func viewFollowingTapped(){
         guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC") as? FollowListViewController else {return}
         followListVC.index = 1
-        followListVC.handle = "dxxynni"
+        followListVC.handle = handle
         followListVC.followerCount = UserDefaultsManager.getData(type: Int.self, forKey: .followerCount) ?? 0
         followListVC.followingCount = UserDefaultsManager.getData(type: Int.self, forKey: .followingCount) ?? 0
         self.navigationController?.pushViewController(followListVC, animated: true)
     }
 
-    
-//    @objc private func clickSettingButton() {
-//        print("------- clickSettingButton clicked -------")
-//        guard let settingsVC = self.storyboard?.instantiateViewController(withIdentifier: "SettingsVC") as? SettingsViewController else {return}
-//        self.navigationController?.pushViewController(settingsVC, animated: true)
-//    }
 }
