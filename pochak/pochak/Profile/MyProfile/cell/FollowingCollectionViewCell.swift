@@ -23,12 +23,12 @@ class FollowingCollectionViewCell: UICollectionViewCell {
         // 프로필 레이아웃
         self.profileImageBtn.contentMode = .scaleAspectFill
         profileImageBtn.clipsToBounds = true // cornerRadius 적용 안됨 해결
-        self.profileImageBtn.layer.cornerRadius = 35
+        self.profileImageBtn.layer.cornerRadius = 26
         
         // 버튼 레이아웃
         followStateToggleBtn.setTitle("팔로잉", for: .normal)
         followStateToggleBtn.backgroundColor = UIColor(named: "gray03")
-        followStateToggleBtn.setTitleColor(UIColor(named: "gray07"), for: .normal)
+        followStateToggleBtn.setTitleColor(UIColor.white, for: .normal)
         followStateToggleBtn.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 14) // 폰트 설정
         followStateToggleBtn.layer.cornerRadius = 5
     }
@@ -57,13 +57,9 @@ class FollowingCollectionViewCell: UICollectionViewCell {
             // 팔로우 취소 알림창
             sender.setTitle("팔로우", for: .normal)
             sender.backgroundColor = UIColor(named: "yellow00")
-            sender.setTitleColor(UIColor(named: "gray07"), for: .normal)
-            sender.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 14) // 폰트 설정
         } else {
             sender.setTitle("팔로잉", for: .normal)
             sender.backgroundColor = UIColor(named: "gray03")
-            sender.setTitleColor(UIColor(named: "gray07"), for: .normal)
-            sender.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 14) // 폰트 설정
         }
         
     }

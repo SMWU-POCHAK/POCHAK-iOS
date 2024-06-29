@@ -26,7 +26,7 @@ class UpdateProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         // MARK: - Add Navigation Item
         // 완료 버튼
         let button = UIButton()

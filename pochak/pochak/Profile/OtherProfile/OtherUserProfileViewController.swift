@@ -26,6 +26,8 @@ class OtherUserProfileViewController: UIViewController {
 
     let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
     var recievedHandle: String?
+    var recievedFollowerCount : Int = 0
+    var recievedFollowingCount : Int = 0
 
     
     override func viewDidLoad() {
@@ -117,6 +119,8 @@ class OtherUserProfileViewController: UIViewController {
             self.postCount.text = String(resultData.totalPostNum ?? 0)
             self.followerCount.text = String(resultData.followerCount ?? 0)
             self.followingCount.text = String(resultData.followingCount ?? 0)
+            self.recievedFollowerCount = resultData.followerCount ?? 0
+            self.recievedFollowingCount = resultData.followingCount ?? 0
                     
             if resultData.isFollow == true {
                 // 버튼 레이아웃
@@ -184,6 +188,8 @@ class OtherUserProfileViewController: UIViewController {
         guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC") as? FollowListViewController else {return}
         followListVC.index = 0
         followListVC.handle = recievedHandle ?? ""
+        followListVC.followerCount = recievedFollowerCount
+        followListVC.followingCount = recievedFollowingCount
         self.navigationController?.pushViewController(followListVC, animated: true)
     }
         
@@ -191,6 +197,8 @@ class OtherUserProfileViewController: UIViewController {
         guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC") as? FollowListViewController else {return}
         followListVC.index = 1
         followListVC.handle = recievedHandle ?? ""
+        followListVC.followerCount = recievedFollowerCount
+        followListVC.followingCount = recievedFollowingCount
         self.navigationController?.pushViewController(followListVC, animated: true)
     }
     

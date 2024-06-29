@@ -5,12 +5,9 @@
 //  Created by Seo Cindy on 12/27/23.
 //
 
-import Tabman
-import Pageboy
 import UIKit
-import Kingfisher
 
-class MyProfileTabViewController: TabmanViewController {
+class MyProfileTabViewController: UIViewController {
 
     @IBOutlet weak var profileBackground: UIView!
     @IBOutlet weak var profileImage: UIImageView!
@@ -28,10 +25,12 @@ class MyProfileTabViewController: TabmanViewController {
     @IBOutlet weak var postListTabmanView: UIView!
     @IBOutlet weak var updateProfileBtn: UIButton!
     @IBOutlet weak var topUIView: UIView!
+    @IBOutlet weak var settingBtn: UIButton!
     
     let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
     override func viewDidLoad() {
         super.viewDidLoad()
+
 
         // 프로픨 디자인
         profileBackground.layer.cornerRadius = 58
@@ -50,17 +49,17 @@ class MyProfileTabViewController: TabmanViewController {
         backBarButtonItem.tintColor = .black
         self.navigationItem.backBarButtonItem = backBarButtonItem
         
-        // 설정 버튼
-        let settingButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
-        settingButton.setImage(UIImage(named: "settingIcon"), for: .normal)
-        settingButton.addTarget(self, action: #selector(clickSettingButton), for: .touchUpInside)
-        /// always assign button to storyboard FIRST!!!!
-        self.topUIView.isUserInteractionEnabled = true // 이제 subview로 이벤트를 전달함
-        self.topUIView.addSubview(settingButton) // view 계층 잘 파악하기
-        /// add constraints
-        settingButton.translatesAutoresizingMaskIntoConstraints = false
-        settingButton.centerYAnchor.constraint(equalTo: self.userHandle.centerYAnchor).isActive = true
-        settingButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
+//        // 설정 버튼
+//        let settingButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+//        settingButton.setImage(UIImage(named: "settingIcon"), for: .normal)
+//        settingButton.addTarget(self, action: #selector(clickSettingButton), for: .touchUpInside)
+//        /// always assign button to storyboard FIRST!!!!
+//        self.topUIView.isUserInteractionEnabled = true // 이제 subview로 이벤트를 전달함
+//        self.topUIView.addSubview(settingButton) // view 계층 잘 파악하기
+//        /// add constraints
+//        settingButton.translatesAutoresizingMaskIntoConstraints = false
+//        settingButton.centerYAnchor.constraint(equalTo: self.userHandle.centerYAnchor).isActive = true
+//        settingButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
         
         // shareButton
         self.shareBtn.titleLabel?.font = UIFont(name: "Pretendard-Medium", size: 14)
@@ -80,6 +79,14 @@ class MyProfileTabViewController: TabmanViewController {
         super.viewWillAppear(animated)
         // API
         loadProfileData()
+        // 네비게이션 바 숨기기
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     private func loadProfileData() {
@@ -124,13 +131,20 @@ class MyProfileTabViewController: TabmanViewController {
             
             UserDefaultsManager.setData(value: resultData.name, key: .name)
             UserDefaultsManager.setData(value: resultData.message, key: .message)
-            
+            UserDefaultsManager.setData(value: resultData.followerCount, key: .followerCount)
+            UserDefaultsManager.setData(value: resultData.followingCount, key: .followingCount)
         })
+    }
+    
+    // Setting Button
+    @IBAction func clickSettingBtn(_ sender: Any) {
+        guard let settingsVC = self.storyboard?.instantiateViewController(withIdentifier: "SettingsVC") as? SettingsViewController else {return}
+        self.navigationController?.pushViewController(settingsVC, animated: true)
     }
     
     // 프로필 수정
     @IBAction func updateProfile(_ sender: Any) {
-        print("------- updateProfile clicked -------")
+
         guard let updateProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "UpdateProfileVC") as? UpdateProfileViewController else {return}
         self.navigationController?.pushViewController(updateProfileVC, animated: true)
     }
@@ -150,6 +164,8 @@ class MyProfileTabViewController: TabmanViewController {
         guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC") as? FollowListViewController else {return}
         followListVC.index = 0
         followListVC.handle = "dxxynni"
+        followListVC.followerCount = UserDefaultsManager.getData(type: Int.self, forKey: .followerCount) ?? 0
+        followListVC.followingCount = UserDefaultsManager.getData(type: Int.self, forKey: .followingCount) ?? 0
         self.navigationController?.pushViewController(followListVC, animated: true)
     }
         
@@ -157,13 +173,15 @@ class MyProfileTabViewController: TabmanViewController {
         guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC") as? FollowListViewController else {return}
         followListVC.index = 1
         followListVC.handle = "dxxynni"
+        followListVC.followerCount = UserDefaultsManager.getData(type: Int.self, forKey: .followerCount) ?? 0
+        followListVC.followingCount = UserDefaultsManager.getData(type: Int.self, forKey: .followingCount) ?? 0
         self.navigationController?.pushViewController(followListVC, animated: true)
     }
 
     
-    @objc private func clickSettingButton() {
-        print("------- clickSettingButton clicked -------")
-        guard let settingsVC = self.storyboard?.instantiateViewController(withIdentifier: "SettingsVC") as? SettingsViewController else {return}
-        self.navigationController?.pushViewController(settingsVC, animated: true)
-    }
+//    @objc private func clickSettingButton() {
+//        print("------- clickSettingButton clicked -------")
+//        guard let settingsVC = self.storyboard?.instantiateViewController(withIdentifier: "SettingsVC") as? SettingsViewController else {return}
+//        self.navigationController?.pushViewController(settingsVC, animated: true)
+//    }
 }

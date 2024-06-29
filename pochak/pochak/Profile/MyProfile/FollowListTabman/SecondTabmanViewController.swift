@@ -78,9 +78,13 @@ extension SecondTabmanViewController : UICollectionViewDelegate, UICollectionVie
 
 // CollectionView Cell 크기(높이, 너비 지정)
 extension SecondTabmanViewController : UICollectionViewDelegateFlowLayout{
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: followingCollectionView.bounds.width,
-                      height: 80)
+                      height: 70)
     }
+    
+    // cell 간 간격 설정
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+            return 0
+        }
 }

@@ -59,12 +59,12 @@ class FollowerCollectionViewCell: UICollectionViewCell {
         // 사진 안 넣어짐 -> 버튼 type을 custom으로 변경 + style default로 변경
         profileImageBtn.contentMode = .scaleAspectFill
         profileImageBtn.clipsToBounds = true // cornerRadius 적용 안됨 해결
-        profileImageBtn.layer.cornerRadius = 35
+        profileImageBtn.layer.cornerRadius = 26
         
         // 버튼 레이아웃
         deleteBtn.setTitle("삭제", for: .normal)
         deleteBtn.backgroundColor = UIColor(named: "gray03")
-        deleteBtn.setTitleColor(UIColor(named: "gray07"), for: .normal)
+        deleteBtn.setTitleColor(UIColor.white, for: .normal)
         deleteBtn.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 14) // 폰트 설정
         deleteBtn.layer.cornerRadius = 5
         
