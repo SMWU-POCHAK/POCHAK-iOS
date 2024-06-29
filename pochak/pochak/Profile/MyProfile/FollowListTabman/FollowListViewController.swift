@@ -18,16 +18,14 @@ class FollowListViewController: TabmanViewController {
     var followerCount : Int = 0
     var followingCount : Int = 0
 
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // 네비게이션 바 설정
         self.navigationController?.navigationBar.tintColor = .black
-//        self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationItem.title = handle ?? "handle not found"
-        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.red, NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 20) ?? UIFont.systemFont(ofSize: 20, weight: .bold)]
+        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.black, NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 18) ?? UIFont.systemFont(ofSize: 20, weight: .bold)]
         
         // Tabman 사용
         // tab에 보여질 VC 추가
@@ -77,11 +75,11 @@ class FollowListViewController: TabmanViewController {
     
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
-        // 네비게이션 바 설정
+        
+        // 다시 뷰로 돌아올 때에도 네비게이션 설정 적용
         self.navigationController?.navigationBar.tintColor = .black
         self.navigationItem.title = handle ?? "handle not found"
-        self.navigationController?.navigationBar.topItem?.title = ""
-        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
+        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.black, NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 18) ?? UIFont.systemFont(ofSize: 20, weight: .bold)]
     }
     
 }

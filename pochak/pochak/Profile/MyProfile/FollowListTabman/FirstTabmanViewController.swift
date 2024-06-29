@@ -18,20 +18,22 @@ class FirstTabmanViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // MARK: - Collection View 구현
+        
+        // CollectionView 등록
         setupCollectionView()
         
+        // API
+        loadFollowerListData()
     }
     
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
+        
         // API
         loadFollowerListData()
     }
 
 
-    // MARK: - Helper
     private func setupCollectionView() {
         followerCollectionView.delegate = self
         followerCollectionView.dataSource = self
@@ -42,7 +44,6 @@ class FirstTabmanViewController: UIViewController{
         }
 
     private func loadFollowerListData() {
-//        let handle = "dxxynni" // !!임시 핸들!!
         FollowListDataManager.shared.followerDataManager(recievedHandle ?? "",{resultData in
             self.imageArray = resultData
             self.followerCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
