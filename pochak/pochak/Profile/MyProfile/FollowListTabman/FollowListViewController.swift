@@ -25,7 +25,7 @@ class FollowListViewController: TabmanViewController {
         // 네비게이션 바 설정
         self.navigationController?.navigationBar.tintColor = .black
         self.navigationItem.title = handle ?? "handle not found"
-        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.black, NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 20) ?? UIFont.systemFont(ofSize: 20, weight: .bold)]
+        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.black, NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 18) ?? UIFont.systemFont(ofSize: 20, weight: .bold)]
         
         // Tabman 사용
         // tab에 보여질 VC 추가
