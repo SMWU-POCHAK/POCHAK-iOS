@@ -33,7 +33,6 @@ class MyProfileTabViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
         // 프로픨 디자인
         profileBackground.layer.cornerRadius = 58
         profileImage.layer.cornerRadius = 55
@@ -86,7 +85,7 @@ class MyProfileTabViewController: UIViewController {
         print(handle)
         MyProfilePostDataManager.shared.myProfileUserAndPochakedPostDataManager(handle,{ [self]resultData in
       
-            // 프로필 이미지
+            // 1. API 호출
             let imageURL = resultData.profileImage ?? ""
             UserDefaultsManager.setData(value: imageURL, key: .profileImgUrl)
             if let url = URL(string: imageURL) {
@@ -100,7 +99,7 @@ class MyProfileTabViewController: UIViewController {
                 }
             }
 
-            // 1. 데이터 뷰에 반영
+            // 2. 필요한 데이터 뷰에 반영
             self.profileImage.contentMode = .scaleAspectFill /* 원 면적에 사진 크기 맞춤 */
             self.userName.text = String(resultData.name ?? "")
             self.userMessage.text = String(resultData.message ?? "")
@@ -108,7 +107,7 @@ class MyProfileTabViewController: UIViewController {
             self.followerCount.text = String(resultData.followerCount ?? 0)
             self.followingCount.text = String(resultData.followingCount ?? 0)
             
-            // 2. UserDefaultsManager에 데이터 저장 후 관리
+            // 3. UserDefaultsManager에 데이터 저장 후 관리
             UserDefaultsManager.setData(value: resultData.name, key: .name)
             UserDefaultsManager.setData(value: resultData.message, key: .message)
             UserDefaultsManager.setData(value: resultData.followerCount, key: .followerCount)
