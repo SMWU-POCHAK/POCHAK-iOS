@@ -28,19 +28,27 @@ class OtherUserProfileViewController: UIViewController {
     var recievedHandle: String?
     var recievedFollowerCount : Int = 0
     var recievedFollowingCount : Int = 0
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Back 버튼 커스텀
-        let backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
+        // 현재 프로필 페이지의 네비게이션 바 설정
+        self.navigationController?.navigationBar.tintColor = .black
+        self.navigationController?.navigationBar.topItem?.title = "@" + (recievedHandle ?? "handle not found")
+        
+        // 다음 나올 VC의 Back 버튼 커스텀
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         backBarButtonItem.tintColor = .black
         self.navigationItem.backBarButtonItem = backBarButtonItem
         
+        // 더보기 버튼
+        let barButton = UIBarButtonItem(image: UIImage(named: "moreButtonIcon"), style: .plain, target: self, action: #selector(moreButtonPressed))
+        self.navigationItem.rightBarButtonItem = barButton
+        
         // 프로픨 디자인
-        profileBackground.layer.cornerRadius = 50
-        profileImage.layer.cornerRadius = 46
+        profileBackground.layer.cornerRadius = 58
+        profileImage.layer.cornerRadius = 55
+        profileImage.contentMode = .scaleAspectFill
         
         // 둥근 모서리 적용
         whiteBackground.layer.cornerRadius = 8
@@ -60,32 +68,35 @@ class OtherUserProfileViewController: UIViewController {
         // API
         loadProfileData()
         
-        // 버튼 레이아웃
-        followToggleBtn.setTitle("팔로잉", for: .normal)
-        followToggleBtn.backgroundColor = UIColor(named: "gray03")
-        followToggleBtn.setTitleColor(UIColor(named: "gray07"), for: .normal)
-        followToggleBtn.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 14) // 폰트 설정
-        followToggleBtn.layer.cornerRadius = 5
+//        // 버튼 레이아웃
+//        followToggleBtn.setTitle("팔로잉", for: .normal)
+//        followToggleBtn.backgroundColor = UIColor(named: "gray03")
+//        followToggleBtn.setTitleColor(UIColor.white, for: .normal)
+//        followToggleBtn.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 16) // 폰트 설정
+//        followToggleBtn.layer.cornerRadius = 5
+    
         
-        // 네비게이션 바 설정
-        self.navigationItem.title = recievedHandle ?? "handle not found"
-        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-        // , .font: UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.heavy)
-        self.navigationController?.navigationBar.tintColor = .white
-        self.navigationController?.navigationBar.topItem?.title = ""
+//        // userHandle
+//        self.userHandle.text = "@\(String(describing: recievedHandle))"
+//        self.userHandle.font = UIFont(name: "Pretendard-Bold", size: 20)
+//        self.userHandle.textColor = UIColor.black
+//        self.userHandle.translatesAutoresizingMaskIntoConstraints = false
+        
         
     }
+    
+    
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
         
         // API
         loadProfileData()
         
-        // 네비게이션 바 설정
-        self.navigationItem.title = recievedHandle ?? "handle not found"
-        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-        self.navigationController?.navigationBar.tintColor = .white
-        self.navigationController?.navigationBar.topItem?.title = ""
+//        // 네비게이션 바 설정
+//        self.navigationItem.title = recievedHandle ?? "handle not found"
+//        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+//        self.navigationController?.navigationBar.tintColor = .white
+//        self.navigationController?.navigationBar.topItem?.title = ""
     }
     
     private func loadProfileData() {
@@ -126,14 +137,14 @@ class OtherUserProfileViewController: UIViewController {
                 // 버튼 레이아웃
                 self.followToggleBtn.setTitle("팔로잉", for: .normal)
                 self.followToggleBtn.backgroundColor = UIColor(named: "gray03")
-                self.followToggleBtn.setTitleColor(UIColor(named: "gray07"), for: .normal)
-                self.followToggleBtn.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 14) // 폰트 설정
+                self.followToggleBtn.setTitleColor(UIColor.white, for: .normal)
+                self.followToggleBtn.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 16) // 폰트 설정
                 self.followToggleBtn.layer.cornerRadius = 5
             } else {
                 self.followToggleBtn.setTitle("팔로우", for: .normal)
                 self.followToggleBtn.backgroundColor = UIColor(named: "yellow00")
-                self.followToggleBtn.setTitleColor(UIColor(named: "gray07"), for: .normal)
-                self.followToggleBtn.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 14) // 폰트 설정
+                self.followToggleBtn.setTitleColor(UIColor.white, for: .normal)
+                self.followToggleBtn.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 16) // 폰트 설정
                 self.followToggleBtn.layer.cornerRadius = 5
             }
         })
@@ -151,23 +162,33 @@ class OtherUserProfileViewController: UIViewController {
         
         if sender.isSelected {
             // 알림창
-            let alert = UIAlertController(title:"팔로우를 취소할까요?",message: "팔로우를 취소하면, 피드에 업로드된 관련 사진이 사라집니다.",preferredStyle: UIAlertController.Style.alert)
-            let cancle = UIAlertAction(title: "나가기", style: .default, handler: nil)
-            let ok = UIAlertAction(title: "계속하기", style: .destructive, handler: {
+            let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+            let titleAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 18), NSAttributedString.Key.foregroundColor: UIColor.black]
+            let titleString = NSAttributedString(string: "팔로우를 취소할까요?", attributes: titleAttributes as [NSAttributedString.Key : Any])
+            
+            let messageAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Regular", size: 14), NSAttributedString.Key.foregroundColor: UIColor.black]
+            let messageString = NSAttributedString(string: "팔로우를 취소하면, 피드에 업로드된 관련 사진이 사라집니다.", attributes: messageAttributes as [NSAttributedString.Key : Any])
+            
+            alert.setValue(titleString, forKey: "attributedTitle")
+            alert.setValue(messageString, forKey: "attributedMessage")
+            
+            
+            let cancelAction = UIAlertAction(title: "나가기", style: .default, handler: nil)
+            cancelAction.setValue(UIColor(named: "gray05"), forKey: "titleTextColor")
+            
+            let okAction = UIAlertAction(title: "계속하기", style: .destructive, handler: {
                 action in
                 sender.setTitle("팔로우", for: .normal)
                 sender.backgroundColor = UIColor(named: "yellow00")
-                sender.setTitleColor(UIColor(named: "gray07"), for: .normal)
-                sender.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 14) // 폰트 설정
             })
-            alert.addAction(cancle)
-            alert.addAction(ok)
+            okAction.setValue(UIColor(named: "yellow00"), forKey: "titleTextColor")
+
+            alert.addAction(cancelAction)
+            alert.addAction(okAction)
             self.present(alert, animated: true, completion: nil) // present는 VC에서만 동작
         } else {
             sender.setTitle("팔로잉", for: .normal)
             sender.backgroundColor = UIColor(named: "gray03")
-            sender.setTitleColor(UIColor(named: "gray07"), for: .normal)
-            sender.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 14) // 폰트 설정
         }
         
     }
@@ -202,8 +223,20 @@ class OtherUserProfileViewController: UIViewController {
         self.navigationController?.pushViewController(followListVC, animated: true)
     }
     
-//    @objc private func clickSettingButton(_ sender: UIButton) {
-//        guard let updateProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "UpdateProfileVC") as? UpdateProfileViewController else {return}
-//        self.navigationController?.pushViewController(updateProfileVC, animated: true)
-//    }
+    @objc func moreButtonPressed(){
+        guard let profileMenuVC = self.storyboard?.instantiateViewController(withIdentifier: "profileMenuVC") as? ProfileMenuViewController else {return}
+        let sheet = profileMenuVC.sheetPresentationController
+        
+        let multiplier = 0.25
+        let fraction = UISheetPresentationController.Detent.custom { context in
+            self.view.bounds.height * multiplier
+        }
+        sheet?.detents = [fraction]
+        sheet?.prefersGrabberVisible = true
+        sheet?.prefersScrollingExpandsWhenScrolledToEdge = false
+
+        present(profileMenuVC, animated: true)
+    }
+
 }
+
