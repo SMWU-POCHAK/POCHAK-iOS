@@ -106,20 +106,6 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     // MARK: - Functions
     
     private func setupNavigationBar(){
-        // 네비게이션 바 밑줄 없애기
-        self.navigationController?.navigationBar.standardAppearance.shadowColor = .white  // 스크롤하지 않는 상태
-        self.navigationController?.navigationBar.scrollEdgeAppearance?.shadowColor = .white  // 스크롤하고 있는 상태
-
-        // back button 커스텀
-        self.navigationController?.navigationBar.topItem?.backButtonTitle = ""
-        self.navigationController?.navigationBar.tintColor = .black
-        let backbutton = UIBarButtonItem(image: UIImage(named: "ChevronLeft"), style: .done, target: self, action: #selector(goBack))
-        self.navigationItem.leftBarButtonItem = backbutton
-
-        // left bar button을 추가하면 기존에 되던 스와이프 pop 기능이 해제됨
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
-        
         // bar button item 추가 (신고하기 메뉴 등)
         let barButton = UIBarButtonItem(image: UIImage(named: "MoreIcon"), style: .plain, target: self, action: #selector(moreActionButtonDidTap))
         self.navigationItem.rightBarButtonItem = barButton
@@ -156,11 +142,13 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
             }
         }
         
-        // 내비게이션 바 타이틀 세팅
-        let label = UILabel()
-        label.font = UIFont(name: "Pretendard-Bold", size: 18)
-        label.text = postDataResult.ownerHandle + " 님의 게시물"
-        self.navigationItem.titleView = label
+//        // 내비게이션 바 타이틀 세팅
+//        let label = UILabel()
+//        label.font = UIFont(name: "Pretendard-Bold", size: 18)
+//        label.text = postDataResult.ownerHandle + " 님의 게시물"
+//        self.navigationItem.titleView = label
+        
+        self.navigationItem.title = postDataResult.ownerHandle + " 님의 게시물"
         
         // 태그된 사용자, 포착한 사용자
         self.taggedUsers.text = ""
