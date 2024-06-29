@@ -28,63 +28,44 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Main.storyboard 가져오기
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        // 토큰 여부에 따른 첫 화면을 설정
-        if let keyChainToken = (try? KeychainManager.load(account: "accessToken")) {
-            // 로그인 된 상태
-            print("scene delegate login succeed")
-            print(keyChainToken)
-            let access = GetToken().getAccessToken()
-            print(access)
-            
-            let homeTabViewController = UIStoryboard(name: "HomeTab", bundle: nil).instantiateViewController(withIdentifier: "HomeTabViewController")
-            let postTabViewController = UIStoryboard(name: "PostTab", bundle: nil).instantiateViewController(withIdentifier: "PostTabViewController")
-            let cameraTabViewController = UIStoryboard(name: "CameraTab", bundle: nil).instantiateViewController(withIdentifier: "CameraViewController")
-            let alarmTabViewController = UIStoryboard(name: "AlarmTab", bundle: nil).instantiateViewController(withIdentifier: "AlarmViewController")
-            let myProfileViewController = UIStoryboard(name: "ProfileTab", bundle: nil).instantiateViewController(withIdentifier: "MyProfileTabVC")
-            
-            let homeNavController = UINavigationController(rootViewController: homeTabViewController)
-            let postNavController = UINavigationController(rootViewController: postTabViewController)
-            let cameraNavController = UINavigationController(rootViewController: cameraTabViewController)
-            let alarmNavController = UINavigationController(rootViewController: alarmTabViewController)
-            let myProfileNavController = UINavigationController(rootViewController: myProfileViewController)
-            
-            let tabBarController = CustomTabBarController()
-            tabBarController.setViewControllers([homeNavController, postNavController, cameraNavController, alarmNavController, myProfileNavController], animated: false)
-            
-            if let items = tabBarController.tabBar.items {
-                items[0].selectedImage = UIImage(named: "home_logo_fill")?.withRenderingMode(.alwaysOriginal)
-                items[0].image = UIImage(named: "home_logo")?.withRenderingMode(.alwaysOriginal)
-                items[0].title = "홈"
+        let homeTabViewController = UIStoryboard(name: "HomeTab", bundle: nil).instantiateViewController(withIdentifier: "HomeTabViewController")
+        let postTabViewController = UIStoryboard(name: "PostTab", bundle: nil).instantiateViewController(withIdentifier: "PostTabViewController")
+        let cameraTabViewController = UIStoryboard(name: "CameraTab", bundle: nil).instantiateViewController(withIdentifier: "CameraViewController")
+        let alarmTabViewController = UIStoryboard(name: "AlarmTab", bundle: nil).instantiateViewController(withIdentifier: "AlarmViewController")
+        let myProfileViewController = UIStoryboard(name: "ProfileTab", bundle: nil).instantiateViewController(withIdentifier: "MyProfileTabVC")
+        
+        let homeNavController = UINavigationController(rootViewController: homeTabViewController)
+        let postNavController = UINavigationController(rootViewController: postTabViewController)
+        let cameraNavController = UINavigationController(rootViewController: cameraTabViewController)
+        let alarmNavController = UINavigationController(rootViewController: alarmTabViewController)
+        let myProfileNavController = UINavigationController(rootViewController: myProfileViewController)
+        
+        let tabBarController = CustomTabBarController()
+        tabBarController.setViewControllers([homeNavController, postNavController, cameraNavController, alarmNavController, myProfileNavController], animated: false)
+        
+        if let items = tabBarController.tabBar.items {
+            items[0].selectedImage = UIImage(named: "home_logo_fill")?.withRenderingMode(.alwaysOriginal)
+            items[0].image = UIImage(named: "home_logo")?.withRenderingMode(.alwaysOriginal)
+            items[0].title = "홈"
 
-                items[1].selectedImage = UIImage(named:"post_fill")?.withRenderingMode(.alwaysOriginal)
-                items[1].image = UIImage(named:"post")?.withRenderingMode(.alwaysOriginal)
-                items[1].title = "게시글"
+            items[1].selectedImage = UIImage(named:"post_fill")?.withRenderingMode(.alwaysOriginal)
+            items[1].image = UIImage(named:"post")?.withRenderingMode(.alwaysOriginal)
+            items[1].title = "게시글"
 
-                items[2].selectedImage = UIImage(named:"pochak_fill")?.withRenderingMode(.alwaysOriginal)
-                items[2].image = UIImage(named:"pochak")?.withRenderingMode(.alwaysOriginal)
-                items[2].title = "카메라"
+            items[2].selectedImage = UIImage(named:"pochak_fill")?.withRenderingMode(.alwaysOriginal)
+            items[2].image = UIImage(named:"pochak")?.withRenderingMode(.alwaysOriginal)
+            items[2].title = "카메라"
 
-                items[3].selectedImage = UIImage(named:"alarm_fill")?.withRenderingMode(.alwaysOriginal)
-                items[3].image = UIImage(named:"alarm")?.withRenderingMode(.alwaysOriginal)
-                items[3].title = "알림"
+            items[3].selectedImage = UIImage(named:"alarm_fill")?.withRenderingMode(.alwaysOriginal)
+            items[3].image = UIImage(named:"alarm")?.withRenderingMode(.alwaysOriginal)
+            items[3].title = "알림"
 
-                items[4].selectedImage = UIImage(named:"profile_fill")?.withRenderingMode(.alwaysOriginal)
-                items[4].image = UIImage(named:"profile")?.withRenderingMode(.alwaysOriginal)
-                items[4].title = "프로필"
-            }
-            window?.rootViewController = tabBarController
-            window?.makeKeyAndVisible()
-            
-        } else {
-            // 로그인 안된 상태
-            print("scene delegate login not yet!")
-
-            let socialJoinViewController = storyboard.instantiateViewController(withIdentifier: "SocialJoinVC")
-            
-            window?.rootViewController = socialJoinViewController
-            window?.makeKeyAndVisible()
-            
+            items[4].selectedImage = UIImage(named:"profile_fill")?.withRenderingMode(.alwaysOriginal)
+            items[4].image = UIImage(named:"profile")?.withRenderingMode(.alwaysOriginal)
+            items[4].title = "프로필"
         }
+        window?.rootViewController = tabBarController
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
