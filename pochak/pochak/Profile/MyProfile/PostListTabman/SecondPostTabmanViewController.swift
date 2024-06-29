@@ -10,9 +10,8 @@ import UIKit
 class SecondPostTabmanViewController: UIViewController {
 
     @IBOutlet weak var postCollectionView: UICollectionView!
-    // let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
-    let handle = "dxxynni" // 임시 핸들
-    var recievedHandle : String?
+    
+    var receivedHandle : String?
     var imageArray : [PostDataModel] = []
     
     override func viewDidLoad() {
@@ -45,7 +44,7 @@ class SecondPostTabmanViewController: UIViewController {
     
     private func loadImageData() {
         // 임시로 사용하는 loginUser
-        MyProfilePostDataManager.shared.myProfilePochakPostDataManager(handle,{resultData in
+        MyProfilePostDataManager.shared.myProfilePochakPostDataManager(receivedHandle ?? "",{resultData in
             self.imageArray = resultData
             self.postCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
         })

@@ -29,6 +29,15 @@ class OtherUserProfileViewController: UIViewController {
     var recievedFollowerCount : Int = 0
     var recievedFollowingCount : Int = 0
     
+    // ViewDidLoad보다 먼저 실행
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //storyboard에서 설정한 identifier와 동일한 이름
+        if segue.identifier == "embedContainer" {
+            let postListVC = segue.destination as! PostListViewController
+            postListVC.handle = recievedHandle
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -30,6 +30,15 @@ class MyProfileTabViewController: UIViewController {
     // let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
     let handle = APIConstants.dayeonHandle // 임시 핸들
     
+    // ViewDidLoad보다 먼저 실행
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //storyboard에서 설정한 identifier와 동일한 이름
+        if segue.identifier == "embedContainer" {
+            let postListVC = segue.destination as! PostListViewController
+            postListVC.handle = handle
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -58,12 +67,16 @@ class MyProfileTabViewController: UIViewController {
 
         // API
         loadProfileData()
+        
     }
-    
+
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
         // API
         loadProfileData()
+        
+        // postListVC에 handle 넘겨주기
+//        performSegue(withIdentifier: "performSegue", sender: handle)
         
         // 뷰가 나타날 때에는 네비게이션 바 숨기기
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -76,6 +89,7 @@ class MyProfileTabViewController: UIViewController {
         // 뷰가 사라질 때에는 네비게이션 바 다시 보여주기
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
+    
     
     private func loadProfileData() {
         // let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""

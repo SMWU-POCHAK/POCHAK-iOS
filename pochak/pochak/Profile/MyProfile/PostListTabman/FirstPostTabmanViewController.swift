@@ -10,25 +10,23 @@ import UIKit
 class FirstPostTabmanViewController: UIViewController {
     
     @IBOutlet weak var postCollectionView: UICollectionView!
-    // let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
-    let handle = "dxxynni" // 임시 핸들
-
-    
+    var receivedHandle: String?
     var imageArray : [PostDataModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // MARK: - Collection View 구현
+        // Collection View 구현
         setupCollectionView()
         
-        // 이미지 로드
+        // 이미지 로드 API
         loadImageData()
     }
     
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
-        // API
+        
+        // 이미지 로드 API
         loadImageData()
     }
 
@@ -43,7 +41,7 @@ class FirstPostTabmanViewController: UIViewController {
         }
     
     private func loadImageData() {
-        MyProfilePostDataManager.shared.myProfileUserAndPochakedPostDataManager(handle,{resultData in
+        MyProfilePostDataManager.shared.myProfileUserAndPochakedPostDataManager(receivedHandle ?? "",{resultData in
             self.imageArray = resultData.postList
             self.postCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
         })

@@ -149,7 +149,7 @@
                                             <action selector="clickSettingBtn:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="XPL-p1-nTp"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y0r-Us-k2l">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y0r-Us-k2l">
                                         <rect key="frame" x="20" y="60" width="0.0" height="0.0"/>
                                         <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="20"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -180,7 +180,7 @@
                                 <rect key="frame" x="0.0" y="340.66666666666674" width="393" height="511.33333333333326"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
-                                    <segue destination="A0Y-2h-uUD" kind="embed" id="d82-1u-71m"/>
+                                    <segue destination="A8c-zA-jyb" kind="embed" identifier="embedContainer" id="CkB-Wx-fnp"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -563,19 +563,20 @@
             <point key="canvasLocation" x="-984" y="-2"/>
         </scene>
         <!--Post List View Controller-->
-        <scene sceneID="KHy-6e-erT">
+        <scene sceneID="LSb-ju-Wft">
             <objects>
-                <viewController storyboardIdentifier="PostListVC" id="A0Y-2h-uUD" customClass="PostListViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="jIR-FU-jfn">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="511.33333333333331"/>
+                <viewController storyboardIdentifier="PostListVC" id="A8c-zA-jyb" customClass="PostListViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="J5d-Go-gxw">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="477"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="GcB-qq-eYl"/>
+                        <viewLayoutGuide key="safeArea" id="Ixl-d3-zOE"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="xT4-6K-Xdq"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="k4E-40-hNX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dAa-JV-w6W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="618" y="646"/>
+            <point key="canvasLocation" x="660" y="651"/>
         </scene>
         <!--First Post Tabman View Controller-->
         <scene sceneID="cOC-Jn-Ggv">
@@ -612,7 +613,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E7h-9i-SdW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="338" y="1230"/>
+            <point key="canvasLocation" x="169" y="1336"/>
         </scene>
         <!--Second Post Tabman View Controller-->
         <scene sceneID="TY2-nz-leW">
@@ -649,7 +650,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5U5-zH-b3T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1167" y="1230"/>
+            <point key="canvasLocation" x="1147" y="1336"/>
         </scene>
         <!--Profile Menu View Controller-->
         <scene sceneID="gYP-B2-hWT">
@@ -866,7 +867,7 @@
                                 <rect key="frame" x="0.0" y="375" width="393" height="477"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
-                                    <segue destination="A0Y-2h-uUD" kind="embed" id="iU8-LN-qc1"/>
+                                    <segue destination="A8c-zA-jyb" kind="embed" identifier="embedContainer" id="2dZ-Dq-Eob"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -903,7 +904,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="d82-1u-71m"/>
+        <segue reference="2dZ-Dq-Eob"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="CancelIcon" width="24" height="24"/>
