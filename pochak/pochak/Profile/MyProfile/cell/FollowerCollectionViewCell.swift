@@ -64,7 +64,6 @@ class FollowerCollectionViewCell: UICollectionViewCell {
             return
         }
         guard let indexPath = superView.indexPath(for: self) else {return}
-        print(indexPath.row)
         delegate?.removeFromCollectionView(at: indexPath, handle)
     }
 }

@@ -125,7 +125,7 @@ extension FirstTabmanViewController: RemoveImageDelegate {
         let okAction = UIAlertAction(title: "삭제하기", style: .default, handler: {
             action in
             // API
-            DeleteFollowerDataManager.shared.deleteFollowerDataManager(handle, { resultData in
+            DeleteFollowerDataManager.shared.deleteFollowerDataManager(self.recievedHandle ?? "", handle, { resultData in
                 print(resultData.message)
             })
             // cell 삭제
