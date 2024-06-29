@@ -70,11 +70,10 @@
             </objects>
             <point key="canvasLocation" x="1977" y="1393"/>
         </scene>
-        <!--게시글-->
+        <!--Navigation Controller-->
         <scene sceneID="d62-hJ-VQo">
             <objects>
                 <navigationController storyboardIdentifier="PostTab" id="Ncd-i5-fAB" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="게시글" image="post" selectedImage="post_fill" id="E0w-ie-eqR"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="VxO-x9-iP1">
                         <rect key="frame" x="0.0" y="50" width="375" height="44"/>
@@ -91,19 +90,19 @@
         <!--Post Tab View Controller-->
         <scene sceneID="Xlr-Dx-qIQ">
             <objects>
-                <viewController id="V7h-eB-hdn" customClass="PostTabViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PostTabViewController" id="V7h-eB-hdn" customClass="PostTabViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UId-Wq-M4L">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="실시간 인기 포스트" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pmz-HU-PyW">
-                                <rect key="frame" x="20" y="178" width="133" height="21.666666666666657"/>
+                                <rect key="frame" x="20" y="178" width="134.66666666666666" height="21"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="eIq-0Q-Vpp" userLabel="CollectionView">
-                                <rect key="frame" x="0.0" y="215.66666666666669" width="375" height="513.33333333333326"/>
+                                <rect key="frame" x="0.0" y="215" width="375" height="514"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fbe-5S-ELW">
                                     <size key="itemSize" width="128" height="128"/>
@@ -116,20 +115,27 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5l0-IY-yuB">
                                 <rect key="frame" x="20" y="106" width="335" height="48"/>
                                 <subviews>
-                                    <searchBar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFill" searchBarStyle="minimal" text="" placeholder="검색어를 입력해주세요." translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8b5-Yo-PFw">
-                                        <rect key="frame" x="0.0" y="-4" width="335" height="56"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="V7h-eB-hdn" id="jqP-hg-aSa"/>
-                                        </connections>
-                                    </searchBar>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="검색어를 입력해주세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wox-xS-WlB">
+                                        <rect key="frame" x="48" y="15" width="153" height="19"/>
+                                        <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="16"/>
+                                        <color key="textColor" name="gray03"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search" translatesAutoresizingMaskIntoConstraints="NO" id="l21-dv-xAE">
+                                        <rect key="frame" x="12" y="12" width="24" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="1Lm-DL-3mM"/>
+                                            <constraint firstAttribute="width" constant="24" id="3Cn-cu-r2C"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" name="gray0.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="Ap3-6n-K4W"/>
-                                    <constraint firstAttribute="trailing" secondItem="8b5-Yo-PFw" secondAttribute="trailing" id="lyh-Im-dPy"/>
-                                    <constraint firstItem="8b5-Yo-PFw" firstAttribute="centerY" secondItem="5l0-IY-yuB" secondAttribute="centerY" id="ooo-V4-KQc"/>
-                                    <constraint firstItem="8b5-Yo-PFw" firstAttribute="leading" secondItem="5l0-IY-yuB" secondAttribute="leading" id="oq4-4J-zza"/>
+                                    <constraint firstItem="wox-xS-WlB" firstAttribute="centerY" secondItem="5l0-IY-yuB" secondAttribute="centerY" id="N9W-rh-VhO"/>
+                                    <constraint firstItem="l21-dv-xAE" firstAttribute="centerY" secondItem="5l0-IY-yuB" secondAttribute="centerY" id="XWP-Bi-q5m"/>
+                                    <constraint firstItem="wox-xS-WlB" firstAttribute="leading" secondItem="l21-dv-xAE" secondAttribute="trailing" constant="12" id="aVf-cX-54V"/>
+                                    <constraint firstItem="l21-dv-xAE" firstAttribute="leading" secondItem="5l0-IY-yuB" secondAttribute="leading" constant="12" id="rpO-dt-DOG"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -150,13 +156,12 @@
                     <navigationItem key="navigationItem" id="2xG-Ek-uMU"/>
                     <connections>
                         <outlet property="collectionView" destination="eIq-0Q-Vpp" id="7D6-zr-NDT"/>
-                        <outlet property="searchBar" destination="8b5-Yo-PFw" id="BFv-K8-CMt"/>
                         <outlet property="searchBarView" destination="5l0-IY-yuB" id="Qem-tR-Kwg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="goF-jl-DKC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="172" y="678"/>
+            <point key="canvasLocation" x="172" y="677.58620689655174"/>
         </scene>
         <!--Recent Search View Controller-->
         <scene sceneID="5Bk-bO-Vv1">
@@ -167,42 +172,60 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="전체 삭제" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jUU-fS-To3">
-                                <rect key="frame" x="292" y="72" width="60" height="18.666666666666671"/>
+                                <rect key="frame" x="295" y="134" width="60" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="2dU-9A-N49"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="16"/>
                                 <color key="textColor" name="gray04"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="최근 검색어" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eU6-yU-EU7">
-                                <rect key="frame" x="20" y="72" width="74" height="18.666666666666671"/>
+                                <rect key="frame" x="20" y="134" width="74" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="CcC-1E-Ze1"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="16"/>
                                 <color key="textColor" name="gray04"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="wA0-Be-353">
-                                <rect key="frame" x="24" y="108.66666666666669" width="327" height="669.33333333333326"/>
+                                <rect key="frame" x="0.0" y="170" width="375" height="608"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Ws-Fy-fr6" userLabel="SearchContainerView">
+                                <rect key="frame" x="20" y="62" width="335" height="48"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="G5V-YL-HfL"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="TXI-7d-z2V"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="eU6-yU-EU7" firstAttribute="top" secondItem="TXI-7d-z2V" secondAttribute="top" constant="22" id="C6B-Gf-thd"/>
+                            <constraint firstItem="eU6-yU-EU7" firstAttribute="top" secondItem="1Ws-Fy-fr6" secondAttribute="bottom" constant="24" id="C6B-Gf-thd"/>
                             <constraint firstItem="eU6-yU-EU7" firstAttribute="leading" secondItem="TXI-7d-z2V" secondAttribute="leading" constant="20" id="OzZ-qZ-R14"/>
+                            <constraint firstItem="1Ws-Fy-fr6" firstAttribute="top" secondItem="TXI-7d-z2V" secondAttribute="top" constant="12" id="QGe-pM-lyD"/>
                             <constraint firstItem="TXI-7d-z2V" firstAttribute="bottom" secondItem="wA0-Be-353" secondAttribute="bottom" id="WGy-ga-je4"/>
-                            <constraint firstItem="wA0-Be-353" firstAttribute="leading" secondItem="TXI-7d-z2V" secondAttribute="leading" constant="24" id="YK8-Fz-3EU"/>
-                            <constraint firstItem="TXI-7d-z2V" firstAttribute="trailing" secondItem="wA0-Be-353" secondAttribute="trailing" constant="24" id="bSK-Gw-fid"/>
-                            <constraint firstItem="jUU-fS-To3" firstAttribute="top" secondItem="TXI-7d-z2V" secondAttribute="top" constant="22" id="bnT-7D-w1S"/>
-                            <constraint firstItem="TXI-7d-z2V" firstAttribute="trailing" secondItem="jUU-fS-To3" secondAttribute="trailing" constant="23" id="pee-oN-zIj"/>
-                            <constraint firstItem="wA0-Be-353" firstAttribute="top" secondItem="jUU-fS-To3" secondAttribute="bottom" constant="18" id="qLh-a6-qCX"/>
+                            <constraint firstItem="wA0-Be-353" firstAttribute="leading" secondItem="TXI-7d-z2V" secondAttribute="leading" id="YK8-Fz-3EU"/>
+                            <constraint firstItem="TXI-7d-z2V" firstAttribute="trailing" secondItem="1Ws-Fy-fr6" secondAttribute="trailing" constant="20" id="aRG-g8-9ev"/>
+                            <constraint firstItem="TXI-7d-z2V" firstAttribute="trailing" secondItem="wA0-Be-353" secondAttribute="trailing" id="bSK-Gw-fid"/>
+                            <constraint firstItem="jUU-fS-To3" firstAttribute="top" secondItem="1Ws-Fy-fr6" secondAttribute="bottom" constant="24" id="bnT-7D-w1S"/>
+                            <constraint firstItem="TXI-7d-z2V" firstAttribute="trailing" secondItem="jUU-fS-To3" secondAttribute="trailing" constant="20" id="pee-oN-zIj"/>
+                            <constraint firstItem="wA0-Be-353" firstAttribute="top" secondItem="jUU-fS-To3" secondAttribute="bottom" constant="16" id="qLh-a6-qCX"/>
+                            <constraint firstItem="1Ws-Fy-fr6" firstAttribute="leading" secondItem="TXI-7d-z2V" secondAttribute="leading" constant="20" id="uvL-wN-nfI"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="deleteAllButton" destination="jUU-fS-To3" id="pOR-At-JyO"/>
+                        <outlet property="searchContainerView" destination="1Ws-Fy-fr6" id="EJa-bD-R0L"/>
                         <outlet property="tableView" destination="wA0-Be-353" id="16v-Tw-CTQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p8M-Gg-iBY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="172" y="1620"/>
+            <point key="canvasLocation" x="172" y="1619.7044334975369"/>
         </scene>
         <!--Post View Controller-->
         <scene sceneID="kPy-rr-5B2">
@@ -640,13 +663,15 @@
         <image name="LikeFilledIcon" width="32" height="32"/>
         <image name="LikeIcon" width="32" height="32"/>
         <image name="NoCommentIcon" width="84" height="84"/>
-        <image name="post" width="24" height="24"/>
-        <image name="post_fill" width="24" height="24"/>
+        <image name="search" width="24" height="24"/>
         <namedColor name="gray0.5">
             <color red="0.94117647058823528" green="0.94901960784313721" blue="0.95686274509803926" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="gray01">
             <color red="0.9137254901960784" green="0.92549019607843142" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="gray03">
+            <color red="0.7803921568627451" green="0.80392156862745101" blue="0.82352941176470584" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="gray04">
             <color red="0.63529411764705879" green="0.66666666666666663" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

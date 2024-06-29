@@ -329,8 +329,8 @@ extension UploadViewController: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultTableViewCell", for: indexPath) as! SearchResultTableViewCell
 
-        let urls = self.searchResultData.map { $0.profileUrl }
-        let handles = self.searchResultData.map { $0.userHandle }
+        let urls = self.searchResultData.map { $0.profileImage }
+        let handles = self.searchResultData.map { $0.handle }
         
         cell.userHandle.text = handles[indexPath.item]
         cell.configure(with: urls[indexPath.item])
@@ -342,7 +342,7 @@ extension UploadViewController: UITableViewDelegate,UITableViewDataSource{
         // 예를 들어, 선택한 셀의 정보를 가져와서 처리하거나 화면 전환 등을 수행할 수 있습니다.
 
         let selectedUserData = searchResultData[indexPath.row] // 선택한 셀의 데이터 가져오기
-        let handles = self.searchResultData.map { $0.userHandle }
+        let handles = self.searchResultData.map { $0.handle }
         
         // 선택한 핸들 가져오기
         let selectedHandle = handles[indexPath.row]
@@ -350,7 +350,7 @@ extension UploadViewController: UITableViewDelegate,UITableViewDataSource{
         // 중복을 체크하여 중복되지 않는 경우에만 추가
         if !tagId.contains(selectedHandle) {
             tagId.append(selectedHandle)
-            print("Selected User Handle: \(selectedUserData.userHandle)")
+            print("Selected User Handle: \(selectedUserData.handle)")
             print(tagId)
             self.collectionView.reloadData()
         } else {

@@ -13,7 +13,6 @@ class PostTabViewController: UIViewController, UISearchBarDelegate{
     @IBOutlet weak var collectionView: UICollectionView!
         
     @IBOutlet weak var searchBarView: UIView!
-    @IBOutlet weak var searchBar: UISearchBar!
     private var postTabDataResponse: PostTabDataResponse!
     private var postTabDataResult: PostTabDataResult!
     private var postList: [PostTabDataPostList]! = []
@@ -23,9 +22,9 @@ class PostTabViewController: UIViewController, UISearchBarDelegate{
         // Delegate
         
         setupCollectionView()
-        setUpSearchController()
         setSearchBarView()
         setupData()
+        setupTapGestureOnSearchBarView()
    // Do any additional setup after loading the view.
     }
     
@@ -33,7 +32,6 @@ class PostTabViewController: UIViewController, UISearchBarDelegate{
         super.viewWillAppear(animated)
         
         // Clear search bar text and resign first responder when returning to this page
-        self.searchBar.resignFirstResponder()
         self.navigationController?.isNavigationBarHidden = true
         
         // back 버튼 커스텀
@@ -81,37 +79,22 @@ class PostTabViewController: UIViewController, UISearchBarDelegate{
             }
     }
     
-    func setUpSearchController() {
-        self.navigationController?.isNavigationBarHidden = true
-        self.searchBar.delegate = self
-        self.searchBar.setBackgroundColor(UIColor(named: "gray0.5"))
-
-        self.searchBar.setLeftImage(UIImage(named: "search"), tintColor: UIColor(named: "gray06"))
-        
-        if let textFieldInsideSearchBar = self.searchBar.value(forKey: "searchField") as? UITextField {
-            textFieldInsideSearchBar.textColor = UIColor.red // 원하는 색으로 변경
-            textFieldInsideSearchBar.attributedPlaceholder = NSAttributedString(
-                string: "검색어를 입력해주세요.", // 원하는 placeholder 텍스트
-                attributes: [NSAttributedString.Key.foregroundColor: UIColor(named: "gray03"),
-                             NSAttributedString.Key.font: UIFont(name: "Pretendard-Medium", size: 16)] // 원하는 색으로 변경
-            )
-        }
-        searchBar.searchTextPositionAdjustment = UIOffset(horizontal: 10, vertical: 0)
-    }
-    
     func setSearchBarView(){
         self.searchBarView.layer.cornerRadius = 7
         self.searchBarView.clipsToBounds = true
     }
     
-    
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+    private func setupTapGestureOnSearchBarView() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(searchBarViewTapped))
+        searchBarView.addGestureRecognizer(tapGesture)
+    }
+
+    @objc private func searchBarViewTapped() {
         // 최근 검색어 화면으로 전환
-        let storyboard = UIStoryboard(name:"PostTab", bundle: nil)
-        let recentSearchVC = storyboard.instantiateViewController(withIdentifier: "RecentSearchVC") as! RecentSearchViewController
-        self.navigationController?.pushViewController(recentSearchVC, animated: false)
-        // 편집 모드를 시작하려면 true를 반환해야 합니다.
-        return true
+        let storyboard = UIStoryboard(name: "PostTab", bundle: nil)
+        if let recentSearchVC = storyboard.instantiateViewController(withIdentifier: "RecentSearchVC") as? RecentSearchViewController {
+            self.navigationController?.pushViewController(recentSearchVC, animated: false)
+        }
     }
     
 }

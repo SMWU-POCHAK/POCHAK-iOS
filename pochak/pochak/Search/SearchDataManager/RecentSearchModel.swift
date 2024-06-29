@@ -13,12 +13,14 @@ class RecentSearchModel : Object {
     @Persisted var term: String // primary key로 지정
     @Persisted var date: Date
     @Persisted var profileImg: String
+    @Persisted var name : String
     
 
-    convenience init(term: String, profileImg: String) {
+    convenience init(term: String, profileImg: String, name : String) {
         self.init()
         self.term = term
         self.profileImg = profileImg
+        self.name = name
     }
 }
 

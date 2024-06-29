@@ -129,8 +129,9 @@
 		EA1B0B722A49D23B00F86FBC /* pochakTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1B0B712A49D23B00F86FBC /* pochakTests.swift */; };
 		EA1B0B7C2A49D23B00F86FBC /* pochakUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1B0B7B2A49D23B00F86FBC /* pochakUITests.swift */; };
 		EA1B0B7E2A49D23B00F86FBC /* pochakUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1B0B7D2A49D23B00F86FBC /* pochakUITestsLaunchTests.swift */; };
+		EA4EF8D82C2EC5F7009549FF /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4EF8D72C2EC5F7009549FF /* UITextField+.swift */; };
 		EA6306D52C2ADBC7000DB0A7 /* UISearchBar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6306D42C2ADBC7000DB0A7 /* UISearchBar+.swift */; };
-		EA6306D82C2BFE53000DB0A7 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6306D72C2BFE53000DB0A7 /* TabbarController.swift */; };
+		EA6306D82C2BFE53000DB0A7 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6306D72C2BFE53000DB0A7 /* CustomTabBarController.swift */; };
 		EA6306DA2C2BFE83000DB0A7 /* CustomTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6306D92C2BFE83000DB0A7 /* CustomTabbar.swift */; };
 		EA7EE1D82BF38921009486CC /* PochakAlarmCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7EE1D62BF38921009486CC /* PochakAlarmCollectionViewCell.swift */; };
 		EA7EE1D92BF38921009486CC /* PochakAlarmCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA7EE1D72BF38921009486CC /* PochakAlarmCollectionViewCell.xib */; };
@@ -305,8 +306,9 @@
 		EA1B0B772A49D23B00F86FBC /* pochakUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pochakUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA1B0B7B2A49D23B00F86FBC /* pochakUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pochakUITests.swift; sourceTree = "<group>"; };
 		EA1B0B7D2A49D23B00F86FBC /* pochakUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pochakUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		EA4EF8D72C2EC5F7009549FF /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		EA6306D42C2ADBC7000DB0A7 /* UISearchBar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+.swift"; sourceTree = "<group>"; };
-		EA6306D72C2BFE53000DB0A7 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
+		EA6306D72C2BFE53000DB0A7 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		EA6306D92C2BFE83000DB0A7 /* CustomTabbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabbar.swift; sourceTree = "<group>"; };
 		EA7EE1D62BF38921009486CC /* PochakAlarmCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakAlarmCollectionViewCell.swift; sourceTree = "<group>"; };
 		EA7EE1D72BF38921009486CC /* PochakAlarmCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PochakAlarmCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -497,6 +499,7 @@
 				08EB5D242C280CFE00E35C16 /* UIImage+.swift */,
 				083249752C2956A000A77C03 /* CustomAlertViewController.storyboard */,
 				083249772C295E4000A77C03 /* CustomAlertViewController.swift */,
+				EA4EF8D72C2EC5F7009549FF /* UITextField+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -850,7 +853,7 @@
 		EA6306D62C2BFE44000DB0A7 /* Tabbar */ = {
 			isa = PBXGroup;
 			children = (
-				EA6306D72C2BFE53000DB0A7 /* TabbarController.swift */,
+				EA6306D72C2BFE53000DB0A7 /* CustomTabBarController.swift */,
 				EA6306D92C2BFE83000DB0A7 /* CustomTabbar.swift */,
 			);
 			path = Tabbar;
@@ -1249,7 +1252,7 @@
 				081228C62A69624000DFA094 /* PostLikesViewController.swift in Sources */,
 				EA01079B2A59556800A3AE85 /* HomeTabViewController.swift in Sources */,
 				373235492B68F9A60042EF94 /* FollowListDataModel.swift in Sources */,
-				EA6306D82C2BFE53000DB0A7 /* TabbarController.swift in Sources */,
+				EA6306D82C2BFE53000DB0A7 /* CustomTabBarController.swift in Sources */,
 				EA1289132B3C4F1F002EC93E /* SearchDataModel.swift in Sources */,
 				0820B1902A63A18100604DA8 /* ReplyTableViewCell.swift in Sources */,
 				08FD3A412B3C70BC00574880 /* HomeDataModel.swift in Sources */,
@@ -1261,6 +1264,7 @@
 				EA1718362A592BE3009168E6 /* AlarmCollectionViewCell.swift in Sources */,
 				376F125B2A8B7440005F469B /* SocialLoginViewController.swift in Sources */,
 				37D311D72B53057700A1D7C1 /* MyProfileUpdateDataModel.swift in Sources */,
+				EA4EF8D82C2EC5F7009549FF /* UITextField+.swift in Sources */,
 				EAF918512AA468670037C270 /* APIConstants.swift in Sources */,
 				3732354E2B691E610042EF94 /* FollowToggleDataManager.swift in Sources */,
 				3769D6BD2B3C348800294CD1 /* FirstTabmanViewController.swift in Sources */,
