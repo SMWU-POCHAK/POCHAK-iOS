@@ -33,6 +33,8 @@ class OtherUserProfileViewController: UIViewController {
         super.viewDidLoad()
         
         // 현재 프로필 페이지의 네비게이션 바 설정
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.navigationBar.backgroundColor = UIColor(named: "gray01")
         self.navigationController?.navigationBar.tintColor = .black
         self.navigationController?.navigationBar.topItem?.title = "@" + (recievedHandle ?? "handle not found")
         
