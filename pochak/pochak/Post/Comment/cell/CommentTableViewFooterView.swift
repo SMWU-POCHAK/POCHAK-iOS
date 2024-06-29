@@ -17,7 +17,8 @@ class CommentTableViewFooterView: UITableViewHeaderFooterView {
 
     private var childCommentDataResponse: ChildCommentDataResponse!
     private var childCommentDataList: [ChildCommentData]!
-    private var tempChildCommentList = [ChildCommentData]()
+    
+    private var currentFetchingPage: Int = 0
     
     // MARK: - Views
     
@@ -39,42 +40,33 @@ class CommentTableViewFooterView: UITableViewHeaderFooterView {
         
         // point를 가지고 테이블뷰의 indexPath를 찾기, 찾지 못하면 바로 리턴
         guard let indexPath = commentVC.tableView.indexPathForRow(at: point) else { return } // 매개변수로 받은 point와 연관된 행 및 섹션을 나타내는 indexPath를 반환,point가 테이블뷰의 bounds의 범위에서 벗어난다면 nil
-        
-        // indexPath를 이용해 data[indexPath.row]를 삭제
-        //commentVC.commentDataList?[indexPath.section].recentComment = nil
-        
-        //commentVC.tableView.
-        //tableView.footerView(forSection: indexPath.section) = nil
+
         //tableView.deleteRows(at: [indexPath], with: .automatic) //4
-        
+        print("더 보려는 댓글의 섹션: \(indexPath.section)")
         loadChildCommentData(indexPath.section)
-        
-        //        commentVC.tableView.reloadData()
         print("---대댓글 보기 버튼 삭제---")
     }
+    
+    // MARK: - Functions
     
     // section은 대댓글을 조회하고자 하는 댓글의 섹션 번호
     private func loadChildCommentData(_ section: Int){
         print("=== load child comment data ===")
+        currentFetchingPage += 1
         
-        CommentDataService.shared.getChildComments(self.postId, self.curCommentId, page: 0) { response in
+        CommentDataService.shared.getChildComments(self.postId, self.curCommentId, page: currentFetchingPage) { response in
             switch(response) {
             case .success(let childCommentDataResponse):
                 self.childCommentDataResponse = childCommentDataResponse as? ChildCommentDataResponse
                 if self.childCommentDataResponse.isSuccess == true {
                     self.childCommentDataList = self.childCommentDataResponse?.result.childCommentList
                     
-                    self.tempChildCommentList.removeAll()
+                    self.childCommentDataResponse?.result.childCommentList.map({ data in
+                        self.childCommentDataList.append(data)
+                    })
                     
-                    //                for data in self.childCommentDataList!{
-                    //                    //print("child comment data:")
-                    //                    //print(data)
-                    //
-                    //                    self.tempChildCommentList.append(UICommentData(commentId: data.commentId, profileImage: data.profileImage, handle: data.handle, createdDate: data.createdDate, content: data.content, isParent: false))
-                    //                }
-                    
-                    self.commentVC.childCommentCntList[section] += self.tempChildCommentList.count
-                    
+                    self.commentVC.childCommentCntList[section] += self.childCommentDataList.count
+                    print("\(section)번째 부모의 자식 댓글 개수: \(self.commentVC.childCommentCntList[section])")
                     // 제대로 된 자리에 대댓글 리스트를 삽입하기 위해서 지금까지 있는 대댓글 개수 세야 함
                     var childCommentsSoFar = 0
                     if(section != 0){
@@ -83,12 +75,10 @@ class CommentTableViewFooterView: UITableViewHeaderFooterView {
                         }
                     }
                     // 대댓글 마지막 페이지 bool값 갱신 -> footer 생성에 관여함
-                    self.commentVC.commentDataResult?.parentCommentList[section].childCommentPageInfo.lastPage =                 self.childCommentDataResponse.result.childCommentPageInfo.lastPage
+                    self.commentVC.parentAndChildCommentList?[section].childCommentPageInfo.lastPage =                 self.childCommentDataResponse.result.childCommentPageInfo.lastPage
                     
                     // 대댓글 리스트에 새로 받아온 대댓글 추가하기
-                    self.commentVC.commentDataResult?.parentCommentList[section].childCommentList.append(contentsOf: self.childCommentDataList)
-                    
-                    //self.commentVC.tableView.reloadData()
+                    self.commentVC.parentAndChildCommentList?[section].childCommentList.append(contentsOf: self.childCommentDataList)
                     
                     // 여기서 다시 되길...
                     self.commentVC.toUICommentData()
