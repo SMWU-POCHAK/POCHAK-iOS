@@ -20,6 +20,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let backButtonImage = UIImage(named: "ChevronLeft")?.withRenderingMode(.alwaysOriginal).withAlignmentRectInsets(UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0))
         
         UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffset(horizontal: -1000, vertical: 0), for: .default)
+
+        UINavigationBar.appearance().shadowImage = UIImage()
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+        UINavigationBar.appearance().backgroundColor = .white
+        UINavigationBar.appearance().barTintColor = .white
         UINavigationBar.appearance().tintColor = .black
         UINavigationBar.appearance().backIndicatorImage = backButtonImage
         UINavigationBar.appearance().titleTextAttributes = [
