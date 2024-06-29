@@ -8,7 +8,13 @@
 import UIKit
 
 class NoPostCollectionViewCell: UICollectionViewCell {
+    
+    // MARK: - Properties
+    
+    static let identifier = "NoPostCollectionViewCell"
 
+    // MARK: - Init
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

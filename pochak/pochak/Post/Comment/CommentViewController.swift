@@ -24,15 +24,11 @@ class CommentViewController: UIViewController {
     var parentCommentId: Int?
     
     public var childCommentCntList = [Int]()  // 섹션 당 셀 개수 따로 저장해둘 리스트 필요함 (부모 댓글의 자식 댓글 개수 저장)
-    
-    private var commentDataResponse: CommentDataResponse?
-    public var commentDataResult: CommentDataResult?
-    private var parentCommentList: [ParentCommentData]?  // 부모댓글 + 자식댓글 있는 list
-    
-    var uiCommentList = [UICommentData]()  // 셀에 뿌릴 때 사용할 실제 데이터들
-    private var tempChildCommentList = [UICommentData]()
+    public var parentAndChildCommentList: [ParentCommentData]?  // 부모댓글 + 자식댓글 있는 list
+    public var uiCommentList = [UICommentData]()  // 셀에 뿌릴 때 사용할 실제 데이터들
     
     private var postCommentResponse: PostCommentResponse?
+    private var profileImageUrl: String = ""
     
     // MARK: - Views
     
@@ -96,21 +92,29 @@ class CommentViewController: UIViewController {
             // NetworkResult형 enum으로 분기 처리
             switch(response){
             case .success(let commentDataResponse):
-                self?.commentDataResponse = commentDataResponse as? CommentDataResponse
-                if self?.commentDataResponse?.isSuccess == true {
-                    self?.commentDataResult = (self?.commentDataResponse?.result)!
-                    self?.parentCommentList = self?.commentDataResult?.parentCommentList  // 데이터로 넘어온 부모 댓글(+자식댓글)리스트
-                    
+                let response = commentDataResponse as? CommentDataResponse
+                //self?.commentDataResponse = commentDataResponse as? CommentDataResponse
+                if response?.isSuccess == true {
+                    let result = response?.result as? CommentDataResult
+                    self?.parentAndChildCommentList = result?.parentCommentList  // 데이터로 넘어온 부모 댓글(+자식댓글)리스트
+                    self?.profileImageUrl = result!.loginMemberProfileImage
                     self?.noComment = true
                     self?.uiCommentList.removeAll()
-                    //self.childCommentCntList.removeAll()
                     
                     // 댓글 존재할 때만
-                    if(self?.parentCommentList?.count != 0){
+                    if(self?.parentAndChildCommentList?.count != 0){
                         self?.noComment = false
                         // 부모 댓글 자체를 부모 댓글인지의 여부가 있는 UICommentData형으로 만들어서 추가
-                        for parentData in self?.parentCommentList ?? [] {
-                            self?.uiCommentList.append(UICommentData(commentId: parentData.commentId, profileImage: parentData.profileImage, handle: parentData.handle, createdDate: parentData.createdDate, content: parentData.content, isParent: true, parentId: nil))
+                        for parentData in self?.parentAndChildCommentList ?? [] {
+                            self?.uiCommentList.append(UICommentData(commentId: parentData.commentId, 
+                                                                     profileImage: parentData.profileImage,
+                                                                     handle: parentData.handle,
+                                                                     createdDate: parentData.createdDate,
+                                                                     content: parentData.content,
+                                                                     isParent: true,
+                                                                     parentId: nil))
+                            // childCommentCntList[몇번째 부모] = 해당 부모의 자식 댓글 개수
+                            self?.childCommentCntList.append(parentData.childCommentList.count)
                             
                             // 부모 댓글의 자식 댓글을 리스트에 추가
                             for childData in parentData.childCommentList {
@@ -147,7 +151,7 @@ class CommentViewController: UIViewController {
     
     private func initUI() {
         // 사용자 프로필 이미지
-        if let url = URL(string: (commentDataResult?.loginMemberProfileImage)!) {
+        if let url = URL(string: profileImageUrl) {
             self.userProfileImageView.kf.setImage(with: url) { result in
                 switch result {
                 case .success(let value):
@@ -198,7 +202,7 @@ class CommentViewController: UIViewController {
     public func toUICommentData(){
         self.uiCommentList.removeAll()
         
-        for parentData in self.parentCommentList ?? [] {
+        for parentData in self.parentAndChildCommentList ?? [] {
             self.uiCommentList.append(UICommentData(commentId: parentData.commentId, profileImage: parentData.profileImage, handle: parentData.handle, createdDate: parentData.createdDate, content: parentData.content, isParent: true, parentId: nil))
             
             // 부모 댓글의 자식 댓글을 리스트에 추가
@@ -306,12 +310,12 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
     // 마지막 섹션은 인디케이터로 해야하는디..
     // 일단 부모 댓글의 개수만큼 섹션 생성
     func numberOfSections(in tableView: UITableView) -> Int {
-        return noComment ? 0 : parentCommentList!.count
+        return noComment ? 0 : parentAndChildCommentList!.count
     }
     
     // 한 섹션에 몇 개의 셀을 넣을지 -> 각 부모댓글의 자식댓글 개수 + 1(부모댓글 자신)
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return noComment ? 0 : parentCommentList![section].childCommentList.count + 1
+        return noComment ? 0 : parentAndChildCommentList![section].childCommentList.count + 1
     }
     
     // 어떤 셀을 보여줄지
@@ -326,7 +330,7 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
         if(section != 0){
             for index in 0...section - 1 {
                 //childCommentsSoFar += self.childCommentCntList[index]
-                childCommentsSoFar += self.parentCommentList![index].childCommentList.count
+                childCommentsSoFar += self.parentAndChildCommentList![index].childCommentList.count
             }
         }
             
@@ -371,7 +375,7 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
         footerView.postId = self.postId
 
 
-        if let cellData = self.parentCommentList {
+        if let cellData = self.parentAndChildCommentList {
             // 현재 부모댓글의 자식 댓글들이 last page가 아니면 footer 추가
             if !cellData[section].childCommentPageInfo.lastPage {
                 //footerView.backgroundColor = .blue
@@ -406,7 +410,7 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
     
     // 이상한 여백 제거?
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if let cellData = self.parentCommentList {
+        if let cellData = self.parentAndChildCommentList {
             // 자식 댓글이 마지막 페이지이면 여백 없애기
             if cellData[section].childCommentPageInfo.lastPage {
                 return .leastNonzeroMagnitude

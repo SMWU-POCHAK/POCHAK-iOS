@@ -12,6 +12,7 @@ class SearchResultTableViewCell: UITableViewCell {
 
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var userHandle: UILabel!
+    @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var deleteBtn: UIImageView!
     
     static let identifier = "SearchResultTableViewCell"
@@ -65,5 +66,4 @@ class SearchResultTableViewCell: UITableViewCell {
             }
         }
     }
-    
 }

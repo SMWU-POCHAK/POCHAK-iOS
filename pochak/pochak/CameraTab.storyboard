@@ -18,11 +18,10 @@
         </array>
     </customFonts>
     <scenes>
-        <!--카메라-->
+        <!--Navigation Controller-->
         <scene sceneID="EZN-Bk-lDs">
             <objects>
                 <navigationController storyboardIdentifier="CameraTab" id="7cH-5Z-rGw" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="카메라" image="pochak" selectedImage="pochak_fill" id="9Cm-V0-V6j"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kT5-4E-tIY">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -244,8 +243,6 @@
     <resources>
         <image name="captureBtn" width="62" height="62"/>
         <image name="flashBg" width="34" height="34.333332061767578"/>
-        <image name="pochak" width="26" height="24"/>
-        <image name="pochak_fill" width="26" height="24"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

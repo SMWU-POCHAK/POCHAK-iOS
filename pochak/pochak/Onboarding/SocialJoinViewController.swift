@@ -119,7 +119,7 @@ class SocialJoinViewController: UIViewController {
     }
     
     private func toHomeTabPage(){
-        guard let tabbarVC = self.storyboard?.instantiateViewController(withIdentifier: "TabbarVC") as? TabbarController else { return }
+        guard let tabbarVC = self.storyboard?.instantiateViewController(withIdentifier: "TabbarVC") as? CustomTabBarController else { return }
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(tabbarVC, animated: false)
     }
 

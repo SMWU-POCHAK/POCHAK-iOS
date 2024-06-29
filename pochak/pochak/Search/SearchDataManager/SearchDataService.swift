@@ -14,33 +14,42 @@ class SearchDataService{
     
     func getIdSearch(keyword:String,completion: @escaping(NetworkResult<Any>) -> Void){
         let parameters: [String: Any] = ["keyword": keyword]
+        let header : HTTPHeaders = ["Authorization": APIConstants.dayeonToken,
+                                    "Content-type": "application/json"
+                                    ]
         print("==getIdSearch==")
         print(parameters)
-        let dataRequest = AF.request("https://w2oa1nd4wb.execute-api.ap-northeast-2.amazonaws.com/default/elasticsearch_searchengine?keyword=\(keyword)",
+        let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/members/search?keyword=\(keyword)",
                                      method: .get,
-                                     encoding: URLEncoding.queryString).validate()
+                                     encoding: URLEncoding.default,
+                                     headers: header)
         
         dataRequest.responseJSON { response in
             switch response.result {
             case .success(let value): // 데이터 통신이 성공한 경우
                 print(value)
-                guard let jsonArray = value as? [[String: Any]] else {
+                
+                guard let json = value as? [String: Any],
+                      let result = json["result"] as? [String: Any],
+                      let jsonArray = result["memberList"] as? [[String: Any]] else {
                     completion(.networkFail)
                     return
                 }
+                
                 var searchData = [idSearchResponse]()
-                                
+                
                 for dict in jsonArray {
-                    if let profileUrl = dict["profileimg_url"] as? String,
-                       let userHandle = dict["userHandle"] as? String,
-                       let id = dict["id"] as? String {
+                    if let profileUrl = dict["profileImage"] as? String,
+                       let handle = dict["handle"] as? String,
+                       let memberId = dict["memberId"] as? Int, // memberId는 Int 타입
+                       let name = dict["name"] as? String {
 
-                        let searchDataItem = idSearchResponse(profileUrl: profileUrl, id: id, userHandle: userHandle)
+                        let searchDataItem = idSearchResponse(memberId: "\(memberId)", profileImage: profileUrl, handle: handle, name: name)
                         searchData.append(searchDataItem)
                     }
                 }
-                print(searchData)
                 
+                print(searchData)
                 completion(.success(searchData))
                 
             case .failure(let error):

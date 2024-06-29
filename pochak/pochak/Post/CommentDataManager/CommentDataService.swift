@@ -27,24 +27,6 @@ struct CommentDataService {
         }
     }
     
-    
-    /// 댓글 삭제 시 서버에 전달할 Body 생성
-    /// - Parameters:
-    ///   - commentUploadedTime: 삭제하려는 댓글(대댓글) 업로드 시간
-    ///   - parentCommentUploadedTime: 대댓글을 삭제하는 경우 대댓글의 부모 댓글 업로드 시간
-    /// - Returns: 만들어진 Body Parameters
-    private func makeDeleteCommentBodyParameter(commentUploadedTime: String, parentCommentUploadedTime: String?) -> Parameters{
-        // 대댓글 삭제인 경우
-        if(parentCommentUploadedTime != nil){
-            return ["commentUploadedTime": commentUploadedTime, "parentCommentUploadedTime": parentCommentUploadedTime!]
-        }
-        // 댓글 삭제인 경우
-        else{
-            return ["commentUploadedTime": commentUploadedTime]
-        }
-    }
-    
-    
     /// 댓글 조회
     /// - Parameters:
     ///   - postId: 조회하고자 하는 댓글이 등록된 게시글 아이디
@@ -83,28 +65,20 @@ struct CommentDataService {
         /* 헤더 있는 자리 */
         print("-get child comments-")
         
-        let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/posts/\(postId)/comments\(commentId)",
+        let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/posts/\(postId)/comments/\(commentId)",
                                     method: .get,
                                     parameters: ["page": page],
                                     encoding: URLEncoding.default,
                                     headers: header)
-        print("dataRequest:")
-        print(dataRequest)
-        print("dataReqeust.responseData:")
-        print(dataRequest.response)
         dataRequest.responseData { dataResponse in
-            print("responseData")
             switch dataResponse.result{
             case .success:
                 // 성공 시 통신 자체의 상태코드와 데이터(value) 수신
                 guard let statusCode = dataResponse.response?.statusCode else {return}
                 guard let value = dataResponse.value else {return}
                 let networkResult = self.judgeStatus(by: statusCode, value, dataType: "ChildCommentData")  // 통신의 결과(성공이면 데이터, 아니면 에러내용)
-                print("get child comment, status code")
-                print(statusCode)
                 completion(networkResult)
             case .failure:
-                print("service fail")
                 completion(.networkFail)
             }
         }

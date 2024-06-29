@@ -91,6 +91,18 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         loadPostDetailData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = false
+    }
+        
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if self.isMovingFromParent {
+            self.navigationController?.isNavigationBarHidden = true
+        }
+    }
+    
     // MARK: - Functions
     
     private func setupNavigationBar(){

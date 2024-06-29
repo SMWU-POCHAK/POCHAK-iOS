@@ -7,15 +7,37 @@
 
 import UIKit
 import GoogleSignIn
+import RealmSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         sleep(2)
+        
+        // 탭바 폰트 설정
+        let appearance = UITabBarItem.appearance()
+        let attributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Medium", size: 13) ?? UIFont.systemFont(ofSize: 13, weight: .medium)
+        ]
+        appearance.setTitleTextAttributes(attributes as [NSAttributedString.Key : Any], for: .normal)
+        appearance.setTitleTextAttributes(attributes as [NSAttributedString.Key : Any], for: .selected)
+        
+        let config = Realm.Configuration(
+            schemaVersion: 2, // Update schema version to the latest version you want to use
+            migrationBlock: { migration, oldSchemaVersion in
+                print("Old Schema Version: \(oldSchemaVersion)")
+                if oldSchemaVersion < 2 {
+                    migration.enumerateObjects(ofType: RecentSearchModel.className()) { oldObject, newObject in
+                        newObject!["name"] = "" // Set default value for the new 'name' property
+                    }
+                }
+            }
+        )
+    
+        Realm.Configuration.defaultConfiguration = config
+        _ = try! Realm()
+                
         return true
     }
 
