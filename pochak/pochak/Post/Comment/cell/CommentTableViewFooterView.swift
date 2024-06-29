@@ -8,15 +8,18 @@
 import UIKit
 
 class CommentTableViewFooterView: UITableViewHeaderFooterView {
-    //var tableView: UITableView!
-    //var data: [CommentData]!
+    
+    // MARK: - Properties
+    
     var commentVC: CommentViewController!
     var postId: Int!
     var curCommentId: Int!
-    
+
     private var childCommentDataResponse: ChildCommentDataResponse!
     private var childCommentDataList: [ChildCommentData]!
     private var tempChildCommentList = [ChildCommentData]()
+    
+    // MARK: - Views
     
     @IBOutlet weak var seeChildCommentsBtn: UIButton!
     /*
@@ -26,6 +29,9 @@ class CommentTableViewFooterView: UITableViewHeaderFooterView {
      // Drawing code
      }
      */
+    
+    // MARK: - Actions
+    
     @IBAction func seeChildCommentsBtnDidTap(_ sender: UIButton) {
         print("---대댓글 보기 버튼 눌림---")
         // 이 액션 함수를 호출한 버튼이 테이블 뷰의 어디에 위치했는지 알아내기
@@ -55,59 +61,56 @@ class CommentTableViewFooterView: UITableViewHeaderFooterView {
             switch(response) {
             case .success(let childCommentDataResponse):
                 self.childCommentDataResponse = childCommentDataResponse as? ChildCommentDataResponse
-                self.childCommentDataList = self.childCommentDataResponse?.result.childCommentList
-                
-                self.tempChildCommentList.removeAll()
-                
-//                for data in self.childCommentDataList!{
-//                    //print("child comment data:")
-//                    //print(data)
-//                    
-//                    self.tempChildCommentList.append(UICommentData(commentId: data.commentId, profileImage: data.profileImage, handle: data.handle, createdDate: data.createdDate, content: data.content, isParent: false))
-//                }
-                
-                self.commentVC.childCommentCntList[section] += self.tempChildCommentList.count
-                
-                // 제대로 된 자리에 대댓글 리스트를 삽입하기 위해서 지금까지 있는 대댓글 개수 세야 함
-                var childCommentsSoFar = 0
-                if(section != 0){
-                    for index in 0...section - 1 {
-                        childCommentsSoFar += self.commentVC.childCommentCntList[index]
+                if self.childCommentDataResponse.isSuccess == true {
+                    self.childCommentDataList = self.childCommentDataResponse?.result.childCommentList
+                    
+                    self.tempChildCommentList.removeAll()
+                    
+                    //                for data in self.childCommentDataList!{
+                    //                    //print("child comment data:")
+                    //                    //print(data)
+                    //
+                    //                    self.tempChildCommentList.append(UICommentData(commentId: data.commentId, profileImage: data.profileImage, handle: data.handle, createdDate: data.createdDate, content: data.content, isParent: false))
+                    //                }
+                    
+                    self.commentVC.childCommentCntList[section] += self.tempChildCommentList.count
+                    
+                    // 제대로 된 자리에 대댓글 리스트를 삽입하기 위해서 지금까지 있는 대댓글 개수 세야 함
+                    var childCommentsSoFar = 0
+                    if(section != 0){
+                        for index in 0...section - 1 {
+                            childCommentsSoFar += self.commentVC.childCommentCntList[index]
+                        }
                     }
+                    // 대댓글 마지막 페이지 bool값 갱신 -> footer 생성에 관여함
+                    self.commentVC.commentDataResult?.parentCommentList[section].childCommentPageInfo.lastPage =                 self.childCommentDataResponse.result.childCommentPageInfo.lastPage
+                    
+                    // 대댓글 리스트에 새로 받아온 대댓글 추가하기
+                    self.commentVC.commentDataResult?.parentCommentList[section].childCommentList.append(contentsOf: self.childCommentDataList)
+                    
+                    //self.commentVC.tableView.reloadData()
+                    
+                    // 여기서 다시 되길...
+                    self.commentVC.toUICommentData()
+                    
+                    self.commentVC.tableView.reloadSections(IndexSet(integer: section), with: .fade)
+                    print("==uicommentlist==")
+                    print(self.commentVC.uiCommentList)
                 }
-                // 대댓글 마지막 페이지 bool값 갱신 -> footer 생성에 관여함
-                self.commentVC.commentDataResult?.parentCommentList[section].childCommentPageInfo.lastPage =                 self.childCommentDataResponse.result.childCommentPageInfo.lastPage
-                
-                // 대댓글 리스트에 새로 받아온 대댓글 추가하기
-                self.commentVC.commentDataResult?.parentCommentList[section].childCommentList.append(contentsOf: self.childCommentDataList)
-
-                //self.commentVC.tableView.reloadData()
-                
-                // 여기서 다시 되길...
-                self.commentVC.toUICommentData()
-                
-                self.commentVC.tableView.reloadSections(IndexSet(integer: section), with: .fade)
-                print("==uicommentlist==")
-                print(self.commentVC.uiCommentList)
+                else {
+                    self.commentVC.present(UIAlertController.networkErrorAlert(title: "대댓글 불러오기에 실패하였습니다."), animated: true)
+                }
             case .requestErr(let message):
                 print("requestErr", message)
             case .pathErr:
                 print("pathErr")
             case .serverErr:
-                print("serveErr")
+                print("serverErr")
+                self.commentVC.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
             case .networkFail:
                 print("networkFail")
+                self.commentVC.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
             }
         }
     }
-    
-    //    override init(reuseIdentifier: String?) {
-    //        super.init(reuseIdentifier: reuseIdentifier)
-    //        //configureContents()
-    //    }
-    //
-    //    required init?(coder: NSCoder) {
-    //        //fatalError("init(coder:) has not been implemented")
-    //        super.init(coder: coder)
-    //    }
 }

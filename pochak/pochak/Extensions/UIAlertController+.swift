@@ -32,4 +32,11 @@ extension UIAlertController {
                                                           attributes: [NSAttributedString.Key.font : UIFont.Pretendard(size: size, family: family) as Any])
         setValue(attributedMessage, forKey: "attributedMessage")
     }
+    
+    /// 서버 통신 실패 했을 때 
+    static func networkErrorAlert(title: String) -> UIAlertController {
+        let alert = UIAlertController(title: title, message: "다시 시도해주세요.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        return alert
+    }
 }

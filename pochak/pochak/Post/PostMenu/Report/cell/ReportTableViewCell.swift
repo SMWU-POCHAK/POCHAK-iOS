@@ -12,10 +12,14 @@ class ReportTableViewCell: UITableViewCell {
     // MARK: - Properties
     
     static let identifier = "ReportTableViewCell"
+    
+    var reportType: ReportType?
 
     // MARK: - Views
     
     @IBOutlet weak var reportReasonLabel: UILabel!
+    
+    // MARK: - Init
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,6 +30,13 @@ class ReportTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    // MARK: - Functions
+    
+    func configure(reportType: ReportType){
+        self.reportType = reportType
+        self.reportReasonLabel.text = ReportType.getReasonForType(reportType)
     }
     
 }

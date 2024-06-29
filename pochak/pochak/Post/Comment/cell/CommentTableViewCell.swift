@@ -9,56 +9,45 @@ import UIKit
 
 class CommentTableViewCell: UITableViewCell {
 
-    // MARK: - Properties
-    @IBOutlet weak var commentTextView: MentionTextView!
+    // MARK: - Views
+    
+    @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var commentUserHandleLabel: UILabel!
     @IBOutlet weak var timePassedLabel: UILabel!
     @IBOutlet weak var childCommentBtn: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
+    
+    // MARK: - Properties
     
     var taggedId: String = ""
     var loggedinUserHandle: String?
-    var deleteButton = UIButton()
     var commentVC: CommentViewController!
     var commentId: Int!
+    var postId: Int!
     
     // comment view controller에서 받는 댓글 입력창
-    var editingCommentTextView: UITextView!
+    var editingCommentTextField: UITextField!
     var tableView: UITableView!
     
     let seeChildCommentBtn = UIButton()
     
-    // MARK: - Action
+    // MARK: - Init
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        loggedinUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
-        
-        /* commentTextView 초기화 */
-        
-        // commentTextView의 inset 제거
-        commentTextView.textContainerInset = .zero
-        commentTextView.textContainer.lineFragmentPadding = 0
-        
-        
-//        commentTextView.delegate = (self.textView(commentTextView, shouldInteractWith: <#T##URL#>, in: <#T##NSRange#>, interaction: <#T##UITextItemInteraction#>) as! any UITextViewDelegate)
-        
-        // commentTextView에서 아이디 찾기
-        commentTextView.findOutMetionedId()
-        
-        commentTextView.delegate = self
+        // TODO: 로그인 완성되면 수정
+        //loggedinUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
+        loggedinUserHandle = "dxxynni"
         
         // 크기 반만큼 radius
-        profileImageView.layer.cornerRadius = 17.5
+        profileImageView.layer.cornerRadius = 40 / 2
         
-        // 사용자(아이디로) 멘션 기능 (댓글에서 아이디 탐지)
-        //taggedId = commentLabel.findOutMentionedId()
-        
+        // TODO: 사용자 프로필로 이동..
         // label이 터치 인식할 수 있도록 gesture recognizer 추가
         //let recognizer = UITapGestureRecognizer(target: self, action: #selector(taggedIdTapped))
         //commentLabel.addGestureRecognizer(recognizer)
-        
-        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -68,6 +57,7 @@ class CommentTableViewCell: UITableViewCell {
     }
     
     // MARK: - Actions
+    
     @IBAction func postChildCmmtBtnDidTap(_ sender: UIButton) {
         // 부모 댓글을 단다는 것을 comment vc에 알려야 함
         commentVC.isPostingChildComment = true
@@ -86,10 +76,37 @@ class CommentTableViewCell: UITableViewCell {
                     self.backgroundColor = oldColor
                 }
         })
-        editingCommentTextView.becomeFirstResponder()
+        editingCommentTextField.becomeFirstResponder()
+    }
+    
+    @IBAction func deleteButtonDidTap(){
+        CommentDataService.shared.deleteComment(postId: self.postId, commentId: self.commentId) { [weak self] result in
+            switch result {
+            case .success(let data):
+                print("댓글 삭제 성공, data: \(data as! DeleteCommentResponse)")
+                let data = data as! DeleteCommentResponse
+                if data.isSuccess == true {
+                    self?.commentVC.loadCommentData()
+                }
+                else{
+                    self?.commentVC.present(UIAlertController.networkErrorAlert(title: "댓글 삭제에 실패하였습니다."), animated: true)
+                }
+            case .requestErr(let message):
+                print("requestErr", message)
+            case .pathErr:
+                print("pathErr")
+            case .serverErr:
+                print("serverErr")
+                self?.commentVC.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
+            case .networkFail:
+                print("networkFail")
+                self?.commentVC?.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
+            }
+        }
     }
     
     // MARK: - Helpers
+    
     func setupData(_ comment: UICommentData){
         // 현재 댓글 아이디 저장
         self.commentId = comment.commentId
@@ -111,22 +128,13 @@ class CommentTableViewCell: UITableViewCell {
             }
         
         self.commentUserHandleLabel.text = comment.handle
-        self.commentTextView.text = comment.content
+        self.commentLabel.text = comment.content
         
-        /* 로그인된 유저의 댓글인 경우 삭제 버튼 생성*/
-        if(comment.handle == loggedinUserHandle){
-            self.addSubview(deleteButton)
-            
-            // 오토레이아웃 설정
-            deleteButton.translatesAutoresizingMaskIntoConstraints = false
-            
-            deleteButton.leadingAnchor.constraint(equalTo: self.childCommentBtn.trailingAnchor, constant: 5.0).isActive = true
-            deleteButton.centerYAnchor.constraint(equalTo: self.childCommentBtn.centerYAnchor).isActive = true
-            
-            deleteButton.setTitle("삭제", for: .normal)
-            deleteButton.setTitleColor(UIColor(named: "gray04"), for: .normal)
-            deleteButton.backgroundColor = .clear
-            deleteButton.titleLabel?.font = UIFont(name: "Pretendard-Medium", size: 11.0)
+        /* 로그인된 유저의 댓글이 아닌 경우 삭제 버튼 hide */
+        print("댓글 핸들: \(comment.handle), 로그인 유저 핸들: \(loggedinUserHandle)")
+        if(comment.handle != loggedinUserHandle){
+            deleteButton.isHidden = true
+            deleteButton.isEnabled = false
         }
         
         // comment.uploadedTime 값: 2023-12-27T19:03:32.701
@@ -171,20 +179,4 @@ class CommentTableViewCell: UITableViewCell {
         }
     }
 
-}
-
-
-// MARK: - Extensions
-// commentTextView를 위한 delegate
-extension CommentTableViewCell: UITextViewDelegate {
-    
-    func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        
-        if let mentionTextView = textView as? MentionTextView,
-           let text = Int(url.debugDescription) {
-            print(mentionTextView.idArray[text])
-            return false
-        }
-        return false
-    }
 }
