@@ -48,9 +48,7 @@ class UploadViewController: UIViewController,UISearchBarDelegate{
     @IBOutlet weak var captionField: UITextView!
     
     @IBOutlet weak var captionCountText: UILabel!
-    
-    @IBOutlet weak var tagSearch: UISearchBar!
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         // 이미지 설정
@@ -67,23 +65,6 @@ class UploadViewController: UIViewController,UISearchBarDelegate{
         captionField.delegate = self
         
         captionCountText.font = UIFont(name: "Pretendard-medium", size: 12)
-        tagSearch.searchBarStyle = .minimal
-        
-        //테그 검색 창 버튼 이미지 설정
-        tagSearch.setImage(UIImage(named: "search"), for: UISearchBar.Icon.search, state: .normal)
-        
-        tagSearch.setImage(UIImage(named: "clear"), for: .clear, state: .normal)
-        
-        //태그검색 창 글씨 크기 설정
-        let attributedString = NSMutableAttributedString(string: "친구를 태그해보세요!", attributes: [
-            NSAttributedString.Key.font: UIFont(name: "Pretendard-medium",size:12) as Any
-           ])
-        
-
-        tagSearch.searchTextField.attributedPlaceholder = attributedString
-        tagSearch.autocapitalizationType = .none
-        
-        tagSearch.searchTextField.font = UIFont(name: "Pretendard-medium",size:12)
         
         //아이디 태그 collectionview
         setupCollectionView()
@@ -360,7 +341,6 @@ extension UploadViewController: UITableViewDelegate,UITableViewDataSource{
         // 원하는 작업을 수행한 후에 선택 해제
         tableView.deselectRow(at: indexPath, animated: true)
         self.tableView.isHidden = true
-        self.tagSearch.text = ""
     }
 
 }
