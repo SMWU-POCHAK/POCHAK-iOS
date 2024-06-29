@@ -52,6 +52,7 @@ class HomeTabViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         print("view will appear - home")
+        self.navigationController?.navigationBar.isHidden = false
         //currentFetchingPage = 0
         //self.setupData()
     }
@@ -65,14 +66,6 @@ class HomeTabViewController: UIViewController {
         let logoImageView = UIImageView(image: UIImage(named: "logo_full"))
         logoImageView.contentMode = .scaleAspectFit
         self.navigationItem.titleView = logoImageView
-        
-        // 네비게이션 바 줄 없애기
-        self.navigationController?.navigationBar.standardAppearance.shadowColor = .white  // 스크롤하지 않는 상태
-        self.navigationController?.navigationBar.scrollEdgeAppearance?.shadowColor = .white  // 스크롤하고 있는 상태
-        
-        // back 버튼 커스텀
-        self.navigationItem.backButtonTitle = ""
-        self.navigationController?.navigationBar.tintColor = .black
     }
     
     private func setupCollectionView() {
