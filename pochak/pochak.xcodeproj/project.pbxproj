@@ -574,12 +574,14 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
-		374261622C2FEF3600B67886 /* ProfileMenu */ = {
+		3742616A2C3075B400B67886 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				374261632C2FEF5F00B67886 /* ProfileMenuViewController.swift */,
+				3747E9712BF3827500364BED /* SettingsViewController.swift */,
+				37D311D82B53131D00A1D7C1 /* LogoutDataManager */,
+				37D311DD2B566C3D00A1D7C1 /* DeleteAccountDataManager */,
 			);
-			path = ProfileMenu;
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		3769D6AC2B3C2F9900294CD1 /* JoinDataManager */ = {
@@ -626,12 +628,9 @@
 			isa = PBXGroup;
 			children = (
 				3769D6B82B3C345800294CD1 /* MyProfileTabViewController.swift */,
-				37A284C02B52FC910023EB9D /* UpdateProfileViewController.swift */,
-				3747E9712BF3827500364BED /* SettingsViewController.swift */,
-				37D311DD2B566C3D00A1D7C1 /* DeleteAccountDataManager */,
-				37D311D82B53131D00A1D7C1 /* LogoutDataManager */,
-				37D311D32B53053C00A1D7C1 /* MyProfileUpdateDataManager */,
-				37C3AF442B3CB26000B4C79C /* MyProfilePostDataManager */,
+				3742616A2C3075B400B67886 /* Settings */,
+				37D311D32B53053C00A1D7C1 /* ProfileUpdate */,
+				37C3AF442B3CB26000B4C79C /* ProfilePostData */,
 				3769D6CC2B3C560200294CD1 /* PostListTabman */,
 				3769D6CB2B3C55E500294CD1 /* FollowListTabman */,
 				3769D6C02B3C39EA00294CD1 /* cell */,
@@ -643,9 +642,9 @@
 			isa = PBXGroup;
 			children = (
 				373235452B68F9180042EF94 /* FollowDataManager */,
-				3769D6BE2B3C349D00294CD1 /* SecondTabmanViewController.swift */,
-				3769D6BC2B3C348800294CD1 /* FirstTabmanViewController.swift */,
 				3769D6BA2B3C347000294CD1 /* FollowListViewController.swift */,
+				3769D6BC2B3C348800294CD1 /* FirstTabmanViewController.swift */,
+				3769D6BE2B3C349D00294CD1 /* SecondTabmanViewController.swift */,
 			);
 			path = FollowListTabman;
 			sourceTree = "<group>";
@@ -660,23 +659,24 @@
 			path = PostListTabman;
 			sourceTree = "<group>";
 		};
-		37C3AF442B3CB26000B4C79C /* MyProfilePostDataManager */ = {
+		37C3AF442B3CB26000B4C79C /* ProfilePostData */ = {
 			isa = PBXGroup;
 			children = (
-				37C3AF452B3CB29A00B4C79C /* MyProfilePostDataManager.swift */,
 				37C3AF472B3CB2B300B4C79C /* MyProfilePochakedPostModel.swift */,
 				37C3AF492B3CB2C700B4C79C /* MyProfilePochakPostModel.swift */,
+				37C3AF452B3CB29A00B4C79C /* MyProfilePostDataManager.swift */,
 			);
-			path = MyProfilePostDataManager;
+			path = ProfilePostData;
 			sourceTree = "<group>";
 		};
-		37D311D32B53053C00A1D7C1 /* MyProfileUpdateDataManager */ = {
+		37D311D32B53053C00A1D7C1 /* ProfileUpdate */ = {
 			isa = PBXGroup;
 			children = (
-				37D311D42B53056700A1D7C1 /* MyProfileUpdateDataManager.swift */,
+				37A284C02B52FC910023EB9D /* UpdateProfileViewController.swift */,
 				37D311D62B53057700A1D7C1 /* MyProfileUpdateDataModel.swift */,
+				37D311D42B53056700A1D7C1 /* MyProfileUpdateDataManager.swift */,
 			);
-			path = MyProfileUpdateDataManager;
+			path = ProfileUpdate;
 			sourceTree = "<group>";
 		};
 		37D311D82B53131D00A1D7C1 /* LogoutDataManager */ = {
@@ -700,7 +700,7 @@
 		37D311E72B567B3F00A1D7C1 /* OtherProfile */ = {
 			isa = PBXGroup;
 			children = (
-				374261622C2FEF3600B67886 /* ProfileMenu */,
+				374261632C2FEF5F00B67886 /* ProfileMenuViewController.swift */,
 				37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */,
 			);
 			path = OtherProfile;

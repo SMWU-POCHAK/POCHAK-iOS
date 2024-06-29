@@ -9,6 +9,8 @@ import UIKit
 
 class FollowerCollectionViewCell: UICollectionViewCell {
     
+    // MARK: - Data
+    
     @IBOutlet weak var profileImageBtn: UIButton!
     @IBOutlet weak var userId: UILabel!
     @IBOutlet weak var userName: UILabel!
@@ -16,12 +18,27 @@ class FollowerCollectionViewCell: UICollectionViewCell {
     
     var localHandle: String = ""
     var parentVC: UIViewController!
-
     weak var delegate: RemoveImageDelegate?
-        
+    static let identifier = "FollowerCollectionViewCell" // Collection View가 생성할 cell임을 명시
+
+    // MARK: - Cell LifeCylce
     
-    // Collection View가 생성할 cell임을 명시
-    static let identifier = "FollowerCollectionViewCell"
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // 프로필 레이아웃
+        profileImageBtn.contentMode = .scaleAspectFill // 사진 안 넣어지는 문제 -> 버튼 type을 custom으로 변경 + style default로 변경
+        profileImageBtn.clipsToBounds = true // cornerRadius 적용 안되는 경우 추가
+        profileImageBtn.layer.cornerRadius = 26
+        
+        // 버튼 레이아웃
+        deleteBtn.setTitle("삭제", for: .normal)
+        deleteBtn.backgroundColor = UIColor(named: "gray03")
+        deleteBtn.setTitleColor(UIColor.white, for: .normal)
+        deleteBtn.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 14) // 폰트 설정
+        deleteBtn.layer.cornerRadius = 5
+    }
+    
+    // MARK: - Method
     
     func configure(_ memberDataModel : MemberListDataModel){
         let imageURL = memberDataModel.profileImage ?? ""
@@ -42,8 +59,6 @@ class FollowerCollectionViewCell: UICollectionViewCell {
     
     @IBAction func deleteFollowerBtn(_ sender: Any) {
         let handle = localHandle
-        print("inside deleteFollowerBtn!!!!!")
-        // index
         guard let superView = self.superview as? UICollectionView else {
             print("superview is not a UICollectionView - getIndexPath")
             return
@@ -52,22 +67,4 @@ class FollowerCollectionViewCell: UICollectionViewCell {
         print(indexPath.row)
         delegate?.removeFromCollectionView(at: indexPath, handle)
     }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // 프로필 레이아웃
-        // 사진 안 넣어짐 -> 버튼 type을 custom으로 변경 + style default로 변경
-        profileImageBtn.contentMode = .scaleAspectFill
-        profileImageBtn.clipsToBounds = true // cornerRadius 적용 안됨 해결
-        profileImageBtn.layer.cornerRadius = 26
-        
-        // 버튼 레이아웃
-        deleteBtn.setTitle("삭제", for: .normal)
-        deleteBtn.backgroundColor = UIColor(named: "gray03")
-        deleteBtn.setTitleColor(UIColor.white, for: .normal)
-        deleteBtn.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 14) // 폰트 설정
-        deleteBtn.layer.cornerRadius = 5
-        
-    }
-
 }

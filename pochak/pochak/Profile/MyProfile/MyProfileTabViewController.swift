@@ -25,12 +25,15 @@ class MyProfileTabViewController: UIViewController {
     @IBOutlet weak var topUIView: UIView!
     @IBOutlet weak var settingBtn: UIButton!
     
-    // 필요한 데이터 불러온 후 변수에 저장
+    // MARK: - Data
+    
     let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
     // let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
     let handle = APIConstants.dayeonHandle // 임시 핸들
     
-    // ViewDidLoad보다 먼저 실행
+    // MARK: - View Lifecycle
+    
+    // Container View에 데이터 전달(ViewDidLoad보다 먼저 실행)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         //storyboard에서 설정한 identifier와 동일한 이름
         if segue.identifier == "embedContainer" {
@@ -75,9 +78,6 @@ class MyProfileTabViewController: UIViewController {
         // API
         loadProfileData()
         
-        // postListVC에 handle 넘겨주기
-//        performSegue(withIdentifier: "performSegue", sender: handle)
-        
         // 뷰가 나타날 때에는 네비게이션 바 숨기기
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
 
@@ -90,16 +90,16 @@ class MyProfileTabViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
+    // MARK: - Method
     
     private func loadProfileData() {
         // let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
         self.userHandle.text = "@\(handle)"
-
-        print("------------------- loadProfileData() 안에 handle 있는지 검사 -------------------")
-        print(handle)
+        
+        // 1. API 호출
         MyProfilePostDataManager.shared.myProfileUserAndPochakedPostDataManager(handle,{ [self]resultData in
       
-            // 1. API 호출
+            // 이미지 데이터
             let imageURL = resultData.profileImage ?? ""
             UserDefaultsManager.setData(value: imageURL, key: .profileImgUrl)
             if let url = URL(string: imageURL) {

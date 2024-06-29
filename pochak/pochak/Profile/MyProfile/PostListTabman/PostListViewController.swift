@@ -11,10 +11,12 @@ import Pageboy
 
 class PostListViewController: TabmanViewController {
 
-    // Tabbar로 넘길 VC 배열 선언
-    private var viewControllers: [UIViewController] = []
+    // MARK: - Data
+    
+    private var viewControllers: [UIViewController] = [] // Tabbar로 넘길 VC 배열 선언
     var handle: String?
 
+    // MARK: - View LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +41,7 @@ class PostListViewController: TabmanViewController {
         bar.indicator.tintColor = UIColor(named: "yellow00")
         // padding 설정
         bar.layout.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        // tap center
+        // center 정렬
         bar.layout.alignment = .centerDistributed
         // 배경색
         bar.backgroundView.style = .clear
@@ -56,12 +58,11 @@ class PostListViewController: TabmanViewController {
         
         /* 4. Baritem 등록 */
         addBar(bar, dataSource: self, at:.top)
-        
-        
     }
 }
 
-// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+// MARK: - Extension
+
 // DataSource Extension
 extension PostListViewController: PageboyViewControllerDataSource, TMBarDataSource {
 
