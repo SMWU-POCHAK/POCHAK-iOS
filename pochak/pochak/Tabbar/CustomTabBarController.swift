@@ -11,13 +11,55 @@ class CustomTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        setTabBarHeight()
+        setTabBarHeight()
         setTabbar()
         setTabbarShadow()
     }
-    
-    private func setTabbar(){
+
+    private func setTabbar() {
+        // 설정할 뷰 컨트롤러들 생성
+        let homeTabViewController = UIStoryboard(name: "HomeTab", bundle: nil).instantiateViewController(withIdentifier: "HomeTabViewController")
+        let postTabViewController = UIStoryboard(name: "PostTab", bundle: nil).instantiateViewController(withIdentifier: "PostTabViewController")
+        let cameraTabViewController = UIStoryboard(name: "CameraTab", bundle: nil).instantiateViewController(withIdentifier: "CameraViewController")
+        let alarmTabViewController = UIStoryboard(name: "AlarmTab", bundle: nil).instantiateViewController(withIdentifier: "AlarmViewController")
+        let myProfileViewController = UIStoryboard(name: "ProfileTab", bundle: nil).instantiateViewController(withIdentifier: "MyProfileTabVC")
+        
+        let homeNavController = UINavigationController(rootViewController: homeTabViewController)
+        let postNavController = UINavigationController(rootViewController: postTabViewController)
+        let cameraNavController = UINavigationController(rootViewController: cameraTabViewController)
+        let alarmNavController = UINavigationController(rootViewController: alarmTabViewController)
+        let myProfileNavController = UINavigationController(rootViewController: myProfileViewController)
+
+        // 탭 바 컨트롤러에 뷰 컨트롤러들 설정
+        self.setViewControllers([homeNavController, postNavController, cameraNavController, alarmNavController, myProfileNavController], animated: false)
+
+        // 탭 바 아이템 설정
+        if let items = tabBar.items {
+            items[0].selectedImage = UIImage(named: "home_logo_fill")?.withRenderingMode(.alwaysOriginal)
+            items[0].image = UIImage(named: "home_logo")?.withRenderingMode(.alwaysOriginal)
+            items[0].title = "홈"
+            
+            items[1].selectedImage = UIImage(named: "post_fill")?.withRenderingMode(.alwaysOriginal)
+            items[1].image = UIImage(named: "post")?.withRenderingMode(.alwaysOriginal)
+            items[1].title = "게시글"
+
+            items[2].selectedImage = UIImage(named: "pochak_fill")?.withRenderingMode(.alwaysOriginal)
+            items[2].image = UIImage(named: "pochak")?.withRenderingMode(.alwaysOriginal)
+            items[2].title = "카메라"
+
+            items[3].selectedImage = UIImage(named: "alarm_fill")?.withRenderingMode(.alwaysOriginal)
+            items[3].image = UIImage(named: "alarm")?.withRenderingMode(.alwaysOriginal)
+            items[3].title = "알림"
+
+            items[4].selectedImage = UIImage(named: "profile_fill")?.withRenderingMode(.alwaysOriginal)
+            items[4].image = UIImage(named: "profile")?.withRenderingMode(.alwaysOriginal)
+            items[4].title = "프로필"
+        }
+
+        // 기본 선택 인덱스 설정
         self.selectedIndex = 0
+
+        // 탭 바의 틴트 색상 설정
         self.tabBar.tintColor = UIColor(named: "navy00")
     }
 
