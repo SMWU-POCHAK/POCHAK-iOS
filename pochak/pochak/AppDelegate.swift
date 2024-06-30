@@ -40,6 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appearance.setTitleTextAttributes(attributes as [NSAttributedString.Key : Any], for: .normal)
         appearance.setTitleTextAttributes(attributes as [NSAttributedString.Key : Any], for: .selected)
         
+        // Realm 마이그레이션
         let config = Realm.Configuration(
             schemaVersion: 2, // Update schema version to the latest version you want to use
             migrationBlock: { migration, oldSchemaVersion in
