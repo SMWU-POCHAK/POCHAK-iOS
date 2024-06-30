@@ -11,13 +11,13 @@ class ProfileMenuViewController: UIViewController {
 
     @IBOutlet weak var userBlockBtn: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
+    var receivedHandle : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
-    
     
     @IBAction func userBlockBtnClicked(_ sender: Any) {
         showAlert(alertType: .confirmAndCancel,
@@ -31,18 +31,18 @@ class ProfileMenuViewController: UIViewController {
     @IBAction func cancelBtnClicked(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-   
 }
 
 extension ProfileMenuViewController: CustomAlertDelegate {
     
     func confirmAction() {
-
+//        BlockDataManager.shared.blockDataManager(receivedHandle ?? "", { resultData in
+//            print(resultData.message)
+//        })
+        print("계정 차단함")
     }
     
     func cancel() {
         print("취소하기 선택됨")
     }
 }
-

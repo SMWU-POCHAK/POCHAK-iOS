@@ -45,8 +45,11 @@ class OtherUserProfileViewController: UIViewController {
         super.viewDidLoad()
         
         // 현재 프로필 페이지의 네비게이션바 커스텀
+        navigationController?.isNavigationBarHidden = false
+        self.navigationController?.navigationBar.backgroundColor = UIColor.clear
         self.navigationController?.navigationBar.tintColor = .black
-        self.navigationController?.navigationBar.topItem?.title = "@" + (recievedHandle ?? "handle not found")
+        self.navigationItem.title = "@" + (recievedHandle ?? "handle not found")
+        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.black, NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 18) ?? UIFont.systemFont(ofSize: 18, weight: .bold)]
         
         // 다음부터 나올 VC의 Back 버튼 커스텀
         let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
@@ -86,10 +89,6 @@ class OtherUserProfileViewController: UIViewController {
         
         // API
         loadProfileData()
-        
-        // 현재 프로필 페이지의 네비게이션바 다시 적용
-        self.navigationController?.navigationBar.tintColor = .black
-        self.navigationController?.navigationBar.topItem?.title = "@" + (recievedHandle ?? "handle not found")
     }
     
     // MARK: - Method
@@ -190,6 +189,7 @@ class OtherUserProfileViewController: UIViewController {
     @objc func moreButtonPressed(){
         guard let profileMenuVC = self.storyboard?.instantiateViewController(withIdentifier: "profileMenuVC") as? ProfileMenuViewController else {return}
         let sheet = profileMenuVC.sheetPresentationController
+        profileMenuVC.receivedHandle = recievedHandle
         
         let multiplier = 0.25
         let fraction = UISheetPresentationController.Detent.custom { context in

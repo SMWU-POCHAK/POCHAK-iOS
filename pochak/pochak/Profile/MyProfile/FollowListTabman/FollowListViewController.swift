@@ -25,6 +25,7 @@ class FollowListViewController: TabmanViewController {
         super.viewDidLoad()
         
         // 네비게이션바 title 커스텀
+        self.navigationController?.navigationBar.backgroundColor = UIColor.clear
         self.navigationController?.navigationBar.tintColor = .black
         self.navigationItem.title = handle ?? "handle not found"
         self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.black, NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 18) ?? UIFont.systemFont(ofSize: 18, weight: .bold)]
@@ -65,16 +66,6 @@ class FollowListViewController: TabmanViewController {
         /* 4. Baritem 등록 */
         addBar(bar, dataSource: self, at:.top)
     }
-    
-    override func viewWillAppear(_ animated: Bool){
-        super.viewWillAppear(animated)
-        
-        // 다시 뷰로 돌아올 때에도 네비게이션 커스텀 적용
-        self.navigationController?.navigationBar.tintColor = .black
-        self.navigationItem.title = handle ?? "handle not found"
-        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.black, NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 18) ?? UIFont.systemFont(ofSize: 20, weight: .bold)]
-        
-    }
 }
 // MARK: - Extension
 
@@ -99,9 +90,11 @@ extension FollowListViewController: PageboyViewControllerDataSource, TMBarDataSo
     func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
         switch index {
            case 0:
-               return TMBarItem(title: "\(followerCount) 팔로워")
+//               return TMBarItem(title: "\(followerCount) 팔로워")
+            return TMBarItem(title: "팔로워")
            case 1:
-               return TMBarItem(title: "\(followingCount) 팔로잉")
+//               return TMBarItem(title: "\(followingCount) 팔로잉")
+            return TMBarItem(title: "팔로잉")
            default:
                let title = "Page \(index)"
               return TMBarItem(title: title)

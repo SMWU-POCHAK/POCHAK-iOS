@@ -79,15 +79,14 @@ class MyProfileTabViewController: UIViewController {
         loadProfileData()
         
         // 뷰가 나타날 때에는 네비게이션 바 숨기기
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
-
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         // 뷰가 사라질 때에는 네비게이션 바 다시 보여주기
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     // MARK: - Method
