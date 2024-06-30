@@ -78,12 +78,7 @@ class CommentViewController: UIViewController {
     // TODO: 바깥 영역 터치 시 키보드 안 내려가는 문제 해결 필요
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
-        self.tableView.endEditing(true)
-        self.commentView.endEditing(true)
-        self.noCommentView.endEditing(true)
         self.commentTextField.endEditing(true)
-//        view.resignFirstResponder()
-        tableView.keyboardDismissMode = .onDrag
     }
     
     func loadCommentData(){
@@ -183,6 +178,9 @@ class CommentViewController: UIViewController {
         
         // 여러 개의 셀 선택 안되도록 설정
         tableView.allowsMultipleSelection = false
+        
+        // 키보드 내릴 수 있게
+        tableView.keyboardDismissMode = .onDrag
         
         // nib은 CommentTableViewCell << 이 파일임
         let commentNib = UINib(nibName: "CommentTableViewCell", bundle: nil)
