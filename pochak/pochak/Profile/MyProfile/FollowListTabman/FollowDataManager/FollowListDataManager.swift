@@ -13,24 +13,18 @@ class FollowListDataManager {
     static let shared = FollowListDataManager()
     
     // Get token
-    let accessToken = GetToken().getAccessToken()
-    let refreshToken = GetToken().getRefreshToken()
+    let accessToken = GetToken.getAccessToken()
+    let refreshToken = GetToken.getRefreshToken()
     
     
     func followerDataManager(_ handle : String, _ completion: @escaping ([MemberListDataModel]) -> Void) {
-//        let url = APIConstants.baseURL + "/api/v1/user/profile/" + handle
-        
-        let url = "http://15.165.84.249/api/v2/members/" + handle + "/follower"
-//        let url = "http://15.165.84.249/api/v2/members/dxxynni/follower"
-
-                    
+        let url = "\(APIConstants.baseURLv2)/api/v2/members/\(handle)/follower"
         let authenticator = MyAuthenticator()
         let credential = MyAuthenticationCredential(accessToken: accessToken,
                                                     refreshToken: refreshToken,
                                                     expiredAt: Date(timeIntervalSinceNow: 60 * 60))
         let myAuthencitationInterceptor = AuthenticationInterceptor(authenticator: authenticator,
                                                                     credential: credential)
-    
         AF.request(url,
                    method: .get,
                    encoding: URLEncoding.default,
@@ -43,28 +37,20 @@ class FollowListDataManager {
                 print(resultData)
                 completion(resultData)
             case .failure(let error):
-                print("nnnnnnn 실패함")
+                print("Request Fail : followerDataManager")
                 print(error)
             }
         }
     }
     
     func followingDataManager(_ handle : String, _ completion: @escaping ([MemberListDataModel]) -> Void) {
-//        let url = APIConstants.baseURL + "/api/v1/user/profile/" + handle + "/pochak"
-        
-        let url = "http://15.165.84.249/api/v2/members/" + handle + "/following"
-//        let url = "http://15.165.84.249/api/v2/members/dxxynni/following"
-
-
-//        let header : HTTPHeaders = ["Authorization": accessToken, "Content-type": "application/json"]
-        
+        let url = "\(APIConstants.baseURLv2)/api/v2/members/\(handle)/following"
         let authenticator = MyAuthenticator()
         let credential = MyAuthenticationCredential(accessToken: accessToken,
                                                     refreshToken: refreshToken,
                                                     expiredAt: Date(timeIntervalSinceNow: 60 * 60))
         let myAuthencitationInterceptor = AuthenticationInterceptor(authenticator: authenticator,
                                                                     credential: credential)
-        
         AF.request(url,
                    method: .get,
                    encoding: URLEncoding.default,
@@ -77,6 +63,7 @@ class FollowListDataManager {
                 let resultData = result.result.memberList
                 completion(resultData)
             case .failure(let error):
+                print("Request Fail : followingDataManager")
                 print(error)
             }
         }

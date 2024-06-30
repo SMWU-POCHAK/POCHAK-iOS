@@ -1,26 +1,27 @@
 //
-//  DeleteFollowerDataManager.swift
+//  LogoutDataManager.swift
 //  pochak
 //
-//  Created by Seo Cindy on 1/30/24.
+//  Created by Seo Cindy on 1/14/24.
 //
-
-import Foundation
 import Alamofire
 
-class DeleteFollowerDataManager {
+class LogoutDataManager{
     
-    static let shared = DeleteFollowerDataManager()
+    static let shared = LogoutDataManager()
     
     // Get token
     let accessToken = GetToken.getAccessToken()
     let refreshToken = GetToken.getRefreshToken()
     
     
-    
-    func deleteFollowerDataManager(_ handle : String, _ selectedHandle : String, _ completion: @escaping (DeleteFollowerDataResponse) -> Void) {
-        let url = "\(APIConstants.baseURLv2)/api/v2/members/\(handle)/follower?followerHandle=\(selectedHandle)"
+    func logoutDataManager(_ completion: @escaping (LogoutDataModel) -> Void) {
+        let url = "\(APIConstants.baseURL)/api/v2/member/logout"
+        
+        print("accessToken : \(accessToken)")
+        print("refreshToken : \(refreshToken)")
 
+        
         let authenticator = MyAuthenticator()
         let credential = MyAuthenticationCredential(accessToken: accessToken,
                                                     refreshToken: refreshToken,
@@ -28,16 +29,18 @@ class DeleteFollowerDataManager {
         let myAuthencitationInterceptor = AuthenticationInterceptor(authenticator: authenticator,
                                                                     credential: credential)
         AF.request(url,
-                   method: .delete,
+                   method: .get,
                    encoding: URLEncoding.default,
                    interceptor: myAuthencitationInterceptor)
         .validate()
-        .responseDecodable(of: DeleteFollowerDataResponse.self) { response in
+        .responseDecodable(of: LogoutDataModel.self) { response in
             switch response.result {
             case .success(let result):
-                completion(result)
+                print("logout success!!!!!!!!!")
+                let resultData = result
+                completion(resultData)
             case .failure(let error):
-                print("Request Fail : deleteFollowerDataManager")
+                print("Request Fail : logoutDataManager")
                 print(error)
             }
         }

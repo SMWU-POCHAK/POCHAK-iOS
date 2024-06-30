@@ -1,26 +1,27 @@
 //
-//  DeleteFollowerDataManager.swift
+//  DeleteAccountDataManager.swift
 //  pochak
 //
-//  Created by Seo Cindy on 1/30/24.
+//  Created by Seo Cindy on 1/16/24.
 //
 
-import Foundation
 import Alamofire
 
-class DeleteFollowerDataManager {
+class DeleteAccountDataManager{
     
-    static let shared = DeleteFollowerDataManager()
+    static let shared = DeleteAccountDataManager()
     
     // Get token
     let accessToken = GetToken.getAccessToken()
     let refreshToken = GetToken.getRefreshToken()
     
-    
-    
-    func deleteFollowerDataManager(_ handle : String, _ selectedHandle : String, _ completion: @escaping (DeleteFollowerDataResponse) -> Void) {
-        let url = "\(APIConstants.baseURLv2)/api/v2/members/\(handle)/follower?followerHandle=\(selectedHandle)"
+    func deleteAccountDataManager(_ completion: @escaping (DeleteAccountModel) -> Void) {
+        let url = "\(APIConstants.baseURL)/api/v2/member/signout"
+        
+        print("accessToken : \(accessToken)")
+        print("refreshToken : \(refreshToken)")
 
+        
         let authenticator = MyAuthenticator()
         let credential = MyAuthenticationCredential(accessToken: accessToken,
                                                     refreshToken: refreshToken,
@@ -32,14 +33,17 @@ class DeleteFollowerDataManager {
                    encoding: URLEncoding.default,
                    interceptor: myAuthencitationInterceptor)
         .validate()
-        .responseDecodable(of: DeleteFollowerDataResponse.self) { response in
+        .responseDecodable(of: DeleteAccountModel.self) { response in
             switch response.result {
             case .success(let result):
-                completion(result)
+                print("signout success!!!!!!!!!")
+                let resultData = result
+                completion(resultData)
             case .failure(let error):
-                print("Request Fail : deleteFollowerDataManager")
+                print("Request Fail : deleteAccountDataManager")
                 print(error)
             }
         }
     }
 }
+

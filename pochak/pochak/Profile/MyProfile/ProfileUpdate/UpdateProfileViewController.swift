@@ -12,6 +12,8 @@ import UIKit
 
 class UpdateProfileViewController: UIViewController {
     
+    // MARK: - Data
+    
     let name = UserDefaultsManager.getData(type: String.self, forKey: .name) ?? "name not found"
     let email = UserDefaultsManager.getData(type: String.self, forKey: .email) ?? "email not found"
     let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
@@ -24,34 +26,37 @@ class UpdateProfileViewController: UIViewController {
     @IBOutlet weak var handleTextField: UITextField!
     @IBOutlet weak var messageTextField: UITextField!
     
+    let imagePickerController = UIImagePickerController()
+    
+    // MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
                 
-        // MARK: - Add Navigation Item
-        // 완료 버튼
+        // 네비게이션바 오른쪽 완료 버튼
         let button = UIButton()
         button.setTitle("완료", for: .normal)
         button.setTitleColor(UIColor(named: "yellow00"), for: .normal)
-        button.titleLabel?.font =  UIFont(name: "Pretendard-Bold", size: 18)
+        button.titleLabel?.font =  UIFont(name: "Pretendard-Bold", size: 16)
         button.addTarget(self, action: #selector(doneBtnTapped), for: .touchUpInside)
-
         let barButton = UIBarButtonItem(customView: button)
         self.navigationItem.rightBarButtonItem = barButton
         
-        // Title
+        // 네비게이션바 title 커스텀
+        self.navigationController?.navigationBar.tintColor = .black
         self.navigationItem.title = "프로필 수정"
+        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.black, NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 18) ?? UIFont.systemFont(ofSize: 18, weight: .bold)]
         
-        // textfied 항목 채워넣기
+        // textfied 데이터 채우기
         nameTextField.text = name
-//        handleTextField.text = handle
-        handleTextField.text = "dxxynni"
+        handleTextField.text = handle
         messageTextField.text = message
         
         // handle 수정 불가하도록 막아두기
-        handleTextField.isUserInteractionEnabled = false
-        handleTextField.textColor = UIColor(named: "gray03")
+//        handleTextField.isUserInteractionEnabled = false
+//        handleTextField.textColor = UIColor(named: "gray03")
         
-        // image 적용
+        // 프로필 image 데이터 채우기
         if let url = URL(string: profileImgUrl) {
             self.profileImg.kf.setImage(with: url) { result in
                 switch result {
@@ -63,29 +68,26 @@ class UpdateProfileViewController: UIViewController {
             }
         }
         
-        // 프로필 레이아웃
+        // 프로필 image 레이아웃
         self.profileImg.contentMode = .scaleAspectFill
         self.profileImg.layer.cornerRadius = 58
 
-        
-        // Back 버튼
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
+//        // Back 버튼
+//        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
     }
     
-    // MARK: - 프로필 설정 완료 시 changeRootViewController
+    // MARK: - Method
+    
     @objc private func doneBtnTapped(_ sender: Any) {
-        
-        // userDefault에 데이터 추가
+        // UserDefaults에 데이터 추가
         guard let name = nameTextField.text  else {return}
         guard let message = messageTextField.text  else {return}
         guard let profileImage = profileImg.image  else {return}
 
-        
         UserDefaultsManager.setData(value: name, key: .name)
         UserDefaultsManager.setData(value: message, key: .message)
-
         
-        // request : PATCH
+        // API request : PATCH
         MyProfileUpdateDataManager.shared.updateDataManager(name,
                                                             handle,
                                                             message,
@@ -95,27 +97,24 @@ class UpdateProfileViewController: UIViewController {
             print(name)
         })
         
-        // 화면 전환
+        // 프로필 화면으로 전환
         navigationController?.popViewController(animated: true)
     }
     
-        
-    // MARK: - 프로필 사진 설정
-    /*
+    /* < 앨범 사진 선택 >
     1. 권한 설정 : Info.plist > Photo Library Usage 권한 추가
     2. UIImagePickerController 선언
     3. @IBAction 정의
     4. 프로토콜 채택
      */
-    let imagePickerController = UIImagePickerController()
     @IBAction func profileBtnTapped(_ sender: Any) {
         self.imagePickerController.delegate = self
         self.imagePickerController.sourceType = .photoLibrary
         present(self.imagePickerController, animated: true, completion: nil)
     }
-    
-    
 }
+
+// MARK: - Extension
 
 // 앨범 사진 선택 프로토콜 채택
 extension UpdateProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -132,5 +131,4 @@ extension UpdateProfileViewController: UIImagePickerControllerDelegate, UINaviga
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
-
 }

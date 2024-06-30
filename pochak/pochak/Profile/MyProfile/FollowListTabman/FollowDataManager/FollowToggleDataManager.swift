@@ -13,22 +13,18 @@ class FollowToggleDataManager {
     static let shared = FollowToggleDataManager()
     
     // Get token
-    let accessToken = GetToken().getAccessToken()
-    let refreshToken = GetToken().getRefreshToken()
+    let accessToken = GetToken.getAccessToken()
+    let refreshToken = GetToken.getRefreshToken()
     
     
     func followToggleDataManager(_ handle : String, _ completion: @escaping (FollowToggleDataResponse) -> Void) {
-        //        let url = APIConstants.baseURL + "/api/v1/user/profile/" + handle
-        
-        let url = "http://15.165.84.249/api/v2/members/" + handle + "/follow"
-        
+        let url = "\(APIConstants.baseURLv2)/api/v2/members/\(handle)/follow"
         let authenticator = MyAuthenticator()
         let credential = MyAuthenticationCredential(accessToken: accessToken,
                                                     refreshToken: refreshToken,
                                                     expiredAt: Date(timeIntervalSinceNow: 60 * 60))
         let myAuthencitationInterceptor = AuthenticationInterceptor(authenticator: authenticator,
                                                                     credential: credential)
-        
         AF.request(url,
                    method: .post,
                    encoding: URLEncoding.default,
@@ -39,6 +35,7 @@ class FollowToggleDataManager {
             case .success(let result):
                 completion(result)
             case .failure(let error):
+                print("Request Fail : followToggleDataManager")
                 print(error)
             }
         }

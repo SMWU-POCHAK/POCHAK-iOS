@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="w5l-aB-8rx">
-
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="w5l-aB-8rx">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -13,6 +12,9 @@
     <customFonts key="customFonts">
         <array key="Pretendard-Bold.ttf">
             <string>Pretendard-Bold</string>
+        </array>
+        <array key="Pretendard-Medium.ttf">
+            <string>Pretendard-Medium</string>
         </array>
     </customFonts>
     <scenes>
@@ -39,16 +41,16 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="포착 시작하기" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxO-YY-JlX">
-                                <rect key="frame" x="0.0" y="641" width="393" height="18.666666666666629"/>
+                                <rect key="frame" x="0.0" y="628" width="393" height="18.666666666666629"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0m9-lT-YBC">
-                                <rect key="frame" x="107.33333333333333" y="758.66666666666663" width="178.33333333333337" height="32.666666666666629"/>
+                                <rect key="frame" x="121.66666666666667" y="745.66666666666663" width="149.66666666666663" height="29.666666666666629"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="이미 계정이 있으신가요?">
-                                    <fontDescription key="titleFontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="16"/>
+                                    <fontDescription key="titleFontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="13"/>
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
@@ -62,7 +64,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FlY-ZQ-tEl">
-                                <rect key="frame" x="127.33333333333331" y="673.66666666666663" width="60" height="60"/>
+                                <rect key="frame" x="127.33333333333331" y="660.66666666666663" width="60" height="60"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="UuV-Mt-0TQ"/>
@@ -75,7 +77,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iro-3g-pM1">
-                                <rect key="frame" x="205.66666666666666" y="673.66666666666663" width="59.999999999999972" height="60"/>
+                                <rect key="frame" x="205.66666666666666" y="660.66666666666663" width="59.999999999999972" height="60"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="g3v-ut-zRm"/>
@@ -94,7 +96,7 @@
                             <constraint firstItem="0m9-lT-YBC" firstAttribute="centerX" secondItem="72j-dg-2HE" secondAttribute="centerX" id="4DC-2F-9bb"/>
                             <constraint firstItem="wV5-nd-x5e" firstAttribute="centerX" secondItem="72j-dg-2HE" secondAttribute="centerX" id="5Zb-Jx-hOx"/>
                             <constraint firstItem="bqt-9u-HeM" firstAttribute="trailing" secondItem="dxO-YY-JlX" secondAttribute="trailing" id="F6Q-TY-hTb"/>
-                            <constraint firstItem="dxO-YY-JlX" firstAttribute="top" secondItem="wV5-nd-x5e" secondAttribute="bottom" constant="123" id="Nm6-yx-USR"/>
+                            <constraint firstItem="dxO-YY-JlX" firstAttribute="top" secondItem="wV5-nd-x5e" secondAttribute="bottom" constant="110" id="Nm6-yx-USR"/>
                             <constraint firstItem="hzd-tu-vfr" firstAttribute="top" secondItem="f2y-Aa-VDr" secondAttribute="bottom" constant="35" id="PeD-jz-0hG"/>
                             <constraint firstItem="f2y-Aa-VDr" firstAttribute="centerX" secondItem="72j-dg-2HE" secondAttribute="centerX" id="Pzd-Wo-V03"/>
                             <constraint firstItem="dxO-YY-JlX" firstAttribute="centerX" secondItem="72j-dg-2HE" secondAttribute="centerX" id="aRl-45-Nfh"/>
@@ -115,6 +117,7 @@
                         <outlet property="appleLoginBtn" destination="Iro-3g-pM1" id="0ha-bm-A4A"/>
                         <outlet property="goToLoginBtn" destination="0m9-lT-YBC" id="9Tg-pu-8Wp"/>
                         <outlet property="googleLoginBtn" destination="FlY-ZQ-tEl" id="Eec-Lf-Nej"/>
+                        <outlet property="startPochak" destination="dxO-YY-JlX" id="v9v-43-Q5j"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p5O-Nq-EP2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -150,13 +153,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="로그인하기" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FQ0-87-lh9">
-                                <rect key="frame" x="162" y="597" width="69.333333333333314" height="18.666666666666629"/>
+                                <rect key="frame" x="162" y="584" width="69.333333333333314" height="18.666666666666629"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eC7-wl-1nm">
-                                <rect key="frame" x="127.33333333333331" y="629.66666666666663" width="60" height="60"/>
+                                <rect key="frame" x="127.33333333333331" y="616.66666666666663" width="60" height="60"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="ZP1-Up-2nS"/>
@@ -169,7 +172,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJ6-54-iFN">
-                                <rect key="frame" x="205.66666666666666" y="629.66666666666663" width="59.999999999999972" height="60"/>
+                                <rect key="frame" x="205.66666666666666" y="616.66666666666663" width="59.999999999999972" height="60"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="0Lq-Q9-Fho"/>
@@ -179,10 +182,10 @@
                                 <buttonConfiguration key="configuration" style="plain" image="apple_login"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gr0-Wy-00a">
-                                <rect key="frame" x="107.33333333333333" y="714.66666666666663" width="178.33333333333337" height="32.666666666666629"/>
+                                <rect key="frame" x="121.66666666666667" y="701.66666666666663" width="149.66666666666663" height="29.666666666666629"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="아직 계정이 없으신가요?">
-                                    <fontDescription key="titleFontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="16"/>
+                                    <fontDescription key="titleFontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="13"/>
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
@@ -202,7 +205,7 @@
                             <constraint firstItem="eC7-wl-1nm" firstAttribute="centerY" secondItem="fJ6-54-iFN" secondAttribute="centerY" id="Ucz-aV-UeZ"/>
                             <constraint firstItem="UiW-s1-0j2" firstAttribute="centerX" secondItem="0bg-F8-ffa" secondAttribute="centerX" id="Y7c-aU-Nxw"/>
                             <constraint firstItem="oRw-tn-9Fj" firstAttribute="top" secondItem="HNw-yt-uHz" secondAttribute="top" constant="195" id="aph-NH-6g6"/>
-                            <constraint firstItem="FQ0-87-lh9" firstAttribute="top" secondItem="8DU-iw-aBR" secondAttribute="bottom" constant="123" id="b4k-2K-fwZ"/>
+                            <constraint firstItem="FQ0-87-lh9" firstAttribute="top" secondItem="8DU-iw-aBR" secondAttribute="bottom" constant="110" id="b4k-2K-fwZ"/>
                             <constraint firstItem="8DU-iw-aBR" firstAttribute="centerX" secondItem="0bg-F8-ffa" secondAttribute="centerX" id="cFh-v3-g4D"/>
                             <constraint firstItem="Gr0-Wy-00a" firstAttribute="centerX" secondItem="0bg-F8-ffa" secondAttribute="centerX" id="cie-Lo-dQm"/>
                             <constraint firstItem="eC7-wl-1nm" firstAttribute="centerX" secondItem="0bg-F8-ffa" secondAttribute="centerX" multiplier="0.8" id="mzk-9f-6Qd"/>
@@ -230,120 +233,114 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이름" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wdA-nt-NKo">
-                                <rect key="frame" x="30" y="265" width="29.666666666666671" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이름" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wdA-nt-NKo">
+                                <rect key="frame" x="20" y="256" width="27.666666666666671" height="19.333333333333314"/>
+                                <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="16"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="이름을 입력해주세요" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zJu-4u-0mx">
-                                <rect key="frame" x="134.66666666666666" y="265.66666666666669" width="229.99999999999997" height="20"/>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="이름을 입력해주세요." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zJu-4u-0mx">
+                                <rect key="frame" x="128.66666666666663" y="255.66666666666663" width="244.33333333333337" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="4It-DO-txF"/>
-                                    <constraint firstAttribute="width" constant="230" id="Cee-Uc-ILp"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="사용자 아이디" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ybw-dj-lI2">
-                                <rect key="frame" x="30.000000000000007" y="321" width="92.666666666666686" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="주의! 아이디는 가입 후 수정이 불가해요" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z0D-3b-zGS">
-                                <rect key="frame" x="150.66666666666663" y="321.66666666666669" width="230" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="230" id="4Wc-MC-QsD"/>
-                                    <constraint firstAttribute="height" constant="20" id="wHF-gC-a7N"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5NX-Us-umr">
-                                <rect key="frame" x="24" y="301" width="345" height="1"/>
+                                <rect key="frame" x="20" y="290.33333333333331" width="353" height="1"/>
                                 <color key="backgroundColor" name="gray01"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="0N7-Oe-dTM"/>
-                                    <constraint firstAttribute="width" constant="345" id="lQe-NL-QE7"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="한 줄 소개" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="24Z-0S-w17">
-                                <rect key="frame" x="30" y="377" width="68" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="사용자 아이디" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ybw-dj-lI2">
+                                <rect key="frame" x="20" y="306.33333333333331" width="86.666666666666671" height="19.333333333333314"/>
+                                <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="16"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="원하는 아이디를 입력해주세요." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z0D-3b-zGS">
+                                <rect key="frame" x="128.66666666666663" y="306" width="244.33333333333337" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="wHF-gC-a7N"/>
+                                </constraints>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="소개" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="24Z-0S-w17">
+                                <rect key="frame" x="20" y="356.66666666666669" width="27.666666666666671" height="19.333333333333314"/>
+                                <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="한 줄 소개를 입력해주세요(최대 10자)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5lu-uT-qnd">
-                                <rect key="frame" x="136" y="377.66666666666669" width="230" height="20"/>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="소개를 입력해주세요." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5lu-uT-qnd">
+                                <rect key="frame" x="128.66666666666663" y="356.33333333333331" width="244.33333333333337" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="YGJ-SW-f4e"/>
-                                    <constraint firstAttribute="width" constant="230" id="fvG-Pm-vsn"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Kz-1m-xXB">
-                                <rect key="frame" x="24" y="413" width="345" height="1"/>
-                                <color key="backgroundColor" name="gray01"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="345" id="92j-MB-K1x"/>
-                                    <constraint firstAttribute="height" constant="1" id="egA-5w-Mqs"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mJ5-ry-dDq">
-                                <rect key="frame" x="24" y="357" width="345" height="1"/>
+                                <rect key="frame" x="20" y="340.66666666666669" width="353" height="1"/>
                                 <color key="backgroundColor" name="gray01"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="345" id="0Qa-xd-ehZ"/>
                                     <constraint firstAttribute="height" constant="1" id="DKD-mO-bB8"/>
                                 </constraints>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile1" translatesAutoresizingMaskIntoConstraints="NO" id="D6n-Hx-BSa">
-                                <rect key="frame" x="138.66666666666666" y="99" width="116" height="116"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Kz-1m-xXB">
+                                <rect key="frame" x="20" y="391.33333333333331" width="353" height="1"/>
+                                <color key="backgroundColor" name="gray01"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="116" id="Sa9-UF-Brk"/>
-                                    <constraint firstAttribute="width" constant="116" id="rZc-SO-2s6"/>
+                                    <constraint firstAttribute="height" constant="1" id="egA-5w-Mqs"/>
                                 </constraints>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yW8-dB-QdC">
-                                <rect key="frame" x="214.66666666666666" y="175" width="40" height="40"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="brH-Aj-KGq">
+                                <rect key="frame" x="138.66666666666666" y="100" width="116" height="116"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="Swl-yk-p51"/>
-                                    <constraint firstAttribute="width" constant="40" id="TKF-aR-RW6"/>
+                                    <constraint firstAttribute="height" constant="116" id="GBl-4S-4kg"/>
+                                    <constraint firstAttribute="width" constant="116" id="rJ3-LZ-w3M"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="chooseImage"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Button" image="chooseProfileIcon"/>
                                 <connections>
-                                    <action selector="profileBtnTapped:" destination="5Yd-x5-rIb" eventType="touchUpInside" id="cnu-Ai-Vba"/>
+                                    <action selector="profileBtnTapped:" destination="5Yd-x5-rIb" eventType="touchUpInside" id="Qat-yK-uoE"/>
                                 </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="h9i-Pb-vJG"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="8Kz-1m-xXB" firstAttribute="top" secondItem="24Z-0S-w17" secondAttribute="bottom" constant="15" id="2OP-Sw-zzg"/>
-                            <constraint firstItem="yW8-dB-QdC" firstAttribute="leading" secondItem="D6n-Hx-BSa" secondAttribute="trailing" constant="-40" id="5Ej-tx-NzN"/>
-                            <constraint firstItem="8Kz-1m-xXB" firstAttribute="centerX" secondItem="Hkb-L2-eue" secondAttribute="centerX" id="EX0-CJ-qDP"/>
+                            <constraint firstAttribute="trailing" secondItem="mJ5-ry-dDq" secondAttribute="trailing" constant="20" id="0ZJ-tc-gbn"/>
+                            <constraint firstAttribute="trailing" secondItem="5lu-uT-qnd" secondAttribute="trailing" constant="20" id="35p-5q-Eu2"/>
+                            <constraint firstAttribute="trailing" secondItem="8Kz-1m-xXB" secondAttribute="trailing" constant="20" id="816-hH-oPY"/>
                             <constraint firstItem="5NX-Us-umr" firstAttribute="top" secondItem="wdA-nt-NKo" secondAttribute="bottom" constant="15" id="EtT-QC-Wl2"/>
-                            <constraint firstItem="yW8-dB-QdC" firstAttribute="top" secondItem="D6n-Hx-BSa" secondAttribute="bottom" constant="-40" id="NPq-OR-Mrl"/>
-                            <constraint firstItem="z0D-3b-zGS" firstAttribute="leading" secondItem="Ybw-dj-lI2" secondAttribute="trailing" constant="28" id="QNe-U3-tot"/>
-                            <constraint firstItem="D6n-Hx-BSa" firstAttribute="top" secondItem="h9i-Pb-vJG" secondAttribute="top" constant="40" id="Ycj-o0-iek"/>
+                            <constraint firstAttribute="trailing" secondItem="z0D-3b-zGS" secondAttribute="trailing" constant="20" id="Hu3-vH-ez6"/>
+                            <constraint firstItem="brH-Aj-KGq" firstAttribute="centerX" secondItem="Hkb-L2-eue" secondAttribute="centerX" id="MjV-Tb-STA"/>
+                            <constraint firstItem="zJu-4u-0mx" firstAttribute="leading" secondItem="z0D-3b-zGS" secondAttribute="leading" id="NAQ-pt-qPL"/>
+                            <constraint firstAttribute="trailing" secondItem="zJu-4u-0mx" secondAttribute="trailing" constant="20" id="PWX-p7-kRr"/>
+                            <constraint firstItem="z0D-3b-zGS" firstAttribute="leading" secondItem="Ybw-dj-lI2" secondAttribute="trailing" constant="22" id="QNe-U3-tot"/>
+                            <constraint firstItem="24Z-0S-w17" firstAttribute="top" secondItem="mJ5-ry-dDq" secondAttribute="bottom" constant="15" id="VR1-KV-O1i"/>
+                            <constraint firstItem="wdA-nt-NKo" firstAttribute="top" secondItem="brH-Aj-KGq" secondAttribute="bottom" constant="40" id="YIe-if-vTz"/>
                             <constraint firstItem="5lu-uT-qnd" firstAttribute="centerY" secondItem="24Z-0S-w17" secondAttribute="centerY" id="bru-vs-ZWN"/>
-                            <constraint firstItem="5lu-uT-qnd" firstAttribute="leading" secondItem="24Z-0S-w17" secondAttribute="trailing" constant="38" id="c4t-Sc-QcT"/>
                             <constraint firstItem="z0D-3b-zGS" firstAttribute="centerY" secondItem="Ybw-dj-lI2" secondAttribute="centerY" id="cJR-W0-5Ky"/>
-                            <constraint firstItem="mJ5-ry-dDq" firstAttribute="centerX" secondItem="Hkb-L2-eue" secondAttribute="centerX" id="eiu-Pw-AM4"/>
-                            <constraint firstItem="24Z-0S-w17" firstAttribute="top" secondItem="Ybw-dj-lI2" secondAttribute="bottom" constant="35" id="gRi-sT-2kG"/>
-                            <constraint firstItem="D6n-Hx-BSa" firstAttribute="centerX" secondItem="Hkb-L2-eue" secondAttribute="centerX" id="iGU-sB-juT"/>
-                            <constraint firstItem="wdA-nt-NKo" firstAttribute="leading" secondItem="h9i-Pb-vJG" secondAttribute="leading" constant="30" id="lgs-fX-E2C"/>
-                            <constraint firstItem="5NX-Us-umr" firstAttribute="centerX" secondItem="Hkb-L2-eue" secondAttribute="centerX" id="n2O-nV-8LZ"/>
+                            <constraint firstItem="5lu-uT-qnd" firstAttribute="leading" secondItem="z0D-3b-zGS" secondAttribute="leading" id="fjG-I8-2pj"/>
+                            <constraint firstItem="8Kz-1m-xXB" firstAttribute="top" secondItem="5lu-uT-qnd" secondAttribute="bottom" constant="15" id="hug-D3-RYL"/>
+                            <constraint firstItem="8Kz-1m-xXB" firstAttribute="leading" secondItem="Hkb-L2-eue" secondAttribute="leading" constant="20" id="hyZ-WN-OYK"/>
+                            <constraint firstItem="wdA-nt-NKo" firstAttribute="leading" secondItem="Hkb-L2-eue" secondAttribute="leading" constant="20" id="lgs-fX-E2C"/>
+                            <constraint firstItem="brH-Aj-KGq" firstAttribute="top" secondItem="Hkb-L2-eue" secondAttribute="top" constant="100" id="m95-4e-7lt"/>
+                            <constraint firstAttribute="trailing" secondItem="5NX-Us-umr" secondAttribute="trailing" constant="20" id="nal-gP-S6c"/>
                             <constraint firstItem="mJ5-ry-dDq" firstAttribute="top" secondItem="Ybw-dj-lI2" secondAttribute="bottom" constant="15" id="q6D-5Q-evd"/>
-                            <constraint firstItem="Ybw-dj-lI2" firstAttribute="top" secondItem="wdA-nt-NKo" secondAttribute="bottom" constant="35" id="qOR-lv-ar1"/>
+                            <constraint firstItem="Ybw-dj-lI2" firstAttribute="top" secondItem="5NX-Us-umr" secondAttribute="bottom" constant="15" id="qOR-lv-ar1"/>
                             <constraint firstItem="Ybw-dj-lI2" firstAttribute="leading" secondItem="wdA-nt-NKo" secondAttribute="leading" id="rKj-Aq-Yb2"/>
                             <constraint firstItem="24Z-0S-w17" firstAttribute="leading" secondItem="Ybw-dj-lI2" secondAttribute="leading" id="rfh-I7-SSE"/>
                             <constraint firstItem="zJu-4u-0mx" firstAttribute="centerY" secondItem="wdA-nt-NKo" secondAttribute="centerY" id="roj-Ec-mrq"/>
-                            <constraint firstItem="zJu-4u-0mx" firstAttribute="leading" secondItem="wdA-nt-NKo" secondAttribute="trailing" constant="75" id="u5u-Jc-bza"/>
-                            <constraint firstItem="wdA-nt-NKo" firstAttribute="top" secondItem="D6n-Hx-BSa" secondAttribute="bottom" constant="50" id="w1r-89-Vh3"/>
+                            <constraint firstItem="mJ5-ry-dDq" firstAttribute="leading" secondItem="Hkb-L2-eue" secondAttribute="leading" constant="20" id="wwJ-qT-M5B"/>
+                            <constraint firstItem="5NX-Us-umr" firstAttribute="leading" secondItem="Hkb-L2-eue" secondAttribute="leading" constant="20" id="zEX-QB-EOt"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -351,8 +348,8 @@
                     <connections>
                         <outlet property="handleTextField" destination="z0D-3b-zGS" id="sqm-oc-uD7"/>
                         <outlet property="messageTextField" destination="5lu-uT-qnd" id="BEm-OI-6GD"/>
-                        <outlet property="nameTextField" destination="zJu-4u-0mx" id="d4B-eI-DyK"/>
-                        <outlet property="profileImg" destination="D6n-Hx-BSa" id="W2Y-yI-ewi"/>
+                        <outlet property="nameTextField" destination="zJu-4u-0mx" id="AKL-DR-6HE"/>
+                        <outlet property="profileImg" destination="brH-Aj-KGq" id="guM-bx-Rfg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tTh-Gd-H9g" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -380,11 +377,10 @@
     </scenes>
     <resources>
         <image name="apple_login" width="20.666666030883789" height="25.666666030883789"/>
-        <image name="chooseImage" width="48" height="48"/>
+        <image name="chooseProfileIcon" width="116" height="116"/>
         <image name="google_login" width="28" height="28"/>
         <image name="pochak_logo" width="132" height="103.66666412353516"/>
         <image name="pochak_word_logo" width="230.66667175292969" height="45.666667938232422"/>
-        <image name="profile1" width="116" height="116"/>
         <namedColor name="gray01">
             <color red="0.9137254901960784" green="0.92549019607843142" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
