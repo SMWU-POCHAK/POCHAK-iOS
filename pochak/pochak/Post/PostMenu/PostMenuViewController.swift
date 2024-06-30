@@ -69,12 +69,20 @@ class PostMenuViewController: UIViewController {
         if let tabBarController = self.presentingViewController as? UITabBarController,
            // 2. 선택된 뷰컨트롤러에 접근 (=navigation controller)
            let navigationController = tabBarController.selectedViewController as? UINavigationController {
-            print(navigationController.viewControllers)
             // 3. 부모의 부모 뷰컨트롤러 (= home tab view controller)에 접근
             if let grandparentViewController = navigationController.viewControllers.dropLast().last {
-                print(grandparentViewController)
-                let vc = grandparentViewController as! HomeTabViewController
-                vc.changeHasBeenMade = true
+                // 홈탭에서 게시글 상세로 이동한 경우
+                if let vc = grandparentViewController as? HomeTabViewController{
+                    vc.changeHasBeenMade = true
+                }
+                // TODO: - 나리 -> 여기에 탐색 탭에서 게시글 다시 불러오는 코드 추가해주기!
+                else if let vc = grandparentViewController as? PostTabViewController {
+                    
+                }
+                // TODO: - 정연 -> 여기에 프로필에서 게시글 다시 불러오는 코드 추가해주기! (내 프로필, 남의 프로필 둘 다 해야 할듯??)
+                else if let vc = grandparentViewController as? MyProfileTabViewController {
+                    
+                }
                 // 모달을 해제하고 그 후 네비게이션 스택에서 원하는 뷰컨트롤러로 이동
                 self.dismiss(animated: true) {
                     navigationController.popToViewController(grandparentViewController, animated: true)
