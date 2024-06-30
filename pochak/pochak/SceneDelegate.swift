@@ -28,22 +28,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Main.storyboard 가져오기
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        let homeTabViewController = UIStoryboard(name: "HomeTab", bundle: nil).instantiateViewController(withIdentifier: "HomeTabViewController")
-        let postTabViewController = UIStoryboard(name: "PostTab", bundle: nil).instantiateViewController(withIdentifier: "PostTabViewController")
-        let cameraTabViewController = UIStoryboard(name: "CameraTab", bundle: nil).instantiateViewController(withIdentifier: "CameraViewController")
-        let alarmTabViewController = UIStoryboard(name: "AlarmTab", bundle: nil).instantiateViewController(withIdentifier: "AlarmViewController")
-        let myProfileViewController = UIStoryboard(name: "ProfileTab", bundle: nil).instantiateViewController(withIdentifier: "MyProfileTabVC")
+        if let keyChainToken = (try? KeychainManager.load(account: "accessToken")) {
+            // 로그인 된 상태
+            print("scene delegate login succeed")
+            print(keyChainToken)
+            let access = GetToken().getAccessToken()
+            print(access)
+            
+            let tabBarController = CustomTabBarController()
         
-        let homeNavController = UINavigationController(rootViewController: homeTabViewController)
-        let postNavController = UINavigationController(rootViewController: postTabViewController)
-        let cameraNavController = UINavigationController(rootViewController: cameraTabViewController)
-        let alarmNavController = UINavigationController(rootViewController: alarmTabViewController)
-        let myProfileNavController = UINavigationController(rootViewController: myProfileViewController)
-        
-        let tabBarController = CustomTabBarController()
-    
-        window?.rootViewController = tabBarController
-        window?.makeKeyAndVisible()
+            window?.rootViewController = tabBarController
+            window?.makeKeyAndVisible()
+            
+        } else {
+            // 로그인 안된 상태
+            print("scene delegate login not yet!")
+
+            let socialJoinViewController = storyboard.instantiateViewController(withIdentifier: "SocialJoinVC")
+            
+            window?.rootViewController = socialJoinViewController
+            window?.makeKeyAndVisible()
+            
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
