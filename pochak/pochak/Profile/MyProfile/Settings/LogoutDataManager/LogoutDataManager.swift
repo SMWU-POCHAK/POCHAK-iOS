@@ -9,26 +9,38 @@ import Alamofire
 class LogoutDataManager{
     
     static let shared = LogoutDataManager()
-    let accessToken = GetToken().getAccessToken()
+    
+    // Get token
+    let accessToken = GetToken.getAccessToken()
+    let refreshToken = GetToken.getRefreshToken()
+    
     
     func logoutDataManager(_ completion: @escaping (LogoutDataModel) -> Void) {
-        let url = APIConstants.baseURL + "/api/v1/user/logout"
+        let url = "\(APIConstants.baseURL)/api/v2/member/logout"
         
-        let header : HTTPHeaders = ["Authorization": accessToken, "Content-type": "application/json"]
-        print(header[0])
+        print("accessToken : \(accessToken)")
+        print("refreshToken : \(refreshToken)")
+
         
+        let authenticator = MyAuthenticator()
+        let credential = MyAuthenticationCredential(accessToken: accessToken,
+                                                    refreshToken: refreshToken,
+                                                    expiredAt: Date(timeIntervalSinceNow: 60 * 60))
+        let myAuthencitationInterceptor = AuthenticationInterceptor(authenticator: authenticator,
+                                                                    credential: credential)
         AF.request(url,
                    method: .get,
                    encoding: URLEncoding.default,
-                   headers: header)
+                   interceptor: myAuthencitationInterceptor)
         .validate()
-        .responseDecodable(of: LogoutDataResponse.self) { response in
+        .responseDecodable(of: LogoutDataModel.self) { response in
             switch response.result {
             case .success(let result):
                 print("logout success!!!!!!!!!")
-                let resultData = result.result
+                let resultData = result
                 completion(resultData)
             case .failure(let error):
+                print("Request Fail : logoutDataManager")
                 print(error)
             }
         }

@@ -21,7 +21,7 @@ class MyProfileUpdateDataManager{
             "message" : message]
         
         let url = APIConstants.baseURL + "/api/v1/user/profile/" + handle
-        let accessToken = GetToken().getAccessToken()
+        let accessToken = GetToken.getAccessToken()
         
         /*HEADER NEEDED TO BE INCLUDED BEFORE RUNNING*/
         let header : HTTPHeaders = ["Authorization": accessToken, "Content-type": "multipart/form-data"]

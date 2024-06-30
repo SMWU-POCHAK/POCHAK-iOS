@@ -13,8 +13,8 @@ class DeleteFollowerDataManager {
     static let shared = DeleteFollowerDataManager()
     
     // Get token
-    let accessToken = GetToken().getAccessToken()
-    let refreshToken = GetToken().getRefreshToken()
+    let accessToken = GetToken.getAccessToken()
+    let refreshToken = GetToken.getRefreshToken()
     
     
     

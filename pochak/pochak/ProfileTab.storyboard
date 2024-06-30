@@ -286,12 +286,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이름" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TxV-A6-7ZA">
-                                <rect key="frame" x="30" y="255.00000000000003" width="27.666666666666671" height="19.333333333333343"/>
+                                <rect key="frame" x="30" y="255.00000000000003" width="28" height="19.333333333333343"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="이름을 입력해주세요" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kb6-iX-qC1">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="이름을 입력해주세요." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kb6-iX-qC1">
                                 <rect key="frame" x="144.66666666666663" y="254.66666666666663" width="230" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="230" id="g0x-sM-IDo"/>
@@ -307,7 +307,7 @@
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="앱 사용 시 표시되는 이름입니다" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZGm-Ex-Oz2">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="원하는 아이디를 입력해주세요." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZGm-Ex-Oz2">
                                 <rect key="frame" x="144.66666666666663" y="309" width="230" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="230" id="E0f-nh-2Ya"/>
@@ -330,7 +330,7 @@
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="한 줄 소개를 입력해주세요" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pLx-l2-v5E">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="한 줄 소개를 입력해주세요." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pLx-l2-v5E">
                                 <rect key="frame" x="144.66666666666663" y="363.33333333333331" width="230" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="3uh-Sr-AXL"/>

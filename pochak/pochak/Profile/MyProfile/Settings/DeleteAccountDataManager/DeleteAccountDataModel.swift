@@ -5,8 +5,8 @@
 //  Created by Seo Cindy on 1/16/24.
 //
 
-struct DeleteAccountResponse: Codable {
-    let isSuccess: Bool
-    let code: Int
-    let message: String
+struct DeleteAccountModel : Codable {
+    var isSuccess: Bool
+    var code: String
+    var message: String
 }

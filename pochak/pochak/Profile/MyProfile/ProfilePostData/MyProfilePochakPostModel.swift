@@ -36,4 +36,3 @@ struct PostDataModel : Codable {
     var postId : Int?
     var postImage : String?
 }
-

@@ -13,8 +13,8 @@ class UnBlockDataManager {
     static let shared = UnBlockDataManager()
     
     // Get token
-    let accessToken = GetToken().getAccessToken()
-    let refreshToken = GetToken().getRefreshToken()
+    let accessToken = GetToken.getAccessToken()
+    let refreshToken = GetToken.getRefreshToken()
     
     func unBlockDataManager(_ handle : String, _ completion: @escaping (UnBlockDataResponse) -> Void) {
         let url = "\(APIConstants.baseURLv2)/api/v2/members/\(handle)/block"
