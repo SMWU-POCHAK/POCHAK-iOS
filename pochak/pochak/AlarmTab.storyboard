@@ -4,11 +4,20 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Pretendard-Bold.ttf">
+            <string>Pretendard-Bold</string>
+        </array>
+        <array key="Pretendard-Medium.ttf">
+            <string>Pretendard-Medium</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--AlarmViewController-->
         <scene sceneID="Q3u-hK-ZR5">
@@ -57,6 +66,96 @@
             </objects>
             <point key="canvasLocation" x="1474" y="682"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="P6X-7u-t8e">
+            <objects>
+                <viewController id="123-se-cYO" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ggc-hF-Fiw">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bzm-ft-g3G">
+                                <rect key="frame" x="20" y="99" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Cq2-lM-1FC"/>
+                                    <constraint firstAttribute="width" constant="50" id="ZU7-Ff-oyq"/>
+                                </constraints>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="7s9-Qc-qcA">
+                                <rect key="frame" x="82" y="106.66666666666667" width="41" height="35.000000000000014"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jj0-aY-oYA">
+                                        <rect key="frame" x="0.0" y="0.0" width="41" height="19.333333333333332"/>
+                                        <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bkk-g7-9dr">
+                                        <rect key="frame" x="0.0" y="19.333333333333329" width="41" height="15.666666666666664"/>
+                                        <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="13"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kew-Z1-qA6">
+                                <rect key="frame" x="267" y="108" width="49" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="49" id="OTQ-7y-gxD"/>
+                                    <constraint firstAttribute="height" constant="32" id="cxl-yf-Krl"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="수락">
+                                    <backgroundConfiguration key="background" cornerRadius="5">
+                                        <color key="backgroundColor" name="yellow00"/>
+                                    </backgroundConfiguration>
+                                    <fontDescription key="titleFontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="14"/>
+                                </buttonConfiguration>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TB9-QB-zIO">
+                                <rect key="frame" x="324" y="108" width="49" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="49" id="0nX-d9-tUp"/>
+                                    <constraint firstAttribute="height" constant="32" id="gFp-4L-xEa"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="거절">
+                                    <backgroundConfiguration key="background" cornerRadius="5">
+                                        <color key="backgroundColor" name="gray03"/>
+                                    </backgroundConfiguration>
+                                    <fontDescription key="titleFontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="14"/>
+                                </buttonConfiguration>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Hox-sq-MBM">
+                                <rect key="frame" x="20" y="165.00000000000003" width="353" height="470.66666666666674"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Hox-sq-MBM" secondAttribute="height" multiplier="3:4" id="tgb-IO-lWc"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="aHP-pV-SGO"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="7s9-Qc-qcA" firstAttribute="leading" secondItem="bzm-ft-g3G" secondAttribute="trailing" constant="12" id="2R3-8G-R4x"/>
+                            <constraint firstItem="Hox-sq-MBM" firstAttribute="top" secondItem="bzm-ft-g3G" secondAttribute="bottom" constant="16" id="99C-2p-7lt"/>
+                            <constraint firstItem="bzm-ft-g3G" firstAttribute="top" secondItem="aHP-pV-SGO" secondAttribute="top" constant="40" id="Ain-u4-ezm"/>
+                            <constraint firstItem="TB9-QB-zIO" firstAttribute="centerY" secondItem="bzm-ft-g3G" secondAttribute="centerY" id="B71-9d-QS3"/>
+                            <constraint firstItem="aHP-pV-SGO" firstAttribute="trailing" secondItem="TB9-QB-zIO" secondAttribute="trailing" constant="20" id="CY6-FG-ccM"/>
+                            <constraint firstItem="Kew-Z1-qA6" firstAttribute="centerY" secondItem="bzm-ft-g3G" secondAttribute="centerY" id="DfU-kf-hAS"/>
+                            <constraint firstItem="bzm-ft-g3G" firstAttribute="leading" secondItem="aHP-pV-SGO" secondAttribute="leading" constant="20" id="FtJ-aF-s1G"/>
+                            <constraint firstItem="Hox-sq-MBM" firstAttribute="leading" secondItem="aHP-pV-SGO" secondAttribute="leading" constant="20" id="hOa-Xk-m9d"/>
+                            <constraint firstItem="TB9-QB-zIO" firstAttribute="leading" secondItem="Kew-Z1-qA6" secondAttribute="trailing" constant="8" id="jUs-bx-P4F"/>
+                            <constraint firstItem="7s9-Qc-qcA" firstAttribute="centerY" secondItem="bzm-ft-g3G" secondAttribute="centerY" id="mb6-uI-2Fy"/>
+                            <constraint firstItem="aHP-pV-SGO" firstAttribute="trailing" secondItem="Hox-sq-MBM" secondAttribute="trailing" constant="20" id="v9K-bk-gse"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mar-aP-AKp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2322.9007633587785" y="694.36619718309862"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="hDT-uN-t6P">
             <objects>
@@ -76,6 +175,12 @@
         </scene>
     </scenes>
     <resources>
+        <namedColor name="gray03">
+            <color red="0.7803921568627451" green="0.80392156862745101" blue="0.82352941176470584" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="yellow00">
+            <color red="1" green="0.72156862745098038" blue="0.23137254901960785" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -117,6 +117,7 @@
 		EA0107AF2A5EC23900A3AE85 /* OtherCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA0107AD2A5EC23900A3AE85 /* OtherCollectionViewCell.xib */; };
 		EA0107B32A5ECB8A00A3AE85 /* PostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0107B12A5ECB8A00A3AE85 /* PostCollectionViewCell.swift */; };
 		EA0107B42A5ECB8A00A3AE85 /* PostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA0107B22A5ECB8A00A3AE85 /* PostCollectionViewCell.xib */; };
+		EA0F23662C319C030014F94E /* PreviewAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0F23652C319C030014F94E /* PreviewAlarmViewController.swift */; };
 		EA1289082B3B2823002EC93E /* AlarmDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1289072B3B2823002EC93E /* AlarmDataModel.swift */; };
 		EA12890A2B3B2836002EC93E /* AlarmDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1289092B3B2836002EC93E /* AlarmDataService.swift */; };
 		EA12890C2B3BF1A7002EC93E /* RecentSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA12890B2B3BF1A7002EC93E /* RecentSearchViewController.swift */; };
@@ -135,7 +136,6 @@
 		EA1B0B7C2A49D23B00F86FBC /* pochakUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1B0B7B2A49D23B00F86FBC /* pochakUITests.swift */; };
 		EA1B0B7E2A49D23B00F86FBC /* pochakUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1B0B7D2A49D23B00F86FBC /* pochakUITestsLaunchTests.swift */; };
 		EA4EF8D82C2EC5F7009549FF /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4EF8D72C2EC5F7009549FF /* UITextField+.swift */; };
-		EA6306D52C2ADBC7000DB0A7 /* UISearchBar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6306D42C2ADBC7000DB0A7 /* UISearchBar+.swift */; };
 		EA6306D82C2BFE53000DB0A7 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6306D72C2BFE53000DB0A7 /* CustomTabBarController.swift */; };
 		EA6306DA2C2BFE83000DB0A7 /* CustomTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6306D92C2BFE83000DB0A7 /* CustomTabbar.swift */; };
 		EA7EE1D82BF38921009486CC /* PochakAlarmCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7EE1D62BF38921009486CC /* PochakAlarmCollectionViewCell.swift */; };
@@ -147,8 +147,12 @@
 		EAAACDB62A5168280041B1B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAAACDB42A5168280041B1B9 /* Main.storyboard */; };
 		EABD20652A6CF5CC007543E9 /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD20632A6CF5CC007543E9 /* TagCollectionViewCell.swift */; };
 		EABD20662A6CF5CC007543E9 /* TagCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EABD20642A6CF5CC007543E9 /* TagCollectionViewCell.xib */; };
+		EAC582742C3074EA006F44AF /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC582732C3074EA006F44AF /* UIColor+.swift */; };
+		EACF0F6E2C3044C000C0016C /* TagSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF0F6C2C3044C000C0016C /* TagSearchTableViewCell.swift */; };
+		EACF0F6F2C3044C000C0016C /* TagSearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EACF0F6D2C3044C000C0016C /* TagSearchTableViewCell.xib */; };
 		EADE01842B383A8B00CECD5B /* PostTabDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADE01832B383A8B00CECD5B /* PostTabDataModel.swift */; };
 		EADE01862B383A9700CECD5B /* PostTabDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADE01852B383A9700CECD5B /* PostTabDataService.swift */; };
+		EAE69F442C315009005762B7 /* UIVIew+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE69F432C315009005762B7 /* UIVIew+.swift */; };
 		EAF885262B5677CB00BA184A /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EAF885252B5677CB00BA184A /* libsqlite3.0.tbd */; };
 		EAF885292B567F4F00BA184A /* RecentSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF885282B567F4F00BA184A /* RecentSearchModel.swift */; };
 		EAF8852B2B569B6600BA184A /* RecentSearchRealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF8852A2B569B6600BA184A /* RecentSearchRealmManager.swift */; };
@@ -295,6 +299,7 @@
 		EA0107AD2A5EC23900A3AE85 /* OtherCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OtherCollectionViewCell.xib; sourceTree = "<group>"; };
 		EA0107B12A5ECB8A00A3AE85 /* PostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCollectionViewCell.swift; sourceTree = "<group>"; };
 		EA0107B22A5ECB8A00A3AE85 /* PostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostCollectionViewCell.xib; sourceTree = "<group>"; };
+		EA0F23652C319C030014F94E /* PreviewAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewAlarmViewController.swift; sourceTree = "<group>"; };
 		EA1289072B3B2823002EC93E /* AlarmDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDataModel.swift; sourceTree = "<group>"; };
 		EA1289092B3B2836002EC93E /* AlarmDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDataService.swift; sourceTree = "<group>"; };
 		EA12890B2B3BF1A7002EC93E /* RecentSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchViewController.swift; sourceTree = "<group>"; };
@@ -317,7 +322,6 @@
 		EA1B0B7B2A49D23B00F86FBC /* pochakUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pochakUITests.swift; sourceTree = "<group>"; };
 		EA1B0B7D2A49D23B00F86FBC /* pochakUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pochakUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		EA4EF8D72C2EC5F7009549FF /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
-		EA6306D42C2ADBC7000DB0A7 /* UISearchBar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+.swift"; sourceTree = "<group>"; };
 		EA6306D72C2BFE53000DB0A7 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		EA6306D92C2BFE83000DB0A7 /* CustomTabbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabbar.swift; sourceTree = "<group>"; };
 		EA7EE1D62BF38921009486CC /* PochakAlarmCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakAlarmCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -329,8 +333,12 @@
 		EAAACDB52A5168280041B1B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EABD20632A6CF5CC007543E9 /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
 		EABD20642A6CF5CC007543E9 /* TagCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagCollectionViewCell.xib; sourceTree = "<group>"; };
+		EAC582732C3074EA006F44AF /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		EACF0F6C2C3044C000C0016C /* TagSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagSearchTableViewCell.swift; sourceTree = "<group>"; };
+		EACF0F6D2C3044C000C0016C /* TagSearchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagSearchTableViewCell.xib; sourceTree = "<group>"; };
 		EADE01832B383A8B00CECD5B /* PostTabDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTabDataModel.swift; sourceTree = "<group>"; };
 		EADE01852B383A9700CECD5B /* PostTabDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTabDataService.swift; sourceTree = "<group>"; };
+		EAE69F432C315009005762B7 /* UIVIew+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIew+.swift"; sourceTree = "<group>"; };
 		EAF885252B5677CB00BA184A /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		EAF885282B567F4F00BA184A /* RecentSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchModel.swift; sourceTree = "<group>"; };
 		EAF8852A2B569B6600BA184A /* RecentSearchRealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchRealmManager.swift; sourceTree = "<group>"; };
@@ -505,12 +513,13 @@
 				0801765D2A74F4B0005E6953 /* UITextView+Extension.swift */,
 				08C02EF52BF3945000627C21 /* UIFont+.swift */,
 				08C02EF72BF394B800627C21 /* UIAlertController+.swift */,
-				EA6306D42C2ADBC7000DB0A7 /* UISearchBar+.swift */,
 				08EB5D242C280CFE00E35C16 /* UIImage+.swift */,
 				083249752C2956A000A77C03 /* CustomAlertViewController.storyboard */,
 				083249772C295E4000A77C03 /* CustomAlertViewController.swift */,
 				EA4EF8D72C2EC5F7009549FF /* UITextField+.swift */,
 				0802AE022C31D3E00090FB92 /* UIImageView+.swift */,
+				EAC582732C3074EA006F44AF /* UIColor+.swift */,
+				EAE69F432C315009005762B7 /* UIVIew+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -761,6 +770,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		EA0F23672C31D1300014F94E /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				EA1718342A592BE3009168E6 /* AlarmCollectionViewCell.swift */,
+				EA1718352A592BE3009168E6 /* AlarmCollectionViewCell.xib */,
+				EA0107AC2A5EC23900A3AE85 /* OtherCollectionViewCell.swift */,
+				EA0107AD2A5EC23900A3AE85 /* OtherCollectionViewCell.xib */,
+				EA7EE1D62BF38921009486CC /* PochakAlarmCollectionViewCell.swift */,
+				EA7EE1D72BF38921009486CC /* PochakAlarmCollectionViewCell.xib */,
+			);
+			path = cell;
+			sourceTree = "<group>";
+		};
 		EA1289062B3B280D002EC93E /* AlarmDataManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -795,14 +817,10 @@
 		EA17182D2A592A08009168E6 /* Alarm */ = {
 			isa = PBXGroup;
 			children = (
+				EA0F23672C31D1300014F94E /* cell */,
 				EA1289062B3B280D002EC93E /* AlarmDataManager */,
-				EA1718342A592BE3009168E6 /* AlarmCollectionViewCell.swift */,
-				EA1718352A592BE3009168E6 /* AlarmCollectionViewCell.xib */,
 				EA0107A62A5CF73900A3AE85 /* AlarmViewController.swift */,
-				EA0107AC2A5EC23900A3AE85 /* OtherCollectionViewCell.swift */,
-				EA0107AD2A5EC23900A3AE85 /* OtherCollectionViewCell.xib */,
-				EA7EE1D62BF38921009486CC /* PochakAlarmCollectionViewCell.swift */,
-				EA7EE1D72BF38921009486CC /* PochakAlarmCollectionViewCell.xib */,
+				EA0F23652C319C030014F94E /* PreviewAlarmViewController.swift */,
 			);
 			path = Alarm;
 			sourceTree = "<group>";
@@ -904,6 +922,8 @@
 				EABD20632A6CF5CC007543E9 /* TagCollectionViewCell.swift */,
 				EABD20642A6CF5CC007543E9 /* TagCollectionViewCell.xib */,
 				EA817AB52B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift */,
+				EACF0F6C2C3044C000C0016C /* TagSearchTableViewCell.swift */,
+				EACF0F6D2C3044C000C0016C /* TagSearchTableViewCell.xib */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -1070,6 +1090,7 @@
 				37BBFDF12C2EB43D003D8DA5 /* Pretendard-ExtraBold.ttf in Resources */,
 				081228CB2A699B5A00DFA094 /* LikedPeopleListTableViewCell.xib in Resources */,
 				EAFB4B872A5147A300E0F2FA /* ProfileTab.storyboard in Resources */,
+				EACF0F6F2C3044C000C0016C /* TagSearchTableViewCell.xib in Resources */,
 				EA0107B42A5ECB8A00A3AE85 /* PostCollectionViewCell.xib in Resources */,
 				3769D6C82B3C4F0900294CD1 /* FollowingCollectionViewCell.xib in Resources */,
 				0876E23F2C274256008DE88F /* NoPostCollectionViewCell.xib in Resources */,
@@ -1235,6 +1256,7 @@
 				08FD3A3E2B3AFE7B00574880 /* CommentDataService.swift in Sources */,
 				3769D6CE2B3C563A00294CD1 /* PostListViewController.swift in Sources */,
 				EA0107A72A5CF73900A3AE85 /* AlarmViewController.swift in Sources */,
+				EACF0F6E2C3044C000C0016C /* TagSearchTableViewCell.swift in Sources */,
 				08B679632B528D7500F8D585 /* CommentTableViewFooterView.swift in Sources */,
 				EA01079C2A59556800A3AE85 /* PostTabViewController.swift in Sources */,
 				EA1289112B3C4F14002EC93E /* SearchDataService.swift in Sources */,
@@ -1262,6 +1284,7 @@
 				3769D6BF2B3C349D00294CD1 /* SecondTabmanViewController.swift in Sources */,
 				08C02EEA2BF3798F00627C21 /* ReportViewController.swift in Sources */,
 				373235562B692C790042EF94 /* DeleteFollowerDataModel.swift in Sources */,
+				EA0F23662C319C030014F94E /* PreviewAlarmViewController.swift in Sources */,
 				0844D7EF2BF219F6001154AC /* DeleteViewCell.swift in Sources */,
 				374261742C3092B900B67886 /* UnblockDataModel.swift in Sources */,
 				373235542B692C6D0042EF94 /* DeleteFollowerDataManager.swift in Sources */,
@@ -1287,6 +1310,7 @@
 				08C02EF82BF394B800627C21 /* UIAlertController+.swift in Sources */,
 				EAF9184E2AA462C50037C270 /* SearchResultTableViewCell.swift in Sources */,
 				EA12890A2B3B2836002EC93E /* AlarmDataService.swift in Sources */,
+				EAE69F442C315009005762B7 /* UIVIew+.swift in Sources */,
 				0876E23E2C274256008DE88F /* NoPostCollectionViewCell.swift in Sources */,
 				08C02EF62BF3945000627C21 /* UIFont+.swift in Sources */,
 				EABD20652A6CF5CC007543E9 /* TagCollectionViewCell.swift in Sources */,
@@ -1316,11 +1340,11 @@
 				0844D7F32BF21A80001154AC /* CancelViewCell.swift in Sources */,
 				37D311D52B53056700A1D7C1 /* MyProfileUpdateDataManager.swift in Sources */,
 				3769D6B92B3C345800294CD1 /* MyProfileTabViewController.swift in Sources */,
-				EA6306D52C2ADBC7000DB0A7 /* UISearchBar+.swift in Sources */,
 				08FD3A392B357E6400574880 /* LikedUsersDataService.swift in Sources */,
 				081228CA2A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift in Sources */,
 				3769D6D02B3C569C00294CD1 /* FirstPostTabmanViewController.swift in Sources */,
 				374261642C2FEF5F00B67886 /* ProfileMenuViewController.swift in Sources */,
+				EAC582742C3074EA006F44AF /* UIColor+.swift in Sources */,
 				3769D6BB2B3C347000294CD1 /* FollowListViewController.swift in Sources */,
 				3769D6B42B3C301B00294CD1 /* JoinDataManager.swift in Sources */,
 				37D311DA2B53134200A1D7C1 /* LogoutDataManager.swift in Sources */,

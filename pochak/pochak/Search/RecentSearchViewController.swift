@@ -121,6 +121,7 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
                 searchTextField.bottomAnchor.constraint(equalTo: searchContainerView.bottomAnchor)
             ])
             
+            searchTextField.heightAnchor.constraint(equalToConstant: self.searchContainerView.frame.height)
 
             searchTextFieldWidthConstraint = searchTextField.widthAnchor.constraint(equalToConstant: self.searchContainerView.frame.width)
             searchTextFieldWidthConstraint.isActive = true
@@ -131,6 +132,8 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
                 cancelButton.trailingAnchor.constraint(equalTo: searchContainerView.trailingAnchor),
                 cancelButton.centerYAnchor.constraint(equalTo: searchTextField.centerYAnchor)
             ])
+            
+            cancelButton.heightAnchor.constraint(equalToConstant: self.searchContainerView.frame.height)
             
             cancelButtonLeadingConstraint = cancelButton.leadingAnchor.constraint(equalTo: searchTextField.trailingAnchor)
             cancelButtonLeadingConstraint.isActive = true
@@ -144,12 +147,7 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
         UIView.animate(withDuration: 0.3) {
             self.searchTextFieldWidthConstraint.constant = self.searchContainerView.frame.width - 41
             self.cancelButtonLeadingConstraint.constant = 16
-            self.view.layoutIfNeeded()
             
-            self.resultVC.tableView.frame = CGRect(x: self.searchContainerView.frame.origin.x,
-                                                   y: self.searchContainerView.frame.maxY,
-                                                   width: self.searchContainerView.frame.width,
-                                                   height: self.view.frame.height - self.searchContainerView.frame.maxY)
             self.view.layoutIfNeeded()
         }
     }
@@ -160,10 +158,6 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
             self.searchTextFieldWidthConstraint.constant = self.searchContainerView.frame.width
             self.cancelButtonLeadingConstraint.constant = 0
             
-            self.resultVC.tableView.frame = CGRect(x: self.searchContainerView.frame.origin.x,
-                                                   y: self.searchContainerView.frame.maxY,
-                                                   width: self.searchContainerView.frame.width,
-                                                   height: self.view.frame.height - self.searchContainerView.frame.maxY)
             self.view.layoutIfNeeded()
         }) { _ in
             self.cancelButton.isHidden = true
