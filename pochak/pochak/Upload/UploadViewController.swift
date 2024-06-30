@@ -79,7 +79,7 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
         if let image = receivedImage {
             captureImg.image = image
         }
-        
+
         captionField.text = "내용 입력하기"
         captionField.textColor = UIColor(named: "gray04")
         captionField.delegate = self
@@ -423,7 +423,7 @@ extension UploadViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
             return 8
         }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
             let totalCellWidth = collectionView.bounds.width - (12 * CGFloat(tagId.count - 1))
             let cellWidth = totalCellWidth / CGFloat(tagId.count)
