@@ -6,14 +6,15 @@
 //
 
 import Foundation
+
 class GetToken {
     
-    func getAccessToken() -> String {
+    static func getAccessToken() -> String {
         guard let keyChainAccessToken = (try? KeychainManager.load(account: "accessToken")) else {return ""}
         return "Bearer " + keyChainAccessToken
     }
     
-    func getRefreshToken() -> String {
+    static func getRefreshToken() -> String {
         guard let keyChainRefreshToken = (try? KeychainManager.load(account: "refreshToken")) else {return ""}
         return "Bearer " + keyChainRefreshToken
     }

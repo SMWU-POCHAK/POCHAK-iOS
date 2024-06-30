@@ -12,8 +12,8 @@ class MyProfilePostDataManager {
     static let shared = MyProfilePostDataManager()
     
     // Get token
-    let accessToken = GetToken().getAccessToken()
-    let refreshToken = GetToken().getRefreshToken()
+    let accessToken = GetToken.getAccessToken()
+    let refreshToken = GetToken.getRefreshToken()
     
     func myProfileUserAndPochakedPostDataManager(_ handle : String, _ completion: @escaping (MyProfileUserAndPochakedPostModel) -> Void) {
         let url = "\(APIConstants.baseURLv2)/api/v2/members/\(handle)"
@@ -29,6 +29,7 @@ class MyProfilePostDataManager {
                    interceptor: myAuthencitationInterceptor)
         .validate()
         .responseDecodable(of: MyProfileUserAndPochakedPostResponse.self) { response in
+            print(response)
             switch response.result {
             case .success(let result):
                 let resultData = result.result

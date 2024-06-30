@@ -26,7 +26,39 @@ class SettingsViewController: UIViewController {
     // MARK: - Funtion
     
     @IBAction func moveToTermsOfUsePage(_ sender: Any) {
-        print("------- moveToTermsOfUsePage clicked -------")
+        // 현재 저장된 모든 Keycahin : accessToken, refreshToken
+        let accessToken = GetToken.getAccessToken()
+        let refreshToken = GetToken.getRefreshToken()
+        
+        
+        
+        
+        // 현재 저장된 모든 userdefaults
+        let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
+        let name = UserDefaultsManager.getData(type: String.self, forKey: .name) ?? "name not found"
+        let email = UserDefaultsManager.getData(type: String.self, forKey: .email) ?? "email not found"
+        let socialType = UserDefaultsManager.getData(type: String.self, forKey: .socialType) ?? "socialType not found"
+        let isNewMember = UserDefaultsManager.getData(type: Bool.self, forKey: .isNewMember)
+        let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? "handle not found"
+        let message = UserDefaultsManager.getData(type: String.self, forKey: .message) ?? "message not found"
+        let profileImgUrl = UserDefaultsManager.getData(type: String.self, forKey: .profileImgUrl) ?? "profileImgUrl not found"
+        let followerCount = UserDefaultsManager.getData(type: Int.self, forKey: .followerCount) ?? -1
+        let followingCount = UserDefaultsManager.getData(type: Int.self, forKey: .followingCount) ?? -1
+        
+        // Print values
+        print("Access Token: \(accessToken)")
+        print("Refresh Token: \(refreshToken)")
+        print("--- User Defaults Values ---")
+        print("Social ID: \(socialId)")
+        print("Name: \(name)")
+        print("Email: \(email)")
+        print("Social Type: \(socialType)")
+        print("Is New Member: \(isNewMember)")
+        print("Handle: \(handle)")
+        print("Message: \(message)")
+        print("Profile Image URL: \(profileImgUrl)")
+        print("Follower Count: \(followerCount)")
+        print("Following Count: \(followingCount)")
     }
     
     @IBAction func logOut(_ sender: Any) {
@@ -80,15 +112,18 @@ extension SettingsViewController : CustomAlertDelegate {
             }
             
             // UserDefulats Delete
-            // enum -> CaseIterable 설정해두면 allCases로 내부요소 접근 가능
-            UserDefaultsManager.UserDefaultsKeys.allCases.forEach { key in
-                if("\(key)" == "handle"){
-                    // forEach는 반복문이 아니기 때문에 break 혹은 continue 사용 불가
-                    return
-                }else{
-                    UserDefaultsManager.removeData(key: key)
-                }
-            }
+//            // enum -> CaseIterable 설정해두면 allCases로 내부요소 접근 가능
+//            UserDefaultsManager.UserDefaultsKeys.allCases.forEach { key in
+//                if("\(key)" == "handle"){
+//                    // forEach는 반복문이 아니기 때문에 break 혹은 continue 사용 불가
+//                    return
+//                }else{
+//                    UserDefaultsManager.removeData(key: key)
+//                }
+//            }
+//            UserDefaultsManager.UserDefaultsKeys.allCases.forEach { key in
+//                UserDefaultsManager.removeData(key: key)
+//            }
             
             // Main으로 화면 전환
             self.toMainPage()

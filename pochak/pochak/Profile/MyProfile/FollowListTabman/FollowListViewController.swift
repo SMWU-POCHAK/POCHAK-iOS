@@ -16,8 +16,8 @@ class FollowListViewController: TabmanViewController {
     var viewControllers: [UIViewController] = []  // Tabbar로 넘길 VC 배열 선언
     var index: Int = 0
     var handle : String?
-    var followerCount : Int = 0 // 나중에는 uderDefaults에 저장된 값으로 사용하기
-    var followingCount : Int = 0
+    var followerCount = UserDefaultsManager.getData(type: Int.self, forKey: .followerCount)
+    var followingCount = UserDefaultsManager.getData(type: Int.self, forKey: .followingCount)
 
     // MARK: - View Lifecycle
     

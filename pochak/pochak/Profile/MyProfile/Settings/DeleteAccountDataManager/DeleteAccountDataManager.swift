@@ -11,25 +11,36 @@ class DeleteAccountDataManager{
     
     static let shared = DeleteAccountDataManager()
     
-    func deleteAccountDataManager(_ completion: @escaping (DeleteAccountResponse) -> Void) {
+    // Get token
+    let accessToken = GetToken.getAccessToken()
+    let refreshToken = GetToken.getRefreshToken()
+    
+    func deleteAccountDataManager(_ completion: @escaping (DeleteAccountModel) -> Void) {
+        let url = "\(APIConstants.baseURL)/api/v2/member/signout"
         
-        let url = APIConstants.baseURL + "/api/v1/user/signout"
-        let accessToken = GetToken().getAccessToken()
+        print("accessToken : \(accessToken)")
+        print("refreshToken : \(refreshToken)")
+
         
-        let header : HTTPHeaders = ["Authorization": accessToken, "Content-type": "application/json"]
-        print(header[0])
-        
+        let authenticator = MyAuthenticator()
+        let credential = MyAuthenticationCredential(accessToken: accessToken,
+                                                    refreshToken: refreshToken,
+                                                    expiredAt: Date(timeIntervalSinceNow: 60 * 60))
+        let myAuthencitationInterceptor = AuthenticationInterceptor(authenticator: authenticator,
+                                                                    credential: credential)
         AF.request(url,
                    method: .delete,
                    encoding: URLEncoding.default,
-                   headers: header)
+                   interceptor: myAuthencitationInterceptor)
         .validate()
-        .responseDecodable(of: DeleteAccountResponse.self) { response in
+        .responseDecodable(of: DeleteAccountModel.self) { response in
             switch response.result {
             case .success(let result):
+                print("signout success!!!!!!!!!")
                 let resultData = result
                 completion(resultData)
             case .failure(let error):
+                print("Request Fail : deleteAccountDataManager")
                 print(error)
             }
         }

@@ -107,7 +107,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let url = URLContexts.first?.url else { return }
             let _ = GIDSignIn.sharedInstance.handle(url)
         }
-
-
 }
-

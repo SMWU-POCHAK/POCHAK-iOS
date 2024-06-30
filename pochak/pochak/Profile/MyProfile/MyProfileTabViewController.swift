@@ -27,9 +27,8 @@ class MyProfileTabViewController: UIViewController {
     
     // MARK: - Data
     
-    let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
-    // let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
-    let handle = APIConstants.dayeonHandle // 임시 핸들
+    let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
+//    let handle = APIConstants.dayeonHandle // 임시 핸들
     
     // MARK: - View Lifecycle
     
@@ -92,7 +91,6 @@ class MyProfileTabViewController: UIViewController {
     // MARK: - Method
     
     private func loadProfileData() {
-        // let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
         self.userHandle.text = "@\(handle)"
         
         // 1. API 호출
@@ -120,7 +118,7 @@ class MyProfileTabViewController: UIViewController {
             self.followerCount.text = String(resultData.followerCount ?? 0)
             self.followingCount.text = String(resultData.followingCount ?? 0)
             
-            // 3. UserDefaultsManager에 데이터 저장 후 관리
+            // 3. UserDefaultsManager에 새로운 데이터 저장 후 관리 : followerCount, followingCount
             UserDefaultsManager.setData(value: resultData.name, key: .name)
             UserDefaultsManager.setData(value: resultData.message, key: .message)
             UserDefaultsManager.setData(value: resultData.followerCount, key: .followerCount)

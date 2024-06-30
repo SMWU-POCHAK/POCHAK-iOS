@@ -13,8 +13,8 @@ class FollowListDataManager {
     static let shared = FollowListDataManager()
     
     // Get token
-    let accessToken = GetToken().getAccessToken()
-    let refreshToken = GetToken().getRefreshToken()
+    let accessToken = GetToken.getAccessToken()
+    let refreshToken = GetToken.getRefreshToken()
     
     
     func followerDataManager(_ handle : String, _ completion: @escaping ([MemberListDataModel]) -> Void) {

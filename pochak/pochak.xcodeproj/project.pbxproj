@@ -573,11 +573,10 @@
 		373815142A89E6BE0032066A /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				373815152A89E6D30032066A /* SocialJoinViewController.swift */,
+				376F125A2A8B7440005F469B /* SocialLoginViewController.swift */,
 				3769D6AD2B3C2FA800294CD1 /* GoogleLoginDataManager */,
 				3769D6AC2B3C2F9900294CD1 /* JoinDataManager */,
-				373815152A89E6D30032066A /* SocialJoinViewController.swift */,
-				373815192A8A09DA0032066A /* MakeProfileViewController.swift */,
-				376F125A2A8B7440005F469B /* SocialLoginViewController.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -615,6 +614,7 @@
 		3769D6AC2B3C2F9900294CD1 /* JoinDataManager */ = {
 			isa = PBXGroup;
 			children = (
+				373815192A8A09DA0032066A /* MakeProfileViewController.swift */,
 				3769D6B32B3C301B00294CD1 /* JoinDataManager.swift */,
 				3769D6B52B3C302C00294CD1 /* JoinDataModel.swift */,
 			);
@@ -1516,6 +1516,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1550,6 +1551,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

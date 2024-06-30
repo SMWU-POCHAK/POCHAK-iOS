@@ -13,8 +13,8 @@ class FollowToggleDataManager {
     static let shared = FollowToggleDataManager()
     
     // Get token
-    let accessToken = GetToken().getAccessToken()
-    let refreshToken = GetToken().getRefreshToken()
+    let accessToken = GetToken.getAccessToken()
+    let refreshToken = GetToken.getRefreshToken()
     
     
     func followToggleDataManager(_ handle : String, _ completion: @escaping (FollowToggleDataResponse) -> Void) {
