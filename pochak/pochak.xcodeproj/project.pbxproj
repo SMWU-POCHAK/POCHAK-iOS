@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0801765E2A74F4B0005E6953 /* UITextView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0801765D2A74F4B0005E6953 /* UITextView+Extension.swift */; };
+		0802AE032C31D3E00090FB92 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0802AE022C31D3E00090FB92 /* UIImageView+.swift */; };
 		081228C62A69624000DFA094 /* PostLikesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081228C52A69624000DFA094 /* PostLikesViewController.swift */; };
 		081228CA2A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081228C82A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift */; };
 		081228CB2A699B5A00DFA094 /* LikedPeopleListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 081228C92A699B5A00DFA094 /* LikedPeopleListTableViewCell.xib */; };
@@ -184,6 +185,7 @@
 
 /* Begin PBXFileReference section */
 		0801765D2A74F4B0005E6953 /* UITextView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extension.swift"; sourceTree = "<group>"; };
+		0802AE022C31D3E00090FB92 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
 		081228C52A69624000DFA094 /* PostLikesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLikesViewController.swift; sourceTree = "<group>"; };
 		081228C82A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedPeopleListTableViewCell.swift; sourceTree = "<group>"; };
 		081228C92A699B5A00DFA094 /* LikedPeopleListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LikedPeopleListTableViewCell.xib; sourceTree = "<group>"; };
@@ -515,6 +517,7 @@
 				083249752C2956A000A77C03 /* CustomAlertViewController.storyboard */,
 				083249772C295E4000A77C03 /* CustomAlertViewController.swift */,
 				EA4EF8D72C2EC5F7009549FF /* UITextField+.swift */,
+				0802AE022C31D3E00090FB92 /* UIImageView+.swift */,
 				EAC582732C3074EA006F44AF /* UIColor+.swift */,
 				EAE69F432C315009005762B7 /* UIVIew+.swift */,
 			);
@@ -1258,6 +1261,7 @@
 				EA01079C2A59556800A3AE85 /* PostTabViewController.swift in Sources */,
 				EA1289112B3C4F14002EC93E /* SearchDataService.swift in Sources */,
 				373235502B691E6A0042EF94 /* FollowToggleDataModel.swift in Sources */,
+				0802AE032C31D3E00090FB92 /* UIImageView+.swift in Sources */,
 				3769D6C72B3C4F0900294CD1 /* FollowingCollectionViewCell.swift in Sources */,
 				373235472B68F93E0042EF94 /* FollowListDataManager.swift in Sources */,
 				08EB5D252C280CFE00E35C16 /* UIImage+.swift in Sources */,

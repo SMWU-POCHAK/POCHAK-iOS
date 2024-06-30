@@ -11,6 +11,8 @@ class CommentTableViewFooterView: UITableViewHeaderFooterView {
     
     // MARK: - Properties
     
+    static let identifier = "CommentTableViewFooterView"
+    
     var commentVC: CommentViewController!
     var postId: Int!
     var curCommentId: Int!

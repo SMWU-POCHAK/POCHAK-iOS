@@ -16,7 +16,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var commentButton: UIButton!
     @IBOutlet weak var followingBtn: UIButton!
-    @IBOutlet weak var postImage: UIImageView!
+    @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var postOwnerHandleLabel: UILabel!
     @IBOutlet weak var postContent: UILabel!
     @IBOutlet weak var taggedUsers: UILabel!
@@ -108,38 +108,13 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         // 크키에 맞게
 //        scrollView.updateContentSize()
         
-        // 포스트 이미지
-        let url = URL(string: postDataResult.postImage)
-        // main thread에서 load할 경우 URL 로딩이 길면 화면이 멈춘다.
-        // 이를 방지하기 위해 다른 thread에서 처리함.
-        DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: url!) {
-                if let image = UIImage(data: data) {
-                    //UI 변경 작업은 main thread에서 해야함.
-                    DispatchQueue.main.async {
-                        self?.postImage.image = image
-                    }
-                }
-            }
+        if let url = URL(string: postDataResult.postImage) {
+            postImageView.load(url: url)
         }
         
-        // 프로필 이미지
-        let profileUrl = URL(string: postDataResult.ownerProfileImage)
-        DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: profileUrl!) {
-                if let image = UIImage(data: data){
-                    DispatchQueue.main.async {
-                        self?.profileImageView.image = image
-                    }
-                }
-            }
+        if let profileUrl = URL(string: postDataResult.ownerProfileImage) {
+            profileImageView.load(url: profileUrl)
         }
-        
-//        // 내비게이션 바 타이틀 세팅
-//        let label = UILabel()
-//        label.font = UIFont(name: "Pretendard-Bold", size: 18)
-//        label.text = postDataResult.ownerHandle + " 님의 게시물"
-//        self.navigationItem.titleView = label
         
         self.navigationItem.title = postDataResult.ownerHandle + " 님의 게시물"
         
@@ -330,6 +305,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         label.text = "더보기"
         label.sizeToFit()
         
+        // TODO: - handle 수정
         let cellCount = (postOwnerHandle == APIConstants.dayeonHandle) ? 3 : 2
         let height = label.frame.height + CGFloat(36 + 16 + 48 * cellCount)
         let fraction = UISheetPresentationController.Detent.custom { context in

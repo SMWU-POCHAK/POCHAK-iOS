@@ -8,6 +8,12 @@
 import UIKit
 
 class ReportViewCell: UITableViewCell {
+    
+    // MARK: - Properties
+    
+    static let identifier = "ReportViewCell"
+    
+    // MARK: - Init
 
     override func awakeFromNib() {
         super.awakeFromNib()
