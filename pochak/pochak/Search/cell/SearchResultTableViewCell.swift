@@ -28,7 +28,7 @@ class SearchResultTableViewCell: UITableViewCell {
     }
 
     private func setupAttribute(){
-        profileImg.layer.cornerRadius = 50/2
+        profileImg.layer.cornerRadius = 52/2
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
