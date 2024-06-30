@@ -20,6 +20,8 @@ class CommentTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
+    static let identifier = "CommentTableViewCell"
+    
     var taggedId: String = ""
     var loggedinUserHandle: String?
     var commentVC: CommentViewController!

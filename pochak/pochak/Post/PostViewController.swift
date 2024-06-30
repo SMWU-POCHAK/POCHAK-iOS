@@ -135,12 +135,6 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
             }
         }
         
-//        // 내비게이션 바 타이틀 세팅
-//        let label = UILabel()
-//        label.font = UIFont(name: "Pretendard-Bold", size: 18)
-//        label.text = postDataResult.ownerHandle + " 님의 게시물"
-//        self.navigationItem.titleView = label
-        
         self.navigationItem.title = postDataResult.ownerHandle + " 님의 게시물"
         
         // 태그된 사용자, 포착한 사용자
@@ -330,6 +324,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         label.text = "더보기"
         label.sizeToFit()
         
+        // TODO: - 수정
         let cellCount = (postOwnerHandle == APIConstants.dayeonHandle) ? 3 : 2
         let height = label.frame.height + CGFloat(36 + 16 + 48 * cellCount)
         let fraction = UISheetPresentationController.Detent.custom { context in

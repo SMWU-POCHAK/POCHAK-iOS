@@ -8,7 +8,13 @@
 import UIKit
 
 class DeleteViewCell: UITableViewCell {
-
+    
+    // MARK: - Properties
+    
+    static let identifier = "DeleteViewCell"
+    
+    // MARK: - Init
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

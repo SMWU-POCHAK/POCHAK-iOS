@@ -11,6 +11,8 @@ class ReplyTableViewCell: UITableViewCell {
 
     // MARK: - Properties
     
+    static let identifier = "ReplyTableViewCell"
+    
     var loggedinUserHandle: String?
     var deleteButton = UIButton()
     var parentCommentId: Int!

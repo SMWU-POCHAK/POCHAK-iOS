@@ -58,9 +58,9 @@ class PostMenuViewController: UIViewController {
         menuTableView.delegate = self
         menuTableView.dataSource = self
         
-        menuTableView.register(UINib(nibName: "ReportViewCell", bundle: nil), forCellReuseIdentifier: "ReportViewCell")
-        menuTableView.register(UINib(nibName: "DeleteViewCell", bundle: nil), forCellReuseIdentifier: "DeleteViewCell")
-        menuTableView.register(UINib(nibName: "CancelViewCell", bundle: nil), forCellReuseIdentifier: "CancelViewCell")
+        menuTableView.register(UINib(nibName: ReportViewCell.identifier, bundle: nil), forCellReuseIdentifier: ReportViewCell.identifier)
+        menuTableView.register(UINib(nibName: DeleteViewCell.identifier, bundle: nil), forCellReuseIdentifier: DeleteViewCell.identifier)
+        menuTableView.register(UINib(nibName: CancelViewCell.identifier, bundle: nil), forCellReuseIdentifier: CancelViewCell.identifier)
     }
     
     /// 게시글 삭제 혹은 신고 후 홈으로 돌아가기
@@ -105,18 +105,18 @@ extension PostMenuViewController: UITableViewDelegate, UITableViewDataSource {
         var cell = UITableViewCell()
         // 로직 처리가 좀 이상한듯 한데..;;;
         if indexPath.row == 0 {
-            cell = (tableView.dequeueReusableCell(withIdentifier: "ReportViewCell", for: indexPath) as?                        ReportViewCell) ?? UITableViewCell()
+            cell = (tableView.dequeueReusableCell(withIdentifier: ReportViewCell.identifier, for: indexPath) as?                        ReportViewCell) ?? UITableViewCell()
         }
         else if indexPath.row == 1 {
             if currentUserIsOwner {
-                cell = tableView.dequeueReusableCell(withIdentifier: "DeleteViewCell", for: indexPath) as?                        DeleteViewCell ?? UITableViewCell()
+                cell = tableView.dequeueReusableCell(withIdentifier: DeleteViewCell.identifier, for: indexPath) as?                        DeleteViewCell ?? UITableViewCell()
             }
             else {
-                cell = tableView.dequeueReusableCell(withIdentifier: "CancelViewCell", for: indexPath) as?                        CancelViewCell ?? UITableViewCell()
+                cell = tableView.dequeueReusableCell(withIdentifier: CancelViewCell.identifier, for: indexPath) as?                        CancelViewCell ?? UITableViewCell()
             }
         }
         else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "CancelViewCell", for: indexPath) as?                        CancelViewCell ?? UITableViewCell()
+            cell = tableView.dequeueReusableCell(withIdentifier: CancelViewCell.identifier, for: indexPath) as?                        CancelViewCell ?? UITableViewCell()
         }
         return cell
     }
@@ -192,6 +192,6 @@ extension PostMenuViewController: CustomAlertDelegate {
     }
     
     func cancel() {
-        print("취소하기 선택됨")
+        
     }
 }
