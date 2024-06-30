@@ -9,20 +9,23 @@ import UIKit
 
 class FollowingCollectionViewCell: UICollectionViewCell {
     
-    // Collection View가 생성할 cell임을 명시
-    static let identifier = "FollowingCollectionViewCell"
-    var handle:String = ""
+    // MARK: - Data
     
     @IBOutlet weak var profileImageBtn: UIButton!
     @IBOutlet weak var userId: UILabel!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var followStateToggleBtn: UIButton!
     
+    static let identifier = "FollowingCollectionViewCell" // Collection View가 생성할 cell임을 명시
+    var handle:String = ""
+    
+    // MARK: - Cell LifeCycle
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // 프로필 레이아웃
-        self.profileImageBtn.contentMode = .scaleAspectFill
-        profileImageBtn.clipsToBounds = true // cornerRadius 적용 안됨 해결
+        self.profileImageBtn.contentMode = .scaleAspectFill // 사진 안 넣어지는 문제 -> 버튼 type을 custom으로 변경 + style default로 변경
+        profileImageBtn.clipsToBounds = true // cornerRadius 적용 안되는 경우 추가
         self.profileImageBtn.layer.cornerRadius = 26
         
         // 버튼 레이아웃
@@ -33,6 +36,7 @@ class FollowingCollectionViewCell: UICollectionViewCell {
         followStateToggleBtn.layer.cornerRadius = 5
     }
     
+    // MARK: - Method
     
     func configure(_ memberDataModel : MemberListDataModel){
         var imageURL = memberDataModel.profileImage ?? ""
@@ -48,21 +52,16 @@ class FollowingCollectionViewCell: UICollectionViewCell {
         let handle = handle
         sender.isSelected.toggle()
         
-        
         FollowToggleDataManager.shared.followToggleDataManager(handle, { resultData in
             print(resultData.message)
         })
         
         if sender.isSelected {
-            // 팔로우 취소 알림창
             sender.setTitle("팔로우", for: .normal)
             sender.backgroundColor = UIColor(named: "yellow00")
         } else {
             sender.setTitle("팔로잉", for: .normal)
             sender.backgroundColor = UIColor(named: "gray03")
         }
-        
     }
-    
-
 }

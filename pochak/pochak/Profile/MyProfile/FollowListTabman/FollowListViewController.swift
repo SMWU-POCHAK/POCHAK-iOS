@@ -11,24 +11,27 @@ import UIKit
 
 class FollowListViewController: TabmanViewController {
     
-    // Tabbar로 넘길 VC 배열 선언
-    var viewControllers: [UIViewController] = []
+   // MARK: - Data
+    
+    var viewControllers: [UIViewController] = []  // Tabbar로 넘길 VC 배열 선언
     var index: Int = 0
     var handle : String?
-    var followerCount : Int = 0
+    var followerCount : Int = 0 // 나중에는 uderDefaults에 저장된 값으로 사용하기
     var followingCount : Int = 0
 
+    // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 네비게이션 바 설정
+        // 네비게이션바 title 커스텀
+        self.navigationController?.navigationBar.backgroundColor = UIColor.clear
         self.navigationController?.navigationBar.tintColor = .black
         self.navigationItem.title = handle ?? "handle not found"
-        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.black, NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 18) ?? UIFont.systemFont(ofSize: 20, weight: .bold)]
+        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.black, NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 18) ?? UIFont.systemFont(ofSize: 18, weight: .bold)]
         
         // Tabman 사용
-        // tab에 보여질 VC 추가
+        /* 1. tab에 보여질 VC 추가 */
         if let firstVC = storyboard?.instantiateViewController(withIdentifier: "FirstTabmanVC") as? FirstTabmanViewController {
             viewControllers.append(firstVC)
             firstVC.recievedHandle = handle ?? ""
@@ -37,31 +40,22 @@ class FollowListViewController: TabmanViewController {
             viewControllers.append(secondVC)
             secondVC.recievedHandle = handle ?? ""
         }
-        
         self.dataSource = self
         
-        // 바 생성 + tabbar 에 관한 디자인처리를 여기서 하면 된다.
+        /* 2. 바 생성 + tabbar 에 관한 디자인처리 */
         let bar = TMBar.ButtonBar()
-        //        bar.layout.transitionStyle = .none
-        
         // 배경색
         bar.backgroundView.style = .clear
-        
         // tab 밑 bar 색깔 & 크기
         bar.indicator.weight = .custom(value: 2)
         bar.indicator.tintColor = UIColor(named: "yellow00")
-        
         // padding 설정
         bar.layout.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-
-        // tap center
+        // center 정렬
         bar.layout.alignment = .centerDistributed
-        
         // tap 사이 간격
         bar.layout.contentMode = .fit //  버튼 화면에 딱 맞도록 구현
-        //        bar.layout.interButtonSpacing = 20
-        
-        // tap 선택 / 미선택
+        // 선택된 tabbar tint 처리
         bar.buttons.customize { (button) in
             button.tintColor = UIColor(named: "gray04")
             button.selectedTintColor = UIColor(named: "navy00")
@@ -69,21 +63,12 @@ class FollowListViewController: TabmanViewController {
             button.selectedFont =  UIFont(name: "Pretendard-Bold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .semibold)
         }
         
+        /* 4. Baritem 등록 */
         addBar(bar, dataSource: self, at:.top)
-        
     }
-    
-    override func viewWillAppear(_ animated: Bool){
-        super.viewWillAppear(animated)
-        
-        // 다시 뷰로 돌아올 때에도 네비게이션 설정 적용
-        self.navigationController?.navigationBar.tintColor = .black
-        self.navigationItem.title = handle ?? "handle not found"
-        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.black, NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 18) ?? UIFont.systemFont(ofSize: 20, weight: .bold)]
-    }
-    
 }
-// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+// MARK: - Extension
+
 // DataSource Extension
 extension FollowListViewController: PageboyViewControllerDataSource, TMBarDataSource {
 
@@ -101,14 +86,15 @@ extension FollowListViewController: PageboyViewControllerDataSource, TMBarDataSo
          return .at(index: index)
     }
     
-    // 추가 구현해야 하는 기능
-    // 팔로워 / 팔로잉에 따라 defualtPage 다르게 하기
+    // 팔로워 페이지 혹은 팔로잉 페이지인지에 따라 defualtPage 다르게 하기
     func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
         switch index {
            case 0:
-               return TMBarItem(title: "\(followerCount) 팔로워")
+//               return TMBarItem(title: "\(followerCount) 팔로워")
+            return TMBarItem(title: "팔로워")
            case 1:
-               return TMBarItem(title: "\(followingCount) 팔로잉")
+//               return TMBarItem(title: "\(followingCount) 팔로잉")
+            return TMBarItem(title: "팔로잉")
            default:
                let title = "Page \(index)"
               return TMBarItem(title: title)

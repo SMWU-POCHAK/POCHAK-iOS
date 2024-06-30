@@ -12,9 +12,13 @@ protocol RemoveImageDelegate: AnyObject {
 }
 
 class FirstTabmanViewController: UIViewController{
+    // MARK: - Data
+    
     @IBOutlet weak var followerCollectionView: UICollectionView!
     var imageArray : [MemberListDataModel] = []
     var recievedHandle : String?
+    
+    // MARK: - View LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +37,8 @@ class FirstTabmanViewController: UIViewController{
         loadFollowerListData()
     }
 
-
+    // MARK: - Method
+    
     private func setupCollectionView() {
         followerCollectionView.delegate = self
         followerCollectionView.dataSource = self
@@ -52,7 +57,8 @@ class FirstTabmanViewController: UIViewController{
     
 }
 
-// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+// MARK: - Extension
+
 extension FirstTabmanViewController : UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return max(0,(imageArray.count))
@@ -67,8 +73,7 @@ extension FirstTabmanViewController : UICollectionViewDelegate, UICollectionView
         }
         
         // 데이터 전달
-        // indexPath 안에는 섹션에 대한 정보, 섹션에 들어가는 데이터 정보 등이 있다
-        let memberListData = imageArray[indexPath.item]
+        let memberListData = imageArray[indexPath.item] // indexPath 안에는 섹션에 대한 정보, 섹션에 들어가는 데이터 정보 등이 있다
         cell.configure(memberListData)
         cell.parentVC = self
         
@@ -77,7 +82,7 @@ extension FirstTabmanViewController : UICollectionViewDelegate, UICollectionView
         return cell
     }
     
-    // 유저 프로필 클릭시 이동
+    // 유저 클릭 시 해당 프로필로 이동
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let otherUserProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else {return}
         self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
@@ -87,9 +92,9 @@ extension FirstTabmanViewController : UICollectionViewDelegate, UICollectionView
 
 }
 
-// CollectionView Cell 크기(높이, 너비 지정)
 extension FirstTabmanViewController : UICollectionViewDelegateFlowLayout{
     
+    // cell 높이, 너비 지정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: followerCollectionView.bounds.width,
                       height: 70)
@@ -97,10 +102,8 @@ extension FirstTabmanViewController : UICollectionViewDelegateFlowLayout{
     
     // cell 간 간격 설정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-            return 0
-        }
-
-    
+        return 0
+    }
 }
 
 // cell 삭제 로직
@@ -111,7 +114,7 @@ extension FirstTabmanViewController: RemoveImageDelegate {
         let titleString = NSAttributedString(string: "팔로워를 삭제하시겠습니까?", attributes: titleAttributes as [NSAttributedString.Key : Any])
         
         let messageAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Regular", size: 14), NSAttributedString.Key.foregroundColor: UIColor.black]
-        let messageString = NSAttributedString(string: "팔로워를 삭제하면, 팔로워와 관련된 사진이 사라집니다.", attributes: messageAttributes as [NSAttributedString.Key : Any])
+        let messageString = NSAttributedString(string: "\n팔로워를 삭제하면, 팔로워와 관련된 \n사진이 사라집니다.", attributes: messageAttributes as [NSAttributedString.Key : Any])
         
         alert.setValue(titleString, forKey: "attributedTitle")
         alert.setValue(messageString, forKey: "attributedMessage")
@@ -122,12 +125,10 @@ extension FirstTabmanViewController: RemoveImageDelegate {
         let okAction = UIAlertAction(title: "삭제하기", style: .default, handler: {
             action in
             // API
-            DeleteFollowerDataManager.shared.deleteFollowerDataManager(handle, { resultData in
+            DeleteFollowerDataManager.shared.deleteFollowerDataManager(self.recievedHandle ?? "", handle, { resultData in
                 print(resultData.message)
             })
             // cell 삭제
-            print("inside removeFromCollectionView!!!!!")
-//            self.followerCollectionView.deleteItems(at: [IndexPath(item: indexPath.row, section: 0)])
             self.imageArray.remove(at: indexPath.row)
             self.followerCollectionView.reloadData()
         })

@@ -25,10 +25,22 @@ class MyProfileTabViewController: UIViewController {
     @IBOutlet weak var topUIView: UIView!
     @IBOutlet weak var settingBtn: UIButton!
     
-    // 필요한 데이터 불러온 후 변수에 저장
+    // MARK: - Data
+    
     let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
     // let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
     let handle = APIConstants.dayeonHandle // 임시 핸들
+    
+    // MARK: - View Lifecycle
+    
+    // Container View에 데이터 전달(ViewDidLoad보다 먼저 실행)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //storyboard에서 설정한 identifier와 동일한 이름
+        if segue.identifier == "embedContainer" {
+            let postListVC = segue.destination as! PostListViewController
+            postListVC.handle = handle
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,34 +70,35 @@ class MyProfileTabViewController: UIViewController {
 
         // API
         loadProfileData()
+        
     }
-    
+
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
         // API
         loadProfileData()
         
         // 뷰가 나타날 때에는 네비게이션 바 숨기기
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
-
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         // 뷰가 사라질 때에는 네비게이션 바 다시 보여주기
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
+    
+    // MARK: - Method
     
     private func loadProfileData() {
         // let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
         self.userHandle.text = "@\(handle)"
-
-        print("------------------- loadProfileData() 안에 handle 있는지 검사 -------------------")
-        print(handle)
+        
+        // 1. API 호출
         MyProfilePostDataManager.shared.myProfileUserAndPochakedPostDataManager(handle,{ [self]resultData in
       
-            // 1. API 호출
+            // 이미지 데이터
             let imageURL = resultData.profileImage ?? ""
             UserDefaultsManager.setData(value: imageURL, key: .profileImgUrl)
             if let url = URL(string: imageURL) {

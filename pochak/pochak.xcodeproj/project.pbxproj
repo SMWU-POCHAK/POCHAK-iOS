@@ -66,6 +66,10 @@
 		373815162A89E6D30032066A /* SocialJoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373815152A89E6D30032066A /* SocialJoinViewController.swift */; };
 		3738151A2A8A09DA0032066A /* MakeProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373815192A8A09DA0032066A /* MakeProfileViewController.swift */; };
 		374261642C2FEF5F00B67886 /* ProfileMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374261632C2FEF5F00B67886 /* ProfileMenuViewController.swift */; };
+		3742616E2C30916C00B67886 /* BlockDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3742616D2C30916C00B67886 /* BlockDataManager.swift */; };
+		374261702C30917600B67886 /* BlockDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3742616F2C30917600B67886 /* BlockDataModel.swift */; };
+		374261722C3092B100B67886 /* UnblockDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374261712C3092B100B67886 /* UnblockDataManager.swift */; };
+		374261742C3092B900B67886 /* UnblockDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374261732C3092B900B67886 /* UnblockDataModel.swift */; };
 		3747E9722BF3827500364BED /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3747E9712BF3827500364BED /* SettingsViewController.swift */; };
 		3769D6AF2B3C2FD500294CD1 /* GoogleLoginDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6AE2B3C2FD500294CD1 /* GoogleLoginDataManager.swift */; };
 		3769D6B22B3C300D00294CD1 /* GoogleLoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6B12B3C300D00294CD1 /* GoogleLoginModel.swift */; };
@@ -236,6 +240,10 @@
 		373815152A89E6D30032066A /* SocialJoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialJoinViewController.swift; sourceTree = "<group>"; };
 		373815192A8A09DA0032066A /* MakeProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeProfileViewController.swift; sourceTree = "<group>"; };
 		374261632C2FEF5F00B67886 /* ProfileMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMenuViewController.swift; sourceTree = "<group>"; };
+		3742616D2C30916C00B67886 /* BlockDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockDataManager.swift; sourceTree = "<group>"; };
+		3742616F2C30917600B67886 /* BlockDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockDataModel.swift; sourceTree = "<group>"; };
+		374261712C3092B100B67886 /* UnblockDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockDataManager.swift; sourceTree = "<group>"; };
+		374261732C3092B900B67886 /* UnblockDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockDataModel.swift; sourceTree = "<group>"; };
 		3747E9712BF3827500364BED /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		3769D6AE2B3C2FD500294CD1 /* GoogleLoginDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginDataManager.swift; sourceTree = "<group>"; };
 		3769D6B12B3C300D00294CD1 /* GoogleLoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginModel.swift; sourceTree = "<group>"; };
@@ -574,12 +582,34 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
-		374261622C2FEF3600B67886 /* ProfileMenu */ = {
+		3742616A2C3075B400B67886 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				3747E9712BF3827500364BED /* SettingsViewController.swift */,
+				37D311D82B53131D00A1D7C1 /* LogoutDataManager */,
+				37D311DD2B566C3D00A1D7C1 /* DeleteAccountDataManager */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		3742616B2C30911A00B67886 /* ProfileMenu */ = {
+			isa = PBXGroup;
+			children = (
+				3742616C2C30914100B67886 /* BlockAPI */,
 				374261632C2FEF5F00B67886 /* ProfileMenuViewController.swift */,
 			);
 			path = ProfileMenu;
+			sourceTree = "<group>";
+		};
+		3742616C2C30914100B67886 /* BlockAPI */ = {
+			isa = PBXGroup;
+			children = (
+				3742616D2C30916C00B67886 /* BlockDataManager.swift */,
+				3742616F2C30917600B67886 /* BlockDataModel.swift */,
+				374261712C3092B100B67886 /* UnblockDataManager.swift */,
+				374261732C3092B900B67886 /* UnblockDataModel.swift */,
+			);
+			path = BlockAPI;
 			sourceTree = "<group>";
 		};
 		3769D6AC2B3C2F9900294CD1 /* JoinDataManager */ = {
@@ -626,12 +656,9 @@
 			isa = PBXGroup;
 			children = (
 				3769D6B82B3C345800294CD1 /* MyProfileTabViewController.swift */,
-				37A284C02B52FC910023EB9D /* UpdateProfileViewController.swift */,
-				3747E9712BF3827500364BED /* SettingsViewController.swift */,
-				37D311DD2B566C3D00A1D7C1 /* DeleteAccountDataManager */,
-				37D311D82B53131D00A1D7C1 /* LogoutDataManager */,
-				37D311D32B53053C00A1D7C1 /* MyProfileUpdateDataManager */,
-				37C3AF442B3CB26000B4C79C /* MyProfilePostDataManager */,
+				3742616A2C3075B400B67886 /* Settings */,
+				37D311D32B53053C00A1D7C1 /* ProfileUpdate */,
+				37C3AF442B3CB26000B4C79C /* ProfilePostData */,
 				3769D6CC2B3C560200294CD1 /* PostListTabman */,
 				3769D6CB2B3C55E500294CD1 /* FollowListTabman */,
 				3769D6C02B3C39EA00294CD1 /* cell */,
@@ -643,9 +670,9 @@
 			isa = PBXGroup;
 			children = (
 				373235452B68F9180042EF94 /* FollowDataManager */,
-				3769D6BE2B3C349D00294CD1 /* SecondTabmanViewController.swift */,
-				3769D6BC2B3C348800294CD1 /* FirstTabmanViewController.swift */,
 				3769D6BA2B3C347000294CD1 /* FollowListViewController.swift */,
+				3769D6BC2B3C348800294CD1 /* FirstTabmanViewController.swift */,
+				3769D6BE2B3C349D00294CD1 /* SecondTabmanViewController.swift */,
 			);
 			path = FollowListTabman;
 			sourceTree = "<group>";
@@ -660,23 +687,24 @@
 			path = PostListTabman;
 			sourceTree = "<group>";
 		};
-		37C3AF442B3CB26000B4C79C /* MyProfilePostDataManager */ = {
+		37C3AF442B3CB26000B4C79C /* ProfilePostData */ = {
 			isa = PBXGroup;
 			children = (
-				37C3AF452B3CB29A00B4C79C /* MyProfilePostDataManager.swift */,
 				37C3AF472B3CB2B300B4C79C /* MyProfilePochakedPostModel.swift */,
 				37C3AF492B3CB2C700B4C79C /* MyProfilePochakPostModel.swift */,
+				37C3AF452B3CB29A00B4C79C /* MyProfilePostDataManager.swift */,
 			);
-			path = MyProfilePostDataManager;
+			path = ProfilePostData;
 			sourceTree = "<group>";
 		};
-		37D311D32B53053C00A1D7C1 /* MyProfileUpdateDataManager */ = {
+		37D311D32B53053C00A1D7C1 /* ProfileUpdate */ = {
 			isa = PBXGroup;
 			children = (
-				37D311D42B53056700A1D7C1 /* MyProfileUpdateDataManager.swift */,
+				37A284C02B52FC910023EB9D /* UpdateProfileViewController.swift */,
 				37D311D62B53057700A1D7C1 /* MyProfileUpdateDataModel.swift */,
+				37D311D42B53056700A1D7C1 /* MyProfileUpdateDataManager.swift */,
 			);
-			path = MyProfileUpdateDataManager;
+			path = ProfileUpdate;
 			sourceTree = "<group>";
 		};
 		37D311D82B53131D00A1D7C1 /* LogoutDataManager */ = {
@@ -700,7 +728,7 @@
 		37D311E72B567B3F00A1D7C1 /* OtherProfile */ = {
 			isa = PBXGroup;
 			children = (
-				374261622C2FEF3600B67886 /* ProfileMenu */,
+				3742616B2C30911A00B67886 /* ProfileMenu */,
 				37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */,
 			);
 			path = OtherProfile;
@@ -1221,6 +1249,7 @@
 				37D311E32B56754D00A1D7C1 /* GetToken.swift in Sources */,
 				08D98C472AFEE8B300E9A097 /* PostDataModel.swift in Sources */,
 				3769D6C32B3C3A1600294CD1 /* FollowerCollectionViewCell.swift in Sources */,
+				374261722C3092B100B67886 /* UnblockDataManager.swift in Sources */,
 				EA1B0B5F2A49D23A00F86FBC /* ViewController.swift in Sources */,
 				379A6A3A2B56BDBF0087FAAC /* Authenticator.swift in Sources */,
 				EA17182C2A5912A7009168E6 /* UploadViewController.swift in Sources */,
@@ -1230,6 +1259,7 @@
 				08C02EEA2BF3798F00627C21 /* ReportViewController.swift in Sources */,
 				373235562B692C790042EF94 /* DeleteFollowerDataModel.swift in Sources */,
 				0844D7EF2BF219F6001154AC /* DeleteViewCell.swift in Sources */,
+				374261742C3092B900B67886 /* UnblockDataModel.swift in Sources */,
 				373235542B692C6D0042EF94 /* DeleteFollowerDataManager.swift in Sources */,
 				08DD9EC42B454405004CCD5F /* FollowDataService.swift in Sources */,
 				371D33782B4E83E90084FF6A /* UserDefaultsManager.swift in Sources */,
@@ -1244,6 +1274,7 @@
 				EA17182B2A5912A7009168E6 /* CameraViewController.swift in Sources */,
 				37D311DF2B566C4D00A1D7C1 /* DeleteAccountDataManager.swift in Sources */,
 				EA817AB62B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
+				3742616E2C30916C00B67886 /* BlockDataManager.swift in Sources */,
 				379A6A3E2B5FA07D0087FAAC /* NavigationController.swift in Sources */,
 				3769D6D52B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift in Sources */,
 				3769D6B62B3C302C00294CD1 /* JoinDataModel.swift in Sources */,
@@ -1263,6 +1294,7 @@
 				EA6306D82C2BFE53000DB0A7 /* CustomTabBarController.swift in Sources */,
 				EA1289132B3C4F1F002EC93E /* SearchDataModel.swift in Sources */,
 				0820B1902A63A18100604DA8 /* ReplyTableViewCell.swift in Sources */,
+				374261702C30917600B67886 /* BlockDataModel.swift in Sources */,
 				08FD3A412B3C70BC00574880 /* HomeDataModel.swift in Sources */,
 				083249782C295E4000A77C03 /* CustomAlertViewController.swift in Sources */,
 				0893E1622B09083C003CF3D8 /* PostDataService.swift in Sources */,
