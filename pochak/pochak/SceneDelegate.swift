@@ -32,7 +32,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             // 로그인 된 상태
             print("scene delegate login succeed")
             print(keyChainToken)
-            let access = GetToken().getAccessToken()
+            let access = GetToken.getAccessToken()
             print(access)
             
             let tabBarController = CustomTabBarController()
