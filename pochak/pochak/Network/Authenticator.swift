@@ -18,16 +18,17 @@ struct TokenRefreshDataModel: Codable {
 }
 
 class MyAuthenticator : Authenticator {
-    let accessToken = GetToken().getAccessToken()
-    let refreshToken = GetToken().getRefreshToken()
+    let accessToken = GetToken.getAccessToken()
+    let refreshToken = GetToken.getRefreshToken()
     typealias Credential = MyAuthenticationCredential
         
     // api요청 시 AuthenticatorIndicator객체가 존재하면, 요청 전에 가로채서 apply에서 Header에 bearerToken 추가
     func apply(_ credential: Credential, to urlRequest: inout URLRequest) {
-        print("apply Function 실행중~~~~~!!")
-//        urlRequest.addValue(accessToken, forHTTPHeaderField: "Authorization")
-        urlRequest.addValue("Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkeHh5bm5pIiwicm9sZSI6IlJPTEVfVVNFUiIsImlhdCI6MTcwNTYyMDMwOCwiZXhwIjoxNzgzMzgwMzA4fQ.2u1cQI59e1n9yPEeCiJxuocU6CR9eMIPRTfJgkFJzX4", forHTTPHeaderField: "Authorization")
-        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-type")
+        print("1. apply Function 실행중")
+        print("1. apply Function 실행중 현재 토큰 : \(accessToken)")
+        urlRequest.addValue(accessToken, forHTTPHeaderField: "Authorization")
+//        urlRequest.addValue("Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkeHh5bm5pIiwicm9sZSI6IlJPTEVfVVNFUiIsImlhdCI6MTcwNTYyMDMwOCwiZXhwIjoxNzgzMzgwMzA4fQ.2u1cQI59e1n9yPEeCiJxuocU6CR9eMIPRTfJgkFJzX4", forHTTPHeaderField: "Authorization")
+//        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-type")
         print(urlRequest.headers)
     }
     

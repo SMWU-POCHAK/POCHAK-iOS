@@ -13,8 +13,12 @@ class ProfilePostCollectionViewCell: UICollectionViewCell {
     // Collection View가 생성할 cell임을 명시
     static let identifier = "ProfilePostCollectionViewCell"
     
-    
     @IBOutlet weak var profilePostImage: UIImageView!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
     
     func configure(_ postDataModel : PostDataModel){
         var imageURL = postDataModel.postImage ?? ""
@@ -29,10 +33,4 @@ class ProfilePostCollectionViewCell: UICollectionViewCell {
             }
         }
     }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
 }
