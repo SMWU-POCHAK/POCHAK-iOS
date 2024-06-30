@@ -13,7 +13,7 @@ class AlarmDataService{
     let accessToken = GetToken().getAccessToken()
     
     // 임시로 넣어두는 다연 토큰
-    let header: HTTPHeaders = ["Authorization": APIConstants.dayeonToken,
+    let header: HTTPHeaders = ["Authorization": APIConstants.suyeonToken,
                  "Content-type": "application/json"
                  ]
     
