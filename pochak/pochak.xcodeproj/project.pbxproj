@@ -767,6 +767,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		EA0F23672C31D1300014F94E /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				EA1718342A592BE3009168E6 /* AlarmCollectionViewCell.swift */,
+				EA1718352A592BE3009168E6 /* AlarmCollectionViewCell.xib */,
+				EA0107AC2A5EC23900A3AE85 /* OtherCollectionViewCell.swift */,
+				EA0107AD2A5EC23900A3AE85 /* OtherCollectionViewCell.xib */,
+				EA7EE1D62BF38921009486CC /* PochakAlarmCollectionViewCell.swift */,
+				EA7EE1D72BF38921009486CC /* PochakAlarmCollectionViewCell.xib */,
+			);
+			path = cell;
+			sourceTree = "<group>";
+		};
 		EA1289062B3B280D002EC93E /* AlarmDataManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -801,14 +814,9 @@
 		EA17182D2A592A08009168E6 /* Alarm */ = {
 			isa = PBXGroup;
 			children = (
+				EA0F23672C31D1300014F94E /* cell */,
 				EA1289062B3B280D002EC93E /* AlarmDataManager */,
-				EA1718342A592BE3009168E6 /* AlarmCollectionViewCell.swift */,
-				EA1718352A592BE3009168E6 /* AlarmCollectionViewCell.xib */,
 				EA0107A62A5CF73900A3AE85 /* AlarmViewController.swift */,
-				EA0107AC2A5EC23900A3AE85 /* OtherCollectionViewCell.swift */,
-				EA0107AD2A5EC23900A3AE85 /* OtherCollectionViewCell.xib */,
-				EA7EE1D62BF38921009486CC /* PochakAlarmCollectionViewCell.swift */,
-				EA7EE1D72BF38921009486CC /* PochakAlarmCollectionViewCell.xib */,
 				EA0F23652C319C030014F94E /* PreviewAlarmViewController.swift */,
 			);
 			path = Alarm;
