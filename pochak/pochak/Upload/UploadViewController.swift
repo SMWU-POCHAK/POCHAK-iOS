@@ -479,24 +479,6 @@ extension UploadViewController: UITableViewDelegate,UITableViewDataSource{
 
 }
 
-extension UploadViewController {
-    func showProgressBar() {
-        // 프로그래스 바를 추가할 부분
-        let progressBar = UIActivityIndicatorView(style: .large)
-        progressBar.center = view.center
-        progressBar.startAnimating()
-        view.addSubview(progressBar)
-    }
-    
-    func hideProgressBar() {
-        // 프로그래스 바를 제거할 부분
-        if let progressBar = view.subviews.first(where: { $0 is UIActivityIndicatorView }) as? UIActivityIndicatorView {
-            progressBar.stopAnimating()
-            progressBar.removeFromSuperview()
-        }
-    }
-}
-
 extension UploadViewController: CustomAlertDelegate {
 
     func confirmAction() {
