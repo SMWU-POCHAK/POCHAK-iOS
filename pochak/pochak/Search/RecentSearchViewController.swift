@@ -213,7 +213,7 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
             resultVC.view.topAnchor.constraint(equalTo: searchContainerView.bottomAnchor, constant: 16),
             resultVC.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             resultVC.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            resultVC.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            resultVC.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
