@@ -16,7 +16,6 @@ class SocialJoinViewController: UIViewController {
     @IBOutlet weak var startPochak: UILabel!
     @IBOutlet weak var googleLoginBtn: UIButton!
     @IBOutlet weak var appleLoginBtn: UIButton!
-    @IBOutlet weak var goToLoginBtn: UIButton!
     
     // MARK: - View LifeCycle
     override func viewDidLoad() {
@@ -92,26 +91,26 @@ class SocialJoinViewController: UIViewController {
         googleLoginBtn.layer.borderColor = UIColor(named: "gray02")?.cgColor
         appleLoginBtn.layer.cornerRadius = 30
         
-        // "이미 계정이 있으신가요?" 커스텀
-        if let font = UIFont(name: "Pretendard-Bold", size: 16) {
-            let customAttributes: [NSAttributedString.Key: Any] = [
-                .font: font,
-                .foregroundColor: UIColor.black,
-                .underlineStyle: 1
-            ]
-            let attributedString = NSAttributedString(string: "이미 계정이 있으신가요?", attributes: customAttributes)
-            goToLoginBtn.setAttributedTitle(attributedString, for: .normal)
-        } else {return}
+//        // "이미 계정이 있으신가요?" 커스텀
+//        if let font = UIFont(name: "Pretendard-Bold", size: 16) {
+//            let customAttributes: [NSAttributedString.Key: Any] = [
+//                .font: font,
+//                .foregroundColor: UIColor.black,
+//                .underlineStyle: 1
+//            ]
+//            let attributedString = NSAttributedString(string: "이미 계정이 있으신가요?", attributes: customAttributes)
+//            goToLoginBtn.setAttributedTitle(attributedString, for: .normal)
+//        } else {return}
     }
     
-    @IBAction func goToLoginBtnTapped(_ sender: UIButton) {
-        // "이미 계정이 있으신가요?" 없어지도록
-        let aa = NSAttributedString(string: "")
-        goToLoginBtn.setAttributedTitle(aa, for: .normal)
-        
-        // 포착 시작하기 -> 로그인하기로 변경
-        startPochak.text = "로그인하기"
-    }
+//    @IBAction func goToLoginBtnTapped(_ sender: UIButton) {
+//        // "이미 계정이 있으신가요?" 없어지도록
+//        let aa = NSAttributedString(string: "")
+//        goToLoginBtn.setAttributedTitle(aa, for: .normal)
+//        
+//        // 포착 시작하기 -> 로그인하기로 변경
+//        startPochak.text = "로그인하기"
+//    }
     
     private func changeViewControllerAccordingToisNewMemeberStateForGoogle(_ isNewMember : Bool, _ resultDataForGoogle : GoogleLoginModel){
         if isNewMember == true {
