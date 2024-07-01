@@ -48,6 +48,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     private let postStoryBoard = UIStoryboard(name: "PostTab", bundle: nil)
     
     private var taggedUserList: [String] = []
+    private let refreshControl = UIRefreshControl()
     
     // MARK: - lifecycle
     
@@ -57,6 +58,11 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         /* 1번만 해도 되는 초기화들.. */
         // 크기에 맞게
         scrollView.updateContentSize()
+        
+        scrollView.delegate = self
+        scrollView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshPostDetail), for: .valueChanged)
+        refreshControl.tintColor = UIColor(named: "navy02")
         
         setupNavigationBar()
         self.navigationController?.isNavigationBarHidden = false
@@ -311,7 +317,6 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         label.text = "더보기"
         label.sizeToFit()
         
-        // TODO: - handle 수정
         let cellCount = (postOwnerHandle == UserDefaultsManager.getData(type: String.self, forKey: .handle)) ? 3 : 2
         let height = label.frame.height + CGFloat(36 + 16 + 48 * cellCount)
         let fraction = UISheetPresentationController.Detent.custom { context in
@@ -334,8 +339,8 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         showCommentVC()
     }
     
-    @objc func goBack(){
-        self.navigationController?.popViewController(animated: true)
+    @objc func refreshPostDetail(){
+        loadPostDetailData()
     }
 }
 
@@ -346,6 +351,14 @@ extension ViewController: UISheetPresentationControllerDelegate {
     func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
         //크기 변경 됐을 경우
         print(sheetPresentationController.selectedDetentIdentifier == .large ? "large" : "medium")
+    }
+}
+
+extension PostViewController: UIScrollViewDelegate {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if refreshControl.isRefreshing {
+             refreshControl.endRefreshing()
+        }
     }
 }
 
