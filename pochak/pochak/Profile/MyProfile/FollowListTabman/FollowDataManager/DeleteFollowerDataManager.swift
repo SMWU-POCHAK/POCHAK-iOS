@@ -19,7 +19,7 @@ class DeleteFollowerDataManager {
     
     
     func deleteFollowerDataManager(_ handle : String, _ selectedHandle : String, _ completion: @escaping (DeleteFollowerDataResponse) -> Void) {
-        let url = "\(APIConstants.baseURLv2)/api/v2/members/\(handle)/follower?followerHandle=\(selectedHandle)"
+        let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)/follower?followerHandle=\(selectedHandle)"
 
         let authenticator = MyAuthenticator()
         let credential = MyAuthenticationCredential(accessToken: accessToken,

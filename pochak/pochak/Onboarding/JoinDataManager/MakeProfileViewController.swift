@@ -10,17 +10,17 @@ import UIKit
 class MakeProfileViewController: UIViewController {
         
     // MARK: - Data
-    
+    let textViewPlaceHolder = "소개를 입력해주세요.(최대 50자)"
     let name = UserDefaultsManager.getData(type: String.self, forKey: .name) ?? "name not found"
     let email = UserDefaultsManager.getData(type: String.self, forKey: .email) ?? "email not found"
     let socialType = UserDefaultsManager.getData(type: String.self, forKey: .socialType) ?? "socialType not found"
     let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
-    let socialRefreshToken = UserDefaultsManager.getData(type: String.self, forKey: .socialRefreshToken) ?? "is not apple login user"
+    let socialRefreshToken = UserDefaultsManager.getData(type: String.self, forKey: .socialRefreshToken) ?? "NOTAPPLELOGINUSER"
 
     @IBOutlet weak var profileImg: UIButton!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var handleTextField: UITextField!
-    @IBOutlet weak var messageTextField: UITextField!
+    @IBOutlet weak var messageTextView: UITextView!
     
     // MARK: - View LifeCycle
     
@@ -52,6 +52,15 @@ class MakeProfileViewController: UIViewController {
         profileImg.imageView?.contentMode = .scaleAspectFill
         profileImg.layer.masksToBounds = true
         profileImg.layer.cornerRadius = 58
+        
+        // textView 레이아웃 설정
+        messageTextView.delegate = self
+        messageTextView.textContainer.lineFragmentPadding = 0 // textView 기본 마진 제거
+        messageTextView.textContainerInset = .zero // textView 기본 마진 제거
+        messageTextView.text = textViewPlaceHolder // PlaceHolder 커스텀
+        messageTextView.textColor = UIColor(named: "gray03") // PlaceHolder 커스텀
+        
+
     }
 
     // MARK: - Function
@@ -61,12 +70,16 @@ class MakeProfileViewController: UIViewController {
         // 새로운 유저 정보 UserDefaults에 저장 : name / handle / message
         guard let name = nameTextField.text  else {return}
         guard let handle = handleTextField.text  else {return}
-        guard let message = messageTextField.text  else {return}
+        guard let message = messageTextView.text  else {return}
         guard let profileImage = profileImg.currentImage  else {return}
-        
-        UserDefaultsManager.setData(value: name, key: .name)
-        UserDefaultsManager.setData(value: handle, key: .handle)
-        UserDefaultsManager.setData(value: message, key: .message)
+        print("----------- message : \(name) --------------")
+        print("----------- message : \(handle) --------------")
+        print("----------- message : \(message) --------------")
+        print("----------- message : \(profileImage) --------------")
+        print("----------- message : \(email) --------------")
+        print("----------- message : \(socialId) --------------")
+        print("----------- message : \(socialType) --------------")
+        print("----------- message : \(socialRefreshToken) --------------")
         
         // API request : POST
         JoinDataManager.shared.joinDataManager(name,
@@ -81,8 +94,14 @@ class MakeProfileViewController: UIViewController {
             
             print("JoinDataManager resultData : \(resultData)")
             
-            // 새로운 유저 정보 UserDefaults에 저장 : IsNewMember
+            
+            // 새로운 유저 정보 UserDefaults에 저장 : id / name / handle / message / IsNewMember
+            UserDefaultsManager.setData(value: resultData.name, key: .name)
+            UserDefaultsManager.setData(value: resultData.id, key: .memberId)
+            UserDefaultsManager.setData(value: handle, key: .handle)
+            UserDefaultsManager.setData(value: message, key: .message)
             UserDefaultsManager.setData(value: resultData.isNewMember, key: .isNewMember)
+
             
             
             // 유저 토큰 정보 저장 @KeyChainManager
@@ -146,5 +165,53 @@ extension MakeProfileViewController: UIImagePickerControllerDelegate, UINavigati
     // 취소
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+// TextView 기본 속성 설정
+extension MakeProfileViewController: UITextViewDelegate {
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == textViewPlaceHolder {
+            textView.text = nil
+            textView.textColor = .black
+        }
+    }
+        
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            textView.text = textViewPlaceHolder
+            textView.textColor =  UIColor(named: "gray03")
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        guard let text = textView.text else { return }
+        
+        // 글자수 제한
+        let maxLength = 51
+        if text.count > maxLength {
+            textView.text = String(text.prefix(maxLength))
+        }
+        
+        // 줄바꿈(들여쓰기) 제한
+        let maxNumberOfLines = 3
+        let lineBreakCharacter = "\n"
+        let lines = text.components(separatedBy: lineBreakCharacter)
+        var consecutiveLineBreakCount = 0 // 연속된 줄 바꿈 횟수
+
+        for line in lines {
+            if line.isEmpty { // 빈 줄이면 연속된 줄 바꿈으로 간주
+                consecutiveLineBreakCount += 1
+            } else {
+                consecutiveLineBreakCount = 0
+            }
+
+            if consecutiveLineBreakCount > maxNumberOfLines {
+//                textView.text = String(text.dropLast()) // 마지막 입력 문자를 제거
+                textView.text.removeLast()
+                break
+            }
+        }
     }
 }

@@ -15,7 +15,7 @@ struct AppleLoginResponse: Codable {
 }
 
 struct AppleLoginModel : Codable {
-    var id : String?
+    var socialId : String?
     var name : String?
     var email : String?
     var socialType : String?

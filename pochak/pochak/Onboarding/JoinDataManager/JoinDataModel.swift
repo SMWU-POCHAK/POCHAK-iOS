@@ -13,7 +13,8 @@ struct JoinAPIResponse: Codable {
 }
 
 struct JoinDataModel : Codable {
-    var id : String?
+    var id : Int?
+    var socialId : String?
     var name : String?
     var email : String?
     var socialType : String?

@@ -9,6 +9,7 @@ import Foundation
 
 class UserDefaultsManager {
     enum UserDefaultsKeys: String, CaseIterable {
+        case memberId
         case socialId
         case name
         case email
