@@ -97,10 +97,11 @@ class MakeProfileViewController: UIViewController {
             } catch {
                 print(error)
             }
+            
+            // 회원가입 성공 시 홈 화면으로  전환
+            self.toHomeTabPage()
         })
         
-        // 홈 화면으로  전환
-        toHomeTabPage()
     }
     
     // 프로필 사진 설정

@@ -49,7 +49,7 @@ struct JoinDataManager {
                 multipartFormData.append("\(value)".data(using: .utf8)!, withName: key)
             }
             //img 추가
-            if let image = profileImage?.jpegData(compressionQuality: 1) {
+            if let image = profileImage?.jpegData(compressionQuality: 0.1) {
                 multipartFormData.append(image, withName: "profileImage", fileName: "image.jpg", mimeType: "image/jpeg")
             }
         }, to: url, method: .post, headers: header).validate().responseDecodable(of: JoinAPIResponse.self) { response in

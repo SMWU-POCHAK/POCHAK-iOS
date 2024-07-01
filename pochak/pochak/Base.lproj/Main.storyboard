@@ -46,17 +46,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0m9-lT-YBC">
-                                <rect key="frame" x="121.66666666666667" y="745.66666666666663" width="149.66666666666663" height="29.666666666666629"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="이미 계정이 있으신가요?">
-                                    <fontDescription key="titleFontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="13"/>
-                                    <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="goToLoginBtnTapped:" destination="OU9-gK-Rev" eventType="touchUpInside" id="EI9-9j-ibG"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="당신의 순간, 포착" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wV5-nd-x5e">
                                 <rect key="frame" x="115.33333333333333" y="490" width="162.66666666666669" height="28"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="24"/>
@@ -93,7 +82,6 @@
                         <viewLayoutGuide key="safeArea" id="bqt-9u-HeM"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="0m9-lT-YBC" firstAttribute="centerX" secondItem="72j-dg-2HE" secondAttribute="centerX" id="4DC-2F-9bb"/>
                             <constraint firstItem="wV5-nd-x5e" firstAttribute="centerX" secondItem="72j-dg-2HE" secondAttribute="centerX" id="5Zb-Jx-hOx"/>
                             <constraint firstItem="bqt-9u-HeM" firstAttribute="trailing" secondItem="dxO-YY-JlX" secondAttribute="trailing" id="F6Q-TY-hTb"/>
                             <constraint firstItem="dxO-YY-JlX" firstAttribute="top" secondItem="wV5-nd-x5e" secondAttribute="bottom" constant="110" id="Nm6-yx-USR"/>
@@ -103,7 +91,6 @@
                             <constraint firstItem="FlY-ZQ-tEl" firstAttribute="centerY" secondItem="Iro-3g-pM1" secondAttribute="centerY" id="clk-5e-X1S"/>
                             <constraint firstItem="Iro-3g-pM1" firstAttribute="top" secondItem="dxO-YY-JlX" secondAttribute="bottom" constant="14" id="iPJ-RE-U2h"/>
                             <constraint firstItem="dxO-YY-JlX" firstAttribute="leading" secondItem="bqt-9u-HeM" secondAttribute="leading" id="jXP-I4-SL7"/>
-                            <constraint firstItem="0m9-lT-YBC" firstAttribute="top" secondItem="FlY-ZQ-tEl" secondAttribute="bottom" constant="25" id="ot6-XL-pb1"/>
                             <constraint firstItem="f2y-Aa-VDr" firstAttribute="top" secondItem="bqt-9u-HeM" secondAttribute="top" constant="195" id="pqF-2d-T1b"/>
                             <constraint firstItem="hzd-tu-vfr" firstAttribute="centerX" secondItem="72j-dg-2HE" secondAttribute="centerX" id="t7M-ii-NLu"/>
                             <constraint firstItem="Iro-3g-pM1" firstAttribute="centerX" secondItem="72j-dg-2HE" secondAttribute="centerX" multiplier="1.2" id="uef-Ci-Asj"/>
@@ -115,7 +102,6 @@
                     <navigationItem key="navigationItem" id="6Nt-gF-19b"/>
                     <connections>
                         <outlet property="appleLoginBtn" destination="Iro-3g-pM1" id="0ha-bm-A4A"/>
-                        <outlet property="goToLoginBtn" destination="0m9-lT-YBC" id="9Tg-pu-8Wp"/>
                         <outlet property="googleLoginBtn" destination="FlY-ZQ-tEl" id="Eec-Lf-Nej"/>
                         <outlet property="startPochak" destination="dxO-YY-JlX" id="v9v-43-Q5j"/>
                     </connections>
