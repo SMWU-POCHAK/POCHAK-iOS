@@ -10,9 +10,10 @@ import Alamofire
 struct HomeDataService {
     static let shared = HomeDataService()
     
-    let header: HTTPHeaders = ["Authorization": APIConstants.dayeonToken,
-                 "Content-type": "application/json"
-                 ]
+    let header: HTTPHeaders = [
+        "Authorization": GetToken.getAccessToken(),
+        "Content-type": "application/json"
+    ]
     
     func getHomeData(page: Int, completion: @escaping (NetworkResult<Any>) -> Void){
         let parameters: Parameters = [ "page": page ]

@@ -12,9 +12,10 @@ struct PostDataService{
     // shared를 통해 여러 VC가 같은 인스턴스에 접근 가능
     static let shared = PostDataService()
     
-    let header: HTTPHeaders = ["Authorization": APIConstants.dayeonToken,
-                 "Content-type": "application/json"
-                 ]
+    let header: HTTPHeaders = [
+        "Authorization": GetToken.getAccessToken(),
+        "Content-type": "application/json"
+    ]
     
     // 포스트 상세 페이지 가져오기
     // completion 클로저를 @escaping closure로 정의

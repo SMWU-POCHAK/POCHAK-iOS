@@ -31,8 +31,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     
     var receivedPostId: Int?
     var postOwnerHandle: String = ""  // 나중에 여기저기에서 사용할 수 있도록.. 미리 게시자 아이디 저장
-    
-    let pullDownMenuBtn = UIButton()
+    var parentVC: UIViewController?  // 포스트 상세 뷰컨트롤러를 띄운 부모 뷰컨트롤러
     
     private var isFollowingColor: UIColor = UIColor(named: "gray03") ?? UIColor(hexCode: "FFB83A")
     private var isNotFollowingColor: UIColor = UIColor(named: "yellow00") ?? UIColor(hexCode: "C6CDD2")
@@ -238,6 +237,9 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
                 }
                 // 바뀐 데이터 반영 위해 다시 포스트 상세 데이터 로드
                 self.loadPostDetailData()
+                
+                // 팔로잉 혹은 취소하면 홈탭에서 보여주는게 달라져야함
+//                Home.UserFollowChanged = true
             case .requestErr(let message):
                 print("requestErr", message)
             case .pathErr:
@@ -306,7 +308,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         label.sizeToFit()
         
         // TODO: - handle 수정
-        let cellCount = (postOwnerHandle == APIConstants.dayeonHandle) ? 3 : 2
+        let cellCount = (postOwnerHandle == UserDefaultsManager.getData(type: String.self, forKey: .handle)) ? 3 : 2
         let height = label.frame.height + CGFloat(36 + 16 + 48 * cellCount)
         let fraction = UISheetPresentationController.Detent.custom { context in
             height
