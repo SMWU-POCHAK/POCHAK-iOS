@@ -86,7 +86,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="apple_login"/>
                                 <connections>
-                                    <action selector="tempJoinAction:" destination="OU9-gK-Rev" eventType="touchUpInside" id="6ed-S9-NFs"/>
+                                    <action selector="appleLoginAction:" destination="OU9-gK-Rev" eventType="touchUpInside" id="7gi-sk-4hK"/>
                                 </connections>
                             </button>
                         </subviews>

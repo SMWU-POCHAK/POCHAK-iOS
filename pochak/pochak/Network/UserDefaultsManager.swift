@@ -13,6 +13,7 @@ class UserDefaultsManager {
         case name
         case email
         case socialType
+        case socialRefreshToken
         case isNewMember
         case handle
         case message
