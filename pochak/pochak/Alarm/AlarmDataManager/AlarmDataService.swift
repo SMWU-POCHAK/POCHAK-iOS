@@ -45,7 +45,7 @@ class AlarmDataService{
     
     func postTagAccept(tagId: Int, isAccept: Bool, completion: @escaping (NetworkResult<Any>) -> Void){
         // header 있는 자리!
-        let header : HTTPHeaders = ["Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkeHh5bm5pIiwicm9sZSI6IlJPTEVfVVNFUiIsImlhdCI6MTcwNTYyMDMwOCwiZXhwIjoxNzgzMzgwMzA4fQ.2u1cQI59e1n9yPEeCiJxuocU6CR9eMIPRTfJgkFJzX4", "Content-type": "application/json"]
+        let header : HTTPHeaders = ["Authorization": APIConstants.suyeonToken, "Content-type": "application/json"]
         
         let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/tags/\(tagId)?isAccept=\(isAccept)",
                                     method: .post,

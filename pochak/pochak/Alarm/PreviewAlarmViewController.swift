@@ -19,7 +19,7 @@ class PreviewAlarmViewController : UIViewController {
     var acceptButtonAction: (() -> Void)?
     var refuseButtonAction: (() -> Void)?
 
-    var taggedUserHandle : [String]
+    var taggedUserHandle : [String] = []
     var pochakUserHandle : String?
     var profileImgUrl : String?
     var postImgUrl : String?
@@ -45,7 +45,8 @@ class PreviewAlarmViewController : UIViewController {
     }
     
     private func setupData(){
-        self.postImageView.load(url: profileImgUrl)
+        configure(imageview: self.postImageView, with: profileImgUrl ?? "")
+       
 //        for handle in taggedUserHandle {
 //            if(handle == taggedUserHandle.last){
 //                self.taggedUsers.text! != handle + " 님"
@@ -54,18 +55,17 @@ class PreviewAlarmViewController : UIViewController {
 //                self.taggedUsers.text! != handle + " 님 • "
 //            }
 //        }
-        self.taggedUsers.text = self.taggedUserHandle +
-        self.pochakUser.text = self.pochakUserHandle + "님이 포착"
-        self.postImageView.load(url: postImgUrl)
+        self.pochakUser.text = (self.pochakUserHandle ?? "사용자") + "님이 포착"
+        configure(imageview: self.postImageView, with: postImgUrl ?? "")
     }
     
-    func configure(with imageUrl: String) {
+    func configure(imageview : UIImageView,with imageUrl: String) {
         if let url = URL(string: imageUrl) {
-            profileImageView.kf.setImage(with: url) { result in
+            imageview.kf.setImage(with: url) { result in
                 switch result {
                 case .success(let value):
                     print("Image successfully loaded: \(value.image)")
-                    self.profileImageView.contentMode = .scaleAspectFill
+                    imageview.contentMode = .scaleAspectFill
 
                 case .failure(let error):
                     print("Image failed to load with error: \(error.localizedDescription)")

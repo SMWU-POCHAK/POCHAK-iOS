@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AlarmViewController: UIViewController {
+class AlarmViewController: UIViewController, UISheetPresentationControllerDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -15,6 +15,8 @@ class AlarmViewController: UIViewController {
     private var alarmDataResponse: AlarmResponse!
     private var alarmDataResult: AlarmResult!
     private var alarmList: [AlarmElementList]! = []
+    
+    private let alarmStoryBoard = UIStoryboard(name: "AlarmTab", bundle: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,11 +37,6 @@ class AlarmViewController: UIViewController {
         collectionView.dataSource = self
         
         //cell 등록
-        collectionView.register(UINib(
-            nibName: "AlarmCollectionViewCell",
-            bundle: nil),
-            forCellWithReuseIdentifier: AlarmCollectionViewCell.identifier)
-        
         collectionView.register(UINib(
             nibName: "OtherCollectionViewCell",
             bundle: nil),
@@ -112,14 +109,14 @@ extension AlarmViewController: UICollectionViewDelegate, UICollectionViewDataSou
             cell.previewBtnAction = {
                // Handle accept button tap
             
-                let previewAlarmVC = postStoryBoard.instantiateViewController(withIdentifier: "PreviewAlarmVC") as! PreviewAlarmViewController
+                let previewAlarmVC = self.alarmStoryBoard.instantiateViewController(withIdentifier: "PreviewAlarmVC") as! PreviewAlarmViewController
                 
                 previewAlarmVC.modalPresentationStyle = .pageSheet
-                previewAlarmVC.tagId = alarmList[indexPath.item].tagId
+                previewAlarmVC.tagId = self.alarmList[indexPath.item].tagId
 //                previewAlarmVC.taggedUserHandle = alarmList[indexPath.item].han
-                previewAlarmVC.pochakUserHandle = alarmList[indexPath.item].ownerHandle
-                previewAlarmVC.profileImgUrl = alarmList[indexPath.item].ownerProfileImage
-                previewAlarmVC.postImgUrl = alarmList[indexPath.item].postImagemo
+                previewAlarmVC.pochakUserHandle = self.alarmList[indexPath.item].ownerHandle
+                previewAlarmVC.profileImgUrl = self.alarmList[indexPath.item].ownerProfileImage
+                previewAlarmVC.postImgUrl = self.alarmList[indexPath.item].postImage
                 
                 // half sheet
                 if let sheet = previewAlarmVC.sheetPresentationController {
@@ -128,7 +125,7 @@ extension AlarmViewController: UICollectionViewDelegate, UICollectionViewDataSou
                     sheet.prefersGrabberVisible = true
                 }
                         
-                present(previewAlarmVC, animated: true)
+                self.present(previewAlarmVC, animated: true)
             }
     
             return cell
@@ -215,7 +212,7 @@ extension AlarmViewController: UICollectionViewDelegate, UICollectionViewDataSou
             return cell
         }
         else{
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AlarmCollectionViewCell.identifier, for: indexPath) as? AlarmCollectionViewCell else{
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OtherCollectionViewCell.identifier, for: indexPath) as? OtherCollectionViewCell else{
                         fatalError("셀 타입 캐스팅 실패")
             }
             return cell
