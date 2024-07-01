@@ -20,7 +20,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     @IBOutlet weak var postOwnerHandleLabel: UILabel!
     @IBOutlet weak var postContent: UILabel!
     @IBOutlet weak var taggedUsers: UILabel!
-    @IBOutlet weak var pochakUser: UILabel!
+    @IBOutlet weak var pochakUserLabel: UILabel!
     
     @IBOutlet weak var borderLineView: UIView!
     @IBOutlet weak var commentUserHandleLabel: UILabel!
@@ -76,8 +76,10 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         profileImageView.addGestureRecognizer(setGestureRecognizer())
         postOwnerHandleLabel.isUserInteractionEnabled = true
         postOwnerHandleLabel.addGestureRecognizer(setGestureRecognizer())
-        pochakUser.isUserInteractionEnabled = true
-        pochakUser.addGestureRecognizer(setGestureRecognizer())
+        pochakUserLabel.isUserInteractionEnabled = true
+        pochakUserLabel.addGestureRecognizer(setGestureRecognizer())
+        commentUserHandleLabel.isUserInteractionEnabled = true
+        commentUserHandleLabel.addGestureRecognizer(setGestureRecognizer())
         
         self.followingBtn.setTitleColor(UIColor.white, for: [.normal, .selected])
         self.followingBtn.setTitle("팔로우", for: .normal)
@@ -137,7 +139,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         }
         
         // TODO: 태그된 사용자에 프로필 이동 제스쳐 등록하기
-        self.pochakUser.text = postDataResult.ownerHandle + "님이 포착"
+        self.pochakUserLabel.text = postDataResult.ownerHandle + "님이 포착"
         
         // 포스트 내용
         self.postOwnerHandleLabel.text = postDataResult.ownerHandle
@@ -191,9 +193,8 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         }
     }
     
-    func setGestureRecognizer() -> UITapGestureRecognizer {
+    private func setGestureRecognizer() -> UITapGestureRecognizer {
         let moveToOthersProfile = UITapGestureRecognizer(target: self, action: #selector(moveToOthersProfile))
-        
         return moveToOthersProfile
     }
     
@@ -293,17 +294,35 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     // 프로필 이미지나 아이디 클릭 시 해당 사용자 프로필로 이동
     @objc func moveToOthersProfile(sender: UITapGestureRecognizer){
         print("move to other's profile")
-//        let storyboard = UIStoryboard(name: "ProfileTab", bundle: nil)
-//        let profileTabVC = storyboard.instantiateViewController(withIdentifier: "ProfileTabVC") as! ProfileTabViewController
-//        
-//        self.navigationController?.pushViewController(profileTabVC, animated: true)
-        //commentVC.postId = tempPostId
-        //commentVC.postUserHandle = postDataResult.postOwnerHandle
+        print(sender.view)
         
+        let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
         
-        //postVC.receivedData = imageArray[indexPath.item].partitionKey!.replacingOccurrences(of: "#", with: "%23")
+        if sender.view == profileImageView || sender.view == pochakUserLabel || sender.view == postOwnerHandleLabel {
+            // 만약 내 게시물이라면
+            if postOwnerHandle == UserDefaultsManager.getData(type: String.self, forKey: .handle) {
+                self.tabBarController?.selectedIndex = 4
+            }
+            // 다른 사람 게시물이라면
+            else {
+                guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
+                otherUserProfileVC.recievedHandle = postOwnerHandle
+                self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
+            }
+        }
         
-        //present(profileTabVC, animated: true)
+        else if sender.view == commentUserHandleLabel {
+            if commentUserHandleLabel.text == UserDefaultsManager.getData(type: String.self, forKey: .handle) {
+                self.tabBarController?.selectedIndex = 4
+            }
+            else {
+                guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
+                otherUserProfileVC.recievedHandle = commentUserHandleLabel.text
+                self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
+            }
+        }
+        
+        // TODO: 포착된 유저에 대해 제스쳐 등록해야 함!!!!
     }
     
     @objc func moreActionButtonDidTap(){
