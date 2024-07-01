@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -96,7 +96,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="실시간 인기 포스트" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pmz-HU-PyW">
-                                <rect key="frame" x="20" y="178" width="134.66666666666666" height="21"/>
+                                <rect key="frame" x="20" y="178" width="133" height="21"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -290,17 +290,18 @@
                                             <stackView opaque="NO" contentMode="scaleAspectFit" alignment="top" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="zk6-cZ-Xnd" userLabel="Content Stack View">
                                                 <rect key="frame" x="20" y="549.66666666666663" width="238" height="50.333333333333371"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Kyle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DiP-WD-doD">
-                                                        <rect key="frame" x="0.0" y="0.0" width="26.666666666666668" height="17"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Kyle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DiP-WD-doD">
+                                                        <rect key="frame" x="0.0" y="0.0" width="28.333333333333332" height="17"/>
                                                         <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="14"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="광합성 잘하는 잘잘씨 광합성 잘하는 잘잘씨 광합성 잘하는 잘잘씨 광합성 잘하는 잘잘씨 짱!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wZB-Xn-bjF">
-                                                        <rect key="frame" x="38.666666666666671" y="0.0" width="199.33333333333331" height="50.333333333333336"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="광합성 잘하는 잘잘씨 광합성 잘하는 잘잘씨 광합성 잘하는 잘잘씨 광합성 잘하는 잘잘씨 짱!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wZB-Xn-bjF">
+                                                        <rect key="frame" x="40.333333333333329" y="0.0" width="197.66666666666669" height="50.333333333333336"/>
                                                         <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="14"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
+                                                        <lineBreakStrategy key="lineBreakStrategy" hangulWordPriority="YES"/>
                                                     </label>
                                                 </subviews>
                                             </stackView>
@@ -429,7 +430,7 @@
                         <outlet property="moreCommentButton" destination="JWP-Of-QNZ" id="dPU-of-3Mo"/>
                         <outlet property="pochakUser" destination="gI1-I5-NSd" id="EE6-b3-PgP"/>
                         <outlet property="postContent" destination="wZB-Xn-bjF" id="KTa-Pe-TAg"/>
-                        <outlet property="postImage" destination="9aE-qJ-kQ5" id="XfM-hX-1KM"/>
+                        <outlet property="postImageView" destination="9aE-qJ-kQ5" id="XfM-hX-1KM"/>
                         <outlet property="postOwnerHandleLabel" destination="DiP-WD-doD" id="kar-iA-aSf"/>
                         <outlet property="profileImageView" destination="g1Z-gd-DZE" id="juV-dt-dkX"/>
                         <outlet property="scrollView" destination="aPT-RR-Xxk" id="yYS-Pd-SxV"/>

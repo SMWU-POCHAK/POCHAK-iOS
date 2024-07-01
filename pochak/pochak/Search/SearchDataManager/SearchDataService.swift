@@ -14,7 +14,7 @@ class SearchDataService{
     
     func getIdSearch(keyword:String,completion: @escaping(NetworkResult<Any>) -> Void){
         let parameters: [String: Any] = ["keyword": keyword]
-        let header : HTTPHeaders = ["Authorization": APIConstants.dayeonToken,
+        let header : HTTPHeaders = ["Authorization": APIConstants.suyeonToken,
                                     "Content-type": "application/json"
                                     ]
         print("==getIdSearch==")

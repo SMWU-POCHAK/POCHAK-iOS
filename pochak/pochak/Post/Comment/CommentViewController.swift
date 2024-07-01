@@ -75,15 +75,9 @@ class CommentViewController: UIViewController {
     
     // MARK: - Functions
     
-    // TODO: 바깥 영역 터치 시 키보드 안 내려가는 문제 해결 필요
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
-        self.tableView.endEditing(true)
-        self.commentView.endEditing(true)
-        self.noCommentView.endEditing(true)
         self.commentTextField.endEditing(true)
-//        view.resignFirstResponder()
-        tableView.keyboardDismissMode = .onDrag
     }
     
     func loadCommentData(){
@@ -150,16 +144,8 @@ class CommentViewController: UIViewController {
     }
     
     private func initUI() {
-        // 사용자 프로필 이미지
         if let url = URL(string: profileImageUrl) {
-            self.userProfileImageView.kf.setImage(with: url) { result in
-                switch result {
-                case .success(let value):
-                    print("Image successfully loaded: \(value.image)")
-                case .failure(let error):
-                    print("Image failed to load with error: \(error.localizedDescription)")
-                }
-            }
+            userProfileImageView.load(url: url)
         }
         
         if noComment {
@@ -184,19 +170,19 @@ class CommentViewController: UIViewController {
         // 여러 개의 셀 선택 안되도록 설정
         tableView.allowsMultipleSelection = false
         
+        // 키보드 내릴 수 있게
+        tableView.keyboardDismissMode = .onDrag
+        
         // nib은 CommentTableViewCell << 이 파일임
-        let commentNib = UINib(nibName: "CommentTableViewCell", bundle: nil)
-        tableView.register(commentNib, forCellReuseIdentifier: "CommentTableViewCell")  // tableview에 이 cell을 등록
+        let commentNib = UINib(nibName: CommentTableViewCell.identifier, bundle: nil)
+        tableView.register(commentNib, forCellReuseIdentifier: CommentTableViewCell.identifier)  // tableview에 이 cell을 등록
         
         // 테이블뷰에 ReplyTableViewCell 등록
-        let replyNib = UINib(nibName: "ReplyTableViewCell", bundle: nil)
-        tableView.register(replyNib, forCellReuseIdentifier: "ReplyTableViewCell")
+        let replyNib = UINib(nibName: ReplyTableViewCell.identifier, bundle: nil)
+        tableView.register(replyNib, forCellReuseIdentifier: ReplyTableViewCell.identifier)
         
         // 테이블뷰에 footer view nib 등록
-        tableView.register(UINib(nibName: "CommentTableViewFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "CommentTableViewFooterView")
-        
-        // 댓글이 없을 때의 셀
-        tableView.register(UINib(nibName: "NoCommentTableViewCell", bundle: nil), forCellReuseIdentifier: "NoCommentTableViewCell")
+        tableView.register(UINib(nibName: CommentTableViewFooterView.identifier, bundle: nil), forHeaderFooterViewReuseIdentifier: CommentTableViewFooterView.identifier)
     }
     
     public func toUICommentData(){
@@ -218,15 +204,6 @@ class CommentViewController: UIViewController {
             let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
                 return
             }
-        // 키보드의 높이
-        // let keyboardHeight = keyboardFrame.size.height
-        // 댓글 입력 View 높이
-        // let commentViewHeight = commentView.frame.height
-
-        // 댓글입력view의 bottom constraint를 키보드 높이만큼 (홈버튼 없는 아이폰?)
-        //CommentInputViewBottomConstraint.constant = keyboardHeight - self.view.safeAreaInsets.bottom
-        // 스크롤뷰 오프셋을 키보드높이+댓글입력view 로 설정해서 스크롤뷰 내용이 다 보일 수 있도록
-        //tableView.contentOffset.y = keyboardHeight + commentViewHeight
         
         // 홈 버튼 없는 아이폰들은 다 빼줘야함. (키보드 높이 - ....?)
         let finalHeight = keyboardFrame.size.height - self.view.safeAreaInsets.bottom
@@ -341,7 +318,7 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
         
         // 부모 댓글인 경우
         if cellData[finalIndex].isParent {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as? CommentTableViewCell else{
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CommentTableViewCell.identifier, for: indexPath) as? CommentTableViewCell else{
                 return UITableViewCell()
             }
             cell.editingCommentTextField = self.commentTextField
@@ -353,7 +330,7 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
         }
         // 자식 댓글인 경우
         else{
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyTableViewCell", for: indexPath)
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ReplyTableViewCell.identifier, for: indexPath)
                     as? ReplyTableViewCell else{
                 return UITableViewCell()
             }
@@ -368,8 +345,7 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
     // 더 보여줄 대댓글이 있을 때 대댓글 더보기 버튼이 있는 footer
     // footer cell 등록, 보여주기
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier:
-                      "CommentTableViewFooterView") as! CommentTableViewFooterView
+        let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CommentTableViewFooterView.identifier) as! CommentTableViewFooterView
         // footer에게 CommentViewController 전달
         footerView.commentVC = self
         footerView.postId = self.postId
@@ -395,18 +371,6 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
-    // 현재는 cell의 높이가 고정되어 있기 때문에 제대로 안 보임 -> height 다시 설정
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        // 스토리 테이블뷰 셀의 높이
-//        if indexPath.row == 0 {
-//            return 80
-//        }
-//        // 피드 테이블뷰 셀의 높이
-//        else{
-//            return 600
-//        }
-//    }
     
     // 이상한 여백 제거?
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

@@ -8,7 +8,13 @@
 import UIKit
 
 class CancelViewCell: UITableViewCell {
-
+    
+    // MARK: - Properties
+    
+    static let identifier = "CancelViewCell"
+    
+    // MARK: - Init
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

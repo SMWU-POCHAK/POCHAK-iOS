@@ -20,6 +20,8 @@ class CommentTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
+    static let identifier = "CommentTableViewCell"
+    
     var taggedId: String = ""
     var loggedinUserHandle: String?
     var commentVC: CommentViewController!
@@ -112,20 +114,9 @@ class CommentTableViewCell: UITableViewCell {
         self.commentId = comment.commentId
         
         // 프로필 이미지
-        let profileImgStr = comment.profileImage
-            let url = URL(string: profileImgStr)
-            // main thread에서 load할 경우 URL 로딩이 길면 화면이 멈춘다.
-            // 이를 방지하기 위해 다른 thread에서 처리함.
-            DispatchQueue.global().async { [weak self] in
-                if let data = try? Data(contentsOf: url!) {
-                    if let image = UIImage(data: data) {
-                        //UI 변경 작업은 main thread에서 해야함.
-                        DispatchQueue.main.async {
-                            self?.profileImageView.image = image
-                        }
-                    }
-                }
-            }
+        if let url = URL(string: comment.profileImage) {
+            profileImageView.load(url: url)
+        }
         
         self.commentUserHandleLabel.text = comment.handle
         self.commentLabel.text = comment.content
