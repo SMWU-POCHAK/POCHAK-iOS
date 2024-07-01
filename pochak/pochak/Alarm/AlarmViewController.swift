@@ -112,13 +112,23 @@ extension AlarmViewController: UICollectionViewDelegate, UICollectionViewDataSou
             cell.previewBtnAction = {
                // Handle accept button tap
             
-                // 게시물로 이동
-                let postTabSb = UIStoryboard(name: "PostTab", bundle: nil)
-                guard let postVC = postTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
-                else { return }
+                let previewAlarmVC = postStoryBoard.instantiateViewController(withIdentifier: "PreviewAlarmVC") as! PreviewAlarmViewController
                 
-                postVC.receivedPostId = self.alarmList[indexPath.item].postId
-                self.navigationController?.pushViewController(postVC, animated: true)
+                previewAlarmVC.modalPresentationStyle = .pageSheet
+                previewAlarmVC.tagId = alarmList[indexPath.item].tagId
+//                previewAlarmVC.taggedUserHandle = alarmList[indexPath.item].han
+                previewAlarmVC.pochakUserHandle = alarmList[indexPath.item].ownerHandle
+                previewAlarmVC.profileImgUrl = alarmList[indexPath.item].ownerProfileImage
+                previewAlarmVC.postImgUrl = alarmList[indexPath.item].postImagemo
+                
+                // half sheet
+                if let sheet = previewAlarmVC.sheetPresentationController {
+                    sheet.detents = [.medium(), .large()]
+                    sheet.delegate = self
+                    sheet.prefersGrabberVisible = true
+                }
+                        
+                present(previewAlarmVC, animated: true)
             }
     
             return cell

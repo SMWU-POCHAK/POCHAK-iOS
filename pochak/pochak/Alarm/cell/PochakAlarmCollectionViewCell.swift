@@ -32,7 +32,6 @@ class PochakAlarmCollectionViewCell: UICollectionViewCell {
         img.layer.cornerRadius = 50/2
         
         previewBtn.layer.masksToBounds = true
-        previewBtn.layer.cornerRadius = 5
     }
     
     func configure(with imageUrl: String) {
