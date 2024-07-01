@@ -15,6 +15,7 @@ class MakeProfileViewController: UIViewController {
     let email = UserDefaultsManager.getData(type: String.self, forKey: .email) ?? "email not found"
     let socialType = UserDefaultsManager.getData(type: String.self, forKey: .socialType) ?? "socialType not found"
     let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
+    let socialRefreshToken = UserDefaultsManager.getData(type: String.self, forKey: .socialRefreshToken) ?? "is not apple login user"
 
     @IBOutlet weak var profileImg: UIButton!
     @IBOutlet weak var nameTextField: UITextField!
@@ -74,6 +75,7 @@ class MakeProfileViewController: UIViewController {
                                                message,
                                                socialId,
                                                socialType,
+                                               socialRefreshToken,
                                                profileImage,
                                                {resultData in
             
@@ -116,42 +118,8 @@ class MakeProfileViewController: UIViewController {
     }
     
     private func toHomeTabPage(){
-        let homeTabViewController = UIStoryboard(name: "HomeTab", bundle: nil).instantiateViewController(withIdentifier: "HomeTabViewController")
-        let postTabViewController = UIStoryboard(name: "PostTab", bundle: nil).instantiateViewController(withIdentifier: "PostTabViewController")
-        let cameraTabViewController = UIStoryboard(name: "CameraTab", bundle: nil).instantiateViewController(withIdentifier: "CameraViewController")
-        let alarmTabViewController = UIStoryboard(name: "AlarmTab", bundle: nil).instantiateViewController(withIdentifier: "AlarmViewController")
-        let myProfileViewController = UIStoryboard(name: "ProfileTab", bundle: nil).instantiateViewController(withIdentifier: "MyProfileTabVC")
-        
-        let homeNavController = UINavigationController(rootViewController: homeTabViewController)
-        let postNavController = UINavigationController(rootViewController: postTabViewController)
-        let cameraNavController = UINavigationController(rootViewController: cameraTabViewController)
-        let alarmNavController = UINavigationController(rootViewController: alarmTabViewController)
-        let myProfileNavController = UINavigationController(rootViewController: myProfileViewController)
         
         let tabBarController = CustomTabBarController()
-        tabBarController.setViewControllers([homeNavController, postNavController, cameraNavController, alarmNavController, myProfileNavController], animated: false)
-        
-        if let items = tabBarController.tabBar.items {
-            items[0].selectedImage = UIImage(named: "home_logo_fill")?.withRenderingMode(.alwaysOriginal)
-            items[0].image = UIImage(named: "home_logo")?.withRenderingMode(.alwaysOriginal)
-            items[0].title = "홈"
-            
-            items[1].selectedImage = UIImage(named:"post_fill")?.withRenderingMode(.alwaysOriginal)
-            items[1].image = UIImage(named:"post")?.withRenderingMode(.alwaysOriginal)
-            items[1].title = "게시글"
-            
-            items[2].selectedImage = UIImage(named:"pochak_fill")?.withRenderingMode(.alwaysOriginal)
-            items[2].image = UIImage(named:"pochak")?.withRenderingMode(.alwaysOriginal)
-            items[2].title = "카메라"
-            
-            items[3].selectedImage = UIImage(named:"alarm_fill")?.withRenderingMode(.alwaysOriginal)
-            items[3].image = UIImage(named:"alarm")?.withRenderingMode(.alwaysOriginal)
-            items[3].title = "알림"
-            
-            items[4].selectedImage = UIImage(named:"profile_fill")?.withRenderingMode(.alwaysOriginal)
-            items[4].image = UIImage(named:"profile")?.withRenderingMode(.alwaysOriginal)
-            items[4].title = "프로필"
-        }
         
         let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
         guard let delegate = sceneDelegate else {

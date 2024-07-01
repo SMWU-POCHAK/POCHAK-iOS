@@ -7,6 +7,7 @@
 
 import UIKit
 import GoogleSignIn
+import AuthenticationServices // 애플 로그인
 
 class SocialJoinViewController: UIViewController {
     
@@ -41,6 +42,7 @@ class SocialJoinViewController: UIViewController {
     }
     
     // MARK: - Google Login
+    
     @IBAction func googleLoginAction(_ sender: Any) {
         GIDSignIn.sharedInstance.signIn(withPresenting: self) { signInResult, error in
             guard error == nil else { return }
@@ -64,12 +66,23 @@ class SocialJoinViewController: UIViewController {
                 UserDefaultsManager.setData(value: email, key: .email)
                 UserDefaultsManager.setData(value: socialType, key: .socialType)
                 
-                self.changeViewControllerAccordingToisNewMemeberState(isNewMember, resultData)
+                self.changeViewControllerAccordingToisNewMemeberStateForGoogle(isNewMember, resultData)
             })
         }
     }
     
     // MARK: - Apple Login
+    
+    @IBAction func appleLoginAction(_ sender: Any) {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email] //유저로 부터 알 수 있는 정보들(name, email)
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
     
     // MARK: - Function
     
@@ -100,15 +113,35 @@ class SocialJoinViewController: UIViewController {
         startPochak.text = "로그인하기"
     }
     
-    private func changeViewControllerAccordingToisNewMemeberState(_ isNewMember : Bool, _ resultData : GoogleLoginModel){
+    private func changeViewControllerAccordingToisNewMemeberStateForGoogle(_ isNewMember : Bool, _ resultDataForGoogle : GoogleLoginModel){
         if isNewMember == true {
             // 프로필 설정 페이지로 이동
             guard let makeProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "MakeProfileVC") as? MakeProfileViewController else {return}
             self.navigationController?.pushViewController(makeProfileVC, animated: true)
         } else {
             // 이미 회원인 유저의 경우 토큰 정보 저장 @KeyChainManager
-            guard let accountAccessToken = resultData.accessToken else { return }
-            guard let accountRefreshToken = resultData.refreshToken else { return }
+            guard let accountAccessToken = resultDataForGoogle.accessToken else { return }
+            guard let accountRefreshToken = resultDataForGoogle.refreshToken else { return }
+            do {
+                try KeychainManager.save(account: "accessToken", value: accountAccessToken, isForce: false)
+                try KeychainManager.save(account: "refreshToken", value: accountRefreshToken, isForce: false)
+            } catch {
+                print(error)
+            }
+            // 홈탭으로 이동
+            toHomeTabPage()
+        }
+    }
+    
+    private func changeViewControllerAccordingToisNewMemeberStateForApple(_ isNewMember : Bool, _ resultDataForApple : AppleLoginModel){
+        if isNewMember == true {
+            // 프로필 설정 페이지로 이동
+            guard let makeProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "MakeProfileVC") as? MakeProfileViewController else {return}
+            self.navigationController?.pushViewController(makeProfileVC, animated: true)
+        } else {
+            // 이미 회원인 유저의 경우 토큰 정보 저장 @KeyChainManager
+            guard let accountAccessToken = resultDataForApple.accessToken else { return }
+            guard let accountRefreshToken = resultDataForApple.refreshToken else { return }
             do {
                 try KeychainManager.save(account: "accessToken", value: accountAccessToken, isForce: false)
                 try KeychainManager.save(account: "refreshToken", value: accountRefreshToken, isForce: false)
@@ -121,47 +154,88 @@ class SocialJoinViewController: UIViewController {
     }
     
     private func toHomeTabPage(){
-        let homeTabViewController = UIStoryboard(name: "HomeTab", bundle: nil).instantiateViewController(withIdentifier: "HomeTabViewController")
-        let postTabViewController = UIStoryboard(name: "PostTab", bundle: nil).instantiateViewController(withIdentifier: "PostTabViewController")
-        let cameraTabViewController = UIStoryboard(name: "CameraTab", bundle: nil).instantiateViewController(withIdentifier: "CameraViewController")
-        let alarmTabViewController = UIStoryboard(name: "AlarmTab", bundle: nil).instantiateViewController(withIdentifier: "AlarmViewController")
-        let myProfileViewController = UIStoryboard(name: "ProfileTab", bundle: nil).instantiateViewController(withIdentifier: "MyProfileTabVC")
-        
-        let homeNavController = UINavigationController(rootViewController: homeTabViewController)
-        let postNavController = UINavigationController(rootViewController: postTabViewController)
-        let cameraNavController = UINavigationController(rootViewController: cameraTabViewController)
-        let alarmNavController = UINavigationController(rootViewController: alarmTabViewController)
-        let myProfileNavController = UINavigationController(rootViewController: myProfileViewController)
         
         let tabBarController = CustomTabBarController()
-        tabBarController.setViewControllers([homeNavController, postNavController, cameraNavController, alarmNavController, myProfileNavController], animated: false)
-        
-        if let items = tabBarController.tabBar.items {
-            items[0].selectedImage = UIImage(named: "home_logo_fill")?.withRenderingMode(.alwaysOriginal)
-            items[0].image = UIImage(named: "home_logo")?.withRenderingMode(.alwaysOriginal)
-            items[0].title = "홈"
-            
-            items[1].selectedImage = UIImage(named:"post_fill")?.withRenderingMode(.alwaysOriginal)
-            items[1].image = UIImage(named:"post")?.withRenderingMode(.alwaysOriginal)
-            items[1].title = "게시글"
-            
-            items[2].selectedImage = UIImage(named:"pochak_fill")?.withRenderingMode(.alwaysOriginal)
-            items[2].image = UIImage(named:"pochak")?.withRenderingMode(.alwaysOriginal)
-            items[2].title = "카메라"
-            
-            items[3].selectedImage = UIImage(named:"alarm_fill")?.withRenderingMode(.alwaysOriginal)
-            items[3].image = UIImage(named:"alarm")?.withRenderingMode(.alwaysOriginal)
-            items[3].title = "알림"
-            
-            items[4].selectedImage = UIImage(named:"profile_fill")?.withRenderingMode(.alwaysOriginal)
-            items[4].image = UIImage(named:"profile")?.withRenderingMode(.alwaysOriginal)
-            items[4].title = "프로필"
-        }
         
         let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
         guard let delegate = sceneDelegate else {
             return
         }
         delegate.window?.rootViewController = tabBarController
+    }
+}
+
+// MARK: - Apple Login Extension
+extension SocialJoinViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding{
+  func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+    //로그인 성공
+        switch authorization.credential {
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            // You can create an account in your system.
+            let userIdentifier = appleIDCredential.user
+            let fullName = appleIDCredential.fullName
+            let email = appleIDCredential.email
+            
+            if  let authorizationCode = appleIDCredential.authorizationCode,
+                let identityToken = appleIDCredential.identityToken,
+                let authCodeString = String(data: authorizationCode, encoding: .utf8),
+                let identifyTokenString = String(data: identityToken, encoding: .utf8) {
+                print("authorizationCode: \(authorizationCode)")
+                print("identityToken: \(identityToken)")
+                print("authCodeString: \(authCodeString)")
+                print("identifyTokenString: \(identifyTokenString)")
+                
+                // API request : POST
+                AppleLoginDataManager.shared.appleLoginDataManager(identifyTokenString, authCodeString, {resultData in
+                    
+                    // 사용자 기본 데이터 저장 : id / name / email / socialType / isNewMember
+                    guard let socialId = resultData.id else { return }
+                    guard let name = resultData.name else {return }
+                    guard let email = resultData.email else { return }
+                    guard let socialType = resultData.socialType else { return }
+                    guard let isNewMember = resultData.isNewMember else { return }
+                    guard let socialRefreshToken = resultData.refreshToken else {return}
+                    
+                    UserDefaultsManager.setData(value: socialId, key: .socialId)
+                    UserDefaultsManager.setData(value: name, key: .name)
+                    UserDefaultsManager.setData(value: email, key: .email)
+                    UserDefaultsManager.setData(value: socialType, key: .socialType)
+                    UserDefaultsManager.setData(value: socialRefreshToken, key: .socialRefreshToken)
+                    
+                    self.changeViewControllerAccordingToisNewMemeberStateForApple(isNewMember, resultData)
+                })
+                
+            }
+            
+            print("useridentifier: \(userIdentifier)")
+            print("fullName: \(fullName)")
+            print("email: \(email)")
+            
+            //Move to MainPage
+            //let validVC = SignValidViewController()
+            //validVC.modalPresentationStyle = .fullScreen
+            //present(validVC, animated: true, completion: nil)
+            
+        case let passwordCredential as ASPasswordCredential:
+            // Sign in using an existing iCloud Keychain credential.
+            let username = passwordCredential.user
+            let password = passwordCredential.password
+            
+            print("username: \(username)")
+            print("password: \(password)")
+            
+        default:
+            break
+        }
+    }
+    
+
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        // 로그인 실패(유저의 취소도 포함)
+        print("login failed - \(error.localizedDescription)")
     }
 }
