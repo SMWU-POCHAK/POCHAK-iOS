@@ -44,9 +44,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             // 로그인 안된 상태
             print("scene delegate login not yet!")
 
-            let socialJoinViewController = storyboard.instantiateViewController(withIdentifier: "SocialJoinVC")
+            let mainNavigationVC = storyboard.instantiateViewController(withIdentifier: "NavigationVC")
             
-            window?.rootViewController = socialJoinViewController
+            window?.rootViewController = mainNavigationVC
             window?.makeKeyAndVisible()
             
         }

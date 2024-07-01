@@ -19,19 +19,26 @@ struct JoinDataManager {
                          _ message : String,
                          _ socialId : String,
                          _ socialType : String,
+                         _ socialRefreshToken : String,
                          _ profileImage : UIImage?,
                          _ completion: @escaping (JoinDataModel) -> Void) {
         
-        let requestBody : [String : Any] = [
+        var requestBody : [String : Any] = [
             "name" : name,
             "email" : email,
             "handle" : handle,
             "message" : message,
             "socialId" : socialId,
             "socialType" : socialType
-//            "socialRefreshToken" :
         ]
         
+        if socialRefreshToken == "NOTAPPLELOGIN" {
+            return
+        } else {
+            requestBody.updateValue(socialRefreshToken, forKey: "socialRefreshToken")
+        }
+        
+        print("requestBody : \(requestBody)")
         print("join url : \(url)")
     
         let header : HTTPHeaders = ["Content-type": "multipart/form-data"]

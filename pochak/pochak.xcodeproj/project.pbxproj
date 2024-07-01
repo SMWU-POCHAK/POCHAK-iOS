@@ -71,6 +71,8 @@
 		374261702C30917600B67886 /* BlockDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3742616F2C30917600B67886 /* BlockDataModel.swift */; };
 		374261722C3092B100B67886 /* UnblockDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374261712C3092B100B67886 /* UnblockDataManager.swift */; };
 		374261742C3092B900B67886 /* UnblockDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374261732C3092B900B67886 /* UnblockDataModel.swift */; };
+		374261782C31C6ED00B67886 /* AppleLoginDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374261772C31C6ED00B67886 /* AppleLoginDataManager.swift */; };
+		3742617A2C31C6F900B67886 /* AppleLoginDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374261792C31C6F900B67886 /* AppleLoginDataModel.swift */; };
 		3747E9722BF3827500364BED /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3747E9712BF3827500364BED /* SettingsViewController.swift */; };
 		3769D6AF2B3C2FD500294CD1 /* GoogleLoginDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6AE2B3C2FD500294CD1 /* GoogleLoginDataManager.swift */; };
 		3769D6B22B3C300D00294CD1 /* GoogleLoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6B12B3C300D00294CD1 /* GoogleLoginModel.swift */; };
@@ -250,6 +252,9 @@
 		3742616F2C30917600B67886 /* BlockDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockDataModel.swift; sourceTree = "<group>"; };
 		374261712C3092B100B67886 /* UnblockDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockDataManager.swift; sourceTree = "<group>"; };
 		374261732C3092B900B67886 /* UnblockDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockDataModel.swift; sourceTree = "<group>"; };
+		374261752C31C23800B67886 /* pochakDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = pochakDebug.entitlements; sourceTree = "<group>"; };
+		374261772C31C6ED00B67886 /* AppleLoginDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginDataManager.swift; sourceTree = "<group>"; };
+		374261792C31C6F900B67886 /* AppleLoginDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginDataModel.swift; sourceTree = "<group>"; };
 		3747E9712BF3827500364BED /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		3769D6AE2B3C2FD500294CD1 /* GoogleLoginDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginDataManager.swift; sourceTree = "<group>"; };
 		3769D6B12B3C300D00294CD1 /* GoogleLoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginModel.swift; sourceTree = "<group>"; };
@@ -587,6 +592,7 @@
 			children = (
 				373815152A89E6D30032066A /* SocialJoinViewController.swift */,
 				376F125A2A8B7440005F469B /* SocialLoginViewController.swift */,
+				374261762C31C6CD00B67886 /* AppleLogin */,
 				3769D6AD2B3C2FA800294CD1 /* GoogleLoginDataManager */,
 				3769D6AC2B3C2F9900294CD1 /* JoinDataManager */,
 			);
@@ -621,6 +627,15 @@
 				374261732C3092B900B67886 /* UnblockDataModel.swift */,
 			);
 			path = BlockAPI;
+			sourceTree = "<group>";
+		};
+		374261762C31C6CD00B67886 /* AppleLogin */ = {
+			isa = PBXGroup;
+			children = (
+				374261772C31C6ED00B67886 /* AppleLoginDataManager.swift */,
+				374261792C31C6F900B67886 /* AppleLoginDataModel.swift */,
+			);
+			path = AppleLogin;
 			sourceTree = "<group>";
 		};
 		3769D6AC2B3C2F9900294CD1 /* JoinDataManager */ = {
@@ -850,6 +865,7 @@
 		EA1B0B592A49D23A00F86FBC /* pochak */ = {
 			isa = PBXGroup;
 			children = (
+				374261752C31C23800B67886 /* pochakDebug.entitlements */,
 				EA6306D62C2BFE44000DB0A7 /* Tabbar */,
 				08C02EF32BF3942300627C21 /* Extensions */,
 				3769D6B72B3C342900294CD1 /* Profile */,
@@ -1290,8 +1306,10 @@
 				373235542B692C6D0042EF94 /* DeleteFollowerDataManager.swift in Sources */,
 				08DD9EC42B454405004CCD5F /* FollowDataService.swift in Sources */,
 				371D33782B4E83E90084FF6A /* UserDefaultsManager.swift in Sources */,
+				3742617A2C31C6F900B67886 /* AppleLoginDataModel.swift in Sources */,
 				373815162A89E6D30032066A /* SocialJoinViewController.swift in Sources */,
 				EA1289082B3B2823002EC93E /* AlarmDataModel.swift in Sources */,
+				374261782C31C6ED00B67886 /* AppleLoginDataManager.swift in Sources */,
 				0844D7EB2BF218A5001154AC /* ReportViewCell.swift in Sources */,
 				379A6A342B569DFA0087FAAC /* AuthenticationCredential.swift in Sources */,
 				0844649C2BF0F25900949850 /* PostMenuViewController.swift in Sources */,
@@ -1532,6 +1550,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = pochak/pochakDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = JU9BM2NXCW;
