@@ -121,7 +121,8 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
                 searchTextField.bottomAnchor.constraint(equalTo: searchContainerView.bottomAnchor)
             ])
             
-            searchTextField.heightAnchor.constraint(equalToConstant: self.searchContainerView.frame.height)
+            let textFieldHeightConstraint = searchTextField.heightAnchor.constraint(equalToConstant: searchContainerView.frame.height)
+            textFieldHeightConstraint.isActive = true
 
             searchTextFieldWidthConstraint = searchTextField.widthAnchor.constraint(equalToConstant: self.searchContainerView.frame.width)
             searchTextFieldWidthConstraint.isActive = true
@@ -133,7 +134,9 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
                 cancelButton.centerYAnchor.constraint(equalTo: searchTextField.centerYAnchor)
             ])
             
-            cancelButton.heightAnchor.constraint(equalToConstant: self.searchContainerView.frame.height)
+            let cancelButtonHeightConstraint = cancelButton.heightAnchor.constraint(equalTo: searchContainerView.heightAnchor)
+            cancelButtonHeightConstraint.isActive = true
+            
             
             cancelButtonLeadingConstraint = cancelButton.leadingAnchor.constraint(equalTo: searchTextField.trailingAnchor)
             cancelButtonLeadingConstraint.isActive = true
