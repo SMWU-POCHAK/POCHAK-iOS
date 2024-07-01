@@ -53,18 +53,14 @@ class SocialJoinViewController: UIViewController {
             print("googleLogin 시스템 안의 accessToken : \(accessToken)")
             GoogleLoginDataManager.shared.googleLoginDataManager(accessToken, {resultData in
                 
-                // 사용자 기본 데이터 저장 : id / name / email / socialType / isNewMember
-                guard let socialId = resultData.id else { return }
-                guard let name = resultData.name else {return }
-                guard let email = resultData.email else { return }
-                guard let socialType = resultData.socialType else { return }
+                print("GoogleLoginDataManager 안의 resultData : \(resultData)")
+                // 사용자 기본 데이터 저장 : socialId / name / email / socialType
+                UserDefaultsManager.setData(value: resultData.socialId, key: .socialId)
+                UserDefaultsManager.setData(value: resultData.name, key: .name)
+                UserDefaultsManager.setData(value: resultData.email, key: .email)
+                UserDefaultsManager.setData(value: resultData.socialType, key: .socialType)
+                
                 guard let isNewMember = resultData.isNewMember else { return }
-                
-                UserDefaultsManager.setData(value: socialId, key: .socialId)
-                UserDefaultsManager.setData(value: name, key: .name)
-                UserDefaultsManager.setData(value: email, key: .email)
-                UserDefaultsManager.setData(value: socialType, key: .socialType)
-                
                 self.changeViewControllerAccordingToisNewMemeberStateForGoogle(isNewMember, resultData)
             })
         }
@@ -90,31 +86,12 @@ class SocialJoinViewController: UIViewController {
         googleLoginBtn.layer.borderWidth = 1
         googleLoginBtn.layer.borderColor = UIColor(named: "gray02")?.cgColor
         appleLoginBtn.layer.cornerRadius = 30
-        
-//        // "이미 계정이 있으신가요?" 커스텀
-//        if let font = UIFont(name: "Pretendard-Bold", size: 16) {
-//            let customAttributes: [NSAttributedString.Key: Any] = [
-//                .font: font,
-//                .foregroundColor: UIColor.black,
-//                .underlineStyle: 1
-//            ]
-//            let attributedString = NSAttributedString(string: "이미 계정이 있으신가요?", attributes: customAttributes)
-//            goToLoginBtn.setAttributedTitle(attributedString, for: .normal)
-//        } else {return}
     }
-    
-//    @IBAction func goToLoginBtnTapped(_ sender: UIButton) {
-//        // "이미 계정이 있으신가요?" 없어지도록
-//        let aa = NSAttributedString(string: "")
-//        goToLoginBtn.setAttributedTitle(aa, for: .normal)
-//        
-//        // 포착 시작하기 -> 로그인하기로 변경
-//        startPochak.text = "로그인하기"
-//    }
     
     private func changeViewControllerAccordingToisNewMemeberStateForGoogle(_ isNewMember : Bool, _ resultDataForGoogle : GoogleLoginModel){
         if isNewMember == true {
             // 프로필 설정 페이지로 이동
+            print("I am inside VC")
             guard let makeProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "MakeProfileVC") as? MakeProfileViewController else {return}
             self.navigationController?.pushViewController(makeProfileVC, animated: true)
         } else {
@@ -192,32 +169,17 @@ extension SocialJoinViewController: ASAuthorizationControllerDelegate, ASAuthori
                 AppleLoginDataManager.shared.appleLoginDataManager(identifyTokenString, authCodeString, {resultData in
                     
                     // 사용자 기본 데이터 저장 : id / name / email / socialType / isNewMember
-                    guard let socialId = resultData.id else { return }
-                    guard let name = resultData.name else {return }
-                    guard let email = resultData.email else { return }
-                    guard let socialType = resultData.socialType else { return }
+                    UserDefaultsManager.setData(value: resultData.socialId, key: .socialId)
+                    UserDefaultsManager.setData(value: resultData.name, key: .name)
+                    UserDefaultsManager.setData(value: resultData.email, key: .email)
+                    UserDefaultsManager.setData(value: resultData.socialType, key: .socialType)
+                    UserDefaultsManager.setData(value: resultData.refreshToken, key: .socialRefreshToken)
+                    
                     guard let isNewMember = resultData.isNewMember else { return }
-                    guard let socialRefreshToken = resultData.refreshToken else {return}
-                    
-                    UserDefaultsManager.setData(value: socialId, key: .socialId)
-                    UserDefaultsManager.setData(value: name, key: .name)
-                    UserDefaultsManager.setData(value: email, key: .email)
-                    UserDefaultsManager.setData(value: socialType, key: .socialType)
-                    UserDefaultsManager.setData(value: socialRefreshToken, key: .socialRefreshToken)
-                    
                     self.changeViewControllerAccordingToisNewMemeberStateForApple(isNewMember, resultData)
                 })
                 
             }
-            
-            print("useridentifier: \(userIdentifier)")
-            print("fullName: \(fullName)")
-            print("email: \(email)")
-            
-            //Move to MainPage
-            //let validVC = SignValidViewController()
-            //validVC.modalPresentationStyle = .fullScreen
-            //present(validVC, animated: true, completion: nil)
             
         case let passwordCredential as ASPasswordCredential:
             // Sign in using an existing iCloud Keychain credential.

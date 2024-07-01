@@ -13,7 +13,7 @@ struct GoogleLoginResponse: Codable {
 }
 
 struct GoogleLoginModel : Codable {
-    var id : String?
+    var socialId : String?
     var name : String?
     var email : String?
     var socialType : String?

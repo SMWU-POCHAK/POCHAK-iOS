@@ -10,8 +10,8 @@ import Alamofire
 struct JoinDataManager {
     
     static let shared = JoinDataManager()
-    let accessToken = GetToken.getAccessToken()
-    let url = "\(APIConstants.baseURL)/api/v2/member/signup"
+    let url = "\(APIConstants.baseURL)/api/v2/members/signup"
+    let header : HTTPHeaders = ["Content-type": "multipart/form-data"]
     
     func joinDataManager(_ name : String,
                          _ email : String,
@@ -23,7 +23,7 @@ struct JoinDataManager {
                          _ profileImage : UIImage?,
                          _ completion: @escaping (JoinDataModel) -> Void) {
         
-        var requestBody : [String : Any] = [
+        var requestBody : [String : String] = [
             "name" : name,
             "email" : email,
             "handle" : handle,
@@ -32,8 +32,7 @@ struct JoinDataManager {
             "socialType" : socialType
         ]
         
-        if socialRefreshToken == "NOTAPPLELOGIN" {
-            return
+        if socialRefreshToken == "NOTAPPLELOGINUSER" {
         } else {
             requestBody.updateValue(socialRefreshToken, forKey: "socialRefreshToken")
         }
@@ -41,14 +40,15 @@ struct JoinDataManager {
         print("requestBody : \(requestBody)")
         print("join url : \(url)")
     
-        let header : HTTPHeaders = ["Content-type": "multipart/form-data"]
         
         AF.upload(multipartFormData: { multipartFormData in
-            //body 추가
+            // requestBody 추가
             for (key, value) in requestBody {
-                multipartFormData.append("\(value)".data(using: .utf8)!, withName: key)
+                if let valueData = value.data(using: .utf8) {
+                    multipartFormData.append(valueData, withName: key)
+                }
             }
-            //img 추가
+            // profileImage 추가
             if let image = profileImage?.jpegData(compressionQuality: 0.1) {
                 multipartFormData.append(image, withName: "profileImage", fileName: "image.jpg", mimeType: "image/jpeg")
             }
