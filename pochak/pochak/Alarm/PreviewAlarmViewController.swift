@@ -51,6 +51,13 @@ class PreviewAlarmViewController : UIViewController {
         setupUI()
     }
     
+    override func viewDidLayoutSubviews() {
+            super.viewDidLayoutSubviews()
+
+            // 모달 창의 높이 설정
+            preferredContentSize = CGSize(width: view.frame.width, height: postImageView.frame.maxY + 13)
+        }
+    
     private func setupAttribute(){
         self.profileImageView?.layer.cornerRadius = 50/2
     }
