@@ -47,6 +47,8 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     
     private let postStoryBoard = UIStoryboard(name: "PostTab", bundle: nil)
     
+    private var taggedUserList: [String] = []
+    
     // MARK: - lifecycle
     
     override func viewDidLoad() {
@@ -167,6 +169,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
                 self.postDataResponse = postData as? PostDataResponse
                 self.postDataResult = self.postDataResponse.result
                 self.postOwnerHandle = self.postDataResult.ownerHandle
+                self.taggedUserList = self.postDataResult.taggedMemberHandle
                 self.initUI()
             case .requestErr(let message):
                 print("requestErr", message)
@@ -193,7 +196,8 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         
         commentVC.modalPresentationStyle = .pageSheet
         commentVC.postId = receivedPostId
-        commentVC.postUserHandle = postDataResult.ownerHandle
+        commentVC.postOwnerHandle = postDataResult.ownerHandle
+        commentVC.taggedUserList = self.taggedUserList
         
         // half sheet
         if let sheet = commentVC.sheetPresentationController {

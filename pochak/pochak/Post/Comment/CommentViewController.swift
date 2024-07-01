@@ -17,7 +17,8 @@ class CommentViewController: UIViewController {
     
     // postVC에서 넘겨주는 값
     var postId: Int?
-    var postUserHandle: String?
+    var postOwnerHandle: String?
+    var taggedUserList: [String]?
     
     // 댓글 셀에서 받을 정보
     var isPostingChildComment: Bool = false
@@ -123,7 +124,7 @@ class CommentViewController: UIViewController {
                     self?.initUI()
                     
                     // title 내용 설정
-                    self?.titleLabel.text = (self?.postUserHandle ?? "사용자") + " 님의 게시물 댓글"
+                    self?.titleLabel.text = (self?.postOwnerHandle ?? "사용자") + " 님의 게시물 댓글"
                 }
                 else {
                     self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패했습니다."), animated: true)
@@ -325,6 +326,8 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
             cell.tableView = self.tableView
             cell.commentVC = self
             cell.postId = self.postId
+            cell.taggedUserList = self.taggedUserList
+            cell.postOwnerHandle = self.postOwnerHandle
             cell.setupData(cellData[finalIndex])
             return cell
         }
