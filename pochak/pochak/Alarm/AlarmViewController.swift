@@ -25,6 +25,7 @@ class AlarmViewController: UIViewController, UISheetPresentationControllerDelega
         
         // Do any additional setup after loading the view.
         setupTableView()
+        setRefreshControl()
         
         // 모달창 닫겼는지 확인
         NotificationCenter.default.addObserver(self, selector: #selector(loadAlarmData), name: Notification.Name("ModalDismissed"), object: nil)
@@ -34,7 +35,7 @@ class AlarmViewController: UIViewController, UISheetPresentationControllerDelega
     override func viewWillAppear(_ animated: Bool) {
         loadAlarmData()
     }
-    
+
     private func setupTableView() {
         // delegate 연결
         tableView.delegate = self
@@ -71,6 +72,23 @@ class AlarmViewController: UIViewController, UISheetPresentationControllerDelega
             }
         }
     }
+    
+    private func setRefreshControl(){
+        // UIRefreshControl 생성
+       let refreshControl = UIRefreshControl()
+       refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+
+       // 테이블 뷰에 UIRefreshControl 설정
+       tableView.refreshControl = refreshControl
+    }
+    
+    @objc private func refreshData(_ sender: Any) {
+        // 데이터 새로고침 완료 후 UIRefreshControl을 종료
+        self.loadAlarmData()
+        DispatchQueue.main.async {
+            self.tableView.refreshControl?.endRefreshing()
+        }
+    }
 }
 
 extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
@@ -80,7 +98,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("alarmList")
-        return self.alarmList.count ?? 0
+        return self.alarmList.count 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
