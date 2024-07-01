@@ -20,7 +20,7 @@ class AlarmViewController: UIViewController, UISheetPresentationControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-bold", size: 20)!]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-bold", size: 18)!]
         self.navigationItem.title = "알림"
         
         // Do any additional setup after loading the view.
