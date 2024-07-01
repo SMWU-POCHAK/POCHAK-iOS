@@ -117,7 +117,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             
             // Set up button actions
             cell.previewBtnClickAction = {
-               // Handle accept button tap
+                // Handle accept button tap
                 guard let tagId = self.alarmList[indexPath.row].tagId,
                       let ownerHandle = self.alarmList[indexPath.row].ownerHandle,
                       let ownerProfileImage = self.alarmList[indexPath.row].ownerProfileImage,
@@ -125,27 +125,31 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
                     print("One or more values are nil")
                     return
                 }
-
+                
                 let previewAlarmVC = self.alarmStoryBoard.instantiateViewController(withIdentifier: "PreviewAlarmVC") as! PreviewAlarmViewController
                 
-                print(tagId)
-                print(ownerHandle)
-                print(ownerProfileImage)
-                print(postImage)
-                
-                previewAlarmVC.modalPresentationStyle = .pageSheet
+                // 데이터 설정
                 previewAlarmVC.tagId = tagId
                 previewAlarmVC.pochakUserHandle = ownerHandle
                 previewAlarmVC.profileImgUrl = ownerProfileImage
                 previewAlarmVC.postImgUrl = postImage
-            
-                // half sheet
+                
+                // 모달 창의 presentation style을 .pageSheet로 설정합니다.
+                previewAlarmVC.modalPresentationStyle = .pageSheet
+                
+                // sheetPresentationController를 이용하여 detent 설정
                 if let sheet = previewAlarmVC.sheetPresentationController {
-                    sheet.detents = [.medium(), .large()]
-                    sheet.delegate = self
-                    sheet.prefersGrabberVisible = true
+                    sheet.detents = [
+                        .custom { _ in
+                            return previewAlarmVC.postImageView.frame.maxY + 13 // 원하는 높이를 반환
+                        }
+                    ]
+                    
+                    sheet.delegate = self // sheet의 delegate 설정
+                    sheet.prefersGrabberVisible = true // grabber(핸들) 표시 여부 설정
                 }
-                        
+                
+                // previewAlarmVC를 present하여 모달 창을 엽니다.
                 self.present(previewAlarmVC, animated: true)
             }
     
