@@ -120,6 +120,7 @@
 		EA0107B32A5ECB8A00A3AE85 /* PostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0107B12A5ECB8A00A3AE85 /* PostCollectionViewCell.swift */; };
 		EA0107B42A5ECB8A00A3AE85 /* PostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA0107B22A5ECB8A00A3AE85 /* PostCollectionViewCell.xib */; };
 		EA0F23662C319C030014F94E /* PreviewAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0F23652C319C030014F94E /* PreviewAlarmViewController.swift */; };
+		EA0F23692C32DA780014F94E /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0F23682C32DA780014F94E /* UIViewController+.swift */; };
 		EA1289082B3B2823002EC93E /* AlarmDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1289072B3B2823002EC93E /* AlarmDataModel.swift */; };
 		EA12890A2B3B2836002EC93E /* AlarmDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1289092B3B2836002EC93E /* AlarmDataService.swift */; };
 		EA12890C2B3BF1A7002EC93E /* RecentSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA12890B2B3BF1A7002EC93E /* RecentSearchViewController.swift */; };
@@ -303,6 +304,7 @@
 		EA0107B12A5ECB8A00A3AE85 /* PostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCollectionViewCell.swift; sourceTree = "<group>"; };
 		EA0107B22A5ECB8A00A3AE85 /* PostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostCollectionViewCell.xib; sourceTree = "<group>"; };
 		EA0F23652C319C030014F94E /* PreviewAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewAlarmViewController.swift; sourceTree = "<group>"; };
+		EA0F23682C32DA780014F94E /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		EA1289072B3B2823002EC93E /* AlarmDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDataModel.swift; sourceTree = "<group>"; };
 		EA1289092B3B2836002EC93E /* AlarmDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDataService.swift; sourceTree = "<group>"; };
 		EA12890B2B3BF1A7002EC93E /* RecentSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchViewController.swift; sourceTree = "<group>"; };
@@ -521,6 +523,7 @@
 				0802AE022C31D3E00090FB92 /* UIImageView+.swift */,
 				EAC582732C3074EA006F44AF /* UIColor+.swift */,
 				EAE69F432C315009005762B7 /* UIVIew+.swift */,
+				EA0F23682C32DA780014F94E /* UIViewController+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1285,6 +1288,7 @@
 				08D98C472AFEE8B300E9A097 /* PostDataModel.swift in Sources */,
 				3769D6C32B3C3A1600294CD1 /* FollowerCollectionViewCell.swift in Sources */,
 				374261722C3092B100B67886 /* UnblockDataManager.swift in Sources */,
+				EA0F23692C32DA780014F94E /* UIViewController+.swift in Sources */,
 				EA1B0B5F2A49D23A00F86FBC /* ViewController.swift in Sources */,
 				379A6A3A2B56BDBF0087FAAC /* Authenticator.swift in Sources */,
 				EA17182C2A5912A7009168E6 /* UploadViewController.swift in Sources */,
