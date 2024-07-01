@@ -23,7 +23,9 @@ class OtherTableViewCell: UITableViewCell {
 
     private func setupAttribute(){
         img.layer.cornerRadius = 48/2
-        
+        comment.lineBreakMode = .byCharWrapping
+//        comment.lineBreakStrategy = .hangulWordPriority
+
         self.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
     
@@ -41,9 +43,11 @@ class OtherTableViewCell: UITableViewCell {
             } else if isFirstCell {
                 // 첫 번째 셀
                 self.lineView.isHidden = false
+                print("첫번째")
             } else if isLastCell {
                 // 마지막 셀
                 self.lineView.isHidden = true // separator를 보이지 않도록
+                print("마지막")
             } else {
                 // 그 외의 경우
                 self.lineView.isHidden = false

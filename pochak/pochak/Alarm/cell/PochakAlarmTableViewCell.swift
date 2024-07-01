@@ -16,13 +16,12 @@ class PochakAlarmTableViewCell: UITableViewCell {
     @IBOutlet weak var previewBtn: UIButton!
     @IBOutlet weak var lineView: UIView!
     
-    var previewBtnAction: (() -> Void)?
+    var previewBtnClickAction: (() -> Void)?
     
-    @IBAction func previewBtnTapped(_ sender: Any) {
+    @IBAction func previewBtnAction(_ sender: Any) {
         print("버튼 클릭")
-        previewBtnAction?()
+        previewBtnClickAction?()
     }
-
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -32,12 +31,12 @@ class PochakAlarmTableViewCell: UITableViewCell {
     
     private func setupAttribute(){
         img.layer.cornerRadius = 48/2
-        
+        comment.lineBreakMode = .byCharWrapping
+//        comment.lineBreakStrategy = .hangulWordPriority
         previewBtn.layer.masksToBounds = true
     }
     
     func configureCellAppearance() {
-        
         // 첫 번째 셀과 마지막 셀의 외형을 설정
         if let tableView = self.superview as? UITableView {
             let indexPath = tableView.indexPath(for: self)!

@@ -32,8 +32,8 @@
                             <constraint firstAttribute="width" constant="48" id="kNH-K9-vxz"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00님이 회원님을 포착하였습니다. ddd" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Udp-iP-b2h">
-                        <rect key="frame" x="80" y="25.999999999999996" width="186" height="33.666666666666657"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00님이 회원님을 포착하였습니다." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Udp-iP-b2h">
+                        <rect key="frame" x="80" y="27.666666666666671" width="186" height="17"/>
                         <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -57,7 +57,7 @@
                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </buttonConfiguration>
                         <connections>
-                            <action selector="previewBtnTapped:" destination="dh2-DK-tYb" eventType="touchUpInside" id="gIz-CU-EjV"/>
+                            <action selector="previewBtnAction:" destination="dh2-DK-tYb" eventType="touchUpInside" id="Val-3c-23p"/>
                         </connections>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GYn-Lo-4To">
@@ -69,6 +69,7 @@
                     </view>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="Udp-iP-b2h" firstAttribute="centerY" secondItem="opi-nx-wnC" secondAttribute="centerY" id="5lg-NT-qHW"/>
                     <constraint firstItem="Nah-Zz-G1L" firstAttribute="centerY" secondItem="opi-nx-wnC" secondAttribute="centerY" id="6vO-ed-9cz"/>
                     <constraint firstItem="GYn-Lo-4To" firstAttribute="leading" secondItem="AFB-qs-uHi" secondAttribute="leading" constant="20" id="CAk-dp-iCa"/>
                     <constraint firstItem="Udp-iP-b2h" firstAttribute="leading" secondItem="opi-nx-wnC" secondAttribute="trailing" constant="12" id="I5o-eE-cvV"/>
@@ -77,7 +78,6 @@
                     <constraint firstAttribute="trailing" secondItem="Nah-Zz-G1L" secondAttribute="trailing" constant="20" id="Xod-BH-ILg"/>
                     <constraint firstItem="Nah-Zz-G1L" firstAttribute="leading" secondItem="Udp-iP-b2h" secondAttribute="trailing" constant="12" id="Z70-k0-oWz"/>
                     <constraint firstItem="GYn-Lo-4To" firstAttribute="top" secondItem="opi-nx-wnC" secondAttribute="bottom" constant="11" id="bhN-eL-yzU"/>
-                    <constraint firstItem="Udp-iP-b2h" firstAttribute="top" secondItem="opi-nx-wnC" secondAttribute="top" constant="14" id="eP4-hJ-Iuh"/>
                     <constraint firstAttribute="trailing" secondItem="GYn-Lo-4To" secondAttribute="trailing" constant="20" id="lq2-Gj-P8p"/>
                     <constraint firstAttribute="bottom" secondItem="opi-nx-wnC" secondAttribute="bottom" constant="12" id="y0v-fe-R33"/>
                     <constraint firstItem="opi-nx-wnC" firstAttribute="leading" secondItem="AFB-qs-uHi" secondAttribute="leading" constant="20" id="zOg-kq-7RZ"/>
@@ -88,7 +88,6 @@
                 <outlet property="img" destination="opi-nx-wnC" id="rK9-Gw-Iwo"/>
                 <outlet property="lineView" destination="AFB-qs-uHi" id="Lw4-gd-ZhV"/>
                 <outlet property="previewBtn" destination="Nah-Zz-G1L" id="k65-8z-40H"/>
-                <outlet property="previewBtnTapped" destination="6vO-ed-9cz" id="hoM-kn-uFd"/>
             </connections>
             <point key="canvasLocation" x="303.05343511450383" y="-120.77464788732395"/>
         </tableViewCell>

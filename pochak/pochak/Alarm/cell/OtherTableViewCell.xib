@@ -30,7 +30,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00님이 회원님을 포착하였습니다. : 댓글" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKV-Nk-oDf">
-                        <rect key="frame" x="80" y="25.999999999999996" width="261" height="33.666666666666657"/>
+                        <rect key="frame" x="80" y="19.666666666666668" width="261" height="32.666666666666657"/>
                         <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -45,12 +45,12 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="tsI-MQ-91r" firstAttribute="leading" secondItem="17X-fK-52l" secondAttribute="leading" constant="20" id="1EI-Jr-qua"/>
+                    <constraint firstItem="cKV-Nk-oDf" firstAttribute="centerY" secondItem="2p9-2b-8ug" secondAttribute="centerY" id="BiE-e6-8BQ"/>
                     <constraint firstAttribute="bottom" secondItem="tsI-MQ-91r" secondAttribute="bottom" id="KCx-60-yET"/>
                     <constraint firstItem="cKV-Nk-oDf" firstAttribute="leading" secondItem="2p9-2b-8ug" secondAttribute="trailing" constant="12" id="KOU-sL-5nM"/>
                     <constraint firstItem="2p9-2b-8ug" firstAttribute="top" secondItem="17X-fK-52l" secondAttribute="top" constant="12" id="Pf1-VW-iSB"/>
                     <constraint firstItem="2p9-2b-8ug" firstAttribute="leading" secondItem="17X-fK-52l" secondAttribute="leading" constant="20" id="UIC-GX-lUw"/>
                     <constraint firstAttribute="bottom" secondItem="2p9-2b-8ug" secondAttribute="bottom" constant="12" id="bFk-YN-MGZ"/>
-                    <constraint firstItem="cKV-Nk-oDf" firstAttribute="top" secondItem="2p9-2b-8ug" secondAttribute="top" constant="14" id="jeS-mt-6on"/>
                     <constraint firstAttribute="trailing" secondItem="cKV-Nk-oDf" secondAttribute="trailing" constant="52" id="nA7-KU-jf6"/>
                     <constraint firstAttribute="trailing" secondItem="tsI-MQ-91r" secondAttribute="trailing" constant="20" id="owz-9l-hkc"/>
                     <constraint firstItem="tsI-MQ-91r" firstAttribute="top" secondItem="2p9-2b-8ug" secondAttribute="bottom" constant="11" id="xaD-K4-dZY"/>
