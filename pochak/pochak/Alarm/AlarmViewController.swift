@@ -25,6 +25,10 @@ class AlarmViewController: UIViewController, UISheetPresentationControllerDelega
         
         // Do any additional setup after loading the view.
         setupTableView()
+        
+        // 모달창 닫겼는지 확인
+        NotificationCenter.default.addObserver(self, selector: #selector(loadAlarmData), name: Notification.Name("ModalDismissed"), object: nil)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,7 +46,7 @@ class AlarmViewController: UIViewController, UISheetPresentationControllerDelega
         tableView.register(UINib(nibName: "PochakAlarmTableViewCell", bundle: nil), forCellReuseIdentifier: PochakAlarmTableViewCell.identifier)
     }
 
-    func loadAlarmData() {
+    @objc func loadAlarmData() {
         AlarmDataService.shared.getAlarm { [self] response in
             switch response {
             case .success(let data):
@@ -87,26 +91,36 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             }
             if let userSentAlarmHandle = self.alarmList[indexPath.row].ownerHandle {
                 // 옵셔널이 아닌 문자열 값을 추출하여 사용합니다.
-                cell.comment.text = "\(userSentAlarmHandle) 님이 회원님을ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ 포착했습니다."
+                cell.comment.text = "\(userSentAlarmHandle) 님이 회원님을 포착했습니다."
             }
             if let image = self.alarmList[indexPath.row].ownerProfileImage {
                 cell.configure(with: image)
             }
             
             // Set up button actions
-            cell.previewBtnAction = {
+            cell.previewBtnClickAction = {
                // Handle accept button tap
-            
-                print("버튼")
+                guard let tagId = self.alarmList[indexPath.row].tagId,
+                      let ownerHandle = self.alarmList[indexPath.row].ownerHandle,
+                      let ownerProfileImage = self.alarmList[indexPath.row].ownerProfileImage,
+                      let postImage = self.alarmList[indexPath.row].postImage else {
+                    print("One or more values are nil")
+                    return
+                }
+
                 let previewAlarmVC = self.alarmStoryBoard.instantiateViewController(withIdentifier: "PreviewAlarmVC") as! PreviewAlarmViewController
                 
-                previewAlarmVC.modalPresentationStyle = .pageSheet
-                previewAlarmVC.tagId = self.alarmList[indexPath.row].tagId
-//                previewAlarmVC.taggedUserHandle = alarmList[indexPath.row].han
-                previewAlarmVC.pochakUserHandle = self.alarmList[indexPath.row].ownerHandle
-                previewAlarmVC.profileImgUrl = self.alarmList[indexPath.row].ownerProfileImage
-                previewAlarmVC.postImgUrl = self.alarmList[indexPath.row].postImage
+                print(tagId)
+                print(ownerHandle)
+                print(ownerProfileImage)
+                print(postImage)
                 
+                previewAlarmVC.modalPresentationStyle = .pageSheet
+                previewAlarmVC.tagId = tagId
+                previewAlarmVC.pochakUserHandle = ownerHandle
+                previewAlarmVC.profileImgUrl = ownerProfileImage
+                previewAlarmVC.postImgUrl = postImage
+            
                 // half sheet
                 if let sheet = previewAlarmVC.sheetPresentationController {
                     sheet.detents = [.medium(), .large()]
@@ -174,7 +188,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             }
             if let userSentAlarmHandle = self.alarmList[indexPath.row].handle {
                 // 옵셔널이 아닌 문자열 값을 추출하여 사용합니다.
-                cell.comment.text = "\(userSentAlarmHandle) 님이      ㅇㅇㅇㅇㅇㅇ      회원님을 팔로우하였습니다."
+                cell.comment.text = "\(userSentAlarmHandle) 님이 회원님을 팔로우하였습니다."
             }
             if let image = self.alarmList[indexPath.row].profileImage {
                 cell.configure(with: image)
@@ -205,14 +219,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(self.alarmList[indexPath.row].alarmType == AlarmType.tagApproval){
-            // 게시물로 이동
-            let postTabSb = UIStoryboard(name: "PostTab", bundle: nil)
-            guard let postVC = postTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
-            else { return }
-            
-            postVC.receivedPostId = alarmList[indexPath.row].postId
-            self.navigationController?.pushViewController(postVC, animated: true)
-            
+            self.tableView.deselectRow(at: indexPath, animated: false)
         }
         // MARK: - 댓글(내가 올린 게시물에 댓글이 달렸을 경우 OWNER_COMMENT)
         else if(self.alarmList[indexPath.row].alarmType == AlarmType.ownerComment){
@@ -264,32 +271,15 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func postTagData(tagId: Int, isAccept: Bool){
-        AlarmDataService.shared.postTagAccept(tagId: tagId, isAccept: isAccept){ [self]
-            response in
-            switch response {
-            case .success(let data):
-                print(data)
-                DispatchQueue.main.async {
-                    loadAlarmData() // tableView를 새로고침하여 이미지 업데이트
-                }
-            case .requestErr(let err):
-                print(err)
-            case .pathErr:
-                print("pathErr")
-            case .serverErr:
-                print("serverErr")
-            case .networkFail:
-                print("networkFail")
-            }
-        }
-        
-    }
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 72
     }
     
     
+}
+
+// 모달창 dismiss하고 알람 data 업데이트
+protocol UpdateDelegate: AnyObject {
+    func modalDidDismiss()
 }

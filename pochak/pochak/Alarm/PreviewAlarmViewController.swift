@@ -18,7 +18,7 @@ class PreviewAlarmViewController : UIViewController {
     
     var acceptButtonAction: (() -> Void)?
     var refuseButtonAction: (() -> Void)?
-
+    
     var taggedUserHandle : [String] = []
     var pochakUserHandle : String?
     var profileImgUrl : String?
@@ -27,36 +27,64 @@ class PreviewAlarmViewController : UIViewController {
     
     @IBAction func acceptBtnTapped(_ sender: Any) {
         acceptButtonAction?()
-    }
+        guard let tagId = tagId else {
+            print("tagId is nil")
+            return
+        }
 
+        postTagData(tagId: tagId, isAccept: true)
+    }
+    
     @IBAction func refuseBtnTapped(_ sender: Any) {
         refuseButtonAction?()
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-        setupAttribute()
-        setupData()
-    }
+        guard let tagId = tagId else {
+            print("tagId is nil")
+            return
+        }
 
-    private func setupAttribute(){
-        profileImageView.layer.cornerRadius = 50/2
+        postTagData(tagId: tagId, isAccept: false)
     }
     
-    private func setupData(){
-        configure(imageview: self.postImageView, with: profileImgUrl ?? "")
-       
-//        for handle in taggedUserHandle {
-//            if(handle == taggedUserHandle.last){
-//                self.taggedUsers.text! != handle + " 님"
-//            }
-//            else{
-//                self.taggedUsers.text! != handle + " 님 • "
-//            }
-//        }
-        self.pochakUser.text = (self.pochakUserHandle ?? "사용자") + "님이 포착"
-        configure(imageview: self.postImageView, with: postImgUrl ?? "")
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupAttribute()
+        setupUI()
+    }
+    
+    private func setupAttribute(){
+        self.profileImageView?.layer.cornerRadius = 50/2
+    }
+    
+    private func setupUI(){
+        if let profileImageView = self.profileImageView {
+            configure(imageview: profileImageView, with: profileImgUrl ?? "")
+        } else {
+            print("profileImageView is nil")
+            // Handle the case where postImageView is nil
+        }
+        
+        //        for handle in taggedUserHandle {
+        //            if(handle == taggedUserHandle.last){
+        //                self.taggedUsers.text! != handle + " 님"
+        //            }
+        //            else{
+        //                self.taggedUsers.text! != handle + " 님 • "
+        //            }
+        //        }
+        
+        if let pochakUser = self.pochakUser {
+            pochakUser.text = (self.pochakUserHandle ?? "사용자") + "님이 포착"
+        } else {
+            print("pochakUser is nil")
+            // Handle the case where postImageView is nil
+        }
+        
+        if let postImageView = self.postImageView {
+            configure(imageview: postImageView, with: postImgUrl ?? "")
+        } else {
+            print("postImageView is nil")
+            // Handle the case where postImageView is nil
+        }
     }
     
     func configure(imageview : UIImageView,with imageUrl: String) {
@@ -66,11 +94,41 @@ class PreviewAlarmViewController : UIViewController {
                 case .success(let value):
                     print("Image successfully loaded: \(value.image)")
                     imageview.contentMode = .scaleAspectFill
-
+                    
                 case .failure(let error):
                     print("Image failed to load with error: \(error.localizedDescription)")
                 }
             }
         }
     }
+    
+    func postTagData(tagId: Int, isAccept: Bool){
+        showProgressBar()
+        AlarmDataService.shared.postTagAccept(tagId: tagId, isAccept: isAccept){ [self]
+            response in
+            
+            // 함수 호출 후 프로그래스 바 숨기기
+            defer {
+                hideProgressBar()
+                dismiss(animated: true) {
+                    NotificationCenter.default.post(name: Notification.Name("ModalDismissed"), object: nil)
+                }
+            }
+            
+            switch response {
+            case .success(let data):
+                print(data)
+            case .requestErr(let err):
+                print(err)
+            case .pathErr:
+                print("pathErr")
+            case .serverErr:
+                print("serverErr")
+            case .networkFail:
+                print("networkFail")
+            }
+        }
+        
+    }
 }
+    
