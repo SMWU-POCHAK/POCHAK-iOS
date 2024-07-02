@@ -16,7 +16,7 @@ class DeleteAccountDataManager{
     let refreshToken = GetToken.getRefreshToken()
     
     func deleteAccountDataManager(_ completion: @escaping (DeleteAccountModel) -> Void) {
-        let url = "\(APIConstants.baseURL)/api/v2/members/signout"
+        let url = "\(APIConstants.baseURL)/api/v2/signout"
         
         print("accessToken : \(accessToken)")
         print("refreshToken : \(refreshToken)")

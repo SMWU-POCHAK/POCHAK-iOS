@@ -98,10 +98,10 @@ class UpdateProfileViewController: UIViewController {
                                                             message,
                                                             profileImage,
                                                {resultData in
-            guard let name = resultData.name else { return }
             UserDefaultsManager.setData(value: resultData.name, key: .name)
+            UserDefaultsManager.setData(value: resultData.handle, key: .handle)
             UserDefaultsManager.setData(value: resultData.message, key: .message)
-            print(name)
+            UserDefaultsManager.setData(value: resultData.profileImgUrl, key: .profileImgUrl)
         })
         
         // 프로필 화면으로 전환

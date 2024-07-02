@@ -10,7 +10,7 @@ import Alamofire
 struct JoinDataManager {
     
     static let shared = JoinDataManager()
-    let url = "\(APIConstants.baseURL)/api/v2/members/signup"
+    let url = "\(APIConstants.baseURL)/api/v2/signup"
     let header : HTTPHeaders = ["Content-type": "multipart/form-data"]
     
     func joinDataManager(_ name : String,
