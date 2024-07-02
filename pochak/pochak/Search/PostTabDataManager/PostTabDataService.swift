@@ -8,13 +8,15 @@
 import Alamofire
 
 class PostTabDataService{
+    let accessToken = GetToken.getAccessToken()
+
     static let shared = PostTabDataService()
 
-    func recommandGet(completion: @escaping(NetworkResult<Any>) -> Void){
-        let header : HTTPHeaders = ["Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkeHh5bm5pIiwicm9sZSI6IlJPTEVfVVNFUiIsImlhdCI6MTcwNTYyMDMwOCwiZXhwIjoxNzgzMzgwMzA4fQ.2u1cQI59e1n9yPEeCiJxuocU6CR9eMIPRTfJgkFJzX4",
+    func recommandGet(page: Int, completion: @escaping(NetworkResult<Any>) -> Void){
+        let header : HTTPHeaders = ["Authorization": self.accessToken ,
                                             "Content-type": "application/json"
                                             ]
-        let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/posts/search",
+        let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/posts/search?page=\(page)",
                                     method: .get,
                                     encoding: URLEncoding.default,
                                     headers: header)
