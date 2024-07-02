@@ -7,16 +7,29 @@
 
 import Foundation
 
-struct IdSearchData: Codable {
-    let profileimgUrl: String
-    let userHandle: String
-    let memberId: String
+struct IdSearchResponse: Codable {
+    let isSuccess: Bool
+    let code: String
+    let message: String
+    let result: IdSearchResult
 }
 
+struct IdSearchResult: Codable {
+    let pageInfo: IdSearchPageInfo
+    let memberList: [IdSearchMember]
+}
 
-struct idSearchResponse:Codable{
-    let memberId : String
-    let profileImage : String
-    let handle : String
-    let name : String
+struct IdSearchPageInfo: Codable {
+    let lastPage: Bool
+    let totalPages: Int
+    let totalElements: Int
+    let size: Int
+}
+
+struct IdSearchMember: Codable {
+    let memberId: Int
+    let profileImage: String
+    let handle: String
+    let name: String
+    let isFollow: Bool?
 }
