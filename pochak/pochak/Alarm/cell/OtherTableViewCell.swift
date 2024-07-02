@@ -23,9 +23,8 @@ class OtherTableViewCell: UITableViewCell {
 
     private func setupAttribute(){
         img.layer.cornerRadius = 48/2
-        comment.lineBreakMode = .byCharWrapping
+//        comment.lineBreakMode = .byCharWrapping
 //        comment.lineBreakStrategy = .hangulWordPriority
-
         self.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
     
