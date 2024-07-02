@@ -56,7 +56,7 @@ class AlarmViewController: UIViewController, UISheetPresentationControllerDelega
                 self.alarmDataResponse = data as? AlarmResponse
                 self.alarmDataResult = self.alarmDataResponse.result
                 print(self.alarmDataResult!)
-                self.alarmList = self.alarmDataResult.alarmElementList
+                self.alarmList = self.alarmDataResult.alarmList
                 print(self.alarmList)
                 DispatchQueue.main.async {
                     self.tableView.reloadData() // tableView를 새로고침하여 이미지 업데이트
@@ -118,21 +118,12 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             // Set up button actions
             cell.previewBtnClickAction = {
                 // Handle accept button tap
-                guard let tagId = self.alarmList[indexPath.row].tagId,
-                      let ownerHandle = self.alarmList[indexPath.row].ownerHandle,
-                      let ownerProfileImage = self.alarmList[indexPath.row].ownerProfileImage,
-                      let postImage = self.alarmList[indexPath.row].postImage else {
-                    print("One or more values are nil")
+                guard let tagId = self.alarmList[indexPath.row].tagId else {
+                    print("tagId is nil")
                     return
                 }
                 
                 let previewAlarmVC = self.alarmStoryBoard.instantiateViewController(withIdentifier: "PreviewAlarmVC") as! PreviewAlarmViewController
-                
-                // 데이터 설정
-                previewAlarmVC.tagId = tagId
-                previewAlarmVC.pochakUserHandle = ownerHandle
-                previewAlarmVC.profileImgUrl = ownerProfileImage
-                previewAlarmVC.postImgUrl = postImage
                 
                 // 모달 창의 presentation style을 .pageSheet로 설정합니다.
                 previewAlarmVC.modalPresentationStyle = .pageSheet
@@ -208,11 +199,11 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: OtherTableViewCell.identifier, for: indexPath) as? OtherTableViewCell else {
                 fatalError("셀 타입 캐스팅 실패")
             }
-            if let userSentAlarmHandle = self.alarmList[indexPath.row].handle {
+            if let userSentAlarmHandle = self.alarmList[indexPath.row].memberHandle {
                 // 옵셔널이 아닌 문자열 값을 추출하여 사용합니다.
                 cell.comment.text = "\(userSentAlarmHandle) 님이 회원님을 팔로우하였습니다."
             }
-            if let image = self.alarmList[indexPath.row].profileImage {
+            if let image = self.alarmList[indexPath.row].memberProfileImage {
                 cell.configure(with: image)
             }
             return cell
@@ -278,7 +269,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             let storyboard = UIStoryboard(name: "ProfileTab", bundle: nil)
             let profileTabVC = storyboard.instantiateViewController(withIdentifier: "OtherUserProfileVC") as! OtherUserProfileViewController
             
-            profileTabVC.recievedHandle = alarmList[indexPath.row].handle
+            profileTabVC.recievedHandle = alarmList[indexPath.row].memberHandle
             self.navigationController?.pushViewController(profileTabVC, animated: true)
         }
         // MARK: - 내가 올린 게시물에 좋아요가 달릴 경우 LIKE
