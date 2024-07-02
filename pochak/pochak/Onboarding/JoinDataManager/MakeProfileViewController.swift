@@ -10,7 +10,7 @@ import UIKit
 class MakeProfileViewController: UIViewController {
         
     // MARK: - Data
-    let textViewPlaceHolder = "소개를 입력해주세요.(최대 50자)"
+    let textViewPlaceHolder = "소개를 입력해주세요.(최대 50자, 3줄)"
     let name = UserDefaultsManager.getData(type: String.self, forKey: .name) ?? "name not found"
     let email = UserDefaultsManager.getData(type: String.self, forKey: .email) ?? "email not found"
     let socialType = UserDefaultsManager.getData(type: String.self, forKey: .socialType) ?? "socialType not found"
@@ -59,8 +59,6 @@ class MakeProfileViewController: UIViewController {
         messageTextView.textContainerInset = .zero // textView 기본 마진 제거
         messageTextView.text = textViewPlaceHolder // PlaceHolder 커스텀
         messageTextView.textColor = UIColor(named: "gray03") // PlaceHolder 커스텀
-        
-
     }
 
     // MARK: - Function
@@ -185,31 +183,45 @@ extension MakeProfileViewController: UITextViewDelegate {
         }
     }
     
+    // 최대 글자 수 50자 제한
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let currentText = textView.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else {return false}
+        let changedText = currentText.replacingCharacters(in: stringRange, with: text)
+        return changedText.count <= 50
+    }
+    
+    // 최대 줄 수 3줄 제한
     func textViewDidChange(_ textView: UITextView) {
         guard let text = textView.text else { return }
         
-        // 글자수 제한
-        let maxLength = 51
-        if text.count > maxLength {
-            textView.text = String(text.prefix(maxLength))
-        }
-        
+//        // 글자수 제한
+//        let maxLength = 50
+//        if text.count > maxLength {
+////            textView.text = String(text.prefix(maxLength))
+//            textView.text.removeLast()
+//        }
+//        
         // 줄바꿈(들여쓰기) 제한
         let maxNumberOfLines = 3
         let lineBreakCharacter = "\n"
         let lines = text.components(separatedBy: lineBreakCharacter)
         var consecutiveLineBreakCount = 0 // 연속된 줄 바꿈 횟수
 
+        print("lines == \(lines)")
         for line in lines {
-            if line.isEmpty { // 빈 줄이면 연속된 줄 바꿈으로 간주
+//            if line.isEmpty { // 빈 줄이면 연속된 줄 바꿈으로 간주
                 consecutiveLineBreakCount += 1
-            } else {
-                consecutiveLineBreakCount = 0
-            }
+//            }
+//            } else {
+//                consecutiveLineBreakCount = 0
+//            }
+            
 
             if consecutiveLineBreakCount > maxNumberOfLines {
-//                textView.text = String(text.dropLast()) // 마지막 입력 문자를 제거
-                textView.text.removeLast()
+                textView.text = String(text.dropLast()) // 마지막 입력 문자를 제거
+                
+//                textView.text.removeLast()
                 break
             }
         }
