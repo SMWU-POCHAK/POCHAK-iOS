@@ -58,7 +58,7 @@ class MyAuthenticator : Authenticator {
     // 추가 할 것 :: refreshtoken 만료 시 로그아웃 하도록 처리(유효기간 1달)
     func refresh(_ credential: MyAuthenticationCredential, for session: Alamofire.Session, completion: @escaping (Result<MyAuthenticationCredential, Error>) -> Void) {
         print("--------------- 2. refresh Function 실행 중 ---------------")
-        let url = "\(APIConstants.baseURL)/api/v2/members/refresh"
+        let url = "\(APIConstants.baseURL)/api/v2/refresh"
         let header : HTTPHeaders = ["Authorization": accessToken, "RefreshToken" : refreshToken, "Content-type": "application/json"]
         
         AF.request(url, method: .post, headers: header).validate().responseDecodable(of: TokenRefreshResponse.self) { response in
