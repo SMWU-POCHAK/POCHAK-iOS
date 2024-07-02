@@ -81,7 +81,7 @@ class PreviewAlarmDataService{
     private func isValidData(data: Data) -> NetworkResult<Any> {
         do {
             let decoder = JSONDecoder()
-            let decodedData = try decoder.decode(AlarmResponse.self, from: data)
+            let decodedData = try decoder.decode(PreviewAlarmResponse.self, from: data)
             return .success(decodedData)
         } catch {
             print("Decoding error:", error)

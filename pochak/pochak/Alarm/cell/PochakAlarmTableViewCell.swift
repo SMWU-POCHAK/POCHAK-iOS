@@ -31,7 +31,7 @@ class PochakAlarmTableViewCell: UITableViewCell {
     
     private func setupAttribute(){
         img.layer.cornerRadius = 48/2
-        comment.lineBreakMode = .byCharWrapping
+//        comment.lineBreakMode = .byCharWrapping
 //        comment.lineBreakStrategy = .hangulWordPriority
         previewBtn.layer.masksToBounds = true
     }

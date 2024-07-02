@@ -9,8 +9,6 @@ import UIKit
 import AVFoundation
 import SwiftUI
 
-
-
 class UploadViewController: UIViewController,UITextFieldDelegate{
          
     // MARK: - Views
@@ -25,12 +23,18 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
     // MARK: - Properties
 
     var receivedImage : UIImage?
-    var searchResultData : [idSearchResponse] = []
-    
     var searchTextField = UITextField()
     var cancelButton = UIButton()
     
-    var currentText : Int = 0
+    var currentTextCount : Int = 0
+    var currentText : String = ""
+    
+    var idSearchResponseData : IdSearchResponse!
+    var memberList : [IdSearchMember]! = []
+    
+    private var isLastPage: Bool = false
+    private var isCurrentlyFetching: Bool = false
+    private var currentFetchingPage: Int = 0
     
     lazy var backButton: UIBarButtonItem = { // 업로드 버튼
         let backBarButtonItem = UIBarButtonItem(image: UIImage(named: "ChevronLeft")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(backbuttonPressed))
@@ -105,7 +109,7 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
     }
     
     private func tagIdDidChange(){
-        if(!tagId.isEmpty && currentText <= 50){
+        if(!tagId.isEmpty && currentTextCount <= 50){
             uploadButton.tintColor = UIColor(named: "yellow00")
             isUploadAllowed = true
         }
@@ -260,13 +264,15 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
 
     // 검색바 텍스트
     @objc func didTextFieldChanged() {
-        let currentText = self.searchTextField.text ?? ""
+        currentText = self.searchTextField.text ?? ""
 
         if currentText.isEmpty {
+            self.currentFetchingPage = 0
             self.tableView.isHidden = true
-            self.searchResultData = []
+            self.memberList = []
             self.tableView.reloadData()
         } else {
+            self.currentFetchingPage = 0
             self.tableView.isHidden = false
             sendTextToServer(currentText)
         }
@@ -322,18 +328,34 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
 
     
     func sendTextToServer(_ searchText: String) {
-        // searchText를 사용하여 서버에 요청을 보내는 로직을 작성
-        // 서버 요청을 보내는 코드 작성
+        isCurrentlyFetching = true
         SearchDataService.shared.getIdSearch(keyword: searchText){ response in
             switch response {
             case .success(let data):
                 print("success")
                 print(data)
+                self.idSearchResponseData = data as? IdSearchResponse
+                guard let result = self.idSearchResponseData?.result else { return }
+            
+                let newPosts = result.memberList
+                let startIndex = self.memberList.count
+                let endIndex = startIndex + newPosts.count
+                let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
                 
-                self.searchResultData = data as! [idSearchResponse]
+                self.memberList.append(contentsOf: newPosts)
                 
+                self.isLastPage = result.pageInfo.lastPage
+                
+                let handle = "dxxynni"
+                self.memberList = self.memberList.filter { $0.handle != handle }
                 DispatchQueue.main.async {
-                    self.tableView.reloadData() // tableView를 새로고침하여 이미지 업데이트
+                    if self.currentFetchingPage == 0 {
+                        self.tableView.reloadData()
+                    } else {
+                        self.tableView.insertRows(at: newIndexPaths, with: .none)
+                    }
+                    self.isCurrentlyFetching = false
+                    self.currentFetchingPage += 1;
                 }
             case .requestErr(let err):
                 print(err)
@@ -348,11 +370,11 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        currentText = captionField.text.count
-        captionCountText.text = "\(currentText)/50"
+        currentTextCount = captionField.text.count
+        captionCountText.text = "\(currentTextCount)/50"
 
         // 50자 넘었을 때 글자수 빨간색으로 변경
-        if(currentText > 50){
+        if(currentTextCount > 50){
             captionCountText.textColor = .red
         }
         else{
@@ -360,7 +382,7 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
         }
         
         // 50자 넘으면 업로드 안되도록
-        if(currentText <= 50 && !tagId.isEmpty){
+        if(currentTextCount <= 50 && !tagId.isEmpty){
             uploadButton.tintColor = UIColor(named: "yellow00")
             isUploadAllowed = true
         }
@@ -443,15 +465,15 @@ extension UploadViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - 태그 tableview
 extension UploadViewController: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchResultData.count
+        return memberList.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TagSearchTableViewCell", for: indexPath) as! TagSearchTableViewCell
 
-        let urls = self.searchResultData.map { $0.profileImage }
-        let names = self.searchResultData.map { $0.name }
-        let handles = self.searchResultData.map { $0.handle }
+        let urls = self.memberList.map { $0.profileImage }
+        let names = self.memberList.map { $0.name }
+        let handles = self.memberList.map { $0.handle }
         
         cell.userHandle.text = handles[indexPath.item]
         cell.userName.text = names[indexPath.item]
@@ -463,8 +485,8 @@ extension UploadViewController: UITableViewDelegate,UITableViewDataSource{
         // 셀을 선택했을 때 수행할 동작을 여기에 추가합니다.
         // 예를 들어, 선택한 셀의 정보를 가져와서 처리하거나 화면 전환 등을 수행할 수 있습니다.
 
-        let selectedUserData = searchResultData[indexPath.row] // 선택한 셀의 데이터 가져오기
-        let handles = self.searchResultData.map { $0.handle }
+        let selectedUserData = memberList[indexPath.row] // 선택한 셀의 데이터 가져오기
+        let handles = self.memberList.map { $0.handle }
         
         // 선택한 핸들 가져오기
         let selectedHandle = handles[indexPath.row]
@@ -502,4 +524,18 @@ extension UploadViewController: CustomAlertDelegate {
         }
     }
 
+}
+
+// MARK: - Extension; UIScrollView
+
+extension UploadViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (self.tableView.contentOffset.y > (self.tableView.contentSize.height - self.tableView.bounds.size.height)){
+            if (!isLastPage && !isCurrentlyFetching) {
+                print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
+                isCurrentlyFetching = true
+                self.sendTextToServer(self.currentText)
+            }
+        }
+    }
 }
