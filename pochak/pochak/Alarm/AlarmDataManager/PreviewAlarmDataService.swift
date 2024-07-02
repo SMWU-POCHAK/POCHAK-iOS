@@ -1,26 +1,27 @@
 //
-//  PostTabDataManager.swift
+//  PreviewDataService.swift
 //  pochak
 //
-//  Created by 장나리 on 12/24/23.
+//  Created by 장나리 on 7/3/24.
 //
 
 import Alamofire
 
-class PostTabDataService{
+class PreviewAlarmDataService{
+    static let shared = PreviewAlarmDataService()
+    
     let accessToken = GetToken.getAccessToken()
-
-    static let shared = PostTabDataService()
-
-    func recommandGet(page: Int, completion: @escaping(NetworkResult<Any>) -> Void){
-        let header : HTTPHeaders = ["Authorization": self.accessToken ,
-                                            "Content-type": "application/json"
-                                            ]
-        let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/posts/search?page=\(page)",
-                                    method: .get,
+    
+    func getTagPreview(tagId: Int, completion: @escaping (NetworkResult<Any>) -> Void){
+        // header 있는 자리!
+        let header: HTTPHeaders = ["Authorization": self.accessToken,
+                     "Content-type": "application/json"
+                     ]
+        
+        let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/alarms/\(tagId)",
+                                    method: .post,
                                     encoding: URLEncoding.default,
                                     headers: header)
-        
         
         // 통신 성공했는지에 대한 여부
         dataRequest.responseData { dataResponse in
@@ -28,12 +29,39 @@ class PostTabDataService{
             // dataResponse.result는 통신 성공/실패 여부
             switch dataResponse.result{
             case .success:
+                print(dataResponse.response)
                 // 성공 시 상태코드와 데이터(value) 수신
                 guard let statusCode = dataResponse.response?.statusCode else {return}
                 guard let value = dataResponse.value else {return}
 
                 let networkResult = self.judgeStatus(by: statusCode, value)
                 completion(networkResult)
+            case .failure:
+                completion(.networkFail)
+            }
+        }
+    }
+
+    func postTagAccept(tagId: Int, isAccept: Bool, completion: @escaping (NetworkResult<Any>) -> Void){
+        // header 있는 자리!
+        let header: HTTPHeaders = ["Authorization": self.accessToken,
+                     "Content-type": "application/json"
+                     ]
+        
+        let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/tags/\(tagId)?isAccept=\(isAccept)",
+                                    method: .post,
+                                    encoding: URLEncoding.default,
+                                    headers: header)
+        
+        // 통신 성공했는지에 대한 여부
+        dataRequest.responseData { dataResponse in
+            // dataResponse 안에는 통신에 대한 결과물
+            // dataResponse.result는 통신 성공/실패 여부
+            switch dataResponse.result{
+            case .success:
+                print(dataResponse.response)
+                // 성공 시 상태코드와 데이터(value) 수신
+                completion(.success("success"))
             case .failure:
                 completion(.networkFail)
             }
@@ -53,7 +81,7 @@ class PostTabDataService{
     private func isValidData(data: Data) -> NetworkResult<Any> {
         do {
             let decoder = JSONDecoder()
-            let decodedData = try decoder.decode(PostTabDataResponse.self, from: data)
+            let decodedData = try decoder.decode(AlarmResponse.self, from: data)
             return .success(decodedData)
         } catch {
             print("Decoding error:", error)

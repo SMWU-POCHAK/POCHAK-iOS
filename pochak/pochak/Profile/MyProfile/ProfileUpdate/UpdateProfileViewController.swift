@@ -13,18 +13,19 @@ import UIKit
 class UpdateProfileViewController: UIViewController {
     
     // MARK: - Data
-    
+    let textViewPlaceHolder = "소개를 입력해주세요.(최대 50자, 3줄)"
+
     let name = UserDefaultsManager.getData(type: String.self, forKey: .name) ?? "name not found"
     let email = UserDefaultsManager.getData(type: String.self, forKey: .email) ?? "email not found"
     let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
     let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? "handle not found"
     let message = UserDefaultsManager.getData(type: String.self, forKey: .message) ?? "message not found"
     let profileImgUrl = UserDefaultsManager.getData(type: String.self, forKey: .profileImgUrl) ?? "profileImgUrl not found"
-
+    
+    @IBOutlet weak var messageTextView: UITextView!
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var handleTextField: UITextField!
-    @IBOutlet weak var messageTextField: UITextField!
     
     let imagePickerController = UIImagePickerController()
     
@@ -50,7 +51,7 @@ class UpdateProfileViewController: UIViewController {
         // textfied 데이터 채우기
         nameTextField.text = name
         handleTextField.text = handle
-        messageTextField.text = message
+        messageTextView.text = message
         
         // handle 수정 불가하도록 막아두기
 //        handleTextField.isUserInteractionEnabled = false
@@ -71,6 +72,13 @@ class UpdateProfileViewController: UIViewController {
         // 프로필 image 레이아웃
         self.profileImg.contentMode = .scaleAspectFill
         self.profileImg.layer.cornerRadius = 58
+        
+        // textView 레이아웃 설정
+        messageTextView.delegate = self
+        messageTextView.textContainer.lineFragmentPadding = 0 // textView 기본 마진 제거
+        messageTextView.textContainerInset = .zero // textView 기본 마진 제거
+//        messageTextView.text = textViewPlaceHolder // PlaceHolder 커스텀
+//        messageTextView.textColor = UIColor(named: "gray03") // PlaceHolder 커스텀
 
 //        // Back 버튼
 //        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
@@ -81,11 +89,8 @@ class UpdateProfileViewController: UIViewController {
     @objc private func doneBtnTapped(_ sender: Any) {
         // UserDefaults에 데이터 추가
         guard let name = nameTextField.text  else {return}
-        guard let message = messageTextField.text  else {return}
+        guard let message = messageTextView.text  else {return}
         guard let profileImage = profileImg.image  else {return}
-
-        UserDefaultsManager.setData(value: name, key: .name)
-        UserDefaultsManager.setData(value: message, key: .message)
         
         // API request : PATCH
         MyProfileUpdateDataManager.shared.updateDataManager(name,
@@ -93,8 +98,10 @@ class UpdateProfileViewController: UIViewController {
                                                             message,
                                                             profileImage,
                                                {resultData in
-            guard let name = resultData.name else { return }
-            print(name)
+            UserDefaultsManager.setData(value: resultData.name, key: .name)
+            UserDefaultsManager.setData(value: resultData.handle, key: .handle)
+            UserDefaultsManager.setData(value: resultData.message, key: .message)
+            UserDefaultsManager.setData(value: resultData.profileImgUrl, key: .profileImgUrl)
         })
         
         // 프로필 화면으로 전환
@@ -132,3 +139,66 @@ extension UpdateProfileViewController: UIImagePickerControllerDelegate, UINaviga
         picker.dismiss(animated: true, completion: nil)
     }
 }
+
+// TextView 기본 속성 설정
+extension UpdateProfileViewController: UITextViewDelegate {
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == textViewPlaceHolder {
+            textView.text = nil
+            textView.textColor = .black
+        }
+    }
+        
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            textView.text = textViewPlaceHolder
+            textView.textColor =  UIColor(named: "gray03")
+        }
+    }
+    
+    // 최대 글자 수 50자 제한
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let currentText = textView.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else {return false}
+        let changedText = currentText.replacingCharacters(in: stringRange, with: text)
+        return changedText.count <= 50
+    }
+    
+    // 최대 줄 수 3줄 제한
+    func textViewDidChange(_ textView: UITextView) {
+        guard let text = textView.text else { return }
+        
+//        // 글자수 제한
+//        let maxLength = 50
+//        if text.count > maxLength {
+////            textView.text = String(text.prefix(maxLength))
+//            textView.text.removeLast()
+//        }
+//
+        // 줄바꿈(들여쓰기) 제한
+        let maxNumberOfLines = 3
+        let lineBreakCharacter = "\n"
+        let lines = text.components(separatedBy: lineBreakCharacter)
+        var consecutiveLineBreakCount = 0 // 연속된 줄 바꿈 횟수
+
+        print("lines == \(lines)")
+        for line in lines {
+//            if line.isEmpty { // 빈 줄이면 연속된 줄 바꿈으로 간주
+                consecutiveLineBreakCount += 1
+//            }
+//            } else {
+//                consecutiveLineBreakCount = 0
+//            }
+            
+
+            if consecutiveLineBreakCount > maxNumberOfLines {
+                textView.text = String(text.dropLast()) // 마지막 입력 문자를 제거
+                
+//                textView.text.removeLast()
+                break
+            }
+        }
+    }
+}
+

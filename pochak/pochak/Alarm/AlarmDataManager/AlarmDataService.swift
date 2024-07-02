@@ -41,32 +41,6 @@ class AlarmDataService{
         }
     }
     
-    func postTagAccept(tagId: Int, isAccept: Bool, completion: @escaping (NetworkResult<Any>) -> Void){
-        // header 있는 자리!
-        let header: HTTPHeaders = ["Authorization": self.accessToken,
-                     "Content-type": "application/json"
-                     ]
-        
-        let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/tags/\(tagId)?isAccept=\(isAccept)",
-                                    method: .post,
-                                    encoding: URLEncoding.default,
-                                    headers: header)
-        
-        // 통신 성공했는지에 대한 여부
-        dataRequest.responseData { dataResponse in
-            // dataResponse 안에는 통신에 대한 결과물
-            // dataResponse.result는 통신 성공/실패 여부
-            switch dataResponse.result{
-            case .success:
-                print(dataResponse.response)
-                // 성공 시 상태코드와 데이터(value) 수신
-                completion(.success("success"))
-            case .failure:
-                completion(.networkFail)
-            }
-        }
-    }
-    
     private func judgeStatus(by statusCode: Int, _ data: Data) -> NetworkResult<Any> {
         switch statusCode{
         case 200: return isValidData(data: data)  // 성공 -> 데이터 가공해서 전달해야하므로 isValidData라는 함수로 데이터 넘겨주기

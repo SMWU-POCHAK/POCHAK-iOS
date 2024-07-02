@@ -16,7 +16,7 @@ class LogoutDataManager{
     
     
     func logoutDataManager(_ completion: @escaping (LogoutDataModel) -> Void) {
-        let url = "\(APIConstants.baseURL)/api/v2/members/logout"
+        let url = "\(APIConstants.baseURL)/api/v2/logout"
         
         print("accessToken : \(accessToken)")
         print("refreshToken : \(refreshToken)")

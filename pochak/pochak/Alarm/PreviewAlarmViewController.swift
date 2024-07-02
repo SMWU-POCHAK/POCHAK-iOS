@@ -25,6 +25,10 @@ class PreviewAlarmViewController : UIViewController {
     var postImgUrl : String?
     var tagId : Int?
     
+    private var previewDataResponse: PreviewAlarmResponse!
+    private var previewDataResult: PreviewAlarmResult!
+    private var tagList: [PreviewTagList]! = []
+    
     @IBAction func acceptBtnTapped(_ sender: Any) {
         acceptButtonAction?()
         guard let tagId = tagId else {
@@ -33,6 +37,7 @@ class PreviewAlarmViewController : UIViewController {
         }
 
         postTagData(tagId: tagId, isAccept: true)
+        getTagPreviewData(tagId: tagId)
     }
     
     @IBAction func refuseBtnTapped(_ sender: Any) {
@@ -111,7 +116,7 @@ class PreviewAlarmViewController : UIViewController {
     
     func postTagData(tagId: Int, isAccept: Bool){
         showProgressBar()
-        AlarmDataService.shared.postTagAccept(tagId: tagId, isAccept: isAccept){ [self]
+        PreviewAlarmDataService.shared.postTagAccept(tagId: tagId, isAccept: isAccept){ [self]
             response in
             
             // 함수 호출 후 프로그래스 바 숨기기
@@ -137,5 +142,65 @@ class PreviewAlarmViewController : UIViewController {
         }
         
     }
+    
+    func getTagPreviewData(tagId: Int){
+        PreviewAlarmDataService.shared.getTagPreview(tagId: tagId){ [self]
+            response in
+            
+            switch response {
+            case .success(let data):
+                print(data)
+                self.previewDataResponse = data as? PreviewAlarmResponse
+                self.previewDataResult = self.previewDataResponse.result
+                self.tagList = self.previewDataResult.tagList
+                
+                
+                
+                if let profileImageView = self.profileImageView {
+                    configure(imageview: profileImageView, with: self.previewDataResult.ownerProfileImage ?? "")
+                } else {
+                    print("profileImageView is nil")
+                    // Handle the case where postImageView is nil
+                }
+                
+                if let taggedUsers = self.taggedUsers{
+                    for tagList in self.tagList {
+                        for handle in tagList.handle{
+                            if(handle == tagList.handle.last){
+                                self.taggedUsers.text = String(handle) + " 님"
+                            }
+                            else{
+                                self.taggedUsers.text = String(handle) + " 님 • "
+                            }
+                        }
+                    }
+                }
+                
+                if let pochakUser = self.pochakUser {
+                    pochakUser.text = (self.previewDataResult.ownerHandle ?? "사용자") + "님이 포착"
+                } else {
+                    print("pochakUser is nil")
+                    // Handle the case where postImageView is nil
+                }
+                
+                if let postImageView = self.postImageView {
+                    configure(imageview: postImageView, with: self.previewDataResult.postImage ?? "")
+                } else {
+                    print("postImageView is nil")
+                }
+                
+            case .requestErr(let err):
+                print(err)
+            case .pathErr:
+                print("pathErr")
+            case .serverErr:
+                print("serverErr")
+            case .networkFail:
+                print("networkFail")
+            }
+        }
+        
+    }
+    
 }
     

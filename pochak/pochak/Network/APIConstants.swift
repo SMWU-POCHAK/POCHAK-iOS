@@ -15,7 +15,7 @@ struct APIConstants{
     // login...
     
     // MARK: - Temporary Properties (Token values)
-    static let dayeonToken : String = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkeHh5bm5pIiwicm9sZSI6IlJPTEVfVVNFUiIsImlhdCI6MTcwNTYyMDMwOCwiZXhwIjoxNzgzMzgwMzA4fQ.2u1cQI59e1n9yPEeCiJxuocU6CR9eMIPRTfJgkFJzX4"
+    static let dayeonToken : String = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzE5ODQzOTM3LCJyb2xlIjoiUk9MRV9VU0VSIiwiZXhwIjoyMDMwODgzOTM3fQ.pkZ2cQSTxX3FXT_OLi8jSwxW94vVIYztepxurfFf7gA"
     
     static let dayeonHandle: String = "dxxynni"
     

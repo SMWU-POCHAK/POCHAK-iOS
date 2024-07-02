@@ -7,7 +7,7 @@ struct AlarmResponse: Codable {
 
 struct AlarmResult: Codable {
     let pageInfo: PageInfo
-    let alarmElementList: [AlarmElementList]
+    let alarmList: [AlarmElementList]
 }
 
 struct PageInfo: Codable {
@@ -31,16 +31,16 @@ struct AlarmElementList: Codable {
     let alarmType: AlarmType
     let isChecked: Bool
     let tagId: Int?
+    let ownerId : Int?
     let ownerHandle: String?
     let ownerName: String?
     let ownerProfileImage: String?
     let postId: Int?
     let postImage: String?
+    let memberId : Int?
     let memberHandle: String?
     let memberName: String?
     let memberProfileImage: String?
     let commentId: Int?
     let commentContent: String?
-    let handle: String?
-    let profileImage: String?
 }

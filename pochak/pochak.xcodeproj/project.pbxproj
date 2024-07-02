@@ -154,6 +154,8 @@
 		EADE01842B383A8B00CECD5B /* PostTabDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADE01832B383A8B00CECD5B /* PostTabDataModel.swift */; };
 		EADE01862B383A9700CECD5B /* PostTabDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADE01852B383A9700CECD5B /* PostTabDataService.swift */; };
 		EAE69F442C315009005762B7 /* UIVIew+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE69F432C315009005762B7 /* UIVIew+.swift */; };
+		EAEADB962C344E160037E116 /* PreviewAlarmDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEADB952C344E160037E116 /* PreviewAlarmDataService.swift */; };
+		EAEADB982C3450FB0037E116 /* PreviewAlarmDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEADB972C3450FB0037E116 /* PreviewAlarmDataModel.swift */; };
 		EAF885262B5677CB00BA184A /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EAF885252B5677CB00BA184A /* libsqlite3.0.tbd */; };
 		EAF885292B567F4F00BA184A /* RecentSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF885282B567F4F00BA184A /* RecentSearchModel.swift */; };
 		EAF8852B2B569B6600BA184A /* RecentSearchRealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF8852A2B569B6600BA184A /* RecentSearchRealmManager.swift */; };
@@ -342,6 +344,8 @@
 		EADE01832B383A8B00CECD5B /* PostTabDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTabDataModel.swift; sourceTree = "<group>"; };
 		EADE01852B383A9700CECD5B /* PostTabDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTabDataService.swift; sourceTree = "<group>"; };
 		EAE69F432C315009005762B7 /* UIVIew+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIew+.swift"; sourceTree = "<group>"; };
+		EAEADB952C344E160037E116 /* PreviewAlarmDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewAlarmDataService.swift; sourceTree = "<group>"; };
+		EAEADB972C3450FB0037E116 /* PreviewAlarmDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewAlarmDataModel.swift; sourceTree = "<group>"; };
 		EAF885252B5677CB00BA184A /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		EAF885282B567F4F00BA184A /* RecentSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchModel.swift; sourceTree = "<group>"; };
 		EAF8852A2B569B6600BA184A /* RecentSearchRealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchRealmManager.swift; sourceTree = "<group>"; };
@@ -586,7 +590,7 @@
 			path = FollowDataManager;
 			sourceTree = "<group>";
 		};
-		373815142A89E6BE0032066A /* Onboarding */ = {
+		373815142A89E6BE0032066A /* Login */ = {
 			isa = PBXGroup;
 			children = (
 				373815152A89E6D30032066A /* SocialJoinViewController.swift */,
@@ -595,7 +599,7 @@
 				3769D6AD2B3C2FA800294CD1 /* GoogleLoginDataManager */,
 				3769D6AC2B3C2F9900294CD1 /* JoinDataManager */,
 			);
-			path = Onboarding;
+			path = Login;
 			sourceTree = "<group>";
 		};
 		3742616A2C3075B400B67886 /* Settings */ = {
@@ -800,6 +804,8 @@
 			children = (
 				EA1289072B3B2823002EC93E /* AlarmDataModel.swift */,
 				EA1289092B3B2836002EC93E /* AlarmDataService.swift */,
+				EAEADB972C3450FB0037E116 /* PreviewAlarmDataModel.swift */,
+				EAEADB952C344E160037E116 /* PreviewAlarmDataService.swift */,
 			);
 			path = AlarmDataManager;
 			sourceTree = "<group>";
@@ -867,7 +873,7 @@
 				08C02EF32BF3942300627C21 /* Extensions */,
 				3769D6B72B3C342900294CD1 /* Profile */,
 				EAF918522AA468FF0037C270 /* Network */,
-				373815142A89E6BE0032066A /* Onboarding */,
+				373815142A89E6BE0032066A /* Login */,
 				EA2B09882A629EED0005EA8B /* Search */,
 				0823B0792A5D6F1E0085002F /* Home */,
 				0823B0762A5D6BC20085002F /* Post */,
@@ -1352,6 +1358,7 @@
 				3769D6BD2B3C348800294CD1 /* FirstTabmanViewController.swift in Sources */,
 				EA1B0B5B2A49D23A00F86FBC /* AppDelegate.swift in Sources */,
 				0844D7F32BF21A80001154AC /* CancelViewCell.swift in Sources */,
+				EAEADB962C344E160037E116 /* PreviewAlarmDataService.swift in Sources */,
 				37D311D52B53056700A1D7C1 /* MyProfileUpdateDataManager.swift in Sources */,
 				3769D6B92B3C345800294CD1 /* MyProfileTabViewController.swift in Sources */,
 				08FD3A392B357E6400574880 /* LikedUsersDataService.swift in Sources */,
@@ -1366,6 +1373,7 @@
 				3747E9722BF3827500364BED /* SettingsViewController.swift in Sources */,
 				3769D6D22B3C56F100294CD1 /* SecondPostTabmanViewController.swift in Sources */,
 				371D337A2B4E8D1F0084FF6A /* KeychainManager.swift in Sources */,
+				EAEADB982C3450FB0037E116 /* PreviewAlarmDataModel.swift in Sources */,
 				EAF918542AA4692E0037C270 /* NetworkResult.swift in Sources */,
 				EA12890C2B3BF1A7002EC93E /* RecentSearchViewController.swift in Sources */,
 				EADE01842B383A8B00CECD5B /* PostTabDataModel.swift in Sources */,
