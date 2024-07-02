@@ -331,7 +331,8 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
                 print(data)
                 
                 self.searchResultData = data as! [idSearchResponse]
-                
+                let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
+                self.searchResultData = self.searchResultData.filter { $0.handle != handle }
                 DispatchQueue.main.async {
                     self.tableView.reloadData() // tableView를 새로고침하여 이미지 업데이트
                 }
