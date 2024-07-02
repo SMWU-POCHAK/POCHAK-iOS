@@ -30,9 +30,10 @@ class MyProfileUpdateDataManager{
                     multipartFormData.append(valueData, withName: key)
                 }
             }
+            
             // profileImage 추가
-            if let image = profileImage?.pngData() {
-                multipartFormData.append(image, withName: "profileImgUrl", fileName: "image.png", mimeType: "image/png")
+            if let image = profileImage?.jpegData(compressionQuality: 0.1) {
+                multipartFormData.append(image, withName: "profileImage", fileName: "image.jpg", mimeType: "image/jpeg")
             }
         }, to: url, method: .put, headers: header).validate().responseDecodable(of: MyProfileUpdateResponse.self) { response in
                 switch response.result {

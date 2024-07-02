@@ -138,7 +138,7 @@
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FR9-sG-gxh">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FR9-sG-gxh">
                                         <rect key="frame" x="156" y="129.33333333333334" width="237" height="17"/>
                                         <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="14"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -286,72 +286,60 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이름" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TxV-A6-7ZA">
-                                <rect key="frame" x="30" y="255.00000000000003" width="28" height="19.333333333333343"/>
+                                <rect key="frame" x="20" y="255.00000000000003" width="28" height="19.333333333333343"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="이름을 입력해주세요." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kb6-iX-qC1">
-                                <rect key="frame" x="144.66666666666663" y="254.66666666666663" width="230" height="20"/>
+                                <rect key="frame" x="128.66666666666663" y="254.66666666666663" width="244.33333333333337" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="230" id="g0x-sM-IDo"/>
                                     <constraint firstAttribute="height" constant="20" id="jXy-AT-ZYw"/>
                                 </constraints>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1LN-aa-1p0">
+                                <rect key="frame" x="20" y="289.33333333333331" width="353" height="1"/>
+                                <color key="backgroundColor" name="gray01"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="4I4-3L-f2s"/>
+                                </constraints>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="사용자 아이디" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yTA-Uj-F6Y">
-                                <rect key="frame" x="30.000000000000007" y="309.33333333333331" width="86.666666666666686" height="19.333333333333314"/>
+                                <rect key="frame" x="20" y="305.33333333333331" width="86.666666666666671" height="19.333333333333314"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="16"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="원하는 아이디를 입력해주세요." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZGm-Ex-Oz2">
-                                <rect key="frame" x="144.66666666666663" y="309" width="230" height="20"/>
+                                <rect key="frame" x="128.66666666666663" y="305" width="244.33333333333337" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="230" id="E0f-nh-2Ya"/>
                                     <constraint firstAttribute="height" constant="20" id="zpo-t2-GDu"/>
                                 </constraints>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1LN-aa-1p0">
-                                <rect key="frame" x="26" y="289.33333333333331" width="341" height="1"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wbo-d1-k1b">
+                                <rect key="frame" x="20" y="339.66666666666669" width="353" height="1"/>
                                 <color key="backgroundColor" name="gray01"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="4I4-3L-f2s"/>
+                                    <constraint firstAttribute="height" constant="1" id="AnN-42-nc6"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="한 줄 소개" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Q5-7C-0wh">
-                                <rect key="frame" x="30" y="363.66666666666669" width="63" height="19.333333333333314"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="소개" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Q5-7C-0wh">
+                                <rect key="frame" x="20" y="355.66666666666669" width="27.666666666666671" height="35.333333333333314"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="16"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="한 줄 소개를 입력해주세요." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pLx-l2-v5E">
-                                <rect key="frame" x="144.66666666666663" y="363.33333333333331" width="230" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="3uh-Sr-AXL"/>
-                                    <constraint firstAttribute="width" constant="230" id="e91-BF-Rri"/>
-                                </constraints>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="16"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tqu-l0-s3K">
-                                <rect key="frame" x="26" y="398" width="341" height="1"/>
+                                <rect key="frame" x="20" y="406" width="353" height="1"/>
                                 <color key="backgroundColor" name="gray01"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="TiU-uD-jmH"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wbo-d1-k1b">
-                                <rect key="frame" x="26" y="343.66666666666669" width="341" height="1"/>
-                                <color key="backgroundColor" name="gray01"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="AnN-42-nc6"/>
                                 </constraints>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile1" translatesAutoresizingMaskIntoConstraints="NO" id="DW4-AL-Ydb">
@@ -373,21 +361,31 @@
                                     <action selector="profileBtnTapped:" destination="UVQ-bG-RPQ" eventType="touchUpInside" id="dbP-HP-eSz"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0PO-fl-0jh">
+                                <rect key="frame" x="128.66666666666663" y="355.66666666666669" width="244.33333333333337" height="35.333333333333314"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="o3v-ll-IgR"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="tqu-l0-s3K" firstAttribute="leading" secondItem="JlR-dh-DoR" secondAttribute="leadingMargin" constant="10" id="2Nh-PL-CXB"/>
+                            <constraint firstItem="tqu-l0-s3K" firstAttribute="leading" secondItem="JlR-dh-DoR" secondAttribute="leading" constant="20" id="2Nh-PL-CXB"/>
+                            <constraint firstItem="tqu-l0-s3K" firstAttribute="top" secondItem="0PO-fl-0jh" secondAttribute="bottom" constant="15" id="5Mn-S9-ZF3"/>
                             <constraint firstItem="6Q5-7C-0wh" firstAttribute="leading" secondItem="yTA-Uj-F6Y" secondAttribute="leading" id="5dh-BP-FZH"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="tqu-l0-s3K" secondAttribute="trailing" constant="10" id="6B4-Qa-BCR"/>
+                            <constraint firstAttribute="trailing" secondItem="tqu-l0-s3K" secondAttribute="trailing" constant="20" id="6B4-Qa-BCR"/>
+                            <constraint firstItem="0PO-fl-0jh" firstAttribute="top" secondItem="Wbo-d1-k1b" secondAttribute="bottom" constant="15" id="7BY-zS-8Lu"/>
                             <constraint firstItem="yTA-Uj-F6Y" firstAttribute="leading" secondItem="TxV-A6-7ZA" secondAttribute="leading" id="CAU-1g-PnR"/>
                             <constraint firstItem="DW4-AL-Ydb" firstAttribute="centerX" secondItem="o3v-ll-IgR" secondAttribute="centerX" id="HEz-CS-zZP"/>
                             <constraint firstItem="ZGm-Ex-Oz2" firstAttribute="centerY" secondItem="yTA-Uj-F6Y" secondAttribute="centerY" id="LhY-js-s0o"/>
                             <constraint firstItem="Wbo-d1-k1b" firstAttribute="top" secondItem="yTA-Uj-F6Y" secondAttribute="bottom" constant="15" id="MOm-hF-g1r"/>
-                            <constraint firstItem="yTA-Uj-F6Y" firstAttribute="top" secondItem="TxV-A6-7ZA" secondAttribute="bottom" constant="35" id="OXJ-QE-4PS"/>
                             <constraint firstItem="TxV-A6-7ZA" firstAttribute="top" secondItem="DW4-AL-Ydb" secondAttribute="bottom" constant="40" id="Opd-l4-Y8A"/>
-                            <constraint firstItem="pLx-l2-v5E" firstAttribute="leading" secondItem="ZGm-Ex-Oz2" secondAttribute="leading" id="QaQ-vQ-RLo"/>
-                            <constraint firstItem="1LN-aa-1p0" firstAttribute="leading" secondItem="JlR-dh-DoR" secondAttribute="leadingMargin" constant="10" id="VYL-3O-jfB"/>
+                            <constraint firstAttribute="trailing" secondItem="ZGm-Ex-Oz2" secondAttribute="trailing" constant="20" id="UWy-HV-Svc"/>
+                            <constraint firstAttribute="trailing" secondItem="0PO-fl-0jh" secondAttribute="trailing" constant="20" id="UbI-Vv-XxV"/>
+                            <constraint firstItem="0PO-fl-0jh" firstAttribute="centerY" secondItem="6Q5-7C-0wh" secondAttribute="centerY" id="VIp-lC-RuZ"/>
+                            <constraint firstItem="1LN-aa-1p0" firstAttribute="leading" secondItem="JlR-dh-DoR" secondAttribute="leading" constant="20" id="VYL-3O-jfB"/>
                             <constraint firstItem="1LN-aa-1p0" firstAttribute="top" secondItem="TxV-A6-7ZA" secondAttribute="bottom" constant="15" id="Yat-ag-bnN"/>
                             <constraint firstItem="Pbj-2i-eF9" firstAttribute="top" secondItem="DW4-AL-Ydb" secondAttribute="bottom" constant="-40" id="aWO-m7-1mn"/>
                             <constraint firstItem="tqu-l0-s3K" firstAttribute="centerX" secondItem="o3v-ll-IgR" secondAttribute="centerX" id="dBi-xk-IBH"/>
@@ -395,21 +393,23 @@
                             <constraint firstItem="DW4-AL-Ydb" firstAttribute="top" secondItem="o3v-ll-IgR" secondAttribute="top" constant="40" id="gWs-Qe-gfx"/>
                             <constraint firstItem="Kb6-iX-qC1" firstAttribute="centerY" secondItem="TxV-A6-7ZA" secondAttribute="centerY" id="gnL-xm-qTa"/>
                             <constraint firstItem="tqu-l0-s3K" firstAttribute="top" secondItem="6Q5-7C-0wh" secondAttribute="bottom" constant="15" id="hHA-jT-abL"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Wbo-d1-k1b" secondAttribute="trailing" constant="10" id="jK3-Rs-Axr"/>
+                            <constraint firstItem="0PO-fl-0jh" firstAttribute="leading" secondItem="ZGm-Ex-Oz2" secondAttribute="leading" id="hR1-NC-PsR"/>
+                            <constraint firstAttribute="trailing" secondItem="Wbo-d1-k1b" secondAttribute="trailing" constant="20" id="jK3-Rs-Axr"/>
                             <constraint firstItem="Kb6-iX-qC1" firstAttribute="leading" secondItem="ZGm-Ex-Oz2" secondAttribute="leading" id="m6c-cR-I84"/>
+                            <constraint firstItem="6Q5-7C-0wh" firstAttribute="top" secondItem="Wbo-d1-k1b" secondAttribute="bottom" constant="15" id="mIX-8y-qEx"/>
                             <constraint firstItem="1LN-aa-1p0" firstAttribute="centerX" secondItem="o3v-ll-IgR" secondAttribute="centerX" id="ohz-Ei-U4o"/>
-                            <constraint firstItem="TxV-A6-7ZA" firstAttribute="leading" secondItem="o3v-ll-IgR" secondAttribute="leading" constant="30" id="uHe-bu-S36"/>
-                            <constraint firstItem="ZGm-Ex-Oz2" firstAttribute="leading" secondItem="yTA-Uj-F6Y" secondAttribute="trailing" constant="28" id="uKH-xx-Fbj"/>
-                            <constraint firstItem="pLx-l2-v5E" firstAttribute="centerY" secondItem="6Q5-7C-0wh" secondAttribute="centerY" id="uiH-UJ-xCm"/>
+                            <constraint firstItem="TxV-A6-7ZA" firstAttribute="leading" secondItem="JlR-dh-DoR" secondAttribute="leading" constant="20" id="uHe-bu-S36"/>
+                            <constraint firstItem="ZGm-Ex-Oz2" firstAttribute="leading" secondItem="yTA-Uj-F6Y" secondAttribute="trailing" constant="22" id="uKH-xx-Fbj"/>
                             <constraint firstItem="Pbj-2i-eF9" firstAttribute="leading" secondItem="DW4-AL-Ydb" secondAttribute="trailing" constant="-40" id="vec-Zv-FPB"/>
-                            <constraint firstItem="Wbo-d1-k1b" firstAttribute="leading" secondItem="JlR-dh-DoR" secondAttribute="leadingMargin" constant="10" id="xZO-g6-xJm"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="1LN-aa-1p0" secondAttribute="trailing" constant="10" id="xZY-tQ-6oa"/>
-                            <constraint firstItem="6Q5-7C-0wh" firstAttribute="top" secondItem="yTA-Uj-F6Y" secondAttribute="bottom" constant="35" id="zV7-eZ-Seh"/>
+                            <constraint firstItem="yTA-Uj-F6Y" firstAttribute="top" secondItem="1LN-aa-1p0" secondAttribute="bottom" constant="15" id="wIr-uh-Xik"/>
+                            <constraint firstItem="Wbo-d1-k1b" firstAttribute="leading" secondItem="JlR-dh-DoR" secondAttribute="leading" constant="20" id="xZO-g6-xJm"/>
+                            <constraint firstAttribute="trailing" secondItem="1LN-aa-1p0" secondAttribute="trailing" constant="20" id="xZY-tQ-6oa"/>
+                            <constraint firstItem="o3v-ll-IgR" firstAttribute="trailing" secondItem="Kb6-iX-qC1" secondAttribute="trailing" constant="20" id="z35-JO-DzF"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="handleTextField" destination="ZGm-Ex-Oz2" id="Ufd-E3-keQ"/>
-                        <outlet property="messageTextField" destination="pLx-l2-v5E" id="ALY-Wr-uGa"/>
+                        <outlet property="messageTextView" destination="0PO-fl-0jh" id="14S-Oc-mmY"/>
                         <outlet property="nameTextField" destination="Kb6-iX-qC1" id="EvW-Dz-lW9"/>
                         <outlet property="profileImg" destination="DW4-AL-Ydb" id="zG9-6e-gmZ"/>
                     </connections>
@@ -580,7 +580,7 @@
             <objects>
                 <viewController storyboardIdentifier="PostListVC" id="A8c-zA-jyb" customClass="PostListViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="J5d-Go-gxw">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="477"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="511.33333333333331"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="Ixl-d3-zOE"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -838,7 +838,7 @@
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wre-Lz-Jv2">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wre-Lz-Jv2">
                                         <rect key="frame" x="156" y="144.33333333333334" width="237" height="17"/>
                                         <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="14"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -917,7 +917,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="2dZ-Dq-Eob"/>
+        <segue reference="CkB-Wx-fnp"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="CancelIcon" width="24" height="24"/>
