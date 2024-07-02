@@ -25,6 +25,7 @@ class PostTabViewController: UIViewController, UISearchBarDelegate{
         setSearchBarView()
         setupData()
         setupTapGestureOnSearchBarView()
+        setRefreshControl()
    // Do any additional setup after loading the view.
     }
     
@@ -94,6 +95,23 @@ class PostTabViewController: UIViewController, UISearchBarDelegate{
         let storyboard = UIStoryboard(name: "PostTab", bundle: nil)
         if let recentSearchVC = storyboard.instantiateViewController(withIdentifier: "RecentSearchVC") as? RecentSearchViewController {
             self.navigationController?.pushViewController(recentSearchVC, animated: false)
+        }
+    }
+    
+    private func setRefreshControl(){
+        // UIRefreshControl 생성
+       let refreshControl = UIRefreshControl()
+       refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+
+       // 테이블 뷰에 UIRefreshControl 설정
+        collectionView.refreshControl = refreshControl
+    }
+    
+    @objc private func refreshData(_ sender: Any) {
+        // 데이터 새로고침 완료 후 UIRefreshControl을 종료
+        self.setupData()
+        DispatchQueue.main.async {
+            self.collectionView.refreshControl?.endRefreshing()
         }
     }
     

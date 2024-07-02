@@ -18,7 +18,7 @@ class FollowListDataManager {
     
     
     func followerDataManager(_ handle : String, _ completion: @escaping ([MemberListDataModel]) -> Void) {
-        let url = "\(APIConstants.baseURLv2)/api/v2/members/\(handle)/follower"
+        let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)/follower"
         let authenticator = MyAuthenticator()
         let credential = MyAuthenticationCredential(accessToken: accessToken,
                                                     refreshToken: refreshToken,

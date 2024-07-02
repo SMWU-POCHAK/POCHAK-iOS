@@ -18,7 +18,7 @@ class FollowToggleDataManager {
     
     
     func followToggleDataManager(_ handle : String, _ completion: @escaping (FollowToggleDataResponse) -> Void) {
-        let url = "\(APIConstants.baseURLv2)/api/v2/members/\(handle)/follow"
+        let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)/follow"
         let authenticator = MyAuthenticator()
         let credential = MyAuthenticationCredential(accessToken: accessToken,
                                                     refreshToken: refreshToken,

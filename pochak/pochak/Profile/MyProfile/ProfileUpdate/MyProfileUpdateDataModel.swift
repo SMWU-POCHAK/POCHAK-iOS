@@ -7,14 +7,14 @@
 
 struct MyProfileUpdateResponse: Codable {
     let isSuccess: Bool
-    let code: Int
+    let code: String
     let message: String
     let result: MyProfileUpdateDataModel
 }
 
 struct MyProfileUpdateDataModel : Codable {
-    var profileImgUrl : String?
     var name : String?
     var handle : String?
     var message : String?
+    var profileImgUrl : String?
 }

@@ -16,7 +16,7 @@ class MyProfilePostDataManager {
     let refreshToken = GetToken.getRefreshToken()
     
     func myProfileUserAndPochakedPostDataManager(_ handle : String, _ completion: @escaping (MyProfileUserAndPochakedPostModel) -> Void) {
-        let url = "\(APIConstants.baseURLv2)/api/v2/members/\(handle)"
+        let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)"
         let authenticator = MyAuthenticator()
         let credential = MyAuthenticationCredential(accessToken: accessToken,
                                                     refreshToken: refreshToken,

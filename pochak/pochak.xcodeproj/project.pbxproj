@@ -115,11 +115,12 @@
 		EA01079C2A59556800A3AE85 /* PostTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0107972A59556800A3AE85 /* PostTabViewController.swift */; };
 		EA01079E2A59556800A3AE85 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0107992A59556800A3AE85 /* PostViewController.swift */; };
 		EA0107A72A5CF73900A3AE85 /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0107A62A5CF73900A3AE85 /* AlarmViewController.swift */; };
-		EA0107AE2A5EC23900A3AE85 /* OtherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0107AC2A5EC23900A3AE85 /* OtherCollectionViewCell.swift */; };
-		EA0107AF2A5EC23900A3AE85 /* OtherCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA0107AD2A5EC23900A3AE85 /* OtherCollectionViewCell.xib */; };
+		EA0107AE2A5EC23900A3AE85 /* OtherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0107AC2A5EC23900A3AE85 /* OtherTableViewCell.swift */; };
+		EA0107AF2A5EC23900A3AE85 /* OtherTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA0107AD2A5EC23900A3AE85 /* OtherTableViewCell.xib */; };
 		EA0107B32A5ECB8A00A3AE85 /* PostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0107B12A5ECB8A00A3AE85 /* PostCollectionViewCell.swift */; };
 		EA0107B42A5ECB8A00A3AE85 /* PostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA0107B22A5ECB8A00A3AE85 /* PostCollectionViewCell.xib */; };
 		EA0F23662C319C030014F94E /* PreviewAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0F23652C319C030014F94E /* PreviewAlarmViewController.swift */; };
+		EA0F23692C32DA780014F94E /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0F23682C32DA780014F94E /* UIViewController+.swift */; };
 		EA1289082B3B2823002EC93E /* AlarmDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1289072B3B2823002EC93E /* AlarmDataModel.swift */; };
 		EA12890A2B3B2836002EC93E /* AlarmDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1289092B3B2836002EC93E /* AlarmDataService.swift */; };
 		EA12890C2B3BF1A7002EC93E /* RecentSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA12890B2B3BF1A7002EC93E /* RecentSearchViewController.swift */; };
@@ -127,8 +128,6 @@
 		EA1289132B3C4F1F002EC93E /* SearchDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1289122B3C4F1F002EC93E /* SearchDataModel.swift */; };
 		EA17182B2A5912A7009168E6 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1718292A5912A7009168E6 /* CameraViewController.swift */; };
 		EA17182C2A5912A7009168E6 /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA17182A2A5912A7009168E6 /* UploadViewController.swift */; };
-		EA1718362A592BE3009168E6 /* AlarmCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1718342A592BE3009168E6 /* AlarmCollectionViewCell.swift */; };
-		EA1718372A592BE3009168E6 /* AlarmCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA1718352A592BE3009168E6 /* AlarmCollectionViewCell.xib */; };
 		EA1B0B5B2A49D23A00F86FBC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1B0B5A2A49D23A00F86FBC /* AppDelegate.swift */; };
 		EA1B0B5D2A49D23A00F86FBC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1B0B5C2A49D23A00F86FBC /* SceneDelegate.swift */; };
 		EA1B0B5F2A49D23A00F86FBC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1B0B5E2A49D23A00F86FBC /* ViewController.swift */; };
@@ -140,8 +139,8 @@
 		EA4EF8D82C2EC5F7009549FF /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4EF8D72C2EC5F7009549FF /* UITextField+.swift */; };
 		EA6306D82C2BFE53000DB0A7 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6306D72C2BFE53000DB0A7 /* CustomTabBarController.swift */; };
 		EA6306DA2C2BFE83000DB0A7 /* CustomTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6306D92C2BFE83000DB0A7 /* CustomTabbar.swift */; };
-		EA7EE1D82BF38921009486CC /* PochakAlarmCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7EE1D62BF38921009486CC /* PochakAlarmCollectionViewCell.swift */; };
-		EA7EE1D92BF38921009486CC /* PochakAlarmCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA7EE1D72BF38921009486CC /* PochakAlarmCollectionViewCell.xib */; };
+		EA7EE1D82BF38921009486CC /* PochakAlarmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7EE1D62BF38921009486CC /* PochakAlarmTableViewCell.swift */; };
+		EA7EE1D92BF38921009486CC /* PochakAlarmTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA7EE1D72BF38921009486CC /* PochakAlarmTableViewCell.xib */; };
 		EA817AB62B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA817AB52B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift */; };
 		EA99B63C2A5143A800EBA2AD /* CameraTab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA99B63B2A5143A800EBA2AD /* CameraTab.storyboard */; };
 		EA9F5CB22B0EF7BB0021951F /* UploadDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9F5CB12B0EF7BB0021951F /* UploadDataModel.swift */; };
@@ -300,11 +299,12 @@
 		EA0107972A59556800A3AE85 /* PostTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTabViewController.swift; sourceTree = "<group>"; };
 		EA0107992A59556800A3AE85 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		EA0107A62A5CF73900A3AE85 /* AlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
-		EA0107AC2A5EC23900A3AE85 /* OtherCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherCollectionViewCell.swift; sourceTree = "<group>"; };
-		EA0107AD2A5EC23900A3AE85 /* OtherCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OtherCollectionViewCell.xib; sourceTree = "<group>"; };
+		EA0107AC2A5EC23900A3AE85 /* OtherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherTableViewCell.swift; sourceTree = "<group>"; };
+		EA0107AD2A5EC23900A3AE85 /* OtherTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OtherTableViewCell.xib; sourceTree = "<group>"; };
 		EA0107B12A5ECB8A00A3AE85 /* PostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCollectionViewCell.swift; sourceTree = "<group>"; };
 		EA0107B22A5ECB8A00A3AE85 /* PostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostCollectionViewCell.xib; sourceTree = "<group>"; };
 		EA0F23652C319C030014F94E /* PreviewAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewAlarmViewController.swift; sourceTree = "<group>"; };
+		EA0F23682C32DA780014F94E /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		EA1289072B3B2823002EC93E /* AlarmDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDataModel.swift; sourceTree = "<group>"; };
 		EA1289092B3B2836002EC93E /* AlarmDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDataService.swift; sourceTree = "<group>"; };
 		EA12890B2B3BF1A7002EC93E /* RecentSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchViewController.swift; sourceTree = "<group>"; };
@@ -312,8 +312,6 @@
 		EA1289122B3C4F1F002EC93E /* SearchDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDataModel.swift; sourceTree = "<group>"; };
 		EA1718292A5912A7009168E6 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		EA17182A2A5912A7009168E6 /* UploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
-		EA1718342A592BE3009168E6 /* AlarmCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCollectionViewCell.swift; sourceTree = "<group>"; };
-		EA1718352A592BE3009168E6 /* AlarmCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlarmCollectionViewCell.xib; sourceTree = "<group>"; };
 		EA1B0B572A49D23A00F86FBC /* pochak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pochak.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA1B0B5A2A49D23A00F86FBC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA1B0B5C2A49D23A00F86FBC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -329,8 +327,8 @@
 		EA4EF8D72C2EC5F7009549FF /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		EA6306D72C2BFE53000DB0A7 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		EA6306D92C2BFE83000DB0A7 /* CustomTabbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabbar.swift; sourceTree = "<group>"; };
-		EA7EE1D62BF38921009486CC /* PochakAlarmCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakAlarmCollectionViewCell.swift; sourceTree = "<group>"; };
-		EA7EE1D72BF38921009486CC /* PochakAlarmCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PochakAlarmCollectionViewCell.xib; sourceTree = "<group>"; };
+		EA7EE1D62BF38921009486CC /* PochakAlarmTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakAlarmTableViewCell.swift; sourceTree = "<group>"; };
+		EA7EE1D72BF38921009486CC /* PochakAlarmTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PochakAlarmTableViewCell.xib; sourceTree = "<group>"; };
 		EA817AB52B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		EA99B63B2A5143A800EBA2AD /* CameraTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CameraTab.storyboard; sourceTree = "<group>"; };
 		EA9F5CB12B0EF7BB0021951F /* UploadDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadDataModel.swift; sourceTree = "<group>"; };
@@ -525,6 +523,7 @@
 				0802AE022C31D3E00090FB92 /* UIImageView+.swift */,
 				EAC582732C3074EA006F44AF /* UIColor+.swift */,
 				EAE69F432C315009005762B7 /* UIVIew+.swift */,
+				EA0F23682C32DA780014F94E /* UIViewController+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -788,12 +787,10 @@
 		EA0F23672C31D1300014F94E /* cell */ = {
 			isa = PBXGroup;
 			children = (
-				EA1718342A592BE3009168E6 /* AlarmCollectionViewCell.swift */,
-				EA1718352A592BE3009168E6 /* AlarmCollectionViewCell.xib */,
-				EA0107AC2A5EC23900A3AE85 /* OtherCollectionViewCell.swift */,
-				EA0107AD2A5EC23900A3AE85 /* OtherCollectionViewCell.xib */,
-				EA7EE1D62BF38921009486CC /* PochakAlarmCollectionViewCell.swift */,
-				EA7EE1D72BF38921009486CC /* PochakAlarmCollectionViewCell.xib */,
+				EA0107AC2A5EC23900A3AE85 /* OtherTableViewCell.swift */,
+				EA0107AD2A5EC23900A3AE85 /* OtherTableViewCell.xib */,
+				EA7EE1D62BF38921009486CC /* PochakAlarmTableViewCell.swift */,
+				EA7EE1D72BF38921009486CC /* PochakAlarmTableViewCell.xib */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -1096,7 +1093,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA7EE1D92BF38921009486CC /* PochakAlarmCollectionViewCell.xib in Resources */,
+				EA7EE1D92BF38921009486CC /* PochakAlarmTableViewCell.xib in Resources */,
 				EAF9184F2AA462C50037C270 /* SearchResultTableViewCell.xib in Resources */,
 				0844D7F42BF21A80001154AC /* CancelViewCell.xib in Resources */,
 				EAFB4B892A5147B400E0F2FA /* PostTab.storyboard in Resources */,
@@ -1115,14 +1112,13 @@
 				EA99B63C2A5143A800EBA2AD /* CameraTab.storyboard in Resources */,
 				EAFB4B842A51478600E0F2FA /* HomeTab.storyboard in Resources */,
 				EA1B0B672A49D23B00F86FBC /* LaunchScreen.storyboard in Resources */,
-				EA0107AF2A5EC23900A3AE85 /* OtherCollectionViewCell.xib in Resources */,
+				EA0107AF2A5EC23900A3AE85 /* OtherTableViewCell.xib in Resources */,
 				3769D6C42B3C3A1600294CD1 /* FollowerCollectionViewCell.xib in Resources */,
 				EAAACDB62A5168280041B1B9 /* Main.storyboard in Resources */,
 				EAFB4B8B2A5147C400E0F2FA /* AlarmTab.storyboard in Resources */,
 				0844D7F02BF219F6001154AC /* DeleteViewCell.xib in Resources */,
 				089C75892A51728A003AAB94 /* Pretendard-Thin.ttf in Resources */,
 				08C02EF22BF37D2F00627C21 /* ReportTableViewCell.xib in Resources */,
-				EA1718372A592BE3009168E6 /* AlarmCollectionViewCell.xib in Resources */,
 				0844D7EC2BF218A5001154AC /* ReportViewCell.xib in Resources */,
 				EA1B0B642A49D23B00F86FBC /* Assets.xcassets in Resources */,
 				0823B0752A5B0E780085002F /* CommentTableViewCell.xib in Resources */,
@@ -1261,10 +1257,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA7EE1D82BF38921009486CC /* PochakAlarmCollectionViewCell.swift in Sources */,
+				EA7EE1D82BF38921009486CC /* PochakAlarmTableViewCell.swift in Sources */,
 				EA01079E2A59556800A3AE85 /* PostViewController.swift in Sources */,
 				3769D6AF2B3C2FD500294CD1 /* GoogleLoginDataManager.swift in Sources */,
-				EA0107AE2A5EC23900A3AE85 /* OtherCollectionViewCell.swift in Sources */,
+				EA0107AE2A5EC23900A3AE85 /* OtherTableViewCell.swift in Sources */,
 				EA9F5CB42B0EF7CC0021951F /* UploadDataService.swift in Sources */,
 				EA9F5CB22B0EF7BB0021951F /* UploadDataModel.swift in Sources */,
 				08FD3A3C2B3AF94A00574880 /* CommentDataModel.swift in Sources */,
@@ -1292,6 +1288,7 @@
 				08D98C472AFEE8B300E9A097 /* PostDataModel.swift in Sources */,
 				3769D6C32B3C3A1600294CD1 /* FollowerCollectionViewCell.swift in Sources */,
 				374261722C3092B100B67886 /* UnblockDataManager.swift in Sources */,
+				EA0F23692C32DA780014F94E /* UIViewController+.swift in Sources */,
 				EA1B0B5F2A49D23A00F86FBC /* ViewController.swift in Sources */,
 				379A6A3A2B56BDBF0087FAAC /* Authenticator.swift in Sources */,
 				EA17182C2A5912A7009168E6 /* UploadViewController.swift in Sources */,
@@ -1347,7 +1344,6 @@
 				37C3AF482B3CB2B300B4C79C /* MyProfilePochakedPostModel.swift in Sources */,
 				EAF8852B2B569B6600BA184A /* RecentSearchRealmManager.swift in Sources */,
 				37D311E12B566C5A00A1D7C1 /* DeleteAccountDataModel.swift in Sources */,
-				EA1718362A592BE3009168E6 /* AlarmCollectionViewCell.swift in Sources */,
 				376F125B2A8B7440005F469B /* SocialLoginViewController.swift in Sources */,
 				37D311D72B53057700A1D7C1 /* MyProfileUpdateDataModel.swift in Sources */,
 				EA4EF8D82C2EC5F7009549FF /* UITextField+.swift in Sources */,
