@@ -590,7 +590,7 @@
 			path = FollowDataManager;
 			sourceTree = "<group>";
 		};
-		373815142A89E6BE0032066A /* Onboarding */ = {
+		373815142A89E6BE0032066A /* Login */ = {
 			isa = PBXGroup;
 			children = (
 				373815152A89E6D30032066A /* SocialJoinViewController.swift */,
@@ -599,7 +599,7 @@
 				3769D6AD2B3C2FA800294CD1 /* GoogleLoginDataManager */,
 				3769D6AC2B3C2F9900294CD1 /* JoinDataManager */,
 			);
-			path = Onboarding;
+			path = Login;
 			sourceTree = "<group>";
 		};
 		3742616A2C3075B400B67886 /* Settings */ = {
@@ -873,7 +873,7 @@
 				08C02EF32BF3942300627C21 /* Extensions */,
 				3769D6B72B3C342900294CD1 /* Profile */,
 				EAF918522AA468FF0037C270 /* Network */,
-				373815142A89E6BE0032066A /* Onboarding */,
+				373815142A89E6BE0032066A /* Login */,
 				EA2B09882A629EED0005EA8B /* Search */,
 				0823B0792A5D6F1E0085002F /* Home */,
 				0823B0762A5D6BC20085002F /* Post */,
