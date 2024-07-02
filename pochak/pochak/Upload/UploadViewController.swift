@@ -30,6 +30,8 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
     var searchTextField = UITextField()
     var cancelButton = UIButton()
     
+    var currentText : Int = 0
+    
     lazy var backButton: UIBarButtonItem = { // 업로드 버튼
         let backBarButtonItem = UIBarButtonItem(image: UIImage(named: "ChevronLeft")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(backbuttonPressed))
         backBarButtonItem.imageInsets = UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0)
@@ -85,7 +87,7 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
         captionField.delegate = self
         captionField.textContainerInset = UIEdgeInsets.zero
         captionField.textContainer.lineFragmentPadding = 0
-        
+                
         if let navigationBar = self.navigationController?.navigationBar {
                 let textAttributes = [
                     NSAttributedString.Key.foregroundColor: UIColor.black,
@@ -103,7 +105,7 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
     }
     
     private func tagIdDidChange(){
-        if(!tagId.isEmpty){
+        if(!tagId.isEmpty && currentText <= 50){
             uploadButton.tintColor = UIColor(named: "yellow00")
             isUploadAllowed = true
         }
@@ -135,6 +137,7 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
                 taggedUserHandles.append(taggedUserHandle)
             }
             print("업로드 완료")
+            print(isUploadAllowed)
             
             showProgressBar()
     
@@ -178,6 +181,8 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
         searchTextField.returnKeyType = .search
         searchTextField.setPlaceholderColor(UIColor(named: "gray03"), font: "Pretendard-Medium", fontSize: 16)
         searchTextField.tintColor = .black
+        
+        searchTextField.addTarget(self, action: #selector(didTextFieldChanged), for: .editingChanged)
         
         // 검색 아이콘 설정
         let iconView = UIImageView(frame: CGRect(x: 12, y: 12, width: 24, height: 24)) // set your Own size
@@ -254,8 +259,8 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
     }
 
     // 검색바 텍스트
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let currentText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? string
+    @objc func didTextFieldChanged() {
+        let currentText = self.searchTextField.text ?? ""
 
         if currentText.isEmpty {
             self.tableView.isHidden = true
@@ -265,7 +270,6 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
             self.tableView.isHidden = false
             sendTextToServer(currentText)
         }
-        return true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -342,28 +346,33 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
             }
         }
     }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        currentText = captionField.text.count
+        captionCountText.text = "\(currentText)/50"
+
+        // 50자 넘었을 때 글자수 빨간색으로 변경
+        if(currentText > 50){
+            captionCountText.textColor = .red
+        }
+        else{
+            captionCountText.textColor = .black
+        }
+        
+        // 50자 넘으면 업로드 안되도록
+        if(currentText <= 50 && !tagId.isEmpty){
+            uploadButton.tintColor = UIColor(named: "yellow00")
+            isUploadAllowed = true
+        }
+        else{
+            uploadButton.tintColor = UIColor(named: "gray03")
+            isUploadAllowed = true
+        }
+    }
 }
 
 // MARK: - 캡션(50자 제한)
 extension UploadViewController : UITextViewDelegate{
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let currentText = textView.text ?? ""
-        guard let stringRange = Range(range, in: currentText) else {return false}
-        let changedText = currentText.replacingCharacters(in: stringRange, with: text)
-        captionCountText.text = "\(currentText.count)/50" // 글자수 보여주는 label 변경
-        
-        if(currentText.count > 50){
-            textView.textColor = .red
-        }
-        else{
-            textView.textColor = .black
-        }
-        
-        //최대 글자수(50자) 이상 입력 불가
-        return changedText.count <= 50
-    }
-    
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == "내용 입력하기" {
             textView.text = nil

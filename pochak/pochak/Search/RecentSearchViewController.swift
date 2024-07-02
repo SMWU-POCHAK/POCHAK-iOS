@@ -91,6 +91,7 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
         searchTextField.returnKeyType = .search
         searchTextField.setPlaceholderColor(UIColor(named: "gray03"), font: "Pretendard-Medium", fontSize: 16)
         searchTextField.tintColor = .black
+        searchTextField.addTarget(self, action: #selector(didTextFieldChanged), for: .editingChanged)
         
         // 검색 아이콘 설정
         let iconView = UIImageView(frame: CGRect(x: 12, y: 12, width: 24, height: 24)) // set your Own size
@@ -168,18 +169,18 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
     }
 
     // 검색바 텍스트
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let currentText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? string
+    @objc func didTextFieldChanged() {
+        let currentText = self.searchTextField.text ?? ""
         if currentText.isEmpty {
             self.resultVC.tableView.isHidden = true
             self.searchResultData = []
             self.resultVC.tableView.reloadData()
         } else {
             self.resultVC.tableView.isHidden = false
+            print(currentText)
             sendTextToServer(currentText)
             tableView.reloadData()
         }
-        return true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
