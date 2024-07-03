@@ -27,8 +27,10 @@ class MyAuthenticator : Authenticator {
     func apply(_ credential: Credential, to urlRequest: inout URLRequest) {
         print("--------------- 1. apply Function 실행 중 ---------------")
         print(">>>>> apply 현재 토큰 : \(accessToken)")
-        urlRequest.addValue(accessToken, forHTTPHeaderField: "Authorization")
-        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-type")
+        urlRequest.addValue(credential.accessToken, forHTTPHeaderField: "Authorization")
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        print(">>>>> apply 현재 urlRequest : \(urlRequest)")
+        
     }
     
     // 2. api요청 후 error가 떨어진 경우, 401에러(인증에러)인 경우만 refresh가 되도록 필터링
@@ -50,9 +52,9 @@ class MyAuthenticator : Authenticator {
         let bearerToken = HTTPHeader.authorization(bearerToken: credential.accessToken).value
         let startIndex = bearerToken.index(bearerToken.startIndex, offsetBy: 7)
         let newBearerToken = String(bearerToken[startIndex...]) // 12:00:00
-        print(">>>>> headers beartoken: \(urlRequest.headers["Authorization"])")
-        print(">>>>> beartoken : \(newBearerToken)")
-        print(">>>>> beartoken이 맞는건지 확인합니다 : \(urlRequest.headers["Authorization"] == newBearerToken)")
+        print(">>>>> headers bearerToken: \(urlRequest.headers["Authorization"])")
+        print(">>>>> bearerToken : \(newBearerToken)")
+        print(">>>>> bearerToken이 맞는건지 확인합니다 : \(urlRequest.headers["Authorization"] == newBearerToken)")
         return urlRequest.headers["Authorization"] == newBearerToken
     }
     
@@ -71,6 +73,7 @@ class MyAuthenticator : Authenticator {
                    print(result.message)
                    print("inside Refresh Success!!!!")
                    let newAccessToken = result.result.accessToken
+                   print(newAccessToken)
                    do {
                        try KeychainManager.update(account: "accessToken", value: newAccessToken)
                    } catch {

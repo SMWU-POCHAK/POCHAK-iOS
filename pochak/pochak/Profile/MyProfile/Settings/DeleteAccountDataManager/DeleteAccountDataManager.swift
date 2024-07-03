@@ -11,11 +11,12 @@ class DeleteAccountDataManager{
     
     static let shared = DeleteAccountDataManager()
     
-    // Get token
-    let accessToken = GetToken.getAccessToken()
-    let refreshToken = GetToken.getRefreshToken()
-    
     func deleteAccountDataManager(_ completion: @escaping (DeleteAccountModel) -> Void) {
+        
+        // Get token
+        let accessToken = GetToken.getAccessToken()
+        let refreshToken = GetToken.getRefreshToken()
+        
         let url = "\(APIConstants.baseURL)/api/v2/signout"
         
         print("accessToken : \(accessToken)")
