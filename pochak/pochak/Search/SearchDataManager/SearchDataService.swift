@@ -9,14 +9,14 @@ import Foundation
 import Alamofire
 
 class SearchDataService{
-    
+    let accessToken = GetToken.getAccessToken()
     static let shared = SearchDataService()
     
     func getIdSearch(keyword:String,completion: @escaping(NetworkResult<Any>) -> Void){
         let parameters: [String: Any] = ["keyword": keyword]
-        let header : HTTPHeaders = ["Authorization": APIConstants.suyeonToken,
+        let header : HTTPHeaders = ["Authorization": self.accessToken,
                                     "Content-type": "application/json"
-                                    ]
+        ]
         print("==getIdSearch==")
         print(parameters)
         let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/members/search?keyword=\(keyword)",
@@ -24,45 +24,48 @@ class SearchDataService{
                                      encoding: URLEncoding.default,
                                      headers: header)
         
-        dataRequest.responseJSON { response in
-            switch response.result {
-            case .success(let value): // 데이터 통신이 성공한 경우
-                print(value)
+        // 통신 성공했는지에 대한 여부
+        dataRequest.responseData { dataResponse in
+            // dataResponse 안에는 통신에 대한 결과물
+            // dataResponse.result는 통신 성공/실패 여부
+            switch dataResponse.result{
+            case .success:
+                print(dataResponse.response)
+                // 성공 시 상태코드와 데이터(value) 수신
+                guard let statusCode = dataResponse.response?.statusCode else {return}
+                guard let value = dataResponse.value else {return}
                 
-                guard let json = value as? [String: Any],
-                      let result = json["result"] as? [String: Any],
-                      let jsonArray = result["memberList"] as? [[String: Any]] else {
-                    completion(.networkFail)
-                    return
-                }
-                
-                var searchData = [idSearchResponse]()
-                
-                for dict in jsonArray {
-                    if let profileUrl = dict["profileImage"] as? String,
-                       let handle = dict["handle"] as? String,
-                       let memberId = dict["memberId"] as? Int, // memberId는 Int 타입
-                       let name = dict["name"] as? String {
-
-                        let searchDataItem = idSearchResponse(memberId: "\(memberId)", profileImage: profileUrl, handle: handle, name: name)
-                        searchData.append(searchDataItem)
-                    }
-                }
-                
-                print(searchData)
-                completion(.success(searchData))
-                
-            case .failure(let error):
-                if let statusCode = response.response?.statusCode {
-                    print("Failure Status Code: \(statusCode)")
-                }
-                print("Failure Error: \(error.localizedDescription)")
-                
-                if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
-                    print("Failure Data: \(errorMessage)")
-                }
+                let networkResult = self.judgeStatus(by: statusCode, value)
+                completion(networkResult)
+            case .failure:
                 completion(.networkFail)
             }
+        }
+    }
+    
+    private func judgeStatus(by statusCode: Int, _ data: Data) -> NetworkResult<Any> {
+        switch statusCode{
+        case 200: return isValidData(data: data)  // 성공 -> 데이터 가공해서 전달해야하므로 isValidData라는 함수로 데이터 넘겨주기
+        case 400: return .pathErr  // 잘못된 요청
+        case 500: return .serverErr  // 서버 에러
+        default: return .networkFail  // 네트워크 에러
+        }
+    }
+    
+    // 통신 성공 시 데이터를 가공하기 위한 함수
+    private func isValidData(data: Data) -> NetworkResult<Any> {
+        do {
+            let decoder = JSONDecoder()
+            let decodedData = try decoder.decode(IdSearchResponse.self, from: data)
+            return .success(decodedData)
+        } catch {
+            print("Decoding error:", error)
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("Received JSON: \(jsonString)")
+            } else {
+                print("Invalid JSON data received")
+            }
+            return .pathErr
         }
     }
 }

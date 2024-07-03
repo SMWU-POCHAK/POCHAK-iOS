@@ -65,26 +65,26 @@ class PostTabViewController: UIViewController, UISearchBarDelegate{
                 switch response {
                 case .success(let data):
                     self.postTabDataResponse = data as? PostTabDataResponse
-                        guard let result = self.postTabDataResponse?.result else { return }
+                    guard let result = self.postTabDataResponse?.result else { return }
+                
+                    let newPosts = result.postList
+                    let startIndex = self.postList.count
+                    let endIndex = startIndex + newPosts.count
+                    let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
                     
-                        let newPosts = result.postList
-                        let startIndex = self.postList.count
-                        let endIndex = startIndex + newPosts.count
-                        let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
-                        
-                        self.postList.append(contentsOf: newPosts)
-                        
-                        self.isLastPage = result.pageInfo.lastPage
-                        
-                        DispatchQueue.main.async {
-                            if self.currentFetchingPage == 0 {
-                                self.collectionView.reloadData()
-                            } else {
-                                self.collectionView.insertItems(at: newIndexPaths)
-                            }
-                            self.isCurrentlyFetching = false
-                            self.currentFetchingPage += 1;
+                    self.postList.append(contentsOf: newPosts)
+                    
+                    self.isLastPage = result.pageInfo.lastPage
+                    
+                    DispatchQueue.main.async {
+                        if self.currentFetchingPage == 0 {
+                            self.collectionView.reloadData()
+                        } else {
+                            self.collectionView.insertItems(at: newIndexPaths)
                         }
+                        self.isCurrentlyFetching = false
+                        self.currentFetchingPage += 1;
+                    }
                 case .requestErr(let err):
                     print(err)
                 case .pathErr:
