@@ -17,10 +17,15 @@ class PostTabViewController: UIViewController, UISearchBarDelegate{
     private var postTabDataResult: PostTabDataResult!
     private var postList: [PostTabDataPostList]! = []
     
+    private var isLastPage: Bool = false
+    private var isCurrentlyFetching: Bool = false
+    private var currentFetchingPage: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Delegate
-        
+        currentFetchingPage = 0
+
         setupCollectionView()
         setSearchBarView()
         setupData()
@@ -54,19 +59,31 @@ class PostTabViewController: UIViewController, UISearchBarDelegate{
     }
 
     private func setupData(){ // 서버 연결 시
-        PostTabDataService.shared.recommandGet(){
+        isCurrentlyFetching = true
+        PostTabDataService.shared.recommandGet(page: currentFetchingPage){
             response in
                 switch response {
                 case .success(let data):
-                    print("success")
-                    print(data)
                     self.postTabDataResponse = data as? PostTabDataResponse
-                    self.postTabDataResult = self.postTabDataResponse.result
-                    print(self.postTabDataResult!)
-                    self.postList = self.postTabDataResult.postList
-                    print(self.postList)
+                    guard let result = self.postTabDataResponse?.result else { return }
+                
+                    let newPosts = result.postList
+                    let startIndex = self.postList.count
+                    let endIndex = startIndex + newPosts.count
+                    let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
+                    
+                    self.postList.append(contentsOf: newPosts)
+                    
+                    self.isLastPage = result.pageInfo.lastPage
+                    
                     DispatchQueue.main.async {
-                        self.collectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
+                        if self.currentFetchingPage == 0 {
+                            self.collectionView.reloadData()
+                        } else {
+                            self.collectionView.insertItems(at: newIndexPaths)
+                        }
+                        self.isCurrentlyFetching = false
+                        self.currentFetchingPage += 1;
                     }
                 case .requestErr(let err):
                     print(err)
@@ -109,6 +126,9 @@ class PostTabViewController: UIViewController, UISearchBarDelegate{
     
     @objc private func refreshData(_ sender: Any) {
         // 데이터 새로고침 완료 후 UIRefreshControl을 종료
+        print("refresh")
+        self.postList = []
+        self.currentFetchingPage = 0
         self.setupData()
         DispatchQueue.main.async {
             self.collectionView.refreshControl?.endRefreshing()
@@ -177,3 +197,16 @@ extension PostTabViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - Extension; UIScrollView
+
+extension PostTabViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (collectionView.contentOffset.y > (collectionView.contentSize.height - collectionView.bounds.size.height)){
+            if (!isLastPage && !isCurrentlyFetching) {
+                print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
+                isCurrentlyFetching = true
+                setupData()
+            }
+        }
+    }
+}

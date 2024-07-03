@@ -1,4 +1,3 @@
-
 //
 //  SearchResultViewController.swift
 //  pochak
@@ -28,7 +27,15 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
     let realm = try! Realm()
     var realmManager = RecentSearchRealmManager()
     var recentSearchTerms: Results<RecentSearchModel>!
-    var searchResultData : [idSearchResponse] = []
+    
+    var idSearchResponseData : IdSearchResponse!
+    var memberList : [IdSearchMember]! = []
+    
+    private var isLastPage: Bool = false
+    private var isCurrentlyFetching: Bool = false
+    private var currentFetchingPage: Int = 0
+
+    var currentText : String = ""
 
     var searchTextFieldWidthConstraint: NSLayoutConstraint!
     var cancelButtonLeadingConstraint: NSLayoutConstraint!
@@ -91,6 +98,7 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
         searchTextField.returnKeyType = .search
         searchTextField.setPlaceholderColor(UIColor(named: "gray03"), font: "Pretendard-Medium", fontSize: 16)
         searchTextField.tintColor = .black
+        searchTextField.addTarget(self, action: #selector(didTextFieldChanged), for: .editingChanged)
         
         // 검색 아이콘 설정
         let iconView = UIImageView(frame: CGRect(x: 12, y: 12, width: 24, height: 24)) // set your Own size
@@ -168,18 +176,20 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
     }
 
     // 검색바 텍스트
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let currentText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? string
+    @objc func didTextFieldChanged() {
+        currentText = self.searchTextField.text ?? ""
         if currentText.isEmpty {
+            self.currentFetchingPage = 0
             self.resultVC.tableView.isHidden = true
-            self.searchResultData = []
+            self.memberList = []
             self.resultVC.tableView.reloadData()
         } else {
+            self.currentFetchingPage = 0
             self.resultVC.tableView.isHidden = false
+            print(currentText)
             sendTextToServer(currentText)
             tableView.reloadData()
         }
-        return true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -235,17 +245,31 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
     }
     
     func sendTextToServer(_ searchText: String) {
-        // searchText를 사용하여 서버에 요청을 보내는 로직을 작성
-        // 서버 요청을 보내는 코드 작성
+        isCurrentlyFetching = true
         SearchDataService.shared.getIdSearch(keyword: searchText){ response in
             switch response {
             case .success(let data):
-                print("success")
+                print("success!!!!")
                 print(data)
-                self.searchResultData = data as! [idSearchResponse]
+                self.idSearchResponseData = data as? IdSearchResponse
+                guard let result = self.idSearchResponseData?.result else { return }
+            
+                let newPosts = result.memberList
+                let startIndex = self.memberList.count
+                let endIndex = startIndex + newPosts.count
+                let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
+                
+                self.memberList.append(contentsOf: newPosts)
+                self.isLastPage = result.pageInfo.lastPage
+                
                 DispatchQueue.main.async {
-                    print("!!!!!!SearchResultData!!!!!! \(self.searchResultData)")
-                    self.resultVC.tableView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
+                    if self.currentFetchingPage == 0 {
+                        self.resultVC.tableView.reloadData()
+                    } else {
+                        self.resultVC.tableView.insertRows(at: newIndexPaths, with: .none)
+                    }
+                    self.isCurrentlyFetching = false
+                    self.currentFetchingPage += 1;
                 }
             case .requestErr(let err):
                 print(err)
@@ -266,7 +290,7 @@ extension RecentSearchViewController:UITableViewDelegate, UITableViewDataSource 
         if tableView == self.tableView {
             return recentSearchTerms.count
         } else if tableView == self.resultVC.tableView {
-            return searchResultData.count
+            return memberList.count
         }
         return 0
     }
@@ -294,9 +318,9 @@ extension RecentSearchViewController:UITableViewDelegate, UITableViewDataSource 
                tableView.reloadData()
            }
         } else if tableView == self.resultVC.tableView {
-            let urls = self.searchResultData.map { $0.profileImage }
-            let handles = self.searchResultData.map { $0.handle }
-            let names = self.searchResultData.map { $0.name }
+            let urls = self.memberList.map { $0.profileImage }
+            let handles = self.memberList.map { $0.handle }
+            let names = self.memberList.map { $0.name }
             
             cell.userHandle.text = handles[indexPath.item]
             cell.userName.text = names[indexPath.item]
@@ -316,7 +340,7 @@ extension RecentSearchViewController:UITableViewDelegate, UITableViewDataSource 
             tableView.deselectRow(at: indexPath, animated: true)
             
         } else if tableView == self.resultVC.tableView {
-            let selectedUserData = searchResultData[indexPath.row]
+            let selectedUserData = memberList[indexPath.row]
             let handle = selectedUserData.handle
             let name = selectedUserData.name
             let profileImg = selectedUserData.profileImage
@@ -338,4 +362,18 @@ extension RecentSearchViewController:UITableViewDelegate, UITableViewDataSource 
         self.navigationController?.pushViewController(profileTabVC, animated: true)
     }
 
+}
+
+// MARK: - Extension; UIScrollView
+
+extension RecentSearchViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (self.tableView.contentOffset.y > (self.tableView.contentSize.height - self.tableView.bounds.size.height)){
+            if (!isLastPage && !isCurrentlyFetching) {
+                print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
+                isCurrentlyFetching = true
+                self.sendTextToServer(currentText)
+            }
+        }
+    }
 }
