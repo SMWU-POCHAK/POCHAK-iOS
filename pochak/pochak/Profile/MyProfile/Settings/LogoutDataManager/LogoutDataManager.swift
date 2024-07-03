@@ -10,12 +10,12 @@ class LogoutDataManager{
     
     static let shared = LogoutDataManager()
     
-    // Get token
-    let accessToken = GetToken.getAccessToken()
-    let refreshToken = GetToken.getRefreshToken()
-    
     
     func logoutDataManager(_ completion: @escaping (LogoutDataModel) -> Void) {
+        // Get token
+        let accessToken = GetToken.getAccessToken()
+        let refreshToken = GetToken.getRefreshToken()
+        
         let url = "\(APIConstants.baseURL)/api/v2/logout"
         
         print("accessToken : \(accessToken)")

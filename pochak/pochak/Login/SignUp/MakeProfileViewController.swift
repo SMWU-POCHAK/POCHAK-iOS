@@ -10,8 +10,7 @@ import UIKit
 class MakeProfileViewController: UIViewController {
         
     // MARK: - Data
-    let textViewPlaceHolder = "소개를 입력해주세요.(최대 50자, 3줄)"
-    let name = UserDefaultsManager.getData(type: String.self, forKey: .name) ?? "name not found"
+    let textViewPlaceHolder = "소개를 입력해주세요.\n(최대 50자, 3줄)"
     let email = UserDefaultsManager.getData(type: String.self, forKey: .email) ?? "email not found"
     let socialType = UserDefaultsManager.getData(type: String.self, forKey: .socialType) ?? "socialType not found"
     let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
@@ -21,6 +20,7 @@ class MakeProfileViewController: UIViewController {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var handleTextField: UITextField!
     @IBOutlet weak var messageTextView: UITextView!
+    @IBOutlet weak var checkHandleDuplicationBtn: UIButton!
     
     // MARK: - View LifeCycle
     
@@ -46,7 +46,7 @@ class MakeProfileViewController: UIViewController {
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
         
         // Name 항목 채워넣기
-        nameTextField.text = name
+//        nameTextField.text = name
         
         // 프로필 image 레이아웃
         profileImg.imageView?.contentMode = .scaleAspectFill
@@ -59,9 +59,44 @@ class MakeProfileViewController: UIViewController {
         messageTextView.textContainerInset = .zero // textView 기본 마진 제거
         messageTextView.text = textViewPlaceHolder // PlaceHolder 커스텀
         messageTextView.textColor = UIColor(named: "gray03") // PlaceHolder 커스텀
+        
+        // 중복확인 버튼 기본 이미지 세팅
+        checkHandleDuplicationBtn.setImage(UIImage(named: "checkHandle"), for: .normal)
+        
+        // 핸들 입력 중이면 중복확인 버튼 및 텍스트필드 글자 색 세팅 원래대로 변경
+        handleTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
     }
 
     // MARK: - Function
+    
+    @objc func textFieldDidChange(_ sender: Any?) {
+        handleTextField.textColor = .black
+        checkHandleDuplicationBtn.setImage(UIImage(named: "checkHandle"), for: .normal)
+    }
+    
+    
+    @IBAction func checkHandleDuplication(_ sender: Any) {
+        guard let handle = handleTextField.text  else {return}
+        print(">>>>> checkHandleDuplication handle : \(handle)")
+        
+        // API request : Get
+        CheckHandleDuplicationDataManager.shared.checkHandleDuplicationDataManager(handle) { resultData in
+            if resultData.message == "사용가능한 handle(아이디)입니다." {
+                // 버튼 변경
+                self.checkHandleDuplicationBtn.setImage(UIImage(named: "checkedHandle"), for: .normal)
+                self.handleTextField.textColor = UIColor(named: "yellow00")
+                // 버튼 disable 시키기
+            } else if resultData.message == "중복되는 handle(아이디)입니다." {
+                // Alert 창
+                self.showAlert(alertType: .confirmOnly,
+                          titleText: "중복된 아이디입니다",
+                          messageText: "다른 아이디를 입력해주세요.",
+                          cancelButtonText: "",
+                          confirmButtonText: "확인"
+                )
+            }
+        }
+    }
     
     @objc private func doneBtnTapped(_ sender: Any) {
         
@@ -225,5 +260,17 @@ extension MakeProfileViewController: UITextViewDelegate {
                 break
             }
         }
+    }
+}
+
+// Alert 창
+extension MakeProfileViewController : CustomAlertDelegate {
+    func cancel() {
+        print("canceled")
+    }
+    
+    
+    func confirmAction() {
+        print("confirmed")
     }
 }

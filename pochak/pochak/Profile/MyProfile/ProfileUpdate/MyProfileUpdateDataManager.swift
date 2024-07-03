@@ -9,7 +9,6 @@ import Alamofire
 
 class MyProfileUpdateDataManager{
     static let shared = MyProfileUpdateDataManager()
-    let accessToken = GetToken.getAccessToken()
 
     func updateDataManager(_ name : String,
                          _ handle : String,
@@ -17,6 +16,8 @@ class MyProfileUpdateDataManager{
                          _ profileImage : UIImage?,
                          _ completion: @escaping (MyProfileUpdateDataModel) -> Void) {
         
+        let accessToken = GetToken.getAccessToken()
+
         let header : HTTPHeaders = ["Authorization": accessToken, "Content-type": "multipart/form-data"]
         let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)"
         let requestBody : [String : String] = [
@@ -43,8 +44,10 @@ class MyProfileUpdateDataManager{
                     print(resultData)
                     completion(resultData)
                 case .failure(let error):
-                    print("실패함!!!!")
-                    print(error)
+                    print("updateDataManager error : \(error.localizedDescription)")
+                    if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
+                        print("Failure Data: \(errorMessage)")
+                    }
             }
         }
     }

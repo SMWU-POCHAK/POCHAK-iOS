@@ -16,17 +16,20 @@ class AppleLoginDataManager {
         let url = "\(APIConstants.baseURL)/apple/login"
         let header : HTTPHeaders = ["IdentityToken": IdentityToken, "AuthorizationCode" : authorizationCode]
 
-        print("url == \(url)")
-        AF.request(url, method: .post).validate().responseDecodable(of: AppleLoginResponse.self) { response in
-            print(response)
+        print(">>>>> appleLoginDataManager url == \(url)")
+        print(">>>>> appleLoginDataManager header == \(header)")
+        AF.request(url, method: .post, headers: header).validate().responseDecodable(of: AppleLoginResponse.self) { response in
+            print(response.result)
                switch response.result {
                case .success(let result):
                    let resultData = result.result
                    print(result)
                    completion(resultData)
                case .failure(let error):
-                   print("appleLoginDataManager error")
-                   print(error.localizedDescription)
+                   print("appleLoginDataManager error : \(error.localizedDescription)")
+                   if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
+                       print("Failure Data: \(errorMessage)")
+                   }
                }
            }
     }

@@ -20,8 +20,10 @@ class GoogleLoginDataManager {
                    let resultData = result.result
                    completion(resultData)
                case .failure(let error):
-                   print("googleLoginDataManager error")
-                   print(error.localizedDescription)
+                   print("googleLoginDataManager error : \(error)")
+                   if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
+                       print("Failure Data: \(errorMessage)")
+                   }
                }
            }
     }

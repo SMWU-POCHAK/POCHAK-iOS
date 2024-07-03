@@ -23,7 +23,7 @@ class MyProfileTabViewController: UIViewController {
     @IBOutlet weak var postListTabmanView: UIView!
     @IBOutlet weak var updateProfileBtn: UIButton!
     @IBOutlet weak var topUIView: UIView!
-    @IBOutlet weak var settingBtn: UIButton!
+    @IBOutlet weak var settingBtn: UIButton!    
     
     // MARK: - Data
     

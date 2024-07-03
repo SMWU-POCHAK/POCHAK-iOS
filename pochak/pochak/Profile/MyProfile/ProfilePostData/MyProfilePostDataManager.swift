@@ -11,11 +11,11 @@ class MyProfilePostDataManager {
     
     static let shared = MyProfilePostDataManager()
     
-    // Get token
-    let accessToken = GetToken.getAccessToken()
-    let refreshToken = GetToken.getRefreshToken()
-    
     func myProfileUserAndPochakedPostDataManager(_ handle : String, _ completion: @escaping (MyProfileUserAndPochakedPostModel) -> Void) {
+        // Get token
+        let accessToken = GetToken.getAccessToken()
+        let refreshToken = GetToken.getRefreshToken()
+        
         let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)"
         let authenticator = MyAuthenticator()
         let credential = MyAuthenticationCredential(accessToken: accessToken,
@@ -35,13 +35,22 @@ class MyProfilePostDataManager {
                 let resultData = result.result
                 completion(resultData)
             case .failure(let error):
-                print("Request Fail : myProfileUserAndPochakedPostDataManager")
-                print(error)
+                print("myProfileUserAndPochakedPostDataManager error : \(error.localizedDescription)")
+                print("accessToken ; \(accessToken)")
+                if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
+                    print("Failure Data: \(errorMessage)")
+                }
             }
         }
     }
     
     func myProfilePochakPostDataManager(_ handle : String, _ completion: @escaping ([PostDataModel]) -> Void) {
+        
+        // Get token
+        let accessToken = GetToken.getAccessToken()
+        let refreshToken = GetToken.getRefreshToken()
+        
+        
         let url = "\(APIConstants.baseURLv2)/api/v2/members/\(handle)/upload"
         let authenticator = MyAuthenticator()
         let credential = MyAuthenticationCredential(accessToken: accessToken,
@@ -61,8 +70,10 @@ class MyProfilePostDataManager {
                 let resultData = result.result.postList
                 completion(resultData)
             case .failure(let error):
-                print("Request Fail : myProfilePochakPostDataManager")
-                print(error)
+                print("myProfilePochakPostDataManager error : \(error.localizedDescription)")
+                if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
+                    print("Failure Data: \(errorMessage)")
+                }
             }
         }
     }

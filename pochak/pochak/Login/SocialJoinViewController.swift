@@ -54,9 +54,8 @@ class SocialJoinViewController: UIViewController {
             GoogleLoginDataManager.shared.googleLoginDataManager(accessToken, {resultData in
                 
                 print("GoogleLoginDataManager 안의 resultData : \(resultData)")
-                // 사용자 기본 데이터 저장 : socialId / name / email / socialType
+                // 사용자 기본 데이터 저장 : socialId / email / socialType
                 UserDefaultsManager.setData(value: resultData.socialId, key: .socialId)
-                UserDefaultsManager.setData(value: resultData.name, key: .name)
                 UserDefaultsManager.setData(value: resultData.email, key: .email)
                 UserDefaultsManager.setData(value: resultData.socialType, key: .socialType)
                 
@@ -111,6 +110,7 @@ class SocialJoinViewController: UIViewController {
     
     private func changeViewControllerAccordingToisNewMemeberStateForApple(_ isNewMember : Bool, _ resultDataForApple : AppleLoginModel){
         if isNewMember == true {
+            print("inside changeVCForApple")
             // 프로필 설정 페이지로 이동
             guard let makeProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "MakeProfileVC") as? MakeProfileViewController else {return}
             self.navigationController?.pushViewController(makeProfileVC, animated: true)
@@ -156,6 +156,7 @@ extension SocialJoinViewController: ASAuthorizationControllerDelegate, ASAuthori
             let fullName = appleIDCredential.fullName
             let email = appleIDCredential.email
             
+            
             if  let authorizationCode = appleIDCredential.authorizationCode,
                 let identityToken = appleIDCredential.identityToken,
                 let authCodeString = String(data: authorizationCode, encoding: .utf8),
@@ -168,9 +169,8 @@ extension SocialJoinViewController: ASAuthorizationControllerDelegate, ASAuthori
                 // API request : POST
                 AppleLoginDataManager.shared.appleLoginDataManager(identifyTokenString, authCodeString, {resultData in
                     
-                    // 사용자 기본 데이터 저장 : id / name / email / socialType / isNewMember
+                    // 사용자 기본 데이터 저장 : id / email / socialType / isNewMember
                     UserDefaultsManager.setData(value: resultData.socialId, key: .socialId)
-                    UserDefaultsManager.setData(value: resultData.name, key: .name)
                     UserDefaultsManager.setData(value: resultData.email, key: .email)
                     UserDefaultsManager.setData(value: resultData.socialType, key: .socialType)
                     UserDefaultsManager.setData(value: resultData.refreshToken, key: .socialRefreshToken)
