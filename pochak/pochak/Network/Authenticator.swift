@@ -29,7 +29,6 @@ class MyAuthenticator : Authenticator {
         print(">>>>> apply 현재 토큰 : \(accessToken)")
         urlRequest.addValue(accessToken, forHTTPHeaderField: "Authorization")
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-type")
-        print(urlRequest.headers)
     }
     
     // 2. api요청 후 error가 떨어진 경우, 401에러(인증에러)인 경우만 refresh가 되도록 필터링
@@ -38,6 +37,7 @@ class MyAuthenticator : Authenticator {
 //        if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
 //            print("Failure Data: \(errorMessage)")
 //        }
+        print(">>>>> didRequest 현재 response : \(response)")
         print(">>>>> didRequest 현재 statusCode : \(response.statusCode)")
         print(">>>>> didRequest 현재 error : \(error)")
         return response.statusCode == 401
@@ -46,10 +46,12 @@ class MyAuthenticator : Authenticator {
     // 3. 인증이 필요한 urlRequest에 대해서만 refresh가 되도록, 이 경우에만 true를 리턴하여 refresh 요청
     func isRequest(_ urlRequest: URLRequest, authenticatedWith credential: MyAuthenticationCredential) -> Bool {
         // bearerToken의 urlRequest대해서만 refresh를 시도 (true)
-        print("--------------- 2. isRequest Function 실행 중 ---------------")
+        print("--------------- 3. isRequest Function 실행 중 ---------------")
         let bearerToken = HTTPHeader.authorization(bearerToken: credential.accessToken).value
         let startIndex = bearerToken.index(bearerToken.startIndex, offsetBy: 7)
         let newBearerToken = String(bearerToken[startIndex...]) // 12:00:00
+        print(">>>>> headers beartoken: \(urlRequest.headers["Authorization"])")
+        print(">>>>> beartoken : \(newBearerToken)")
         print(">>>>> beartoken이 맞는건지 확인합니다 : \(urlRequest.headers["Authorization"] == newBearerToken)")
         return urlRequest.headers["Authorization"] == newBearerToken
     }
@@ -57,10 +59,12 @@ class MyAuthenticator : Authenticator {
     // 4. accesToken을 refresh 하는 부분
     // 추가 할 것 :: refreshtoken 만료 시 로그아웃 하도록 처리(유효기간 1달)
     func refresh(_ credential: MyAuthenticationCredential, for session: Alamofire.Session, completion: @escaping (Result<MyAuthenticationCredential, Error>) -> Void) {
-        print("--------------- 2. refresh Function 실행 중 ---------------")
+        print("--------------- 4. refresh Function 실행 중 ---------------")
         let url = "\(APIConstants.baseURL)/api/v2/refresh"
         let header : HTTPHeaders = ["Authorization": accessToken, "RefreshToken" : refreshToken, "Content-type": "application/json"]
         
+        print(">>>>> url : \(url)")
+        print(">>>>> header : \(header)")
         AF.request(url, method: .post, headers: header).validate().responseDecodable(of: TokenRefreshResponse.self) { response in
                switch response.result {
                case .success(let result):
