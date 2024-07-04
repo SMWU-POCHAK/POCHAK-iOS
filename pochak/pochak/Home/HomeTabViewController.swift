@@ -46,15 +46,6 @@ class HomeTabViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         print("view will appear - home")
         self.navigationController?.navigationBar.isHidden = false
-        
-//        if Home.UserFollowChanged || Home.UserDeletedPost {
-//            print("user follow changed or deleted post")
-//            Home.UserFollowChanged = false
-//            Home.UserDeletedPost = false
-//            self.currentFetchingPage = 0
-//            self.postList.removeAll()
-//            self.setupData()
-//        }
     }
     
     // MARK: - Actions
@@ -94,9 +85,15 @@ class HomeTabViewController: UIViewController {
             case .success(let data):
                 self.homeDataResponse = data as? HomeDataResponse
                 self.homeDataResult = self.homeDataResponse.result
-                self.homeDataResult.postList.map { data in
-                    self.postList.append(data)
-                }
+                
+                self.isLastPage = self.homeDataResult.pageInfo.lastPage
+
+                let newPosts = self.homeDataResult.postList
+                let startIndex = self.postList.count
+                let endIndex = startIndex + newPosts.count
+                let newIndexPath = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
+                
+                self.postList.append(contentsOf: newPosts)
                 
                 if self.postList.count == 0 {
                     self.noPost = true
@@ -106,14 +103,17 @@ class HomeTabViewController: UIViewController {
                 }
                 
                 print("보여주는 게시글 개수: \(self.postList.count)")
-                
-                self.isLastPage = self.homeDataResult.pageInfo.lastPage
-                
                 DispatchQueue.main.async {
-                    self.collectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
+                    if self.currentFetchingPage == 0 {
+                        self.collectionView.reloadData()
+                    } 
+                    else {
+                        self.collectionView.insertItems(at: newIndexPath)
+                    }
+                    
                     self.isCurrentlyFetching = false
+                    self.currentFetchingPage += 1;
                 }
-                self.currentFetchingPage += 1;  // 다음 페이지로
             case .requestErr(let err):
                 print(err)
             case .pathErr:
