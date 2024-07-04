@@ -13,24 +13,13 @@ class UnBlockDataManager {
     static let shared = UnBlockDataManager()
     
     func unBlockDataManager(_ handle : String, _ blockedMemberHandle : String, _ completion: @escaping (UnBlockDataResponse) -> Void) {
-        // Get token
-        let accessToken = GetToken.getAccessToken()
-        let refreshToken = GetToken.getRefreshToken()
         
         let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)/block?blockedMemberHandle=\(blockedMemberHandle)"
 
-        print("handle : \(handle)")
-        print("blockedMemberHandle : \(blockedMemberHandle)")
-        let authenticator = MyAuthenticator()
-        let credential = MyAuthenticationCredential(accessToken: accessToken,
-                                                    refreshToken: refreshToken,
-                                                    expiredAt: Date(timeIntervalSinceNow: 60 * 60))
-        let myAuthencitationInterceptor = AuthenticationInterceptor(authenticator: authenticator,
-                                                                    credential: credential)
         AF.request(url,
                    method: .delete,
                    encoding: URLEncoding.default,
-                   interceptor: myAuthencitationInterceptor)
+                   interceptor: RequestInterceptor.getRequestInterceptor())
         .validate()
         .responseDecodable(of: UnBlockDataResponse.self) { response in
             switch response.result {

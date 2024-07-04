@@ -18,23 +18,13 @@ class MyProfilePostDataManager {
     static let shared = MyProfilePostDataManager()
     
     func myProfileUserAndPochakedPostDataManager(_ handle : String, _ completion: @escaping (MyProfileUserAndPochakedPostModel) -> Void) {
-        // Get token
-        let accessToken = GetToken.getAccessToken()
-        let refreshToken = GetToken.getRefreshToken()
         
         let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)"
-        let authenticator = MyAuthenticator()
-        let credential = MyAuthenticationCredential(accessToken: accessToken,
-                                                    refreshToken: refreshToken,
-                                                    expiredAt: Date(timeIntervalSinceNow: 60 * 60))
-        let myAuthencitationInterceptor = AuthenticationInterceptor(authenticator: authenticator,
-                                                                    credential: credential)
-        
-        print("current accessToken : \(accessToken)")
+
         AF.request(url,
                    method: .get,
                    encoding: URLEncoding.default,
-                   interceptor: myAuthencitationInterceptor)
+                   interceptor: RequestInterceptor.getRequestInterceptor())
         .validate()
         .responseDecodable(of: MyProfileUserAndPochakedPostResponse.self) { response in
             print(response)
@@ -44,7 +34,6 @@ class MyProfilePostDataManager {
                 completion(resultData)
             case .failure(let error):
                 print("myProfileUserAndPochakedPostDataManager error : \(error.localizedDescription)")
-                print("accessToken ; \(accessToken)")
                 if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
                     print("Failure Data: \(errorMessage)")
                 }
@@ -53,23 +42,13 @@ class MyProfilePostDataManager {
     }
     
     func myProfilePochakPostDataManager(_ handle : String, _ completion: @escaping ([PostDataModel]) -> Void) {
-        
-        // Get token
-        let accessToken = GetToken.getAccessToken()
-        let refreshToken = GetToken.getRefreshToken()
-        
-        
+                
         let url = "\(APIConstants.baseURLv2)/api/v2/members/\(handle)/upload"
-        let authenticator = MyAuthenticator()
-        let credential = MyAuthenticationCredential(accessToken: accessToken,
-                                                    refreshToken: refreshToken,
-                                                    expiredAt: Date(timeIntervalSinceNow: 60 * 60))
-        let myAuthencitationInterceptor = AuthenticationInterceptor(authenticator: authenticator,
-                                                                    credential: credential)
+        
         AF.request(url,
                    method: .get,
                    encoding: URLEncoding.default,
-                   interceptor: myAuthencitationInterceptor)
+                   interceptor: RequestInterceptor.getRequestInterceptor())
         .validate()
         .responseDecodable(of: MyProfilePochakPostResponse.self) { response in
             print(response)

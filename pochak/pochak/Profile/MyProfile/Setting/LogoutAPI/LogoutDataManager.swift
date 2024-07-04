@@ -12,26 +12,12 @@ class LogoutDataManager{
     
     
     func logoutDataManager(_ completion: @escaping (LogoutDataModel) -> Void) {
-        // Get token
-        let accessToken = GetToken.getAccessToken()
-        let refreshToken = GetToken.getRefreshToken()
-        
         let url = "\(APIConstants.baseURL)/api/v2/logout"
         
-        print("accessToken : \(accessToken)")
-        print("refreshToken : \(refreshToken)")
-
-        
-        let authenticator = MyAuthenticator()
-        let credential = MyAuthenticationCredential(accessToken: accessToken,
-                                                    refreshToken: refreshToken,
-                                                    expiredAt: Date(timeIntervalSinceNow: 60 * 60))
-        let myAuthencitationInterceptor = AuthenticationInterceptor(authenticator: authenticator,
-                                                                    credential: credential)
         AF.request(url,
                    method: .get,
                    encoding: URLEncoding.default,
-                   interceptor: myAuthencitationInterceptor)
+                   interceptor: RequestInterceptor.getRequestInterceptor())
         .validate()
         .responseDecodable(of: LogoutDataModel.self) { response in
             switch response.result {

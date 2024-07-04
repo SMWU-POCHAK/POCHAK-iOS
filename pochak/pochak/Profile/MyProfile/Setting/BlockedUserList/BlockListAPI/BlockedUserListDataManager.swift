@@ -14,22 +14,13 @@ class BlockedUserListDataManager{
     
     
     func blockedUserListDataManager(_ handle : String, _ completion: @escaping (BlockedUserDataModel) -> Void) {
-        // Get token
-        let accessToken = GetToken.getAccessToken()
-        let refreshToken = GetToken.getRefreshToken()
         
         let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)/block"
         
-        let authenticator = MyAuthenticator()
-        let credential = MyAuthenticationCredential(accessToken: accessToken,
-                                                    refreshToken: refreshToken,
-                                                    expiredAt: Date(timeIntervalSinceNow: 60 * 60))
-        let myAuthencitationInterceptor = AuthenticationInterceptor(authenticator: authenticator,
-                                                                    credential: credential)
         AF.request(url,
                    method: .get,
                    encoding: URLEncoding.default,
-                   interceptor: myAuthencitationInterceptor)
+                   interceptor: RequestInterceptor.getRequestInterceptor())
         .validate()
         .responseDecodable(of: BlockedUserDataResponse.self) { response in
             switch response.result {

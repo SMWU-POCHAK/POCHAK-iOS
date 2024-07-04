@@ -13,22 +13,13 @@ class BlockDataManager {
     static let shared = BlockDataManager()
     
     func blockDataManager(_ handle : String, _ completion: @escaping (BlockDataResponse) -> Void) {
-        // Get token
-        let accessToken = GetToken.getAccessToken()
-        let refreshToken = GetToken.getRefreshToken()
         
         let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)/block"
 
-        let authenticator = MyAuthenticator()
-        let credential = MyAuthenticationCredential(accessToken: accessToken,
-                                                    refreshToken: refreshToken,
-                                                    expiredAt: Date(timeIntervalSinceNow: 60 * 60))
-        let myAuthencitationInterceptor = AuthenticationInterceptor(authenticator: authenticator,
-                                                                    credential: credential)
         AF.request(url,
                    method: .post,
                    encoding: URLEncoding.default,
-                   interceptor: myAuthencitationInterceptor)
+                   interceptor: RequestInterceptor.getRequestInterceptor())
         .validate()
         .responseDecodable(of: BlockDataResponse.self) { response in
             switch response.result {

@@ -7,14 +7,14 @@
 
 import Alamofire
 
-class MyProfileUpdateDataManager{
-    static let shared = MyProfileUpdateDataManager()
+class ProfileUpdateDataManager{
+    static let shared = ProfileUpdateDataManager()
 
     func updateDataManager(_ name : String,
                          _ handle : String,
                          _ message : String,
                          _ profileImage : UIImage?,
-                         _ completion: @escaping (MyProfileUpdateDataModel) -> Void) {
+                         _ completion: @escaping (ProfileUpdateDataModel) -> Void) {
         
         let accessToken = GetToken.getAccessToken()
 
@@ -36,7 +36,7 @@ class MyProfileUpdateDataManager{
             if let image = profileImage?.jpegData(compressionQuality: 0.1) {
                 multipartFormData.append(image, withName: "profileImage", fileName: "profileImage.jpg", mimeType: "image/jpeg")
             }
-        }, to: url, method: .put, headers: header).validate().responseDecodable(of: MyProfileUpdateResponse.self) { response in
+        }, to: url, method: .put, headers: header).validate().responseDecodable(of: ProfileUpdateResponse.self) { response in
                 switch response.result {
                 case .success(let result):
                     let resultData = result.result

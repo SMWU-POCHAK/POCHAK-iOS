@@ -141,7 +141,7 @@ extension SettingsViewController : CustomAlertDelegate {
             
         } else if selectedBtn == 1 {
             // API 호출
-            DeleteAccountDataManager.shared.deleteAccountDataManager(
+            SignOutDataManager.shared.signOutDataManager(
                 { resultData in
                 let message = resultData.message
                 print(message)
