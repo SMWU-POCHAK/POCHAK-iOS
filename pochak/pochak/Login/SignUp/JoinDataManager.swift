@@ -11,7 +11,7 @@ struct JoinDataManager {
     
     static let shared = JoinDataManager()
     let url = "\(APIConstants.baseURL)/api/v2/signup"
-    let header : HTTPHeaders = ["Content-type": "multipart/form-data"]
+    let header : HTTPHeaders = ["Content-Type": "multipart/form-data", "charset" : "UTF-8"]
     
     func joinDataManager(_ name : String,
                          _ email : String,
@@ -49,18 +49,23 @@ struct JoinDataManager {
                 }
             }
             // profileImage 추가
-            if let image = profileImage?.jpegData(compressionQuality: 0.1) {
-                multipartFormData.append(image, withName: "profileImage", fileName: "image.jpg", mimeType: "image/jpeg")
+            if let image = profileImage?.jpegData(compressionQuality: 0.2) {
+                multipartFormData.append(image, withName: "profileImage", fileName: "profileImage.jpg", mimeType: "image/jpeg")
+                print("image : \(image)")
             }
+            
         }, to: url, method: .post, headers: header).validate().responseDecodable(of: JoinAPIResponse.self) { response in
             print("joindataManager respose: \(response)")
-            print("joindataManager respose: \(response.result)")
+            print("joindataManager response result: \(response.result)")
                 switch response.result {
                 case .success(let result):
                     let resultData = result.result
                     completion(resultData)
                 case .failure(let error):
-                    print(error)
+                    print("joindataManager error : \(error.localizedDescription)")
+                    if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
+                        print("Failure Data: \(errorMessage)")
+                    }
             }
         }
     }

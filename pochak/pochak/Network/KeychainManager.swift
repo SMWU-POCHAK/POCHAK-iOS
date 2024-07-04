@@ -75,6 +75,8 @@ class KeychainManager {
         guard status == errSecSuccess else {
             throw KeychainError.unknown(status)
         }
+        
+        print("keychain updated!")
     }
     
     // MARK: - Load

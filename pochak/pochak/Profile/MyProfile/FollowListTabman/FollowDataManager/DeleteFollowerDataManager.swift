@@ -12,13 +12,11 @@ class DeleteFollowerDataManager {
     
     static let shared = DeleteFollowerDataManager()
     
-    // Get token
-    let accessToken = GetToken.getAccessToken()
-    let refreshToken = GetToken.getRefreshToken()
-    
-    
-    
     func deleteFollowerDataManager(_ handle : String, _ selectedHandle : String, _ completion: @escaping (DeleteFollowerDataResponse) -> Void) {
+        // Get token
+        let accessToken = GetToken.getAccessToken()
+        let refreshToken = GetToken.getRefreshToken()
+        
         let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)/follower?followerHandle=\(selectedHandle)"
 
         let authenticator = MyAuthenticator()

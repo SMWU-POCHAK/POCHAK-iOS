@@ -12,12 +12,13 @@ class FollowListDataManager {
     
     static let shared = FollowListDataManager()
     
-    // Get token
-    let accessToken = GetToken.getAccessToken()
-    let refreshToken = GetToken.getRefreshToken()
-    
     
     func followerDataManager(_ handle : String, _ completion: @escaping ([MemberListDataModel]) -> Void) {
+        
+        // Get token
+        let accessToken = GetToken.getAccessToken()
+        let refreshToken = GetToken.getRefreshToken()
+        
         let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)/follower"
         let authenticator = MyAuthenticator()
         let credential = MyAuthenticationCredential(accessToken: accessToken,
@@ -44,6 +45,10 @@ class FollowListDataManager {
     }
     
     func followingDataManager(_ handle : String, _ completion: @escaping ([MemberListDataModel]) -> Void) {
+        // Get token
+        let accessToken = GetToken.getAccessToken()
+        let refreshToken = GetToken.getRefreshToken()
+        
         let url = "\(APIConstants.baseURLv2)/api/v2/members/\(handle)/following"
         let authenticator = MyAuthenticator()
         let credential = MyAuthenticationCredential(accessToken: accessToken,
