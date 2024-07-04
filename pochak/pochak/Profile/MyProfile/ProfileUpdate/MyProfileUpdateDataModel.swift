@@ -16,5 +16,5 @@ struct MyProfileUpdateDataModel : Codable {
     var name : String?
     var handle : String?
     var message : String?
-    var profileImgUrl : String?
+    var profileImage : String?
 }

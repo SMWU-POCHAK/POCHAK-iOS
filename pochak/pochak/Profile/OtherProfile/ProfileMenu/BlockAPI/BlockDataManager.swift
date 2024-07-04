@@ -12,12 +12,12 @@ class BlockDataManager {
     
     static let shared = BlockDataManager()
     
-    // Get token
-    let accessToken = GetToken.getAccessToken()
-    let refreshToken = GetToken.getRefreshToken()
-    
     func blockDataManager(_ handle : String, _ completion: @escaping (BlockDataResponse) -> Void) {
-        let url = "\(APIConstants.baseURLv2)/api/v2/members/\(handle)/block"
+        // Get token
+        let accessToken = GetToken.getAccessToken()
+        let refreshToken = GetToken.getRefreshToken()
+        
+        let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)/block"
 
         let authenticator = MyAuthenticator()
         let credential = MyAuthenticationCredential(accessToken: accessToken,
@@ -26,7 +26,7 @@ class BlockDataManager {
         let myAuthencitationInterceptor = AuthenticationInterceptor(authenticator: authenticator,
                                                                     credential: credential)
         AF.request(url,
-                   method: .delete,
+                   method: .post,
                    encoding: URLEncoding.default,
                    interceptor: myAuthencitationInterceptor)
         .validate()
@@ -35,8 +35,10 @@ class BlockDataManager {
             case .success(let result):
                 completion(result)
             case .failure(let error):
-                print("Request Fail : blockDataManager")
-                print(error)
+                print("Request Fail blockDataManager : \(error.localizedDescription)")
+                if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
+                    print("Failure Data: \(errorMessage)")
+                }
             }
         }
     }

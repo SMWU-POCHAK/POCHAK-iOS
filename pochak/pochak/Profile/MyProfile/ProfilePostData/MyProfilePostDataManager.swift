@@ -7,6 +7,12 @@
 
 import Alamofire
 
+struct SimpleJson: Codable {
+    var isSuccess: Bool
+    var code: String
+    var message: String
+}
+
 class MyProfilePostDataManager {
     
     static let shared = MyProfilePostDataManager()
@@ -23,6 +29,8 @@ class MyProfilePostDataManager {
                                                     expiredAt: Date(timeIntervalSinceNow: 60 * 60))
         let myAuthencitationInterceptor = AuthenticationInterceptor(authenticator: authenticator,
                                                                     credential: credential)
+        
+        print("current accessToken : \(accessToken)")
         AF.request(url,
                    method: .get,
                    encoding: URLEncoding.default,
@@ -71,7 +79,13 @@ class MyProfilePostDataManager {
                 completion(resultData)
             case .failure(let error):
                 print("myProfilePochakPostDataManager error : \(error.localizedDescription)")
-                if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
+                guard let data = response.data else { return }
+                // data
+                let decoder = JSONDecoder()
+                if let json = try? decoder.decode(SimpleJson.self, from: data) {
+                    print(">>>>> decoder : \(json.code)") // hyeon
+                }
+                if let errorMessage = String(data: data, encoding: .utf8) {
                     print("Failure Data: \(errorMessage)")
                 }
             }

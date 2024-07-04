@@ -76,6 +76,11 @@
 		3742617D2C359D6100B67886 /* CheckHandleDuplicationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3742617C2C359D6100B67886 /* CheckHandleDuplicationDataManager.swift */; };
 		3742617F2C359D6D00B67886 /* CheckHandleDuplicationDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3742617E2C359D6D00B67886 /* CheckHandleDuplicationDataModel.swift */; };
 		3747E9722BF3827500364BED /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3747E9712BF3827500364BED /* SettingsViewController.swift */; };
+		3766F4022C3706DC001DD239 /* BlockedUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3766F4012C3706DC001DD239 /* BlockedUserTableViewCell.xib */; };
+		3766F4032C3706DC001DD239 /* BlockedUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4002C3706DC001DD239 /* BlockedUserTableViewCell.swift */; };
+		3766F4062C370A7C001DD239 /* BlockedUserListDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4052C370A7C001DD239 /* BlockedUserListDataManager.swift */; };
+		3766F4082C370A82001DD239 /* BlockedUserListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4072C370A82001DD239 /* BlockedUserListDataModel.swift */; };
+		3766F40A2C370CF5001DD239 /* BlockedUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4092C370CF5001DD239 /* BlockedUserViewController.swift */; };
 		3769D6AF2B3C2FD500294CD1 /* GoogleLoginDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6AE2B3C2FD500294CD1 /* GoogleLoginDataManager.swift */; };
 		3769D6B22B3C300D00294CD1 /* GoogleLoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6B12B3C300D00294CD1 /* GoogleLoginModel.swift */; };
 		3769D6B42B3C301B00294CD1 /* JoinDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6B32B3C301B00294CD1 /* JoinDataManager.swift */; };
@@ -261,6 +266,11 @@
 		3742617C2C359D6100B67886 /* CheckHandleDuplicationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckHandleDuplicationDataManager.swift; sourceTree = "<group>"; };
 		3742617E2C359D6D00B67886 /* CheckHandleDuplicationDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckHandleDuplicationDataModel.swift; sourceTree = "<group>"; };
 		3747E9712BF3827500364BED /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		3766F4002C3706DC001DD239 /* BlockedUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserTableViewCell.swift; sourceTree = "<group>"; };
+		3766F4012C3706DC001DD239 /* BlockedUserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlockedUserTableViewCell.xib; sourceTree = "<group>"; };
+		3766F4052C370A7C001DD239 /* BlockedUserListDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserListDataManager.swift; sourceTree = "<group>"; };
+		3766F4072C370A82001DD239 /* BlockedUserListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserListDataModel.swift; sourceTree = "<group>"; };
+		3766F4092C370CF5001DD239 /* BlockedUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserViewController.swift; sourceTree = "<group>"; };
 		3769D6AE2B3C2FD500294CD1 /* GoogleLoginDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginDataManager.swift; sourceTree = "<group>"; };
 		3769D6B12B3C300D00294CD1 /* GoogleLoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginModel.swift; sourceTree = "<group>"; };
 		3769D6B32B3C301B00294CD1 /* JoinDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinDataManager.swift; sourceTree = "<group>"; };
@@ -609,6 +619,7 @@
 		3742616A2C3075B400B67886 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				3766F4042C370A5D001DD239 /* BlockedUserList */,
 				3747E9712BF3827500364BED /* SettingsViewController.swift */,
 				37D311D82B53131D00A1D7C1 /* LogoutDataManager */,
 				37D311DD2B566C3D00A1D7C1 /* DeleteAccountDataManager */,
@@ -652,6 +663,26 @@
 				3742617E2C359D6D00B67886 /* CheckHandleDuplicationDataModel.swift */,
 			);
 			path = CheckHandle;
+			sourceTree = "<group>";
+		};
+		3766F3FF2C3706C7001DD239 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				3766F4002C3706DC001DD239 /* BlockedUserTableViewCell.swift */,
+				3766F4012C3706DC001DD239 /* BlockedUserTableViewCell.xib */,
+			);
+			path = cell;
+			sourceTree = "<group>";
+		};
+		3766F4042C370A5D001DD239 /* BlockedUserList */ = {
+			isa = PBXGroup;
+			children = (
+				3766F3FF2C3706C7001DD239 /* cell */,
+				3766F4052C370A7C001DD239 /* BlockedUserListDataManager.swift */,
+				3766F4072C370A82001DD239 /* BlockedUserListDataModel.swift */,
+				3766F4092C370CF5001DD239 /* BlockedUserViewController.swift */,
+			);
+			path = BlockedUserList;
 			sourceTree = "<group>";
 		};
 		3769D6AC2B3C2F9900294CD1 /* SignUp */ = {
@@ -1128,6 +1159,7 @@
 				3769D6C82B3C4F0900294CD1 /* FollowingCollectionViewCell.xib in Resources */,
 				0876E23F2C274256008DE88F /* NoPostCollectionViewCell.xib in Resources */,
 				089C75882A51728A003AAB94 /* Pretendard-Regular.ttf in Resources */,
+				3766F4022C3706DC001DD239 /* BlockedUserTableViewCell.xib in Resources */,
 				083249762C2956A000A77C03 /* CustomAlertViewController.storyboard in Resources */,
 				EA99B63C2A5143A800EBA2AD /* CameraTab.storyboard in Resources */,
 				EAFB4B842A51478600E0F2FA /* HomeTab.storyboard in Resources */,
@@ -1327,6 +1359,7 @@
 				3742617A2C31C6F900B67886 /* AppleLoginDataModel.swift in Sources */,
 				373815162A89E6D30032066A /* SocialJoinViewController.swift in Sources */,
 				EA1289082B3B2823002EC93E /* AlarmDataModel.swift in Sources */,
+				3766F40A2C370CF5001DD239 /* BlockedUserViewController.swift in Sources */,
 				374261782C31C6ED00B67886 /* AppleLoginDataManager.swift in Sources */,
 				0844D7EB2BF218A5001154AC /* ReportViewCell.swift in Sources */,
 				379A6A342B569DFA0087FAAC /* AuthenticationCredential.swift in Sources */,
@@ -1339,6 +1372,7 @@
 				EA817AB62B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				3742616E2C30916C00B67886 /* BlockDataManager.swift in Sources */,
 				379A6A3E2B5FA07D0087FAAC /* NavigationController.swift in Sources */,
+				3766F4062C370A7C001DD239 /* BlockedUserListDataManager.swift in Sources */,
 				3769D6D52B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift in Sources */,
 				3769D6B62B3C302C00294CD1 /* JoinDataModel.swift in Sources */,
 				084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */,
@@ -1369,11 +1403,13 @@
 				37D311D72B53057700A1D7C1 /* MyProfileUpdateDataModel.swift in Sources */,
 				EA4EF8D82C2EC5F7009549FF /* UITextField+.swift in Sources */,
 				EAF918512AA468670037C270 /* APIConstants.swift in Sources */,
+				3766F4082C370A82001DD239 /* BlockedUserListDataModel.swift in Sources */,
 				3732354E2B691E610042EF94 /* FollowToggleDataManager.swift in Sources */,
 				3769D6BD2B3C348800294CD1 /* FirstTabmanViewController.swift in Sources */,
 				EA1B0B5B2A49D23A00F86FBC /* AppDelegate.swift in Sources */,
 				0844D7F32BF21A80001154AC /* CancelViewCell.swift in Sources */,
 				EAEADB962C344E160037E116 /* PreviewAlarmDataService.swift in Sources */,
+				3766F4032C3706DC001DD239 /* BlockedUserTableViewCell.swift in Sources */,
 				37D311D52B53056700A1D7C1 /* MyProfileUpdateDataManager.swift in Sources */,
 				3769D6B92B3C345800294CD1 /* MyProfileTabViewController.swift in Sources */,
 				08FD3A392B357E6400574880 /* LikedUsersDataService.swift in Sources */,

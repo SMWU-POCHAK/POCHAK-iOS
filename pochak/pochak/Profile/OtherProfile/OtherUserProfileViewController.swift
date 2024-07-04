@@ -7,8 +7,11 @@
 
 import UIKit
 
-class OtherUserProfileViewController: UIViewController {
+protocol SecondViewControllerDelegate: AnyObject {
+    func dismissSecondViewController()
+}
 
+class OtherUserProfileViewController: UIViewController {
     // MARK: - Data
     
     @IBOutlet weak var profileBackground: UIView!
@@ -16,7 +19,6 @@ class OtherUserProfileViewController: UIViewController {
     @IBOutlet weak var followerList: UIStackView!
     @IBOutlet weak var followingList: UIStackView!
     @IBOutlet weak var whiteBackground: UIView!
-    @IBOutlet weak var userHandle: UILabel!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userMessage: UILabel!
     @IBOutlet weak var postCount: UILabel!
@@ -35,6 +37,7 @@ class OtherUserProfileViewController: UIViewController {
     
     // Container View에 데이터 전달(ViewDidLoad보다 먼저 실행)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let currentHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
         if segue.identifier == "embedContainer" {
             let postListVC = segue.destination as! PostListViewController
             postListVC.handle = recievedHandle
@@ -198,7 +201,9 @@ class OtherUserProfileViewController: UIViewController {
         sheet?.detents = [fraction]
         sheet?.prefersGrabberVisible = true
         sheet?.prefersScrollingExpandsWhenScrolledToEdge = false
-
+        
+        // delegate 채택
+        profileMenuVC.delegate = self
         present(profileMenuVC, animated: true)
     }
 }
@@ -218,5 +223,11 @@ extension OtherUserProfileViewController: CustomAlertDelegate {
     
     func cancel() {
         print("취소하기 선택됨")
+    }
+}
+
+extension OtherUserProfileViewController: SecondViewControllerDelegate {
+    func dismissSecondViewController() {
+        self.navigationController?.popViewController(animated: true)
     }
 }

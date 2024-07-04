@@ -9,6 +9,7 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
+    @IBOutlet weak var blockManageBtn: UIButton!
     @IBOutlet weak var logOutButton: UIButton!
     @IBOutlet weak var deleteAccountButton: UIButton!
     var selectedBtn : Int = 0
@@ -59,6 +60,16 @@ class SettingsViewController: UIViewController {
         print("Profile Image URL: \(profileImgUrl)")
         print("Follower Count: \(followerCount)")
         print("Following Count: \(followingCount)")
+    }
+    
+    @IBAction func viewBlockList(_ sender: Any) {
+        let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? "handle not found"
+        BlockedUserListDataManager.shared.blockedUserListDataManager(handle, { resultData in
+            // 차단된 계정 페이지로 이동
+            guard let blockedUserVC = self.storyboard?.instantiateViewController(withIdentifier: "BlockedUserVC") as? BlockedUserViewController else {return}
+            blockedUserVC.blockedUserList = resultData.blockList
+            self.navigationController?.pushViewController(blockedUserVC, animated: true)
+        })
     }
     
     @IBAction func logOut(_ sender: Any) {

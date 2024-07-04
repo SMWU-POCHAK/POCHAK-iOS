@@ -1,26 +1,25 @@
 //
-//  BlockDataManager.swift
+//  BlockedUserListDataManager.swift
 //  pochak
 //
-//  Created by Seo Cindy on 6/30/24.
+//  Created by Seo Cindy on 7/5/24.
 //
 
 import Foundation
 import Alamofire
 
-class UnBlockDataManager {
+class BlockedUserListDataManager{
     
-    static let shared = UnBlockDataManager()
+    static let shared = BlockedUserListDataManager()
     
-    func unBlockDataManager(_ handle : String, _ blockedMemberHandle : String, _ completion: @escaping (UnBlockDataResponse) -> Void) {
+    
+    func blockedUserListDataManager(_ handle : String, _ completion: @escaping (BlockedUserDataModel) -> Void) {
         // Get token
         let accessToken = GetToken.getAccessToken()
         let refreshToken = GetToken.getRefreshToken()
         
-        let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)/block?blockedMemberHandle=\(blockedMemberHandle)"
-
-        print("handle : \(handle)")
-        print("blockedMemberHandle : \(blockedMemberHandle)")
+        let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)/block"
+        
         let authenticator = MyAuthenticator()
         let credential = MyAuthenticationCredential(accessToken: accessToken,
                                                     refreshToken: refreshToken,
@@ -28,16 +27,18 @@ class UnBlockDataManager {
         let myAuthencitationInterceptor = AuthenticationInterceptor(authenticator: authenticator,
                                                                     credential: credential)
         AF.request(url,
-                   method: .delete,
+                   method: .get,
                    encoding: URLEncoding.default,
                    interceptor: myAuthencitationInterceptor)
         .validate()
-        .responseDecodable(of: UnBlockDataResponse.self) { response in
+        .responseDecodable(of: BlockedUserDataResponse.self) { response in
             switch response.result {
             case .success(let result):
-                completion(result)
+                let resultData = result.result
+                print(">>>>> resultData : \(resultData)")
+                completion(resultData)
             case .failure(let error):
-                print("Request Fail unBlockDataManager : \(error.localizedDescription)")
+                print("blockedUserListDataManager error : \(error.localizedDescription)")
                 if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
                     print("Failure Data: \(errorMessage)")
                 }
