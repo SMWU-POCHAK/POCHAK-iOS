@@ -81,6 +81,9 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         commentUserHandleLabel.isUserInteractionEnabled = true
         commentUserHandleLabel.addGestureRecognizer(setGestureRecognizer())
         
+        // 태그된 유저 띄우기 위한 제스쳐 등록
+        taggedUsers.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showTaggedUsersVC)))
+        
         self.followingBtn.setTitleColor(UIColor.white, for: [.normal, .selected])
         self.followingBtn.setTitle("팔로우", for: .normal)
         self.followingBtn.setTitle("팔로잉", for: .selected)
@@ -205,6 +208,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         commentVC.postId = receivedPostId
         commentVC.postOwnerHandle = postDataResult.ownerHandle
         commentVC.taggedUserList = self.taggedUserList
+        commentVC.postVC = self
         
         // half sheet
         if let sheet = commentVC.sheetPresentationController {
@@ -321,8 +325,19 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
                 self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
             }
         }
+    }
+    
+    @objc func showTaggedUsersVC(){
+        print("태그된 유저 보여줄거에요~")
         
-        // TODO: 포착된 유저에 대해 제스쳐 등록해야 함!!!!
+        let taggedUserDetailVC = postStoryBoard.instantiateViewController(withIdentifier: "TaggedUsersDetailVC") as! TaggedUsersDetailViewController
+        
+        let sheet = taggedUserDetailVC.sheetPresentationController
+        sheet?.detents = [.medium(), .large()]
+        sheet?.prefersGrabberVisible = true
+        sheet?.prefersScrollingExpandsWhenScrolledToEdge = false
+
+        present(taggedUserDetailVC, animated: true)
     }
     
     @objc func moreActionButtonDidTap(){
