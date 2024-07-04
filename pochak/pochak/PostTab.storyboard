@@ -267,7 +267,7 @@
                                                     </label>
                                                 </subviews>
                                             </stackView>
-                                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8NM-hH-Q9c">
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8NM-hH-Q9c">
                                                 <rect key="frame" x="285" y="24" width="70" height="36"/>
                                                 <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="16"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -394,6 +394,7 @@
                                             <constraint firstAttribute="trailing" secondItem="VHa-nq-QVw" secondAttribute="trailing" constant="9" id="beO-vg-tgn"/>
                                             <constraint firstItem="JWP-Of-QNZ" firstAttribute="centerY" secondItem="po0-2n-gtJ" secondAttribute="centerY" id="gAm-B4-BCo"/>
                                             <constraint firstItem="8NM-hH-Q9c" firstAttribute="centerY" secondItem="g1Z-gd-DZE" secondAttribute="centerY" id="gmI-Ds-I35"/>
+                                            <constraint firstItem="8NM-hH-Q9c" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Kgl-pj-DSt" secondAttribute="trailing" constant="50" id="lxI-iJ-qjG"/>
                                             <constraint firstItem="9aE-qJ-kQ5" firstAttribute="top" secondItem="g1Z-gd-DZE" secondAttribute="bottom" constant="14" id="sJx-lI-kGg"/>
                                             <constraint firstAttribute="trailing" secondItem="M2a-Za-kAx" secondAttribute="trailing" constant="20" id="tbB-TT-LZs"/>
                                         </constraints>
