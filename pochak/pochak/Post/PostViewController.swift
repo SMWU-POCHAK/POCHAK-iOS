@@ -335,6 +335,15 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         let taggedUserDetailVC = postStoryBoard.instantiateViewController(withIdentifier: "TaggedUsersDetailVC") as! TaggedUsersDetailViewController
         taggedUserDetailVC.tagList = taggedUserList
         
+        taggedUserDetailVC.goToOtherProfileVC = {(handle: String) in
+            self.dismiss(animated: true)
+            let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
+            
+            guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
+            otherUserProfileVC.recievedHandle = handle
+            self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
+        }
+        
         let sheet = taggedUserDetailVC.sheetPresentationController
         sheet?.detents = [.medium(), .large()]
         sheet?.prefersGrabberVisible = true

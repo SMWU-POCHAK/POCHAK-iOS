@@ -12,6 +12,8 @@ class TaggedUsersDetailViewController: UIViewController {
     // MARK: - Properties
     
     var tagList: [TaggedMember]?
+    
+    var goToOtherProfileVC: ((String) -> Void)?
 
     // MARK: - Views
     
@@ -50,6 +52,12 @@ extension TaggedUsersDetailViewController: UITableViewDelegate, UITableViewDataS
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TaggedUsersTableViewCell.identifier, for: indexPath) as? TaggedUsersTableViewCell else { return UITableViewCell() }
         cell.configure(tagData: tagList![indexPath.row])
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        
+        goToOtherProfileVC!(tagList![indexPath.row].handle)
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
