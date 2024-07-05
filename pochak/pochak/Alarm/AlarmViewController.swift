@@ -124,6 +124,8 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
                 }
                 
                 let previewAlarmVC = self.alarmStoryBoard.instantiateViewController(withIdentifier: "PreviewAlarmVC") as! PreviewAlarmViewController
+                previewAlarmVC.tagId = tagId
+                previewAlarmVC.alarmId = self.alarmList[indexPath.row].alarmId
                 
                 // 모달 창의 presentation style을 .pageSheet로 설정합니다.
                 previewAlarmVC.modalPresentationStyle = .pageSheet

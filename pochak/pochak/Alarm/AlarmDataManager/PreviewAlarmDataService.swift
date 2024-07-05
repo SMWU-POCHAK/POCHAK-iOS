@@ -19,7 +19,7 @@ class PreviewAlarmDataService{
                      ]
         
         let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/alarms/\(tagId)",
-                                    method: .post,
+                                    method: .get,
                                     encoding: URLEncoding.default,
                                     headers: header)
         
