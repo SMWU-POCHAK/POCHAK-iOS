@@ -67,7 +67,7 @@ class CustomTabBarController: UITabBarController {
         // 탭바 높이 조정
         let customTabBar = CustomTabBar()
         let hasBottomInset = UIApplication.shared.windows.first?.safeAreaInsets.bottom ?? 0 > 0
-        customTabBar.customHeight = hasBottomInset ? 90 : 56 // 베젤이 있는 경우와 없는 경우의 높이 설정
+        customTabBar.customHeight = hasBottomInset ? 94 : 64 // 베젤이 있는 경우와 없는 경우의 높이 설정
         setValue(customTabBar, forKey: "tabBar")
         
     }
@@ -79,6 +79,8 @@ class CustomTabBarController: UITabBarController {
 
         tabBarItemAppearance.normal.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Medium", size: 13)]
         tabBarItemAppearance.selected.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Medium", size: 13)]
+        tabBarItemAppearance.normal.titlePositionAdjustment = .init(horizontal: 0, vertical: -5)
+        tabBarItemAppearance.selected.titlePositionAdjustment = .init(horizontal: 0, vertical: -5)
         
         appearance.stackedLayoutAppearance = tabBarItemAppearance
 
