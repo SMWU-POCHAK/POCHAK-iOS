@@ -10,7 +10,6 @@ class LogoutDataManager{
     
     static let shared = LogoutDataManager()
     
-    
     func logoutDataManager(_ completion: @escaping (LogoutDataModel) -> Void) {
         let url = "\(APIConstants.baseURL)/api/v2/logout"
         

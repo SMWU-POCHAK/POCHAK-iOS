@@ -31,6 +31,7 @@ class HomeTabViewController: UIViewController {
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
+        print("view will load - home")
         super.viewDidLoad()
         
         currentFetchingPage = 0

@@ -42,6 +42,7 @@ class MyProfileTabViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        print("viewDidLoad handle : \(handle)")
         super.viewDidLoad()
 
         // 프로픨 디자인
