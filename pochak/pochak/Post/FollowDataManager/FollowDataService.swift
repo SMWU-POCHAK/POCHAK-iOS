@@ -11,9 +11,10 @@ import Alamofire
 struct FollowDataService {
     static let shared = FollowDataService()
     
-    let header: HTTPHeaders = ["Authorization": APIConstants.dayeonToken,
-                 "Content-type": "application/json"
-                 ]
+    let header: HTTPHeaders = [
+        "Authorization": GetToken.getAccessToken(),
+        "Content-type": "application/json"
+    ]
     
     /// 팔로우 혹은 팔로우 취소하는 api
     /// - Parameters:

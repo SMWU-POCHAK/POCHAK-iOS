@@ -24,6 +24,7 @@ class PreviewAlarmViewController : UIViewController {
     var profileImgUrl : String?
     var postImgUrl : String?
     var tagId : Int?
+    var alarmId: Int?
     
     private var previewDataResponse: PreviewAlarmResponse!
     private var previewDataResult: PreviewAlarmResult!
@@ -37,7 +38,6 @@ class PreviewAlarmViewController : UIViewController {
         }
 
         postTagData(tagId: tagId, isAccept: true)
-        getTagPreviewData(tagId: tagId)
     }
     
     @IBAction func refuseBtnTapped(_ sender: Any) {
@@ -53,6 +53,7 @@ class PreviewAlarmViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupAttribute()
+        getTagPreviewData(alarmId: alarmId!)
         setupUI()
     }
     
@@ -143,8 +144,9 @@ class PreviewAlarmViewController : UIViewController {
         
     }
     
-    func getTagPreviewData(tagId: Int){
-        PreviewAlarmDataService.shared.getTagPreview(tagId: tagId){ [self]
+    func getTagPreviewData(alarmId: Int){
+        print("======= \(alarmId)번의 알람 미리보기 합니다 =======")
+        PreviewAlarmDataService.shared.getTagPreview(tagId: alarmId){ [self]
             response in
             
             switch response {
@@ -155,7 +157,6 @@ class PreviewAlarmViewController : UIViewController {
                 self.tagList = self.previewDataResult.tagList
                 
                 
-                
                 if let profileImageView = self.profileImageView {
                     configure(imageview: profileImageView, with: self.previewDataResult.ownerProfileImage ?? "")
                 } else {
@@ -163,18 +164,17 @@ class PreviewAlarmViewController : UIViewController {
                     // Handle the case where postImageView is nil
                 }
                 
-                if let taggedUsers = self.taggedUsers{
-                    for tagList in self.tagList {
-                        for handle in tagList.handle{
-                            if(handle == tagList.handle.last){
-                                self.taggedUsers.text = String(handle) + " 님"
-                            }
-                            else{
-                                self.taggedUsers.text = String(handle) + " 님 • "
-                            }
-                        }
+                var taggedUserString = ""
+                //if let tagList = self.tagList{
+                for taggedMember in tagList {
+                    if taggedMember.handle == tagList.last?.handle {
+                        taggedUserString += "\(taggedMember.handle) 님"
+                    }
+                    else {
+                        taggedUserString += "\(taggedMember.handle) 님 • "
                     }
                 }
+                taggedUsers.text = taggedUserString
                 
                 if let pochakUser = self.pochakUser {
                     pochakUser.text = (self.previewDataResult.ownerHandle ?? "사용자") + "님이 포착"

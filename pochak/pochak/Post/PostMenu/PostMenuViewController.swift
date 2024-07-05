@@ -32,8 +32,7 @@ class PostMenuViewController: UIViewController {
         print("게시글 추가 메뉴 \(postId)")
         
         // 게시물 작성자와 현재 로그인된 유저가 같으면 삭제 메뉴 추가
-        // TODO: 로그인 구현 후 수정
-        if(postOwner == APIConstants.dayeonHandle){
+        if(postOwner == UserDefaultsManager.getData(type: String.self, forKey: .handle)){
             currentUserIsOwner = true
         }
         
@@ -71,18 +70,18 @@ class PostMenuViewController: UIViewController {
            let navigationController = tabBarController.selectedViewController as? UINavigationController {
             // 3. 부모의 부모 뷰컨트롤러 (= home tab view controller)에 접근
             if let grandparentViewController = navigationController.viewControllers.dropLast().last {
-                // 홈탭에서 게시글 상세로 이동한 경우
-                if let vc = grandparentViewController as? HomeTabViewController{
-                    vc.changeHasBeenMade = true
-                }
-                // TODO: - 나리 -> 여기에 탐색 탭에서 게시글 다시 불러오는 코드 추가해주기!
-                else if let vc = grandparentViewController as? PostTabViewController {
-                    
-                }
-                // TODO: - 정연 -> 여기에 프로필에서 게시글 다시 불러오는 코드 추가해주기! (내 프로필, 남의 프로필 둘 다 해야 할듯??)
-                else if let vc = grandparentViewController as? MyProfileTabViewController {
-                    
-                }
+//                // 홈탭에서 게시글 상세로 이동한 경우
+//                if let vc = grandparentViewController as? HomeTabViewController{
+//                    
+//                }
+//                // TODO: - 나리 -> 여기에 탐색 탭에서 게시글 다시 불러오는 코드 추가해주기!
+//                else if let vc = grandparentViewController as? PostTabViewController {
+//                    
+//                }
+//                // TODO: - 정연 -> 여기에 프로필에서 게시글 다시 불러오는 코드 추가해주기! (내 프로필, 남의 프로필 둘 다 해야 할듯??)
+//                else if let vc = grandparentViewController as? MyProfileTabViewController {
+//                    
+//                }
                 // 모달을 해제하고 그 후 네비게이션 스택에서 원하는 뷰컨트롤러로 이동
                 self.dismiss(animated: true) {
                     navigationController.popToViewController(grandparentViewController, animated: true)

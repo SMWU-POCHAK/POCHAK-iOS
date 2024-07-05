@@ -21,6 +21,46 @@
         </array>
     </customFonts>
     <scenes>
+        <!--Tagged Users Detail View Controller-->
+        <scene sceneID="qD1-LR-vaw">
+            <objects>
+                <viewController storyboardIdentifier="TaggedUsersDetailVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="z5k-WS-O5g" customClass="TaggedUsersDetailViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VTm-VQ-a8V">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="태그" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kuy-zn-KqB">
+                                <rect key="frame" x="172" y="86" width="31.333333333333343" height="21"/>
+                                <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="rcL-dg-6O5">
+                                <rect key="frame" x="0.0" y="107" width="375" height="671"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="separatorColor" name="gray01"/>
+                                <inset key="separatorInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="h0S-vr-8bT"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="h0S-vr-8bT" firstAttribute="trailing" secondItem="rcL-dg-6O5" secondAttribute="trailing" id="CxW-o2-mfG"/>
+                            <constraint firstItem="rcL-dg-6O5" firstAttribute="leading" secondItem="h0S-vr-8bT" secondAttribute="leading" id="OP5-ya-qid"/>
+                            <constraint firstItem="Kuy-zn-KqB" firstAttribute="centerX" secondItem="h0S-vr-8bT" secondAttribute="centerX" id="ddZ-mZ-iuz"/>
+                            <constraint firstItem="Kuy-zn-KqB" firstAttribute="top" secondItem="h0S-vr-8bT" secondAttribute="top" constant="36" id="qwK-8j-QlC"/>
+                            <constraint firstItem="rcL-dg-6O5" firstAttribute="top" secondItem="Kuy-zn-KqB" secondAttribute="bottom" id="wr8-Cy-yp4"/>
+                            <constraint firstItem="h0S-vr-8bT" firstAttribute="bottom" secondItem="rcL-dg-6O5" secondAttribute="bottom" id="zmQ-c6-2K3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="rcL-dg-6O5" id="dpn-OA-Gnh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iCP-fV-Mjj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1971" y="1382"/>
+        </scene>
         <!--Post Likes View Controller-->
         <scene sceneID="Ire-iZ-234">
             <objects>
@@ -68,7 +108,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zZ3-Ct-woZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1977" y="1393"/>
+            <point key="canvasLocation" x="2801" y="1387"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="d62-hJ-VQo">
@@ -253,7 +293,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Kgl-pj-DSt">
                                                 <rect key="frame" x="82" y="-8" width="129" height="100"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TZj-sL-ED1">
+                                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TZj-sL-ED1">
                                                         <rect key="frame" x="0.0" y="0.0" width="129" height="50"/>
                                                         <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="16"/>
                                                         <nil key="textColor"/>
@@ -267,7 +307,7 @@
                                                     </label>
                                                 </subviews>
                                             </stackView>
-                                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8NM-hH-Q9c">
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8NM-hH-Q9c">
                                                 <rect key="frame" x="285" y="24" width="70" height="36"/>
                                                 <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="16"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -394,6 +434,7 @@
                                             <constraint firstAttribute="trailing" secondItem="VHa-nq-QVw" secondAttribute="trailing" constant="9" id="beO-vg-tgn"/>
                                             <constraint firstItem="JWP-Of-QNZ" firstAttribute="centerY" secondItem="po0-2n-gtJ" secondAttribute="centerY" id="gAm-B4-BCo"/>
                                             <constraint firstItem="8NM-hH-Q9c" firstAttribute="centerY" secondItem="g1Z-gd-DZE" secondAttribute="centerY" id="gmI-Ds-I35"/>
+                                            <constraint firstItem="8NM-hH-Q9c" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Kgl-pj-DSt" secondAttribute="trailing" constant="50" id="lxI-iJ-qjG"/>
                                             <constraint firstItem="9aE-qJ-kQ5" firstAttribute="top" secondItem="g1Z-gd-DZE" secondAttribute="bottom" constant="14" id="sJx-lI-kGg"/>
                                             <constraint firstAttribute="trailing" secondItem="M2a-Za-kAx" secondAttribute="trailing" constant="20" id="tbB-TT-LZs"/>
                                         </constraints>
@@ -428,7 +469,7 @@
                         <outlet property="followingBtn" destination="8NM-hH-Q9c" id="IBZ-Pw-2dJ"/>
                         <outlet property="likeButton" destination="vvh-0p-iKO" id="ryI-jF-OtB"/>
                         <outlet property="moreCommentButton" destination="JWP-Of-QNZ" id="dPU-of-3Mo"/>
-                        <outlet property="pochakUser" destination="gI1-I5-NSd" id="EE6-b3-PgP"/>
+                        <outlet property="pochakUserLabel" destination="gI1-I5-NSd" id="bNx-9e-OFs"/>
                         <outlet property="postContent" destination="wZB-Xn-bjF" id="KTa-Pe-TAg"/>
                         <outlet property="postImageView" destination="9aE-qJ-kQ5" id="XfM-hX-1KM"/>
                         <outlet property="postOwnerHandleLabel" destination="DiP-WD-doD" id="kar-iA-aSf"/>
@@ -450,14 +491,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="qEx-57-ueM">
-                                <rect key="frame" x="0.0" y="117.66666666666669" width="375" height="604.33333333333326"/>
+                                <rect key="frame" x="0.0" y="117" width="375" height="605"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2e3-3r-nAq">
-                                <rect key="frame" x="0.0" y="117.66666666666669" width="375" height="604.33333333333326"/>
+                                <rect key="frame" x="0.0" y="117" width="375" height="605"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="onL-la-Rin">
-                                        <rect key="frame" x="121.66666666666667" y="239.66666666666663" width="131.66666666666663" height="125"/>
+                                        <rect key="frame" x="121.66666666666667" y="240" width="131.66666666666663" height="125"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoCommentIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ItR-Eh-S2U">
                                                 <rect key="frame" x="23.999999999999986" y="0.0" width="84" height="84"/>
@@ -540,7 +581,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jal 님의 게시물 댓글" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y4f-dv-2yg">
-                                <rect key="frame" x="114.66666666666669" y="86" width="146" height="21.666666666666671"/>
+                                <rect key="frame" x="114.66666666666669" y="86" width="146" height="21"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -587,13 +628,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="더보기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7B-OC-7cT">
-                                <rect key="frame" x="164" y="86" width="47" height="21.666666666666671"/>
+                                <rect key="frame" x="164" y="86" width="47" height="21"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="48" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="QCS-0R-jE3" userLabel="MenuTable View">
-                                <rect key="frame" x="0.0" y="123.66666666666669" width="375" height="654.33333333333326"/>
+                                <rect key="frame" x="0.0" y="123" width="375" height="655"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="separatorColor" name="gray01"/>
                                 <inset key="separatorInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
@@ -627,13 +668,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="신고하기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LOi-BI-yRL">
-                                <rect key="frame" x="156.33333333333334" y="86" width="62.333333333333343" height="21.666666666666671"/>
+                                <rect key="frame" x="156.33333333333334" y="86" width="62.333333333333343" height="21"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="48" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Ggd-xp-TCn">
-                                <rect key="frame" x="0.0" y="123.66666666666669" width="375" height="654.33333333333326"/>
+                                <rect key="frame" x="0.0" y="123" width="375" height="655"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="separatorColor" name="gray01"/>
                                 <inset key="separatorInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
