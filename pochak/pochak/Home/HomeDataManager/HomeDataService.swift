@@ -10,10 +10,10 @@ import Alamofire
 struct HomeDataService {
     static let shared = HomeDataService()
     
-    let header: HTTPHeaders = [
-        "Authorization": GetToken.getAccessToken(),
-        "Content-type": "application/json"
-    ]
+//    let header: HTTPHeaders = [
+//        "Authorization": GetToken.getAccessToken(),
+//        "Content-type": "application/json"
+//    ]
     
     func getHomeData(page: Int, completion: @escaping (NetworkResult<Any>) -> Void){
         let parameters: Parameters = [ "page": page ]
@@ -21,7 +21,7 @@ struct HomeDataService {
         let dataRequest = AF.request(APIConstants.baseURLv2 + "/api/v2/posts?page=\(page)",
                         method: .get,
                         encoding: JSONEncoding.default,
-                        headers: header)
+                        /*headers: header*/interceptor: RequestInterceptor.getRequestInterceptor())
         
         dataRequest.responseData { response in
             switch response.result {

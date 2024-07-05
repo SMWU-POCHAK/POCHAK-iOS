@@ -815,7 +815,7 @@
                                                 </constraints>
                                             </imageView>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" name="gray04"/>
                                         <constraints>
                                             <constraint firstItem="w1h-9D-Wgk" firstAttribute="centerY" secondItem="ORo-fh-fM5" secondAttribute="centerY" id="FyG-KY-Jog"/>
                                             <constraint firstItem="w1h-9D-Wgk" firstAttribute="centerX" secondItem="ORo-fh-fM5" secondAttribute="centerX" id="mcP-71-WfZ"/>

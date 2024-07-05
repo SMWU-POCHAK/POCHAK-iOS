@@ -12,10 +12,10 @@ struct LikedUsersDataService{
     // shared를 통해 여러 VC가 같은 인스턴스에 접근 가능
     static let shared = LikedUsersDataService()
     
-    let header: HTTPHeaders = [
-        "Authorization": GetToken.getAccessToken(),
-        "Content-type": "application/json"
-    ]
+//    let header: HTTPHeaders = [
+//        "Authorization": GetToken.getAccessToken(),
+//        "Content-type": "application/json"
+//    ]
     
     // 해당 포스트에 좋아요 누른 회원 조회하기
     // completion 클로저를 @escaping closure로 정의
@@ -28,7 +28,7 @@ struct LikedUsersDataService{
         let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/posts/\(postId)/like",
                                     method: .get,
                                     encoding: URLEncoding.default,
-                                    headers: header)
+                                    /*headers: header*/interceptor: RequestInterceptor.getRequestInterceptor())
         
         // 통신 성공했는지에 대한 여부
         dataRequest.responseData { dataResponse in
@@ -52,7 +52,7 @@ struct LikedUsersDataService{
         let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/posts/\(postId)/like",
                                      method: .post,
                                      encoding: URLEncoding.default,
-                                     headers: header)
+                                     /*headers: header*/interceptor: RequestInterceptor.getRequestInterceptor())
         
         dataRequest.responseData { dataResponse in
             switch dataResponse.result{

@@ -12,10 +12,10 @@ struct PostDataService{
     // shared를 통해 여러 VC가 같은 인스턴스에 접근 가능
     static let shared = PostDataService()
     
-    let header: HTTPHeaders = [
-        "Authorization": GetToken.getAccessToken(),
-        "Content-type": "application/json"
-    ]
+//    let header: HTTPHeaders = [
+//        "Authorization": GetToken.getAccessToken(),
+//        "Content-type": "application/json"
+//    ]
     
     // 포스트 상세 페이지 가져오기
     // completion 클로저를 @escaping closure로 정의
@@ -28,7 +28,7 @@ struct PostDataService{
         let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/posts/\(postId)",
                                     method: .get,
                                     encoding: URLEncoding.default,
-                                    headers: header)
+                                    /*headers: header*/ interceptor: RequestInterceptor.getRequestInterceptor())
         
         // 통신 성공했는지에 대한 여부
         dataRequest.responseData { dataResponse in
@@ -55,7 +55,7 @@ struct PostDataService{
         let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/posts/\(postId)",
                                     method: .delete,
                                     encoding: URLEncoding.default,
-                                    headers: header)
+                                    /*headers: header*/interceptor: RequestInterceptor.getRequestInterceptor())
         
         dataRequest.responseData { dataResponse in
             switch dataResponse.result {
@@ -89,7 +89,7 @@ struct PostDataService{
                                      method: .post,
                                      parameters: requestBody,
                                      encoding: JSONEncoding.default,
-                                     headers: header)
+                                     /*headers: header*/interceptor: RequestInterceptor.getRequestInterceptor())
         
         print("신고하기 request: \(dataRequest)")
         
