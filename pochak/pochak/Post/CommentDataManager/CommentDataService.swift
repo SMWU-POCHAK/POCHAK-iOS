@@ -10,10 +10,10 @@ import Alamofire
 struct CommentDataService {
     static let shared = CommentDataService()
     
-    let header: HTTPHeaders = [
-        "Authorization": GetToken.getAccessToken(),
-        "Content-type": "application/json"
-    ]
+//    let header: HTTPHeaders = [
+//        "Authorization": GetToken.getAccessToken(),
+//        "Content-type": "application/json"
+//    ]
     
     /// 댓글 등록 시 서버에 전달할 Body 생성
     /// - Parameters:
@@ -40,7 +40,7 @@ struct CommentDataService {
                                     method: .get,
                                     parameters: ["page": page],
                                     encoding: URLEncoding.default,
-                                    headers: header)
+                                    /*headers: header*/ interceptor: RequestInterceptor.getRequestInterceptor())
         
         dataRequest.responseData { dataResponse in
             switch dataResponse.result{
@@ -70,7 +70,7 @@ struct CommentDataService {
                                     method: .get,
                                     parameters: ["page": page],
                                     encoding: URLEncoding.default,
-                                    headers: header)
+                                    /*headers: header*/interceptor: RequestInterceptor.getRequestInterceptor())
         dataRequest.responseData { dataResponse in
             switch dataResponse.result{
             case .success:
@@ -96,7 +96,7 @@ struct CommentDataService {
                                     method: .post,
                                     parameters: makeBodyParameter(content: content, parentCommentId: parentCommentId),
                                     encoding: JSONEncoding.default,
-                                    headers: header)
+                                    /*headers: header*/interceptor: RequestInterceptor.getRequestInterceptor())
         
         dataRequest.responseData { dataResponse in
             switch dataResponse.result{
@@ -123,11 +123,11 @@ struct CommentDataService {
     func deleteComment(postId: Int, commentId: Int, completion: @escaping (NetworkResult<Any>) -> Void){
         let parameters: Parameters = ["commentId" : commentId]
         print("=== deleting comment ===")
-        print("header: \(header)")
+//        print("header: \(header)")
         let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/posts/\(postId)/comments",
                                     method: .delete,
                                     parameters: parameters,
-                                    headers: header)
+                                    /*headers: header*/interceptor: RequestInterceptor.getRequestInterceptor())
 
         dataRequest.responseData { dataResponse in
             switch dataResponse.result{

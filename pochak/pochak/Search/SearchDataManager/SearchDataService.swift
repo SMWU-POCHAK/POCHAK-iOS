@@ -14,15 +14,15 @@ class SearchDataService{
     
     func getIdSearch(keyword:String,completion: @escaping(NetworkResult<Any>) -> Void){
         let parameters: [String: Any] = ["keyword": keyword]
-        let header : HTTPHeaders = ["Authorization": self.accessToken,
-                                    "Content-type": "application/json"
-        ]
+//        let header : HTTPHeaders = ["Authorization": self.accessToken,
+//                                    "Content-type": "application/json"
+//        ]
         print("==getIdSearch==")
         print(parameters)
         let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/members/search?keyword=\(keyword)",
                                      method: .get,
                                      encoding: URLEncoding.default,
-                                     headers: header)
+                                     /*headers: header*/ interceptor: RequestInterceptor.getRequestInterceptor())
         
         // 통신 성공했는지에 대한 여부
         dataRequest.responseData { dataResponse in

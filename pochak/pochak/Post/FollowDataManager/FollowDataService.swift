@@ -11,10 +11,10 @@ import Alamofire
 struct FollowDataService {
     static let shared = FollowDataService()
     
-    let header: HTTPHeaders = [
-        "Authorization": GetToken.getAccessToken(),
-        "Content-type": "application/json"
-    ]
+//    let header: HTTPHeaders = [
+//        "Authorization": GetToken.getAccessToken(),
+//        "Content-type": "application/json"
+//    ]
     
     /// 팔로우 혹은 팔로우 취소하는 api
     /// - Parameters:
@@ -24,7 +24,7 @@ struct FollowDataService {
         let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/members/\(handle)/follow",
                                     method: .post,
                                     encoding: URLEncoding.default,
-                                    headers: header)
+                                    /*headers: header*/interceptor: RequestInterceptor.getRequestInterceptor())
         
         dataRequest.responseData { dataResponse in
             // dataResponse.result는 통신 성공/실패 여부

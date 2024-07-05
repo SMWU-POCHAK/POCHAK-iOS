@@ -28,7 +28,7 @@ class MyAuthenticator : Authenticator {
         print("--------------- 1. apply Function 실행 중 ---------------")
         print(">>>>> apply 현재 토큰 : \(accessToken)")
         urlRequest.addValue(credential.accessToken, forHTTPHeaderField: "Authorization")
-        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         print(">>>>> apply 현재 urlRequest : \(urlRequest)")
         
     }
@@ -73,12 +73,13 @@ class MyAuthenticator : Authenticator {
                    print(result.message)
                    print("inside Refresh Success!!!!")
                    let newAccessToken = result.result.accessToken
-                   print(newAccessToken)
+                   print(">>>>> newAccessToken : \(newAccessToken)")
                    do {
                        try KeychainManager.update(account: "accessToken", value: newAccessToken)
                    } catch {
                        print(error)
                    }
+                   print(">>>>> get newAccessToken from keychain: \(GetToken.getAccessToken())")
                    let credential = Credential(accessToken: newAccessToken, refreshToken: credential.refreshToken, expiredAt: Date(timeIntervalSinceNow: 60 * 60))
                    completion(.success(credential))
                case .failure(let error):

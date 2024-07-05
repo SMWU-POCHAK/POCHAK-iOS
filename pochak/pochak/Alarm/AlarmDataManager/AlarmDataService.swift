@@ -14,13 +14,13 @@ class AlarmDataService{
     
     
     func getAlarm(completion: @escaping (NetworkResult<Any>) -> Void){
-        let header: HTTPHeaders = ["Authorization": self.accessToken,
-                     "Content-type": "application/json"
-                     ]
+//        let header: HTTPHeaders = ["Authorization": self.accessToken,
+//                     "Content-type": "application/json"
+//                     ]
         let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/alarms",
                                     method: .get,
                                     encoding: URLEncoding.default,
-                                    headers: header)
+                                    /*headers: header*/ interceptor: RequestInterceptor.getRequestInterceptor())
         
         // 통신 성공했는지에 대한 여부
         dataRequest.responseData { dataResponse in

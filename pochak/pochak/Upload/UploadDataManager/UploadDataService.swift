@@ -9,23 +9,24 @@ import Alamofire
 
 class UploadDataService{
     static let shared = UploadDataService()
-    let accessToken = GetToken.getAccessToken()
+//    let accessToken = GetToken.getAccessToken()
     
 
     func upload(postImage:Data?,  caption:String, taggedMemberHandleList:Array<String>, completion: @escaping(NetworkResult<Any>) -> Void){
         // 임시로 넣어두는 다연 토큰
-        let header: HTTPHeaders = ["Authorization": self.accessToken,
-                     "Content-type": "application/json"
-                     ]
+        let header: HTTPHeaders = ["Content-type": "multipart/form-data"]
 
         print("==upload==")
+        print("postImage : \(postImage)")
+        print("caption : \(caption)")
+        print("taggedMemberHandleList : \(taggedMemberHandleList)")
         
         // Create an Alamofire upload request
         AF.upload(
             multipartFormData: { multipartFormData in
                 // Append image data as multipart form data
                 if let imageData = postImage {
-                    multipartFormData.append(imageData, withName: "postImage", fileName: "image.jpg", mimeType: "image/jpeg")
+                    multipartFormData.append(imageData, withName: "postImage", fileName: "postImage.jpg", mimeType: "image/jpeg")
                 }
                 
                 if let captionData = caption.data(using: .utf8) {
@@ -42,7 +43,8 @@ class UploadDataService{
             },
             to: APIConstants.baseURLv2 + "/api/v2/posts",
             method: .post,
-            headers: header
+            headers: header,
+            interceptor: RequestInterceptor.getRequestInterceptor()
         )
         .responseJSON { response in
             debugPrint(response)

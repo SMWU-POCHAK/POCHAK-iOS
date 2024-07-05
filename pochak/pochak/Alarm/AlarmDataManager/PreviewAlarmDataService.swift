@@ -14,14 +14,14 @@ class PreviewAlarmDataService{
     
     func getTagPreview(tagId: Int, completion: @escaping (NetworkResult<Any>) -> Void){
         // header 있는 자리!
-        let header: HTTPHeaders = ["Authorization": self.accessToken,
-                     "Content-type": "application/json"
-                     ]
+//        let header: HTTPHeaders = ["Authorization": self.accessToken,
+//                     "Content-type": "application/json"
+//                     ]
         
         let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/alarms/\(tagId)",
                                     method: .get,
                                     encoding: URLEncoding.default,
-                                    headers: header)
+                                    /*headers: header*/interceptor: RequestInterceptor.getRequestInterceptor())
         
         // 통신 성공했는지에 대한 여부
         dataRequest.responseData { dataResponse in
