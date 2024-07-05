@@ -13,22 +13,13 @@ class DeleteFollowerDataManager {
     static let shared = DeleteFollowerDataManager()
     
     func deleteFollowerDataManager(_ handle : String, _ selectedHandle : String, _ completion: @escaping (DeleteFollowerDataResponse) -> Void) {
-        // Get token
-        let accessToken = GetToken.getAccessToken()
-        let refreshToken = GetToken.getRefreshToken()
         
         let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)/follower?followerHandle=\(selectedHandle)"
 
-        let authenticator = MyAuthenticator()
-        let credential = MyAuthenticationCredential(accessToken: accessToken,
-                                                    refreshToken: refreshToken,
-                                                    expiredAt: Date(timeIntervalSinceNow: 60 * 60))
-        let myAuthencitationInterceptor = AuthenticationInterceptor(authenticator: authenticator,
-                                                                    credential: credential)
         AF.request(url,
                    method: .delete,
                    encoding: URLEncoding.default,
-                   interceptor: myAuthencitationInterceptor)
+                   interceptor: RequestInterceptor.getRequestInterceptor())
         .validate()
         .responseDecodable(of: DeleteFollowerDataResponse.self) { response in
             switch response.result {

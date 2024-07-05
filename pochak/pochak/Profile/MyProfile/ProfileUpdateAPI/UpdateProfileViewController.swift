@@ -5,9 +5,6 @@
 //  Created by Seo Cindy on 1/14/24.
 //
 
-// 추가로 구현 할 것!!!
-// 1. handle 바꾸려고 하면 알림창 뜨게하기
-
 import UIKit
 
 class UpdateProfileViewController: UIViewController {
@@ -121,7 +118,7 @@ class UpdateProfileViewController: UIViewController {
         guard let profileImage = profileImg.image  else {return}
         
         // API request : PATCH
-        MyProfileUpdateDataManager.shared.updateDataManager(name,
+        ProfileUpdateDataManager.shared.updateDataManager(name,
                                                             handle,
                                                             message,
                                                             profileImage,
@@ -129,11 +126,10 @@ class UpdateProfileViewController: UIViewController {
             UserDefaultsManager.setData(value: resultData.name, key: .name)
             UserDefaultsManager.setData(value: resultData.handle, key: .handle)
             UserDefaultsManager.setData(value: resultData.message, key: .message)
-            UserDefaultsManager.setData(value: resultData.profileImgUrl, key: .profileImgUrl)
+            UserDefaultsManager.setData(value: resultData.profileImage, key: .profileImgUrl)
+            // 프로필 화면으로 전환
+            self.navigationController?.popViewController(animated: true)
         })
-        
-        // 프로필 화면으로 전환
-        navigationController?.popViewController(animated: true)
     }
     
     /* < 앨범 사진 선택 >

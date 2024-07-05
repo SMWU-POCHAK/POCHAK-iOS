@@ -52,6 +52,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="M1o-wR-N5d" firstAttribute="top" secondItem="cCD-m9-ruE" secondAttribute="bottom" constant="5" id="FIA-8K-7e2"/>
+                        </constraints>
                     </stackView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xeb-rw-ZRP">
                         <rect key="frame" x="349" y="40.666666666666664" width="49" height="29.999999999999993"/>
@@ -103,10 +106,10 @@
     </objects>
     <resources>
         <namedColor name="gray01">
-            <color red="0.91399997472763062" green="0.92500001192092896" blue="0.93699997663497925" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.9137254901960784" green="0.92549019607843142" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="gray07">
-            <color red="0.1289999932050705" green="0.14499999582767487" blue="0.16099999845027924" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.12549019607843137" green="0.14117647058823529" blue="0.16078431372549021" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

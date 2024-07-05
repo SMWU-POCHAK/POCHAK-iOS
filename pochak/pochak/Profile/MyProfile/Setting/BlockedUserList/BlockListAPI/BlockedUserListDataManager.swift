@@ -1,32 +1,35 @@
 //
-//  BlockDataManager.swift
+//  BlockedUserListDataManager.swift
 //  pochak
 //
-//  Created by Seo Cindy on 6/30/24.
+//  Created by Seo Cindy on 7/5/24.
 //
 
 import Foundation
 import Alamofire
 
-class BlockDataManager {
+class BlockedUserListDataManager{
     
-    static let shared = BlockDataManager()
+    static let shared = BlockedUserListDataManager()
     
-    func blockDataManager(_ handle : String, _ completion: @escaping (BlockDataResponse) -> Void) {
+    
+    func blockedUserListDataManager(_ handle : String, _ completion: @escaping (BlockedUserDataModel) -> Void) {
         
         let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)/block"
-
+        
         AF.request(url,
-                   method: .post,
+                   method: .get,
                    encoding: URLEncoding.default,
                    interceptor: RequestInterceptor.getRequestInterceptor())
         .validate()
-        .responseDecodable(of: BlockDataResponse.self) { response in
+        .responseDecodable(of: BlockedUserDataResponse.self) { response in
             switch response.result {
             case .success(let result):
-                completion(result)
+                let resultData = result.result
+                print(">>>>> resultData : \(resultData)")
+                completion(resultData)
             case .failure(let error):
-                print("Request Fail blockDataManager : \(error.localizedDescription)")
+                print("blockedUserListDataManager error : \(error.localizedDescription)")
                 if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
                     print("Failure Data: \(errorMessage)")
                 }

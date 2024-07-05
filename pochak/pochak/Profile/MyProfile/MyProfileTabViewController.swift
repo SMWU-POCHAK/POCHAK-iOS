@@ -132,7 +132,6 @@ class MyProfileTabViewController: UIViewController {
     }
     
     @IBAction func updateProfile(_ sender: Any) {
-
         guard let updateProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "UpdateProfileVC") as? UpdateProfileViewController else {return}
         self.navigationController?.pushViewController(updateProfileVC, animated: true)
     }
