@@ -6,23 +6,11 @@
 //
 
 import UIKit
-import Kingfisher
 
 class HomeTabViewController: UIViewController {
     
     // MARK: - Properties
-    
-    public var changeHasBeenMade: Bool = false {
-        willSet {
-            if(newValue){
-                print("삭제돼서 다시 로딩할 예정")
-                self.currentFetchingPage = 0
-                self.postList.removeAll()
-                self.setupData()
-            }
-        }
-    }
-    
+
     private var postList: [HomeDataPostList]! = []
     private var isLastPage: Bool = false
     private var currentFetchingPage: Int = 0
@@ -33,6 +21,8 @@ class HomeTabViewController: UIViewController {
     private let minimumInterItemSpacing: CGFloat = 8
     private var noPost: Bool = false
     private var isCurrentlyFetching: Bool = false
+    
+    private var refreshControl = UIRefreshControl()
     
     // MARK: - Views
     
@@ -48,17 +38,23 @@ class HomeTabViewController: UIViewController {
         
         setupNavigationBar()
         setupCollectionView()
+        
+        refreshControl.addTarget(self, action: #selector(refreshHome), for: .valueChanged)
+        refreshControl.tintColor = UIColor(named: "navy02")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         print("view will appear - home")
         self.navigationController?.navigationBar.isHidden = false
-        //currentFetchingPage = 0
-        //self.setupData()
     }
     
-    // MARK: - Action
-
+    // MARK: - Actions
+    
+    @objc func refreshHome(){
+        self.currentFetchingPage = 0
+        self.postList.removeAll()
+        self.setupData()
+    }
     
     // MARK: - Functions
     
@@ -71,6 +67,8 @@ class HomeTabViewController: UIViewController {
     private func setupCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        collectionView.refreshControl = refreshControl
             
         collectionView.register(
             UINib(nibName: HomeCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
@@ -87,23 +85,35 @@ class HomeTabViewController: UIViewController {
             case .success(let data):
                 self.homeDataResponse = data as? HomeDataResponse
                 self.homeDataResult = self.homeDataResponse.result
-                self.homeDataResult.postList.map { data in
-                    self.postList.append(data)
-                }
+                
+                self.isLastPage = self.homeDataResult.pageInfo.lastPage
+
+                let newPosts = self.homeDataResult.postList
+                let startIndex = self.postList.count
+                let endIndex = startIndex + newPosts.count
+                let newIndexPath = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
+                
+                self.postList.append(contentsOf: newPosts)
                 
                 if self.postList.count == 0 {
                     self.noPost = true
                 }
+                else {
+                    self.noPost = false
+                }
                 
                 print("보여주는 게시글 개수: \(self.postList.count)")
-                
-                self.isLastPage = self.homeDataResult.pageInfo.lastPage
-                
                 DispatchQueue.main.async {
-                    self.collectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
+                    if self.currentFetchingPage == 0 {
+                        self.collectionView.reloadData()
+                    } 
+                    else {
+                        self.collectionView.insertItems(at: newIndexPath)
+                    }
+                    
                     self.isCurrentlyFetching = false
+                    self.currentFetchingPage += 1;
                 }
-                self.currentFetchingPage += 1;  // 다음 페이지로
             case .requestErr(let err):
                 print(err)
             case .pathErr:
@@ -116,7 +126,6 @@ class HomeTabViewController: UIViewController {
                 self.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
             }
         }
-        changeHasBeenMade = false
     }
 }
 
@@ -151,6 +160,7 @@ extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDel
             guard let postVC = postTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
             else { return }
             
+            postVC.parentVC = self
             postVC.receivedPostId = postList[indexPath.item].postId
             self.navigationController?.pushViewController(postVC, animated: true)
         }
@@ -191,6 +201,12 @@ extension HomeTabViewController: UIScrollViewDelegate {
                 isCurrentlyFetching = true
                 setupData()
             }
+        }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if refreshControl.isRefreshing {
+             refreshControl.endRefreshing()
         }
     }
 }

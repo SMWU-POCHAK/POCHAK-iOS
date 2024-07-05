@@ -26,6 +26,7 @@ struct PreviewAlarmResult: Codable {
 // MARK: - Tag DTO
 struct PreviewTagList: Codable {
     let memberId: Int
+    let profileImage: String
     let handle: String
     let name: String
 }

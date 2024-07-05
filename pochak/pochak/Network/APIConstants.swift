@@ -19,7 +19,7 @@ struct APIConstants{
     
     static let dayeonHandle: String = "dxxynni"
     
-    static let suyeonToken : String = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdS55ZW9ubl8iLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzA5NTUzNzE3LCJleHAiOjE3ODczMTM3MTd9.1z__UGnchm_UcZ7Znv-VtzZYpuyv77FXn0rGiJ_3UIY"
+    static let suyeonToken : String = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyOCIsImlhdCI6MTcxOTg0NDEyNywicm9sZSI6IlJPTEVfVVNFUiIsImV4cCI6MjAzMDg4NDEyN30.6ZKFdnt54kD2XygP7YZzKlNrkDNzGBubdinrxrTQ2_Y"
     
     static let suyeonHandle: String = "su.yeonn_"
 }

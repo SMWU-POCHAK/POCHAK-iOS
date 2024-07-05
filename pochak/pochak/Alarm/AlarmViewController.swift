@@ -20,7 +20,6 @@ class AlarmViewController: UIViewController, UISheetPresentationControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-bold", size: 18)!]
         self.navigationItem.title = "알림"
         
         // Do any additional setup after loading the view.
@@ -124,6 +123,8 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
                 }
                 
                 let previewAlarmVC = self.alarmStoryBoard.instantiateViewController(withIdentifier: "PreviewAlarmVC") as! PreviewAlarmViewController
+                previewAlarmVC.tagId = tagId
+                previewAlarmVC.alarmId = self.alarmList[indexPath.row].alarmId
                 
                 // 모달 창의 presentation style을 .pageSheet로 설정합니다.
                 previewAlarmVC.modalPresentationStyle = .pageSheet

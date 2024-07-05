@@ -97,6 +97,9 @@ class CustomAlertViewController: UIViewController {
         // alert 내용 폰트 설정
         titleLabel.text = titleText
         messageLabel.text = messageText
+        
+        titleLabel.setLineHeightByPx(value: 3)
+        messageLabel.setLineHeightByPx(value: 3)
     }
 }
 

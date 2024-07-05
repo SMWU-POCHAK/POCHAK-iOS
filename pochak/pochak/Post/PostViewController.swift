@@ -20,7 +20,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     @IBOutlet weak var postOwnerHandleLabel: UILabel!
     @IBOutlet weak var postContent: UILabel!
     @IBOutlet weak var taggedUsers: UILabel!
-    @IBOutlet weak var pochakUser: UILabel!
+    @IBOutlet weak var pochakUserLabel: UILabel!
     
     @IBOutlet weak var borderLineView: UIView!
     @IBOutlet weak var commentUserHandleLabel: UILabel!
@@ -31,8 +31,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     
     var receivedPostId: Int?
     var postOwnerHandle: String = ""  // 나중에 여기저기에서 사용할 수 있도록.. 미리 게시자 아이디 저장
-    
-    let pullDownMenuBtn = UIButton()
+    var parentVC: UIViewController?  // 포스트 상세 뷰컨트롤러를 띄운 부모 뷰컨트롤러
     
     private var isFollowingColor: UIColor = UIColor(named: "gray03") ?? UIColor(hexCode: "FFB83A")
     private var isNotFollowingColor: UIColor = UIColor(named: "yellow00") ?? UIColor(hexCode: "C6CDD2")
@@ -48,6 +47,9 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     
     private let postStoryBoard = UIStoryboard(name: "PostTab", bundle: nil)
     
+    private var taggedUserList: [TaggedMember] = []
+    private let refreshControl = UIRefreshControl()
+    
     // MARK: - lifecycle
     
     override func viewDidLoad() {
@@ -56,6 +58,11 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         /* 1번만 해도 되는 초기화들.. */
         // 크기에 맞게
         scrollView.updateContentSize()
+        
+        scrollView.delegate = self
+        scrollView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshPostDetail), for: .valueChanged)
+        refreshControl.tintColor = UIColor(named: "navy02")
         
         setupNavigationBar()
         self.navigationController?.isNavigationBarHidden = false
@@ -69,8 +76,13 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         profileImageView.addGestureRecognizer(setGestureRecognizer())
         postOwnerHandleLabel.isUserInteractionEnabled = true
         postOwnerHandleLabel.addGestureRecognizer(setGestureRecognizer())
-        pochakUser.isUserInteractionEnabled = true
-        pochakUser.addGestureRecognizer(setGestureRecognizer())
+        pochakUserLabel.isUserInteractionEnabled = true
+        pochakUserLabel.addGestureRecognizer(setGestureRecognizer())
+        commentUserHandleLabel.isUserInteractionEnabled = true
+        commentUserHandleLabel.addGestureRecognizer(setGestureRecognizer())
+        
+        // 태그된 유저 띄우기 위한 제스쳐 등록
+        taggedUsers.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showTaggedUsersVC)))
         
         self.followingBtn.setTitleColor(UIColor.white, for: [.normal, .selected])
         self.followingBtn.setTitle("팔로우", for: .normal)
@@ -120,17 +132,17 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         
         // 태그된 사용자, 포착한 사용자
         self.taggedUsers.text = ""
-        for handle in postDataResult.taggedMemberHandle {
-            if(handle == postDataResult.taggedMemberHandle.last){
-                self.taggedUsers.text! += handle + " 님"
+        for taggedUser in self.taggedUserList {
+            if(taggedUser.handle == self.taggedUserList.last?.handle){
+                self.taggedUsers.text! += taggedUser.handle + " 님"
             }
             else{
-                self.taggedUsers.text! += handle + " 님 • "
+                self.taggedUsers.text! += taggedUser.handle + " 님 • "
             }
         }
         
         // TODO: 태그된 사용자에 프로필 이동 제스쳐 등록하기
-        self.pochakUser.text = postDataResult.ownerHandle + "님이 포착"
+        self.pochakUserLabel.text = postDataResult.ownerHandle + "님이 포착"
         
         // 포스트 내용
         self.postOwnerHandleLabel.text = postDataResult.ownerHandle
@@ -168,6 +180,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
                 self.postDataResponse = postData as? PostDataResponse
                 self.postDataResult = self.postDataResponse.result
                 self.postOwnerHandle = self.postDataResult.ownerHandle
+                self.taggedUserList = self.postDataResult.tagList
                 self.initUI()
             case .requestErr(let message):
                 print("requestErr", message)
@@ -183,9 +196,8 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         }
     }
     
-    func setGestureRecognizer() -> UITapGestureRecognizer {
+    private func setGestureRecognizer() -> UITapGestureRecognizer {
         let moveToOthersProfile = UITapGestureRecognizer(target: self, action: #selector(moveToOthersProfile))
-        
         return moveToOthersProfile
     }
     
@@ -194,7 +206,11 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         
         commentVC.modalPresentationStyle = .pageSheet
         commentVC.postId = receivedPostId
-        commentVC.postUserHandle = postDataResult.ownerHandle
+        commentVC.postOwnerHandle = postDataResult.ownerHandle
+        commentVC.taggedUserList = taggedUserList.map({ taggedUser in
+            taggedUser.handle
+        })
+        commentVC.postVC = self
         
         // half sheet
         if let sheet = commentVC.sheetPresentationController {
@@ -238,6 +254,9 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
                 }
                 // 바뀐 데이터 반영 위해 다시 포스트 상세 데이터 로드
                 self.loadPostDetailData()
+                
+                // 팔로잉 혹은 취소하면 홈탭에서 보여주는게 달라져야함
+//                Home.UserFollowChanged = true
             case .requestErr(let message):
                 print("requestErr", message)
             case .pathErr:
@@ -281,17 +300,56 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     // 프로필 이미지나 아이디 클릭 시 해당 사용자 프로필로 이동
     @objc func moveToOthersProfile(sender: UITapGestureRecognizer){
         print("move to other's profile")
-//        let storyboard = UIStoryboard(name: "ProfileTab", bundle: nil)
-//        let profileTabVC = storyboard.instantiateViewController(withIdentifier: "ProfileTabVC") as! ProfileTabViewController
-//        
-//        self.navigationController?.pushViewController(profileTabVC, animated: true)
-        //commentVC.postId = tempPostId
-        //commentVC.postUserHandle = postDataResult.postOwnerHandle
+        print(sender.view)
         
+        let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
         
-        //postVC.receivedData = imageArray[indexPath.item].partitionKey!.replacingOccurrences(of: "#", with: "%23")
+        if sender.view == profileImageView || sender.view == pochakUserLabel || sender.view == postOwnerHandleLabel {
+            // 만약 내 게시물이라면
+            if postOwnerHandle == UserDefaultsManager.getData(type: String.self, forKey: .handle) {
+                self.tabBarController?.selectedIndex = 4
+            }
+            // 다른 사람 게시물이라면
+            else {
+                guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
+                otherUserProfileVC.recievedHandle = postOwnerHandle
+                self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
+            }
+        }
         
-        //present(profileTabVC, animated: true)
+        else if sender.view == commentUserHandleLabel {
+            if commentUserHandleLabel.text == UserDefaultsManager.getData(type: String.self, forKey: .handle) {
+                self.tabBarController?.selectedIndex = 4
+            }
+            else {
+                guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
+                otherUserProfileVC.recievedHandle = commentUserHandleLabel.text
+                self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
+            }
+        }
+    }
+    
+    @objc func showTaggedUsersVC(){
+        print("태그된 유저 보여줄거에요~")
+        
+        let taggedUserDetailVC = postStoryBoard.instantiateViewController(withIdentifier: "TaggedUsersDetailVC") as! TaggedUsersDetailViewController
+        taggedUserDetailVC.tagList = taggedUserList
+        
+        taggedUserDetailVC.goToOtherProfileVC = {(handle: String) in
+            self.dismiss(animated: true)
+            let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
+            
+            guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
+            otherUserProfileVC.recievedHandle = handle
+            self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
+        }
+        
+        let sheet = taggedUserDetailVC.sheetPresentationController
+        sheet?.detents = [.medium(), .large()]
+        sheet?.prefersGrabberVisible = true
+        sheet?.prefersScrollingExpandsWhenScrolledToEdge = false
+
+        present(taggedUserDetailVC, animated: true)
     }
     
     @objc func moreActionButtonDidTap(){
@@ -305,8 +363,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         label.text = "더보기"
         label.sizeToFit()
         
-        // TODO: - handle 수정
-        let cellCount = (postOwnerHandle == APIConstants.dayeonHandle) ? 3 : 2
+        let cellCount = (postOwnerHandle == UserDefaultsManager.getData(type: String.self, forKey: .handle)) ? 3 : 2
         let height = label.frame.height + CGFloat(36 + 16 + 48 * cellCount)
         let fraction = UISheetPresentationController.Detent.custom { context in
             height
@@ -328,8 +385,8 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         showCommentVC()
     }
     
-    @objc func goBack(){
-        self.navigationController?.popViewController(animated: true)
+    @objc func refreshPostDetail(){
+        loadPostDetailData()
     }
 }
 
@@ -340,6 +397,14 @@ extension ViewController: UISheetPresentationControllerDelegate {
     func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
         //크기 변경 됐을 경우
         print(sheetPresentationController.selectedDetentIdentifier == .large ? "large" : "medium")
+    }
+}
+
+extension PostViewController: UIScrollViewDelegate {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if refreshControl.isRefreshing {
+             refreshControl.endRefreshing()
+        }
     }
 }
 

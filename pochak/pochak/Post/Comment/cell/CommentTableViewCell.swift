@@ -22,11 +22,11 @@ class CommentTableViewCell: UITableViewCell {
     
     static let identifier = "CommentTableViewCell"
     
-    var taggedId: String = ""
-    var loggedinUserHandle: String?
     var commentVC: CommentViewController!
     var commentId: Int!
     var postId: Int!
+    var taggedUserList: [String]?
+    var postOwnerHandle: String?
     
     // comment view controller에서 받는 댓글 입력창
     var editingCommentTextField: UITextField!
@@ -34,14 +34,12 @@ class CommentTableViewCell: UITableViewCell {
     
     let seeChildCommentBtn = UIButton()
     
+    private let currentUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
+    
     // MARK: - Init
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        // TODO: 로그인 완성되면 수정
-        //loggedinUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
-        loggedinUserHandle = "dxxynni"
         
         // 크기 반만큼 radius
         profileImageView.layer.cornerRadius = 40 / 2
@@ -121,11 +119,14 @@ class CommentTableViewCell: UITableViewCell {
         self.commentUserHandleLabel.text = comment.handle
         self.commentLabel.text = comment.content
         
-        /* 로그인된 유저의 댓글이 아닌 경우 삭제 버튼 hide */
-        print("댓글 핸들: \(comment.handle), 로그인 유저 핸들: \(loggedinUserHandle)")
-        if(comment.handle != loggedinUserHandle){
-            deleteButton.isHidden = true
-            deleteButton.isEnabled = false
+        /* 게시글의 주인(찍은 사람 + 찍힌 사람들) 혹은 댓글을 작성한 사람이 아닌 경우 삭제 버튼 hide */
+        print("댓글 핸들: \(comment.handle), 로그인 유저 핸들: \(currentUserHandle)")
+
+        if(comment.handle == currentUserHandle
+           || (postOwnerHandle == currentUserHandle)
+           || (taggedUserList?.contains(currentUserHandle!))!){
+            print("이 유저는 댓글 삭제가 가능함")
+            deleteButton.isHidden = false
         }
         
         // comment.uploadedTime 값: 2023-12-27T19:03:32.701

@@ -184,6 +184,7 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
             self.memberList = []
             self.resultVC.tableView.reloadData()
         } else {
+            self.memberList = []
             self.currentFetchingPage = 0
             self.resultVC.tableView.isHidden = false
             print(currentText)

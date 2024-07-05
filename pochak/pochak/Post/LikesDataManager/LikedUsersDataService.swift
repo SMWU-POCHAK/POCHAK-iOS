@@ -12,9 +12,10 @@ struct LikedUsersDataService{
     // shared를 통해 여러 VC가 같은 인스턴스에 접근 가능
     static let shared = LikedUsersDataService()
     
-    let header: HTTPHeaders = ["Authorization": APIConstants.dayeonToken,
-                 "Content-type": "application/json"
-                 ]
+    let header: HTTPHeaders = [
+        "Authorization": GetToken.getAccessToken(),
+        "Content-type": "application/json"
+    ]
     
     // 해당 포스트에 좋아요 누른 회원 조회하기
     // completion 클로저를 @escaping closure로 정의
