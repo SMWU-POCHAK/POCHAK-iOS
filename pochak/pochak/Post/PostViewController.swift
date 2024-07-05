@@ -47,7 +47,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     
     private let postStoryBoard = UIStoryboard(name: "PostTab", bundle: nil)
     
-    private var taggedUserList: [String] = []
+    private var taggedUserList: [TaggedMember] = []
     private let refreshControl = UIRefreshControl()
     
     // MARK: - lifecycle
@@ -132,12 +132,12 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         
         // 태그된 사용자, 포착한 사용자
         self.taggedUsers.text = ""
-        for handle in postDataResult.taggedMemberHandle {
-            if(handle == postDataResult.taggedMemberHandle.last){
-                self.taggedUsers.text! += handle + " 님"
+        for taggedUser in self.taggedUserList {
+            if(taggedUser.handle == self.taggedUserList.last?.handle){
+                self.taggedUsers.text! += taggedUser.handle + " 님"
             }
             else{
-                self.taggedUsers.text! += handle + " 님 • "
+                self.taggedUsers.text! += taggedUser.handle + " 님 • "
             }
         }
         
@@ -180,7 +180,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
                 self.postDataResponse = postData as? PostDataResponse
                 self.postDataResult = self.postDataResponse.result
                 self.postOwnerHandle = self.postDataResult.ownerHandle
-                self.taggedUserList = self.postDataResult.taggedMemberHandle
+                self.taggedUserList = self.postDataResult.tagList
                 self.initUI()
             case .requestErr(let message):
                 print("requestErr", message)
@@ -207,7 +207,9 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         commentVC.modalPresentationStyle = .pageSheet
         commentVC.postId = receivedPostId
         commentVC.postOwnerHandle = postDataResult.ownerHandle
-        commentVC.taggedUserList = self.taggedUserList
+        commentVC.taggedUserList = taggedUserList.map({ taggedUser in
+            taggedUser.handle
+        })
         commentVC.postVC = self
         
         // half sheet
@@ -331,6 +333,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         print("태그된 유저 보여줄거에요~")
         
         let taggedUserDetailVC = postStoryBoard.instantiateViewController(withIdentifier: "TaggedUsersDetailVC") as! TaggedUsersDetailViewController
+        taggedUserDetailVC.tagList = taggedUserList
         
         let sheet = taggedUserDetailVC.sheetPresentationController
         sheet?.detents = [.medium(), .large()]

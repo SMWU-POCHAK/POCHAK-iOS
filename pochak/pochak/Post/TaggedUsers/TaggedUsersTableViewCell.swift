@@ -34,7 +34,11 @@ class TaggedUsersTableViewCell: UITableViewCell {
     
     // MARK: - Functions
     
-    func configure(){
-        
+    func configure(tagData: TaggedMember){
+        if let profileImageURL = URL(string: tagData.profileImage) {
+            profileImageView.load(url: profileImageURL)
+        }
+        handleLabel.text = tagData.handle
+        nameLabel.text = tagData.name
     }
 }

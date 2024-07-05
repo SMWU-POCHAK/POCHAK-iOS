@@ -8,6 +8,10 @@
 import UIKit
 
 class TaggedUsersDetailViewController: UIViewController {
+    
+    // MARK: - Properties
+    
+    var tagList: [TaggedMember]?
 
     // MARK: - Views
     
@@ -39,12 +43,12 @@ class TaggedUsersDetailViewController: UIViewController {
 
 extension TaggedUsersDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return tagList?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TaggedUsersTableViewCell.identifier, for: indexPath) as? TaggedUsersTableViewCell else { return UITableViewCell() }
-        // TODO: configure cell!
+        cell.configure(tagData: tagList![indexPath.row])
         return cell
     }
     
