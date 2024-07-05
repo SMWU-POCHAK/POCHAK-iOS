@@ -233,7 +233,10 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         
         // 댓글이 있으면 -> 댓글 버튼 활성화 이미지로 변경
         if !isHidden {
-            commentButton.setImage(UIImage(named: "CommentFilledIcon"), for: .normal)
+            commentButton.isSelected = true
+        }
+        else {
+            commentButton.isSelected = false
         }
     }
     
