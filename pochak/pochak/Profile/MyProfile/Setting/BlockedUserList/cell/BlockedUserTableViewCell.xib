@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Pretendard-Bold.ttf">
+            <string>Pretendard-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="97" id="KGk-i7-Jjw" customClass="BlockedUserTableViewCell" customModule="pochak" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="407" height="97"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="407" height="97"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xcd-31-TVC">
+                        <rect key="frame" x="20" y="22.666666666666671" width="52" height="52"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="52" id="bCw-Kg-zOb"/>
+                            <constraint firstAttribute="width" constant="52" id="kFA-ub-9bF"/>
+                        </constraints>
+                    </imageView>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="X1l-Zt-MpS">
+                        <rect key="frame" x="84" y="31.666666666666671" width="45" height="34"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="handle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nGV-tK-4KY">
+                                <rect key="frame" x="0.0" y="0.0" width="45" height="17"/>
+                                <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PLj-ZY-0Nc">
+                                <rect key="frame" x="0.0" y="16.999999999999996" width="45" height="17.000000000000004"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="name">
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="Pretendard-Regular"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k9k-36-lab">
+                        <rect key="frame" x="314" y="32.666666666666664" width="73" height="31.999999999999993"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="32" id="Xri-CZ-wUq"/>
+                            <constraint firstAttribute="width" constant="73" id="cFj-8z-jf1"/>
+                        </constraints>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <connections>
+                            <action selector="unblockBtnSelected:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="mTE-31-IFx"/>
+                        </connections>
+                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9EY-Pz-Qla">
+                        <rect key="frame" x="20" y="96" width="367" height="1"/>
+                        <color key="backgroundColor" name="gray01"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="CHA-8O-hQW"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="X1l-Zt-MpS" firstAttribute="centerY" secondItem="xcd-31-TVC" secondAttribute="centerY" id="0m6-1w-M7U"/>
+                    <constraint firstAttribute="bottom" secondItem="9EY-Pz-Qla" secondAttribute="bottom" id="FGe-0p-oXa"/>
+                    <constraint firstItem="xcd-31-TVC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="MCT-5j-E3h"/>
+                    <constraint firstItem="9EY-Pz-Qla" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="gHw-os-TqO"/>
+                    <constraint firstAttribute="trailing" secondItem="9EY-Pz-Qla" secondAttribute="trailing" constant="20" id="gaM-ee-WK7"/>
+                    <constraint firstItem="X1l-Zt-MpS" firstAttribute="leading" secondItem="xcd-31-TVC" secondAttribute="trailing" constant="12" id="npW-oX-RGW"/>
+                    <constraint firstItem="xcd-31-TVC" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="pYG-sh-ciI"/>
+                    <constraint firstItem="k9k-36-lab" firstAttribute="centerY" secondItem="xcd-31-TVC" secondAttribute="centerY" id="qQk-lY-Jej"/>
+                    <constraint firstAttribute="trailing" secondItem="k9k-36-lab" secondAttribute="trailing" constant="20" id="waV-Sj-e5x"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+            <connections>
+                <outlet property="profileImg" destination="xcd-31-TVC" id="ZkS-cY-HUa"/>
+                <outlet property="unblockButton" destination="k9k-36-lab" id="Rfe-9T-25w"/>
+                <outlet property="userHandle" destination="nGV-tK-4KY" id="KT8-dQ-bnS"/>
+                <outlet property="userName" destination="PLj-ZY-0Nc" id="GzG-uo-8v5"/>
+            </connections>
+            <point key="canvasLocation" x="132.06106870229007" y="38.380281690140848"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="gray01">
+            <color red="0.9137254901960784" green="0.92549019607843142" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

@@ -427,7 +427,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DdG-Xj-RH0">
-                                <rect key="frame" x="20" y="94" width="353" height="35"/>
+                                <rect key="frame" x="20" y="79" width="353" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="dRE-vZ-qqR"/>
                                 </constraints>
@@ -443,44 +443,63 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pLf-MC-NSW">
-                                <rect key="frame" x="20" y="137" width="353" height="1"/>
+                                <rect key="frame" x="20" y="122" width="353" height="1"/>
                                 <color key="backgroundColor" name="gray01"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="nCp-Pd-Rnt"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dvA-qb-arP">
-                                <rect key="frame" x="20" y="146" width="353" height="35"/>
+                                <rect key="frame" x="20" y="131" width="353" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="QYF-q1-tmS"/>
                                 </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="차단관리">
+                                    <fontDescription key="titleFontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="16"/>
+                                    <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="logOut:" destination="vUv-9O-tVW" eventType="touchUpInside" id="fG4-x9-Tyk"/>
+                                    <action selector="viewBlockList:" destination="F73-Jk-SPL" eventType="touchUpInside" id="Spe-sE-Cbm"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z6e-AH-bEC">
+                                <rect key="frame" x="20" y="183" width="353" height="33.333333333333343"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="로그아웃">
                                     <fontDescription key="titleFontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="16"/>
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="logOut:" destination="F73-Jk-SPL" eventType="touchUpInside" id="8xn-27-GK9"/>
-                                    <action selector="logOut:" destination="vUv-9O-tVW" eventType="touchUpInside" id="fG4-x9-Tyk"/>
+                                    <action selector="DeleteAccount:" destination="vUv-9O-tVW" eventType="touchUpInside" id="EfO-fe-Gos"/>
+                                    <action selector="logOut:" destination="F73-Jk-SPL" eventType="touchUpInside" id="5TH-rh-44h"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z6e-AH-bEC">
-                                <rect key="frame" x="20" y="198" width="353" height="33.333333333333343"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZBT-O9-mCh">
+                                <rect key="frame" x="20" y="233.33333333333334" width="353" height="33.333333333333343"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="회원탈퇴">
                                     <fontDescription key="titleFontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="16"/>
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="DeleteAccount:" destination="vUv-9O-tVW" eventType="touchUpInside" id="EfO-fe-Gos"/>
-                                    <action selector="deleteAccount:" destination="F73-Jk-SPL" eventType="touchUpInside" id="owZ-ke-lqQ"/>
+                                    <action selector="DeleteAccount:" destination="vUv-9O-tVW" eventType="touchUpInside" id="J8R-op-hNO"/>
+                                    <action selector="deleteAccount:" destination="F73-Jk-SPL" eventType="touchUpInside" id="Srd-rh-9D9"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NwZ-Qb-4oD">
-                                <rect key="frame" x="20" y="189" width="353" height="1"/>
+                                <rect key="frame" x="20" y="174" width="353" height="1"/>
                                 <color key="backgroundColor" name="gray01"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="88c-KG-zHR"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rU5-mS-hTm">
+                                <rect key="frame" x="20" y="224.33333333333334" width="353" height="1"/>
+                                <color key="backgroundColor" name="gray01"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="2Q7-DJ-l4J"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -490,10 +509,12 @@
                             <constraint firstItem="zsI-cW-gSw" firstAttribute="trailing" secondItem="dvA-qb-arP" secondAttribute="trailing" constant="20" id="2Gh-Au-WGg"/>
                             <constraint firstItem="dvA-qb-arP" firstAttribute="leading" secondItem="zsI-cW-gSw" secondAttribute="leading" constant="20" id="4QI-Wf-o0d"/>
                             <constraint firstItem="pLf-MC-NSW" firstAttribute="top" secondItem="DdG-Xj-RH0" secondAttribute="bottom" constant="8" id="6Dd-D1-WwN"/>
+                            <constraint firstItem="rU5-mS-hTm" firstAttribute="leading" secondItem="vLN-OR-Nh4" secondAttribute="leading" constant="20" id="9fj-yy-pre"/>
                             <constraint firstItem="zsI-cW-gSw" firstAttribute="trailing" secondItem="NwZ-Qb-4oD" secondAttribute="trailing" constant="20" id="AEC-uR-fxG"/>
                             <constraint firstItem="DdG-Xj-RH0" firstAttribute="centerX" secondItem="zsI-cW-gSw" secondAttribute="centerX" id="BvL-eT-aFW"/>
                             <constraint firstItem="Z6e-AH-bEC" firstAttribute="top" secondItem="NwZ-Qb-4oD" secondAttribute="bottom" constant="8" id="C56-vU-htK"/>
                             <constraint firstItem="zsI-cW-gSw" firstAttribute="trailing" secondItem="DdG-Xj-RH0" secondAttribute="trailing" constant="20" id="CXo-BE-kds"/>
+                            <constraint firstItem="ZBT-O9-mCh" firstAttribute="centerX" secondItem="vLN-OR-Nh4" secondAttribute="centerX" id="DdT-LK-phh"/>
                             <constraint firstItem="zsI-cW-gSw" firstAttribute="trailing" secondItem="Z6e-AH-bEC" secondAttribute="trailing" constant="20" id="KVY-zN-hFt"/>
                             <constraint firstItem="Z6e-AH-bEC" firstAttribute="leading" secondItem="zsI-cW-gSw" secondAttribute="leading" constant="20" id="LBn-kp-iYu"/>
                             <constraint firstItem="Z6e-AH-bEC" firstAttribute="centerX" secondItem="zsI-cW-gSw" secondAttribute="centerX" id="LqG-28-PdR"/>
@@ -502,24 +523,61 @@
                             <constraint firstItem="dvA-qb-arP" firstAttribute="centerX" secondItem="zsI-cW-gSw" secondAttribute="centerX" id="NjL-d8-bXd"/>
                             <constraint firstItem="NwZ-Qb-4oD" firstAttribute="centerX" secondItem="zsI-cW-gSw" secondAttribute="centerX" id="V4I-pl-GLx"/>
                             <constraint firstItem="pLf-MC-NSW" firstAttribute="leading" secondItem="zsI-cW-gSw" secondAttribute="leading" constant="20" id="WE0-kU-CSc"/>
+                            <constraint firstAttribute="trailing" secondItem="rU5-mS-hTm" secondAttribute="trailing" constant="20" id="WaO-TZ-EB1"/>
+                            <constraint firstItem="rU5-mS-hTm" firstAttribute="top" secondItem="Z6e-AH-bEC" secondAttribute="bottom" constant="8" id="XNB-Ha-7w2"/>
                             <constraint firstItem="NwZ-Qb-4oD" firstAttribute="leading" secondItem="zsI-cW-gSw" secondAttribute="leading" constant="20" id="Yjh-ns-tUD"/>
                             <constraint firstItem="NwZ-Qb-4oD" firstAttribute="top" secondItem="dvA-qb-arP" secondAttribute="bottom" constant="8" id="c4d-rd-hh9"/>
                             <constraint firstItem="dvA-qb-arP" firstAttribute="top" secondItem="pLf-MC-NSW" secondAttribute="bottom" constant="8" id="fVM-Ud-NgX"/>
+                            <constraint firstItem="ZBT-O9-mCh" firstAttribute="top" secondItem="rU5-mS-hTm" secondAttribute="bottom" constant="8" id="fqI-pk-N7T"/>
                             <constraint firstItem="pLf-MC-NSW" firstAttribute="centerX" secondItem="zsI-cW-gSw" secondAttribute="centerX" id="lNU-bS-AWw"/>
                             <constraint firstItem="dvA-qb-arP" firstAttribute="centerX" secondItem="zsI-cW-gSw" secondAttribute="centerX" id="mgY-pD-a9b"/>
+                            <constraint firstItem="rU5-mS-hTm" firstAttribute="centerX" secondItem="vLN-OR-Nh4" secondAttribute="centerX" id="qWa-gi-AIb"/>
+                            <constraint firstItem="ZBT-O9-mCh" firstAttribute="leading" secondItem="vLN-OR-Nh4" secondAttribute="leading" constant="20" id="tg8-WO-PuS"/>
                             <constraint firstItem="Z6e-AH-bEC" firstAttribute="centerX" secondItem="zsI-cW-gSw" secondAttribute="centerX" id="ufZ-ta-Ce1"/>
-                            <constraint firstItem="DdG-Xj-RH0" firstAttribute="top" secondItem="zsI-cW-gSw" secondAttribute="top" constant="35" id="yXT-1W-CQM"/>
+                            <constraint firstAttribute="trailing" secondItem="ZBT-O9-mCh" secondAttribute="trailing" constant="20" id="xzN-Ie-XUQ"/>
+                            <constraint firstItem="DdG-Xj-RH0" firstAttribute="top" secondItem="zsI-cW-gSw" secondAttribute="top" constant="20" id="yXT-1W-CQM"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="deleteAccountButton" destination="Z6e-AH-bEC" id="eOj-eV-LpL"/>
-                        <outlet property="logOutButton" destination="dvA-qb-arP" id="7Rd-ff-Rcx"/>
+                        <outlet property="blockManageBtn" destination="dvA-qb-arP" id="RIh-nv-Ky0"/>
+                        <outlet property="deleteAccountButton" destination="ZBT-O9-mCh" id="erk-Nw-lJ9"/>
+                        <outlet property="logOutButton" destination="Z6e-AH-bEC" id="GKi-KY-zN9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qv5-bi-DGY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="vUv-9O-tVW" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3261.8320610687019" y="-1095.0704225352113"/>
+        </scene>
+        <!--Blocked User View Controller-->
+        <scene sceneID="jkx-sC-fTO">
+            <objects>
+                <viewController storyboardIdentifier="BlockedUserVC" id="bTf-hl-jE8" customClass="BlockedUserViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="z2O-yj-VCw">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="sLv-Qc-QMn">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="W9K-7Y-tbj"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="sLv-Qc-QMn" firstAttribute="top" secondItem="W9K-7Y-tbj" secondAttribute="top" id="7Gn-D7-LcU"/>
+                            <constraint firstItem="W9K-7Y-tbj" firstAttribute="trailing" secondItem="sLv-Qc-QMn" secondAttribute="trailing" id="dAN-Tn-52F"/>
+                            <constraint firstItem="W9K-7Y-tbj" firstAttribute="bottom" secondItem="sLv-Qc-QMn" secondAttribute="bottom" id="kGr-gz-E6j"/>
+                            <constraint firstItem="sLv-Qc-QMn" firstAttribute="leading" secondItem="W9K-7Y-tbj" secondAttribute="leading" id="koR-ea-62p"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="sLv-Qc-QMn" id="lYs-Vf-kw8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7sv-YY-lGL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4066" y="-1095"/>
         </scene>
         <!--First Tabman View Controller-->
         <scene sceneID="fk5-qI-ro9">
