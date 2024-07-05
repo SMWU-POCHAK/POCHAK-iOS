@@ -347,6 +347,7 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
                 
                 self.isLastPage = result.pageInfo.lastPage
                 
+                // TODO: 토큰 기능 완성되면 유저 디폴트 값으로 변경하기!
                 let handle = "dxxynni"
                 self.memberList = self.memberList.filter { $0.handle != handle }
                 DispatchQueue.main.async {
