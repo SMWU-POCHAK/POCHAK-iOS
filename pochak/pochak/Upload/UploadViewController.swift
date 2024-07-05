@@ -272,6 +272,7 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
             self.memberList = []
             self.tableView.reloadData()
         } else {
+            self.memberList = []
             self.currentFetchingPage = 0
             self.tableView.isHidden = false
             sendTextToServer(currentText)
