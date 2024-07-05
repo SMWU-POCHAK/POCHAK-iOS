@@ -22,7 +22,8 @@ class CommentTableViewCell: UITableViewCell {
     
     static let identifier = "CommentTableViewCell"
     
-    var commentVC: CommentViewController!
+    weak var postVC: PostViewController?
+    weak var commentVC: CommentViewController?
     var commentId: Int!
     var postId: Int!
     var taggedUserList: [String]?
@@ -46,8 +47,12 @@ class CommentTableViewCell: UITableViewCell {
         
         // TODO: 사용자 프로필로 이동..
         // label이 터치 인식할 수 있도록 gesture recognizer 추가
-        //let recognizer = UITapGestureRecognizer(target: self, action: #selector(taggedIdTapped))
-        //commentLabel.addGestureRecognizer(recognizer)
+        
+        profileImageView.isUserInteractionEnabled = true
+        profileImageView.addGestureRecognizer(setGestureRecognizer())
+        
+        commentUserHandleLabel.isUserInteractionEnabled = true
+        commentUserHandleLabel.addGestureRecognizer(setGestureRecognizer())
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -60,8 +65,8 @@ class CommentTableViewCell: UITableViewCell {
     
     @IBAction func postChildCmmtBtnDidTap(_ sender: UIButton) {
         // 부모 댓글을 단다는 것을 comment vc에 알려야 함
-        commentVC.isPostingChildComment = true
-        commentVC.parentCommentId = self.commentId
+        commentVC?.isPostingChildComment = true
+        commentVC?.parentCommentId = self.commentId
         
         let indexPath = tableView.indexPath(for: self)
         // 답글을 다려는 셀을 맨 위로 이동
@@ -86,10 +91,10 @@ class CommentTableViewCell: UITableViewCell {
                 print("댓글 삭제 성공, data: \(data as! DeleteCommentResponse)")
                 let data = data as! DeleteCommentResponse
                 if data.isSuccess == true {
-                    self?.commentVC.loadCommentData()
+                    self?.commentVC?.loadCommentData()
                 }
                 else{
-                    self?.commentVC.present(UIAlertController.networkErrorAlert(title: "댓글 삭제에 실패하였습니다."), animated: true)
+                    self?.commentVC?.present(UIAlertController.networkErrorAlert(title: "댓글 삭제에 실패하였습니다."), animated: true)
                 }
             case .requestErr(let message):
                 print("requestErr", message)
@@ -97,11 +102,29 @@ class CommentTableViewCell: UITableViewCell {
                 print("pathErr")
             case .serverErr:
                 print("serverErr")
-                self?.commentVC.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
+                self?.commentVC?.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
             case .networkFail:
                 print("networkFail")
                 self?.commentVC?.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
             }
+        }
+    }
+    
+    @objc private func moveToOthersProfile(sender: UITapGestureRecognizer) {
+        print("move to other's profile")
+        print(sender.view)
+        
+        let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
+        
+        // 댓글 작성자가 현재 유저라면
+        if commentUserHandleLabel.text == currentUserHandle {
+            self.commentVC?.tabBarController?.selectedIndex = 4
+        }
+        else {
+            guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
+            otherUserProfileVC.recievedHandle = commentUserHandleLabel.text
+            print("post vc의 nav controller: \(self.postVC?.navigationController)")
+            self.postVC?.navigationController?.pushViewController(otherUserProfileVC, animated: true)
         }
     }
     
@@ -169,6 +192,11 @@ class CommentTableViewCell: UITableViewCell {
         else{
             self.timePassedLabel.text = String(timePassed / (7*24*60*60)) + "주"
         }
+    }
+    
+    private func setGestureRecognizer() -> UITapGestureRecognizer {
+        let moveToOthersProfile = UITapGestureRecognizer(target: self, action: #selector(moveToOthersProfile))
+        return moveToOthersProfile
     }
 
 }

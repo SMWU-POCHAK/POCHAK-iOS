@@ -19,6 +19,7 @@ class CommentViewController: UIViewController {
     var postId: Int?
     var postOwnerHandle: String?
     var taggedUserList: [String]?
+    weak var postVC: PostViewController?
     
     // 댓글 셀에서 받을 정보
     var isPostingChildComment: Bool = false
@@ -325,6 +326,7 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
             cell.editingCommentTextField = self.commentTextField
             cell.tableView = self.tableView
             cell.commentVC = self
+            cell.postVC = self.postVC
             cell.postId = self.postId
             cell.taggedUserList = self.taggedUserList
             cell.postOwnerHandle = self.postOwnerHandle
