@@ -100,6 +100,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
         return self.alarmList.count 
     }
     
+    // TODO: 여기 부분 switch-case 로 바꾸면 훨씬 좋을 것 같음..!!!!
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // MARK: - 누군가 날 게시물에 태그했을 경우 TAG_APPROVAL
         if(self.alarmList[indexPath.row].alarmType == AlarmType.tagApproval){
@@ -209,15 +210,32 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             }
             return cell
         }
-        // MARK: - 내가 올린 게시물에 좋아요가 달릴 경우 LIKE
-        else if(self.alarmList[indexPath.row].alarmType == AlarmType.like){
+        // MARK: - 내가 올린 게시물에 좋아요가 달릴 경우 OWNER_LIKE
+        else if(self.alarmList[indexPath.row].alarmType == AlarmType.ownerLike) {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: OtherTableViewCell.identifier, for: indexPath) as? OtherTableViewCell else {
                 fatalError("셀 타입 캐스팅 실패")
             }
+            
             if let userSentAlarmHandle = self.alarmList[indexPath.row].memberHandle {
-                // 옵셔널이 아닌 문자열 값을 추출하여 사용합니다.
-                cell.comment.text = "\(userSentAlarmHandle) 님이 좋아요를 눌렀습니다."
+                cell.comment.text = "내 게시물에 \(userSentAlarmHandle)님이 좋아요를 눌렀습니다."
             }
+            
+            if let image = self.alarmList[indexPath.row].memberProfileImage {
+                cell.configure(with: image)
+            }
+            return cell
+        }
+        
+        // MARK: - 내가 포착된 게시물에 좋아요가 달릴 경우 TAGGED_LIKE
+        else if(self.alarmList[indexPath.row].alarmType == AlarmType.taggedLike) {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: OtherTableViewCell.identifier, for: indexPath) as? OtherTableViewCell else {
+                fatalError("셀 타입 캐스팅 실패")
+            }
+            
+            if let userSentAlarmHandle = self.alarmList[indexPath.row].memberHandle {
+                cell.comment.text = "내가 포착된 게시물에 \(userSentAlarmHandle)님이 좋아요를 눌렀습니다."
+            }
+            
             if let image = self.alarmList[indexPath.row].memberProfileImage {
                 cell.configure(with: image)
             }
@@ -231,6 +249,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    // TODO: 여기도 switch-case..!!
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(self.alarmList[indexPath.row].alarmType == AlarmType.tagApproval){
             self.tableView.deselectRow(at: indexPath, animated: false)
@@ -273,8 +292,9 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             profileTabVC.recievedHandle = alarmList[indexPath.row].memberHandle
             self.navigationController?.pushViewController(profileTabVC, animated: true)
         }
-        // MARK: - 내가 올린 게시물에 좋아요가 달릴 경우 LIKE
-        else if(self.alarmList[indexPath.row].alarmType == AlarmType.like){
+        // MARK: - 내 게시물 혹은 내가 포착된 게시물에 좋아요가 달릴 경우 OWNER_LIKE, TAGGED_LIKE
+        else if(self.alarmList[indexPath.row].alarmType == AlarmType.ownerLike
+                || self.alarmList[indexPath.row].alarmType == AlarmType.taggedLike){
             // 게시물로 이동
             let postTabSb = UIStoryboard(name: "PostTab", bundle: nil)
             guard let postVC = postTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
