@@ -86,6 +86,7 @@
 		3766F4082C370A82001DD239 /* BlockedUserListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4072C370A82001DD239 /* BlockedUserListDataModel.swift */; };
 		3766F40A2C370CF5001DD239 /* BlockedUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4092C370CF5001DD239 /* BlockedUserViewController.swift */; };
 		3766F40C2C3736F1001DD239 /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F40B2C3736F1001DD239 /* RequestInterceptor.swift */; };
+		3766F40F2C398AA8001DD239 /* NetworkResult400.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F40E2C398AA8001DD239 /* NetworkResult400.swift */; };
 		3769D6AF2B3C2FD500294CD1 /* GoogleLoginDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6AE2B3C2FD500294CD1 /* GoogleLoginDataManager.swift */; };
 		3769D6B22B3C300D00294CD1 /* GoogleLoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6B12B3C300D00294CD1 /* GoogleLoginModel.swift */; };
 		3769D6B42B3C301B00294CD1 /* JoinDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6B32B3C301B00294CD1 /* JoinDataManager.swift */; };
@@ -281,6 +282,7 @@
 		3766F4072C370A82001DD239 /* BlockedUserListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserListDataModel.swift; sourceTree = "<group>"; };
 		3766F4092C370CF5001DD239 /* BlockedUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserViewController.swift; sourceTree = "<group>"; };
 		3766F40B2C3736F1001DD239 /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
+		3766F40E2C398AA8001DD239 /* NetworkResult400.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult400.swift; sourceTree = "<group>"; };
 		3769D6AE2B3C2FD500294CD1 /* GoogleLoginDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginDataManager.swift; sourceTree = "<group>"; };
 		3769D6B12B3C300D00294CD1 /* GoogleLoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginModel.swift; sourceTree = "<group>"; };
 		3769D6B32B3C301B00294CD1 /* JoinDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinDataManager.swift; sourceTree = "<group>"; };
@@ -1062,6 +1064,7 @@
 				379A6A332B569DFA0087FAAC /* AuthenticationCredential.swift */,
 				379A6A392B56BDBF0087FAAC /* Authenticator.swift */,
 				3766F40B2C3736F1001DD239 /* RequestInterceptor.swift */,
+				3766F40E2C398AA8001DD239 /* NetworkResult400.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1343,6 +1346,7 @@
 			files = (
 				EA7EE1D82BF38921009486CC /* PochakAlarmTableViewCell.swift in Sources */,
 				EA01079E2A59556800A3AE85 /* PostViewController.swift in Sources */,
+				3766F40F2C398AA8001DD239 /* NetworkResult400.swift in Sources */,
 				3769D6AF2B3C2FD500294CD1 /* GoogleLoginDataManager.swift in Sources */,
 				EA0107AE2A5EC23900A3AE85 /* OtherTableViewCell.swift in Sources */,
 				EA9F5CB42B0EF7CC0021951F /* UploadDataService.swift in Sources */,
