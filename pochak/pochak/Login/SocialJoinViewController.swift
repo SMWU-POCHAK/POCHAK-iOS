@@ -32,12 +32,21 @@ class SocialJoinViewController: UIViewController {
         
         // 네비게이션 바 Back Button 커스텀
         /// 주의점 : backBarButtonItem 사용 시 FirstViewController에서 지정!
-        let backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
-        backBarButtonItem.tintColor = .black
-        self.navigationItem.backBarButtonItem = backBarButtonItem
+//        let backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
+//        backBarButtonItem.tintColor = .black
+//        self.navigationItem.backBarButtonItem = backBarButtonItem
         
         // 로그인 버튼 디자인 커스텀
         btnLayout()
+    }
+    override func viewWillAppear(_ animated: Bool){
+        // 뷰가 나타날 때에는 네비게이션 바 숨기기
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        // 뷰가 사라질 때에는 네비게이션 바 다시 보여주기
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     // MARK: - Google Login
@@ -51,6 +60,10 @@ class SocialJoinViewController: UIViewController {
             let user = signInResult.user
             let accessToken = user.accessToken.tokenString
             print("googleLogin 시스템 안의 accessToken : \(accessToken)")
+            
+            // 로딩모달
+            self.showProgressBar()
+
             GoogleLoginDataManager.shared.googleLoginDataManager(accessToken, {resultData in
                 
                 print("GoogleLoginDataManager 안의 resultData : \(resultData)")
@@ -61,6 +74,9 @@ class SocialJoinViewController: UIViewController {
                 
                 guard let isNewMember = resultData.isNewMember else { return }
                 self.changeViewControllerAccordingToisNewMemeberStateForGoogle(isNewMember, resultData)
+                
+                // 로딩 숨김
+                self.hideProgressBar()
             })
         }
     }
@@ -89,8 +105,6 @@ class SocialJoinViewController: UIViewController {
     
     private func changeViewControllerAccordingToisNewMemeberStateForGoogle(_ isNewMember : Bool, _ resultDataForGoogle : GoogleLoginModel){
         if isNewMember == true {
-            // 프로필 설정 페이지로 이동
-            print("I am inside VC")
             guard let makeProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "MakeProfileVC") as? MakeProfileViewController else {return}
             self.navigationController?.pushViewController(makeProfileVC, animated: true)
         } else {
@@ -166,6 +180,9 @@ extension SocialJoinViewController: ASAuthorizationControllerDelegate, ASAuthori
                 print("authCodeString: \(authCodeString)")
                 print("identifyTokenString: \(identifyTokenString)")
                 
+                // 로딩모달
+                self.showProgressBar()
+                
                 // API request : POST
                 AppleLoginDataManager.shared.appleLoginDataManager(identifyTokenString, authCodeString, {resultData in
                     
@@ -177,6 +194,8 @@ extension SocialJoinViewController: ASAuthorizationControllerDelegate, ASAuthori
                     
                     guard let isNewMember = resultData.isNewMember else { return }
                     self.changeViewControllerAccordingToisNewMemeberStateForApple(isNewMember, resultData)
+                    // 로딩 숨김
+                    self.hideProgressBar()
                 })
                 
             }
