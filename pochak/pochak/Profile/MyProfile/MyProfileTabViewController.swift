@@ -42,8 +42,13 @@ class MyProfileTabViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        print("viewDidLoad handle : \(handle)")
+        print(">>>>>>>>>>>>>>>> viewDidLoad handle : \(handle)")
+        print(">>>>>>>>>>>>>>>> viewDidLoad - myProfile")
+
         super.viewDidLoad()
+        
+        // 네비게이션 바 숨기기
+        self.navigationController?.isNavigationBarHidden = true
 
         // 프로픨 디자인
         profileBackground.layer.cornerRadius = 58
@@ -55,6 +60,9 @@ class MyProfileTabViewController: UIViewController {
         // 팔로워 / 팔로잉 레이블 선택
         viewFollowerList()
         viewFollowingList()
+        
+        // 핸들 설정
+        userHandle.text = "@\(handle)"
     
         // Back 버튼 커스텀
         let backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
@@ -75,55 +83,59 @@ class MyProfileTabViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
-        // API
-        loadProfileData()
+        print(">>>>>>>>>>>>>>>> view will appear - myProfile")
         
         // 뷰가 나타날 때에는 네비게이션 바 숨기기
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.isNavigationBarHidden = true
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        print(">>>>>>>>>>>>>>>> viewWillDisappear - myProfile")
         
         // 뷰가 사라질 때에는 네비게이션 바 다시 보여주기
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.isNavigationBarHidden = false
     }
     
     // MARK: - Method
     
     private func loadProfileData() {
-        self.userHandle.text = "@\(handle)"
         
         // 1. API 호출
-        MyProfilePostDataManager.shared.myProfileUserAndPochakedPostDataManager(handle,{ [self]resultData in
-      
-            // 이미지 데이터
-            let imageURL = resultData.profileImage ?? ""
-            UserDefaultsManager.setData(value: imageURL, key: .profileImgUrl)
-            if let url = URL(string: imageURL) {
-                self.profileImage.kf.setImage(with: url) { result in
-                    switch result {
-                    case .success(let value):
-                        print("Image successfully loaded: \(value.image)")
-                    case .failure(let error):
-                        print("Image failed to load with error: \(error.localizedDescription)")
+        MyProfilePostDataManager.shared.myProfileUserAndPochakedPostDataManager(handle, 0,{ response in
+            switch response {
+            case .success(let resultData):
+                // 이미지 데이터
+                let imageURL = resultData.profileImage ?? ""
+                UserDefaultsManager.setData(value: imageURL, key: .profileImgUrl)
+                if let url = URL(string: imageURL) {
+                    self.profileImage.kf.setImage(with: url) { result in
+                        switch result {
+                        case .success(let value):
+                            print("Image successfully loaded: \(value.image)")
+                        case .failure(let error):
+                            print("Image failed to load with error: \(error.localizedDescription)")
+                        }
                     }
                 }
+                
+                // 2. 필요한 데이터 뷰에 반영
+                self.profileImage.contentMode = .scaleAspectFill /* 원 면적에 사진 크기 맞춤 */
+                self.userName.text = String(resultData.name ?? "")
+                self.userMessage.text = String(resultData.message ?? "")
+                self.postCount.text = String(resultData.totalPostNum ?? 0)
+                self.followerCount.text = String(resultData.followerCount ?? 0)
+                self.followingCount.text = String(resultData.followingCount ?? 0)
+                
+                // 3. UserDefaultsManager에 새로운 데이터 저장 후 관리 : followerCount, followingCount
+                UserDefaultsManager.setData(value: resultData.name, key: .name)
+                UserDefaultsManager.setData(value: resultData.message, key: .message)
+                UserDefaultsManager.setData(value: resultData.followerCount, key: .followerCount)
+                UserDefaultsManager.setData(value: resultData.followingCount, key: .followingCount)
+            case .MEMBER4002:
+                print("유효하지 않은 멤버의 handle입니다.")
+                self.present(UIAlertController.networkErrorAlert(title: "유효하지 않은 멤버의 handle입니다."), animated: true)
             }
-
-            // 2. 필요한 데이터 뷰에 반영
-            self.profileImage.contentMode = .scaleAspectFill /* 원 면적에 사진 크기 맞춤 */
-            self.userName.text = String(resultData.name ?? "")
-            self.userMessage.text = String(resultData.message ?? "")
-            self.postCount.text = String(resultData.totalPostNum ?? 0)
-            self.followerCount.text = String(resultData.followerCount ?? 0)
-            self.followingCount.text = String(resultData.followingCount ?? 0)
-            
-            // 3. UserDefaultsManager에 새로운 데이터 저장 후 관리 : followerCount, followingCount
-            UserDefaultsManager.setData(value: resultData.name, key: .name)
-            UserDefaultsManager.setData(value: resultData.message, key: .message)
-            UserDefaultsManager.setData(value: resultData.followerCount, key: .followerCount)
-            UserDefaultsManager.setData(value: resultData.followingCount, key: .followingCount)
         })
     }
     

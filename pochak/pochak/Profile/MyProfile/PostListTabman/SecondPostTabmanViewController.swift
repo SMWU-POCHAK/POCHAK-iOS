@@ -15,24 +15,35 @@ class SecondPostTabmanViewController: UIViewController {
     var receivedHandle : String?
     var imageArray : [PostDataModel] = []
     
+    private var isLastPage: Bool = false
+    private var isCurrentlyFetching: Bool = false
+    private var currentFetchingPage: Int = 0
+    
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Delegate
+        currentFetchingPage = 0
+        // API
+        loadImageData()
+
         // Collection View 구현
         setupCollectionView()
         
-        // API
-        loadImageData()
+        // 새로고침 구현
+        setRefreshControl()
+    
     }
     
-    override func viewWillAppear(_ animated: Bool){
-        super.viewWillAppear(animated)
-        
-        // API
-        loadImageData()
-    }
+//    override func viewWillAppear(_ animated: Bool){
+//        super.viewWillAppear(animated)
+//        // Delegate
+//        currentFetchingPage = 0
+//        // API
+//        loadImageData()
+//    }
 
     // MARK: - Function
     
@@ -46,10 +57,46 @@ class SecondPostTabmanViewController: UIViewController {
         }
     
     private func loadImageData() {
-        MyProfilePostDataManager.shared.myProfilePochakPostDataManager(receivedHandle ?? "",{resultData in
-            self.imageArray = resultData
-            self.postCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
+        MyProfilePostDataManager.shared.myProfilePochakPostDataManager(receivedHandle ?? "",currentFetchingPage,{resultData in
+            
+            let newPosts = resultData.postList
+            let startIndex = resultData.postList.count
+            let endIndex = startIndex + newPosts.count
+            let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
+            self.imageArray.append(contentsOf: newPosts)
+            self.isLastPage = resultData.pageInfo.lastPage
+            
+            DispatchQueue.main.async {
+                if self.currentFetchingPage == 0 {
+                    self.postCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
+                    print(">>>>>>> PochakPostDataManager is currently reloading!!!!!!!")
+                } else {
+                    self.postCollectionView.insertItems(at: newIndexPaths)
+                }
+                self.isCurrentlyFetching = false
+                self.currentFetchingPage += 1;
+            }
         })
+    }
+    
+    private func setRefreshControl(){
+        // UIRefreshControl 생성
+       let refreshControl = UIRefreshControl()
+       refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+
+       // 테이블 뷰에 UIRefreshControl 설정
+        postCollectionView.refreshControl = refreshControl
+    }
+    
+    @objc private func refreshData(_ sender: Any) {
+        // 데이터 새로고침 완료 후 UIRefreshControl을 종료
+        print("refresh")
+        self.imageArray = []
+        self.currentFetchingPage = 0
+        self.loadImageData()
+        DispatchQueue.main.async {
+            self.postCollectionView.refreshControl?.endRefreshing()
+        }
     }
 }
 
@@ -96,5 +143,18 @@ extension SecondPostTabmanViewController : UICollectionViewDelegate, UICollectio
             else { return }
         postVC.receivedPostId = imageArray[indexPath.item].postId
         self.navigationController?.pushViewController(postVC, animated: true)
+    }
+}
+
+// Paging
+extension SecondPostTabmanViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (postCollectionView.contentOffset.y > (postCollectionView.contentSize.height - postCollectionView.bounds.size.height)){
+            if (!isLastPage && !isCurrentlyFetching) {
+                print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
+                isCurrentlyFetching = true
+                loadImageData()
+            }
+        }
     }
 }

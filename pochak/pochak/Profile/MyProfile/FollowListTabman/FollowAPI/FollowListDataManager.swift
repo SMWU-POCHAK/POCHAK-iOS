@@ -12,9 +12,9 @@ class FollowListDataManager {
     
     static let shared = FollowListDataManager()
     
-    func followerDataManager(_ handle : String, _ completion: @escaping ([MemberListDataModel]) -> Void) {
+    func followerDataManager(_ handle : String, _ page : Int, _ completion: @escaping (FollowListDataModel) -> Void) {
         
-        let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)/follower"
+        let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)/follower?page=\(page)"
         
         AF.request(url,
                    method: .get,
@@ -24,7 +24,7 @@ class FollowListDataManager {
         .responseDecodable(of: FollowListDataResponse.self) { response in
             switch response.result {
             case .success(let result):
-                let resultData = result.result.memberList
+                let resultData = result.result
                 print(resultData)
                 completion(resultData)
             case .failure(let error):
@@ -34,9 +34,9 @@ class FollowListDataManager {
         }
     }
     
-    func followingDataManager(_ handle : String, _ completion: @escaping ([MemberListDataModel]) -> Void) {
+    func followingDataManager(_ handle : String, _ page : Int, _ completion: @escaping (FollowListDataModel) -> Void) {
         
-        let url = "\(APIConstants.baseURLv2)/api/v2/members/\(handle)/following"
+        let url = "\(APIConstants.baseURLv2)/api/v2/members/\(handle)/following?page=\(page)"
         
         AF.request(url,
                    method: .get,
@@ -47,7 +47,7 @@ class FollowListDataManager {
             print(response)
             switch response.result {
             case .success(let result):
-                let resultData = result.result.memberList
+                let resultData = result.result
                 completion(resultData)
             case .failure(let error):
                 print("Request Fail : followingDataManager")
