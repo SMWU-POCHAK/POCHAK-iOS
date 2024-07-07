@@ -59,7 +59,7 @@ class SettingsViewController: UIViewController {
         print("Follower Count: \(followerCount)")
         print("Following Count: \(followingCount)")
         
-        guard let url = URL(string: "https://www.naver.com") else { return }
+        guard let url = URL(string: "https://pochak.notion.site/6520996186464c36a8b3a04bc17fa000?pvs=74") else { return }
         let safariVC = SFSafariViewController(url: url)
         // delegate 지정 및 presentation style 설정.
         safariVC.transitioningDelegate = self
@@ -69,7 +69,7 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func openPrivacyPolicy(_ sender: Any) {
-        guard let url = URL(string: "https://www.naver.com") else { return }
+        guard let url = URL(string: "https://pochak.notion.site/e365e34f018949b88543adbe6b0b3746") else { return }
         let safariVC = SFSafariViewController(url: url)
         // delegate 지정 및 presentation style 설정.
         safariVC.transitioningDelegate = self
