@@ -19,18 +19,18 @@ struct TokenRefreshDataModel: Codable {
 }
 
 class MyAuthenticator : Authenticator {
-    let accessToken = GetToken.getAccessToken()
-    let refreshToken = GetToken.getRefreshToken()
     typealias Credential = MyAuthenticationCredential
         
     // 1. api요청 시 AuthenticatorIndicator객체가 존재하면, 요청 전에 가로채서 apply에서 Header에 bearerToken 추가
     func apply(_ credential: Credential, to urlRequest: inout URLRequest) {
         print("--------------- 1. apply Function 실행 중 ---------------")
-        print(">>>>> apply 현재 토큰 : \(accessToken)")
+        print(">>>>> apply 현재 토큰 : \(credential.accessToken)")
         urlRequest.addValue(credential.accessToken, forHTTPHeaderField: "Authorization")
 //        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         print(">>>>> apply 현재 urlRequest : \(urlRequest)")
         
+        print(">>>> requiresRefresh?? : \(credential.requiresRefresh)")
+        print(">>>> expiredAt?? : \(credential.expiredAt)")
     }
     
     // 2. api요청 후 error가 떨어진 경우, 401에러(인증에러)인 경우만 refresh가 되도록 필터링
@@ -63,7 +63,7 @@ class MyAuthenticator : Authenticator {
     func refresh(_ credential: MyAuthenticationCredential, for session: Alamofire.Session, completion: @escaping (Result<MyAuthenticationCredential, Error>) -> Void) {
         print("--------------- 4. refresh Function 실행 중 ---------------")
         let url = "\(APIConstants.baseURL)/api/v2/refresh"
-        let header : HTTPHeaders = ["Authorization": accessToken, "RefreshToken" : refreshToken, "Content-type": "application/json"]
+        let header : HTTPHeaders = ["Authorization": credential.accessToken, "RefreshToken" : credential.refreshToken, "Content-type": "application/json"]
         
         print(">>>>> url : \(url)")
         print(">>>>> header : \(header)")
@@ -79,9 +79,9 @@ class MyAuthenticator : Authenticator {
                    } catch {
                        print(error)
                    }
-                   print(">>>>> get newAccessToken from keychain: \(GetToken.getAccessToken())")
-                   let credential = Credential(accessToken: newAccessToken, refreshToken: credential.refreshToken, expiredAt: Date(timeIntervalSinceNow: 60 * 60))
+                   let credential = Credential(accessToken: GetToken.getAccessToken(), refreshToken: credential.refreshToken, expiredAt: Date(timeIntervalSinceNow: 60 * 30))
                    completion(.success(credential))
+                   // 새로운 토큰으로 API 재요청
                case .failure(let error):
                    print("inside Refresh Fail!!!!")
                    print(error)
