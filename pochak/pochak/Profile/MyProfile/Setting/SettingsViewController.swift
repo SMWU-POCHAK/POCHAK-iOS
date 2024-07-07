@@ -137,11 +137,14 @@ extension SettingsViewController : CustomAlertDelegate {
             // UserDefulats Delete
             // enum -> CaseIterable 설정해두면 allCases로 내부요소 접근 가능
             // handle 제외 전부 삭제
+//            UserDefaultsManager.UserDefaultsKeys.allCases.forEach { key in
+//                if("\(key)" == "handle"){
+//                }else{
+//                    UserDefaultsManager.removeData(key: key)
+//                }
+//            }
             UserDefaultsManager.UserDefaultsKeys.allCases.forEach { key in
-                if("\(key)" == "handle"){
-                }else{
-                    UserDefaultsManager.removeData(key: key)
-                }
+                UserDefaultsManager.removeData(key: key)
             }
             
             // Main으로 화면 전환

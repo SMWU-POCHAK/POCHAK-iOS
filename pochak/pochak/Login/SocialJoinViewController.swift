@@ -9,13 +9,27 @@ import UIKit
 import GoogleSignIn
 import AuthenticationServices // 애플 로그인
 
-class SocialJoinViewController: UIViewController {
+protocol SendDelegate {
+    func sendAgreed(agree : Bool)
+}
+
+class SocialJoinViewController: UIViewController, SendDelegate {
+    func sendAgreed(agree: Bool) {
+        if agree {
+            guard let makeProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "MakeProfileVC") as? MakeProfileViewController else {return}
+            self.navigationController?.pushViewController(makeProfileVC, animated: true)
+        } else {
+            print("not agreed yet!")
+        }
+    }
+    
     
     // MARK: - Data
     
     @IBOutlet weak var startPochak: UILabel!
     @IBOutlet weak var googleLoginBtn: UIButton!
     @IBOutlet weak var appleLoginBtn: UIButton!
+    
     
     // MARK: - View LifeCycle
     override func viewDidLoad() {
@@ -105,8 +119,10 @@ class SocialJoinViewController: UIViewController {
     
     private func changeViewControllerAccordingToisNewMemeberStateForGoogle(_ isNewMember : Bool, _ resultDataForGoogle : GoogleLoginModel){
         if isNewMember == true {
-            guard let makeProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "MakeProfileVC") as? MakeProfileViewController else {return}
-            self.navigationController?.pushViewController(makeProfileVC, animated: true)
+            guard let termsOfAgreeVC = self.storyboard?.instantiateViewController(withIdentifier: "TermsOfAgreeVC") as? TermsOfAgreeViewController else {return}
+            termsOfAgreeVC.modalPresentationStyle = .overCurrentContext    //  투명도가 있으면 투명도에 맞춰서 나오게 해주는 코드(뒤에있는 배경이 보일 수 있게)
+            termsOfAgreeVC.delegate = self
+            self.present(termsOfAgreeVC, animated: false, completion: nil)
         } else {
             // 이미 회원인 유저의 경우 토큰 정보 저장 @KeyChainManager
             guard let accountAccessToken = resultDataForGoogle.accessToken else { return }
@@ -117,6 +133,8 @@ class SocialJoinViewController: UIViewController {
             } catch {
                 print(error)
             }
+            
+            UserDefaultsManager.setData(value: resultDataForGoogle.handle, key: .handle)
             // 홈탭으로 이동
             toHomeTabPage()
         }
@@ -126,8 +144,10 @@ class SocialJoinViewController: UIViewController {
         if isNewMember == true {
             print("inside changeVCForApple")
             // 프로필 설정 페이지로 이동
-            guard let makeProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "MakeProfileVC") as? MakeProfileViewController else {return}
-            self.navigationController?.pushViewController(makeProfileVC, animated: true)
+            guard let termsOfAgreeVC = self.storyboard?.instantiateViewController(withIdentifier: "TermsOfAgreeVC") as? TermsOfAgreeViewController else {return}
+            termsOfAgreeVC.modalPresentationStyle = .overCurrentContext    //  투명도가 있으면 투명도에 맞춰서 나오게 해주는 코드(뒤에있는 배경이 보일 수 있게)
+            termsOfAgreeVC.delegate = self
+            self.present(termsOfAgreeVC, animated: false, completion: nil)
         } else {
             // 이미 회원인 유저의 경우 토큰 정보 저장 @KeyChainManager
             guard let accountAccessToken = resultDataForApple.accessToken else { return }
@@ -138,6 +158,7 @@ class SocialJoinViewController: UIViewController {
             } catch {
                 print(error)
             }
+            UserDefaultsManager.setData(value: resultDataForApple.handle, key: .handle)
             // 홈탭으로 이동
             toHomeTabPage()
         }
