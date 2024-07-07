@@ -36,6 +36,8 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
     private var isCurrentlyFetching: Bool = false
     private var currentFetchingPage: Int = 0
     
+//    private var tagIsFull = false
+    
     lazy var backButton: UIBarButtonItem = { // 업로드 버튼
         let backBarButtonItem = UIBarButtonItem(image: UIImage(named: "ChevronLeft")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(backbuttonPressed))
         backBarButtonItem.imageInsets = UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0)
@@ -492,15 +494,24 @@ extension UploadViewController: UITableViewDelegate,UITableViewDataSource{
         
         // 선택한 핸들 가져오기
         let selectedHandle = handles[indexPath.row]
+        
+        // 태그는 최대 5개까지 가능함
+        if tagId.count == 5 {
+            showAlert(alertType: .confirmOnly,
+                      titleText: "태그는 최대 5명까지 가능해요.",
+                      confirmButtonText: "확인")
+        }
 
-        // 중복을 체크하여 중복되지 않는 경우에만 추가
-        if !tagId.contains(selectedHandle) {
-            tagId.append(selectedHandle)
-            print("Selected User Handle: \(selectedUserData.handle)")
-            print(tagId)
-            self.collectionView.reloadData()
-        } else {
-            print("이미 추가된 핸들입니다.")
+        // 태그 추가가 가능한 경우, 중복을 체크하여 중복되지 않는 경우에만 추가
+        else {
+            if !tagId.contains(selectedHandle) {
+                tagId.append(selectedHandle)
+                print("Selected User Handle: \(selectedUserData.handle)")
+                print(tagId)
+                self.collectionView.reloadData()
+            } else {
+                print("이미 추가된 핸들입니다.")
+            }
         }
 
         // 원하는 작업을 수행한 후에 선택 해제
@@ -516,7 +527,6 @@ extension UploadViewController: CustomAlertDelegate {
 
     func confirmAction() {
         print("계속하기 선택됨")
-
     }
 
     func cancel() {
