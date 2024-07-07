@@ -18,6 +18,7 @@ struct AppleLoginModel : Codable {
     var socialId : String?
     var name : String?
     var email : String?
+    var handle : String?
     var socialType : String?
     var accessToken : String?
     var refreshToken : String?
