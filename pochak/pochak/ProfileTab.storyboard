@@ -432,7 +432,7 @@
                                     <constraint firstAttribute="height" constant="35" id="dRE-vZ-qqR"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="right_arrow" imagePlacement="trailing" title="개인정보처리방침" imagePadding="-140">
+                                <buttonConfiguration key="configuration" style="plain" image="right_arrow" imagePlacement="trailing" title="개인정보 처리방침" imagePadding="-140">
                                     <fontDescription key="titleFontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="16"/>
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
