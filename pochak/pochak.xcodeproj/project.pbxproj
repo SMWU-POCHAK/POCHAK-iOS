@@ -87,6 +87,7 @@
 		3766F40A2C370CF5001DD239 /* BlockedUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4092C370CF5001DD239 /* BlockedUserViewController.swift */; };
 		3766F40C2C3736F1001DD239 /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F40B2C3736F1001DD239 /* RequestInterceptor.swift */; };
 		3766F40F2C398AA8001DD239 /* NetworkResult400.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F40E2C398AA8001DD239 /* NetworkResult400.swift */; };
+		3766F4132C3A69E5001DD239 /* TermsOfAgreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4122C3A69E5001DD239 /* TermsOfAgreeViewController.swift */; };
 		3769D6AF2B3C2FD500294CD1 /* GoogleLoginDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6AE2B3C2FD500294CD1 /* GoogleLoginDataManager.swift */; };
 		3769D6B22B3C300D00294CD1 /* GoogleLoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6B12B3C300D00294CD1 /* GoogleLoginModel.swift */; };
 		3769D6B42B3C301B00294CD1 /* JoinDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6B32B3C301B00294CD1 /* JoinDataManager.swift */; };
@@ -283,6 +284,7 @@
 		3766F4092C370CF5001DD239 /* BlockedUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserViewController.swift; sourceTree = "<group>"; };
 		3766F40B2C3736F1001DD239 /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		3766F40E2C398AA8001DD239 /* NetworkResult400.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult400.swift; sourceTree = "<group>"; };
+		3766F4122C3A69E5001DD239 /* TermsOfAgreeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfAgreeViewController.swift; sourceTree = "<group>"; };
 		3769D6AE2B3C2FD500294CD1 /* GoogleLoginDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginDataManager.swift; sourceTree = "<group>"; };
 		3769D6B12B3C300D00294CD1 /* GoogleLoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginModel.swift; sourceTree = "<group>"; };
 		3769D6B32B3C301B00294CD1 /* JoinDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinDataManager.swift; sourceTree = "<group>"; };
@@ -632,6 +634,7 @@
 			isa = PBXGroup;
 			children = (
 				373815152A89E6D30032066A /* SocialJoinViewController.swift */,
+				3766F4122C3A69E5001DD239 /* TermsOfAgreeViewController.swift */,
 				376F125A2A8B7440005F469B /* SocialLoginViewController.swift */,
 				374261762C31C6CD00B67886 /* AppleLogin */,
 				3769D6AD2B3C2FA800294CD1 /* GoogleLoginDataManager */,
@@ -1404,6 +1407,7 @@
 				0844D7EB2BF218A5001154AC /* ReportViewCell.swift in Sources */,
 				379A6A342B569DFA0087FAAC /* AuthenticationCredential.swift in Sources */,
 				0844649C2BF0F25900949850 /* PostMenuViewController.swift in Sources */,
+				3766F4132C3A69E5001DD239 /* TermsOfAgreeViewController.swift in Sources */,
 				37D311DC2B53135000A1D7C1 /* LogoutDataModel.swift in Sources */,
 				37A284C12B52FC910023EB9D /* UpdateProfileViewController.swift in Sources */,
 				3738151A2A8A09DA0032066A /* MakeProfileViewController.swift in Sources */,
