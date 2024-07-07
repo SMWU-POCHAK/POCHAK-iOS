@@ -320,29 +320,17 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         
         let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
         
+        guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
+        
         if sender.view == profileImageView || sender.view == pochakUserLabel || sender.view == postOwnerHandleLabel {
-            // 만약 내 게시물이라면
-            if postOwnerHandle == UserDefaultsManager.getData(type: String.self, forKey: .handle) {
-                self.tabBarController?.selectedIndex = 4
-            }
-            // 다른 사람 게시물이라면
-            else {
-                guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
-                otherUserProfileVC.recievedHandle = postOwnerHandle
-                self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
-            }
+            otherUserProfileVC.recievedHandle = postOwnerHandle
         }
         
         else if sender.view == commentUserHandleLabel {
-            if commentUserHandleLabel.text == UserDefaultsManager.getData(type: String.self, forKey: .handle) {
-                self.tabBarController?.selectedIndex = 4
-            }
-            else {
-                guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
-                otherUserProfileVC.recievedHandle = commentUserHandleLabel.text
-                self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
-            }
+            otherUserProfileVC.recievedHandle = commentUserHandleLabel.text
         }
+        
+        self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
     }
     
     @objc func showTaggedUsersVC(){

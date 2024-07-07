@@ -28,6 +28,7 @@ class ReplyTableViewCell: UITableViewCell {
     var editingCommentTextField: UITextField!
     var tableView: UITableView!
     var commentVC: CommentViewController!
+    var postVC: PostViewController!
     
     // MARK: - Init
     
@@ -39,6 +40,9 @@ class ReplyTableViewCell: UITableViewCell {
         
         // 이미지뷰 반만큼 radius 적용 -> 동그랗게
         profileImageView.layer.cornerRadius = 36 / 2
+        
+        profileImageView.addGestureRecognizer(setGestureRecognizer())
+        userHandleLabel.addGestureRecognizer(setGestureRecognizer())
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -127,5 +131,23 @@ class ReplyTableViewCell: UITableViewCell {
         else{
             self.timePassedLabel.text = String(timePassed / (7*24*60*60)) + "주"
         }
+    }
+    
+    @objc private func moveToOthersProfile(sender: UITapGestureRecognizer) {
+        print("move to other's profile")
+        print(sender.view)
+        
+        let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
+        
+        guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
+        otherUserProfileVC.recievedHandle = userHandleLabel.text
+        print("post vc의 nav controller: \(self.postVC?.navigationController)")
+        self.commentVC?.dismiss(animated: true)
+        self.postVC?.navigationController?.pushViewController(otherUserProfileVC, animated: true)
+    }
+    
+    private func setGestureRecognizer() -> UITapGestureRecognizer {
+        let moveToOthersProfile = UITapGestureRecognizer(target: self, action: #selector(moveToOthersProfile))
+        return moveToOthersProfile
     }
 }
