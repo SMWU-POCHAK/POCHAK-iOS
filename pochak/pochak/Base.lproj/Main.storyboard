@@ -361,14 +361,14 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9PP-lq-jel">
                                 <rect key="frame" x="46.666666666666657" y="251" width="300" height="350"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="개인정보 및 이용약관 동의 항목" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6GH-cM-sso">
-                                        <rect key="frame" x="16" y="104.66666666666669" width="274" height="21.666666666666671"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6GH-cM-sso">
+                                        <rect key="frame" x="16" y="104.66666666666669" width="274" height="0.0"/>
                                         <fontDescription key="fontDescription" name="Pretendard-SemiBold" family="Pretendard" pointSize="18"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Rj-0x-cLq">
-                                        <rect key="frame" x="16" y="141.33333333333331" width="19.666666666666671" height="22"/>
+                                        <rect key="frame" x="16" y="119.66666666666669" width="19.666666666666671" height="22"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal">
                                             <color key="titleColor" name="gray04"/>
@@ -385,14 +385,14 @@
                                             <constraint firstAttribute="height" constant="60" id="epc-v6-7Bz"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pochak" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zpj-Id-v3Y">
-                                        <rect key="frame" x="84" y="28" width="68.666666666666686" height="24"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zpj-Id-v3Y">
+                                        <rect key="frame" x="84" y="41.333333333333314" width="0.0" height="0.0"/>
                                         <fontDescription key="fontDescription" name="Pretendard-SemiBold" family="Pretendard" pointSize="20"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pochak Corp." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QJt-RG-HKZ">
-                                        <rect key="frame" x="84" y="57.000000000000007" width="94.333333333333314" height="19.333333333333336"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QJt-RG-HKZ">
+                                        <rect key="frame" x="84" y="46.333333333333314" width="0.0" height="0.0"/>
                                         <fontDescription key="fontDescription" name="Pretendard-Light" family="Pretendard" pointSize="16"/>
                                         <color key="textColor" name="gray04"/>
                                         <nil key="highlightedColor"/>
@@ -405,7 +405,7 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lnf-Ig-3ap">
-                                        <rect key="frame" x="16" y="175.33333333333331" width="19.666666666666671" height="22"/>
+                                        <rect key="frame" x="16" y="153.66666666666669" width="19.666666666666671" height="22"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal">
                                             <color key="titleColor" name="gray04"/>
@@ -416,7 +416,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vJI-PQ-G2a">
-                                        <rect key="frame" x="260" y="137.33333333333331" width="30" height="30"/>
+                                        <rect key="frame" x="260" y="115.66666666666669" width="30" height="30"/>
                                         <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="15"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="보기">
@@ -427,7 +427,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c7L-9Z-VnX">
-                                        <rect key="frame" x="260" y="171.33333333333331" width="30" height="30"/>
+                                        <rect key="frame" x="260" y="149.66666666666669" width="30" height="30"/>
                                         <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="15"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="보기">
@@ -458,7 +458,7 @@
                                     <constraint firstAttribute="trailing" secondItem="vJI-PQ-G2a" secondAttribute="trailing" constant="10" id="CMV-sd-MTC"/>
                                     <constraint firstItem="9Rj-0x-cLq" firstAttribute="centerY" secondItem="vJI-PQ-G2a" secondAttribute="centerY" id="Ch3-R1-IrD"/>
                                     <constraint firstItem="Bmf-c1-jTu" firstAttribute="leading" secondItem="9PP-lq-jel" secondAttribute="leading" constant="10" id="EgC-ky-Eou"/>
-                                    <constraint firstItem="zpj-Id-v3Y" firstAttribute="centerY" secondItem="kFo-DC-nA3" secondAttribute="centerY" multiplier="0.75" id="F0J-v7-MD7"/>
+                                    <constraint firstItem="zpj-Id-v3Y" firstAttribute="centerY" secondItem="kFo-DC-nA3" secondAttribute="centerY" multiplier="0.77" id="F0J-v7-MD7"/>
                                     <constraint firstItem="c7L-9Z-VnX" firstAttribute="centerY" secondItem="Lnf-Ig-3ap" secondAttribute="centerY" id="K7Q-mf-nWe"/>
                                     <constraint firstItem="kFo-DC-nA3" firstAttribute="centerX" secondItem="9PP-lq-jel" secondAttribute="centerX" multiplier="0.3" constant="1" id="KLn-Am-bds"/>
                                     <constraint firstAttribute="trailing" secondItem="6GH-cM-sso" secondAttribute="trailing" constant="10" id="Qgf-0E-W8U"/>
@@ -495,8 +495,11 @@
                         <outlet property="agreeForTermsOfUSe" destination="Lnf-Ig-3ap" id="BZo-Yb-s0I"/>
                         <outlet property="appIcon" destination="kFo-DC-nA3" id="7cy-As-ZHi"/>
                         <outlet property="backgroundView" destination="9PP-lq-jel" id="zfn-GI-c1I"/>
+                        <outlet property="pochakCorpLabel" destination="QJt-RG-HKZ" id="01Q-WZ-lzQ"/>
+                        <outlet property="pochakLabel" destination="zpj-Id-v3Y" id="Cqc-Vk-xSt"/>
                         <outlet property="seePrivacyPolicy" destination="vJI-PQ-G2a" id="9ze-Sn-jR8"/>
                         <outlet property="seeTermsOfUse" destination="c7L-9Z-VnX" id="13B-J4-PUe"/>
+                        <outlet property="titleLabel" destination="6GH-cM-sso" id="KEY-zp-4im"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AxG-NF-UXC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -10,7 +10,9 @@ import SafariServices
 
 class TermsOfAgreeViewController: UIViewController, UIViewControllerTransitioningDelegate {
 
-    
+    @IBOutlet weak var pochakLabel: UILabel!
+    @IBOutlet weak var pochakCorpLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var appIcon: UIImageView!
     @IBOutlet weak var agreeForPrivacyPolicy: UIButton!
     @IBOutlet weak var agreeForTermsOfUSe: UIButton!
@@ -28,12 +30,24 @@ class TermsOfAgreeViewController: UIViewController, UIViewControllerTransitionin
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.navigationController?.isNavigationBarHidden = false
         backgroundView.layer.cornerRadius = 8
         appIcon.layer.cornerRadius = 5
         agreeAndContinueButton.layer.cornerRadius = 5
         seePrivacyPolicy.setUnderline()
         seeTermsOfUse.setUnderline()
+        
+        pochakLabel.text = "Pochak"
+        pochakLabel.font = UIFont(name: "Pretendard-SemiBold", size: 20)
+        pochakLabel.textColor = .black
+        
+        pochakCorpLabel.text = "Pochak Corp."
+        pochakCorpLabel.font = UIFont(name: "Pretendard-Light", size: 16)
+        pochakCorpLabel.textColor = UIColor(named: "gray04")
+        
+        titleLabel.text = "개인정보 및 이용약관 동의 항목"
+        titleLabel.font = UIFont(name: "Pretendard-SemiBold", size: 18)
+        titleLabel.textColor = .black
+        
         
         agreeForPrivacyPolicy.setTitle(" [필수] 개인정보 제3자 제공 동의", for: .normal)
         agreeForPrivacyPolicy.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
@@ -61,6 +75,7 @@ class TermsOfAgreeViewController: UIViewController, UIViewControllerTransitionin
             didAgreeForPrivacyPolicy = false
             agreeForPrivacyPolicy.setTitleColor(UIColor(named: "gray04"), for: .normal)
             agreeForPrivacyPolicy.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
+            agreeForPrivacyPolicy.tintColor = UIColor(named: "gray04")
         }
         
     }
@@ -75,6 +90,7 @@ class TermsOfAgreeViewController: UIViewController, UIViewControllerTransitionin
             didAgreeForTermsOfUse = false
             agreeForTermsOfUSe.setTitleColor(UIColor(named: "gray04"), for: .normal)
             agreeForTermsOfUSe.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
+            agreeForTermsOfUSe.tintColor = UIColor(named: "gray04")
         }
     }
     
