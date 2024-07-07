@@ -368,6 +368,7 @@
                                                             <constraint firstAttribute="height" constant="48" id="WFC-0b-CWs"/>
                                                         </constraints>
                                                         <state key="normal" image="CommentIcon"/>
+                                                        <state key="selected" image="CommentFilledIcon"/>
                                                         <connections>
                                                             <action selector="commentButtonDidTap:" destination="HEC-dG-qH7" eventType="touchUpInside" id="G08-lr-uuv"/>
                                                         </connections>
@@ -701,6 +702,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="CommentFilledIcon" width="28" height="28"/>
         <image name="CommentIcon" width="28" height="28"/>
         <image name="LikeFilledIcon" width="32" height="32"/>
         <image name="LikeIcon" width="32" height="32"/>
