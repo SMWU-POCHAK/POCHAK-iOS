@@ -342,6 +342,7 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
             cell.editingCommentTextField = self.commentTextField
             cell.tableView = self.tableView
             cell.commentVC = self
+            cell.postVC = self.postVC
             cell.setupData(cellData[finalIndex])
             return cell
         }
