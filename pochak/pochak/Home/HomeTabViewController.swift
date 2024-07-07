@@ -84,7 +84,7 @@ class HomeTabViewController: UIViewController {
         HomeDataService.shared.getHomeData(page: currentFetchingPage) { response in
             switch response {
             case .success(let data):
-                self.homeDataResponse = data as? HomeDataResponse
+                self.homeDataResponse = data
                 self.homeDataResult = self.homeDataResponse.result
                 
                 self.isLastPage = self.homeDataResult.pageInfo.lastPage

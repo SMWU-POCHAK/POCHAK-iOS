@@ -17,9 +17,9 @@ class MyProfilePostDataManager {
     
     static let shared = MyProfilePostDataManager()
     
-    func myProfileUserAndPochakedPostDataManager(_ handle : String, _ completion: @escaping (MyProfileUserAndPochakedPostModel) -> Void) {
+    func myProfileUserAndPochakedPostDataManager(_ handle : String, _ page : Int, _ completion: @escaping (NetworkResult400<MyProfileUserAndPochakedPostModel>) -> Void) {
         
-        let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)"
+        let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)?page=\(page)"
 
         AF.request(url,
                    method: .get,
@@ -31,19 +31,24 @@ class MyProfilePostDataManager {
             switch response.result {
             case .success(let result):
                 let resultData = result.result
-                completion(resultData)
+                completion(.success(resultData))
             case .failure(let error):
                 print("myProfileUserAndPochakedPostDataManager error : \(error.localizedDescription)")
                 if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
                     print("Failure Data: \(errorMessage)")
                 }
+                if let statusCode = response.response?.statusCode {
+                    if statusCode == 400 {
+                        completion(.MEMBER4002)
+                    }
+                }
             }
         }
     }
     
-    func myProfilePochakPostDataManager(_ handle : String, _ completion: @escaping ([PostDataModel]) -> Void) {
+    func myProfilePochakPostDataManager(_ handle : String, _ page : Int, _ completion: @escaping (MyProfilePochakPostModel) -> Void) {
                 
-        let url = "\(APIConstants.baseURLv2)/api/v2/members/\(handle)/upload"
+        let url = "\(APIConstants.baseURLv2)/api/v2/members/\(handle)/upload?page=\(page)"
         
         AF.request(url,
                    method: .get,
@@ -54,7 +59,7 @@ class MyProfilePostDataManager {
             print(response)
             switch response.result {
             case .success(let result):
-                let resultData = result.result.postList
+                let resultData = result.result
                 completion(resultData)
             case .failure(let error):
                 print("myProfilePochakPostDataManager error : \(error.localizedDescription)")

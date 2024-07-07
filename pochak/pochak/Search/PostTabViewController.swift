@@ -64,7 +64,7 @@ class PostTabViewController: UIViewController, UISearchBarDelegate{
             response in
                 switch response {
                 case .success(let data):
-                    self.postTabDataResponse = data as? PostTabDataResponse
+                    self.postTabDataResponse = data
                     guard let result = self.postTabDataResponse?.result else { return }
                 
                     let newPosts = result.postList

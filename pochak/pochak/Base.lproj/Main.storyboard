@@ -41,7 +41,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="포착 시작하기" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxO-YY-JlX">
-                                <rect key="frame" x="153.33333333333334" y="650.66666666666663" width="86.666666666666657" height="19.333333333333371"/>
+                                <rect key="frame" x="152.66666666666666" y="650.66666666666663" width="87.666666666666657" height="19.333333333333371"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -287,7 +287,7 @@
                                     <constraint firstAttribute="width" constant="116" id="rJ3-LZ-w3M"/>
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Button" image="chooseProfileIcon"/>
+                                <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="profileBtnTapped:" destination="5Yd-x5-rIb" eventType="touchUpInside" id="Qat-yK-uoE"/>
                                 </connections>
@@ -370,7 +370,6 @@
     </scenes>
     <resources>
         <image name="apple_login" width="20.666666030883789" height="25.666666030883789"/>
-        <image name="chooseProfileIcon" width="116" height="116"/>
         <image name="google_login" width="28" height="28"/>
         <image name="pochak_logo" width="132" height="103.66666412353516"/>
         <image name="pochak_word_logo" width="230.66667175292969" height="45.666667938232422"/>

@@ -50,18 +50,15 @@ class FollowingCollectionViewCell: UICollectionViewCell {
 
     @IBAction func toggleFollowBtn(_ sender: UIButton) {
         let handle = handle
-        sender.isSelected.toggle()
-        
         FollowToggleDataManager.shared.followToggleDataManager(handle, { resultData in
             print(resultData.message)
+            if resultData.message == "성공적으로 팔로우를 취소하였습니다." {
+                sender.setTitle("팔로우", for: .normal)
+                sender.backgroundColor = UIColor(named: "yellow00")
+            } else if resultData.message == "성공적으로 팔로우하였습니다."{
+                sender.setTitle("팔로잉", for: .normal)
+                sender.backgroundColor = UIColor(named: "gray03")
+            }
         })
-        
-        if sender.isSelected {
-            sender.setTitle("팔로우", for: .normal)
-            sender.backgroundColor = UIColor(named: "yellow00")
-        } else {
-            sender.setTitle("팔로잉", for: .normal)
-            sender.backgroundColor = UIColor(named: "gray03")
-        }
     }
 }
