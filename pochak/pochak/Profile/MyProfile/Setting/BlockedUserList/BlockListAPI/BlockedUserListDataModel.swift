@@ -20,14 +20,14 @@ struct BlockedUserDataModel : Codable {
 }
 
 struct BlockedUserPageDataModel : Codable {
-    var lastPage : Bool?
-    var totalPages: Int?
-    var totalElements: Int?
-    var size: Int?
+    var lastPage : Bool
+    var totalPages: Int
+    var totalElements: Int
+    var size: Int
 }
 
 struct BlockedUserListDataModel : Codable {
-    var profileImage: String?
-    var handle: String?
-    var name: String?
+    var profileImage: String
+    var handle: String
+    var name: String
 }

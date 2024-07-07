@@ -13,9 +13,9 @@ class BlockedUserListDataManager{
     static let shared = BlockedUserListDataManager()
     
     
-    func blockedUserListDataManager(_ handle : String, _ completion: @escaping (BlockedUserDataModel) -> Void) {
+    func blockedUserListDataManager(_ handle : String,_ page : Int, _ completion: @escaping (BlockedUserDataModel) -> Void) {
         
-        let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)/block"
+        let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)/block?page=\(page)"
         
         AF.request(url,
                    method: .get,

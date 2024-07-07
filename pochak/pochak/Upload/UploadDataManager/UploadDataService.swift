@@ -15,11 +15,6 @@ class UploadDataService{
     func upload(postImage:Data?,  caption:String, taggedMemberHandleList:Array<String>, completion: @escaping(NetworkResult<Any>) -> Void){
         // 임시로 넣어두는 다연 토큰
         let header: HTTPHeaders = ["Content-type": "multipart/form-data"]
-
-        print("==upload==")
-        print("postImage : \(postImage)")
-        print("caption : \(caption)")
-        print("taggedMemberHandleList : \(taggedMemberHandleList)")
         
         // Create an Alamofire upload request
         AF.upload(

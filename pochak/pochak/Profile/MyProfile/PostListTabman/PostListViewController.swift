@@ -58,6 +58,7 @@ class PostListViewController: TabmanViewController {
         
         /* 4. Baritem 등록 */
         addBar(bar, dataSource: self, at:.top)
+        
     }
 }
 

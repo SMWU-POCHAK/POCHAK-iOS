@@ -26,13 +26,13 @@ struct MyProfileUserAndPochakedPostModel : Codable {
 }
 
 struct PageDataModel : Codable {
-    var lastPage : Bool?
-    var totalPages : Int?
-    var totalElements : Int?
-    var size : Int?
+    var lastPage : Bool
+    var totalPages : Int
+    var totalElements : Int
+    var size : Int
 }
 
 struct PostDataModel : Codable {
-    var postId : Int?
-    var postImage : String?
+    var postId : Int
+    var postImage : String
 }

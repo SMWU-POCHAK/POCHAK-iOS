@@ -14,25 +14,24 @@ class SecondTabmanViewController: UIViewController {
     @IBOutlet weak var followingCollectionView: UICollectionView!
     var imageArray : [MemberListDataModel] = []
     var recievedHandle : String?
+    
+    private var isLastPage: Bool = false
+    private var isCurrentlyFetching: Bool = false
+    private var currentFetchingPage: Int = 0
 
     // MARK: - View LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        // Delegate
+        currentFetchingPage = 0
+        // API
+        loadFollowingListData()
         // CollectionView 등록
         setupCollectionView()
-        
-        // API
-        loadFollowingListData()
+        // 새로고침 구현
+        setRefreshControl()
     }
     
-    override func viewWillAppear(_ animated: Bool){
-        super.viewWillAppear(animated)
-        
-        // API
-        loadFollowingListData()
-    }
-
     // MARK: - Method
 
     private func setupCollectionView() {
@@ -45,12 +44,50 @@ class SecondTabmanViewController: UIViewController {
         }
     
     private func loadFollowingListData() {
-        FollowListDataManager.shared.followingDataManager(recievedHandle ?? "",{resultData in
-            self.imageArray = resultData
-            self.followingCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
+        FollowListDataManager.shared.followingDataManager(recievedHandle ?? "",currentFetchingPage, {resultData in
+            let newMembers = resultData.memberList
+            let startIndex = resultData.memberList.count
+            print("startIndex : \(startIndex)")
+            let endIndex = startIndex + newMembers.count
+            print("endIndex : \(endIndex)")
+            let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
+            print("newIndexPaths : \(newIndexPaths)")
+            self.imageArray.append(contentsOf: newMembers)
+            self.isLastPage = resultData.pageInfo.lastPage
+            
+            print("보여주는 계정 개수: \(newMembers.count)")
+            DispatchQueue.main.async {
+                if self.currentFetchingPage == 0 {
+                    self.followingCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
+                    print(">>>>>>> Follower is currently reloading!!!!!!!")
+                } else {
+                    self.followingCollectionView.insertItems(at: newIndexPaths)
+                    print(">>>>>>> Follower is currently fethcing!!!!!!!")
+                }
+                self.isCurrentlyFetching = false
+                self.currentFetchingPage += 1;
+            }
         })
     }
+    private func setRefreshControl(){
+        // UIRefreshControl 생성
+       let refreshControl = UIRefreshControl()
+       refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+
+       // 테이블 뷰에 UIRefreshControl 설정
+        followingCollectionView.refreshControl = refreshControl
+    }
     
+    @objc private func refreshData(_ sender: Any) {
+        // 데이터 새로고침 완료 후 UIRefreshControl을 종료
+        print("refresh")
+        self.imageArray = []
+        self.currentFetchingPage = 0
+        self.loadFollowingListData()
+        DispatchQueue.main.async {
+            self.followingCollectionView.refreshControl?.endRefreshing()
+        }
+    }
 }
 
 // MARK: - Extension
@@ -93,5 +130,18 @@ extension SecondTabmanViewController : UICollectionViewDelegateFlowLayout{
     // cell 간 간격 설정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+}
+
+// Paging
+extension SecondTabmanViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (followingCollectionView.contentOffset.y > (followingCollectionView.contentSize.height - followingCollectionView.bounds.size.height)){
+            if (!isLastPage && !isCurrentlyFetching) {
+                print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
+                isCurrentlyFetching = true
+                loadFollowingListData()
+            }
+        }
     }
 }

@@ -25,10 +25,11 @@ class FollowListViewController: TabmanViewController {
         super.viewDidLoad()
         
         // 네비게이션바 title 커스텀
+        self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.backgroundColor = UIColor.clear
-        self.navigationController?.navigationBar.tintColor = .black
+//        self.navigationController?.navigationBar.tintColor = .black
         self.navigationItem.title = handle ?? "handle not found"
-        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.black, NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 18) ?? UIFont.systemFont(ofSize: 18, weight: .bold)]
+//        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.black, NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 20) ?? UIFont.systemFont(ofSize: 20, weight: .bold)]
         
         // Tabman 사용
         /* 1. tab에 보여질 VC 추가 */
@@ -66,6 +67,17 @@ class FollowListViewController: TabmanViewController {
         /* 4. Baritem 등록 */
         addBar(bar, dataSource: self, at:.top)
     }
+    // 뷰컨이 생길 때 숨김
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.navigationBar.backgroundColor = UIColor.clear
+    }
+//    // 뷰컨이 사라질 때 다시 동작
+//    override func viewDidDisappear(_ animated: Bool) {
+//        super.viewDidDisappear(animated)
+//        self.navigationController?.isNavigationBarHidden = true
+//    }
 }
 // MARK: - Extension
 

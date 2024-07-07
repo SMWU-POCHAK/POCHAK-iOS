@@ -19,10 +19,9 @@ class RequestInterceptor {
         let authenticator = MyAuthenticator()
         let credential = MyAuthenticationCredential(accessToken: accessToken,
                                                     refreshToken: refreshToken,
-                                                    expiredAt: Date(timeIntervalSinceNow: 60 * 60))
+                                                    expiredAt: Date(timeIntervalSinceNow: 60 * 30))
         let myAuthencitationInterceptor = AuthenticationInterceptor(authenticator: authenticator,
                                                                     credential: credential)
-        
         return myAuthencitationInterceptor
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class SettingsViewController: UIViewController {
     
@@ -26,13 +27,10 @@ class SettingsViewController: UIViewController {
 
     // MARK: - Funtion
     
-    @IBAction func moveToTermsOfUsePage(_ sender: Any) {
+    @IBAction func openTermsOfUse(_ sender: Any) {
         // 현재 저장된 모든 Keycahin : accessToken, refreshToken
         let accessToken = GetToken.getAccessToken()
         let refreshToken = GetToken.getRefreshToken()
-        
-        
-        
         
         // 현재 저장된 모든 userdefaults
         let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
@@ -60,16 +58,30 @@ class SettingsViewController: UIViewController {
         print("Profile Image URL: \(profileImgUrl)")
         print("Follower Count: \(followerCount)")
         print("Following Count: \(followingCount)")
+        
+        guard let url = URL(string: "https://www.naver.com") else { return }
+        let safariVC = SFSafariViewController(url: url)
+        // delegate 지정 및 presentation style 설정.
+        safariVC.transitioningDelegate = self
+        safariVC.modalPresentationStyle = .pageSheet
+
+        present(safariVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func openPrivacyPolicy(_ sender: Any) {
+        guard let url = URL(string: "https://www.naver.com") else { return }
+        let safariVC = SFSafariViewController(url: url)
+        // delegate 지정 및 presentation style 설정.
+        safariVC.transitioningDelegate = self
+        safariVC.modalPresentationStyle = .pageSheet
+
+        present(safariVC, animated: true, completion: nil)
     }
     
     @IBAction func viewBlockList(_ sender: Any) {
-        let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? "handle not found"
-        BlockedUserListDataManager.shared.blockedUserListDataManager(handle, { resultData in
-            // 차단된 계정 페이지로 이동
-            guard let blockedUserVC = self.storyboard?.instantiateViewController(withIdentifier: "BlockedUserVC") as? BlockedUserViewController else {return}
-            blockedUserVC.blockedUserList = resultData.blockList
-            self.navigationController?.pushViewController(blockedUserVC, animated: true)
-        })
+        // 차단된 계정 페이지로 이동
+        guard let blockedUserVC = self.storyboard?.instantiateViewController(withIdentifier: "BlockedUserVC") as? BlockedUserViewController else {return}
+        self.navigationController?.pushViewController(blockedUserVC, animated: true)
     }
     
     @IBAction func logOut(_ sender: Any) {
@@ -165,3 +177,6 @@ extension SettingsViewController : CustomAlertDelegate {
         print("cancel button selected")
     }
 }
+
+// UIViewControllerTransitioningDelegate 채택.
+extension SettingsViewController: UIViewControllerTransitioningDelegate { }
