@@ -23,7 +23,8 @@ enum AlarmType: String, Codable {
     case taggedComment = "TAGGED_COMMENT"
     case commentReply = "COMMENT_REPLY"
     case follow = "FOLLOW"
-    case like = "LIKE"
+    case ownerLike = "OWNER_LIKE"
+    case taggedLike = "TAGGED_LIKE"
 }
 
 struct AlarmElementList: Codable {
