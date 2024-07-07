@@ -85,6 +85,9 @@ class MyProfileTabViewController: UIViewController {
         super.viewWillAppear(animated)
         print(">>>>>>>>>>>>>>>> view will appear - myProfile")
         
+        // API
+        loadProfileData()
+        
         // 뷰가 나타날 때에는 네비게이션 바 숨기기
         self.navigationController?.isNavigationBarHidden = true
     }
