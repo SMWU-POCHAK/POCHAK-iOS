@@ -252,7 +252,7 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
             case .success(let data):
                 print("success!!!!")
                 print(data)
-                self.idSearchResponseData = data as? IdSearchResponse
+                self.idSearchResponseData = data
                 guard let result = self.idSearchResponseData?.result else { return }
             
                 let newPosts = result.memberList

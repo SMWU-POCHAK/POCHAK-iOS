@@ -52,7 +52,7 @@ class AlarmViewController: UIViewController, UISheetPresentationControllerDelega
             case .success(let data):
                 print("success")
                 
-                self.alarmDataResponse = data as? AlarmResponse
+                self.alarmDataResponse = data
                 self.alarmDataResult = self.alarmDataResponse.result
                 print(self.alarmDataResult!)
                 self.alarmList = self.alarmDataResult.alarmList
