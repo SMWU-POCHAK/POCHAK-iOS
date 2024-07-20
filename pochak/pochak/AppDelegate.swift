@@ -55,8 +55,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         Realm.Configuration.defaultConfiguration = config
         _ = try! Realm()
-                
+        
+        
+        // 앱 첫 실행 시 keyChain 정보를 삭제
+        removeKeychainAtFirstLaunch()
         return true
+    }
+    
+    private func removeKeychainAtFirstLaunch() {
+        guard UserDefaults.isFirstLaunch() else {
+            return
+        }
+        
+        // 첫 실행이라면 keyChain 정보를 삭제
+        do {
+            try KeychainManager.delete(account: "accessToken")
+            try KeychainManager.delete(account: "refreshToken")
+        } catch {
+            print(error)
+        }
     }
 
     // MARK: UISceneSession Lifecycle
