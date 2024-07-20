@@ -50,6 +50,7 @@ class BlockedUserViewController: UIViewController {
     
     private func loadBlockedUserList(){
         let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? "handle not found"
+        isCurrentlyFetching = true
         BlockedUserListDataManager.shared.blockedUserListDataManager(handle, currentFetchingPage, { resultData in
             let newBlockedUsers = resultData.blockList
             let startIndex = resultData.blockList.count
@@ -63,7 +64,8 @@ class BlockedUserViewController: UIViewController {
                     self.tableView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
                     print(">>>>>>> PochakPostDataManager is currently reloading!!!!!!!")
                 } else {
-                    self.tableView.insertRows(at: newIndexPaths, with: .automatic)
+                    self.tableView.insertRows(at: newIndexPaths, with: .none)
+                    print(">>>>>>> PochakPostDataManager is currently insertingRows!!!!!!!")
                 }
                 self.isCurrentlyFetching = false
                 self.currentFetchingPage += 1;
@@ -125,8 +127,8 @@ extension BlockedUserViewController: RemoveCellDelegate {
         print(" >>>> cellIndexPath : \(cellIndexPath)")
         print(" >>>> cellHandle : \(cellHandle)")
         showAlert(alertType: .confirmAndCancel,
-                  titleText: "팔로워 차단을 취소하겠습니까?",
-                  messageText: "팔로워 차단을 취소하면, 팔로워와 관련된 \n사진 및 소식을 다시 접할 수 있습니다.",
+                  titleText: "유저 차단을 취소하겠습니까?",
+                  messageText: "유저 차단을 취소하면, 팔로워와 관련된 \n사진 및 소식을 다시 접할 수 있습니다.",
                   cancelButtonText: "나가기",
                   confirmButtonText: "계속하기"
         )

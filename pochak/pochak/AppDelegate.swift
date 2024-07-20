@@ -59,8 +59,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 앱이 시작될 때 Firebase 연동
         FirebaseApp.configure()
-                
+        
+        // 앱 첫 실행 시 keyChain 정보를 삭제
+        removeKeychainAtFirstLaunch()
         return true
+    }
+    
+    private func removeKeychainAtFirstLaunch() {
+        guard UserDefaults.isFirstLaunch() else {
+            return
+        }
+        
+        // 첫 실행이라면 keyChain 정보를 삭제
+        do {
+            try KeychainManager.delete(account: "accessToken")
+            try KeychainManager.delete(account: "refreshToken")
+        } catch {
+            print(error)
+        }
     }
 
     // MARK: UISceneSession Lifecycle
