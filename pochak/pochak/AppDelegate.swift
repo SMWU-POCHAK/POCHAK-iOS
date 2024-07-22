@@ -8,6 +8,7 @@
 import UIKit
 import GoogleSignIn
 import RealmSwift
+import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -56,6 +57,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Realm.Configuration.defaultConfiguration = config
         _ = try! Realm()
         
+        // 앱이 시작될 때 Firebase 연동
+        FirebaseApp.configure()
         
         // 앱 첫 실행 시 keyChain 정보를 삭제
         removeKeychainAtFirstLaunch()
