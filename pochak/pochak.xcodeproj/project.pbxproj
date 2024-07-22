@@ -48,6 +48,7 @@
 		08C02EF22BF37D2F00627C21 /* ReportTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08C02EF02BF37D2F00627C21 /* ReportTableViewCell.xib */; };
 		08C02EF62BF3945000627C21 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C02EF52BF3945000627C21 /* UIFont+.swift */; };
 		08C02EF82BF394B800627C21 /* UIAlertController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C02EF72BF394B800627C21 /* UIAlertController+.swift */; };
+		08D301742C4C30170031CC53 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08D301732C4C30170031CC53 /* GoogleService-Info.plist */; };
 		08D98C472AFEE8B300E9A097 /* PostDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D98C462AFEE8B300E9A097 /* PostDataModel.swift */; };
 		08D98C4A2AFEE8D700E9A097 /* LikedUsersDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D98C492AFEE8D700E9A097 /* LikedUsersDataModel.swift */; };
 		08DD9EC22B454356004CCD5F /* FollowDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DD9EC12B454356004CCD5F /* FollowDataModel.swift */; };
@@ -243,6 +244,7 @@
 		08C02EF02BF37D2F00627C21 /* ReportTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportTableViewCell.xib; sourceTree = "<group>"; };
 		08C02EF52BF3945000627C21 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		08C02EF72BF394B800627C21 /* UIAlertController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+.swift"; sourceTree = "<group>"; };
+		08D301732C4C30170031CC53 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08D98C462AFEE8B300E9A097 /* PostDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDataModel.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		08D98C492AFEE8D700E9A097 /* LikedUsersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedUsersDataModel.swift; sourceTree = "<group>"; };
 		08DD9EC12B454356004CCD5F /* FollowDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowDataModel.swift; sourceTree = "<group>"; };
@@ -949,6 +951,7 @@
 		EA1B0B592A49D23A00F86FBC /* pochak */ = {
 			isa = PBXGroup;
 			children = (
+				08D301732C4C30170031CC53 /* GoogleService-Info.plist */,
 				3750669E2C3BB1660036E264 /* pochak.entitlements */,
 				374261752C31C23800B67886 /* pochakDebug.entitlements */,
 				EAF918522AA468FF0037C270 /* Network */,
@@ -1200,6 +1203,7 @@
 				089C75882A51728A003AAB94 /* Pretendard-Regular.ttf in Resources */,
 				3766F4022C3706DC001DD239 /* BlockedUserTableViewCell.xib in Resources */,
 				083249762C2956A000A77C03 /* CustomAlertViewController.storyboard in Resources */,
+				08D301742C4C30170031CC53 /* GoogleService-Info.plist in Resources */,
 				EA99B63C2A5143A800EBA2AD /* CameraTab.storyboard in Resources */,
 				EAFB4B842A51478600E0F2FA /* HomeTab.storyboard in Resources */,
 				EA1B0B672A49D23B00F86FBC /* LaunchScreen.storyboard in Resources */,
