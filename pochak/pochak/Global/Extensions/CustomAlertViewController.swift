@@ -13,12 +13,6 @@ protocol CustomAlertDelegate {
     func cancel()     // cancel button event
 }
 
-/// 알람창 종류 enum
-enum AlertType {
-    case confirmOnly            // 확인 버튼
-    case confirmAndCancel       // 확인, 취소 버튼
-}
-
 class CustomAlertViewController: UIViewController {
     
     // MARK: - Properties
