@@ -17,16 +17,6 @@ struct PageInfo: Codable {
     let size: Int
 }
 
-enum AlarmType: String, Codable {
-    case tagApproval = "TAG_APPROVAL"
-    case ownerComment = "OWNER_COMMENT"
-    case taggedComment = "TAGGED_COMMENT"
-    case commentReply = "COMMENT_REPLY"
-    case follow = "FOLLOW"
-    case ownerLike = "OWNER_LIKE"
-    case taggedLike = "TAGGED_LIKE"
-}
-
 struct AlarmElementList: Codable {
     let alarmId: Int
     let alarmType: AlarmType

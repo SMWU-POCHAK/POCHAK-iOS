@@ -26,7 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         
         // Main.storyboard 가져오기
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let storyboard = UIStoryboard(name: "Login", bundle: nil)
         
         if let keyChainToken = (try? KeychainManager.load(account: "accessToken")) {
             // 로그인 된 상태

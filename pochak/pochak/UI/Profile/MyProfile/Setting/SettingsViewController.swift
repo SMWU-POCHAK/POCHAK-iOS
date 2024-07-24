@@ -106,7 +106,7 @@ class SettingsViewController: UIViewController {
     
     private func toMainPage(){
         // Main.storyboard 가져오기
-        let mainVCBundle = UIStoryboard.init(name: "Main", bundle: nil)
+        let mainVCBundle = UIStoryboard.init(name: "Login", bundle: nil)
         // NavigationController 연결 안되는 문제 -> 해결 : inherit module from target 옵션 체크
         guard let mainVC = mainVCBundle.instantiateViewController(withIdentifier: "NavigationVC") as? NavigationController else { return }
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainVC, animated: false)
