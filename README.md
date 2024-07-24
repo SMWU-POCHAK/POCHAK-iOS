@@ -34,8 +34,7 @@ POCHAK은 사용자들이 서로의 순간에 참여하고 상호 작용할 수 
 
 ## Developers
 
-<table align="center">![Image](https://github.com/user-attachments/assets/7c4890b1-4d13-47e2-998a-2e908fc73671)
-
+<table align="center">
   <tr>
     <td align="center"><img src="https://github.com/user-attachments/assets/7c4890b1-4d13-47e2-998a-2e908fc73671"></td>
     <td><img src="https://avatars.githubusercontent.com/u/90668082?v=4"></td>
