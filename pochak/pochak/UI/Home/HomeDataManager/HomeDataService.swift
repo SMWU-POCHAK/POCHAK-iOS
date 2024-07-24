@@ -10,18 +10,18 @@ import Alamofire
 struct HomeDataService {
     static let shared = HomeDataService()
     
-    func getHomeData(page: Int, completion: @escaping (NetworkResult<HomeDataResponse>) -> Void){
+    func getHomeData(page: Int, completion: @escaping (NetworkResult<HomeDataResponse>) -> Void) {
         
         let dataRequest = AF.request(APIConstants.baseURLv2 + "/api/v2/posts?page=\(page)",
                                      method: .get,
                                      encoding: JSONEncoding.default,
                                      interceptor: RequestInterceptor.getRequestInterceptor())
         
-        dataRequest.validate().responseDecodable(of: HomeDataResponse.self){ response in
+        dataRequest.validate().responseDecodable(of: HomeDataResponse.self) { response in
             switch response.result {
             case .success: // 데이터 통신이 성공한 경우
-                guard let statusCode = response.response?.statusCode else {return}
-                guard let value = response.value else {return}
+                guard let statusCode = response.response?.statusCode else { return }
+                guard let value = response.value else { return }
                 
                 let networkResult = judgeStatus(by: statusCode, value)
                 completion(networkResult)

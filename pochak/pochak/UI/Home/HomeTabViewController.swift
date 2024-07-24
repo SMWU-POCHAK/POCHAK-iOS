@@ -51,7 +51,7 @@ class HomeTabViewController: UIViewController {
     
     // MARK: - Actions
     
-    @objc func refreshHome(){
+    @objc func refreshHome() {
         self.currentFetchingPage = 0
         self.postList.removeAll()
         self.setupData()
@@ -72,13 +72,15 @@ class HomeTabViewController: UIViewController {
         collectionView.refreshControl = refreshControl
             
         collectionView.register(
-            UINib(nibName: HomeCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
+            UINib(nibName: HomeCollectionViewCell.identifier, bundle: nil), 
+            forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
+        
         collectionView.register(
-            
-            UINib(nibName: NoPostCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: NoPostCollectionViewCell.identifier)
+            UINib(nibName: NoPostCollectionViewCell.identifier, bundle: nil), 
+            forCellWithReuseIdentifier: NoPostCollectionViewCell.identifier)
     }
     
-    private func setupData(){
+    private func setupData() {
         isCurrentlyFetching = true
         // 임시로 유저 핸들 지수로
         HomeDataService.shared.getHomeData(page: currentFetchingPage) { response in
@@ -130,7 +132,7 @@ class HomeTabViewController: UIViewController {
     }
 }
 
-// MARK: - Extensions; CollectionView
+// MARK: - Extension: CollectionView
 
 extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -145,7 +147,7 @@ extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDel
         }
         else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as? HomeCollectionViewCell
-            else{ return UICollectionViewCell()}
+            else{ return UICollectionViewCell() }
             
             if let url = URL(string: (self.postList[indexPath.item].postImage)) {
                 cell.imageView.load(url: url)
@@ -192,11 +194,11 @@ extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDel
     }
 }
 
-// MARK: - Extension; UIScrollView
+// MARK: - Extension: UIScrollView
 
 extension HomeTabViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (!noPost && collectionView.contentOffset.y > (collectionView.contentSize.height - collectionView.bounds.size.height)){
+        if (!noPost && collectionView.contentOffset.y > (collectionView.contentSize.height - collectionView.bounds.size.height)) {
             if (!isLastPage && !isCurrentlyFetching) {
                 print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
                 isCurrentlyFetching = true
