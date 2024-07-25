@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeTabViewController: UIViewController {
+final class HomeTabViewController: UIViewController {
     
     // MARK: - Properties
     
