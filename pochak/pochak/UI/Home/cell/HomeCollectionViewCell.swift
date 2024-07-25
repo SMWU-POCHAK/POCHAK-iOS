@@ -32,7 +32,7 @@ final class HomeCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Functions
     
-    func prepare(image: UIImage?){
+    func prepare(image: UIImage?) {
         self.imageView.image = image
     }
 }

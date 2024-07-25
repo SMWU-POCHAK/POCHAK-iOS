@@ -49,7 +49,7 @@ final class HomeTabViewController: UIViewController {
     
     // MARK: - Actions
     
-    @objc func refreshHome(){
+    @objc func refreshHome() {
         self.currentFetchingPage = 0
         self.postList.removeAll()
         self.setupData()
@@ -70,13 +70,15 @@ final class HomeTabViewController: UIViewController {
         collectionView.refreshControl = refreshControl
             
         collectionView.register(
-            UINib(nibName: HomeCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
+            UINib(nibName: HomeCollectionViewCell.identifier, bundle: nil), 
+            forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
+        
         collectionView.register(
-            
-            UINib(nibName: NoPostCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: NoPostCollectionViewCell.identifier)
+            UINib(nibName: NoPostCollectionViewCell.identifier, bundle: nil), 
+            forCellWithReuseIdentifier: NoPostCollectionViewCell.identifier)
     }
     
-    private func setupData(){
+    private func setupData() {
         isCurrentlyFetching = true
 
         HomeDataService.shared.getHomeData(page: currentFetchingPage) { response in
@@ -140,7 +142,7 @@ extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDel
         }
         else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as? HomeCollectionViewCell
-            else{ return UICollectionViewCell()}
+            else{ return UICollectionViewCell() }
             
             if let url = URL(string: (self.postList[indexPath.item].postImage)) {
                 cell.imageView.load(with: url)
