@@ -8,12 +8,8 @@
 import Alamofire
 
 struct CommentDataService {
-    static let shared = CommentDataService()
     
-//    let header: HTTPHeaders = [
-//        "Authorization": GetToken.getAccessToken(),
-//        "Content-type": "application/json"
-//    ]
+    static let shared = CommentDataService()
     
     /// 댓글 등록 시 서버에 전달할 Body 생성
     /// - Parameters:
@@ -36,11 +32,11 @@ struct CommentDataService {
     ///   - completion: 댓글 조회 후 처리할 핸들러 (뷰컨트롤러에서 정의)
     func getComments(_ postId: Int, page: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
         
-        let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/posts/\(postId)/comments",
+        let dataRequest = AF.request(APIConstants.baseURLv2 + "/api/v2/posts/\(postId)/comments",
                                     method: .get,
                                     parameters: ["page": page],
                                     encoding: URLEncoding.default,
-                                    /*headers: header*/ interceptor: RequestInterceptor.getRequestInterceptor())
+                                    interceptor: RequestInterceptor.getRequestInterceptor())
         
         dataRequest.responseData { dataResponse in
             switch dataResponse.result {
@@ -66,11 +62,12 @@ struct CommentDataService {
     func getChildComments(_ postId: Int, _ commentId: Int, page: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
         print("-get child comments-")
         
-        let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/posts/\(postId)/comments/\(commentId)",
+        let dataRequest = AF.request(APIConstants.baseURLv2 + "/api/v2/posts/\(postId)/comments/\(commentId)",
                                     method: .get,
                                     parameters: ["page": page],
                                     encoding: URLEncoding.default,
-                                    /*headers: header*/interceptor: RequestInterceptor.getRequestInterceptor())
+                                    interceptor: RequestInterceptor.getRequestInterceptor())
+        
         dataRequest.responseData { dataResponse in
             switch dataResponse.result {
             case .success:
@@ -96,16 +93,14 @@ struct CommentDataService {
                                     method: .post,
                                     parameters: makeBodyParameter(content: content, parentCommentId: parentCommentId),
                                     encoding: JSONEncoding.default,
-                                    /*headers: header*/interceptor: RequestInterceptor.getRequestInterceptor())
+                                    interceptor: RequestInterceptor.getRequestInterceptor())
         
         dataRequest.responseData { dataResponse in
             switch dataResponse.result {
             case .success:
                 // 성공 시 통신 자체의 상태코드와 데이터(value) 수신
                 guard let statusCode = dataResponse.response?.statusCode else { return }
-                print("=== dataResponse.response.statusCode: \(statusCode)")
                 guard let value = dataResponse.value else { return }
-                print("=== value: \(value.description)")
                 let networkResult = self.judgeStatus(by: statusCode, value, dataType: "PostCommentResponse")  // 통신의 결과(성공이면 데이터, 아니면 에러내용)
                 completion(networkResult)
             case .failure:
@@ -114,7 +109,6 @@ struct CommentDataService {
         }
     }
     
-    
     /// 댓글 삭제하기
     /// - Parameters:
     ///   - postId: 삭제하려는 댓글이 달린 게시글 아이디
@@ -122,12 +116,11 @@ struct CommentDataService {
     ///   - completion: 댓글 삭제 후 핸들러
     func deleteComment(postId: Int, commentId: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
         let parameters: Parameters = ["commentId" : commentId]
-        print("=== deleting comment ===")
-//        print("header: \(header)")
+
         let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/posts/\(postId)/comments",
                                     method: .delete,
                                     parameters: parameters,
-                                    /*headers: header*/interceptor: RequestInterceptor.getRequestInterceptor())
+                                    interceptor: RequestInterceptor.getRequestInterceptor())
 
         dataRequest.responseData { dataResponse in
             switch dataResponse.result {
@@ -150,14 +143,6 @@ struct CommentDataService {
     ///   - dataType: 여기서는 여러 종류의 데이터를 다루고 있으므로 현재 다루고 있는 데이터 종류(모델명)
     /// - Returns: 네트워크 연결 결과 NetworkResult를 리턴
     private func judgeStatus(by statusCode: Int, _ data: Data, dataType: String) -> NetworkResult<Any> {
-        print("=== judging status, code: \(statusCode)")
-        
-        do {
-            let p = try JSONDecoder().decode(DeleteCommentResponse.self, from: data)
-            print(p)
-        } catch {
-            print(error)
-        }
         switch statusCode {
         case 200: return isValidData(data: data, dataType: dataType)  // 성공 -> 데이터 가공해서 전달해야하므로 isValidData라는 함수로 데이터 넘겨주기
         case 400: return .pathErr  // 잘못된 요청

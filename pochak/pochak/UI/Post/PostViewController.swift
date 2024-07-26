@@ -25,8 +25,6 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     
     private var likePostResponse: LikePostDataResponse!
     
-    private var followPostResponse: FollowDataResponse!
-    
     private var deletePostResponse: PostDeleteResponse!
     
     private var taggedUserList: [TaggedMember] = []
@@ -356,9 +354,8 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     private func postFollowRequest() {
         FollowDataService.shared.postFollow(postOwnerHandle) { response in
             switch(response) {
-            case .success(let followData):
-                self.followPostResponse = followData as? FollowDataResponse
-                if(!self.followPostResponse.isSuccess) {
+            case .success(let followDataResponse):
+                if(followDataResponse.isSuccess) {
                     self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
                     return
                 }
