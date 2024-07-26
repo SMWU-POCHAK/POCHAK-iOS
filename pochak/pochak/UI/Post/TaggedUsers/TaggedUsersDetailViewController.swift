@@ -22,7 +22,7 @@ class TaggedUsersDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setTableView()
     }
     
@@ -38,7 +38,6 @@ class TaggedUsersDetailViewController: UIViewController {
                            forCellReuseIdentifier: TaggedUsersTableViewCell.identifier)
     }
 }
-
 
 // MARK: - Extension: UITableView
 
@@ -58,9 +57,4 @@ extension TaggedUsersDetailViewController: UITableViewDelegate, UITableViewDataS
         
         goToOtherProfileVC!(tagList![indexPath.row].handle)
     }
-    
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 68
-    }
-    
 }

@@ -2,7 +2,7 @@
 //  TaggedUsersTableViewCell.swift
 //  pochak
 //
-//  Created by Suyeon Hwang on 7/5/24.
+//  Created by Suyeon Hwang on 7/26/24.
 //
 
 import UIKit
@@ -20,12 +20,12 @@ class TaggedUsersTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     
     // MARK: - Init
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

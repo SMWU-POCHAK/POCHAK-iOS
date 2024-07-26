@@ -43,8 +43,6 @@
 		08B679612B528CB600F8D585 /* CommentTableViewFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08B679602B528CB600F8D585 /* CommentTableViewFooterView.xib */; };
 		08B679632B528D7500F8D585 /* CommentTableViewFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B679622B528D7500F8D585 /* CommentTableViewFooterView.swift */; };
 		08B693F22C37203400D82DC4 /* TaggedUsersDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B693F12C37203400D82DC4 /* TaggedUsersDetailViewController.swift */; };
-		08B693F82C37220600D82DC4 /* TaggedUsersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B693F62C37220600D82DC4 /* TaggedUsersTableViewCell.swift */; };
-		08B693F92C37220600D82DC4 /* TaggedUsersTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08B693F72C37220600D82DC4 /* TaggedUsersTableViewCell.xib */; };
 		08C02EEA2BF3798F00627C21 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C02EE82BF3798F00627C21 /* ReportViewController.swift */; };
 		08C02EF12BF37D2F00627C21 /* ReportTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C02EEF2BF37D2F00627C21 /* ReportTableViewCell.swift */; };
 		08C02EF22BF37D2F00627C21 /* ReportTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08C02EF02BF37D2F00627C21 /* ReportTableViewCell.xib */; };
@@ -58,6 +56,8 @@
 		08E8DCDC2C38118000EC78C2 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E8DCDB2C38118000EC78C2 /* UILabel+.swift */; };
 		08EB5D252C280CFE00E35C16 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB5D242C280CFE00E35C16 /* UIImage+.swift */; };
 		08EB99B42C53D76C00FAC08A /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB99B32C53D76C00FAC08A /* UIScrollView+.swift */; };
+		08EB99B72C53EA8500FAC08A /* TaggedUsersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB99B52C53EA8500FAC08A /* TaggedUsersTableViewCell.swift */; };
+		08EB99B82C53EA8500FAC08A /* TaggedUsersTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EB99B62C53EA8500FAC08A /* TaggedUsersTableViewCell.xib */; };
 		08FD3A392B357E6400574880 /* LikedUsersDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FD3A382B357E6400574880 /* LikedUsersDataService.swift */; };
 		08FD3A3C2B3AF94A00574880 /* CommentDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FD3A3B2B3AF94A00574880 /* CommentDataModel.swift */; };
 		08FD3A3E2B3AFE7B00574880 /* CommentDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FD3A3D2B3AFE7B00574880 /* CommentDataService.swift */; };
@@ -241,8 +241,6 @@
 		08B679602B528CB600F8D585 /* CommentTableViewFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableViewFooterView.xib; sourceTree = "<group>"; };
 		08B679622B528D7500F8D585 /* CommentTableViewFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewFooterView.swift; sourceTree = "<group>"; };
 		08B693F12C37203400D82DC4 /* TaggedUsersDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggedUsersDetailViewController.swift; sourceTree = "<group>"; };
-		08B693F62C37220600D82DC4 /* TaggedUsersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggedUsersTableViewCell.swift; sourceTree = "<group>"; };
-		08B693F72C37220600D82DC4 /* TaggedUsersTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaggedUsersTableViewCell.xib; sourceTree = "<group>"; };
 		08C02EE82BF3798F00627C21 /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		08C02EEF2BF37D2F00627C21 /* ReportTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTableViewCell.swift; sourceTree = "<group>"; };
 		08C02EF02BF37D2F00627C21 /* ReportTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportTableViewCell.xib; sourceTree = "<group>"; };
@@ -256,6 +254,8 @@
 		08E8DCDB2C38118000EC78C2 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		08EB5D242C280CFE00E35C16 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		08EB99B32C53D76C00FAC08A /* UIScrollView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
+		08EB99B52C53EA8500FAC08A /* TaggedUsersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggedUsersTableViewCell.swift; sourceTree = "<group>"; };
+		08EB99B62C53EA8500FAC08A /* TaggedUsersTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaggedUsersTableViewCell.xib; sourceTree = "<group>"; };
 		08FD3A382B357E6400574880 /* LikedUsersDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedUsersDataService.swift; sourceTree = "<group>"; };
 		08FD3A3B2B3AF94A00574880 /* CommentDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDataModel.swift; sourceTree = "<group>"; };
 		08FD3A3D2B3AFE7B00574880 /* CommentDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDataService.swift; sourceTree = "<group>"; };
@@ -602,8 +602,8 @@
 			isa = PBXGroup;
 			children = (
 				08B693F12C37203400D82DC4 /* TaggedUsersDetailViewController.swift */,
-				08B693F62C37220600D82DC4 /* TaggedUsersTableViewCell.swift */,
-				08B693F72C37220600D82DC4 /* TaggedUsersTableViewCell.xib */,
+				08EB99B52C53EA8500FAC08A /* TaggedUsersTableViewCell.swift */,
+				08EB99B62C53EA8500FAC08A /* TaggedUsersTableViewCell.xib */,
 			);
 			path = TaggedUsers;
 			sourceTree = "<group>";
@@ -1278,7 +1278,7 @@
 				08C02EF22BF37D2F00627C21 /* ReportTableViewCell.xib in Resources */,
 				0844D7EC2BF218A5001154AC /* ReportViewCell.xib in Resources */,
 				EA1B0B642A49D23B00F86FBC /* Assets.xcassets in Resources */,
-				08B693F92C37220600D82DC4 /* TaggedUsersTableViewCell.xib in Resources */,
+				08EB99B82C53EA8500FAC08A /* TaggedUsersTableViewCell.xib in Resources */,
 				0823B0752A5B0E780085002F /* CommentTableViewCell.xib in Resources */,
 				089C758A2A51728A003AAB94 /* Pretendard-Black.ttf in Resources */,
 				084AF4C82A5D831100C6454A /* HomeCollectionViewCell.xib in Resources */,
@@ -1427,6 +1427,7 @@
 				08FD3A3E2B3AFE7B00574880 /* CommentDataService.swift in Sources */,
 				3769D6CE2B3C563A00294CD1 /* PostListViewController.swift in Sources */,
 				EA0107A72A5CF73900A3AE85 /* AlarmViewController.swift in Sources */,
+				08EB99B72C53EA8500FAC08A /* TaggedUsersTableViewCell.swift in Sources */,
 				EACF0F6E2C3044C000C0016C /* TagSearchTableViewCell.swift in Sources */,
 				08B679632B528D7500F8D585 /* CommentTableViewFooterView.swift in Sources */,
 				EA01079C2A59556800A3AE85 /* PostTabViewController.swift in Sources */,
@@ -1460,7 +1461,6 @@
 				373235562B692C790042EF94 /* DeleteFollowerDataModel.swift in Sources */,
 				3766F40C2C3736F1001DD239 /* RequestInterceptor.swift in Sources */,
 				EA0F23662C319C030014F94E /* PreviewAlarmViewController.swift in Sources */,
-				08B693F82C37220600D82DC4 /* TaggedUsersTableViewCell.swift in Sources */,
 				0844D7EF2BF219F6001154AC /* DeleteViewCell.swift in Sources */,
 				374261742C3092B900B67886 /* UnblockDataModel.swift in Sources */,
 				373235542B692C6D0042EF94 /* DeleteFollowerDataManager.swift in Sources */,
