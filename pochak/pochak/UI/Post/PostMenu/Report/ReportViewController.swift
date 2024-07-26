@@ -77,6 +77,8 @@ class ReportViewController: UIViewController {
     
     @IBOutlet weak var reportTableView: UITableView!
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -94,7 +96,7 @@ class ReportViewController: UIViewController {
     }
     
     /// 게시글 신고 후 홈으로 돌아가기
-    private func goBackToHome(){
+    private func goBackToHome() {
         // 1. ReportVC를 보여주고 있는 뷰컨트롤러를 찾고 (=tabbar controller)
         if let tabBarController = self.presentingViewController as? UITabBarController,
            // 2. 선택된 뷰컨트롤러에 접근 (=navigation controller)
@@ -109,7 +111,7 @@ class ReportViewController: UIViewController {
         }
     }
     
-    func setPostId(_ postId: Int){
+    func setPostId(_ postId: Int) {
         self.postId = postId
     }
 }
@@ -146,7 +148,7 @@ extension ReportViewController: UITableViewDelegate, UITableViewDataSource {
                                     confirmButtonText: "확인"
                                     )
                 }
-                else{
+                else {
                     self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패했습니다."), animated: true)
                 }
                 return
@@ -165,6 +167,8 @@ extension ReportViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
 }
+
+// MARK: - Extension: CustomAlertDelegate
 
 extension ReportViewController: CustomAlertDelegate {
     func confirmAction() {

@@ -8,15 +8,6 @@
 import UIKit
 
 class CommentTableViewCell: UITableViewCell {
-
-    // MARK: - Views
-    
-    @IBOutlet weak var commentLabel: UILabel!
-    @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var commentUserHandleLabel: UILabel!
-    @IBOutlet weak var timePassedLabel: UILabel!
-    @IBOutlet weak var childCommentBtn: UIButton!
-    @IBOutlet weak var deleteButton: UIButton!
     
     // MARK: - Properties
     
@@ -36,6 +27,15 @@ class CommentTableViewCell: UITableViewCell {
     let seeChildCommentBtn = UIButton()
     
     private let currentUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
+
+    // MARK: - Views
+    
+    @IBOutlet weak var commentLabel: UILabel!
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var commentUserHandleLabel: UILabel!
+    @IBOutlet weak var timePassedLabel: UILabel!
+    @IBOutlet weak var childCommentBtn: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
     
     // MARK: - Init
     
@@ -74,17 +74,14 @@ class CommentTableViewCell: UITableViewCell {
         
         // fade in, fade out 으로 색상 변경 
         let oldColor = self.backgroundColor
-        UIView.animate(withDuration: 0.9, animations: {
-            self.backgroundColor = UIColor(named: "navy03")
-            }, completion: { _ in
-                UIView.animate(withDuration: 0.5) {
-                    self.backgroundColor = oldColor
-                }
-        })
+        UIView.animate(withDuration: 0.9, 
+                       animations: { self.backgroundColor = UIColor(named: "navy03") },
+                       completion: { _ in UIView.animate(withDuration: 0.5) { self.backgroundColor = oldColor } }
+        )
         editingCommentTextField.becomeFirstResponder()
     }
     
-    @IBAction func deleteButtonDidTap(){
+    @IBAction func deleteButtonDidTap() {
         CommentDataService.shared.deleteComment(postId: self.postId, commentId: self.commentId) { [weak self] result in
             switch result {
             case .success(let data):
@@ -93,7 +90,7 @@ class CommentTableViewCell: UITableViewCell {
                 if data.isSuccess == true {
                     self?.commentVC?.loadCommentData()
                 }
-                else{
+                else {
                     self?.commentVC?.present(UIAlertController.networkErrorAlert(title: "댓글 삭제에 실패하였습니다."), animated: true)
                 }
             case .requestErr(let message):
@@ -129,9 +126,9 @@ class CommentTableViewCell: UITableViewCell {
         }
     }
     
-    // MARK: - Helpers
+    // MARK: - Functions
     
-    func setupData(_ comment: UICommentData){
+    func setupData(_ comment: UICommentData) {
         // 현재 댓글 아이디 저장
         self.commentId = comment.commentId
         
@@ -148,7 +145,7 @@ class CommentTableViewCell: UITableViewCell {
 
         if(comment.handle == currentUserHandle
            || (postOwnerHandle == currentUserHandle)
-           || (taggedUserList?.contains(currentUserHandle!))!){
+           || (taggedUserList?.contains(currentUserHandle!))!) {
             print("이 유저는 댓글 삭제가 가능함")
             deleteButton.isHidden = false
         }
@@ -172,26 +169,26 @@ class CommentTableViewCell: UITableViewCell {
         
         let timePassed = Int(endTime!.timeIntervalSince(startTime))  // 초단위 리턴
         // 초
-        if(timePassed >= 0 && timePassed < 60){
+        if(timePassed >= 0 && timePassed < 60) {
             self.timePassedLabel.text = String(timePassed) + "초"
         }
         // 분
-        else if(timePassed >= 60 && timePassed < 3600){
+        else if(timePassed >= 60 && timePassed < 3600) {
             self.timePassedLabel.text = String(timePassed / 60) + "분"
         }
         // 시
-        else if(timePassed >= 3600 && timePassed < 24*60*60){
+        else if(timePassed >= 3600 && timePassed < 24 * 60 * 60) {
             self.timePassedLabel.text = String(timePassed / 3600) + "시간"
         }
         
         // 일
-        else if(timePassed >= 24*60*60 && timePassed < 7*24*60*60){
-            self.timePassedLabel.text = String(timePassed/(24*60*60)) + "일"
+        else if(timePassed >= 24 * 60 * 60 && timePassed < 7 * 24 * 60 * 60) {
+            self.timePassedLabel.text = String(timePassed/(24 * 60 * 60)) + "일"
         }
         
         // 주
-        else{
-            self.timePassedLabel.text = String(timePassed / (7*24*60*60)) + "주"
+        else {
+            self.timePassedLabel.text = String(timePassed / (7 * 24 * 60 * 60)) + "주"
         }
     }
     
@@ -199,5 +196,4 @@ class CommentTableViewCell: UITableViewCell {
         let moveToOthersProfile = UITapGestureRecognizer(target: self, action: #selector(moveToOthersProfile))
         return moveToOthersProfile
     }
-
 }

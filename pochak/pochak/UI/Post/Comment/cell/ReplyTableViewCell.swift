@@ -17,18 +17,18 @@ class ReplyTableViewCell: UITableViewCell {
     var deleteButton = UIButton()
     var parentCommentId: Int!
     
+    // comment view controller에서 받는 댓글 입력창
+    var editingCommentTextField: UITextField!
+    var tableView: UITableView!
+    var commentVC: CommentViewController!
+    var postVC: PostViewController!
+    
     // MARK: - Views
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var userHandleLabel: UILabel!
     @IBOutlet weak var timePassedLabel: UILabel!
     @IBOutlet weak var replyLabel: UILabel!
-
-    // comment view controller에서 받는 댓글 입력창
-    var editingCommentTextField: UITextField!
-    var tableView: UITableView!
-    var commentVC: CommentViewController!
-    var postVC: PostViewController!
     
     // MARK: - Init
     
@@ -64,19 +64,29 @@ class ReplyTableViewCell: UITableViewCell {
         
         // fade in, fade out 으로 색상 변경 
         let oldColor = self.backgroundColor
-        UIView.animate(withDuration: 0.8, animations: {
-            self.backgroundColor = UIColor(named: "navy03")
-            }, completion: { _ in
-                UIView.animate(withDuration: 0.5) {
-                    self.backgroundColor = oldColor
-                }
+        UIView.animate(withDuration: 0.8, 
+                       animations: { self.backgroundColor = UIColor(named: "navy03") },
+                       completion: { _ in UIView.animate(withDuration: 0.5) { self.backgroundColor = oldColor }
         })
         editingCommentTextField.becomeFirstResponder()
     }
     
-    // MARK: - Helpers
+    @objc private func moveToOthersProfile(sender: UITapGestureRecognizer) {
+        print("move to other's profile")
+        print(sender.view)
+        
+        let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
+        
+        guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
+        otherUserProfileVC.recievedHandle = userHandleLabel.text
+        print("post vc의 nav controller: \(self.postVC?.navigationController)")
+        self.commentVC?.dismiss(animated: true)
+        self.postVC?.navigationController?.pushViewController(otherUserProfileVC, animated: true)
+    }
     
-    func setupData(_ commentData: UICommentData){
+    // MARK: - Functions
+    
+    func setupData(_ commentData: UICommentData) {
         // 부모 댓글 아이디 저장
         parentCommentId = commentData.parentId
         
@@ -110,40 +120,27 @@ class ReplyTableViewCell: UITableViewCell {
         
         let timePassed = Int(endTime!.timeIntervalSince(startTime))  // 초단위 리턴
         // 초
-        if(timePassed >= 0 && timePassed < 60){
+        if(timePassed >= 0 && timePassed < 60) {
             self.timePassedLabel.text = String(timePassed) + "초"
         }
         // 분
-        else if(timePassed >= 60 && timePassed < 3600){
+        else if(timePassed >= 60 && timePassed < 3600) {
             self.timePassedLabel.text = String(timePassed / 60) + "분"
         }
         // 시
-        else if(timePassed >= 3600 && timePassed < 24*60*60){
+        else if(timePassed >= 3600 && timePassed < 24 * 60 * 60) {
             self.timePassedLabel.text = String(timePassed / 3600) + "시간"
         }
         
         // 일
-        else if(timePassed >= 24*60*60 && timePassed < 7*24*60*60){
-            self.timePassedLabel.text = String(timePassed/(24*60*60)) + "일"
+        else if(timePassed >= 24 * 60 * 60 && timePassed < 7 * 24 * 60 * 60) {
+            self.timePassedLabel.text = String(timePassed/(24 * 60 * 60)) + "일"
         }
         
         // 주
-        else{
-            self.timePassedLabel.text = String(timePassed / (7*24*60*60)) + "주"
+        else {
+            self.timePassedLabel.text = String(timePassed / (7 * 24 * 60 * 60)) + "주"
         }
-    }
-    
-    @objc private func moveToOthersProfile(sender: UITapGestureRecognizer) {
-        print("move to other's profile")
-        print(sender.view)
-        
-        let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
-        
-        guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
-        otherUserProfileVC.recievedHandle = userHandleLabel.text
-        print("post vc의 nav controller: \(self.postVC?.navigationController)")
-        self.commentVC?.dismiss(animated: true)
-        self.postVC?.navigationController?.pushViewController(otherUserProfileVC, animated: true)
     }
     
     private func setGestureRecognizer() -> UITapGestureRecognizer {

@@ -9,24 +9,6 @@ import UIKit
 
 class PostViewController: UIViewController, UISheetPresentationControllerDelegate {
     
-    // MARK: - Views
-    
-    @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var likeButton: UIButton!
-    @IBOutlet weak var commentButton: UIButton!
-    @IBOutlet weak var followingBtn: UIButton!
-    @IBOutlet weak var postImageView: UIImageView!
-    @IBOutlet weak var postOwnerHandleLabel: UILabel!
-    @IBOutlet weak var postContent: UILabel!
-    @IBOutlet weak var taggedUsers: UILabel!
-    @IBOutlet weak var pochakUserLabel: UILabel!
-    
-    @IBOutlet weak var borderLineView: UIView!
-    @IBOutlet weak var commentUserHandleLabel: UILabel!
-    @IBOutlet weak var commentContentLabel: UILabel!
-    @IBOutlet weak var moreCommentButton: UIButton!
-    
     // MARK: - Properties
     
     var receivedPostId: Int?
@@ -51,7 +33,25 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     private var taggedUserList: [TaggedMember] = []
     private let refreshControl = UIRefreshControl()
     
-    // MARK: - lifecycle
+    // MARK: - Views
+    
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var commentButton: UIButton!
+    @IBOutlet weak var followingBtn: UIButton!
+    @IBOutlet weak var postImageView: UIImageView!
+    @IBOutlet weak var postOwnerHandleLabel: UILabel!
+    @IBOutlet weak var postContent: UILabel!
+    @IBOutlet weak var taggedUsers: UILabel!
+    @IBOutlet weak var pochakUserLabel: UILabel!
+    
+    @IBOutlet weak var borderLineView: UIView!
+    @IBOutlet weak var commentUserHandleLabel: UILabel!
+    @IBOutlet weak var commentContentLabel: UILabel!
+    @IBOutlet weak var moreCommentButton: UIButton!
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,15 +109,138 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         self.navigationController?.isNavigationBarHidden = false
     }
     
+    // MARK: - Actions
+    
+    @IBAction func followingBtnTapped(_ sender: Any) {
+        print("현재 팔로잉 상태: \(isFollowing)")
+        
+        // 현재 팔로잉 상태라면 취소할건지 알림창 띄우기
+        if isFollowing! {
+            showAlert(alertType: .confirmAndCancel,
+                      titleText: "팔로우를 취소할까요?",
+                      cancelButtonText: "취소",
+                      confirmButtonText: "확인")
+        }
+        else {
+            postFollowRequest()
+        }
+    }
+
+    @IBAction func likeBtnTapped(_ sender: Any) {
+        LikedUsersDataService.shared.postLikeRequest(receivedPostId!) { response in
+            switch(response) {
+            case .success(let likePostResponse):
+                self.likePostResponse = likePostResponse as? LikePostDataResponse
+                if(!self.likePostResponse.isSuccess!) {
+                    self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                    return
+                }
+                print(self.likePostResponse.message)
+                self.loadPostDetailData()
+                
+            case .requestErr(let message):
+                print("requestErr", message)
+            case .pathErr:
+                print("pathErr")
+            case .serverErr:
+                print("serverErr")
+                self.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
+            case .networkFail:
+                print("networkFail")
+                self.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
+            }
+        }
+    }
+    
+    // 프로필 이미지나 아이디 클릭 시 해당 사용자 프로필로 이동
+    @objc func moveToOthersProfile(sender: UITapGestureRecognizer) {
+        print("move to other's profile")
+        print(sender.view)
+        
+        let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
+        
+        guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
+        
+        if sender.view == profileImageView || sender.view == pochakUserLabel || sender.view == postOwnerHandleLabel {
+            otherUserProfileVC.recievedHandle = postOwnerHandle
+        }
+        
+        else if sender.view == commentUserHandleLabel {
+            otherUserProfileVC.recievedHandle = commentUserHandleLabel.text
+        }
+        
+        self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
+    }
+    
+    @objc func showTaggedUsersVC() {
+        print("태그된 유저 보여줄거에요~")
+        
+        let taggedUserDetailVC = postStoryBoard.instantiateViewController(withIdentifier: "TaggedUsersDetailVC") as! TaggedUsersDetailViewController
+        taggedUserDetailVC.tagList = taggedUserList
+        
+        taggedUserDetailVC.goToOtherProfileVC = { (handle: String) in
+            self.dismiss(animated: true)
+            let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
+            
+            guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
+            otherUserProfileVC.recievedHandle = handle
+            self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
+        }
+        
+        let sheet = taggedUserDetailVC.sheetPresentationController
+        sheet?.detents = [.medium(), .large()]
+        sheet?.prefersGrabberVisible = true
+        sheet?.prefersScrollingExpandsWhenScrolledToEdge = false
+
+        present(taggedUserDetailVC, animated: true)
+    }
+    
+    @objc func moreActionButtonDidTap() {
+        let postMenuVC = postStoryBoard.instantiateViewController(withIdentifier: "PostMenuVC") as! PostMenuViewController
+        postMenuVC.setPostIdAndOwner(postId: receivedPostId!, postOwner: postOwnerHandle)
+        let sheet = postMenuVC.sheetPresentationController
+        
+        /* 메뉴 개수에 맞도록 sheet 높이 설정 */
+        let label = UILabel()
+        label.font = UIFont(name: "Pretendard-Bold", size: 20)
+        label.text = "더보기"
+        label.sizeToFit()
+        
+        let cellCount = (postOwnerHandle == UserDefaultsManager.getData(type: String.self, forKey: .handle)) ? 3 : 2
+        let height = label.frame.height + CGFloat(36 + 16 + 48 * cellCount)
+        let fraction = UISheetPresentationController.Detent.custom { context in
+            height
+        }
+        sheet?.detents = [fraction]
+        sheet?.prefersGrabberVisible = true
+        sheet?.prefersScrollingExpandsWhenScrolledToEdge = false
+
+        present(postMenuVC, animated: true)
+    }
+    
+    /// 댓글 버튼을 눌렀을 때
+    @IBAction func commentButtonDidTap(_ sender: Any) {
+        showCommentVC()
+    }
+    
+    /// 더보기 버튼을 눌렀을 때
+    @IBAction func moreCommentButtonDidTap(_ sender: Any) {
+        showCommentVC()
+    }
+    
+    @objc func refreshPostDetail() {
+        loadPostDetailData()
+    }
+    
     // MARK: - Functions
     
-    private func setupNavigationBar(){
+    private func setupNavigationBar() {
         // bar button item 추가 (신고하기 메뉴 등)
         let barButton = UIBarButtonItem(image: UIImage(named: "MoreIcon"), style: .plain, target: self, action: #selector(moreActionButtonDidTap))
         self.navigationItem.rightBarButtonItem = barButton
     }
     
-    private func initUI(){
+    private func initUI() {
         // 크키에 맞게
 //        scrollView.updateContentSize()
         
@@ -134,10 +257,10 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         // 태그된 사용자, 포착한 사용자
         self.taggedUsers.text = ""
         for taggedUser in self.taggedUserList {
-            if(taggedUser.handle == self.taggedUserList.last?.handle){
+            if(taggedUser.handle == self.taggedUserList.last?.handle) {
                 self.taggedUsers.text! += taggedUser.handle + " 님"
             }
-            else{
+            else {
                 self.taggedUsers.text! += taggedUser.handle + " 님 • "
             }
         }
@@ -150,10 +273,10 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         
         
         // 댓글 미리보기 -> 있으면 보여주기
-        if(postDataResult.recentComment == nil){
+        if(postDataResult.recentComment == nil) {
             self.hideCommentViews(isHidden: true)
         }
-        else{
+        else {
             self.hideCommentViews(isHidden: false)
             self.setCommentViewContents()
         }
@@ -162,10 +285,10 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
         self.likeButton.isSelected = postDataResult.isLike
         
         // 팔로잉 버튼
-        if(isFollowing == nil){
+        if(isFollowing == nil) {
             self.followingBtn.isHidden = true
         }
-        else{
+        else {
             self.followingBtn.isHidden = false
             self.followingBtn.isSelected = isFollowing!
             self.followingBtn.backgroundColor = isFollowing! ? self.isFollowingColor : self.isNotFollowingColor
@@ -173,9 +296,9 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
     }
     
     /// 게시글 상세 데이터 조회하기
-    func loadPostDetailData(){
-        PostDataService.shared.getPostDetail(receivedPostId!) { (response) in
-            switch(response){
+    func loadPostDetailData() {
+        PostDataService.shared.getPostDetail(receivedPostId!) { response in
+            switch(response) {
             case .success(let postData):
                 self.postDataResponse = postData as? PostDataResponse
                 self.postDataResult = self.postDataResponse.result
@@ -250,7 +373,7 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
             switch(response) {
             case .success(let followData):
                 self.followPostResponse = followData as? FollowDataResponse
-                if(!self.followPostResponse.isSuccess){
+                if(!self.followPostResponse.isSuccess) {
                     self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
                     return
                 }
@@ -269,133 +392,9 @@ class PostViewController: UIViewController, UISheetPresentationControllerDelegat
             }
         }
     }
-       
-    // MARK: - Actions
-    
-    @IBAction func followingBtnTapped(_ sender: Any) {
-        print("현재 팔로잉 상태: \(isFollowing)")
-        
-        // 현재 팔로잉 상태라면 취소할건지 알림창 띄우기
-        if isFollowing! {
-            showAlert(alertType: .confirmAndCancel,
-                      titleText: "팔로우를 취소할까요?",
-                      cancelButtonText: "취소",
-                      confirmButtonText: "확인")
-        }
-        else {
-            postFollowRequest()
-        }
-    }
-
-    @IBAction func likeBtnTapped(_ sender: Any) {
-        LikedUsersDataService.shared.postLikeRequest(receivedPostId!){(response) in
-            switch(response){
-            case .success(let likePostResponse):
-                self.likePostResponse = likePostResponse as? LikePostDataResponse
-                if(!self.likePostResponse.isSuccess!){
-                    self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
-                    return
-                }
-                print(self.likePostResponse.message)
-                self.loadPostDetailData()
-                
-            case .requestErr(let message):
-                print("requestErr", message)
-            case .pathErr:
-                print("pathErr")
-            case .serverErr:
-                print("serverErr")
-                self.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
-            case .networkFail:
-                print("networkFail")
-                self.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
-            }
-        }
-    }
-    
-    // 프로필 이미지나 아이디 클릭 시 해당 사용자 프로필로 이동
-    @objc func moveToOthersProfile(sender: UITapGestureRecognizer){
-        print("move to other's profile")
-        print(sender.view)
-        
-        let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
-        
-        guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
-        
-        if sender.view == profileImageView || sender.view == pochakUserLabel || sender.view == postOwnerHandleLabel {
-            otherUserProfileVC.recievedHandle = postOwnerHandle
-        }
-        
-        else if sender.view == commentUserHandleLabel {
-            otherUserProfileVC.recievedHandle = commentUserHandleLabel.text
-        }
-        
-        self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
-    }
-    
-    @objc func showTaggedUsersVC(){
-        print("태그된 유저 보여줄거에요~")
-        
-        let taggedUserDetailVC = postStoryBoard.instantiateViewController(withIdentifier: "TaggedUsersDetailVC") as! TaggedUsersDetailViewController
-        taggedUserDetailVC.tagList = taggedUserList
-        
-        taggedUserDetailVC.goToOtherProfileVC = {(handle: String) in
-            self.dismiss(animated: true)
-            let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
-            
-            guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
-            otherUserProfileVC.recievedHandle = handle
-            self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
-        }
-        
-        let sheet = taggedUserDetailVC.sheetPresentationController
-        sheet?.detents = [.medium(), .large()]
-        sheet?.prefersGrabberVisible = true
-        sheet?.prefersScrollingExpandsWhenScrolledToEdge = false
-
-        present(taggedUserDetailVC, animated: true)
-    }
-    
-    @objc func moreActionButtonDidTap(){
-        let postMenuVC = postStoryBoard.instantiateViewController(withIdentifier: "PostMenuVC") as! PostMenuViewController
-        postMenuVC.setPostIdAndOwner(postId: receivedPostId!, postOwner: postOwnerHandle)
-        let sheet = postMenuVC.sheetPresentationController
-        
-        /* 메뉴 개수에 맞도록 sheet 높이 설정 */
-        let label = UILabel()
-        label.font = UIFont(name: "Pretendard-Bold", size: 20)
-        label.text = "더보기"
-        label.sizeToFit()
-        
-        let cellCount = (postOwnerHandle == UserDefaultsManager.getData(type: String.self, forKey: .handle)) ? 3 : 2
-        let height = label.frame.height + CGFloat(36 + 16 + 48 * cellCount)
-        let fraction = UISheetPresentationController.Detent.custom { context in
-            height
-        }
-        sheet?.detents = [fraction]
-        sheet?.prefersGrabberVisible = true
-        sheet?.prefersScrollingExpandsWhenScrolledToEdge = false
-
-        present(postMenuVC, animated: true)
-    }
-    
-    /// 댓글 버튼을 눌렀을 때
-    @IBAction func commentButtonDidTap(_ sender: Any) {
-        showCommentVC()
-    }
-    
-    /// 더보기 버튼을 눌렀을 때
-    @IBAction func moreCommentButtonDidTap(_ sender: Any) {
-        showCommentVC()
-    }
-    
-    @objc func refreshPostDetail(){
-        loadPostDetailData()
-    }
 }
 
-
-// MARK: - Extensions
+// MARK: - Extension: UIScrollView
 
 extension PostViewController: UIScrollViewDelegate {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -426,11 +425,13 @@ extension UIScrollView {
     }
 }
 
+// MARK: - Extension: UIGestureRecognizerDelegate
+
 extension PostViewController: UIGestureRecognizerDelegate {
 
 }
 
-// MARK: - Extension; Custom Alert delegate
+// MARK: - Extension: CustomAlertDelegate
 
 extension PostViewController: CustomAlertDelegate {
     func confirmAction() {

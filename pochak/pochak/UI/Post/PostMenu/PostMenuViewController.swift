@@ -9,18 +9,16 @@ import UIKit
 
 class PostMenuViewController: UIViewController {
     
-    // MARK: - Views
-
-    @IBOutlet weak var menuTableView: UITableView!
-    
     // MARK: - Properties
     
     private var postId: Int?
     private var postOwner: String?
-    
     private var currentUserIsOwner = false
-    
     private var postDeleteResponse: PostDeleteResponse?
+    
+    // MARK: - Views
+
+    @IBOutlet weak var menuTableView: UITableView!
     
     // MARK: - Lifecycle
     
@@ -32,7 +30,7 @@ class PostMenuViewController: UIViewController {
         print("게시글 추가 메뉴 \(postId)")
         
         // 게시물 작성자와 현재 로그인된 유저가 같으면 삭제 메뉴 추가
-        if(postOwner == UserDefaultsManager.getData(type: String.self, forKey: .handle)){
+        if(postOwner == UserDefaultsManager.getData(type: String.self, forKey: .handle)) {
             currentUserIsOwner = true
         }
         
@@ -48,12 +46,12 @@ class PostMenuViewController: UIViewController {
     
     // MARK: - Functions
     
-    func setPostIdAndOwner(postId: Int, postOwner: String){
+    func setPostIdAndOwner(postId: Int, postOwner: String) {
         self.postId = postId
         self.postOwner = postOwner
     }
     
-    private func setupTableView(){
+    private func setupTableView() {
         menuTableView.delegate = self
         menuTableView.dataSource = self
         
@@ -63,7 +61,7 @@ class PostMenuViewController: UIViewController {
     }
     
     /// 게시글 삭제 혹은 신고 후 홈으로 돌아가기
-    private func goBackToHome(){
+    private func goBackToHome() {
         // 1. postMenuVC를 보여주고 있는 뷰컨트롤러를 찾고 (=tabbar controller)
         if let tabBarController = self.presentingViewController as? UITabBarController,
            // 2. 선택된 뷰컨트롤러에 접근 (=navigation controller)
@@ -154,10 +152,9 @@ extension PostMenuViewController: UITableViewDelegate, UITableViewDataSource {
             dismiss(animated: true)
         }
     }
-    
 }
 
-// MARK: - Extension; Custom Alert
+// MARK: - Extension: CustomAlertDelegate
 
 extension PostMenuViewController: CustomAlertDelegate {
     

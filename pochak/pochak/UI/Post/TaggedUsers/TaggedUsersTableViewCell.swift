@@ -19,7 +19,7 @@ class TaggedUsersTableViewCell: UITableViewCell {
     @IBOutlet weak var handleLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     
-    // MARK: - Initialization
+    // MARK: - Init
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,7 +34,7 @@ class TaggedUsersTableViewCell: UITableViewCell {
     
     // MARK: - Functions
     
-    func configure(tagData: TaggedMember){
+    func configure(tagData: TaggedMember) {
         if let profileImageURL = URL(string: tagData.profileImage) {
             profileImageView.load(url: profileImageURL)
         }

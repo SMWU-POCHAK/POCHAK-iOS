@@ -12,7 +12,6 @@ class TaggedUsersDetailViewController: UIViewController {
     // MARK: - Properties
     
     var tagList: [TaggedMember]?
-    
     var goToOtherProfileVC: ((String) -> Void)?
 
     // MARK: - Views
@@ -41,7 +40,7 @@ class TaggedUsersDetailViewController: UIViewController {
 }
 
 
-// MARK: - Extension; UITableView
+// MARK: - Extension: UITableView
 
 extension TaggedUsersDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

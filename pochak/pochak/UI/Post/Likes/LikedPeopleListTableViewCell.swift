@@ -10,18 +10,20 @@ import UIKit
 class LikedPeopleListTableViewCell: UITableViewCell {
 
     // MARK: - Properties
+    
+    private var isFollowing: Bool = false  // 임시로 초깃값은 false -> 나중에 변경
+    private var isFollowingColor: UIColor = UIColor(named: "gray03") ?? UIColor(hexCode: "FFB83A")
+    private var isNotFollowingColor: UIColor = UIColor(named: "yellow00") ?? UIColor(hexCode: "C6CDD2")
+    
+    // MARK: - Views
+    
     @IBOutlet weak var followingBtn: UIButton!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var userHandleLabel: UILabel!
     @IBOutlet weak var userNameLabel: UILabel!
     
-    
-    private var isFollowing: Bool = false  // 임시로 초깃값은 false -> 나중에 변경
-    private var isFollowingColor: UIColor = UIColor(named: "gray03") ?? UIColor(hexCode: "FFB83A")
-    private var isNotFollowingColor: UIColor = UIColor(named: "yellow00") ?? UIColor(hexCode: "C6CDD2")
-
-    
     // MARK: - Lifecycle
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -48,6 +50,7 @@ class LikedPeopleListTableViewCell: UITableViewCell {
     }
     
     // MARK: - Actions
+    
     @IBAction func followBtnDidTap(_ sender: Any) {
         // 언팔로우하기
         if followingBtn.isSelected {
@@ -61,8 +64,9 @@ class LikedPeopleListTableViewCell: UITableViewCell {
         }
     }
     
-    // MARK: - Helper
-    func setupData(_ likedUser: LikeMember){
+    // MARK: - Functions
+    
+    func setupData(_ likedUser: LikeMember) {
         // 프로필 이미지
         if let profileImgStr = likedUser.profileImage {
             let url = URL(string: profileImgStr)
@@ -91,14 +95,13 @@ class LikedPeopleListTableViewCell: UITableViewCell {
             followingBtn.isHidden = true
         }
         else{
-            if(likedUser.follow!){
+            if(likedUser.follow!) {
                 followingBtn.isSelected = true
             }
-            else{
+            else {
                 followingBtn.isSelected = false
             }
             followingBtn.backgroundColor = likedUser.follow! ? self.isFollowingColor : self.isNotFollowingColor
         }
     }
-    
 }

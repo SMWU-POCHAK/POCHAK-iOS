@@ -7,7 +7,7 @@
 
 import Alamofire
 
-struct LikedUsersDataService{
+struct LikedUsersDataService {
     // static을 통해 shared 프로퍼티에 싱글턴 인스턴스 저장하여 생성
     // shared를 통해 여러 VC가 같은 인스턴스에 접근 가능
     static let shared = LikedUsersDataService()
@@ -21,7 +21,7 @@ struct LikedUsersDataService{
     // completion 클로저를 @escaping closure로 정의
     // -> getPersonInfo 함수가 종료되든 말든 상관없이 completion은 탈출 클로저이기 때문에, 전달된다면 이후에 외부에서도 사용가능
     // 네트워크 작업이 끝나면 completion 클로저에 네트워크의 결과를 담아서 호출하게 되고, VC에서 꺼내서 처리할 예정
-    func getLikedUsers(_ postId: Int, completion: @escaping (NetworkResult<Any>) -> Void){
+    func getLikedUsers(_ postId: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
         
         // JSONEncoding 인코딩 방식으로 헤더 정보와 함께
         // Request를 보내기 위한 정보
@@ -34,11 +34,11 @@ struct LikedUsersDataService{
         dataRequest.responseData { dataResponse in
             // dataResponse 안에는 통신에 대한 결과물
             // dataResponse.result는 통신 성공/실패 여부
-            switch dataResponse.result{
+            switch dataResponse.result {
             case .success:
                 // 성공 시 통신 자체의 상태코드와 데이터(value) 수신
-                guard let statusCode = dataResponse.response?.statusCode else {return}
-                guard let value = dataResponse.value else {return}
+                guard let statusCode = dataResponse.response?.statusCode else { return }
+                guard let value = dataResponse.value else { return }
                 let networkResult = self.judgeStatus(by: statusCode, value, dataType: "LikedUsersDataResponse")  // 통신의 결과(성공이면 데이터, 아니면 에러내용)
                 completion(networkResult)
             case .failure:
@@ -47,7 +47,7 @@ struct LikedUsersDataService{
         }
     }
     
-    func postLikeRequest(_ postId: Int, completion: @escaping (NetworkResult<Any>) -> Void){
+    func postLikeRequest(_ postId: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
         
         let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/posts/\(postId)/like",
                                      method: .post,
@@ -55,11 +55,11 @@ struct LikedUsersDataService{
                                      /*headers: header*/interceptor: RequestInterceptor.getRequestInterceptor())
         
         dataRequest.responseData { dataResponse in
-            switch dataResponse.result{
+            switch dataResponse.result {
             case .success:
                 // 성공 시 통신 자체의 상태코드와 데이터 수신
-                guard let statusCode = dataResponse.response?.statusCode else {return}
-                guard let value = dataResponse.value else{return}
+                guard let statusCode = dataResponse.response?.statusCode else { return }
+                guard let value = dataResponse.value else { return }
                 let networkResult = self.judgeStatus(by: statusCode, value, dataType: "LikePostDataResponse")
                 completion(networkResult)
             case .failure:
@@ -68,12 +68,9 @@ struct LikedUsersDataService{
         }
     }
     
-    // MARK: -- Helper function
-    
     // 요청 후 받은 statusCode를 바탕으로 어떻게 결과값을 처리할 지 정의
     private func judgeStatus(by statusCode: Int, _ data: Data, dataType: String) -> NetworkResult<Any> {
-        
-        switch statusCode{
+        switch statusCode {
         case 200: return isValidData(data: data, dataType: dataType)  // 성공 -> 데이터 가공해서 전달해야하므로 isValidData라는 함수로 데이터 넘겨주기
         case 400: return .pathErr  // 잘못된 요청
         case 500: return .serverErr  // 서버 에러
@@ -85,11 +82,11 @@ struct LikedUsersDataService{
     private func isValidData(data: Data, dataType: String) -> NetworkResult<Any> {
         do {
             let decoder = JSONDecoder()
-            if(dataType == "LikedUsersDataResponse"){  // 좋아요 누른 사람 조회
+            if(dataType == "LikedUsersDataResponse") {  // 좋아요 누른 사람 조회
                 let decodedData = try decoder.decode(LikedUsersDataResponse.self, from: data)  // 디코딩
                 return .success(decodedData)
             }
-            else{  // 좋아요 누르기 요청
+            else {  // 좋아요 누르기 요청
                 let decodedData = try decoder.decode(LikePostDataResponse.self, from: data)
                 return .success(decodedData)
             }
@@ -98,7 +95,8 @@ struct LikedUsersDataService{
             print("Decoding error, likedusers:", error)
             if let jsonString = String(data: data, encoding: .utf8) {
                 print("Received JSON: \(jsonString)")
-            } else {
+            }
+            else {
                 print("Invalid JSON data received")
             }
             return .pathErr
