@@ -467,16 +467,16 @@
                         <outlet property="commentButton" destination="13V-C1-H5f" id="vRC-zC-e7s"/>
                         <outlet property="commentContentLabel" destination="115-H2-hsS" id="w1j-72-EtA"/>
                         <outlet property="commentUserHandleLabel" destination="Ntm-Dj-3cn" id="1wg-0t-Uh4"/>
-                        <outlet property="followingBtn" destination="8NM-hH-Q9c" id="IBZ-Pw-2dJ"/>
+                        <outlet property="followingButton" destination="8NM-hH-Q9c" id="IBZ-Pw-2dJ"/>
                         <outlet property="likeButton" destination="vvh-0p-iKO" id="ryI-jF-OtB"/>
                         <outlet property="moreCommentButton" destination="JWP-Of-QNZ" id="dPU-of-3Mo"/>
                         <outlet property="pochakUserLabel" destination="gI1-I5-NSd" id="bNx-9e-OFs"/>
-                        <outlet property="postContent" destination="wZB-Xn-bjF" id="KTa-Pe-TAg"/>
+                        <outlet property="postContentLabel" destination="wZB-Xn-bjF" id="KTa-Pe-TAg"/>
                         <outlet property="postImageView" destination="9aE-qJ-kQ5" id="XfM-hX-1KM"/>
                         <outlet property="postOwnerHandleLabel" destination="DiP-WD-doD" id="kar-iA-aSf"/>
                         <outlet property="profileImageView" destination="g1Z-gd-DZE" id="juV-dt-dkX"/>
                         <outlet property="scrollView" destination="aPT-RR-Xxk" id="yYS-Pd-SxV"/>
-                        <outlet property="taggedUsers" destination="TZj-sL-ED1" id="HGo-4W-OpC"/>
+                        <outlet property="taggedUsersLabel" destination="TZj-sL-ED1" id="HGo-4W-OpC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ND-cG-8cX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
