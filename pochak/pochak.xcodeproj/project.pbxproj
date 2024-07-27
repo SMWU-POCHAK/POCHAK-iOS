@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0801765E2A74F4B0005E6953 /* UITextView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0801765D2A74F4B0005E6953 /* UITextView+Extension.swift */; };
 		0802AE032C31D3E00090FB92 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0802AE022C31D3E00090FB92 /* UIImageView+.swift */; };
+		080FEF012C551C3200951460 /* ReportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080FEF002C551C3200951460 /* ReportType.swift */; };
 		081228C62A69624000DFA094 /* PostLikesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081228C52A69624000DFA094 /* PostLikesViewController.swift */; };
 		081228CA2A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081228C82A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift */; };
 		081228CB2A699B5A00DFA094 /* LikedPeopleListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 081228C92A699B5A00DFA094 /* LikedPeopleListTableViewCell.xib */; };
@@ -206,6 +207,7 @@
 /* Begin PBXFileReference section */
 		0801765D2A74F4B0005E6953 /* UITextView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extension.swift"; sourceTree = "<group>"; };
 		0802AE022C31D3E00090FB92 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
+		080FEF002C551C3200951460 /* ReportType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportType.swift; sourceTree = "<group>"; };
 		081228C52A69624000DFA094 /* PostLikesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLikesViewController.swift; sourceTree = "<group>"; };
 		081228C82A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedPeopleListTableViewCell.swift; sourceTree = "<group>"; };
 		081228C92A699B5A00DFA094 /* LikedPeopleListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LikedPeopleListTableViewCell.xib; sourceTree = "<group>"; };
@@ -556,6 +558,7 @@
 			children = (
 				089E27B62C4E8C2D00828F4C /* AlarmType.swift */,
 				089E27B82C4E8CB800828F4C /* AlertType.swift */,
+				080FEF002C551C3200951460 /* ReportType.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1480,6 +1483,7 @@
 				37A284C12B52FC910023EB9D /* UpdateProfileViewController.swift in Sources */,
 				3738151A2A8A09DA0032066A /* MakeProfileViewController.swift in Sources */,
 				EA17182B2A5912A7009168E6 /* CameraViewController.swift in Sources */,
+				080FEF012C551C3200951460 /* ReportType.swift in Sources */,
 				37D311DF2B566C4D00A1D7C1 /* SignOutDataManager.swift in Sources */,
 				EA817AB62B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				3742616E2C30916C00B67886 /* BlockDataManager.swift in Sources */,
