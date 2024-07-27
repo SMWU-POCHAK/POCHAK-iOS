@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CancelViewCell: UITableViewCell {
+final class CancelViewCell: UITableViewCell {
     
     // MARK: - Properties
     

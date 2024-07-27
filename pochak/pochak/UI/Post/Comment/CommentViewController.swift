@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class CommentViewController: UIViewController {
+final class CommentViewController: UIViewController {
 
     // MARK: - Properties
     

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PostViewController: UIViewController, UISheetPresentationControllerDelegate {
+final class PostViewController: UIViewController, UISheetPresentationControllerDelegate {
     
     // MARK: - Properties
     

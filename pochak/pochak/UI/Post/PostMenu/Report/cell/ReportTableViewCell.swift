@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ReportTableViewCell: UITableViewCell {
+final class ReportTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     

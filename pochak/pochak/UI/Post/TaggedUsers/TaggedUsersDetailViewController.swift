@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TaggedUsersDetailViewController: UIViewController {
+final class TaggedUsersDetailViewController: UIViewController {
     
     // MARK: - Properties
     

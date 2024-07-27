@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ReplyTableViewCell: UITableViewCell {
+final class ReplyTableViewCell: UITableViewCell {
 
     // MARK: - Properties
     

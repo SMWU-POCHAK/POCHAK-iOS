@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PostMenuViewController: UIViewController {
+final class PostMenuViewController: UIViewController {
     
     // MARK: - Properties
     

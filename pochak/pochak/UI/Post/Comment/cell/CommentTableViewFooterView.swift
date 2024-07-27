@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CommentTableViewFooterView: UITableViewHeaderFooterView {
+final class CommentTableViewFooterView: UITableViewHeaderFooterView {
     
     // MARK: - Properties
     

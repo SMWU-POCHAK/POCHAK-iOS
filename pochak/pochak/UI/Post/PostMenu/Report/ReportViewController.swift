@@ -67,7 +67,7 @@ enum ReportType: String {
     }
 }
 
-class ReportViewController: UIViewController {
+final class ReportViewController: UIViewController {
     
     // MARK: - Properties
 
