@@ -19,13 +19,13 @@ struct HomeDataService {
         
         dataRequest.validate().responseDecodable(of: HomeDataResponse.self) { response in
             switch response.result {
-            case .success: // 데이터 통신이 성공한 경우
+            case .success:
                 guard let statusCode = response.response?.statusCode else { return }
                 guard let value = response.value else { return }
                 
                 let networkResult = judgeStatus(by: statusCode, value)
                 completion(networkResult)
-            case .failure(let error): // 데이터 통신이 실패한 경우
+            case .failure(let error):
                 if let statusCode = response.response?.statusCode {
                     print("Failure Status Code: \(statusCode)")
                     completion(.networkFail)
@@ -44,9 +44,9 @@ struct HomeDataService {
     private func judgeStatus(by statusCode: Int, _ data: HomeDataResponse) -> NetworkResult<HomeDataResponse> {
         switch statusCode {
         case 200: return .success(data)
-        case 400: return .pathErr  // 잘못된 요청
-        case 500: return .serverErr  // 서버 에러
-        default: return .networkFail  // 네트워크 에러
+        case 400: return .pathErr
+        case 500: return .serverErr
+        default: return .networkFail
         }
     }
 }

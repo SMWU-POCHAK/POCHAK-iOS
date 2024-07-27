@@ -127,7 +127,7 @@ final class HomeTabViewController: UIViewController {
     }
 }
 
-// MARK: - Extensions; CollectionView
+// MARK: - Extension: CollectionView
 
 extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -164,12 +164,10 @@ extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDel
         }
     }
     
-    // cell의 위 아래 간격을 정함
     func collectionView(_ collectionView: UICollectionView, layout: UICollectionViewLayout, minimumLineSpacingForSectionAt: Int) -> CGFloat {
         return noPost ? 0 : minimumLineSpacing
     }
     
-    // cell 양 옆 간격
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return noPost ? 0 : minimumInterItemSpacing
     }
@@ -188,7 +186,7 @@ extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDel
     }
 }
 
-// MARK: - Extension; UIScrollView
+// MARK: - Extension: UIScrollView
 
 extension HomeTabViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
