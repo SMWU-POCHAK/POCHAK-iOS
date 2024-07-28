@@ -15,6 +15,8 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var deleteAccountButton: UIButton!
     var selectedBtn : Int = 0
     
+    var realmManager = RecentSearchRealmManager()
+    
     // MARK: - View LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,6 +132,13 @@ extension SettingsViewController : CustomAlertDelegate {
             do {
                 try KeychainManager.delete(account: "accessToken")
                 try KeychainManager.delete(account: "refreshToken")
+                
+                // 최근 검색 기록 삭제
+                if realmManager.deleteAllData() {
+                    print("Successfully deleted all data")
+                } else {
+                    print("Failed to delete all data")
+                }
             } catch {
                 print(error)
             }
@@ -162,6 +171,13 @@ extension SettingsViewController : CustomAlertDelegate {
             do {
                 try KeychainManager.delete(account: "accessToken")
                 try KeychainManager.delete(account: "refreshToken")
+                
+                // 최근 검색 기록 삭제
+                if realmManager.deleteAllData() {
+                    print("Successfully deleted all data")
+                } else {
+                    print("Failed to delete all data")
+                }
             } catch {
                 print(error)
             }
