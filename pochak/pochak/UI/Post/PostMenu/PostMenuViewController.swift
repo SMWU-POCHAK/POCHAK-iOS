@@ -13,6 +13,7 @@ final class PostMenuViewController: UIViewController {
     
     private var postId: Int?
     private var postOwner: String?
+    private var taggedMemberList: [String] = []
     private var currentUserIsOwner = false
     private var postDeleteResponse: PostDeleteResponse?
     
@@ -29,8 +30,10 @@ final class PostMenuViewController: UIViewController {
         
         print("게시글 추가 메뉴 \(postId)")
         
-        // 게시물 작성자와 현재 로그인된 유저가 같으면 삭제 메뉴 추가
-        if(postOwner == UserDefaultsManager.getData(type: String.self, forKey: .handle)) {
+        // 게시물 작성자(포착한 사람, 포착 태그당한 사람)와 현재 로그인된 유저가 같으면 삭제 메뉴 추가
+        let currentLogInUser = UserDefaultsManager.getData(type: String.self, forKey: .handle)
+        
+        if(currentLogInUser == postOwner || taggedMemberList.contains(currentLogInUser ?? "")) {
             currentUserIsOwner = true
         }
         
@@ -46,18 +49,22 @@ final class PostMenuViewController: UIViewController {
     
     // MARK: - Functions
     
-    func setPostIdAndOwner(postId: Int, postOwner: String) {
+    func setPostData(postId: Int, postOwner: String, taggedMemberList: [String]) {
         self.postId = postId
         self.postOwner = postOwner
+        self.taggedMemberList = taggedMemberList
     }
     
     private func setupTableView() {
         menuTableView.delegate = self
         menuTableView.dataSource = self
         
-        menuTableView.register(UINib(nibName: ReportViewCell.identifier, bundle: nil), forCellReuseIdentifier: ReportViewCell.identifier)
-        menuTableView.register(UINib(nibName: DeleteViewCell.identifier, bundle: nil), forCellReuseIdentifier: DeleteViewCell.identifier)
-        menuTableView.register(UINib(nibName: CancelViewCell.identifier, bundle: nil), forCellReuseIdentifier: CancelViewCell.identifier)
+        menuTableView.register(UINib(nibName: ReportViewCell.identifier, bundle: nil), 
+                               forCellReuseIdentifier: ReportViewCell.identifier)
+        menuTableView.register(UINib(nibName: DeleteViewCell.identifier, bundle: nil), 
+                               forCellReuseIdentifier: DeleteViewCell.identifier)
+        menuTableView.register(UINib(nibName: CancelViewCell.identifier, bundle: nil), 
+                               forCellReuseIdentifier: CancelViewCell.identifier)
     }
     
     /// 게시글 삭제 혹은 신고 후 홈으로 돌아가기
@@ -68,18 +75,6 @@ final class PostMenuViewController: UIViewController {
            let navigationController = tabBarController.selectedViewController as? UINavigationController {
             // 3. 부모의 부모 뷰컨트롤러 (= home tab view controller)에 접근
             if let grandparentViewController = navigationController.viewControllers.dropLast().last {
-//                // 홈탭에서 게시글 상세로 이동한 경우
-//                if let vc = grandparentViewController as? HomeTabViewController{
-//                    
-//                }
-//                // TODO: - 나리 -> 여기에 탐색 탭에서 게시글 다시 불러오는 코드 추가해주기!
-//                else if let vc = grandparentViewController as? PostTabViewController {
-//                    
-//                }
-//                // TODO: - 정연 -> 여기에 프로필에서 게시글 다시 불러오는 코드 추가해주기! (내 프로필, 남의 프로필 둘 다 해야 할듯??)
-//                else if let vc = grandparentViewController as? MyProfileTabViewController {
-//                    
-//                }
                 // 모달을 해제하고 그 후 네비게이션 스택에서 원하는 뷰컨트롤러로 이동
                 self.dismiss(animated: true) {
                     navigationController.popToViewController(grandparentViewController, animated: true)
@@ -165,9 +160,9 @@ extension PostMenuViewController: CustomAlertDelegate {
                 self?.postDeleteResponse = postDeleteResponse as? PostDeleteResponse
                 if self?.postDeleteResponse?.isSuccess == false {
                     let alert = UIAlertController(title: "게시글 삭제에 실패하였습니다.", message: "다시 시도해주세요.", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
-                        self?.dismiss(animated: true)
-                    }))
+                    alert.addAction(UIAlertAction(title: "확인", 
+                                                  style: .default,
+                                                  handler: { action in self?.dismiss(animated: true) }))
                     return
                 }
                 else {

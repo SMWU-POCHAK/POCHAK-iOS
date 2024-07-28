@@ -154,7 +154,9 @@ final class PostViewController: UIViewController, UISheetPresentationControllerD
     
     @objc func moreActionButtonDidTap() {
         let postMenuVC = postStoryBoard.instantiateViewController(withIdentifier: "PostMenuVC") as! PostMenuViewController
-        postMenuVC.setPostIdAndOwner(postId: receivedPostId!, postOwner: postOwnerHandle)
+        postMenuVC.setPostData(postId: receivedPostId!, 
+                               postOwner: postOwnerHandle,
+                               taggedMemberList: taggedUserList.map({ $0.handle }))
         let sheet = postMenuVC.sheetPresentationController
         
         /* 메뉴 개수에 맞도록 sheet 높이 설정 */
@@ -163,7 +165,9 @@ final class PostViewController: UIViewController, UISheetPresentationControllerD
         label.text = "더보기"
         label.sizeToFit()
         
-        let cellCount = (postOwnerHandle == UserDefaultsManager.getData(type: String.self, forKey: .handle)) ? 3 : 2
+        let currentLogInUser = UserDefaultsManager.getData(type: String.self, forKey: .handle)
+        
+        let cellCount = (postOwnerHandle == currentLogInUser || taggedUserList.contains(where: { $0.handle == currentLogInUser })) ? 3 : 2
         let height = label.frame.height + CGFloat(36 + 16 + 48 * cellCount)
         let fraction = UISheetPresentationController.Detent.custom { context in
             height
