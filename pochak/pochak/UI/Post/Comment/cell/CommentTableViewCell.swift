@@ -134,7 +134,7 @@ final class CommentTableViewCell: UITableViewCell {
         
         // 프로필 이미지
         if let url = URL(string: comment.profileImage) {
-            profileImageView.load(url: url)
+            profileImageView.load(with: url)
         }
         
         self.commentUserHandleLabel.text = comment.handle

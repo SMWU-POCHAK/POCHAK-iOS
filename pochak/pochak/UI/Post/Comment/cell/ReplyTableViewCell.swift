@@ -92,7 +92,7 @@ final class ReplyTableViewCell: UITableViewCell {
         
         // 프로필 이미지
         if let url = URL(string: commentData.profileImage) {
-            profileImageView.load(url: url)
+            profileImageView.load(with: url)
         }
         
         // 유저 핸들

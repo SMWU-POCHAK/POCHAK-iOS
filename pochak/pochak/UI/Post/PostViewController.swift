@@ -237,11 +237,11 @@ final class PostViewController: UIViewController, UISheetPresentationControllerD
     
     private func setupData() {
         if let url = URL(string: postDataResult.postImage) {
-            postImageView.load(url: url)
+            postImageView.load(with: url)
         }
         
         if let profileUrl = URL(string: postDataResult.ownerProfileImage) {
-            profileImageView.load(url: profileUrl)
+            profileImageView.load(with: profileUrl)
         }
         
         self.navigationItem.title = postDataResult.ownerHandle + " 님의 게시물"

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NoPostCollectionViewCell: UICollectionViewCell {
+final class NoPostCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     
