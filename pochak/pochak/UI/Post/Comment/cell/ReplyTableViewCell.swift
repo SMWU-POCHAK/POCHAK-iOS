@@ -14,7 +14,6 @@ final class ReplyTableViewCell: UITableViewCell {
     static let identifier = "ReplyTableViewCell"
     
     var loggedinUserHandle: String?
-    var deleteButton = UIButton()
     var parentCommentId: Int!
     
     // comment view controller에서 받는 댓글 입력창
@@ -72,9 +71,6 @@ final class ReplyTableViewCell: UITableViewCell {
     }
     
     @objc private func moveToOthersProfile(sender: UITapGestureRecognizer) {
-        print("move to other's profile")
-        print(sender.view)
-        
         let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
         
         guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
@@ -114,7 +110,6 @@ final class ReplyTableViewCell: UITableViewCell {
         format.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         let startTime = format.date(from: String(uploadedTime))!
-        //let startStr = format.string(from: startTime!)
         let endStr = format.string(from: currentTime)
         let endTime = format.date(from: endStr)
         

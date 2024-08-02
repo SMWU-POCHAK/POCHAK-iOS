@@ -25,9 +25,7 @@ final class TaggedUsersDetailViewController: UIViewController {
         
         setTableView()
     }
-    
-    // MARK: - Actions
-    
+        
     // MARK: - Funtions
     
     private func setTableView() {

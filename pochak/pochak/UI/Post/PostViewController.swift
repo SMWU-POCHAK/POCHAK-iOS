@@ -7,13 +7,12 @@
 
 import UIKit
 
-final class PostViewController: UIViewController, UISheetPresentationControllerDelegate {
+final class PostViewController: UIViewController {
     
     // MARK: - Properties
     
     var receivedPostId: Int?
-    var postOwnerHandle: String = ""  // 나중에 여기저기에서 사용할 수 있도록.. 미리 게시자 아이디 저장
-    var parentVC: UIViewController?  // 포스트 상세 뷰컨트롤러를 띄운 부모 뷰컨트롤러
+    var postOwnerHandle: String = ""  // 게시글 주인 핸들 저장
     
     private let postStoryBoard = UIStoryboard(name: "PostTab", bundle: nil)
     private let refreshControl = UIRefreshControl()
@@ -77,7 +76,6 @@ final class PostViewController: UIViewController, UISheetPresentationControllerD
     // MARK: - Actions
     
     @IBAction func followingBtnTapped(_ sender: Any) {
-        // 현재 팔로잉 상태라면 취소할건지 알림창 띄우기
         if isFollowing! {
             showAlert(alertType: .confirmAndCancel,
                       titleText: "팔로우를 취소할까요?",
@@ -273,7 +271,6 @@ final class PostViewController: UIViewController, UISheetPresentationControllerD
             self.setCommentViewContents()
         }
         
-        // 좋아요 버튼 (내가 눌렀는지 안했는지)
         self.likeButton.isSelected = postDataResult.isLike
         
         // 팔로잉 버튼
@@ -328,10 +325,8 @@ final class PostViewController: UIViewController, UISheetPresentationControllerD
         })
         commentVC.postVC = self
         
-        // half sheet
         if let sheet = commentVC.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
-//            sheet.delegate = self
             sheet.prefersGrabberVisible = true
         }
                 

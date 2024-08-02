@@ -108,9 +108,6 @@ final class CommentTableViewCell: UITableViewCell {
     }
     
     @objc private func moveToOthersProfile(sender: UITapGestureRecognizer) {
-        print("move to other's profile")
-        print(sender.view)
-        
         let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
         
         // 댓글 작성자가 현재 유저라면

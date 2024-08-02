@@ -13,7 +13,6 @@ final class CommentViewController: UIViewController {
     // MARK: - Properties
     
     let textViewPlaceHolder = "이 게시물에 댓글을 달아보세요"
-    //var loggedinUserHandle: String!  // 현재 로그인된 유저의 아이디
     
     // postVC에서 넘겨주는 값
     var postId: Int?
@@ -48,10 +47,6 @@ final class CommentViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // TODO: UserDefaults에서 현재 로그인된 유저 핸들 가져오기
-//        loggedinUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
-//        print("current logged in user handle is : \(loggedinUserHandle)")
         
         // 테이블 뷰 세팅
         setUpTableView()
@@ -141,7 +136,6 @@ final class CommentViewController: UIViewController {
             switch(response) {
             case .success(let commentDataResponse):
                 let response = commentDataResponse as? CommentDataResponse
-                //self?.commentDataResponse = commentDataResponse as? CommentDataResponse
                 if response?.isSuccess == true {
                     let result = response?.result as? CommentDataResult
                     self?.parentAndChildCommentList = result?.parentCommentList  // 데이터로 넘어온 부모 댓글(+자식댓글)리스트
@@ -226,7 +220,6 @@ final class CommentViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 90
         
-        // 여러 개의 셀 선택 안되도록 설정
         tableView.allowsMultipleSelection = false
         
         // 키보드 내릴 수 있게
@@ -234,14 +227,15 @@ final class CommentViewController: UIViewController {
         
         // nib은 CommentTableViewCell << 이 파일임
         let commentNib = UINib(nibName: CommentTableViewCell.identifier, bundle: nil)
-        tableView.register(commentNib, forCellReuseIdentifier: CommentTableViewCell.identifier)  // tableview에 이 cell을 등록
+        tableView.register(commentNib, forCellReuseIdentifier: CommentTableViewCell.identifier)
         
         // 테이블뷰에 ReplyTableViewCell 등록
         let replyNib = UINib(nibName: ReplyTableViewCell.identifier, bundle: nil)
         tableView.register(replyNib, forCellReuseIdentifier: ReplyTableViewCell.identifier)
         
         // 테이블뷰에 footer view nib 등록
-        tableView.register(UINib(nibName: CommentTableViewFooterView.identifier, bundle: nil), forHeaderFooterViewReuseIdentifier: CommentTableViewFooterView.identifier)
+        tableView.register(UINib(nibName: CommentTableViewFooterView.identifier, bundle: nil),
+                           forHeaderFooterViewReuseIdentifier: CommentTableViewFooterView.identifier)
     }
     
     public func toUICommentData() {
@@ -303,8 +297,7 @@ final class CommentViewController: UIViewController {
 
 extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
     
-    // 마지막 섹션은 인디케이터로 해야하는디..
-    // 일단 부모 댓글의 개수만큼 섹션 생성
+    // 마지막 섹션은 인디케이터로 해야하는디.. 일단 부모 댓글의 개수만큼 섹션 생성
     func numberOfSections(in tableView: UITableView) -> Int {
         return noComment ? 0 : parentAndChildCommentList!.count
     }
@@ -325,7 +318,6 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
         var childCommentsSoFar = 0
         if(section != 0){
             for index in 0...section - 1 {
-                //childCommentsSoFar += self.childCommentCntList[index]
                 childCommentsSoFar += self.parentAndChildCommentList![index].childCommentList.count
             }
         }
