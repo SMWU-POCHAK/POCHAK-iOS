@@ -147,7 +147,7 @@ class CommentViewController: UIViewController {
     
     private func initUI() {
         if let url = URL(string: profileImageUrl) {
-            userProfileImageView.load(url: url)
+            userProfileImageView.load(with: url)
         }
         
         if noComment {

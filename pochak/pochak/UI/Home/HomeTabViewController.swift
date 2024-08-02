@@ -7,18 +7,16 @@
 
 import UIKit
 
-class HomeTabViewController: UIViewController {
+final class HomeTabViewController: UIViewController {
     
     // MARK: - Properties
+    
+    private let minimumLineSpacing: CGFloat = 9
+    private let minimumInterItemSpacing: CGFloat = 8
 
     private var postList: [HomeDataPostList]! = []
     private var isLastPage: Bool = false
     private var currentFetchingPage: Int = 0
-    private var homeDataResponse: HomeDataResponse!
-    private var homeDataResult: HomeDataResult!
-    
-    private let minimumLineSpacing: CGFloat = 9
-    private let minimumInterItemSpacing: CGFloat = 8
     private var noPost: Bool = false
     private var isCurrentlyFetching: Bool = false
     
@@ -51,7 +49,7 @@ class HomeTabViewController: UIViewController {
     
     // MARK: - Actions
     
-    @objc func refreshHome(){
+    @objc func refreshHome() {
         self.currentFetchingPage = 0
         self.postList.removeAll()
         self.setupData()
@@ -72,27 +70,26 @@ class HomeTabViewController: UIViewController {
         collectionView.refreshControl = refreshControl
             
         collectionView.register(
-            UINib(nibName: HomeCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
+            UINib(nibName: HomeCollectionViewCell.identifier, bundle: nil), 
+            forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
+        
         collectionView.register(
-            
-            UINib(nibName: NoPostCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: NoPostCollectionViewCell.identifier)
+            UINib(nibName: NoPostCollectionViewCell.identifier, bundle: nil), 
+            forCellWithReuseIdentifier: NoPostCollectionViewCell.identifier)
     }
     
-    private func setupData(){
+    private func setupData() {
         isCurrentlyFetching = true
-        // 임시로 유저 핸들 지수로
+
         HomeDataService.shared.getHomeData(page: currentFetchingPage) { response in
             switch response {
             case .success(let data):
-                self.homeDataResponse = data
-                self.homeDataResult = self.homeDataResponse.result
-                
-                self.isLastPage = self.homeDataResult.pageInfo.lastPage
+                self.isLastPage = data.result.pageInfo.lastPage
 
-                let newPosts = self.homeDataResult.postList
+                let newPosts = data.result.postList
                 let startIndex = self.postList.count
                 let endIndex = startIndex + newPosts.count
-                let newIndexPath = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
+                let newIndexPathList = (startIndex ..< endIndex).map { IndexPath(item: $0, section: 0) }
                 
                 self.postList.append(contentsOf: newPosts)
                 
@@ -109,7 +106,7 @@ class HomeTabViewController: UIViewController {
                         self.collectionView.reloadData()
                     } 
                     else {
-                        self.collectionView.insertItems(at: newIndexPath)
+                        self.collectionView.insertItems(at: newIndexPathList)
                     }
                     
                     self.isCurrentlyFetching = false
@@ -130,7 +127,7 @@ class HomeTabViewController: UIViewController {
     }
 }
 
-// MARK: - Extensions; CollectionView
+// MARK: - Extension: CollectionView
 
 extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -145,10 +142,10 @@ extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDel
         }
         else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as? HomeCollectionViewCell
-            else{ return UICollectionViewCell()}
+            else{ return UICollectionViewCell() }
             
             if let url = URL(string: (self.postList[indexPath.item].postImage)) {
-                cell.imageView.load(url: url)
+                cell.imageView.load(with: url)
             }
             
             return cell
@@ -167,17 +164,14 @@ extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDel
         }
     }
     
-    // cell의 위 아래 간격을 정함
     func collectionView(_ collectionView: UICollectionView, layout: UICollectionViewLayout, minimumLineSpacingForSectionAt: Int) -> CGFloat {
         return noPost ? 0 : minimumLineSpacing
     }
     
-    // cell 양 옆 간격
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return noPost ? 0 : minimumInterItemSpacing
     }
     
-    // cell 크기 지정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if noPost {
             let mainBound = UIScreen.main.bounds.size
@@ -192,7 +186,7 @@ extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDel
     }
 }
 
-// MARK: - Extension; UIScrollView
+// MARK: - Extension: UIScrollView
 
 extension HomeTabViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
