@@ -15,6 +15,7 @@ final class PostViewController: UIViewController {
     var postOwnerHandle: String = ""  // 게시글 주인 핸들 저장
     
     private let postStoryBoard = UIStoryboard(name: "PostTab", bundle: nil)
+    private let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
     private let refreshControl = UIRefreshControl()
     
     private var isFollowing: Bool?
@@ -114,8 +115,6 @@ final class PostViewController: UIViewController {
     
     // 프로필 이미지나 아이디 클릭 시 해당 사용자 프로필로 이동
     @objc func moveToOthersProfile(sender: UITapGestureRecognizer) {
-        let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
-        
         guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
         
         if sender.view == profileImageView || sender.view == pochakUserLabel || sender.view == postOwnerHandleLabel {
@@ -135,9 +134,7 @@ final class PostViewController: UIViewController {
         
         taggedUserDetailVC.goToOtherProfileVC = { (handle: String) in
             self.dismiss(animated: true)
-            let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
-            
-            guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
+            guard let otherUserProfileVC = self.profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
             otherUserProfileVC.recievedHandle = handle
             self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
         }
