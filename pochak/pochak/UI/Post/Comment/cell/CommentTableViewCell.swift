@@ -110,17 +110,18 @@ final class CommentTableViewCell: UITableViewCell {
     @objc private func moveToOthersProfile(sender: UITapGestureRecognizer) {
         let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
         
+        guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
+        
         // 댓글 작성자가 현재 유저라면
         if commentUserHandleLabel.text == currentUserHandle {
-            self.commentVC?.tabBarController?.selectedIndex = 4
+            otherUserProfileVC.recievedHandle = currentUserHandle
         }
         else {
-            guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
             otherUserProfileVC.recievedHandle = commentUserHandleLabel.text
-            print("post vc의 nav controller: \(self.postVC?.navigationController)")
-            self.commentVC?.dismiss(animated: true)
-            self.postVC?.navigationController?.pushViewController(otherUserProfileVC, animated: true)
         }
+        print("post vc의 nav controller: \(self.postVC?.navigationController)")
+        self.commentVC?.dismiss(animated: true)
+        self.postVC?.navigationController?.pushViewController(otherUserProfileVC, animated: true)
     }
     
     // MARK: - Functions
