@@ -41,9 +41,9 @@ POCHAK은 사용자들이 서로의 순간에 참여하고 상호 작용할 수 
     <td><img src="https://avatars.githubusercontent.com/u/90389093?v=4"></td>
   </tr>
   <tr>
-    <td align="center"><a href="https:github.com/syhwang1231">황수연</a><br>iOS Developer</td>
-    <td align="center"><a href="https:github.com/skfl0282">장나리</a><br>iOS Developer</td>
-    <td align="center"><a href="https:github.com/cyndii20">서정연</a><br>iOS Developer</td>
+    <td align="center"><a href="https://github.com/syhwang1231">황수연</a><br>iOS Developer</td>
+    <td align="center"><a href="https://github.com/skfl0282">장나리</a><br>iOS Developer</td>
+    <td align="center"><a href="https://github.com/cyndii20">서정연</a><br>iOS Developer</td>
   </tr>
   <tr>
     <td>
