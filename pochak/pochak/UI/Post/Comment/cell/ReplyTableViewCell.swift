@@ -13,7 +13,7 @@ final class ReplyTableViewCell: UITableViewCell {
     
     static let identifier = "ReplyTableViewCell"
     
-    var loggedinUserHandle: String?
+    private let loggedinUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
     var parentCommentId: Int!
     
     // comment view controller에서 받는 댓글 입력창
@@ -33,9 +33,6 @@ final class ReplyTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        // 현재 로그인된 유저 핸들 가져오기
-        loggedinUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
         
         // 이미지뷰 반만큼 radius 적용 -> 동그랗게
         profileImageView.layer.cornerRadius = 36 / 2

@@ -26,7 +26,7 @@ final class CommentTableViewCell: UITableViewCell {
     
     let seeChildCommentBtn = UIButton()
     
-    private let currentUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
+    private let currentUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
 
     // MARK: - Views
     
@@ -143,7 +143,7 @@ final class CommentTableViewCell: UITableViewCell {
 
         if(comment.handle == currentUserHandle
            || (postOwnerHandle == currentUserHandle)
-           || (taggedUserList?.contains(currentUserHandle!))!) {
+           || (taggedUserList?.contains(currentUserHandle))!) {
             print("이 유저는 댓글 삭제가 가능함")
             deleteButton.isHidden = false
         }

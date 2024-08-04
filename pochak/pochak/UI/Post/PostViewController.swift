@@ -160,7 +160,7 @@ final class PostViewController: UIViewController {
         label.text = "더보기"
         label.sizeToFit()
         
-        let currentLogInUser = UserDefaultsManager.getData(type: String.self, forKey: .handle)
+        let currentLogInUser = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
         
         let cellCount = (postOwnerHandle == currentLogInUser || taggedUserList.contains(where: { $0.handle == currentLogInUser })) ? 3 : 2
         let height = label.frame.height + CGFloat(36 + 16 + 48 * cellCount)

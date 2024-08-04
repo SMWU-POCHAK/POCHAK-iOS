@@ -31,9 +31,9 @@ final class PostMenuViewController: UIViewController {
         print("게시글 추가 메뉴 \(postId)")
         
         // 게시물 작성자(포착한 사람, 포착 태그당한 사람)와 현재 로그인된 유저가 같으면 삭제 메뉴 추가
-        let currentLogInUser = UserDefaultsManager.getData(type: String.self, forKey: .handle)
+        let currentLogInUser = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
         
-        if(currentLogInUser == postOwner || taggedMemberList.contains(currentLogInUser ?? "")) {
+        if(currentLogInUser == postOwner || taggedMemberList.contains(currentLogInUser)) {
             currentUserIsOwner = true
         }
         
