@@ -84,6 +84,9 @@ class MyAuthenticator : Authenticator {
                    // 새로운 토큰으로 API 재요청
                case .failure(let error):
                    print("inside Refresh Fail!!!!")
+                   if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
+                       print("Failure Data: \(errorMessage)")
+                   }
                    print(error)
                }
            }
