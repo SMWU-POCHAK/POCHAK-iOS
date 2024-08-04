@@ -81,47 +81,38 @@ final class HomeTabViewController: UIViewController {
     private func setupData() {
         isCurrentlyFetching = true
 
-        HomeDataService.shared.getHomeData(page: currentFetchingPage) { response in
-            switch response {
-            case .success(let data):
-                self.isLastPage = data.result.pageInfo.lastPage
+        let request = HomeRequest(page: currentFetchingPage)
+        HomeService.getHomePost(request: request) { data, failed in // weak self 넣기
+            guard let data = data else { return print(failed?.localizedDescription) }
+            print("succeed")
+            print(data)
+            self.isLastPage = data.result.pageInfo.lastPage
 
-                let newPosts = data.result.postList
-                let startIndex = self.postList.count
-                let endIndex = startIndex + newPosts.count
-                let newIndexPathList = (startIndex ..< endIndex).map { IndexPath(item: $0, section: 0) }
-                
-                self.postList.append(contentsOf: newPosts)
-                
-                if self.postList.count == 0 {
-                    self.noPost = true
+            let newPosts = data.result.postList
+            let startIndex = self.postList.count
+            let endIndex = startIndex + newPosts.count
+            let newIndexPathList = (startIndex ..< endIndex).map { IndexPath(item: $0, section: 0) }
+
+            self.postList.append(contentsOf: newPosts)
+
+            if self.postList.count == 0 {
+                self.noPost = true
+            }
+            else {
+                self.noPost = false
+            }
+
+            print("보여주는 게시글 개수: \(self.postList.count)")
+            DispatchQueue.main.async {
+                if self.currentFetchingPage == 0 {
+                    self.collectionView.reloadData()
                 }
                 else {
-                    self.noPost = false
+                    self.collectionView.insertItems(at: newIndexPathList)
                 }
-                
-                print("보여주는 게시글 개수: \(self.postList.count)")
-                DispatchQueue.main.async {
-                    if self.currentFetchingPage == 0 {
-                        self.collectionView.reloadData()
-                    } 
-                    else {
-                        self.collectionView.insertItems(at: newIndexPathList)
-                    }
-                    
-                    self.isCurrentlyFetching = false
-                    self.currentFetchingPage += 1;
-                }
-            case .requestErr(let err):
-                print(err)
-            case .pathErr:
-                print("pathErr")
-            case .serverErr:
-                print("serverErr")
-                self.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
-            case .networkFail:
-                print("networkFail")
-                self.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
+
+                self.isCurrentlyFetching = false
+                self.currentFetchingPage += 1;
             }
         }
     }
