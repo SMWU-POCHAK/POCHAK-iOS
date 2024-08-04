@@ -158,7 +158,6 @@ extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDel
             guard let postVC = postTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
             else { return }
             
-            postVC.parentVC = self
             postVC.receivedPostId = postList[indexPath.item].postId
             self.navigationController?.pushViewController(postVC, animated: true)
         }

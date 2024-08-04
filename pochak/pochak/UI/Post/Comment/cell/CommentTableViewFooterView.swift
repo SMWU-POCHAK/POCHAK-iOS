@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CommentTableViewFooterView: UITableViewHeaderFooterView {
+final class CommentTableViewFooterView: UITableViewHeaderFooterView {
     
     // MARK: - Properties
     
@@ -52,7 +52,7 @@ class CommentTableViewFooterView: UITableViewHeaderFooterView {
     // MARK: - Functions
     
     // section은 대댓글을 조회하고자 하는 댓글의 섹션 번호
-    private func loadChildCommentData(_ section: Int){
+    private func loadChildCommentData(_ section: Int) {
         print("=== load child comment data ===")
         currentFetchingPage += 1
         
@@ -71,7 +71,7 @@ class CommentTableViewFooterView: UITableViewHeaderFooterView {
                     print("\(section)번째 부모의 자식 댓글 개수: \(self.commentVC.childCommentCntList[section])")
                     // 제대로 된 자리에 대댓글 리스트를 삽입하기 위해서 지금까지 있는 대댓글 개수 세야 함
                     var childCommentsSoFar = 0
-                    if(section != 0){
+                    if(section != 0) {
                         for index in 0...section - 1 {
                             childCommentsSoFar += self.commentVC.childCommentCntList[index]
                         }

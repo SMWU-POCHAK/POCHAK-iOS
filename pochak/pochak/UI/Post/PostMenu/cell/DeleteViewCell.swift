@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DeleteViewCell: UITableViewCell {
+final class DeleteViewCell: UITableViewCell {
     
     // MARK: - Properties
     

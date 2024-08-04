@@ -7,12 +7,11 @@
 
 import UIKit
 
-class TaggedUsersDetailViewController: UIViewController {
+final class TaggedUsersDetailViewController: UIViewController {
     
     // MARK: - Properties
     
     var tagList: [TaggedMember]?
-    
     var goToOtherProfileVC: ((String) -> Void)?
 
     // MARK: - Views
@@ -23,12 +22,10 @@ class TaggedUsersDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setTableView()
     }
-    
-    // MARK: - Actions
-    
+        
     // MARK: - Funtions
     
     private func setTableView() {
@@ -40,8 +37,7 @@ class TaggedUsersDetailViewController: UIViewController {
     }
 }
 
-
-// MARK: - Extension; UITableView
+// MARK: - Extension: UITableView
 
 extension TaggedUsersDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -59,9 +55,4 @@ extension TaggedUsersDetailViewController: UITableViewDelegate, UITableViewDataS
         
         goToOtherProfileVC!(tagList![indexPath.row].handle)
     }
-    
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 68
-    }
-    
 }

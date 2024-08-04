@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ReportTableViewCell: UITableViewCell {
+final class ReportTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
@@ -34,9 +34,8 @@ class ReportTableViewCell: UITableViewCell {
     
     // MARK: - Functions
     
-    func configure(reportType: ReportType){
+    func configure(reportType: ReportType) {
         self.reportType = reportType
         self.reportReasonLabel.text = ReportType.getReasonForType(reportType)
     }
-    
 }

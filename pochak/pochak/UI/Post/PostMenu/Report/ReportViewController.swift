@@ -7,67 +7,7 @@
 
 import UIKit
 
-enum ReportType: String {
-    case NOT_INTERESTED
-    case SPAM
-    case NUDITY_OR_SEXUAL_CONTENT
-    case FRAUD_OR_SCAM
-    case HATE_SPEECH_OR_SYMBOL
-    case MISINFORMATION
-    
-    static let reportReasons = [
-        "마음에 들지 않습니다.",
-        "스팸",
-        "나체 이미지 또는 성적 행위",
-        "사기 또는 거짓",
-        "혐오 발언 또는 상징",
-        "거짓 정보"
-    ]
-    
-    /// 해당 인덱스의 report type 리턴
-    static func getReportTypeAt(index: Int) -> ReportType {
-        switch index {
-        case 0:
-            return NOT_INTERESTED
-        case 1:
-            return SPAM
-        case 2:
-            return NUDITY_OR_SEXUAL_CONTENT
-        case 3:
-            return FRAUD_OR_SCAM
-        case 4:
-            return HATE_SPEECH_OR_SYMBOL
-        case 5:
-            return MISINFORMATION
-        default:
-            return NOT_INTERESTED
-        }
-    }
-    
-    /// ReportType에 해당하는 사유 string 리턴
-    static func getReasonForType(_ reportType: ReportType) -> String {
-        switch reportType {
-        case .NOT_INTERESTED:
-            return reportReasons[0]
-        case .SPAM:
-            return reportReasons[1]
-        case .NUDITY_OR_SEXUAL_CONTENT:
-            return reportReasons[2]
-        case .FRAUD_OR_SCAM:
-            return reportReasons[3]
-        case .HATE_SPEECH_OR_SYMBOL:
-            return reportReasons[4]
-        case .MISINFORMATION:
-            return reportReasons[5]
-        }
-    }
-    
-    static func getReportTypeCount() -> Int {
-        return reportReasons.count
-    }
-}
-
-class ReportViewController: UIViewController {
+final class ReportViewController: UIViewController {
     
     // MARK: - Properties
 
@@ -76,6 +16,8 @@ class ReportViewController: UIViewController {
     // MARK: - Views
     
     @IBOutlet weak var reportTableView: UITableView!
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,7 +36,7 @@ class ReportViewController: UIViewController {
     }
     
     /// 게시글 신고 후 홈으로 돌아가기
-    private func goBackToHome(){
+    private func goBackToHome() {
         // 1. ReportVC를 보여주고 있는 뷰컨트롤러를 찾고 (=tabbar controller)
         if let tabBarController = self.presentingViewController as? UITabBarController,
            // 2. 선택된 뷰컨트롤러에 접근 (=navigation controller)
@@ -109,7 +51,7 @@ class ReportViewController: UIViewController {
         }
     }
     
-    func setPostId(_ postId: Int){
+    func setPostId(_ postId: Int) {
         self.postId = postId
     }
 }
@@ -146,7 +88,7 @@ extension ReportViewController: UITableViewDelegate, UITableViewDataSource {
                                     confirmButtonText: "확인"
                                     )
                 }
-                else{
+                else {
                     self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패했습니다."), animated: true)
                 }
                 return
@@ -165,6 +107,8 @@ extension ReportViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
 }
+
+// MARK: - Extension: CustomAlertDelegate
 
 extension ReportViewController: CustomAlertDelegate {
     func confirmAction() {

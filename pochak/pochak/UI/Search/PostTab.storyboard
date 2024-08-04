@@ -35,7 +35,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="rcL-dg-6O5">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="rcL-dg-6O5">
                                 <rect key="frame" x="0.0" y="107" width="375" height="671"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="separatorColor" name="gray01"/>
@@ -330,14 +330,14 @@
                                             <stackView opaque="NO" contentMode="scaleAspectFit" alignment="top" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="zk6-cZ-Xnd" userLabel="Content Stack View">
                                                 <rect key="frame" x="20" y="549.66666666666663" width="238" height="50"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" ambiguous="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DiP-WD-doD">
-                                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DiP-WD-doD">
+                                                        <rect key="frame" x="0.0" y="0.0" width="226" height="50"/>
                                                         <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="14"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wZB-Xn-bjF">
-                                                        <rect key="frame" x="62" y="0.0" width="176" height="0.0"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wZB-Xn-bjF">
+                                                        <rect key="frame" x="238" y="0.0" width="0.0" height="17"/>
                                                         <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="14"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -383,16 +383,16 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="po0-2n-gtJ">
-                                                <rect key="frame" x="20" y="630.66666666666663" width="61" height="50"/>
+                                                <rect key="frame" x="20" y="630.66666666666663" width="111" height="50"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ntm-Dj-3cn">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ntm-Dj-3cn">
                                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                         <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="14"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="115-H2-hsS">
-                                                        <rect key="frame" x="61" y="0.0" width="0.0" height="0.0"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="115-H2-hsS">
+                                                        <rect key="frame" x="61" y="0.0" width="50" height="50"/>
                                                         <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="14"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -467,16 +467,16 @@
                         <outlet property="commentButton" destination="13V-C1-H5f" id="vRC-zC-e7s"/>
                         <outlet property="commentContentLabel" destination="115-H2-hsS" id="w1j-72-EtA"/>
                         <outlet property="commentUserHandleLabel" destination="Ntm-Dj-3cn" id="1wg-0t-Uh4"/>
-                        <outlet property="followingBtn" destination="8NM-hH-Q9c" id="IBZ-Pw-2dJ"/>
+                        <outlet property="followingButton" destination="8NM-hH-Q9c" id="IBZ-Pw-2dJ"/>
                         <outlet property="likeButton" destination="vvh-0p-iKO" id="ryI-jF-OtB"/>
                         <outlet property="moreCommentButton" destination="JWP-Of-QNZ" id="dPU-of-3Mo"/>
                         <outlet property="pochakUserLabel" destination="gI1-I5-NSd" id="bNx-9e-OFs"/>
-                        <outlet property="postContent" destination="wZB-Xn-bjF" id="KTa-Pe-TAg"/>
+                        <outlet property="postContentLabel" destination="wZB-Xn-bjF" id="KTa-Pe-TAg"/>
                         <outlet property="postImageView" destination="9aE-qJ-kQ5" id="XfM-hX-1KM"/>
                         <outlet property="postOwnerHandleLabel" destination="DiP-WD-doD" id="kar-iA-aSf"/>
                         <outlet property="profileImageView" destination="g1Z-gd-DZE" id="juV-dt-dkX"/>
                         <outlet property="scrollView" destination="aPT-RR-Xxk" id="yYS-Pd-SxV"/>
-                        <outlet property="taggedUsers" destination="TZj-sL-ED1" id="HGo-4W-OpC"/>
+                        <outlet property="taggedUsersLabel" destination="TZj-sL-ED1" id="HGo-4W-OpC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ND-cG-8cX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -2,12 +2,12 @@
 //  TaggedUsersTableViewCell.swift
 //  pochak
 //
-//  Created by Suyeon Hwang on 7/5/24.
+//  Created by Suyeon Hwang on 7/26/24.
 //
 
 import UIKit
 
-class TaggedUsersTableViewCell: UITableViewCell {
+final class TaggedUsersTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
@@ -19,13 +19,13 @@ class TaggedUsersTableViewCell: UITableViewCell {
     @IBOutlet weak var handleLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     
-    // MARK: - Initialization
-    
+    // MARK: - Init
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
@@ -34,7 +34,7 @@ class TaggedUsersTableViewCell: UITableViewCell {
     
     // MARK: - Functions
     
-    func configure(tagData: TaggedMember){
+    func configure(tagData: TaggedMember) {
         if let profileImageURL = URL(string: tagData.profileImage) {
             profileImageView.load(with: profileImageURL)
         }

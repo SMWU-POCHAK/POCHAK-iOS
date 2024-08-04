@@ -6,6 +6,7 @@
 //
 
 // MARK: - 좋아요 누른 사람 조회
+
 struct LikedUsersDataResponse: Codable {
     let isSuccess: Bool?
     let code: String
@@ -25,6 +26,7 @@ struct LikeMember: Codable {
 }
 
 // MARK: - 좋아요 누르기
+
 struct LikePostDataResponse: Codable {
     let isSuccess: Bool?
     let code: String
