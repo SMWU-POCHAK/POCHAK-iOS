@@ -83,7 +83,20 @@ final class HomeTabViewController: UIViewController {
 
         let request = HomeRequest(page: currentFetchingPage)
         HomeService.getHomePost(request: request) { [weak self] data, failed in
-            guard let data = data else { return print(failed?.localizedDescription) }
+            guard let data = data else {
+                // 에러가 난 경우, alert 창 present
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .serverError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .unknownError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                }
+                return
+            }
             print("=== Home, setup data succeeded ===")
             print("== data: \(data)")
             
