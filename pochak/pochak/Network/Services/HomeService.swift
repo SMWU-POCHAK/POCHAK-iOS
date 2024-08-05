@@ -14,12 +14,14 @@ struct HomeService {
     ///   - completion: 통신 후 핸들러 (뷰컨트롤러에 있음)
     static func getHomePost(
         request: HomeRequest,
-        completion: @escaping (_ succeed: HomeResponse?, _ failed: Error?) -> Void) {
+        completion: @escaping (_ succeed: HomeResponse?, _ failed: NetworkError?) -> Void) {
         NetworkService.shared.request(HomeAPI.getHomePost(request)) { response in
             switch response {
             case .success(let data):
                 completion(data, nil)
             case .failure(let error):
+                print("=== getHomePost error ===")
+                print(error.localizedDescription)
                 completion(nil, error)
             }
         }
