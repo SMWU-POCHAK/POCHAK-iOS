@@ -1072,12 +1072,12 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		EA2CD6332C5F458900644EFE /* Model */ = {
+		EA2CD6332C5F458900644EFE /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				EA2CD6372C5F45B900644EFE /* Home */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		EA2CD6342C5F459B00644EFE /* Base */ = {
@@ -1183,7 +1183,7 @@
 				EA2CD6362C5F45AE00644EFE /* Authentication */,
 				EA2CD6352C5F45A100644EFE /* APIs */,
 				EA2CD6342C5F459B00644EFE /* Base */,
-				EA2CD6332C5F458900644EFE /* Model */,
+				EA2CD6332C5F458900644EFE /* Models */,
 				EA2CD6322C5F458200644EFE /* Services */,
 				EAF918502AA468670037C270 /* APIConstants.swift */,
 				EAF918532AA4692E0037C270 /* NetworkResult.swift */,
