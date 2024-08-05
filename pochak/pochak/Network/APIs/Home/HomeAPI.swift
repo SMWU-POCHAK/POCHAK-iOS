@@ -32,5 +32,4 @@ extension HomeAPI: BaseAPI {
         case .getHomePost(let request): return .query(request)
         }
     }
-
 }
