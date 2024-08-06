@@ -10,18 +10,23 @@ import Kingfisher
 
 class ProfilePostCollectionViewCell: UICollectionViewCell {
     
-    // Collection View가 생성할 cell임을 명시
-    static let identifier = "ProfilePostCollectionViewCell"
+    // MARK: - Properties
+    
+    static let identifier = "ProfilePostCollectionViewCell" // Collection View가 생성할 cell임을 명시
+
+    // MARK: - Views
     
     @IBOutlet weak var profilePostImage: UIImageView!
     
+    // MARK: - LifeCycle
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
     
-    func configure(_ postDataModel : PostDataModel){
-        var imageURL = postDataModel.postImage ?? ""
+    // MARK: - Functions
+    func setUpCellData(_ postDataModel : PostDataModel){
+        var imageURL = postDataModel.postImage
         if let url = URL(string: imageURL) {
             profilePostImage.kf.setImage(with: url) { result in
                 switch result {

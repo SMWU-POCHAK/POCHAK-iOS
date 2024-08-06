@@ -236,10 +236,10 @@
             </objects>
             <point key="canvasLocation" x="34" y="-1095"/>
         </scene>
-        <!--Second Tabman View Controller-->
+        <!--Following List Tabman View Controller-->
         <scene sceneID="RcR-mz-bl6">
             <objects>
-                <viewController storyboardIdentifier="SecondTabmanVC" id="6BN-AV-Fru" customClass="SecondTabmanViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SecondTabmanVC" id="6BN-AV-Fru" customClass="FollowingListTabmanViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kTW-vn-TjC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -636,10 +636,10 @@
             </objects>
             <point key="canvasLocation" x="4066" y="-1095"/>
         </scene>
-        <!--First Tabman View Controller-->
+        <!--Follower List Tabman View Controller-->
         <scene sceneID="fk5-qI-ro9">
             <objects>
-                <viewController storyboardIdentifier="FirstTabmanVC" id="daP-Ha-eQB" customClass="FirstTabmanViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FirstTabmanVC" id="daP-Ha-eQB" customClass="FollowerListTabmanViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="98I-w3-T27">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -695,7 +695,7 @@
             <objects>
                 <viewController storyboardIdentifier="PostListVC" id="A8c-zA-jyb" customClass="PostListViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="J5d-Go-gxw">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="477"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="511.33333333333331"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="Ixl-d3-zOE"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -706,10 +706,10 @@
             </objects>
             <point key="canvasLocation" x="660" y="651"/>
         </scene>
-        <!--First Post Tabman View Controller-->
+        <!--Pochaked Post Tabman View Controller-->
         <scene sceneID="cOC-Jn-Ggv">
             <objects>
-                <viewController storyboardIdentifier="FirstPostTabmanVC" id="OyH-H5-6Nd" customClass="FirstPostTabmanViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FirstPostTabmanVC" id="OyH-H5-6Nd" customClass="PochakedPostTabmanViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ihC-TG-mCI">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -743,10 +743,10 @@
             </objects>
             <point key="canvasLocation" x="169" y="1336"/>
         </scene>
-        <!--Second Post Tabman View Controller-->
+        <!--Pochak Post Tabman View Controller-->
         <scene sceneID="TY2-nz-leW">
             <objects>
-                <viewController storyboardIdentifier="SecondPostTabmanVC" id="F96-tg-VEN" customClass="SecondPostTabmanViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SecondPostTabmanVC" id="F96-tg-VEN" customClass="PochakPostTabmanViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Jpg-pc-if0">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1047,7 +1047,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="2dZ-Dq-Eob"/>
+        <segue reference="CkB-Wx-fnp"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="CancelIcon" width="24" height="24"/>

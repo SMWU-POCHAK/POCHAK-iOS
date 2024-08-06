@@ -7,50 +7,68 @@
 
 import UIKit
 
+// cell 삭제 프로토콜
 protocol RemoveImageDelegate: AnyObject {
     func removeFromCollectionView(at indexPath: IndexPath, _ handle: String)
 }
 
-class FirstTabmanViewController: UIViewController{
-    // MARK: - Data
+class FollowerListTabmanViewController: UIViewController{
     
-    @IBOutlet weak var followerCollectionView: UICollectionView!
-    var imageArray : [MemberListDataModel] = []
-    var recievedHandle : String?
-    var cellIndexPath : IndexPath?
-    var cellHandle : String?
+    // MARK: - Properties
+    
+    var imageArray: [MemberListDataModel] = []
+    var recievedHandle: String?
+    var cellIndexPath: IndexPath?
+    var cellHandle: String?
     var loginUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
-    
     private var isLastPage: Bool = false
     private var isCurrentlyFetching: Bool = false
     private var currentFetchingPage: Int = 0
     
-    // MARK: - View LifeCycle
+    // MARK: - Views
+    
+    @IBOutlet weak var followerCollectionView: UICollectionView!
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Delegate
         currentFetchingPage = 0
-        // API
-        loadFollowerListData()
-        // CollectionView 등록
-        setupCollectionView()
-        // 새로고침 구현
-        setRefreshControl()
+        
+        setUpCollectionView()
+        setUpRefreshControl()
+        setUpData()
     }
-
-    // MARK: - Method
     
-    private func setupCollectionView() {
+    // MARK: - Actions
+    
+    @objc private func refreshData(_ sender: Any) {
+        // 데이터 새로고침 완료 후 UIRefreshControl을 종료
+        print("refresh")
+        imageArray = []
+        currentFetchingPage = 0
+        setUpData()
+        DispatchQueue.main.async {
+            self.followerCollectionView.refreshControl?.endRefreshing()
+        }
+    }
+    
+    // MARK: - Functions
+    
+    private func setUpCollectionView() {
         followerCollectionView.delegate = self
         followerCollectionView.dataSource = self
-            
-        // collection view에 셀 등록
         followerCollectionView.register(
             UINib(nibName: "FollowerCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "FollowerCollectionViewCell")
-        }
-
-    private func loadFollowerListData() {
+    }
+    
+    private func setUpRefreshControl(){
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        followerCollectionView.refreshControl = refreshControl
+    }
+    
+    private func setUpData() {
         FollowListDataManager.shared.followerDataManager(recievedHandle ?? "",currentFetchingPage,{resultData in
             
             let newMembers = resultData.memberList
@@ -77,50 +95,25 @@ class FirstTabmanViewController: UIViewController{
             }
         })
     }
-    
-    private func setRefreshControl(){
-        // UIRefreshControl 생성
-       let refreshControl = UIRefreshControl()
-       refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
-
-       // 테이블 뷰에 UIRefreshControl 설정
-        followerCollectionView.refreshControl = refreshControl
-    }
-    
-    @objc private func refreshData(_ sender: Any) {
-        // 데이터 새로고침 완료 후 UIRefreshControl을 종료
-        print("refresh")
-        self.imageArray = []
-        self.currentFetchingPage = 0
-        self.loadFollowerListData()
-        DispatchQueue.main.async {
-            self.followerCollectionView.refreshControl?.endRefreshing()
-        }
-    }
-    
 }
 
-// MARK: - Extension
+// MARK: - Extension : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, RemoveImageDelegate, CustomAlertDelegate, UIScrollViewDelegate
 
-extension FirstTabmanViewController : UICollectionViewDelegate, UICollectionViewDataSource {
+extension FollowerListTabmanViewController : UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return max(0,(imageArray.count))
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        // cell 생성
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: FollowerCollectionViewCell.identifier,
             for: indexPath) as? FollowerCollectionViewCell else {
             return UICollectionViewCell()
         }
-        
-        // 데이터 전달
+
         let memberListData = imageArray[indexPath.item] // indexPath 안에는 섹션에 대한 정보, 섹션에 들어가는 데이터 정보 등이 있다
         cell.searchedHandle = recievedHandle ?? ""
-        cell.configure(memberListData)
-        
-        // delegate 위임받음
+        cell.setUpCellData(memberListData)
         cell.delegate = self
         return cell
     }
@@ -135,27 +128,19 @@ extension FirstTabmanViewController : UICollectionViewDelegate, UICollectionView
 
 }
 
-extension FirstTabmanViewController : UICollectionViewDelegateFlowLayout{
-    
-    // cell 높이, 너비 지정
+extension FollowerListTabmanViewController : UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: followerCollectionView.bounds.width,
                       height: 70)
     }
     
-    // cell 간 간격 설정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
 }
-// cell 삭제 로직
-extension FirstTabmanViewController: RemoveImageDelegate {
+
+extension FollowerListTabmanViewController: RemoveImageDelegate {
     func removeFromCollectionView(at indexPath: IndexPath, _ handle: String) {
-        print("inside removeCell")
-        cellIndexPath = indexPath
-        cellHandle = handle
-        print(" >>>> cellIndexPath : \(cellIndexPath)")
-        print(" >>>> cellHandle : \(cellHandle)")
         showAlert(alertType: .confirmAndCancel,
                   titleText: "팔로워를 삭제하시겠습니까?",
                   messageText: "팔로워를 삭제하면, 팔로워와 관련된 \n사진이 사라집니다.",
@@ -165,12 +150,10 @@ extension FirstTabmanViewController: RemoveImageDelegate {
     }
 }
 
-extension FirstTabmanViewController : CustomAlertDelegate {
+extension FollowerListTabmanViewController : CustomAlertDelegate {
     func confirmAction() {
-        // API
         DeleteFollowerDataManager.shared.deleteFollowerDataManager(self.recievedHandle ?? "", cellHandle ?? "", { resultData in
             print(resultData.message)
-            // cell 삭제
             self.imageArray.remove(at: self.cellIndexPath!.row)
             self.followerCollectionView.reloadData()
         })
@@ -181,14 +164,13 @@ extension FirstTabmanViewController : CustomAlertDelegate {
     }
 }
 
-// Paging
-extension FirstTabmanViewController: UIScrollViewDelegate {
+extension FollowerListTabmanViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (followerCollectionView.contentOffset.y > (followerCollectionView.contentSize.height - followerCollectionView.bounds.size.height)){
             if (!isLastPage && !isCurrentlyFetching) {
                 print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
                 isCurrentlyFetching = true
-                loadFollowerListData()
+                setUpData()
             }
         }
     }

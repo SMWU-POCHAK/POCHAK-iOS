@@ -7,46 +7,59 @@
 
 import UIKit
 
-class FirstPostTabmanViewController: UIViewController {
+class PochakedPostTabmanViewController: UIViewController {
     
-    // MARK: - Data
+    // MARK: - Properties
     
-    @IBOutlet weak var postCollectionView: UICollectionView!
     var receivedHandle: String?
-    var imageArray : [PostDataModel] = []
-    
+    var imageArray: [PostDataModel] = []
     private var isLastPage: Bool = false
     private var isCurrentlyFetching: Bool = false
     private var currentFetchingPage: Int = 0
     
-    // MARK: - View Lifecycle
+    // MARK: - Views
+    
+    @IBOutlet weak var postCollectionView: UICollectionView!
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Delegate
         currentFetchingPage = 0
-        // API
-        loadImageData()
-
-        // Collection View 구현
-        setupCollectionView()
         
-        // 새로고침 구현
-        setRefreshControl()
+        setUpCollectionView()
+        setUpRefreshControl()
+        setUpData()
     }
-
-    // MARK: - Funtion
     
-    private func setupCollectionView() {
+    // MARK: - Actions
+    
+    @objc private func refreshData(_ sender: Any) {
+        print("refresh")
+        imageArray = []
+        currentFetchingPage = 0
+        setUpData()
+        DispatchQueue.main.async {
+            self.postCollectionView.refreshControl?.endRefreshing()
+        }
+    }
+    
+    // MARK: - Functions
+    
+    private func setUpCollectionView() {
         postCollectionView.delegate = self
         postCollectionView.dataSource = self
-            
-        // collection view에 셀 등록
         postCollectionView.register(
             UINib(nibName: "ProfilePostCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ProfilePostCollectionViewCell")
-        }
+    }
     
-    private func loadImageData() {
+    private func setUpRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        postCollectionView.refreshControl = refreshControl
+    }
+    
+    private func setUpData() {
         isCurrentlyFetching = true
         MyProfilePostDataManager.shared.myProfileUserAndPochakedPostDataManager(receivedHandle ?? "", currentFetchingPage,{ response in
             switch response {
@@ -79,35 +92,14 @@ class FirstPostTabmanViewController: UIViewController {
             }
         })
     }
-    
-    private func setRefreshControl(){
-        // UIRefreshControl 생성
-       let refreshControl = UIRefreshControl()
-       refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
-
-       // 테이블 뷰에 UIRefreshControl 설정
-        postCollectionView.refreshControl = refreshControl
-    }
-    
-    @objc private func refreshData(_ sender: Any) {
-        // 데이터 새로고침 완료 후 UIRefreshControl을 종료
-        print("refresh")
-        self.imageArray = []
-        self.currentFetchingPage = 0
-        self.loadImageData()
-        DispatchQueue.main.async {
-            self.postCollectionView.refreshControl?.endRefreshing()
-        }
-    }
 }
 
-// MARK: - Extension
+// MARK: - Extension : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate
 
-extension FirstPostTabmanViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension PochakedPostTabmanViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return max(0,(imageArray.count))
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // cell 생성
@@ -118,21 +110,18 @@ extension FirstPostTabmanViewController : UICollectionViewDelegate, UICollection
         }
         
         let postData = imageArray[indexPath.item] // indexPath 안에는 섹션에 대한 정보, 섹션에 들어가는 데이터 정보 등이 있다
-        cell.configure(postData)
+        cell.setUpCellData(postData)
         return cell
     }
     
-    // cell 상하 간격 설정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt: Int) -> CGFloat {
         return 5
     }
     
-    // cell 옆 간격 설정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 5
     }
     
-    // cell 좌우 간격 설정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = CGFloat((collectionView.frame.width - 10) / 3)
         return CGSize(width: width, height: width * 4 / 3)
@@ -148,14 +137,13 @@ extension FirstPostTabmanViewController : UICollectionViewDelegate, UICollection
     }
 }
 
-// Paging
-extension FirstPostTabmanViewController: UIScrollViewDelegate {
+extension PochakedPostTabmanViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (postCollectionView.contentOffset.y > (postCollectionView.contentSize.height - postCollectionView.bounds.size.height)){
             if (!isLastPage && !isCurrentlyFetching) {
                 print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
                 isCurrentlyFetching = true
-                loadImageData()
+                setUpData()
             }
         }
     }

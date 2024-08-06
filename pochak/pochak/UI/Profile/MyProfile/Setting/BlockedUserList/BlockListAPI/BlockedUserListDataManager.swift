@@ -12,7 +12,6 @@ class BlockedUserListDataManager{
     
     static let shared = BlockedUserListDataManager()
     
-    
     func blockedUserListDataManager(_ handle : String,_ page : Int, _ completion: @escaping (BlockedUserDataModel) -> Void) {
         
         let url = "\(APIConstants.baseURL)/api/v2/members/\(handle)/block?page=\(page)"
@@ -29,7 +28,7 @@ class BlockedUserListDataManager{
                 print(">>>>> resultData : \(resultData)")
                 completion(resultData)
             case .failure(let error):
-                print("blockedUserListDataManager error : \(error.localizedDescription)")
+                print("Request Fail : blockedUserListDataManager")
                 if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
                     print("Failure Data: \(errorMessage)")
                 }
