@@ -68,9 +68,19 @@
                         <state key="normal">
                             <color key="titleColor" name="gray07"/>
                         </state>
-                        <connections>
-                            <action selector="deleteFollowerBtn:" destination="gTV-IL-0wX" eventType="touchUpInside" id="XnB-VD-Idz"/>
-                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dez-fd-ehM">
+                        <rect key="frame" x="333" y="40.666666666666664" width="65" height="29.999999999999993"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="9fo-ks-edk"/>
+                            <constraint firstAttribute="width" constant="65" id="O0f-yz-5fb"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="14"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal">
+                            <color key="titleColor" name="gray07"/>
+                        </state>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2KR-Ov-z9A">
                         <rect key="frame" x="20" y="110" width="378" height="1"/>
@@ -85,6 +95,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="xeb-rw-ZRP" firstAttribute="centerY" secondItem="KfR-SN-GsJ" secondAttribute="centerY" id="0BC-6u-Gby"/>
+                <constraint firstAttribute="trailing" secondItem="dez-fd-ehM" secondAttribute="trailing" constant="20" id="1OR-ty-Aof"/>
                 <constraint firstAttribute="bottom" secondItem="2KR-Ov-z9A" secondAttribute="bottom" id="3VQ-Og-pa0"/>
                 <constraint firstItem="u2x-vq-ScL" firstAttribute="centerY" secondItem="KfR-SN-GsJ" secondAttribute="centerY" id="41a-zd-Lrv"/>
                 <constraint firstItem="u2x-vq-ScL" firstAttribute="leading" secondItem="KfR-SN-GsJ" secondAttribute="trailing" constant="12" id="A6o-hd-XVe"/>
@@ -93,10 +104,12 @@
                 <constraint firstItem="KfR-SN-GsJ" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="aJI-hv-LQ2"/>
                 <constraint firstAttribute="trailing" secondItem="2KR-Ov-z9A" secondAttribute="trailing" constant="20" id="cl2-96-svz"/>
                 <constraint firstAttribute="trailing" secondItem="xeb-rw-ZRP" secondAttribute="trailing" constant="20" id="euV-3w-nVA"/>
+                <constraint firstItem="dez-fd-ehM" firstAttribute="centerY" secondItem="KfR-SN-GsJ" secondAttribute="centerY" id="lIx-6V-4xq"/>
             </constraints>
             <size key="customSize" width="418" height="111"/>
             <connections>
                 <outlet property="deleteBtn" destination="xeb-rw-ZRP" id="sTG-u2-fH3"/>
+                <outlet property="followBtn" destination="dez-fd-ehM" id="Kf3-L4-Zsu"/>
                 <outlet property="profileImageBtn" destination="KfR-SN-GsJ" id="BbH-SY-TZk"/>
                 <outlet property="userId" destination="cCD-m9-ruE" id="OUh-Xl-et4"/>
                 <outlet property="userName" destination="M1o-wR-N5d" id="SWr-Tz-Ja4"/>

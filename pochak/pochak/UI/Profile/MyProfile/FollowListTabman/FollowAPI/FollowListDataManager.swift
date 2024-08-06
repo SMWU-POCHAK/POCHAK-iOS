@@ -24,10 +24,16 @@ class FollowListDataManager {
         .responseDecodable(of: FollowListDataResponse.self) { response in
             switch response.result {
             case .success(let result):
+                if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
+                    print("Success Data for followerDataManager: \(errorMessage)")
+                }
                 let resultData = result.result
                 print(resultData)
                 completion(resultData)
             case .failure(let error):
+                if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
+                    print("Failure Data for followerDataManager: \(errorMessage)")
+                }
                 print("Request Fail : followerDataManager")
                 print(error)
             }
@@ -50,6 +56,9 @@ class FollowListDataManager {
                 let resultData = result.result
                 completion(resultData)
             case .failure(let error):
+                if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
+                    print("Failure Data for followingDataManager: \(errorMessage)")
+                }
                 print("Request Fail : followingDataManager")
                 print(error)
             }
