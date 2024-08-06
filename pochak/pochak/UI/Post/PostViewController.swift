@@ -351,7 +351,7 @@ final class PostViewController: UIViewController {
         FollowDataService.shared.postFollow(postOwnerHandle) { response in
             switch(response) {
             case .success(let followDataResponse):
-                if(followDataResponse.isSuccess) {
+                if(!followDataResponse.isSuccess) {
                     self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
                     return
                 }

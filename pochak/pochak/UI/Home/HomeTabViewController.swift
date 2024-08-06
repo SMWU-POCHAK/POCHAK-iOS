@@ -82,37 +82,51 @@ final class HomeTabViewController: UIViewController {
         isCurrentlyFetching = true
 
         let request = HomeRequest(page: currentFetchingPage)
-        HomeService.getHomePost(request: request) { data, failed in // weak self 넣기
-            guard let data = data else { return print(failed?.localizedDescription) }
-            print("succeed")
-            print(data)
-            self.isLastPage = data.result.pageInfo.lastPage
+        HomeService.getHomePost(request: request) { [weak self] data, failed in
+            guard let data = data else {
+                // 에러가 난 경우, alert 창 present
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .serverError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .unknownError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                }
+                return
+            }
+            print("=== Home, setup data succeeded ===")
+            print("== data: \(data)")
+            
+            self?.isLastPage = data.result.pageInfo.lastPage
 
             let newPosts = data.result.postList
-            let startIndex = self.postList.count
-            let endIndex = startIndex + newPosts.count
-            let newIndexPathList = (startIndex ..< endIndex).map { IndexPath(item: $0, section: 0) }
+            let startIndex = self?.postList.count
+            let endIndex = startIndex! + newPosts.count
+            let newIndexPathList = (startIndex! ..< endIndex).map { IndexPath(item: $0, section: 0) }
 
-            self.postList.append(contentsOf: newPosts)
+            self?.postList.append(contentsOf: newPosts)
 
-            if self.postList.count == 0 {
-                self.noPost = true
+            if self?.postList.count == 0 {
+                self?.noPost = true
             }
             else {
-                self.noPost = false
+                self?.noPost = false
             }
 
-            print("보여주는 게시글 개수: \(self.postList.count)")
+            print("== 보여주는 게시글 개수: \(self?.postList.count) ==")
             DispatchQueue.main.async {
-                if self.currentFetchingPage == 0 {
-                    self.collectionView.reloadData()
+                if self?.currentFetchingPage == 0 {
+                    self?.collectionView.reloadData()
                 }
                 else {
-                    self.collectionView.insertItems(at: newIndexPathList)
+                    self?.collectionView.insertItems(at: newIndexPathList)
                 }
 
-                self.isCurrentlyFetching = false
-                self.currentFetchingPage += 1;
+                self?.isCurrentlyFetching = false
+                self?.currentFetchingPage += 1;
             }
         }
     }
@@ -120,7 +134,7 @@ final class HomeTabViewController: UIViewController {
 
 // MARK: - Extension: CollectionView
 
-extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout { 
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return noPost ? 1 : postList.count
