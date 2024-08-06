@@ -11,7 +11,7 @@ import SafariServices
 class SettingsViewController: UIViewController {
     
     // MARK: - Properties
-    var selectedBtn : Int = 0
+    var selectedBtn: Int = 0
     var realmManager = RecentSearchRealmManager()
     
     // MARK: - Views

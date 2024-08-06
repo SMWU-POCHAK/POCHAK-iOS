@@ -23,7 +23,6 @@ class FollowListViewController: TabmanViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setUpTabman()
         setUpNavigationBar()
     }

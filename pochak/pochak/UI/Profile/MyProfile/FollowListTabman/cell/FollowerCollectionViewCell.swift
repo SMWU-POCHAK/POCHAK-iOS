@@ -72,7 +72,7 @@ class FollowerCollectionViewCell: UICollectionViewCell {
         followBtn.isHidden = false
     }
     
-    func setUpCellData(_ memberDataModel : MemberListDataModel){
+    func setUpCellData(_ memberDataModel : MemberListDataModel) {
         let imageURL = memberDataModel.profileImage
         if let url = URL(string: imageURL) {
             profileImageBtn.kf.setImage(with: url, for: .normal, completionHandler:  { result in

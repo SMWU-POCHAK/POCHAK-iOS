@@ -53,7 +53,7 @@ class FollowingListTabmanViewController: UIViewController {
             UINib(nibName: "FollowingCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "FollowingCollectionViewCell")
     }
     
-    private func setUpRefreshControl(){
+    private func setUpRefreshControl() {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         followingCollectionView.refreshControl = refreshControl
@@ -90,6 +90,7 @@ class FollowingListTabmanViewController: UIViewController {
 // MARK: - Extension : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 
 extension FollowingListTabmanViewController : UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return max(0,(imageArray.count))
     }
@@ -116,6 +117,7 @@ extension FollowingListTabmanViewController : UICollectionViewDelegate, UICollec
 }
 
 extension FollowingListTabmanViewController : UICollectionViewDelegateFlowLayout{
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: followingCollectionView.bounds.width,
                       height: 70)
@@ -127,6 +129,7 @@ extension FollowingListTabmanViewController : UICollectionViewDelegateFlowLayout
 }
 
 extension FollowingListTabmanViewController: UIScrollViewDelegate {
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (followingCollectionView.contentOffset.y > (followingCollectionView.contentSize.height - followingCollectionView.bounds.size.height)){
             if (!isLastPage && !isCurrentlyFetching) {

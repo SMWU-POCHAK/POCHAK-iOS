@@ -62,7 +62,7 @@ class FollowerListTabmanViewController: UIViewController{
             UINib(nibName: "FollowerCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "FollowerCollectionViewCell")
     }
     
-    private func setUpRefreshControl(){
+    private func setUpRefreshControl() {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         followerCollectionView.refreshControl = refreshControl
@@ -100,6 +100,7 @@ class FollowerListTabmanViewController: UIViewController{
 // MARK: - Extension : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, RemoveImageDelegate, CustomAlertDelegate, UIScrollViewDelegate
 
 extension FollowerListTabmanViewController : UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return max(0,(imageArray.count))
     }
@@ -129,6 +130,7 @@ extension FollowerListTabmanViewController : UICollectionViewDelegate, UICollect
 }
 
 extension FollowerListTabmanViewController : UICollectionViewDelegateFlowLayout{
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: followerCollectionView.bounds.width,
                       height: 70)
@@ -140,6 +142,7 @@ extension FollowerListTabmanViewController : UICollectionViewDelegateFlowLayout{
 }
 
 extension FollowerListTabmanViewController: RemoveImageDelegate {
+    
     func removeFromCollectionView(at indexPath: IndexPath, _ handle: String) {
         showAlert(alertType: .confirmAndCancel,
                   titleText: "팔로워를 삭제하시겠습니까?",
@@ -151,6 +154,7 @@ extension FollowerListTabmanViewController: RemoveImageDelegate {
 }
 
 extension FollowerListTabmanViewController : CustomAlertDelegate {
+    
     func confirmAction() {
         DeleteFollowerDataManager.shared.deleteFollowerDataManager(self.recievedHandle ?? "", cellHandle ?? "", { resultData in
             print(resultData.message)
@@ -165,6 +169,7 @@ extension FollowerListTabmanViewController : CustomAlertDelegate {
 }
 
 extension FollowerListTabmanViewController: UIScrollViewDelegate {
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (followerCollectionView.contentOffset.y > (followerCollectionView.contentSize.height - followerCollectionView.bounds.size.height)){
             if (!isLastPage && !isCurrentlyFetching) {

@@ -44,7 +44,7 @@ class MyProfileTabViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpControllerView()
+        setUpViewController()
         setUpData()
     }
     
@@ -71,16 +71,6 @@ class MyProfileTabViewController: UIViewController {
         self.navigationController?.pushViewController(updateProfileVC, animated: true)
     }
     
-    private func viewFollowerList() { /*  UITapGestureRecognizer 사용 */
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewFollowerTapped))
-        followerList.addGestureRecognizer(tapGestureRecognizer)
-    }
-    
-    private func viewFollowingList() { /*  UITapGestureRecognizer 사용 */
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewFollowingTapped))
-        followingList.addGestureRecognizer(tapGestureRecognizer)
-    }
-    
     @objc private func viewFollowerTapped() {
         guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC") as? FollowListViewController else {return}
         followListVC.index = 0
@@ -101,7 +91,7 @@ class MyProfileTabViewController: UIViewController {
     
     // MARK: - Functions
     
-    private func setUpControllerView() {
+    private func setUpViewController() {
         self.navigationController?.isNavigationBarHidden = true
         
         profileBackground.layer.cornerRadius = 58
@@ -123,6 +113,16 @@ class MyProfileTabViewController: UIViewController {
         postListTabmanView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
         postListTabmanView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
         postListTabmanView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
+    }
+    
+    private func viewFollowerList() { /*  UITapGestureRecognizer 사용 */
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewFollowerTapped))
+        followerList.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    private func viewFollowingList() { /*  UITapGestureRecognizer 사용 */
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewFollowingTapped))
+        followingList.addGestureRecognizer(tapGestureRecognizer)
     }
     
     private func setUpData() {

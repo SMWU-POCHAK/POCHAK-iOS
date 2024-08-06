@@ -358,7 +358,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="chooseImage"/>
                                 <connections>
-                                    <action selector="profileBtnTapped:" destination="UVQ-bG-RPQ" eventType="touchUpInside" id="dbP-HP-eSz"/>
+                                    <action selector="profileBtnTapped:" destination="UVQ-bG-RPQ" eventType="touchUpInside" id="DQe-Fl-osk"/>
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0PO-fl-0jh">

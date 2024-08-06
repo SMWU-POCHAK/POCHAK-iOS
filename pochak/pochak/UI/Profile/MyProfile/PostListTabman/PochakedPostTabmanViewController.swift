@@ -97,6 +97,7 @@ class PochakedPostTabmanViewController: UIViewController {
 // MARK: - Extension : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate
 
 extension PochakedPostTabmanViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return max(0,(imageArray.count))
     }
@@ -138,6 +139,7 @@ extension PochakedPostTabmanViewController : UICollectionViewDelegate, UICollect
 }
 
 extension PochakedPostTabmanViewController: UIScrollViewDelegate {
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (postCollectionView.contentOffset.y > (postCollectionView.contentSize.height - postCollectionView.bounds.size.height)){
             if (!isLastPage && !isCurrentlyFetching) {

@@ -13,7 +13,7 @@ class FollowingCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "FollowingCollectionViewCell" // Collection View가 생성할 cell임을 명시
     
-    var cellHandle:String = ""
+    var cellHandle: String = ""
     
     // MARK: - Views
     
@@ -54,7 +54,7 @@ class FollowingCollectionViewCell: UICollectionViewCell {
         followStateToggleBtn.isHidden = false
     }
     
-    func setUpCellData(_ memberDataModel : MemberListDataModel){
+    func setUpCellData(_ memberDataModel : MemberListDataModel) {
         var imageURL = memberDataModel.profileImage
         if let url = URL(string: imageURL) {
             profileImageBtn.kf.setImage(with: url, for: .normal)

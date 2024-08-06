@@ -740,8 +740,8 @@
 		3742616B2C30911A00B67886 /* ProfileMenu */ = {
 			isa = PBXGroup;
 			children = (
-				3742616C2C30914100B67886 /* BlockAPI */,
 				374261632C2FEF5F00B67886 /* ProfileMenuViewController.swift */,
+				3742616C2C30914100B67886 /* BlockAPI */,
 			);
 			path = ProfileMenu;
 			sourceTree = "<group>";
@@ -848,6 +848,7 @@
 			isa = PBXGroup;
 			children = (
 				3769D6B82B3C345800294CD1 /* MyProfileTabViewController.swift */,
+				37A284C02B52FC910023EB9D /* UpdateProfileViewController.swift */,
 				3742616A2C3075B400B67886 /* Setting */,
 				37D311D32B53053C00A1D7C1 /* ProfileUpdateAPI */,
 				37C3AF442B3CB26000B4C79C /* ProfileAPI */,
@@ -893,7 +894,6 @@
 		37D311D32B53053C00A1D7C1 /* ProfileUpdateAPI */ = {
 			isa = PBXGroup;
 			children = (
-				37A284C02B52FC910023EB9D /* UpdateProfileViewController.swift */,
 				37D311D62B53057700A1D7C1 /* ProfileUpdateDataModel.swift */,
 				37D311D42B53056700A1D7C1 /* ProfileUpdateDataManager.swift */,
 			);

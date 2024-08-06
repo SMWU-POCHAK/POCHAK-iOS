@@ -96,12 +96,14 @@ class BlockedUserViewController: UIViewController {
 // MARK: - Extension : UITableViewDelegate, UITableViewDataSource, RemoveCellDelegate, CustomAlertDelegate, UIScrollViewDelegate
 
 extension BlockedUserViewController: UITableViewDelegate{
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }
 }
 
 extension BlockedUserViewController: UITableViewDataSource{
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return max(0,(blockedUserList.count))
     }
@@ -116,6 +118,7 @@ extension BlockedUserViewController: UITableViewDataSource{
 }
 
 extension BlockedUserViewController: RemoveCellDelegate {
+    
     func removeCell(at indexPath: IndexPath, _ handle: String) {
         showAlert(alertType: .confirmAndCancel,
                   titleText: "유저 차단을 취소하겠습니까?",
@@ -127,6 +130,7 @@ extension BlockedUserViewController: RemoveCellDelegate {
 }
 
 extension BlockedUserViewController: CustomAlertDelegate {
+    
     func confirmAction() {
         let userHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
         UnBlockDataManager.shared.unBlockDataManager(userHandle ?? "" , cellHandle ?? "", { resultData in
@@ -141,6 +145,7 @@ extension BlockedUserViewController: CustomAlertDelegate {
 }
 
 extension BlockedUserViewController: UIScrollViewDelegate {
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (tableView.contentOffset.y > (tableView.contentSize.height - tableView.bounds.size.height)){
             if (!isLastPage && !isCurrentlyFetching) {
