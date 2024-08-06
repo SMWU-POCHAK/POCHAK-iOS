@@ -19,6 +19,7 @@ class FirstTabmanViewController: UIViewController{
     var recievedHandle : String?
     var cellIndexPath : IndexPath?
     var cellHandle : String?
+    var loginUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
     
     private var isLastPage: Bool = false
     private var isCurrentlyFetching: Bool = false
@@ -116,6 +117,7 @@ extension FirstTabmanViewController : UICollectionViewDelegate, UICollectionView
         
         // 데이터 전달
         let memberListData = imageArray[indexPath.item] // indexPath 안에는 섹션에 대한 정보, 섹션에 들어가는 데이터 정보 등이 있다
+        cell.searchedHandle = recievedHandle ?? ""
         cell.configure(memberListData)
         
         // delegate 위임받음
@@ -178,40 +180,6 @@ extension FirstTabmanViewController : CustomAlertDelegate {
         print("cancel button selected")
     }
 }
-
-//// cell 삭제 로직
-//extension FirstTabmanViewController: RemoveImageDelegate {
-//    func removeFromCollectionView(at indexPath: IndexPath, _ handle: String) {
-//        let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
-//        let titleAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 18), NSAttributedString.Key.foregroundColor: UIColor.black]
-//        let titleString = NSAttributedString(string: "팔로워를 삭제하시겠습니까?", attributes: titleAttributes as [NSAttributedString.Key : Any])
-//        
-//        let messageAttributes = [NSAttributedString.Key.font: UIFont(name: "Pretendard-Regular", size: 14), NSAttributedString.Key.foregroundColor: UIColor.black]
-//        let messageString = NSAttributedString(string: "\n팔로워를 삭제하면, 팔로워와 관련된 \n사진이 사라집니다.", attributes: messageAttributes as [NSAttributedString.Key : Any])
-//        
-//        alert.setValue(titleString, forKey: "attributedTitle")
-//        alert.setValue(messageString, forKey: "attributedMessage")
-//        
-//        let cancelAction = UIAlertAction(title: "취소", style: .default, handler: nil)
-//        cancelAction.setValue(UIColor(named: "gray05"), forKey: "titleTextColor")
-//        
-//        let okAction = UIAlertAction(title: "삭제하기", style: .default, handler: {
-//            action in
-//            // API
-//            DeleteFollowerDataManager.shared.deleteFollowerDataManager(self.recievedHandle ?? "", handle, { resultData in
-//                print(resultData.message)
-//            })
-//            // cell 삭제
-//            self.imageArray.remove(at: indexPath.row)
-//            self.followerCollectionView.reloadData()
-//        })
-//        okAction.setValue(UIColor(named: "yellow00"), forKey: "titleTextColor")
-//
-//        alert.addAction(cancelAction)
-//        alert.addAction(okAction)
-//        self.present(alert, animated: true, completion: nil) // present는 VC에서만 동작
-//    }
-//}
 
 // Paging
 extension FirstTabmanViewController: UIScrollViewDelegate {

@@ -24,31 +24,54 @@ class FollowingCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // 프로필 레이아웃
-        self.profileImageBtn.contentMode = .scaleAspectFill // 사진 안 넣어지는 문제 -> 버튼 type을 custom으로 변경 + style default로 변경
+        profileImageBtn.imageView?.contentMode = .scaleAspectFill // 사진 안 넣어지는 문제 -> 버튼 type을 custom으로 변경 + style default로 변경
         profileImageBtn.clipsToBounds = true // cornerRadius 적용 안되는 경우 추가
-        self.profileImageBtn.layer.cornerRadius = 26
+        profileImageBtn.layer.cornerRadius = 26
         
-        // 버튼 레이아웃
-        followStateToggleBtn.setTitle("팔로잉", for: .normal)
-        followStateToggleBtn.backgroundColor = UIColor(named: "gray03")
-        followStateToggleBtn.setTitleColor(UIColor.white, for: .normal)
-        followStateToggleBtn.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 14) // 폰트 설정
-        followStateToggleBtn.layer.cornerRadius = 5
+        followStateToggleBtn.isHidden = false
     }
     
     // MARK: - Method
     
     func configure(_ memberDataModel : MemberListDataModel){
-        var imageURL = memberDataModel.profileImage ?? ""
+        // 프로필 이미지 설정
+        var imageURL = memberDataModel.profileImage
         if let url = URL(string: imageURL) {
             profileImageBtn.kf.setImage(with: url, for: .normal)
         }
+        
+        // 프로필 정보 설정
         userId.text = memberDataModel.handle
         userName.text = memberDataModel.name
-        handle = memberDataModel.handle ?? ""
+        handle = memberDataModel.handle
+        
+        
+        // 팔로우 유무 설정
+        if let isFollow = memberDataModel.isFollow {
+            followStateToggleBtn.isHidden = false
+            if isFollow {
+                // 버튼 레이아웃
+                followStateToggleBtn.setTitle("팔로잉", for: .normal)
+                followStateToggleBtn.backgroundColor = UIColor(named: "gray03")
+                followStateToggleBtn.setTitleColor(UIColor.white, for: .normal)
+                followStateToggleBtn.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 14) // 폰트 설정
+                followStateToggleBtn.layer.cornerRadius = 5
+                followStateToggleBtn.addTarget(self, action: #selector(toggleFollowBtn), for: .touchUpInside)
+            } else if !isFollow {
+                // 버튼 레이아웃
+                followStateToggleBtn.setTitle("팔로우", for: .normal)
+                followStateToggleBtn.backgroundColor = UIColor(named: "yellow00")
+                followStateToggleBtn.setTitleColor(UIColor.white, for: .normal)
+                followStateToggleBtn.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 14) // 폰트 설정
+                followStateToggleBtn.layer.cornerRadius = 5
+                followStateToggleBtn.addTarget(self, action: #selector(toggleFollowBtn), for: .touchUpInside)
+            }
+        } else {
+            followStateToggleBtn.isHidden = true
+        }
     }
 
-    @IBAction func toggleFollowBtn(_ sender: UIButton) {
+    @objc func toggleFollowBtn(_ sender: UIButton) {
         let handle = handle
         FollowToggleDataManager.shared.followToggleDataManager(handle, { resultData in
             print(resultData.message)

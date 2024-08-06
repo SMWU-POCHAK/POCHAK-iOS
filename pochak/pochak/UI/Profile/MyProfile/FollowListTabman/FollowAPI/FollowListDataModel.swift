@@ -18,8 +18,9 @@ struct FollowListDataModel : Codable {
 }
 
 struct MemberListDataModel: Codable {
+    var memberId : Int
     var profileImage: String
     var handle: String
     var name: String
-    var isFollow: Bool
+    var isFollow: Bool?
 }

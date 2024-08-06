@@ -112,6 +112,7 @@ extension SecondTabmanViewController : UICollectionViewDelegate, UICollectionVie
     }
     
     //  유저 클릭 시 해당 프로필로 이동
+    // 프로필 클릭 시에도 이동하도록
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let otherUserProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else {return}
         self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
