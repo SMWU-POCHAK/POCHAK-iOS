@@ -33,8 +33,8 @@ class PostTabViewController: UIViewController, UISearchBarDelegate {
         currentFetchingPage = 0
         
         setupCollectionView()
-        setSearchBarView()
         setupData()
+        setSearchBarView()
         setupTapGestureOnSearchBarView()
         setRefreshControl()
     }
@@ -70,7 +70,7 @@ class PostTabViewController: UIViewController, UISearchBarDelegate {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(
-            nibName: "PostCollectionViewCell",
+            nibName: PostCollectionViewCell.identifier,
             bundle: nil),forCellWithReuseIdentifier: PostCollectionViewCell.identifier)
     }
     
@@ -131,7 +131,7 @@ class PostTabViewController: UIViewController, UISearchBarDelegate {
 }
 
 
-// MARK: - Extension: CollectionView
+// MARK: - Extension: UICollectionView
 
 extension PostTabViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -150,8 +150,8 @@ extension PostTabViewController: UICollectionViewDelegate, UICollectionViewDataS
         
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("view post btn tapped")
         let postTabSb = UIStoryboard(name: "PostTab", bundle: nil)
         guard let postVC = postTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
         else { return }

@@ -17,7 +17,6 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
     private var cancelButton = UIButton()
     private var resultVC = UITableViewController()
     
-    private let realm = try! Realm()
     private var realmManager = RecentSearchRealmManager()
     private var recentSearchTerms: Results<RecentSearchModel>!
     
@@ -28,9 +27,9 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
     private var isCurrentlyFetching: Bool = false
     private var currentFetchingPage: Int = 0
     
-    var currentText : String = ""
-    var searchTextFieldWidthConstraint: NSLayoutConstraint!
-    var cancelButtonLeadingConstraint: NSLayoutConstraint!
+    private var currentText : String = ""
+    private var searchTextFieldWidthConstraint: NSLayoutConstraint!
+    private var cancelButtonLeadingConstraint: NSLayoutConstraint!
     
     
     // MARK: - Views
@@ -129,7 +128,6 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
         cancelButton.setTitleColor(.black, for: .normal)
         cancelButton.addTarget(self, action: #selector(cancelButtonClicked), for: .touchUpInside)
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
-        cancelButton.isHidden = true
         
         if let searchContainerView = searchContainerView {
             searchContainerView.addSubview(searchTextField)
@@ -138,7 +136,8 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
             NSLayoutConstraint.activate([
                 searchTextField.leadingAnchor.constraint(equalTo: searchContainerView.leadingAnchor),
                 searchTextField.topAnchor.constraint(equalTo: searchContainerView.topAnchor),
-                searchTextField.bottomAnchor.constraint(equalTo: searchContainerView.bottomAnchor)
+                searchTextField.bottomAnchor.constraint(equalTo: searchContainerView.bottomAnchor),
+                searchTextField.trailingAnchor.constraint(equalTo: cancelButton.leadingAnchor)
             ])
             
             let textFieldHeightConstraint = searchTextField.heightAnchor.constraint(equalToConstant: searchContainerView.frame.height)
@@ -146,7 +145,7 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
             
             searchTextFieldWidthConstraint = searchTextField.widthAnchor.constraint(equalToConstant: self.searchContainerView.frame.width)
             searchTextFieldWidthConstraint.isActive = true
-            
+
             NSLayoutConstraint.activate([
                 cancelButton.leadingAnchor.constraint(equalTo: searchTextField.trailingAnchor, constant: 10),
                 cancelButton.trailingAnchor.constraint(equalTo: searchContainerView.trailingAnchor),
@@ -157,12 +156,49 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
             cancelButtonHeightConstraint.isActive = true
             
             cancelButtonLeadingConstraint = cancelButton.leadingAnchor.constraint(equalTo: searchTextField.trailingAnchor)
+            cancelButtonLeadingConstraint.constant = searchContainerView.frame.width
+            cancelButtonLeadingConstraint.constant = 0
             cancelButtonLeadingConstraint.isActive = true
             
-            searchTextFieldWidthConstraint.constant = searchContainerView.frame.width
-            cancelButtonLeadingConstraint.constant = 0
-            
+            self.cancelButton.isHidden = true
         }
+    }
+    
+    private func setupResultViewController() {
+        // 검색 결과 tableViewController 설정
+        resultVC = UITableViewController()
+        resultVC.tableView.delegate = self
+        resultVC.tableView.dataSource = self
+        resultVC.tableView.separatorStyle = .none
+        resultVC.tableView.register(UINib(nibName: SearchResultTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: SearchResultTableViewCell.identifier)
+        
+        resultVC.view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(resultVC.view)
+        
+        resultVC.view.isHidden = true
+    }
+    
+    private func setupResultViewLayout() {
+        NSLayoutConstraint.activate([
+            resultVC.view.topAnchor.constraint(equalTo: searchContainerView.bottomAnchor, constant: 16),
+            resultVC.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            resultVC.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            resultVC.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    private func setupTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        tableView.separatorStyle = .none
+        tableView.register(UINib(nibName: SearchResultTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: SearchResultTableViewCell.identifier)
+    }
+    
+    func loadRealm() {
+        recentSearchTerms = realmManager.getAllRecentSearchTerms()
+        print(recentSearchTerms)
+        tableView.reloadData()
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -190,46 +226,12 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    private func setupResultViewController() {
-        // 검색 결과 tableViewController 설정
-        resultVC = UITableViewController()
-        resultVC.tableView.delegate = self
-        resultVC.tableView.dataSource = self
-        resultVC.tableView.separatorStyle = .none
-        resultVC.tableView.register(UINib(nibName: "SearchResultTableViewCell", bundle: nil), forCellReuseIdentifier: "SearchResultTableViewCell")
-        
-        resultVC.view.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(resultVC.view)
-        
-        resultVC.view.isHidden = true
-    }
     
-    private func setupResultViewLayout() {
-        NSLayoutConstraint.activate([
-            resultVC.view.topAnchor.constraint(equalTo: searchContainerView.bottomAnchor, constant: 16),
-            resultVC.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            resultVC.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            resultVC.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
-    }
-    
-    private func setupTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        tableView.separatorStyle = .none
-        tableView.register(UINib(nibName: "SearchResultTableViewCell", bundle: nil), forCellReuseIdentifier: "SearchResultTableViewCell")
-    }
-    
-    func loadRealm() {
-        recentSearchTerms = realmManager.getAllRecentSearchTerms()
-        print(recentSearchTerms)
-        tableView.reloadData()
-    }
-    
+    /// 아이디 검색 서버통신
+    /// - Parameter searchText: 검색어
     func sendTextToServer(_ searchText: String) {
         isCurrentlyFetching = true
-        SearchDataService.shared.getIdSearch(keyword: searchText){ response in
+        SearchDataService.shared.getIdSearch(keyword: searchText) { response in
             switch response {
             case .success(let data):
                 print("success!!!!")
@@ -267,9 +269,9 @@ class RecentSearchViewController: UIViewController, UITextFieldDelegate {
     }
 }
 
-// MARK: - Extension: TableView
+// MARK: - Extension: UITableView
 
-extension RecentSearchViewController:UITableViewDelegate, UITableViewDataSource {
+extension RecentSearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == self.tableView {
             return recentSearchTerms.count
@@ -280,12 +282,10 @@ extension RecentSearchViewController:UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultTableViewCell", for: indexPath) as! SearchResultTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTableViewCell.identifier, for: indexPath) as! SearchResultTableViewCell
         
         if tableView == self.tableView {
             let recentSearchTerm = recentSearchTerms[indexPath.row]
-            print(recentSearchTerm)
-            print(recentSearchTerm.term)
             cell.userHandle.text = recentSearchTerm.term
             cell.userName.text = recentSearchTerm.name
             cell.configure(with: recentSearchTerm.profileImg)
@@ -319,7 +319,6 @@ extension RecentSearchViewController:UITableViewDelegate, UITableViewDataSource 
             
             handleSelectedUser(handle: handle, name: name, profileImg: profileImg)
             tableView.deselectRow(at: indexPath, animated: true)
-            
         } else if tableView == self.resultVC.tableView {
             let selectedUserData = memberList[indexPath.row]
             let handle = selectedUserData.handle
@@ -341,7 +340,6 @@ extension RecentSearchViewController:UITableViewDelegate, UITableViewDataSource 
         profileTabVC.recievedHandle = handle
         self.navigationController?.pushViewController(profileTabVC, animated: true)
     }
-    
 }
 
 // MARK: - Extension: UIScrollView
