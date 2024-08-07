@@ -8,24 +8,25 @@ import RealmSwift
 
 class RecentSearchRealmManager {
     private let realm: Realm
-
+    
     init() {
-        // Get the default Realm
         self.realm = try! Realm()
-        
     }
-
+    
     // MARK: - Create
+    
+    /// Realm DB에 최근 검색어 추가
+    /// - Parameters:
+    ///   - term: 검색 프로필 handle
+    ///   - profileImg: 검색 프로필 이미지
+    ///   - name: 검색 프로필 이름
     func addRecentSearch(term: String, profileImg: String, name: String) {
-        // Check if the term already exists in Realm
         if let existingSearchTerm = realm.objects(RecentSearchModel.self).filter("term == %@", term).first {
-            // Term already exists, update the date
             try! realm.write {
                 existingSearchTerm.date = Date()
             }
             print("Term updated")
         } else {
-            // Term does not exist, add it to Realm
             let searchTerm = RecentSearchModel(term: term, profileImg: profileImg, name: name)
             try! realm.write {
                 realm.add(searchTerm)
@@ -33,14 +34,19 @@ class RecentSearchRealmManager {
             print("Term added to Realm")
         }
     }
-
+    
     // MARK: - Read
+    
+    /// Realm DB에 저장된 최근검색 기록 반환
+    /// - Returns: 날짜를 기준으로 내림차순
     func getAllRecentSearchTerms() -> Results<RecentSearchModel> {
-        // Retrieve all RecentSearchModel objects from Realm
         return realm.objects(RecentSearchModel.self).sorted(byKeyPath: "date", ascending: false)
     }
-
+    
     // MARK: - Update
+    
+    /// Realm DB 업데이트
+    /// - Parameter term: <#term description#>
     func updateRecentSearchTerm(term: String) {
         guard let searchTerm = realm.objects(RecentSearchModel.self).filter("term == %@", term).first else {
             print("Original term not found in Realm")
@@ -48,36 +54,38 @@ class RecentSearchRealmManager {
         }
         
         try! realm.write {
-            // Update the date to reflect the modification
             searchTerm.date = Date()
         }
-        print("Term updated in Realm")// After updating, refresh the list by sorting it based on the date
+        print("Term updated in Realm")
     }
-
+    
     // MARK: - Delete
+    
+    /// Realm DB에서 원하는 데이터 삭제
+    /// - Parameter term: 삭제하고 싶은 handle
     func deleteRecentSearchTerm(term: String) {
         guard let searchTerm = realm.objects(RecentSearchModel.self).filter("term == %@", term).first else {
             print("Term not found in Realm")
             return
         }
-
+        
         try! realm.write {
-            // Delete the term from Realm
             realm.delete(searchTerm)
         }
         print("Term deleted from Realm")
     }
     
-    // MARK: - 전체 데이터 삭제
-        func deleteAllData() -> Bool {
-            do {
-                try realm.write {
-                    realm.deleteAll()
-                }
-                return true
-            } catch {
-                print("Error deleting all data: \(error.localizedDescription)")
-                return false
+    /// Realm DB 데이터 전체 삭제
+    /// - Returns: 성공 시 true, 실패 시 false
+    func deleteAllData() -> Bool {
+        do {
+            try realm.write {
+                realm.deleteAll()
             }
+            return true
+        } catch {
+            print("Error deleting all data: \(error.localizedDescription)")
+            return false
         }
+    }
 }
