@@ -288,8 +288,11 @@ extension RecentSearchViewController: UITableViewDelegate, UITableViewDataSource
             let recentSearchTerm = recentSearchTerms[indexPath.row]
             cell.userHandle.text = recentSearchTerm.term
             cell.userName.text = recentSearchTerm.name
-            cell.configure(with: recentSearchTerm.profileImg)
             cell.deleteBtn.isHidden = false
+            
+            if let url = URL(string: recentSearchTerm.profileImg) {
+                cell.profileImg.load(with: url)
+            }
             
             cell.deleteButtonAction = {
                 print("Delete button tapped for term: \(recentSearchTerm.term)")
@@ -304,8 +307,11 @@ extension RecentSearchViewController: UITableViewDelegate, UITableViewDataSource
             
             cell.userHandle.text = handles[indexPath.item]
             cell.userName.text = names[indexPath.item]
-            cell.configure(with: urls[indexPath.item])
             cell.deleteBtn.isHidden = true
+            
+            if let url = URL(string: urls[indexPath.item]) {
+                cell.profileImg.load(with: url)
+            }
         }
         return cell
     }

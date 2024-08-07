@@ -145,7 +145,9 @@ extension PostTabViewController: UICollectionViewDelegate, UICollectionViewDataS
         }
         
         if !postList.isEmpty {
-            cell.configure(with: postList[indexPath.item].postImage)
+            if let url = URL(string: postList[indexPath.item].postImage) {
+                cell.imageView.load(with: url)
+            }
         }
         
         return cell

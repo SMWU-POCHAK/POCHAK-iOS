@@ -9,32 +9,42 @@ import UIKit
 import Kingfisher
 
 class SearchResultTableViewCell: UITableViewCell {
+    
+    // MARK: - Properties
+    static let identifier = "SearchResultTableViewCell"
+    
+    var deleteButtonAction: (() -> Void)?
+    
+    // MARK: - Views
 
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var userHandle: UILabel!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var deleteBtn: UIImageView!
-    
-    static let identifier = "SearchResultTableViewCell"
-    
-    var deleteButtonAction: (() -> Void)?
+
+    // MARK: - Lifecycle
 
     override func awakeFromNib() {
         super.awakeFromNib()
         setupAttribute()
-        // Initialization code
-        print("SearchResultTableViewCell")
         imageViewClickGesture()
-    }
-
-    private func setupAttribute(){
-        profileImg.layer.cornerRadius = 52/2
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    // MARK: - Actions
 
-        // Configure the view for the selected state
+    @objc func imageViewTapped() {
+           deleteButtonAction?()
+    }
+    
+    // MARK: - Functions
+
+    private func setupAttribute(){
+        profileImg.layer.cornerRadius = 52/2
+        profileImg.contentMode = .scaleAspectFill
     }
     
     private func imageViewClickGesture(){
@@ -44,26 +54,7 @@ class SearchResultTableViewCell: UITableViewCell {
         // 이미지뷰에 UITapGestureRecognizer 추가
         deleteBtn.addGestureRecognizer(tapGesture)
 
-        // 사용자 상호 작용을 가능하게 하려면 반드시 다음을 설정해야 합니다.
+        // 사용자와 상호 작용이 가능하도록
         deleteBtn.isUserInteractionEnabled = true
-    }
-
-    @objc func imageViewTapped() {
-           deleteButtonAction?()
-    }
-    
-    // 이미지 설정 함수
-    func configure(with imageUrl: String) {
-        if let url = URL(string: imageUrl) {
-            profileImg.kf.setImage(with: url) { result in
-                switch result {
-                case .success(let value):
-                    print("Image successfully loaded: \(value.image)")
-                    self.profileImg.contentMode = .scaleAspectFill
-                case .failure(let error):
-                    print("Image failed to load with error: \(error.localizedDescription)")
-                }
-            }
-        }
     }
 }
