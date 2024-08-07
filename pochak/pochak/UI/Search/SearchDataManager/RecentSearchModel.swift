@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class RecentSearchModel: Object {
+final class RecentSearchModel: Object {
     @Persisted(primaryKey: true) var objectID: ObjectId
     @Persisted var term: String // primary key로 지정
     @Persisted var date: Date

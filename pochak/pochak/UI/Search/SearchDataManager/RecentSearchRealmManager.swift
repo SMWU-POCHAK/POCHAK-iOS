@@ -6,7 +6,7 @@
 //
 import RealmSwift
 
-class RecentSearchRealmManager {
+final class RecentSearchRealmManager {
     private let realm: Realm
     
     init() {

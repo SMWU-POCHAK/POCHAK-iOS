@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import RealmSwift
 
-class RecentSearchViewController: UIViewController, UITextFieldDelegate {
+final class RecentSearchViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Properties
     

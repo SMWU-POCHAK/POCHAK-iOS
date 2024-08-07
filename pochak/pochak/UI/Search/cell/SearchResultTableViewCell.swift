@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class SearchResultTableViewCell: UITableViewCell {
+final class SearchResultTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     static let identifier = "SearchResultTableViewCell"

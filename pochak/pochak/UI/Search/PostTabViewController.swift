@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class PostTabViewController: UIViewController, UISearchBarDelegate {
+final class PostTabViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: - Properties
     
