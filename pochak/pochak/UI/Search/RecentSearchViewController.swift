@@ -30,7 +30,7 @@ final class RecentSearchViewController: UIViewController, UITextFieldDelegate {
     private var currentText : String = ""
     private var searchTextFieldWidthConstraint: NSLayoutConstraint!
     private var cancelButtonLeadingConstraint: NSLayoutConstraint!
-    
+    private var cancelButtonWidthConstraint: NSLayoutConstraint!
     
     // MARK: - Views
     
@@ -55,7 +55,6 @@ final class RecentSearchViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
-        self.cancelButton.isHidden = true
         setupResultViewLayout()
     }
     
@@ -128,7 +127,7 @@ final class RecentSearchViewController: UIViewController, UITextFieldDelegate {
         cancelButton.setTitleColor(.black, for: .normal)
         cancelButton.addTarget(self, action: #selector(cancelButtonClicked), for: .touchUpInside)
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
-        
+
         if let searchContainerView = searchContainerView {
             searchContainerView.addSubview(searchTextField)
             searchContainerView.addSubview(cancelButton)
@@ -137,7 +136,6 @@ final class RecentSearchViewController: UIViewController, UITextFieldDelegate {
                 searchTextField.leadingAnchor.constraint(equalTo: searchContainerView.leadingAnchor),
                 searchTextField.topAnchor.constraint(equalTo: searchContainerView.topAnchor),
                 searchTextField.bottomAnchor.constraint(equalTo: searchContainerView.bottomAnchor),
-                searchTextField.trailingAnchor.constraint(equalTo: cancelButton.leadingAnchor)
             ])
             
             let textFieldHeightConstraint = searchTextField.heightAnchor.constraint(equalToConstant: searchContainerView.frame.height)
@@ -147,20 +145,19 @@ final class RecentSearchViewController: UIViewController, UITextFieldDelegate {
             searchTextFieldWidthConstraint.isActive = true
 
             NSLayoutConstraint.activate([
-                cancelButton.leadingAnchor.constraint(equalTo: searchTextField.trailingAnchor, constant: 10),
+                cancelButton.leadingAnchor.constraint(equalTo: searchTextField.trailingAnchor),
                 cancelButton.trailingAnchor.constraint(equalTo: searchContainerView.trailingAnchor),
-                cancelButton.centerYAnchor.constraint(equalTo: searchTextField.centerYAnchor)
+                cancelButton.centerYAnchor.constraint(equalTo: searchTextField.centerYAnchor),
             ])
             
             let cancelButtonHeightConstraint = cancelButton.heightAnchor.constraint(equalTo: searchContainerView.heightAnchor)
             cancelButtonHeightConstraint.isActive = true
             
-            cancelButtonLeadingConstraint = cancelButton.leadingAnchor.constraint(equalTo: searchTextField.trailingAnchor)
-            cancelButtonLeadingConstraint.constant = searchContainerView.frame.width
-            cancelButtonLeadingConstraint.constant = 0
-            cancelButtonLeadingConstraint.isActive = true
+            cancelButtonWidthConstraint = cancelButton.widthAnchor.constraint(equalToConstant: 0)
+            cancelButtonWidthConstraint.isActive = true
             
-            self.cancelButton.isHidden = true
+            cancelButtonLeadingConstraint = cancelButton.leadingAnchor.constraint(equalTo: searchTextField.trailingAnchor)
+            cancelButtonLeadingConstraint.isActive = true
         }
     }
     
@@ -190,7 +187,6 @@ final class RecentSearchViewController: UIViewController, UITextFieldDelegate {
     private func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        
         tableView.separatorStyle = .none
         tableView.register(UINib(nibName: SearchResultTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: SearchResultTableViewCell.identifier)
     }
@@ -202,22 +198,20 @@ final class RecentSearchViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        cancelButton.isHidden = false
-        
         UIView.animate(withDuration: 0.3) {
             self.searchTextFieldWidthConstraint.constant = self.searchContainerView.frame.width - 41
+            self.cancelButtonWidthConstraint.constant = 41
             self.cancelButtonLeadingConstraint.constant = 16
             self.view.layoutIfNeeded()
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        UIView.animate(withDuration: 0.3, animations: {
+        UIView.animate(withDuration: 0.3) {
             self.searchTextFieldWidthConstraint.constant = self.searchContainerView.frame.width
+            self.cancelButtonWidthConstraint.constant = 0
             self.cancelButtonLeadingConstraint.constant = 0
             self.view.layoutIfNeeded()
-        }) { _ in
-            self.cancelButton.isHidden = true
         }
     }
     
@@ -225,7 +219,6 @@ final class RecentSearchViewController: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
-    
     
     /// 아이디 검색 서버통신
     /// - Parameter searchText: 검색어
