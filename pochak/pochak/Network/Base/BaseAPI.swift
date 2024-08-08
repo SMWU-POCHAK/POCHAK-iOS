@@ -13,7 +13,7 @@ protocol BaseAPI: URLRequestConvertible {
     var baseURL: String { get }
     var method: HTTPMethod { get }
     var path: String { get }
-    var parameters: RequestParams { get }
+    var parameters: RequestParams? { get }
 }
 
 extension BaseAPI {
@@ -31,19 +31,21 @@ extension BaseAPI {
         let url = try baseURL.asURL()
         var urlRequest = try URLRequest(url: url.appendingPathComponent(path), method: method)
         urlRequest.setValue(ContentType.json.rawValue, forHTTPHeaderField: HTTPHeaderType.contentType.rawValue)
-
-        switch parameters {
-        case .query(let request):
-            let params = request?.toDictionary() ?? [:]
-            let queryParams = params.map { URLQueryItem(name: $0.key, value: "\($0.value)") }
-            var components = URLComponents(string: url.appendingPathComponent(path).absoluteString)
-            components?.queryItems = queryParams
-            urlRequest.url = components?.url
-        case .body(let request):
-            let params = request?.toDictionary() ?? [:]
-            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
+        
+        if let parameters = parameters {
+            switch parameters {
+            case .query(let request):
+                let params = request?.toDictionary() ?? [:]
+                let queryParams = params.map { URLQueryItem(name: $0.key, value: "\($0.value)") }
+                var components = URLComponents(string: url.appendingPathComponent(path).absoluteString)
+                components?.queryItems = queryParams
+                urlRequest.url = components?.url
+            case .body(let request):
+                let params = request?.toDictionary() ?? [:]
+                urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
+            }
         }
-
+            
         print("==urlRequest = \(urlRequest.description)==")
         return urlRequest
     }
