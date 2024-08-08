@@ -12,7 +12,7 @@ final class PostViewController: UIViewController {
     // MARK: - Properties
     
     var receivedPostId: Int?
-    var postOwnerHandle: String = ""  // 게시글 주인 핸들 저장
+    //var postOwnerHandle: String = ""  // 게시글 주인 핸들 저장
     
     private let postStoryBoard = UIStoryboard(name: "PostTab", bundle: nil)
     private let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
@@ -115,7 +115,7 @@ final class PostViewController: UIViewController {
         guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
         
         if sender.view == profileImageView || sender.view == pochakUserLabel || sender.view == postOwnerHandleLabel {
-            otherUserProfileVC.recievedHandle = postOwnerHandle
+            otherUserProfileVC.recievedHandle = postDataResult?.ownerHandle
         }
         
         else if sender.view == commentUserHandleLabel {
@@ -147,7 +147,7 @@ final class PostViewController: UIViewController {
     @objc func moreActionButtonDidTap() {
         let postMenuVC = postStoryBoard.instantiateViewController(withIdentifier: "PostMenuVC") as! PostMenuViewController
         postMenuVC.setPostData(postId: receivedPostId!, 
-                               postOwner: postOwnerHandle,
+                               postOwner: postDataResult!.ownerHandle,
                                taggedMemberList: postDataResult!.tagList.map({ $0.handle }))
         let sheet = postMenuVC.sheetPresentationController
         
@@ -159,7 +159,7 @@ final class PostViewController: UIViewController {
         
         let currentLogInUser = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
         
-        let cellCount = (postOwnerHandle == currentLogInUser || postDataResult!.tagList.contains(where: { $0.handle == currentLogInUser })) ? 3 : 2
+        let cellCount = (postDataResult?.ownerHandle == currentLogInUser || postDataResult!.tagList.contains(where: { $0.handle == currentLogInUser })) ? 3 : 2
         let height = label.frame.height + CGFloat(36 + 16 + 48 * cellCount)
         let fraction = UISheetPresentationController.Detent.custom { context in
             height
@@ -352,7 +352,7 @@ final class PostViewController: UIViewController {
     }
     
     private func postFollowRequest() {
-        FollowDataService.shared.postFollow(postOwnerHandle) { response in
+        FollowDataService.shared.postFollow(postDataResult!.ownerHandle) { response in
             switch(response) {
             case .success(let followDataResponse):
                 if(!followDataResponse.isSuccess) {
