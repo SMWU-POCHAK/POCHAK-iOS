@@ -65,7 +65,11 @@ final class RecentSearchViewController: UIViewController, UITextFieldDelegate {
             recentSearchTerms = realmManager.getAllRecentSearchTerms()
             tableView.reloadData()
         } else {
-            print("Failed to delete all data")
+            showAlert(alertType: .confirmOnly,
+                      titleText: "다시 시도해주세요.",
+                      messageText: "",
+                      cancelButtonText: "",
+                      confirmButtonText: "확인")
         }
     }
     
@@ -290,8 +294,15 @@ extension RecentSearchViewController: UITableViewDelegate, UITableViewDataSource
             cell.deleteButtonAction = {
                 print("Delete button tapped for term: \(recentSearchTerm.term)")
                 
-                self.realmManager.deleteRecentSearchTerm(term: recentSearchTerm.term)
-                tableView.reloadData()
+                if (self.realmManager.deleteRecentSearchTerm(term: recentSearchTerm.term)) {
+                    tableView.reloadData()
+                } else {
+                    self.showAlert(alertType: .confirmOnly,
+                              titleText: "다시 시도해주세요.",
+                              messageText: "",
+                              cancelButtonText: "",
+                              confirmButtonText: "확인")
+                }
             }
         } else if tableView == self.resultVC.tableView {
             let urls = self.memberList.map { $0.profileImage }
@@ -352,5 +363,16 @@ extension RecentSearchViewController: UIScrollViewDelegate {
                 self.sendTextToServer(currentText)
             }
         }
+    }
+}
+
+// MARK: - Extension: CustomAlertDelegate
+
+extension RecentSearchViewController: CustomAlertDelegate {
+    func cancel() {
+    }
+    
+    func confirmAction() {
+        print("confirmed")
     }
 }

@@ -63,16 +63,17 @@ final class RecentSearchRealmManager {
     
     /// Realm DB에서 원하는 데이터 삭제
     /// - Parameter term: 삭제하고 싶은 handle
-    func deleteRecentSearchTerm(term: String) {
+    func deleteRecentSearchTerm(term: String) -> Bool {
         guard let searchTerm = realm.objects(RecentSearchModel.self).filter("term == %@", term).first else {
             print("Term not found in Realm")
-            return
+            return false
         }
         
         try! realm.write {
             realm.delete(searchTerm)
         }
         print("Term deleted from Realm")
+        return true
     }
     
     /// Realm DB 데이터 전체 삭제
