@@ -130,7 +130,6 @@ final class PostTabViewController: UIViewController, UISearchBarDelegate {
     }
 }
 
-
 // MARK: - Extension: UICollectionView
 
 extension PostTabViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -165,7 +164,6 @@ extension PostTabViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 9
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 4.5, left: 20, bottom: 4.5, right: 20)

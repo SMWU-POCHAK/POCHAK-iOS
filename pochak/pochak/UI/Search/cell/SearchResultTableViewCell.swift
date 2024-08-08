@@ -11,6 +11,7 @@ import Kingfisher
 final class SearchResultTableViewCell: UITableViewCell {
     
     // MARK: - Properties
+    
     static let identifier = "SearchResultTableViewCell"
     
     var deleteButtonAction: (() -> Void)?
