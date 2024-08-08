@@ -9,8 +9,8 @@ import Foundation
 import RealmSwift
 
 final class RecentSearchModel: Object {
-    @Persisted(primaryKey: true) var objectID: ObjectId
-    @Persisted var term: String // primary key로 지정
+    @Persisted(primaryKey: true) var objectID: ObjectId // primary key로 지정
+    @Persisted var term: String
     @Persisted var date: Date
     @Persisted var profileImg: String
     @Persisted var name : String
