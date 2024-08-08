@@ -27,4 +27,23 @@ struct PostService {
                 }
             }
         }
+    
+    /// 게시글 삭제하기
+    /// - Parameters:
+    ///   - postId: 삭제하려는 게시글 아이디
+    ///   - completion: 핸들러 (뷰컨트롤러에 있음)
+    static func deletePostDetail(
+        postId: Int,
+        completion: @escaping (_ succeed: PostDeleteResponse?, _ failed: NetworkError?) -> Void) {
+            NetworkService.shared.request(PostDeleteAPI.deletePostDetail(postId)) { response in
+                switch response {
+                case .success(let data):
+                    completion(data, nil)
+                case .failure(let error):
+                    print("=== deletePostDetail service error ===")
+                    print(error.localizedDescription)
+                    completion(nil, error)
+                }
+            }
+    }
 }

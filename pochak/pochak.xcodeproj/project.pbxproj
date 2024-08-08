@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0801765E2A74F4B0005E6953 /* UITextView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0801765D2A74F4B0005E6953 /* UITextView+Extension.swift */; };
 		0802AE032C31D3E00090FB92 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0802AE022C31D3E00090FB92 /* UIImageView+.swift */; };
+		080AAFA52C64E9A500FBBE94 /* PostDeleteAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080AAFA42C64E9A500FBBE94 /* PostDeleteAPI.swift */; };
+		080AAFA72C64EAA200FBBE94 /* PostDeleteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080AAFA62C64EAA200FBBE94 /* PostDeleteResponse.swift */; };
 		080FEF012C551C3200951460 /* ReportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080FEF002C551C3200951460 /* ReportType.swift */; };
 		081228C62A69624000DFA094 /* PostLikesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081228C52A69624000DFA094 /* PostLikesViewController.swift */; };
 		081228CA2A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081228C82A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift */; };
@@ -217,6 +219,8 @@
 /* Begin PBXFileReference section */
 		0801765D2A74F4B0005E6953 /* UITextView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extension.swift"; sourceTree = "<group>"; };
 		0802AE022C31D3E00090FB92 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
+		080AAFA42C64E9A500FBBE94 /* PostDeleteAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDeleteAPI.swift; sourceTree = "<group>"; };
+		080AAFA62C64EAA200FBBE94 /* PostDeleteResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDeleteResponse.swift; sourceTree = "<group>"; };
 		080FEF002C551C3200951460 /* ReportType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportType.swift; sourceTree = "<group>"; };
 		081228C52A69624000DFA094 /* PostLikesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLikesViewController.swift; sourceTree = "<group>"; };
 		081228C82A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedPeopleListTableViewCell.swift; sourceTree = "<group>"; };
@@ -659,6 +663,7 @@
 			isa = PBXGroup;
 			children = (
 				08C915172C64610C0044A9A8 /* PostDetailResponse.swift */,
+				080AAFA62C64EAA200FBBE94 /* PostDeleteResponse.swift */,
 			);
 			path = PostDetail;
 			sourceTree = "<group>";
@@ -667,6 +672,7 @@
 			isa = PBXGroup;
 			children = (
 				08C9151E2C6461ED0044A9A8 /* PostAPI.swift */,
+				080AAFA42C64E9A500FBBE94 /* PostDeleteAPI.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -1507,6 +1513,7 @@
 				08FD3A3C2B3AF94A00574880 /* CommentDataModel.swift in Sources */,
 				37C3AF4B2B3CB49E00B4C79C /* MyProfilePostDataManager.swift in Sources */,
 				08FD3A3E2B3AFE7B00574880 /* CommentDataService.swift in Sources */,
+				080AAFA52C64E9A500FBBE94 /* PostDeleteAPI.swift in Sources */,
 				EA2CD63F2C5F585400644EFE /* HTTPHeaderType.swift in Sources */,
 				3769D6CE2B3C563A00294CD1 /* PostListViewController.swift in Sources */,
 				EA0107A72A5CF73900A3AE85 /* AlarmViewController.swift in Sources */,
@@ -1633,6 +1640,7 @@
 				EAEADB982C3450FB0037E116 /* PreviewAlarmDataModel.swift in Sources */,
 				EAF918542AA4692E0037C270 /* NetworkResult.swift in Sources */,
 				EA12890C2B3BF1A7002EC93E /* RecentSearchViewController.swift in Sources */,
+				080AAFA72C64EAA200FBBE94 /* PostDeleteResponse.swift in Sources */,
 				EADE01842B383A8B00CECD5B /* PostTabDataModel.swift in Sources */,
 				08EB99B42C53D76C00FAC08A /* UIScrollView+.swift in Sources */,
 				EA6306DA2C2BFE83000DB0A7 /* CustomTabbar.swift in Sources */,
