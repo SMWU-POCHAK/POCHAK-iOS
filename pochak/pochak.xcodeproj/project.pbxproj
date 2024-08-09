@@ -64,8 +64,6 @@
 		08C9151C2C6461B10044A9A8 /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C9151B2C6461B10044A9A8 /* PostService.swift */; };
 		08C9151F2C6461ED0044A9A8 /* PostAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C9151E2C6461ED0044A9A8 /* PostAPI.swift */; };
 		08D98C4A2AFEE8D700E9A097 /* LikedUsersDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D98C492AFEE8D700E9A097 /* LikedUsersDataModel.swift */; };
-		08DD9EC22B454356004CCD5F /* FollowDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DD9EC12B454356004CCD5F /* FollowDataModel.swift */; };
-		08DD9EC42B454405004CCD5F /* FollowDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DD9EC32B454405004CCD5F /* FollowDataService.swift */; };
 		08E8DCDC2C38118000EC78C2 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E8DCDB2C38118000EC78C2 /* UILabel+.swift */; };
 		08EB5D252C280CFE00E35C16 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB5D242C280CFE00E35C16 /* UIImage+.swift */; };
 		08EB99B42C53D76C00FAC08A /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB99B32C53D76C00FAC08A /* UIScrollView+.swift */; };
@@ -281,8 +279,6 @@
 		08C9151B2C6461B10044A9A8 /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
 		08C9151E2C6461ED0044A9A8 /* PostAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAPI.swift; sourceTree = "<group>"; };
 		08D98C492AFEE8D700E9A097 /* LikedUsersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedUsersDataModel.swift; sourceTree = "<group>"; };
-		08DD9EC12B454356004CCD5F /* FollowDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowDataModel.swift; sourceTree = "<group>"; };
-		08DD9EC32B454405004CCD5F /* FollowDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowDataService.swift; sourceTree = "<group>"; };
 		08E8DCDB2C38118000EC78C2 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		08EB5D242C280CFE00E35C16 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		08EB99B32C53D76C00FAC08A /* UIScrollView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
@@ -477,7 +473,6 @@
 			children = (
 				08B693F32C37219C00D82DC4 /* TaggedUsers */,
 				0844649A2BF0F21200949850 /* PostMenu */,
-				08DD9EC02B454343004CCD5F /* FollowDataManager */,
 				08FD3A3A2B3ADF4600574880 /* CommentDataManager */,
 				08D98C482AFEE8C100E9A097 /* LikesDataManager */,
 				EA0107992A59556800A3AE85 /* PostViewController.swift */,
@@ -716,15 +711,6 @@
 				08FD3A382B357E6400574880 /* LikedUsersDataService.swift */,
 			);
 			path = LikesDataManager;
-			sourceTree = "<group>";
-		};
-		08DD9EC02B454343004CCD5F /* FollowDataManager */ = {
-			isa = PBXGroup;
-			children = (
-				08DD9EC12B454356004CCD5F /* FollowDataModel.swift */,
-				08DD9EC32B454405004CCD5F /* FollowDataService.swift */,
-			);
-			path = FollowDataManager;
 			sourceTree = "<group>";
 		};
 		08FD3A3A2B3ADF4600574880 /* CommentDataManager */ = {
@@ -1557,7 +1543,6 @@
 				373235472B68F93E0042EF94 /* FollowListDataManager.swift in Sources */,
 				08EB5D252C280CFE00E35C16 /* UIImage+.swift in Sources */,
 				EAF885292B567F4F00BA184A /* RecentSearchModel.swift in Sources */,
-				08DD9EC22B454356004CCD5F /* FollowDataModel.swift in Sources */,
 				08D98C4A2AFEE8D700E9A097 /* LikedUsersDataModel.swift in Sources */,
 				EA0107B32A5ECB8A00A3AE85 /* PostCollectionViewCell.swift in Sources */,
 				EADE01862B383A9700CECD5B /* PostTabDataService.swift in Sources */,
@@ -1584,7 +1569,6 @@
 				EA2CD63B2C5F463700644EFE /* NetworkService.swift in Sources */,
 				373235542B692C6D0042EF94 /* DeleteFollowerDataManager.swift in Sources */,
 				3742617D2C359D6100B67886 /* CheckHandleDuplicationDataManager.swift in Sources */,
-				08DD9EC42B454405004CCD5F /* FollowDataService.swift in Sources */,
 				371D33782B4E83E90084FF6A /* UserDefaultsManager.swift in Sources */,
 				3742617A2C31C6F900B67886 /* AppleLoginDataModel.swift in Sources */,
 				373815162A89E6D30032066A /* SocialJoinViewController.swift in Sources */,
