@@ -349,26 +349,25 @@ final class PostViewController: UIViewController {
     }
     
     private func postFollowRequest() {
-        FollowDataService.shared.postFollow(postDataResult!.ownerHandle) { response in
-            switch(response) {
-            case .success(let followDataResponse):
-                if(!followDataResponse.isSuccess) {
-                    self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
-                    return
+        UserService.postFollowRequest(handle: postDataResult!.ownerHandle) { [weak self] data, failed in
+            guard let data = data else {
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "팔로우에 실패하였습니다."), animated: true)
                 }
-                // 바뀐 데이터 반영 위해 다시 포스트 상세 데이터 로드
-                self.loadPostDetailData()
-            case .requestErr(let message):
-                print("requestErr", message)
-            case .pathErr:
-                print("pathErr")
-            case .serverErr:
-                print("serverErr")
-                self.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
-            case .networkFail:
-                print("networkFail")
-                self.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
+                return
             }
+            
+            print("=== PostDetail, postFollowRequest succeeded ===")
+            print("== data: \(data)")
+            
+            if(!data.isSuccess) {
+                self?.present(UIAlertController.networkErrorAlert(title: "팔로우에 실패하였습니다."), animated: true)
+                return
+            }
+            self?.loadPostDetailData()
         }
     }
 }
