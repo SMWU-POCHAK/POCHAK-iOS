@@ -35,6 +35,9 @@
 		084AF4C82A5D831100C6454A /* HomeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */; };
 		086E90072C664C6A00A05E76 /* PostLikeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086E90062C664C6A00A05E76 /* PostLikeResponse.swift */; };
 		086E90092C664C9600A05E76 /* PostLikeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086E90082C664C9600A05E76 /* PostLikeAPI.swift */; };
+		086E900C2C6669C600A05E76 /* FollowAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086E900B2C6669C600A05E76 /* FollowAPI.swift */; };
+		086E900F2C666A1D00A05E76 /* FollowResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086E900E2C666A1D00A05E76 /* FollowResponse.swift */; };
+		086E90112C666A5700A05E76 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086E90102C666A5700A05E76 /* UserService.swift */; };
 		0876E23E2C274256008DE88F /* NoPostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */; };
 		0876E23F2C274256008DE88F /* NoPostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */; };
 		0889D1382C5CB69F00206C86 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0889D1372C5CB69F00206C86 /* String+.swift */; };
@@ -248,6 +251,9 @@
 		084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCollectionViewCell.xib; sourceTree = "<group>"; };
 		086E90062C664C6A00A05E76 /* PostLikeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLikeResponse.swift; sourceTree = "<group>"; };
 		086E90082C664C9600A05E76 /* PostLikeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLikeAPI.swift; sourceTree = "<group>"; };
+		086E900B2C6669C600A05E76 /* FollowAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowAPI.swift; sourceTree = "<group>"; };
+		086E900E2C666A1D00A05E76 /* FollowResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowResponse.swift; sourceTree = "<group>"; };
+		086E90102C666A5700A05E76 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoPostCollectionViewCell.swift; sourceTree = "<group>"; };
 		0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoPostCollectionViewCell.xib; sourceTree = "<group>"; };
 		0889D1372C5CB69F00206C86 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
@@ -545,6 +551,22 @@
 				0844D7F22BF21A80001154AC /* CancelViewCell.xib */,
 			);
 			path = cell;
+			sourceTree = "<group>";
+		};
+		086E900A2C6669BA00A05E76 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				086E900B2C6669C600A05E76 /* FollowAPI.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		086E900D2C666A0E00A05E76 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				086E900E2C666A1D00A05E76 /* FollowResponse.swift */,
+			);
+			path = User;
 			sourceTree = "<group>";
 		};
 		089C757A2A51713C003AAB94 /* Fonts */ = {
@@ -1099,6 +1121,7 @@
 			children = (
 				EA2CD6412C5F5A0500644EFE /* HomeService.swift */,
 				08C9151B2C6461B10044A9A8 /* PostService.swift */,
+				086E90102C666A5700A05E76 /* UserService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1106,6 +1129,7 @@
 		EA2CD6332C5F458900644EFE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				086E900D2C666A0E00A05E76 /* User */,
 				08C915162C6460F50044A9A8 /* PostDetail */,
 				EA2CD6372C5F45B900644EFE /* Home */,
 			);
@@ -1127,6 +1151,7 @@
 		EA2CD6352C5F45A100644EFE /* APIs */ = {
 			isa = PBXGroup;
 			children = (
+				086E900A2C6669BA00A05E76 /* User */,
 				08C9151D2C6461C00044A9A8 /* Post */,
 				EA2CD6402C5F59F800644EFE /* Home */,
 			);
@@ -1563,6 +1588,7 @@
 				371D33782B4E83E90084FF6A /* UserDefaultsManager.swift in Sources */,
 				3742617A2C31C6F900B67886 /* AppleLoginDataModel.swift in Sources */,
 				373815162A89E6D30032066A /* SocialJoinViewController.swift in Sources */,
+				086E90112C666A5700A05E76 /* UserService.swift in Sources */,
 				EA1289082B3B2823002EC93E /* AlarmDataModel.swift in Sources */,
 				3766F40A2C370CF5001DD239 /* BlockedUserViewController.swift in Sources */,
 				374261782C31C6ED00B67886 /* AppleLoginDataManager.swift in Sources */,
@@ -1632,6 +1658,7 @@
 				3769D6D02B3C569C00294CD1 /* FirstPostTabmanViewController.swift in Sources */,
 				374261642C2FEF5F00B67886 /* ProfileMenuViewController.swift in Sources */,
 				3742617F2C359D6D00B67886 /* CheckHandleDuplicationDataModel.swift in Sources */,
+				086E900F2C666A1D00A05E76 /* FollowResponse.swift in Sources */,
 				EAC582742C3074EA006F44AF /* UIColor+.swift in Sources */,
 				3769D6BB2B3C347000294CD1 /* FollowListViewController.swift in Sources */,
 				3769D6B42B3C301B00294CD1 /* JoinDataManager.swift in Sources */,
@@ -1646,6 +1673,7 @@
 				EA12890C2B3BF1A7002EC93E /* RecentSearchViewController.swift in Sources */,
 				080AAFA72C64EAA200FBBE94 /* PostDeleteResponse.swift in Sources */,
 				EADE01842B383A8B00CECD5B /* PostTabDataModel.swift in Sources */,
+				086E900C2C6669C600A05E76 /* FollowAPI.swift in Sources */,
 				08EB99B42C53D76C00FAC08A /* UIScrollView+.swift in Sources */,
 				EA6306DA2C2BFE83000DB0A7 /* CustomTabbar.swift in Sources */,
 				EA2CD6422C5F5A0500644EFE /* HomeService.swift in Sources */,
