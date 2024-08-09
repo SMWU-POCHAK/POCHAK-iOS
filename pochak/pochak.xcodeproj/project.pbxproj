@@ -33,6 +33,8 @@
 		0844D7F42BF21A80001154AC /* CancelViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0844D7F22BF21A80001154AC /* CancelViewCell.xib */; };
 		084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */; };
 		084AF4C82A5D831100C6454A /* HomeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */; };
+		086E90072C664C6A00A05E76 /* PostLikeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086E90062C664C6A00A05E76 /* PostLikeResponse.swift */; };
+		086E90092C664C9600A05E76 /* PostLikeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086E90082C664C9600A05E76 /* PostLikeAPI.swift */; };
 		0876E23E2C274256008DE88F /* NoPostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */; };
 		0876E23F2C274256008DE88F /* NoPostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */; };
 		0889D1382C5CB69F00206C86 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0889D1372C5CB69F00206C86 /* String+.swift */; };
@@ -244,6 +246,8 @@
 		0844D7F22BF21A80001154AC /* CancelViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CancelViewCell.xib; sourceTree = "<group>"; };
 		084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCollectionViewCell.xib; sourceTree = "<group>"; };
+		086E90062C664C6A00A05E76 /* PostLikeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLikeResponse.swift; sourceTree = "<group>"; };
+		086E90082C664C9600A05E76 /* PostLikeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLikeAPI.swift; sourceTree = "<group>"; };
 		0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoPostCollectionViewCell.swift; sourceTree = "<group>"; };
 		0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoPostCollectionViewCell.xib; sourceTree = "<group>"; };
 		0889D1372C5CB69F00206C86 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
@@ -667,6 +671,7 @@
 				080AAFA62C64EAA200FBBE94 /* PostDeleteResponse.swift */,
 				080AAFAA2C65161100FBBE94 /* PostReportResponse.swift */,
 				080AAFAC2C65174900FBBE94 /* PostReportRequest.swift */,
+				086E90062C664C6A00A05E76 /* PostLikeResponse.swift */,
 			);
 			path = PostDetail;
 			sourceTree = "<group>";
@@ -677,6 +682,7 @@
 				08C9151E2C6461ED0044A9A8 /* PostAPI.swift */,
 				080AAFA42C64E9A500FBBE94 /* PostDeleteAPI.swift */,
 				080AAFA82C6510AE00FBBE94 /* PostReportAPI.swift */,
+				086E90082C664C9600A05E76 /* PostLikeAPI.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -1600,9 +1606,11 @@
 				37C3AF482B3CB2B300B4C79C /* MyProfilePochakedPostModel.swift in Sources */,
 				EAF8852B2B569B6600BA184A /* RecentSearchRealmManager.swift in Sources */,
 				EA2CD6392C5F45E300644EFE /* BaseAPI.swift in Sources */,
+				086E90092C664C9600A05E76 /* PostLikeAPI.swift in Sources */,
 				37D311E12B566C5A00A1D7C1 /* SignOutDataModel.swift in Sources */,
 				376F125B2A8B7440005F469B /* SocialLoginViewController.swift in Sources */,
 				37D311D72B53057700A1D7C1 /* ProfileUpdateDataModel.swift in Sources */,
+				086E90072C664C6A00A05E76 /* PostLikeResponse.swift in Sources */,
 				EA4EF8D82C2EC5F7009549FF /* UITextField+.swift in Sources */,
 				08C9151F2C6461ED0044A9A8 /* PostAPI.swift in Sources */,
 				EAF918512AA468670037C270 /* APIConstants.swift in Sources */,

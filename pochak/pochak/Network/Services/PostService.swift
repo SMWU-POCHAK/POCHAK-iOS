@@ -65,4 +65,23 @@ struct PostService {
                 }
             }
         }
+    
+    /// 게시글 좋아요 누르기
+    /// - Parameters:
+    ///   - postId: 좋아요를 누르려는 게시글 아이디
+    ///   - completion: 통신 후 핸들러 (뷰컨트롤러에 있음)
+    static func postLikePost(
+        postId: Int,
+        completion: @escaping (_ succeed: PostLikeResponse?, _ failed: NetworkError?) -> Void) {
+            NetworkService.shared.request(PostLikeAPI.postLikePost(postId)) { response in
+                switch response {
+                case .success(let data):
+                    completion(data, nil)
+                case .failure(let error):
+                    print("=== postLikePost service error ===")
+                    print(error.localizedDescription)
+                    completion(nil, error)
+                }
+            }
+        }
 }
