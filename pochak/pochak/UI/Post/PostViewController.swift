@@ -19,9 +19,7 @@ final class PostViewController: UIViewController {
     private let refreshControl = UIRefreshControl()
         
     private var postDataResult: PostDetailResponseResult?
-    
-    private var likePostResponse: LikePostDataResponse!
-    
+        
     private var deletePostResponse: PostDeleteResponse!
         
     // MARK: - Views
@@ -86,27 +84,26 @@ final class PostViewController: UIViewController {
     }
 
     @IBAction func likeBtnTapped(_ sender: Any) {
-        LikedUsersDataService.shared.postLikeRequest(receivedPostId!) { response in
-            switch(response) {
-            case .success(let likePostResponse):
-                self.likePostResponse = likePostResponse as? LikePostDataResponse
-                if(!self.likePostResponse.isSuccess!) {
-                    self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
-                    return
+        PostService.postLikePost(postId: receivedPostId!) { [weak self] data, failed in
+            guard let data = data else {
+                // 에러가 난 경우, alert 창 present
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "좋아요에 실패하였습니다."), animated: true)
                 }
-                print(self.likePostResponse.message)
-                self.loadPostDetailData()
-            case .requestErr(let message):
-                print("requestErr", message)
-            case .pathErr:
-                print("pathErr")
-            case .serverErr:
-                print("serverErr")
-                self.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
-            case .networkFail:
-                print("networkFail")
-                self.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
+                return
             }
+            
+            print("=== PostDetail, likeBtnTapped succeeded ===")
+            print("== data: \(data)")
+            
+            if(!data.isSuccess) {
+                self?.present(UIAlertController.networkErrorAlert(title: "좋아요에 실패하였습니다."), animated: true)
+                return
+            }
+            self?.loadPostDetailData()
         }
     }
     
