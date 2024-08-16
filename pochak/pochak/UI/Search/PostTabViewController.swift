@@ -12,7 +12,7 @@ final class PostTabViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: - Properties
     
-    private var postTabDataResponse: PostTabDataResponse!
+    private var postTabDataResponse: PostTabResponse!
     private var postTabDataResult: PostTabDataResult!
     private var postList: [PostTabDataPostList]! = []
     
@@ -76,38 +76,47 @@ final class PostTabViewController: UIViewController, UISearchBarDelegate {
     
     private func setupData() {
         isCurrentlyFetching = true
-        PostTabDataService.shared.recommandGet(page: currentFetchingPage){ response in
-            switch response {
-            case .success(let data):
-                self.postTabDataResponse = data
-                guard let result = self.postTabDataResponse?.result else { return }
-                
-                let newPosts = result.postList
-                let startIndex = self.postList.count
-                let endIndex = startIndex + newPosts.count
-                let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
-                
-                self.postList.append(contentsOf: newPosts)
-                self.isLastPage = result.pageInfo.lastPage
-                
-                DispatchQueue.main.async {
-                    if self.currentFetchingPage == 0 {
-                        self.collectionView.reloadData()
-                    }
-                    else {
-                        self.collectionView.insertItems(at: newIndexPaths)
-                    }
-                    self.isCurrentlyFetching = false
-                    self.currentFetchingPage += 1;
+        
+        let request = PostTabRequest(page: currentFetchingPage)
+        PostTabService.getPostTab(request: request) { [weak self] data, failed in
+            guard let data = data else {
+                // 에러가 난 경우, alert 창 present
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .serverError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .unknownError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
                 }
-            case .requestErr(let err):
-                print(err)
-            case .pathErr:
-                print("pathErr")
-            case .serverErr:
-                print("serverErr")
-            case .networkFail:
-                print("networkFail")
+                return
+            }
+            
+            print("=== PostTab data succeeded ===")
+            print("== data: \(data)")
+            
+            self?.postTabDataResponse = data
+            guard let result = self?.postTabDataResponse?.result else { return }
+
+            let newPosts = result.postList
+            let startIndex = self?.postList.count
+            let endIndex = startIndex! + newPosts.count
+            let newIndexPaths = (startIndex! ..< endIndex).map { IndexPath(item: $0, section: 0) }
+
+            self?.postList.append(contentsOf: newPosts)
+            self?.isLastPage = result.pageInfo.lastPage
+
+            DispatchQueue.main.async {
+                if self?.currentFetchingPage == 0 {
+                    self?.collectionView.reloadData()
+                }
+                else {
+                    self?.collectionView.insertItems(at: newIndexPaths)
+                }
+                self?.isCurrentlyFetching = false
+                self?.currentFetchingPage += 1;
             }
         }
     }
