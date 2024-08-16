@@ -41,14 +41,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appearance.setTitleTextAttributes(attributes as [NSAttributedString.Key : Any], for: .normal)
         appearance.setTitleTextAttributes(attributes as [NSAttributedString.Key : Any], for: .selected)
         
-        // Realm 마이그레이션
+        // Realm 마이그레이션 : Realm 스키마 업데이트 시 schemaVersion을 올리고, 변경사항이 반영될 수 있도록 초기화 진행
         let config = Realm.Configuration(
-            schemaVersion: 2, // Update schema version to the latest version you want to use
+            schemaVersion: 2,
             migrationBlock: { migration, oldSchemaVersion in
                 print("Old Schema Version: \(oldSchemaVersion)")
                 if oldSchemaVersion < 2 {
                     migration.enumerateObjects(ofType: RecentSearchModel.className()) { oldObject, newObject in
-                        newObject!["name"] = "" // Set default value for the new 'name' property
+                        newObject!["name"] = ""
                     }
                 }
             }
