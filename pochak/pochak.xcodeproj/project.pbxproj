@@ -18,6 +18,9 @@
 		081228C62A69624000DFA094 /* PostLikesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081228C52A69624000DFA094 /* PostLikesViewController.swift */; };
 		081228CA2A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081228C82A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift */; };
 		081228CB2A699B5A00DFA094 /* LikedPeopleListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 081228C92A699B5A00DFA094 /* LikedPeopleListTableViewCell.xib */; };
+		081689B12C73672200EC4D95 /* CommentGetResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081689B02C73672200EC4D95 /* CommentGetResponse.swift */; };
+		081689B32C7367CC00EC4D95 /* CommentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081689B22C7367CC00EC4D95 /* CommentAPI.swift */; };
+		081689B62C73697700EC4D95 /* CommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081689B52C73697700EC4D95 /* CommentService.swift */; };
 		0820B1902A63A18100604DA8 /* ReplyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0820B18E2A63A18100604DA8 /* ReplyTableViewCell.swift */; };
 		0820B1912A63A18100604DA8 /* ReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0820B18F2A63A18100604DA8 /* ReplyTableViewCell.xib */; };
 		0823B0742A5B0E780085002F /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823B0722A5B0E780085002F /* CommentTableViewCell.swift */; };
@@ -63,7 +66,6 @@
 		08C9151C2C6461B10044A9A8 /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C9151B2C6461B10044A9A8 /* PostService.swift */; };
 		08C9151F2C6461ED0044A9A8 /* PostAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C9151E2C6461ED0044A9A8 /* PostAPI.swift */; };
 		08D2B98D2C68C02D00BD7450 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08D2B98C2C68C02D00BD7450 /* GoogleService-Info.plist */; };
-		08D98C472AFEE8B300E9A097 /* PostDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D98C462AFEE8B300E9A097 /* PostDataModel.swift */; };
 		08D98C4A2AFEE8D700E9A097 /* LikedUsersDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D98C492AFEE8D700E9A097 /* LikedUsersDataModel.swift */; };
 		08E8DCDC2C38118000EC78C2 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E8DCDB2C38118000EC78C2 /* UILabel+.swift */; };
 		08EB5D252C280CFE00E35C16 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB5D242C280CFE00E35C16 /* UIImage+.swift */; };
@@ -233,6 +235,9 @@
 		081228C52A69624000DFA094 /* PostLikesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLikesViewController.swift; sourceTree = "<group>"; };
 		081228C82A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedPeopleListTableViewCell.swift; sourceTree = "<group>"; };
 		081228C92A699B5A00DFA094 /* LikedPeopleListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LikedPeopleListTableViewCell.xib; sourceTree = "<group>"; };
+		081689B02C73672200EC4D95 /* CommentGetResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentGetResponse.swift; sourceTree = "<group>"; };
+		081689B22C7367CC00EC4D95 /* CommentAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentAPI.swift; sourceTree = "<group>"; };
+		081689B52C73697700EC4D95 /* CommentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentService.swift; sourceTree = "<group>"; };
 		0820B18E2A63A18100604DA8 /* ReplyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyTableViewCell.swift; sourceTree = "<group>"; };
 		0820B18F2A63A18100604DA8 /* ReplyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReplyTableViewCell.xib; sourceTree = "<group>"; };
 		0823B0722A5B0E780085002F /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
@@ -279,7 +284,6 @@
 		08C9151B2C6461B10044A9A8 /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
 		08C9151E2C6461ED0044A9A8 /* PostAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAPI.swift; sourceTree = "<group>"; };
 		08D2B98C2C68C02D00BD7450 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		08D98C462AFEE8B300E9A097 /* PostDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDataModel.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		08D98C492AFEE8D700E9A097 /* LikedUsersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedUsersDataModel.swift; sourceTree = "<group>"; };
 		08E8DCDB2C38118000EC78C2 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		08EB5D242C280CFE00E35C16 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
@@ -468,6 +472,14 @@
 				081228C92A699B5A00DFA094 /* LikedPeopleListTableViewCell.xib */,
 			);
 			path = Likes;
+			sourceTree = "<group>";
+		};
+		081689B42C73680F00EC4D95 /* Comment */ = {
+			isa = PBXGroup;
+			children = (
+				081689B02C73672200EC4D95 /* CommentGetResponse.swift */,
+			);
+			path = Comment;
 			sourceTree = "<group>";
 		};
 		0823B0762A5D6BC20085002F /* Post */ = {
@@ -686,6 +698,7 @@
 		08C915162C6460F50044A9A8 /* PostDetail */ = {
 			isa = PBXGroup;
 			children = (
+				081689B42C73680F00EC4D95 /* Comment */,
 				08C915172C64610C0044A9A8 /* PostDetailResponse.swift */,
 				080AAFA62C64EAA200FBBE94 /* PostDeleteResponse.swift */,
 				080AAFAA2C65161100FBBE94 /* PostReportResponse.swift */,
@@ -702,6 +715,7 @@
 				080AAFA42C64E9A500FBBE94 /* PostDeleteAPI.swift */,
 				080AAFA82C6510AE00FBBE94 /* PostReportAPI.swift */,
 				086E90082C664C9600A05E76 /* PostLikeAPI.swift */,
+				081689B22C7367CC00EC4D95 /* CommentAPI.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -1110,6 +1124,7 @@
 				EA2CD6412C5F5A0500644EFE /* HomeService.swift */,
 				08C9151B2C6461B10044A9A8 /* PostService.swift */,
 				086E90102C666A5700A05E76 /* UserService.swift */,
+				081689B52C73697700EC4D95 /* CommentService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1616,6 +1631,7 @@
 				3769D6D52B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift in Sources */,
 				3769D6B62B3C302C00294CD1 /* JoinDataModel.swift in Sources */,
 				084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */,
+				081689B32C7367CC00EC4D95 /* CommentAPI.swift in Sources */,
 				37C3AF4A2B3CB2C700B4C79C /* MyProfilePochakPostModel.swift in Sources */,
 				08C02EF82BF394B800627C21 /* UIAlertController+.swift in Sources */,
 				089E27B92C4E8CB800828F4C /* AlertType.swift in Sources */,
@@ -1668,6 +1684,7 @@
 				EAC582742C3074EA006F44AF /* UIColor+.swift in Sources */,
 				3769D6BB2B3C347000294CD1 /* FollowListViewController.swift in Sources */,
 				3769D6B42B3C301B00294CD1 /* JoinDataManager.swift in Sources */,
+				081689B62C73697700EC4D95 /* CommentService.swift in Sources */,
 				37D311DA2B53134200A1D7C1 /* LogoutDataManager.swift in Sources */,
 				EA1B0B5D2A49D23A00F86FBC /* SceneDelegate.swift in Sources */,
 				080AAFAB2C65161100FBBE94 /* PostReportResponse.swift in Sources */,
@@ -1680,6 +1697,7 @@
 				080AAFA72C64EAA200FBBE94 /* PostDeleteResponse.swift in Sources */,
 				EADE01842B383A8B00CECD5B /* PostTabDataModel.swift in Sources */,
 				086E900C2C6669C600A05E76 /* FollowAPI.swift in Sources */,
+				081689B12C73672200EC4D95 /* CommentGetResponse.swift in Sources */,
 				08EB99B42C53D76C00FAC08A /* UIScrollView+.swift in Sources */,
 				EA6306DA2C2BFE83000DB0A7 /* CustomTabbar.swift in Sources */,
 				EA2CD6422C5F5A0500644EFE /* HomeService.swift in Sources */,
