@@ -1,4 +1,4 @@
-# 2023-POCHAK-ios
+# Welcome! We are POCHAK 📸
 <p align="center">
   <img width="80%" alt="소개페이지" src="https://github.com/user-attachments/assets/d7dabb58-7402-422a-b2e8-e8f108f1ec18">
 </p>
