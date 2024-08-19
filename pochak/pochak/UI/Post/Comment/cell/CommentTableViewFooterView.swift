@@ -16,9 +16,6 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
     var commentVC: CommentViewController!
     var postId: Int!
     var curCommentId: Int!
-
-    private var childCommentDataResponse: ChildCommentDataResponse!
-    private var childCommentDataList: [ChildCommentData]!
     
     private var currentFetchingPage: Int = 0
     
@@ -56,52 +53,53 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
         print("=== load child comment data ===")
         currentFetchingPage += 1
         
-        CommentDataService.shared.getChildComments(self.postId, self.curCommentId, page: currentFetchingPage) { response in
-            switch(response) {
-            case .success(let childCommentDataResponse):
-                self.childCommentDataResponse = childCommentDataResponse as? ChildCommentDataResponse
-                if self.childCommentDataResponse.isSuccess == true {
-                    self.childCommentDataList = self.childCommentDataResponse?.result.childCommentList
-                    
-                    self.childCommentDataResponse?.result.childCommentList.map({ data in
-                        self.childCommentDataList.append(data)
-                    })
-                    
-                    self.commentVC.childCommentCntList[section] += self.childCommentDataList.count
-                    print("\(section)번째 부모의 자식 댓글 개수: \(self.commentVC.childCommentCntList[section])")
-                    // 제대로 된 자리에 대댓글 리스트를 삽입하기 위해서 지금까지 있는 대댓글 개수 세야 함
-                    var childCommentsSoFar = 0
-                    if(section != 0) {
-                        for index in 0...section - 1 {
-                            childCommentsSoFar += self.commentVC.childCommentCntList[index]
-                        }
+        CommentService.getChildComments(postId: postId, commentId: curCommentId, page: currentFetchingPage) { [weak self] data, failed in
+            guard let data = data else {
+                // 에러가 난 경우, alert 창 present
+                switch failed {
+                case .disconnected:
+                    self?.commentVC.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    self?.commentVC.present(UIAlertController.networkErrorAlert(title: "대댓글 더 불러오기를 실패하였습니다."), animated: true)
+                }
+                return
+            }
+            
+            print("=== CommentTableViewFooterView, loadChildCommentData succeeded ===")
+            print("== data: \(data)")
+            
+            if data.isSuccess == true {
+//                childCommentDataList = self.childCommentDataResponse?.result.childCommentList
+                
+//                data.result.childCommentList.map({ data in
+//                    self.childCommentDataList.append(data)
+//                })
+                
+                self?.commentVC.childCommentCntList[section] += data.result.childCommentList.count
+                print("\(section)번째 부모의 자식 댓글 개수: \(self?.commentVC.childCommentCntList[section])")
+                
+                // 제대로 된 자리에 대댓글 리스트를 삽입하기 위해서 지금까지 있는 대댓글 개수 세야 함
+                var childCommentsSoFar = 0
+                if(section != 0) {
+                    for index in 0...section - 1 {
+                        childCommentsSoFar += self!.commentVC.childCommentCntList[index]
                     }
-                    // 대댓글 마지막 페이지 bool값 갱신 -> footer 생성에 관여함
-                    self.commentVC.parentAndChildCommentList?[section].childCommentPageInfo.lastPage =                 self.childCommentDataResponse.result.childCommentPageInfo.lastPage
-                    
-                    // 대댓글 리스트에 새로 받아온 대댓글 추가하기
-                    self.commentVC.parentAndChildCommentList?[section].childCommentList.append(contentsOf: self.childCommentDataList)
-                    
-                    // 여기서 다시 되길...
-                    self.commentVC.toUICommentData()
-                    
-                    self.commentVC.tableView.reloadSections(IndexSet(integer: section), with: .fade)
-                    print("==uicommentlist==")
-                    print(self.commentVC.uiCommentList)
                 }
-                else {
-                    self.commentVC.present(UIAlertController.networkErrorAlert(title: "대댓글 불러오기에 실패하였습니다."), animated: true)
-                }
-            case .requestErr(let message):
-                print("requestErr", message)
-            case .pathErr:
-                print("pathErr")
-            case .serverErr:
-                print("serverErr")
-                self.commentVC.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
-            case .networkFail:
-                print("networkFail")
-                self.commentVC.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
+                // 대댓글 마지막 페이지 bool값 갱신 -> footer 생성에 관여함
+                self?.commentVC.parentAndChildCommentList?[section].childCommentPageInfo.lastPage =                 data.result.childCommentPageInfo.lastPage
+                
+                // 대댓글 리스트에 새로 받아온 대댓글 추가하기
+                self?.commentVC.parentAndChildCommentList?[section].childCommentList.append(contentsOf: data.result.childCommentList)
+                
+                // 여기서 다시 되길...
+                self?.commentVC.toUICommentData()
+                
+                self?.commentVC.tableView.reloadSections(IndexSet(integer: section), with: .fade)
+                print("==uicommentlist==")
+                print(self?.commentVC.uiCommentList)
+            }
+            else {
+                self?.commentVC.present(UIAlertController.networkErrorAlert(title: "대댓글 더 불러오기를 실패하였습니다."), animated: true)
             }
         }
     }

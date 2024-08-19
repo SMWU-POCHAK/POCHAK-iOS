@@ -21,6 +21,8 @@
 		081689B12C73672200EC4D95 /* CommentGetResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081689B02C73672200EC4D95 /* CommentGetResponse.swift */; };
 		081689B32C7367CC00EC4D95 /* CommentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081689B22C7367CC00EC4D95 /* CommentAPI.swift */; };
 		081689B62C73697700EC4D95 /* CommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081689B52C73697700EC4D95 /* CommentService.swift */; };
+		081689B92C73BBF200EC4D95 /* ChildCommentGetResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081689B82C73BBF200EC4D95 /* ChildCommentGetResponse.swift */; };
+		081689BB2C73BC2900EC4D95 /* ChildCommentGetAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081689BA2C73BC2900EC4D95 /* ChildCommentGetAPI.swift */; };
 		0820B1902A63A18100604DA8 /* ReplyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0820B18E2A63A18100604DA8 /* ReplyTableViewCell.swift */; };
 		0820B1912A63A18100604DA8 /* ReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0820B18F2A63A18100604DA8 /* ReplyTableViewCell.xib */; };
 		0823B0742A5B0E780085002F /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823B0722A5B0E780085002F /* CommentTableViewCell.swift */; };
@@ -238,6 +240,8 @@
 		081689B02C73672200EC4D95 /* CommentGetResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentGetResponse.swift; sourceTree = "<group>"; };
 		081689B22C7367CC00EC4D95 /* CommentAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentAPI.swift; sourceTree = "<group>"; };
 		081689B52C73697700EC4D95 /* CommentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentService.swift; sourceTree = "<group>"; };
+		081689B82C73BBF200EC4D95 /* ChildCommentGetResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildCommentGetResponse.swift; sourceTree = "<group>"; };
+		081689BA2C73BC2900EC4D95 /* ChildCommentGetAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildCommentGetAPI.swift; sourceTree = "<group>"; };
 		0820B18E2A63A18100604DA8 /* ReplyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyTableViewCell.swift; sourceTree = "<group>"; };
 		0820B18F2A63A18100604DA8 /* ReplyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReplyTableViewCell.xib; sourceTree = "<group>"; };
 		0823B0722A5B0E780085002F /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
@@ -478,6 +482,7 @@
 			isa = PBXGroup;
 			children = (
 				081689B02C73672200EC4D95 /* CommentGetResponse.swift */,
+				081689B82C73BBF200EC4D95 /* ChildCommentGetResponse.swift */,
 			);
 			path = Comment;
 			sourceTree = "<group>";
@@ -486,6 +491,7 @@
 			isa = PBXGroup;
 			children = (
 				081689B22C7367CC00EC4D95 /* CommentAPI.swift */,
+				081689BA2C73BC2900EC4D95 /* ChildCommentGetAPI.swift */,
 			);
 			path = Comment;
 			sourceTree = "<group>";
@@ -1640,6 +1646,7 @@
 				3769D6B62B3C302C00294CD1 /* JoinDataModel.swift in Sources */,
 				084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */,
 				081689B32C7367CC00EC4D95 /* CommentAPI.swift in Sources */,
+				081689BB2C73BC2900EC4D95 /* ChildCommentGetAPI.swift in Sources */,
 				37C3AF4A2B3CB2C700B4C79C /* MyProfilePochakPostModel.swift in Sources */,
 				08C02EF82BF394B800627C21 /* UIAlertController+.swift in Sources */,
 				089E27B92C4E8CB800828F4C /* AlertType.swift in Sources */,
@@ -1651,6 +1658,7 @@
 				EABD20652A6CF5CC007543E9 /* TagCollectionViewCell.swift in Sources */,
 				0823B0742A5B0E780085002F /* CommentTableViewCell.swift in Sources */,
 				0801765E2A74F4B0005E6953 /* UITextView+Extension.swift in Sources */,
+				081689B92C73BBF200EC4D95 /* ChildCommentGetResponse.swift in Sources */,
 				081228C62A69624000DFA094 /* PostLikesViewController.swift in Sources */,
 				EA01079B2A59556800A3AE85 /* HomeTabViewController.swift in Sources */,
 				373235492B68F9A60042EF94 /* FollowListDataModel.swift in Sources */,
