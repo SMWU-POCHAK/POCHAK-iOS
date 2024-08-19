@@ -482,6 +482,14 @@
 			path = Comment;
 			sourceTree = "<group>";
 		};
+		081689B72C7379A600EC4D95 /* Comment */ = {
+			isa = PBXGroup;
+			children = (
+				081689B22C7367CC00EC4D95 /* CommentAPI.swift */,
+			);
+			path = Comment;
+			sourceTree = "<group>";
+		};
 		0823B0762A5D6BC20085002F /* Post */ = {
 			isa = PBXGroup;
 			children = (
@@ -711,11 +719,11 @@
 		08C9151D2C6461C00044A9A8 /* Post */ = {
 			isa = PBXGroup;
 			children = (
+				081689B72C7379A600EC4D95 /* Comment */,
 				08C9151E2C6461ED0044A9A8 /* PostAPI.swift */,
 				080AAFA42C64E9A500FBBE94 /* PostDeleteAPI.swift */,
 				080AAFA82C6510AE00FBBE94 /* PostReportAPI.swift */,
 				086E90082C664C9600A05E76 /* PostLikeAPI.swift */,
-				081689B22C7367CC00EC4D95 /* CommentAPI.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
