@@ -89,7 +89,7 @@ final class CommentViewController: UIViewController {
                     case .disconnected:
                         self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
                     default:
-                        self?.present(UIAlertController.networkErrorAlert(title: "댓글 조회에 실패하였습니다."), animated: true)
+                        self?.present(UIAlertController.networkErrorAlert(title: "댓글 등록에 실패하였습니다."), animated: true)
                     }
                     return
                 }
@@ -137,7 +137,8 @@ final class CommentViewController: UIViewController {
                 // 에러가 난 경우, alert 창 present
                 switch failed {
                 case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), 
+                                  animated: true)
                 default:
                     self?.present(UIAlertController.networkErrorAlert(title: "댓글 조회에 실패하였습니다."), animated: true)
                 }

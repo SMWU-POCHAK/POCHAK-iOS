@@ -90,7 +90,7 @@ final class CommentTableViewCell: UITableViewCell {
                     self?.commentVC?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
                                              animated: true)
                 default:
-                    self?.commentVC?.present(UIAlertController.networkErrorAlert(title: "댓글 조회에 실패하였습니다."),
+                    self?.commentVC?.present(UIAlertController.networkErrorAlert(title: "댓글 삭제에 실패하였습니다."),
                                              animated: true)
                 }
                 return

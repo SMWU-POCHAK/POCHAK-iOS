@@ -89,7 +89,8 @@ final class PostViewController: UIViewController {
                 // 에러가 난 경우, alert 창 present
                 switch failed {
                 case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), 
+                                  animated: true)
                 default:
                     self?.present(UIAlertController.networkErrorAlert(title: "좋아요에 실패하였습니다."), animated: true)
                 }
@@ -288,13 +289,10 @@ final class PostViewController: UIViewController {
                 // 에러가 난 경우, alert 창 present
                 switch failed {
                 case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .serverError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .unknownError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
+                                  animated: true)
                 default:
-                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                    self?.present(UIAlertController.networkErrorAlert(title: "게시글 조회에 실패하였습니다."), animated: true)
                 }
                 return
             }
@@ -353,9 +351,10 @@ final class PostViewController: UIViewController {
             guard let data = data else {
                 switch failed {
                 case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), 
+                                  animated: true)
                 default:
-                    self?.present(UIAlertController.networkErrorAlert(title: "팔로우에 실패하였습니다."), animated: true)
+                    self?.present(UIAlertController.networkErrorAlert(title: "팔로우 요청에 실패하였습니다."), animated: true)
                 }
                 return
             }
@@ -364,7 +363,7 @@ final class PostViewController: UIViewController {
             print("== data: \(data)")
             
             if(!data.isSuccess) {
-                self?.present(UIAlertController.networkErrorAlert(title: "팔로우에 실패하였습니다."), animated: true)
+                self?.present(UIAlertController.networkErrorAlert(title: "팔로우 요청에 실패하였습니다."), animated: true)
                 return
             }
             self?.loadPostDetailData()
