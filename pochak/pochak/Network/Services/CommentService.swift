@@ -18,6 +18,7 @@ struct CommentService {
         postId: Int,
         page: Int,
         completion: @escaping (_ succeed: CommentGetResponse?, _ failed: NetworkError?) -> Void) {
+            
             NetworkService.shared.request(CommentAPI.getComments(postId: postId, page: page)) { response in
                 switch response {
                 case .success(let data):
@@ -41,11 +42,16 @@ struct CommentService {
         commentId: Int,
         page: Int,
         completion: @escaping (_ succeed: ChildCommentGetResponse?, _ failed: NetworkError?) -> Void) {
-            NetworkService.shared.request(ChildCommentAPI.getChildComments(postId: postId, commentId: commentId, page: page)) { response in
+            
+            NetworkService.shared.request(ChildCommentAPI.getChildComments(postId: postId, 
+                                                                           commentId: commentId,
+                                                                           page: page)) { response in
                 switch response {
                 case .success(let data):
                     completion(data, nil)
                 case .failure(let error):
+                    print("=== getChildComments service error ===")
+                    print(error.localizedDescription)
                     completion(nil, error)
                 }
             }
@@ -62,7 +68,10 @@ struct CommentService {
         content: String,
         parentCommentId: Int?,
         completion: @escaping (_ succeed: CommentPostResponse?, _ failed: NetworkError?) -> Void) {
-            NetworkService.shared.request(CommentPostAPI.postNewComment(postId: postId, request: CommentPostRequest(content: content, parentCommentId: parentCommentId))) { response in
+            
+            NetworkService.shared.request(CommentPostAPI.postNewComment(postId: postId, 
+                                                                        request: CommentPostRequest(content: content, parentCommentId: parentCommentId))
+            ) { response in
                 switch response {
                 case .success(let data):
                     completion(data, nil)
@@ -83,6 +92,7 @@ struct CommentService {
         postId: Int,
         commentId: Int,
         completion: @escaping (_ succeed: CommentDeleteResponse?, _ failed: NetworkError?) -> Void) {
+            
             NetworkService.shared.request(CommentDeleteAPI.deleteComment(postId: postId, commentId: commentId)) { response in
                 switch response {
                 case .success(let data):
