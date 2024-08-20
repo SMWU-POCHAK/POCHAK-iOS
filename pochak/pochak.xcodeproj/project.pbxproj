@@ -46,6 +46,9 @@
 		0876E23E2C274256008DE88F /* NoPostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */; };
 		0876E23F2C274256008DE88F /* NoPostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */; };
 		0889D1382C5CB69F00206C86 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0889D1372C5CB69F00206C86 /* String+.swift */; };
+		089C10752C748BA6007DB23F /* CommentPostResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089C10742C748BA6007DB23F /* CommentPostResponse.swift */; };
+		089C10772C748BB7007DB23F /* CommentPostAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089C10762C748BB7007DB23F /* CommentPostAPI.swift */; };
+		089C10792C748E4C007DB23F /* CommentPostRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089C10782C748E4C007DB23F /* CommentPostRequest.swift */; };
 		089C75882A51728A003AAB94 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C757F2A517289003AAB94 /* Pretendard-Regular.ttf */; };
 		089C75892A51728A003AAB94 /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75802A517289003AAB94 /* Pretendard-Thin.ttf */; };
 		089C758A2A51728A003AAB94 /* Pretendard-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75812A517289003AAB94 /* Pretendard-Black.ttf */; };
@@ -265,6 +268,9 @@
 		0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoPostCollectionViewCell.swift; sourceTree = "<group>"; };
 		0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoPostCollectionViewCell.xib; sourceTree = "<group>"; };
 		0889D1372C5CB69F00206C86 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		089C10742C748BA6007DB23F /* CommentPostResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentPostResponse.swift; sourceTree = "<group>"; };
+		089C10762C748BB7007DB23F /* CommentPostAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentPostAPI.swift; sourceTree = "<group>"; };
+		089C10782C748E4C007DB23F /* CommentPostRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentPostRequest.swift; sourceTree = "<group>"; };
 		089C757F2A517289003AAB94 /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.ttf"; sourceTree = "<group>"; };
 		089C75802A517289003AAB94 /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.ttf"; sourceTree = "<group>"; };
 		089C75812A517289003AAB94 /* Pretendard-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.ttf"; sourceTree = "<group>"; };
@@ -483,6 +489,8 @@
 			children = (
 				081689B02C73672200EC4D95 /* CommentGetResponse.swift */,
 				081689B82C73BBF200EC4D95 /* ChildCommentGetResponse.swift */,
+				089C10742C748BA6007DB23F /* CommentPostResponse.swift */,
+				089C10782C748E4C007DB23F /* CommentPostRequest.swift */,
 			);
 			path = Comment;
 			sourceTree = "<group>";
@@ -492,6 +500,7 @@
 			children = (
 				081689B22C7367CC00EC4D95 /* CommentAPI.swift */,
 				081689BA2C73BC2900EC4D95 /* ChildCommentGetAPI.swift */,
+				089C10762C748BB7007DB23F /* CommentPostAPI.swift */,
 			);
 			path = Comment;
 			sourceTree = "<group>";
@@ -1604,6 +1613,7 @@
 				37D311E32B56754D00A1D7C1 /* GetToken.swift in Sources */,
 				3769D6C32B3C3A1600294CD1 /* FollowerCollectionViewCell.swift in Sources */,
 				374261722C3092B100B67886 /* UnblockDataManager.swift in Sources */,
+				089C10792C748E4C007DB23F /* CommentPostRequest.swift in Sources */,
 				EA0F23692C32DA780014F94E /* UIViewController+.swift in Sources */,
 				379A6A3A2B56BDBF0087FAAC /* Authenticator.swift in Sources */,
 				EA17182C2A5912A7009168E6 /* UploadViewController.swift in Sources */,
@@ -1663,12 +1673,14 @@
 				EA01079B2A59556800A3AE85 /* HomeTabViewController.swift in Sources */,
 				373235492B68F9A60042EF94 /* FollowListDataModel.swift in Sources */,
 				EA6306D82C2BFE53000DB0A7 /* CustomTabBarController.swift in Sources */,
+				089C10772C748BB7007DB23F /* CommentPostAPI.swift in Sources */,
 				EA1289132B3C4F1F002EC93E /* SearchDataModel.swift in Sources */,
 				0820B1902A63A18100604DA8 /* ReplyTableViewCell.swift in Sources */,
 				374261702C30917600B67886 /* BlockDataModel.swift in Sources */,
 				083249782C295E4000A77C03 /* CustomAlertViewController.swift in Sources */,
 				37C3AF482B3CB2B300B4C79C /* MyProfilePochakedPostModel.swift in Sources */,
 				EAF8852B2B569B6600BA184A /* RecentSearchRealmManager.swift in Sources */,
+				089C10752C748BA6007DB23F /* CommentPostResponse.swift in Sources */,
 				EA2CD6392C5F45E300644EFE /* BaseAPI.swift in Sources */,
 				086E90092C664C9600A05E76 /* PostLikeAPI.swift in Sources */,
 				37D311E12B566C5A00A1D7C1 /* SignOutDataModel.swift in Sources */,

@@ -28,7 +28,6 @@ final class CommentViewController: UIViewController {
     public var parentAndChildCommentList: [ParentCommentData]?  // 부모댓글 + 자식댓글 있는 list
     public var uiCommentList = [UICommentData]()  // 셀에 뿌릴 때 사용할 실제 데이터들
     
-    private var postCommentResponse: CommentPostResponse?
     private var profileImageUrl: String = ""
     private var noComment: Bool = true
     
@@ -82,29 +81,30 @@ final class CommentViewController: UIViewController {
         // 댓글 내용이 있는 경우에만 POST 요청
         if commentContent != "" {
             // 임시로 parentCommentSK는 nil로 지정
-            CommentDataService.shared.postComment(postId!, commentContent, self.isPostingChildComment ? self.parentCommentId : nil) { response in
-                switch(response) {
-                case .success(let data):
-                    self.postCommentResponse = (data as! CommentPostResponse)
-                    // 만약 실패한 경우 실패했다고 알림창
-                    if(self.postCommentResponse?.isSuccess == false){
-                        self.present(UIAlertController.networkErrorAlert(title: "댓글 등록에 실패하였습니다."), animated: true)
-                        return
+            
+            CommentService.postNewComment(postId: postId!, content: commentContent, parentCommentId: self.isPostingChildComment ? self.parentCommentId : nil) { [weak self] data, failed in
+                guard let data = data else {
+                    // 에러가 난 경우, alert 창 present
+                    switch failed {
+                    case .disconnected:
+                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    default:
+                        self?.present(UIAlertController.networkErrorAlert(title: "댓글 조회에 실패하였습니다."), animated: true)
                     }
-                    else {
-                        print("=== 새 댓글 등록, 데이터 업데이트 ===")
-                        self.loadCommentData()
-                    }
-                case .requestErr(let message):
-                    print("requestErr", message)
-                case .pathErr:
-                    print("pathErr")
-                case .serverErr:
-                    print("serverErr")
-                    self.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
-                case .networkFail:
-                    print("networkFail")
-                    self.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
+                    return
+                }
+                
+                print("=== CommentView, postNewCommentBtnTapped succeeded ===")
+                print("== data: \(data)")
+                
+                // 만약 실패한 경우 실패했다고 알림창
+                if(data.isSuccess == false){
+                    self?.present(UIAlertController.networkErrorAlert(title: "댓글 등록에 실패하였습니다."), animated: true)
+                    return
+                }
+                else {
+                    print("=== 새 댓글 등록, 데이터 업데이트 ===")
+                    self?.loadCommentData()
                 }
             }
         }

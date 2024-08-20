@@ -50,4 +50,27 @@ struct CommentService {
                 }
             }
         }
+    
+    /// 새로운 댓글 혹은 대댓글을 등록합니다.
+    /// - Parameters:
+    ///   - postId: 댓글 혹은 대댓글을 등록하려는 게시글 아이디
+    ///   - content: 댓글 혹은 대댓글 내용
+    ///   - parentCommentId: (대댓글인 경우만) 부모 댓글 아이디 (댓글 등록인 경우 nil 전달)
+    ///   - completion: 핸들러
+    static func postNewComment(
+        postId: Int,
+        content: String,
+        parentCommentId: Int?,
+        completion: @escaping (_ succeed: CommentPostResponse?, _ failed: NetworkError?) -> Void) {
+            NetworkService.shared.request(CommentPostAPI.postNewComment(postId: postId, request: CommentPostRequest(content: content, parentCommentId: parentCommentId))) { response in
+                switch response {
+                case .success(let data):
+                    completion(data, nil)
+                case .failure(let error):
+                    print("=== postNewComment service error ===")
+                    print(error.localizedDescription)
+                    completion(nil, error)
+                }
+            }
+        }
 }
