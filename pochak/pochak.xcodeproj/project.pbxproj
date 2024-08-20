@@ -81,8 +81,6 @@
 		08EB99B72C53EA8500FAC08A /* TaggedUsersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB99B52C53EA8500FAC08A /* TaggedUsersTableViewCell.swift */; };
 		08EB99B82C53EA8500FAC08A /* TaggedUsersTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EB99B62C53EA8500FAC08A /* TaggedUsersTableViewCell.xib */; };
 		08FD3A392B357E6400574880 /* LikedUsersDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FD3A382B357E6400574880 /* LikedUsersDataService.swift */; };
-		08FD3A3C2B3AF94A00574880 /* CommentDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FD3A3B2B3AF94A00574880 /* CommentDataModel.swift */; };
-		08FD3A3E2B3AFE7B00574880 /* CommentDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FD3A3D2B3AFE7B00574880 /* CommentDataService.swift */; };
 		2FCBFE6DE98CEA8938EF93DC /* Pods_pochakTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1916A70A802F298FF38F24 /* Pods_pochakTests.framework */; };
 		371D33782B4E83E90084FF6A /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D33772B4E83E90084FF6A /* UserDefaultsManager.swift */; };
 		371D337A2B4E8D1F0084FF6A /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D33792B4E8D1F0084FF6A /* KeychainManager.swift */; };
@@ -307,8 +305,6 @@
 		08EB99B52C53EA8500FAC08A /* TaggedUsersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggedUsersTableViewCell.swift; sourceTree = "<group>"; };
 		08EB99B62C53EA8500FAC08A /* TaggedUsersTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaggedUsersTableViewCell.xib; sourceTree = "<group>"; };
 		08FD3A382B357E6400574880 /* LikedUsersDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedUsersDataService.swift; sourceTree = "<group>"; };
-		08FD3A3B2B3AF94A00574880 /* CommentDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDataModel.swift; sourceTree = "<group>"; };
-		08FD3A3D2B3AFE7B00574880 /* CommentDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDataService.swift; sourceTree = "<group>"; };
 		0994FB0CA794651C5C9BDE8F /* Pods-pochak-pochakUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pochak-pochakUITests.debug.xcconfig"; path = "Target Support Files/Pods-pochak-pochakUITests/Pods-pochak-pochakUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		0DB83F3ED818C9AF01F6A8E0 /* Pods-pochak.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pochak.release.xcconfig"; path = "Target Support Files/Pods-pochak/Pods-pochak.release.xcconfig"; sourceTree = "<group>"; };
 		371D33772B4E83E90084FF6A /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
@@ -518,7 +514,6 @@
 			children = (
 				08B693F32C37219C00D82DC4 /* TaggedUsers */,
 				0844649A2BF0F21200949850 /* PostMenu */,
-				08FD3A3A2B3ADF4600574880 /* CommentDataManager */,
 				08D98C482AFEE8C100E9A097 /* LikesDataManager */,
 				EA0107992A59556800A3AE85 /* PostViewController.swift */,
 				081228C72A699B1100DFA094 /* Likes */,
@@ -759,15 +754,6 @@
 				08FD3A382B357E6400574880 /* LikedUsersDataService.swift */,
 			);
 			path = LikesDataManager;
-			sourceTree = "<group>";
-		};
-		08FD3A3A2B3ADF4600574880 /* CommentDataManager */ = {
-			isa = PBXGroup;
-			children = (
-				08FD3A3B2B3AF94A00574880 /* CommentDataModel.swift */,
-				08FD3A3D2B3AFE7B00574880 /* CommentDataService.swift */,
-			);
-			path = CommentDataManager;
 			sourceTree = "<group>";
 		};
 		373235452B68F9180042EF94 /* FollowAPI */ = {
@@ -1591,11 +1577,9 @@
 				EA9F5CB42B0EF7CC0021951F /* UploadDataService.swift in Sources */,
 				EA2CD6482C5F5B0700644EFE /* HomeRequest.swift in Sources */,
 				EA9F5CB22B0EF7BB0021951F /* UploadDataModel.swift in Sources */,
-				08FD3A3C2B3AF94A00574880 /* CommentDataModel.swift in Sources */,
 				37C3AF4B2B3CB49E00B4C79C /* MyProfilePostDataManager.swift in Sources */,
 				080AAFA92C6510AE00FBBE94 /* PostReportAPI.swift in Sources */,
 				089C107D2C749886007DB23F /* CommentDeleteAPI.swift in Sources */,
-				08FD3A3E2B3AFE7B00574880 /* CommentDataService.swift in Sources */,
 				080AAFA52C64E9A500FBBE94 /* PostDeleteAPI.swift in Sources */,
 				EA2CD63F2C5F585400644EFE /* HTTPHeaderType.swift in Sources */,
 				3769D6CE2B3C563A00294CD1 /* PostListViewController.swift in Sources */,
