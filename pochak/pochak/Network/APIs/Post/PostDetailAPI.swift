@@ -1,5 +1,5 @@
 //
-//  PostAPI.swift
+//  PostDetailAPI.swift
 //  pochak
 //
 //  Created by Suyeon Hwang on 8/8/24.
@@ -8,11 +8,11 @@
 import Foundation
 import Alamofire
 
-enum PostAPI {
+enum PostDetailAPI {
     case getPostDetail(_ id: Int)
 }
 
-extension PostAPI: BaseAPI {
+extension PostDetailAPI: BaseAPI {
     
     typealias Response = PostDetailResponse
         

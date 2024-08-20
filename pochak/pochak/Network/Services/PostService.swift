@@ -17,7 +17,7 @@ struct PostService {
         postId: Int,
         completion: @escaping (_ succeed: PostDetailResponse?, _ failed: NetworkError?) -> Void) {
             
-            NetworkService.shared.request(PostAPI.getPostDetail(postId)) { response in
+            NetworkService.shared.request(PostDetailAPI.getPostDetail(postId)) { response in
                 switch response {
                 case .success(let data):
                     completion(data, nil)

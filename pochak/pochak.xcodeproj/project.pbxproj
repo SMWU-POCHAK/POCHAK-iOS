@@ -72,7 +72,7 @@
 		08C02EF82BF394B800627C21 /* UIAlertController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C02EF72BF394B800627C21 /* UIAlertController+.swift */; };
 		08C915182C64610C0044A9A8 /* PostDetailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C915172C64610C0044A9A8 /* PostDetailResponse.swift */; };
 		08C9151C2C6461B10044A9A8 /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C9151B2C6461B10044A9A8 /* PostService.swift */; };
-		08C9151F2C6461ED0044A9A8 /* PostAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C9151E2C6461ED0044A9A8 /* PostAPI.swift */; };
+		08C9151F2C6461ED0044A9A8 /* PostDetailAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C9151E2C6461ED0044A9A8 /* PostDetailAPI.swift */; };
 		08D2B98D2C68C02D00BD7450 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08D2B98C2C68C02D00BD7450 /* GoogleService-Info.plist */; };
 		08D98C4A2AFEE8D700E9A097 /* LikedUsersDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D98C492AFEE8D700E9A097 /* LikedUsersDataModel.swift */; };
 		08E8DCDC2C38118000EC78C2 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E8DCDB2C38118000EC78C2 /* UILabel+.swift */; };
@@ -296,7 +296,7 @@
 		08C02EF72BF394B800627C21 /* UIAlertController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+.swift"; sourceTree = "<group>"; };
 		08C915172C64610C0044A9A8 /* PostDetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailResponse.swift; sourceTree = "<group>"; };
 		08C9151B2C6461B10044A9A8 /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
-		08C9151E2C6461ED0044A9A8 /* PostAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAPI.swift; sourceTree = "<group>"; };
+		08C9151E2C6461ED0044A9A8 /* PostDetailAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailAPI.swift; sourceTree = "<group>"; };
 		08D2B98C2C68C02D00BD7450 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08D98C492AFEE8D700E9A097 /* LikedUsersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedUsersDataModel.swift; sourceTree = "<group>"; };
 		08E8DCDB2C38118000EC78C2 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
@@ -739,7 +739,7 @@
 			isa = PBXGroup;
 			children = (
 				081689B72C7379A600EC4D95 /* Comment */,
-				08C9151E2C6461ED0044A9A8 /* PostAPI.swift */,
+				08C9151E2C6461ED0044A9A8 /* PostDetailAPI.swift */,
 				080AAFA42C64E9A500FBBE94 /* PostDeleteAPI.swift */,
 				080AAFA82C6510AE00FBBE94 /* PostReportAPI.swift */,
 				086E90082C664C9600A05E76 /* PostLikeAPI.swift */,
@@ -1683,7 +1683,7 @@
 				37D311D72B53057700A1D7C1 /* ProfileUpdateDataModel.swift in Sources */,
 				086E90072C664C6A00A05E76 /* PostLikeResponse.swift in Sources */,
 				EA4EF8D82C2EC5F7009549FF /* UITextField+.swift in Sources */,
-				08C9151F2C6461ED0044A9A8 /* PostAPI.swift in Sources */,
+				08C9151F2C6461ED0044A9A8 /* PostDetailAPI.swift in Sources */,
 				EAF918512AA468670037C270 /* APIConstants.swift in Sources */,
 				3766F4082C370A82001DD239 /* BlockedUserListDataModel.swift in Sources */,
 				3732354E2B691E610042EF94 /* FollowToggleDataManager.swift in Sources */,
