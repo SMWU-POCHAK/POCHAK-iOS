@@ -51,6 +51,7 @@
 		089C10792C748E4C007DB23F /* CommentPostRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089C10782C748E4C007DB23F /* CommentPostRequest.swift */; };
 		089C107B2C749863007DB23F /* CommentDeleteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089C107A2C749863007DB23F /* CommentDeleteResponse.swift */; };
 		089C107D2C749886007DB23F /* CommentDeleteAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089C107C2C749886007DB23F /* CommentDeleteAPI.swift */; };
+		089C107F2C749BC3007DB23F /* UICommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089C107E2C749BC3007DB23F /* UICommentModel.swift */; };
 		089C75882A51728A003AAB94 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C757F2A517289003AAB94 /* Pretendard-Regular.ttf */; };
 		089C75892A51728A003AAB94 /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75802A517289003AAB94 /* Pretendard-Thin.ttf */; };
 		089C758A2A51728A003AAB94 /* Pretendard-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75812A517289003AAB94 /* Pretendard-Black.ttf */; };
@@ -275,6 +276,7 @@
 		089C10782C748E4C007DB23F /* CommentPostRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentPostRequest.swift; sourceTree = "<group>"; };
 		089C107A2C749863007DB23F /* CommentDeleteResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDeleteResponse.swift; sourceTree = "<group>"; };
 		089C107C2C749886007DB23F /* CommentDeleteAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDeleteAPI.swift; sourceTree = "<group>"; };
+		089C107E2C749BC3007DB23F /* UICommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICommentModel.swift; sourceTree = "<group>"; };
 		089C757F2A517289003AAB94 /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.ttf"; sourceTree = "<group>"; };
 		089C75802A517289003AAB94 /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.ttf"; sourceTree = "<group>"; };
 		089C75812A517289003AAB94 /* Pretendard-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.ttf"; sourceTree = "<group>"; };
@@ -529,6 +531,7 @@
 			isa = PBXGroup;
 			children = (
 				EA0107952A59556800A3AE85 /* CommentViewController.swift */,
+				089C107E2C749BC3007DB23F /* UICommentModel.swift */,
 				0823B0782A5D6DA40085002F /* cell */,
 			);
 			path = Comment;
@@ -1713,6 +1716,7 @@
 				080AAFAD2C65174900FBBE94 /* PostReportRequest.swift in Sources */,
 				08FD3A392B357E6400574880 /* LikedUsersDataService.swift in Sources */,
 				081228CA2A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift in Sources */,
+				089C107F2C749BC3007DB23F /* UICommentModel.swift in Sources */,
 				3769D6D02B3C569C00294CD1 /* FirstPostTabmanViewController.swift in Sources */,
 				374261642C2FEF5F00B67886 /* ProfileMenuViewController.swift in Sources */,
 				3742617F2C359D6D00B67886 /* CheckHandleDuplicationDataModel.swift in Sources */,
