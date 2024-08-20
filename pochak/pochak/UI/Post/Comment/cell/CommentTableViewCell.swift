@@ -82,27 +82,29 @@ final class CommentTableViewCell: UITableViewCell {
     }
     
     @IBAction func deleteButtonDidTap() {
-        CommentDataService.shared.deleteComment(postId: self.postId, commentId: self.commentId) { [weak self] result in
-            switch result {
-            case .success(let data):
-                print("댓글 삭제 성공, data: \(data as! DeleteCommentResponse)")
-                let data = data as! DeleteCommentResponse
-                if data.isSuccess == true {
-                    self?.commentVC?.loadCommentData()
+        CommentService.deleteComment(postId: postId, commentId: commentId) { [weak self] data, failed in
+            guard let data = data else {
+                // 에러가 난 경우, alert 창 present
+                switch failed {
+                case .disconnected:
+                    self?.commentVC?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
+                                             animated: true)
+                default:
+                    self?.commentVC?.present(UIAlertController.networkErrorAlert(title: "댓글 조회에 실패하였습니다."),
+                                             animated: true)
                 }
-                else {
-                    self?.commentVC?.present(UIAlertController.networkErrorAlert(title: "댓글 삭제에 실패하였습니다."), animated: true)
-                }
-            case .requestErr(let message):
-                print("requestErr", message)
-            case .pathErr:
-                print("pathErr")
-            case .serverErr:
-                print("serverErr")
-                self?.commentVC?.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
-            case .networkFail:
-                print("networkFail")
-                self?.commentVC?.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
+                return
+            }
+            
+            print("=== CommentTableViewCell, deleteButtonDidTap succeeded ===")
+            print("== data: \(data)")
+            
+            if data.isSuccess == true {
+                self?.commentVC?.loadCommentData()
+            }
+            else {
+                self?.commentVC?.present(UIAlertController.networkErrorAlert(title: "댓글 삭제에 실패하였습니다."), 
+                                         animated: true)
             }
         }
     }

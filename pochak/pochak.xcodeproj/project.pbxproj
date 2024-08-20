@@ -49,6 +49,8 @@
 		089C10752C748BA6007DB23F /* CommentPostResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089C10742C748BA6007DB23F /* CommentPostResponse.swift */; };
 		089C10772C748BB7007DB23F /* CommentPostAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089C10762C748BB7007DB23F /* CommentPostAPI.swift */; };
 		089C10792C748E4C007DB23F /* CommentPostRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089C10782C748E4C007DB23F /* CommentPostRequest.swift */; };
+		089C107B2C749863007DB23F /* CommentDeleteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089C107A2C749863007DB23F /* CommentDeleteResponse.swift */; };
+		089C107D2C749886007DB23F /* CommentDeleteAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089C107C2C749886007DB23F /* CommentDeleteAPI.swift */; };
 		089C75882A51728A003AAB94 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C757F2A517289003AAB94 /* Pretendard-Regular.ttf */; };
 		089C75892A51728A003AAB94 /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75802A517289003AAB94 /* Pretendard-Thin.ttf */; };
 		089C758A2A51728A003AAB94 /* Pretendard-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75812A517289003AAB94 /* Pretendard-Black.ttf */; };
@@ -271,6 +273,8 @@
 		089C10742C748BA6007DB23F /* CommentPostResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentPostResponse.swift; sourceTree = "<group>"; };
 		089C10762C748BB7007DB23F /* CommentPostAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentPostAPI.swift; sourceTree = "<group>"; };
 		089C10782C748E4C007DB23F /* CommentPostRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentPostRequest.swift; sourceTree = "<group>"; };
+		089C107A2C749863007DB23F /* CommentDeleteResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDeleteResponse.swift; sourceTree = "<group>"; };
+		089C107C2C749886007DB23F /* CommentDeleteAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDeleteAPI.swift; sourceTree = "<group>"; };
 		089C757F2A517289003AAB94 /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.ttf"; sourceTree = "<group>"; };
 		089C75802A517289003AAB94 /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.ttf"; sourceTree = "<group>"; };
 		089C75812A517289003AAB94 /* Pretendard-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.ttf"; sourceTree = "<group>"; };
@@ -491,6 +495,7 @@
 				081689B82C73BBF200EC4D95 /* ChildCommentGetResponse.swift */,
 				089C10742C748BA6007DB23F /* CommentPostResponse.swift */,
 				089C10782C748E4C007DB23F /* CommentPostRequest.swift */,
+				089C107A2C749863007DB23F /* CommentDeleteResponse.swift */,
 			);
 			path = Comment;
 			sourceTree = "<group>";
@@ -501,6 +506,7 @@
 				081689B22C7367CC00EC4D95 /* CommentAPI.swift */,
 				081689BA2C73BC2900EC4D95 /* ChildCommentGetAPI.swift */,
 				089C10762C748BB7007DB23F /* CommentPostAPI.swift */,
+				089C107C2C749886007DB23F /* CommentDeleteAPI.swift */,
 			);
 			path = Comment;
 			sourceTree = "<group>";
@@ -1585,6 +1591,7 @@
 				08FD3A3C2B3AF94A00574880 /* CommentDataModel.swift in Sources */,
 				37C3AF4B2B3CB49E00B4C79C /* MyProfilePostDataManager.swift in Sources */,
 				080AAFA92C6510AE00FBBE94 /* PostReportAPI.swift in Sources */,
+				089C107D2C749886007DB23F /* CommentDeleteAPI.swift in Sources */,
 				08FD3A3E2B3AFE7B00574880 /* CommentDataService.swift in Sources */,
 				080AAFA52C64E9A500FBBE94 /* PostDeleteAPI.swift in Sources */,
 				EA2CD63F2C5F585400644EFE /* HTTPHeaderType.swift in Sources */,
@@ -1669,6 +1676,7 @@
 				0823B0742A5B0E780085002F /* CommentTableViewCell.swift in Sources */,
 				0801765E2A74F4B0005E6953 /* UITextView+Extension.swift in Sources */,
 				081689B92C73BBF200EC4D95 /* ChildCommentGetResponse.swift in Sources */,
+				089C107B2C749863007DB23F /* CommentDeleteResponse.swift in Sources */,
 				081228C62A69624000DFA094 /* PostLikesViewController.swift in Sources */,
 				EA01079B2A59556800A3AE85 /* HomeTabViewController.swift in Sources */,
 				373235492B68F9A60042EF94 /* FollowListDataModel.swift in Sources */,

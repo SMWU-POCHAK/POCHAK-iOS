@@ -73,4 +73,25 @@ struct CommentService {
                 }
             }
         }
+    
+    /// 댓글을 삭제합니다.
+    /// - Parameters:
+    ///   - postId: 삭제하려는 댓글이 달려있는 게시글 아이디
+    ///   - commentId: 삭제하려는 댓글의 아이디
+    ///   - completion: 핸들러
+    static func deleteComment(
+        postId: Int,
+        commentId: Int,
+        completion: @escaping (_ succeed: CommentDeleteResponse?, _ failed: NetworkError?) -> Void) {
+            NetworkService.shared.request(CommentDeleteAPI.deleteComment(postId: postId, commentId: commentId)) { response in
+                switch response {
+                case .success(let data):
+                    completion(data, nil)
+                case .failure(let error):
+                    print("=== deleteComment service error ===")
+                    print(error.localizedDescription)
+                    completion(nil, error)
+                }
+            }
+        }
 }
