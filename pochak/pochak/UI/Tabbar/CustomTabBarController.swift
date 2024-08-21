@@ -41,7 +41,7 @@ class CustomTabBarController: UITabBarController {
             
             items[1].selectedImage = UIImage(named: "post_fill")?.withRenderingMode(.alwaysOriginal)
             items[1].image = UIImage(named: "post")?.withRenderingMode(.alwaysOriginal)
-            items[1].title = "게시글"
+            items[1].title = "탐색"
 
             items[2].selectedImage = UIImage(named: "pochak_fill")?.withRenderingMode(.alwaysOriginal)
             items[2].image = UIImage(named: "pochak")?.withRenderingMode(.alwaysOriginal)
