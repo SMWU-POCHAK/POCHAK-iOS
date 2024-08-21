@@ -1080,7 +1080,7 @@
 		EA2CD6332C5F458900644EFE /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				EAC957632C6F344200046142 /* ExploreTab */,
+				EAC957632C6F344200046142 /* Explore */,
 				EA2CD6372C5F45B900644EFE /* Home */,
 			);
 			path = Models;
@@ -1101,7 +1101,7 @@
 		EA2CD6352C5F45A100644EFE /* APIs */ = {
 			isa = PBXGroup;
 			children = (
-				EAC957602C6F331500046142 /* ExploreTab */,
+				EAC957602C6F331500046142 /* Explore */,
 				EA2CD6402C5F59F800644EFE /* Home */,
 			);
 			path = APIs;
@@ -1163,21 +1163,21 @@
 			path = UploadDataManager;
 			sourceTree = "<group>";
 		};
-		EAC957602C6F331500046142 /* ExploreTab */ = {
+		EAC957602C6F331500046142 /* Explore */ = {
 			isa = PBXGroup;
 			children = (
 				EAC957612C6F332500046142 /* ExploreTabAPI.swift */,
 			);
-			path = ExploreTab;
+			path = Explore;
 			sourceTree = "<group>";
 		};
-		EAC957632C6F344200046142 /* ExploreTab */ = {
+		EAC957632C6F344200046142 /* Explore */ = {
 			isa = PBXGroup;
 			children = (
 				EAC957662C6F34BC00046142 /* ExploreTabResponse.swift */,
 				EAC957682C6F34C300046142 /* ExploreTabRequest.swift */,
 			);
-			path = ExploreTab;
+			path = Explore;
 			sourceTree = "<group>";
 		};
 		EAF9184B2AA462930037C270 /* cell */ = {
