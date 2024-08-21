@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -113,7 +113,7 @@
         <!--Navigation Controller-->
         <scene sceneID="d62-hJ-VQo">
             <objects>
-                <navigationController storyboardIdentifier="PostTab" id="Ncd-i5-fAB" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ExploreTab" id="Ncd-i5-fAB" sceneMemberID="viewController">
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="VxO-x9-iP1">
                         <rect key="frame" x="0.0" y="50" width="375" height="44"/>
@@ -127,10 +127,10 @@
             </objects>
             <point key="canvasLocation" x="-734" y="679"/>
         </scene>
-        <!--Post Tab View Controller-->
+        <!--Explore Tab View Controller-->
         <scene sceneID="Xlr-Dx-qIQ">
             <objects>
-                <viewController storyboardIdentifier="PostTabViewController" id="V7h-eB-hdn" customClass="PostTabViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ExploreTabViewController" id="V7h-eB-hdn" customClass="ExploreTabViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UId-Wq-M4L">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-final class PostTabViewController: UIViewController, UISearchBarDelegate {
+final class ExploreTabViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: - Properties
     
@@ -141,7 +141,7 @@ final class PostTabViewController: UIViewController, UISearchBarDelegate {
 
 // MARK: - Extension: UICollectionView
 
-extension PostTabViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ExploreTabViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return postList.count
@@ -193,7 +193,7 @@ extension PostTabViewController: UICollectionViewDelegate, UICollectionViewDataS
 
 // MARK: - Extension: UIScrollView
 
-extension PostTabViewController: UIScrollViewDelegate {
+extension ExploreTabViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (collectionView.contentOffset.y > (collectionView.contentSize.height - collectionView.bounds.size.height)) {
             if (!isLastPage && !isCurrentlyFetching) {
