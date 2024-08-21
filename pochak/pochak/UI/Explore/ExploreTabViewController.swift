@@ -12,9 +12,9 @@ final class ExploreTabViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: - Properties
     
-    private var postTabDataResponse: PostTabResponse!
-    private var postTabDataResult: PostTabDataResult!
-    private var postList: [PostTabDataPostList]! = []
+    private var ExploreTabDataResponse: ExploreTabResponse!
+    private var ExploreTabDataResult: ExploreTabDataResult!
+    private var postList: [ExploreTabDataPostList]! = []
     
     private var isLastPage: Bool = false
     private var isCurrentlyFetching: Bool = false
@@ -49,7 +49,7 @@ final class ExploreTabViewController: UIViewController, UISearchBarDelegate {
     
     @objc private func searchBarViewTapped() {
         // 최근 검색어 화면으로 전환
-        let storyboard = UIStoryboard(name: "PostTab", bundle: nil)
+        let storyboard = UIStoryboard(name: "ExploreTab", bundle: nil)
         if let recentSearchVC = storyboard.instantiateViewController(withIdentifier: "RecentSearchVC") as? RecentSearchViewController {
             self.navigationController?.pushViewController(recentSearchVC, animated: false)
         }
@@ -77,8 +77,8 @@ final class ExploreTabViewController: UIViewController, UISearchBarDelegate {
     private func setupData() {
         isCurrentlyFetching = true
         
-        let request = PostTabRequest(page: currentFetchingPage)
-        PostTabService.getPostTab(request: request) { [weak self] data, failed in
+        let request = ExploreTabRequest(page: currentFetchingPage)
+        ExploreTabService.getExploreTab(request: request) { [weak self] data, failed in
             guard let data = data else {
                 // 에러가 난 경우, alert 창 present
                 switch failed {
@@ -94,11 +94,11 @@ final class ExploreTabViewController: UIViewController, UISearchBarDelegate {
                 return
             }
             
-            print("=== PostTab data succeeded ===")
+            print("=== ExploreTab data succeeded ===")
             print("== data: \(data)")
             
-            self?.postTabDataResponse = data
-            guard let result = self?.postTabDataResponse?.result else { return }
+            self?.ExploreTabDataResponse = data
+            guard let result = self?.ExploreTabDataResponse?.result else { return }
 
             let newPosts = result.postList
             let startIndex = self?.postList.count
@@ -162,8 +162,8 @@ extension ExploreTabViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let postTabSb = UIStoryboard(name: "PostTab", bundle: nil)
-        guard let postVC = postTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
+        let exploreTabSb = UIStoryboard(name: "ExploreTab", bundle: nil)
+        guard let postVC = exploreTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
         else { return }
         
         postVC.receivedPostId = postList[indexPath.item].postId

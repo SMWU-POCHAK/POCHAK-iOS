@@ -14,7 +14,7 @@ final class PostViewController: UIViewController {
     var receivedPostId: Int?
     var postOwnerHandle: String = ""  // 게시글 주인 핸들 저장
     
-    private let postStoryBoard = UIStoryboard(name: "PostTab", bundle: nil)
+    private let postStoryBoard = UIStoryboard(name: "ExploreTab", bundle: nil)
     private let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
     private let refreshControl = UIRefreshControl()
     

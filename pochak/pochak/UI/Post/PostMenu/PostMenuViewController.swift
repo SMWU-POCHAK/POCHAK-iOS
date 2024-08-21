@@ -119,7 +119,7 @@ extension PostMenuViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            let storyboard = UIStoryboard(name: "PostTab", bundle: nil)
+            let storyboard = UIStoryboard(name: "ExploreTab", bundle: nil)
             let reportVC = storyboard.instantiateViewController(withIdentifier: "ReportVC") as! ReportViewController
             reportVC.setPostId(postId!)  // 신고하는 게시물 아이디 넘겨주기
             
