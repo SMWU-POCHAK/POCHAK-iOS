@@ -143,7 +143,6 @@
 		EA12890A2B3B2836002EC93E /* AlarmDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1289092B3B2836002EC93E /* AlarmDataService.swift */; };
 		EA12890C2B3BF1A7002EC93E /* RecentSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA12890B2B3BF1A7002EC93E /* RecentSearchViewController.swift */; };
 		EA1289112B3C4F14002EC93E /* SearchDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1289102B3C4F14002EC93E /* SearchDataService.swift */; };
-		EA1289132B3C4F1F002EC93E /* SearchDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1289122B3C4F1F002EC93E /* SearchDataModel.swift */; };
 		EA17182B2A5912A7009168E6 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1718292A5912A7009168E6 /* CameraViewController.swift */; };
 		EA17182C2A5912A7009168E6 /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA17182A2A5912A7009168E6 /* UploadViewController.swift */; };
 		EA1B0B5B2A49D23A00F86FBC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1B0B5A2A49D23A00F86FBC /* AppDelegate.swift */; };
@@ -161,6 +160,10 @@
 		EA2CD6442C5F5A0E00644EFE /* HomeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2CD6432C5F5A0E00644EFE /* HomeAPI.swift */; };
 		EA2CD6462C5F5A1E00644EFE /* HomeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2CD6452C5F5A1E00644EFE /* HomeResponse.swift */; };
 		EA2CD6482C5F5B0700644EFE /* HomeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2CD6472C5F5B0700644EFE /* HomeRequest.swift */; };
+		EA402BD62C7AE34300858FF5 /* SearchAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA402BD52C7AE34300858FF5 /* SearchAPI.swift */; };
+		EA402BDB2C7AE3F200858FF5 /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA402BDA2C7AE3F200858FF5 /* SearchResponse.swift */; };
+		EA402BDD2C7AE3FD00858FF5 /* SearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA402BDC2C7AE3FD00858FF5 /* SearchRequest.swift */; };
+		EA402BDF2C7AE45900858FF5 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA402BDE2C7AE45900858FF5 /* SearchService.swift */; };
 		EA4EF8D82C2EC5F7009549FF /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4EF8D72C2EC5F7009549FF /* UITextField+.swift */; };
 		EA6306D82C2BFE53000DB0A7 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6306D72C2BFE53000DB0A7 /* CustomTabBarController.swift */; };
 		EA6306DA2C2BFE83000DB0A7 /* CustomTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6306D92C2BFE83000DB0A7 /* CustomTabbar.swift */; };
@@ -174,10 +177,10 @@
 		EABD20652A6CF5CC007543E9 /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD20632A6CF5CC007543E9 /* TagCollectionViewCell.swift */; };
 		EABD20662A6CF5CC007543E9 /* TagCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EABD20642A6CF5CC007543E9 /* TagCollectionViewCell.xib */; };
 		EAC582742C3074EA006F44AF /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC582732C3074EA006F44AF /* UIColor+.swift */; };
-		EAC957622C6F332500046142 /* ExploreTabAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC957612C6F332500046142 /* ExploreTabAPI.swift */; };
-		EAC957652C6F345800046142 /* ExploreTabService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC957642C6F345800046142 /* ExploreTabService.swift */; };
-		EAC957672C6F34BC00046142 /* ExploreTabResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC957662C6F34BC00046142 /* ExploreTabResponse.swift */; };
-		EAC957692C6F34C300046142 /* ExploreTabRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC957682C6F34C300046142 /* ExploreTabRequest.swift */; };
+		EAC957622C6F332500046142 /* ExploreAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC957612C6F332500046142 /* ExploreAPI.swift */; };
+		EAC957652C6F345800046142 /* ExploreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC957642C6F345800046142 /* ExploreService.swift */; };
+		EAC957672C6F34BC00046142 /* ExploreResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC957662C6F34BC00046142 /* ExploreResponse.swift */; };
+		EAC957692C6F34C300046142 /* ExploreRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC957682C6F34C300046142 /* ExploreRequest.swift */; };
 		EACF0F6E2C3044C000C0016C /* TagSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF0F6C2C3044C000C0016C /* TagSearchTableViewCell.swift */; };
 		EACF0F6F2C3044C000C0016C /* TagSearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EACF0F6D2C3044C000C0016C /* TagSearchTableViewCell.xib */; };
 		EAE69F442C315009005762B7 /* UIVIew+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE69F432C315009005762B7 /* UIVIew+.swift */; };
@@ -357,7 +360,6 @@
 		EA1289092B3B2836002EC93E /* AlarmDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDataService.swift; sourceTree = "<group>"; };
 		EA12890B2B3BF1A7002EC93E /* RecentSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchViewController.swift; sourceTree = "<group>"; };
 		EA1289102B3C4F14002EC93E /* SearchDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDataService.swift; sourceTree = "<group>"; };
-		EA1289122B3C4F1F002EC93E /* SearchDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDataModel.swift; sourceTree = "<group>"; };
 		EA1718292A5912A7009168E6 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		EA17182A2A5912A7009168E6 /* UploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		EA1B0B572A49D23A00F86FBC /* pochak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pochak.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -379,6 +381,10 @@
 		EA2CD6432C5F5A0E00644EFE /* HomeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAPI.swift; sourceTree = "<group>"; };
 		EA2CD6452C5F5A1E00644EFE /* HomeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeResponse.swift; sourceTree = "<group>"; };
 		EA2CD6472C5F5B0700644EFE /* HomeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRequest.swift; sourceTree = "<group>"; };
+		EA402BD52C7AE34300858FF5 /* SearchAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAPI.swift; sourceTree = "<group>"; };
+		EA402BDA2C7AE3F200858FF5 /* SearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponse.swift; sourceTree = "<group>"; };
+		EA402BDC2C7AE3FD00858FF5 /* SearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRequest.swift; sourceTree = "<group>"; };
+		EA402BDE2C7AE45900858FF5 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		EA4EF8D72C2EC5F7009549FF /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		EA6306D72C2BFE53000DB0A7 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		EA6306D92C2BFE83000DB0A7 /* CustomTabbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabbar.swift; sourceTree = "<group>"; };
@@ -392,10 +398,10 @@
 		EABD20632A6CF5CC007543E9 /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
 		EABD20642A6CF5CC007543E9 /* TagCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagCollectionViewCell.xib; sourceTree = "<group>"; };
 		EAC582732C3074EA006F44AF /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
-		EAC957612C6F332500046142 /* ExploreTabAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreTabAPI.swift; sourceTree = "<group>"; };
-		EAC957642C6F345800046142 /* ExploreTabService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreTabService.swift; sourceTree = "<group>"; };
-		EAC957662C6F34BC00046142 /* ExploreTabResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreTabResponse.swift; sourceTree = "<group>"; };
-		EAC957682C6F34C300046142 /* ExploreTabRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreTabRequest.swift; sourceTree = "<group>"; };
+		EAC957612C6F332500046142 /* ExploreAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreAPI.swift; sourceTree = "<group>"; };
+		EAC957642C6F345800046142 /* ExploreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreService.swift; sourceTree = "<group>"; };
+		EAC957662C6F34BC00046142 /* ExploreResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreResponse.swift; sourceTree = "<group>"; };
+		EAC957682C6F34C300046142 /* ExploreRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreRequest.swift; sourceTree = "<group>"; };
 		EACF0F6C2C3044C000C0016C /* TagSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagSearchTableViewCell.swift; sourceTree = "<group>"; };
 		EACF0F6D2C3044C000C0016C /* TagSearchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagSearchTableViewCell.xib; sourceTree = "<group>"; };
 		EAE69F432C315009005762B7 /* UIVIew+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIew+.swift"; sourceTree = "<group>"; };
@@ -968,7 +974,6 @@
 			isa = PBXGroup;
 			children = (
 				EA1289102B3C4F14002EC93E /* SearchDataService.swift */,
-				EA1289122B3C4F1F002EC93E /* SearchDataModel.swift */,
 				EAF885282B567F4F00BA184A /* RecentSearchModel.swift */,
 				EAF8852A2B569B6600BA184A /* RecentSearchRealmManager.swift */,
 			);
@@ -1072,7 +1077,8 @@
 			isa = PBXGroup;
 			children = (
 				EA2CD6412C5F5A0500644EFE /* HomeService.swift */,
-				EAC957642C6F345800046142 /* ExploreTabService.swift */,
+				EAC957642C6F345800046142 /* ExploreService.swift */,
+				EA402BDE2C7AE45900858FF5 /* SearchService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1080,6 +1086,7 @@
 		EA2CD6332C5F458900644EFE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				EA402BD92C7AE3C300858FF5 /* Search */,
 				EAC957632C6F344200046142 /* Explore */,
 				EA2CD6372C5F45B900644EFE /* Home */,
 			);
@@ -1101,6 +1108,7 @@
 		EA2CD6352C5F45A100644EFE /* APIs */ = {
 			isa = PBXGroup;
 			children = (
+				EA402BD42C7AE33500858FF5 /* Search */,
 				EAC957602C6F331500046142 /* Explore */,
 				EA2CD6402C5F59F800644EFE /* Home */,
 			);
@@ -1131,6 +1139,23 @@
 				EA2CD6432C5F5A0E00644EFE /* HomeAPI.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		EA402BD42C7AE33500858FF5 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				EA402BD52C7AE34300858FF5 /* SearchAPI.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		EA402BD92C7AE3C300858FF5 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				EA402BDA2C7AE3F200858FF5 /* SearchResponse.swift */,
+				EA402BDC2C7AE3FD00858FF5 /* SearchRequest.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 		EA6306D62C2BFE44000DB0A7 /* Tabbar */ = {
@@ -1166,7 +1191,7 @@
 		EAC957602C6F331500046142 /* Explore */ = {
 			isa = PBXGroup;
 			children = (
-				EAC957612C6F332500046142 /* ExploreTabAPI.swift */,
+				EAC957612C6F332500046142 /* ExploreAPI.swift */,
 			);
 			path = Explore;
 			sourceTree = "<group>";
@@ -1174,8 +1199,8 @@
 		EAC957632C6F344200046142 /* Explore */ = {
 			isa = PBXGroup;
 			children = (
-				EAC957662C6F34BC00046142 /* ExploreTabResponse.swift */,
-				EAC957682C6F34C300046142 /* ExploreTabRequest.swift */,
+				EAC957662C6F34BC00046142 /* ExploreResponse.swift */,
+				EAC957682C6F34C300046142 /* ExploreRequest.swift */,
 			);
 			path = Explore;
 			sourceTree = "<group>";
@@ -1536,16 +1561,17 @@
 				08D98C4A2AFEE8D700E9A097 /* LikedUsersDataModel.swift in Sources */,
 				EA0107B32A5ECB8A00A3AE85 /* PostCollectionViewCell.swift in Sources */,
 				EA2CD6462C5F5A1E00644EFE /* HomeResponse.swift in Sources */,
-				EAC957622C6F332500046142 /* ExploreTabAPI.swift in Sources */,
+				EAC957622C6F332500046142 /* ExploreAPI.swift in Sources */,
 				EA01079A2A59556800A3AE85 /* CommentViewController.swift in Sources */,
 				08B693F22C37203400D82DC4 /* TaggedUsersDetailViewController.swift in Sources */,
 				08C02EF12BF37D2F00627C21 /* ReportTableViewCell.swift in Sources */,
 				37D311E32B56754D00A1D7C1 /* GetToken.swift in Sources */,
-				EAC957652C6F345800046142 /* ExploreTabService.swift in Sources */,
+				EAC957652C6F345800046142 /* ExploreService.swift in Sources */,
 				08D98C472AFEE8B300E9A097 /* PostDataModel.swift in Sources */,
 				3769D6C32B3C3A1600294CD1 /* FollowerCollectionViewCell.swift in Sources */,
 				374261722C3092B100B67886 /* UnblockDataManager.swift in Sources */,
 				EA0F23692C32DA780014F94E /* UIViewController+.swift in Sources */,
+				EA402BD62C7AE34300858FF5 /* SearchAPI.swift in Sources */,
 				379A6A3A2B56BDBF0087FAAC /* Authenticator.swift in Sources */,
 				EA17182C2A5912A7009168E6 /* UploadViewController.swift in Sources */,
 				089E27B72C4E8C2D00828F4C /* AlarmType.swift in Sources */,
@@ -1554,18 +1580,20 @@
 				3769D6BF2B3C349D00294CD1 /* SecondTabmanViewController.swift in Sources */,
 				08C02EEA2BF3798F00627C21 /* ReportViewController.swift in Sources */,
 				373235562B692C790042EF94 /* DeleteFollowerDataModel.swift in Sources */,
-				EAC957672C6F34BC00046142 /* ExploreTabResponse.swift in Sources */,
+				EAC957672C6F34BC00046142 /* ExploreResponse.swift in Sources */,
 				3766F40C2C3736F1001DD239 /* RequestInterceptor.swift in Sources */,
 				EA0F23662C319C030014F94E /* PreviewAlarmViewController.swift in Sources */,
 				0844D7EF2BF219F6001154AC /* DeleteViewCell.swift in Sources */,
 				374261742C3092B900B67886 /* UnblockDataModel.swift in Sources */,
 				EA2CD63B2C5F463700644EFE /* NetworkService.swift in Sources */,
+				EA402BDD2C7AE3FD00858FF5 /* SearchRequest.swift in Sources */,
 				373235542B692C6D0042EF94 /* DeleteFollowerDataManager.swift in Sources */,
 				3742617D2C359D6100B67886 /* CheckHandleDuplicationDataManager.swift in Sources */,
 				08DD9EC42B454405004CCD5F /* FollowDataService.swift in Sources */,
 				371D33782B4E83E90084FF6A /* UserDefaultsManager.swift in Sources */,
 				3742617A2C31C6F900B67886 /* AppleLoginDataModel.swift in Sources */,
 				373815162A89E6D30032066A /* SocialJoinViewController.swift in Sources */,
+				EA402BDB2C7AE3F200858FF5 /* SearchResponse.swift in Sources */,
 				EA1289082B3B2823002EC93E /* AlarmDataModel.swift in Sources */,
 				3766F40A2C370CF5001DD239 /* BlockedUserViewController.swift in Sources */,
 				374261782C31C6ED00B67886 /* AppleLoginDataManager.swift in Sources */,
@@ -1583,7 +1611,7 @@
 				3742616E2C30916C00B67886 /* BlockDataManager.swift in Sources */,
 				379A6A3E2B5FA07D0087FAAC /* NavigationController.swift in Sources */,
 				3766F4062C370A7C001DD239 /* BlockedUserListDataManager.swift in Sources */,
-				EAC957692C6F34C300046142 /* ExploreTabRequest.swift in Sources */,
+				EAC957692C6F34C300046142 /* ExploreRequest.swift in Sources */,
 				3769D6D52B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift in Sources */,
 				3769D6B62B3C302C00294CD1 /* JoinDataModel.swift in Sources */,
 				084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */,
@@ -1593,6 +1621,7 @@
 				EAF9184E2AA462C50037C270 /* SearchResultTableViewCell.swift in Sources */,
 				EA12890A2B3B2836002EC93E /* AlarmDataService.swift in Sources */,
 				EAE69F442C315009005762B7 /* UIVIew+.swift in Sources */,
+				EA402BDF2C7AE45900858FF5 /* SearchService.swift in Sources */,
 				0876E23E2C274256008DE88F /* NoPostCollectionViewCell.swift in Sources */,
 				08C02EF62BF3945000627C21 /* UIFont+.swift in Sources */,
 				EABD20652A6CF5CC007543E9 /* TagCollectionViewCell.swift in Sources */,
@@ -1602,7 +1631,6 @@
 				EA01079B2A59556800A3AE85 /* HomeTabViewController.swift in Sources */,
 				373235492B68F9A60042EF94 /* FollowListDataModel.swift in Sources */,
 				EA6306D82C2BFE53000DB0A7 /* CustomTabBarController.swift in Sources */,
-				EA1289132B3C4F1F002EC93E /* SearchDataModel.swift in Sources */,
 				0820B1902A63A18100604DA8 /* ReplyTableViewCell.swift in Sources */,
 				374261702C30917600B67886 /* BlockDataModel.swift in Sources */,
 				083249782C295E4000A77C03 /* CustomAlertViewController.swift in Sources */,

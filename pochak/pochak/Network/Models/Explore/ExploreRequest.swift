@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct ExploreTabRequest: Encodable {
+struct ExploreRequest: Encodable {
     let page: Int
 }

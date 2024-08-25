@@ -12,9 +12,9 @@ final class ExploreTabViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: - Properties
     
-    private var ExploreTabDataResponse: ExploreTabResponse!
-    private var ExploreTabDataResult: ExploreTabDataResult!
-    private var postList: [ExploreTabDataPostList]! = []
+    private var ExploreTabDataResponse: ExploreResponse!
+    private var ExploreTabDataResult: ExploreDataResult!
+    private var postList: [ExploreDataPostList]! = []
     
     private var isLastPage: Bool = false
     private var isCurrentlyFetching: Bool = false
@@ -77,8 +77,8 @@ final class ExploreTabViewController: UIViewController, UISearchBarDelegate {
     private func setupData() {
         isCurrentlyFetching = true
         
-        let request = ExploreTabRequest(page: currentFetchingPage)
-        ExploreTabService.getExploreTab(request: request) { [weak self] data, failed in
+        let request = ExploreRequest(page: currentFetchingPage)
+        ExploreService.getExploreTab(request: request) { [weak self] data, failed in
             guard let data = data else {
                 // 에러가 난 경우, alert 창 present
                 switch failed {

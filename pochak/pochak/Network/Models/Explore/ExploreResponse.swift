@@ -7,26 +7,26 @@
 
 import Foundation
 
-struct ExploreTabResponse: Codable {
+struct ExploreResponse: Codable {
     let isSuccess : Bool
     let code: String
     let message: String
-    let result: ExploreTabDataResult
+    let result: ExploreDataResult
 }
 
-struct ExploreTabDataResult: Codable {
-    let pageInfo : ExploreTabDataPageInfo
-    let postList : [ExploreTabDataPostList]
+struct ExploreDataResult: Codable {
+    let pageInfo : ExploreDataPageInfo
+    let postList : [ExploreDataPostList]
 }
 
-struct ExploreTabDataPageInfo: Codable {
+struct ExploreDataPageInfo: Codable {
     let lastPage: Bool
     let totalPages: Int
     let totalElements: Int
     let size: Int
 }
 
-struct ExploreTabDataPostList: Codable {
+struct ExploreDataPostList: Codable {
     let postId: Int
     let postImage: String
 }

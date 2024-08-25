@@ -8,28 +8,28 @@
 import Foundation
 import Alamofire
 
-enum ExploreTabAPI {
-    case getExploreTab(ExploreTabRequest)
+enum ExploreAPI {
+    case getExplore(ExploreRequest)
 }
 
-extension ExploreTabAPI: BaseAPI {
-    typealias Response = ExploreTabResponse
+extension ExploreAPI: BaseAPI {
+    typealias Response = ExploreResponse
     
     var method: HTTPMethod {
         switch self {
-        case .getExploreTab: return .get
+        case .getExplore: return .get
         }
     }
 
     var path: String {
         switch self {
-        case .getExploreTab: return "/v2/posts/search"
+        case .getExplore: return "/v2/posts/search"
         }
     }
 
     var parameters: RequestParams {
         switch self {
-        case .getExploreTab(let request): return .query(request)
+        case .getExplore(let request): return .query(request)
         }
     }
 }
