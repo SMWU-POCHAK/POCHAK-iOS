@@ -29,8 +29,8 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
     var currentTextCount : Int = 0
     var currentText : String = ""
     
-    var idSearchResponseData : IdSearchResponse!
-    var memberList : [IdSearchMember]! = []
+    var idSearchResponseData : SearchResponse!
+    var memberList : [SearchMember]! = []
     
     private var isLastPage: Bool = false
     private var isCurrentlyFetching: Bool = false
@@ -332,45 +332,45 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
     
     func sendTextToServer(_ searchText: String) {
         isCurrentlyFetching = true
-        SearchDataService.shared.getIdSearch(keyword: searchText){ response in
-            switch response {
-            case .success(let data):
-                print("success")
-                print(data)
-                self.idSearchResponseData = data as? IdSearchResponse
-                guard let result = self.idSearchResponseData?.result else { return }
-            
-                let newPosts = result.memberList
-                let startIndex = self.memberList.count
-                let endIndex = startIndex + newPosts.count
-                let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
-                
-                self.memberList.append(contentsOf: newPosts)
-                
-                self.isLastPage = result.pageInfo.lastPage
-                
-                let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
-
-                self.memberList = self.memberList.filter { $0.handle != handle }
-                DispatchQueue.main.async {
-                    if self.currentFetchingPage == 0 {
-                        self.tableView.reloadData()
-                    } else {
-                        self.tableView.insertRows(at: newIndexPaths, with: .none)
-                    }
-                    self.isCurrentlyFetching = false
-                    self.currentFetchingPage += 1;
-                }
-            case .requestErr(let err):
-                print(err)
-            case .pathErr:
-                print("pathErr")
-            case .serverErr:
-                print("serverErr")
-            case .networkFail:
-                print("networkFail")
-            }
-        }
+//        SearchDataService.shared.getIdSearch(keyword: searchText){ response in
+//            switch response {
+//            case .success(let data):
+//                print("success")
+//                print(data)
+//                self.idSearchResponseData = data as? IdSearchResponse
+//                guard let result = self.idSearchResponseData?.result else { return }
+//            
+//                let newPosts = result.memberList
+//                let startIndex = self.memberList.count
+//                let endIndex = startIndex + newPosts.count
+//                let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
+//                
+//                self.memberList.append(contentsOf: newPosts)
+//                
+//                self.isLastPage = result.pageInfo.lastPage
+//                
+//                let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
+//
+//                self.memberList = self.memberList.filter { $0.handle != handle }
+//                DispatchQueue.main.async {
+//                    if self.currentFetchingPage == 0 {
+//                        self.tableView.reloadData()
+//                    } else {
+//                        self.tableView.insertRows(at: newIndexPaths, with: .none)
+//                    }
+//                    self.isCurrentlyFetching = false
+//                    self.currentFetchingPage += 1;
+//                }
+//            case .requestErr(let err):
+//                print(err)
+//            case .pathErr:
+//                print("pathErr")
+//            case .serverErr:
+//                print("serverErr")
+//            case .networkFail:
+//                print("networkFail")
+//            }
+//        }
     }
     
     func textViewDidChange(_ textView: UITextView) {
