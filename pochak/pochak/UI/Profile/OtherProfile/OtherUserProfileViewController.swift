@@ -16,9 +16,9 @@ class OtherUserProfileViewController: UIViewController {
     // MARK: - Properties
     
     let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId)
-    var recievedHandle: String?
-    var recievedFollowerCount: Int = 0
-    var recievedFollowingCount: Int = 0
+    var receivedHandle: String?
+    var receivedFollowerCount: Int = 0
+    var receivedFollowingCount: Int = 0
     var receivedIsFollow: Bool?
     var searchBlockedUser: Bool = false
     lazy var moreButton: UIBarButtonItem = { // 업로드 버튼
@@ -49,7 +49,7 @@ class OtherUserProfileViewController: UIViewController {
         //storyboard에서 설정한 identifier와 동일한 이름
         if segue.identifier == "embedContainer" {
             let postListVC = segue.destination as! PostListViewController
-            postListVC.handle = recievedHandle
+            postListVC.handle = receivedHandle
         }
     }
     
@@ -91,18 +91,18 @@ class OtherUserProfileViewController: UIViewController {
     @objc private func viewFollowerTapped() {
         guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC") as? FollowListViewController else {return}
         followListVC.index = 0
-        followListVC.handle = recievedHandle ?? ""
-        followListVC.followerCount = recievedFollowerCount
-        followListVC.followingCount = recievedFollowingCount
+        followListVC.handle = receivedHandle ?? ""
+        followListVC.followerCount = receivedFollowerCount
+        followListVC.followingCount = receivedFollowingCount
         self.navigationController?.pushViewController(followListVC, animated: true)
     }
     
     @objc private func viewFollowingTapped() {
         guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC") as? FollowListViewController else {return}
         followListVC.index = 1
-        followListVC.handle = recievedHandle ?? ""
-        followListVC.followerCount = recievedFollowerCount
-        followListVC.followingCount = recievedFollowingCount
+        followListVC.handle = receivedHandle ?? ""
+        followListVC.followerCount = receivedFollowerCount
+        followListVC.followingCount = receivedFollowingCount
         self.navigationController?.pushViewController(followListVC, animated: true)
     }
     
@@ -134,7 +134,7 @@ class OtherUserProfileViewController: UIViewController {
     private func setUpNavigationBar() {
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.backgroundColor = UIColor.clear
-        self.navigationItem.title = "@" + (recievedHandle ?? "handle not found")
+        self.navigationItem.title = "@" + (receivedHandle ?? "handle not found")
         self.navigationItem.rightBarButtonItem = moreButton
     }
     
@@ -192,8 +192,8 @@ class OtherUserProfileViewController: UIViewController {
                 self.postCount.text = String(resultData.totalPostNum ?? 0)
                 self.followerCount.text = String(resultData.followerCount ?? 0)
                 self.followingCount.text = String(resultData.followingCount ?? 0)
-                self.recievedFollowerCount = resultData.followerCount ?? 0
-                self.recievedFollowingCount = resultData.followingCount ?? 0
+                self.receivedFollowerCount = resultData.followerCount ?? 0
+                self.receivedFollowingCount = resultData.followingCount ?? 0
                 self.receivedIsFollow = resultData.isFollow
                 
                 // 버튼 설정
@@ -245,7 +245,7 @@ extension OtherUserProfileViewController: CustomAlertDelegate {
         if searchBlockedUser {
             print("confirm selected!")
         } else {
-            FollowToggleDataManager.shared.followToggleDataManager(self.recievedHandle ?? "", { resultData in
+            FollowToggleDataManager.shared.followToggleDataManager(receivedHandle ?? "", { resultData in
                 print(resultData.message)
             })
             self.receivedIsFollow = false

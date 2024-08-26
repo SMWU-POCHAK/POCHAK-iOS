@@ -29,7 +29,6 @@ class FollowListViewController: TabmanViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         // View Controller 생길 때 네비게이션 바 숨김
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.backgroundColor = UIColor.clear
@@ -48,11 +47,11 @@ class FollowListViewController: TabmanViewController {
         /* 1. tab에 보여질 VC 추가 */
         if let firstVC = storyboard?.instantiateViewController(withIdentifier: "FirstTabmanVC") as? FollowerListTabmanViewController {
             viewControllers.append(firstVC)
-            firstVC.recievedHandle = handle ?? ""
+            firstVC.receivedHandle = handle ?? ""
         }
         if let secondVC = storyboard?.instantiateViewController(withIdentifier: "SecondTabmanVC") as? FollowingListTabmanViewController {
             viewControllers.append(secondVC)
-            secondVC.recievedHandle = handle ?? ""
+            secondVC.receivedHandle = handle ?? ""
         }
         self.dataSource = self
         

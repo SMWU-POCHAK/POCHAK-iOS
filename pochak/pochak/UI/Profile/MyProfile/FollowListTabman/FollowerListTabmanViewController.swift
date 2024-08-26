@@ -12,12 +12,12 @@ protocol RemoveImageDelegate: AnyObject {
     func removeFromCollectionView(at indexPath: IndexPath, _ handle: String)
 }
 
-class FollowerListTabmanViewController: UIViewController{
+class FollowerListTabmanViewController: UIViewController {
     
     // MARK: - Properties
     
     var imageArray: [MemberListDataModel] = []
-    var recievedHandle: String?
+    var receivedHandle: String?
     var cellIndexPath: IndexPath?
     var cellHandle: String?
     var loginUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
@@ -59,7 +59,8 @@ class FollowerListTabmanViewController: UIViewController{
         followerCollectionView.delegate = self
         followerCollectionView.dataSource = self
         followerCollectionView.register(
-            UINib(nibName: "FollowerCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "FollowerCollectionViewCell")
+            UINib(nibName: HomeCollectionViewCell.identifier, bundle: nil),
+            forCellWithReuseIdentifier: FollowerCollectionViewCell.identifier)
     }
     
     private func setUpRefreshControl() {
@@ -69,7 +70,7 @@ class FollowerListTabmanViewController: UIViewController{
     }
     
     private func setUpData() {
-        FollowListDataManager.shared.followerDataManager(recievedHandle ?? "",currentFetchingPage,{resultData in
+        FollowListDataManager.shared.followerDataManager(receivedHandle ?? "",currentFetchingPage,{resultData in
             
             let newMembers = resultData.memberList
             let startIndex = resultData.memberList.count
@@ -97,7 +98,7 @@ class FollowerListTabmanViewController: UIViewController{
     }
 }
 
-// MARK: - Extension : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, RemoveImageDelegate, CustomAlertDelegate, UIScrollViewDelegate
+// MARK: - Extension : UICollectionViewDelegate, UICollectionViewDataSource
 
 extension FollowerListTabmanViewController : UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -113,7 +114,7 @@ extension FollowerListTabmanViewController : UICollectionViewDelegate, UICollect
         }
 
         let memberListData = imageArray[indexPath.item] // indexPath 안에는 섹션에 대한 정보, 섹션에 들어가는 데이터 정보 등이 있다
-        cell.searchedHandle = recievedHandle ?? ""
+        cell.searchedHandle = receivedHandle ?? ""
         cell.setUpCellData(memberListData)
         cell.delegate = self
         return cell
@@ -129,7 +130,9 @@ extension FollowerListTabmanViewController : UICollectionViewDelegate, UICollect
 
 }
 
-extension FollowerListTabmanViewController : UICollectionViewDelegateFlowLayout{
+// MARK: - Extension : UICollectionViewDelegateFlowLayout
+
+extension FollowerListTabmanViewController : UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: followerCollectionView.bounds.width,
@@ -140,6 +143,8 @@ extension FollowerListTabmanViewController : UICollectionViewDelegateFlowLayout{
         return 0
     }
 }
+
+// MARK: - Extension : RemoveImageDelegate
 
 extension FollowerListTabmanViewController: RemoveImageDelegate {
     
@@ -153,10 +158,12 @@ extension FollowerListTabmanViewController: RemoveImageDelegate {
     }
 }
 
+// MARK: - Extension : CustomAlertDelegate
+
 extension FollowerListTabmanViewController : CustomAlertDelegate {
     
     func confirmAction() {
-        DeleteFollowerDataManager.shared.deleteFollowerDataManager(self.recievedHandle ?? "", cellHandle ?? "", { resultData in
+        DeleteFollowerDataManager.shared.deleteFollowerDataManager(receivedHandle ?? "", cellHandle ?? "", { resultData in
             print(resultData.message)
             self.imageArray.remove(at: self.cellIndexPath!.row)
             self.followerCollectionView.reloadData()
@@ -168,10 +175,12 @@ extension FollowerListTabmanViewController : CustomAlertDelegate {
     }
 }
 
+// MARK: - Extension : UIScrollViewDelegate
+
 extension FollowerListTabmanViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (followerCollectionView.contentOffset.y > (followerCollectionView.contentSize.height - followerCollectionView.bounds.size.height)){
+        if (followerCollectionView.contentOffset.y > (followerCollectionView.contentSize.height - followerCollectionView.bounds.size.height)) {
             if (!isLastPage && !isCurrentlyFetching) {
                 print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
                 isCurrentlyFetching = true

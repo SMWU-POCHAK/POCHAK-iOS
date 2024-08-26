@@ -43,7 +43,7 @@ class FollowerCollectionViewCell: UICollectionViewCell {
             print("superview is not a UICollectionView - getIndexPath")
             return
         }
-        guard let indexPath = superView.indexPath(for: self) else {return}
+        guard let indexPath = superView.indexPath(for: self) else { return }
         delegate?.removeFromCollectionView(at: indexPath, cellHandle)
     }
     
@@ -54,7 +54,7 @@ class FollowerCollectionViewCell: UICollectionViewCell {
             if resultCode == "FOLLOW2002" {
                 sender.setTitle("팔로우", for: .normal)
                 sender.backgroundColor = UIColor(named: "yellow00")
-            } else if resultCode == "FOLLOW2001"{
+            } else if resultCode == "FOLLOW2001" {
                 sender.setTitle("팔로잉", for: .normal)
                 sender.backgroundColor = UIColor(named: "gray03")
             }

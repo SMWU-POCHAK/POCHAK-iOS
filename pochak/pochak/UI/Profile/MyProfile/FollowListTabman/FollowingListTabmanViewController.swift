@@ -12,7 +12,7 @@ class FollowingListTabmanViewController: UIViewController {
     // MARK: - Properties
     
     var imageArray: [MemberListDataModel] = []
-    var recievedHandle: String?
+    var receivedHandle: String?
     private var isLastPage: Bool = false
     private var isCurrentlyFetching: Bool = false
     private var currentFetchingPage: Int = 0
@@ -22,6 +22,7 @@ class FollowingListTabmanViewController: UIViewController {
     @IBOutlet weak var followingCollectionView: UICollectionView!
     
     // MARK: - LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         currentFetchingPage = 0
@@ -50,7 +51,8 @@ class FollowingListTabmanViewController: UIViewController {
         followingCollectionView.delegate = self
         followingCollectionView.dataSource = self
         followingCollectionView.register(
-            UINib(nibName: "FollowingCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "FollowingCollectionViewCell")
+            UINib(nibName: FollowingCollectionViewCell.identifier, bundle: nil),
+            forCellWithReuseIdentifier: FollowingCollectionViewCell.identifier)
     }
     
     private func setUpRefreshControl() {
@@ -60,7 +62,7 @@ class FollowingListTabmanViewController: UIViewController {
     }
     
     private func setUpData() {
-        FollowListDataManager.shared.followingDataManager(recievedHandle ?? "",currentFetchingPage, {resultData in
+        FollowListDataManager.shared.followingDataManager(receivedHandle ?? "", currentFetchingPage, { resultData in
             let newMembers = resultData.memberList
             let startIndex = resultData.memberList.count
             print("startIndex : \(startIndex)")
@@ -87,9 +89,9 @@ class FollowingListTabmanViewController: UIViewController {
     }
 }
 
-// MARK: - Extension : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
+// MARK: - Extension : UICollectionViewDelegate, UICollectionViewDataSource
 
-extension FollowingListTabmanViewController : UICollectionViewDelegate, UICollectionViewDataSource {
+extension FollowingListTabmanViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return max(0,(imageArray.count))
@@ -112,11 +114,13 @@ extension FollowingListTabmanViewController : UICollectionViewDelegate, UICollec
         guard let otherUserProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else {return}
         self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
         guard let cell: FollowingCollectionViewCell = self.followingCollectionView.cellForItem(at: indexPath) as? FollowingCollectionViewCell else {return}
-        otherUserProfileVC.recievedHandle = cell.userId.text
+        otherUserProfileVC.receivedHandle = cell.userId.text
     }
 }
 
-extension FollowingListTabmanViewController : UICollectionViewDelegateFlowLayout{
+// MARK: - Extension : UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
+
+extension FollowingListTabmanViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: followingCollectionView.bounds.width,
@@ -128,10 +132,12 @@ extension FollowingListTabmanViewController : UICollectionViewDelegateFlowLayout
     }
 }
 
+// MARK: - Extension : UIScrollViewDelegate
+
 extension FollowingListTabmanViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (followingCollectionView.contentOffset.y > (followingCollectionView.contentSize.height - followingCollectionView.bounds.size.height)){
+        if (followingCollectionView.contentOffset.y > (followingCollectionView.contentSize.height - followingCollectionView.bounds.size.height)) {
             if (!isLastPage && !isCurrentlyFetching) {
                 print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
                 isCurrentlyFetching = true

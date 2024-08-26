@@ -51,7 +51,8 @@ class PochakPostTabmanViewController: UIViewController {
         postCollectionView.delegate = self
         postCollectionView.dataSource = self
         postCollectionView.register(
-            UINib(nibName: "ProfilePostCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ProfilePostCollectionViewCell")
+            UINib(nibName: ProfilePostCollectionViewCell.identifier, bundle: nil),
+            forCellWithReuseIdentifier: ProfilePostCollectionViewCell.identifier)
     }
     
     private func setUpRefreshControl() {

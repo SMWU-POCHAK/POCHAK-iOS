@@ -50,7 +50,8 @@ class PochakedPostTabmanViewController: UIViewController {
         postCollectionView.delegate = self
         postCollectionView.dataSource = self
         postCollectionView.register(
-            UINib(nibName: "ProfilePostCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ProfilePostCollectionViewCell")
+            UINib(nibName: ProfilePostCollectionViewCell.identifier, bundle: nil),
+            forCellWithReuseIdentifier: ProfilePostCollectionViewCell.identifier)
     }
     
     private func setUpRefreshControl() {
@@ -61,7 +62,7 @@ class PochakedPostTabmanViewController: UIViewController {
     
     private func setUpData() {
         isCurrentlyFetching = true
-        MyProfilePostDataManager.shared.myProfileUserAndPochakedPostDataManager(receivedHandle ?? "", currentFetchingPage,{ response in
+        MyProfilePostDataManager.shared.myProfileUserAndPochakedPostDataManager(receivedHandle ?? "", currentFetchingPage, { response in
             switch response {
             case .success(let resultData):
                 
