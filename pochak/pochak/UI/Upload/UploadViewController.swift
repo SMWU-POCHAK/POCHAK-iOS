@@ -29,7 +29,6 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
     var currentTextCount : Int = 0
     var currentText : String = ""
     
-    var idSearchResponseData : SearchResponse!
     var memberList : [SearchMember]! = []
     
     private var isLastPage: Bool = false
@@ -318,7 +317,6 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
     }
     
     private func setupTableView(){
-        print(tableView)
         //delegate 연결
         tableView.delegate = self
         tableView.dataSource = self
@@ -332,45 +330,45 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
     
     func sendTextToServer(_ searchText: String) {
         isCurrentlyFetching = true
-//        SearchDataService.shared.getIdSearch(keyword: searchText){ response in
-//            switch response {
-//            case .success(let data):
-//                print("success")
-//                print(data)
-//                self.idSearchResponseData = data as? IdSearchResponse
-//                guard let result = self.idSearchResponseData?.result else { return }
-//            
-//                let newPosts = result.memberList
-//                let startIndex = self.memberList.count
-//                let endIndex = startIndex + newPosts.count
-//                let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
-//                
-//                self.memberList.append(contentsOf: newPosts)
-//                
-//                self.isLastPage = result.pageInfo.lastPage
-//                
-//                let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
-//
-//                self.memberList = self.memberList.filter { $0.handle != handle }
-//                DispatchQueue.main.async {
-//                    if self.currentFetchingPage == 0 {
-//                        self.tableView.reloadData()
-//                    } else {
-//                        self.tableView.insertRows(at: newIndexPaths, with: .none)
-//                    }
-//                    self.isCurrentlyFetching = false
-//                    self.currentFetchingPage += 1;
-//                }
-//            case .requestErr(let err):
-//                print(err)
-//            case .pathErr:
-//                print("pathErr")
-//            case .serverErr:
-//                print("serverErr")
-//            case .networkFail:
-//                print("networkFail")
-//            }
-//        }
+        
+        let request = SearchRequest(page: currentFetchingPage, keyword: searchText)
+        SearchService.getSearch(request: request) { [weak self] data, failed in
+            guard let data = data else {
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .serverError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .unknownError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                }
+                return
+            }
+                        
+            let newResult = data.result.memberList
+            let startIndex = self?.memberList.count
+            let endIndex = startIndex! + newResult.count
+            let newIndexPaths = (startIndex! ..< endIndex).map { IndexPath(item: $0, section: 0) }
+            
+            self?.memberList.append(contentsOf: newResult)
+            
+            self?.isLastPage = data.result.pageInfo.lastPage
+            
+            let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
+            
+            self?.memberList = self?.memberList.filter { $0.handle != handle }
+            DispatchQueue.main.async {
+                if self?.currentFetchingPage == 0 {
+                    self?.tableView.reloadData()
+                } else {
+                    self?.tableView.insertRows(at: newIndexPaths, with: .none)
+                }
+                self?.isCurrentlyFetching = false
+                self?.currentFetchingPage += 1;
+            }
+        }
     }
     
     func textViewDidChange(_ textView: UITextView) {

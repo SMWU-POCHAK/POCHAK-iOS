@@ -20,7 +20,6 @@ final class RecentSearchViewController: UIViewController, UITextFieldDelegate {
     private var realmManager = RecentSearchRealmManager()
     private var recentSearchTerms: Results<RecentSearchModel>!
     
-    private var idSearchResponseData: SearchResponse!
     private var memberList: [SearchMember]! = []
     
     private var isLastPage: Bool = false
@@ -246,17 +245,14 @@ final class RecentSearchViewController: UIViewController, UITextFieldDelegate {
             }
             print("=== Id Search, setup data succeeded ===")
             print("== data: \(data)")
-            
-            self?.idSearchResponseData = data
-            guard let result = self?.idSearchResponseData?.result else { return }
-            
-            let newPosts = result.memberList
+                        
+            let newResult = data.result.memberList
             let startIndex = self?.memberList.count
-            let endIndex = startIndex! + newPosts.count
+            let endIndex = startIndex! + newResult.count
             let newIndexPaths = (startIndex! ..< endIndex).map { IndexPath(item: $0, section: 0) }
             
-            self?.memberList.append(contentsOf: newPosts)
-            self?.isLastPage = result.pageInfo.lastPage
+            self?.memberList.append(contentsOf: newResult)
+            self?.isLastPage = data.result.pageInfo.lastPage
             
             DispatchQueue.main.async {
                 if self?.currentFetchingPage == 0 {
