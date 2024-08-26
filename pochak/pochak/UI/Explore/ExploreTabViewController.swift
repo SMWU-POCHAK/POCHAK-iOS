@@ -78,7 +78,7 @@ final class ExploreTabViewController: UIViewController, UISearchBarDelegate {
         isCurrentlyFetching = true
         
         let request = ExploreRequest(page: currentFetchingPage)
-        ExploreService.getExploreTab(request: request) { [weak self] data, failed in
+        ExploreService.getExplore(request: request) { [weak self] data, failed in
             guard let data = data else {
                 // 에러가 난 경우, alert 창 present
                 switch failed {

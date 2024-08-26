@@ -12,7 +12,7 @@ struct ExploreService {
     /// - Parameters:
     ///   - request: 받아올 탐색 탭 게시글 페이지
     ///   - completion: 통신 후 핸들러 (뷰컨트롤러에 있음)
-    static func getExploreTab(
+    static func getExplore(
         request: ExploreRequest,
         completion: @escaping (_ succeed: ExploreResponse?, _ failed: NetworkError?) -> Void) {
         NetworkService.shared.request(ExploreAPI.getExplore(request)) { response in
