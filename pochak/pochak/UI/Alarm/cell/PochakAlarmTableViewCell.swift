@@ -8,20 +8,26 @@
 import UIKit
 
 class PochakAlarmTableViewCell: UITableViewCell {
+    
+    // MARK: - Properties
 
     static let identifier = "PochakAlarmTableViewCell"
+    var previewBtnClickAction: (() -> Void)?
+
+    // MARK: - Views
 
     @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var comment: UILabel!
     @IBOutlet weak var previewBtn: UIButton!
     @IBOutlet weak var lineView: UIView!
     
-    var previewBtnClickAction: (() -> Void)?
-    
     @IBAction func previewBtnAction(_ sender: Any) {
         print("버튼 클릭")
         previewBtnClickAction?()
     }
+    
+    // MARK: - Lifecycle
+
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -29,38 +35,43 @@ class PochakAlarmTableViewCell: UITableViewCell {
         configureCellAppearance()
     }
     
-    private func setupAttribute(){
+    // MARK: - Functions
+
+    private func setupAttribute() {
         img.layer.cornerRadius = 48/2
 //        comment.lineBreakMode = .byCharWrapping
 //        comment.lineBreakStrategy = .hangulWordPriority
         previewBtn.layer.masksToBounds = true
     }
     
-    func configureCellAppearance() {
+    private func configureCellAppearance() {
         // 첫 번째 셀과 마지막 셀의 외형을 설정
         if let tableView = self.superview as? UITableView {
             let indexPath = tableView.indexPath(for: self)!
-            let isFirstCell = indexPath.row == 0
-            let isLastCell = indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1
+            let row = indexPath.row
+            let numberOfRows = tableView.numberOfRows(inSection: indexPath.section)
             
-            if isFirstCell && isLastCell {
+            switch row {
+            case 0 where numberOfRows == 1:
                 // 아이템이 하나인 경우
                 self.lineView.isHidden = true // separator를 보이지 않도록
-            } else if isFirstCell {
+                
+            case 0:
                 // 첫 번째 셀
                 self.lineView.isHidden = false
                 print("첫번째")
-            } else if isLastCell {
+                
+            case numberOfRows - 1:
                 // 마지막 셀
                 self.lineView.isHidden = true // separator를 보이지 않도록
                 print("마지막")
-            } else {
+                
+            default:
                 // 그 외의 경우
                 self.lineView.isHidden = false
             }
         }
     }
-    
     
     func configure(with imageUrl: String) {
         if let url = URL(string: imageUrl) {
@@ -76,5 +87,4 @@ class PochakAlarmTableViewCell: UITableViewCell {
             }
         }
     }
-
 }
