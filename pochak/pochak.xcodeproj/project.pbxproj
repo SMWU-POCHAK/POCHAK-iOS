@@ -722,7 +722,7 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		08C915162C6460F50044A9A8 /* PostDetail */ = {
+		08C915162C6460F50044A9A8 /* Post */ = {
 			isa = PBXGroup;
 			children = (
 				081689B42C73680F00EC4D95 /* Comment */,
@@ -732,7 +732,7 @@
 				080AAFAC2C65174900FBBE94 /* PostReportRequest.swift */,
 				086E90062C664C6A00A05E76 /* PostLikeResponse.swift */,
 			);
-			path = PostDetail;
+			path = Post;
 			sourceTree = "<group>";
 		};
 		08C9151D2C6461C00044A9A8 /* Post */ = {
@@ -1151,7 +1151,7 @@
 			isa = PBXGroup;
 			children = (
 				086E900D2C666A0E00A05E76 /* User */,
-				08C915162C6460F50044A9A8 /* PostDetail */,
+				08C915162C6460F50044A9A8 /* Post */,
 				EA2CD6372C5F45B900644EFE /* Home */,
 			);
 			path = Models;
@@ -1921,7 +1921,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.site.pochak.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1961,7 +1961,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.site.pochak.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
