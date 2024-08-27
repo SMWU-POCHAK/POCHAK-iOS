@@ -168,14 +168,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
         switch alarmType {
         case .tagApproval:
             self.tableView.deselectRow(at: indexPath, animated: false)
-            
-        case .ownerComment, .taggedComment, .commentReply:
-            let postTabSb = UIStoryboard(name: "PostTab", bundle: nil)
-            guard let postVC = postTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController else { return }
-            
-            postVC.receivedPostId = alarmList[indexPath.row].postId
-            self.navigationController?.pushViewController(postVC, animated: true)
-            
+
         case .follow:
             let storyboard = UIStoryboard(name: "ProfileTab", bundle: nil)
             guard let profileTabVC = storyboard.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
@@ -183,7 +176,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             profileTabVC.recievedHandle = alarmList[indexPath.row].memberHandle
             self.navigationController?.pushViewController(profileTabVC, animated: true)
             
-        case .ownerLike, .taggedLike:
+        case .ownerComment, .taggedComment, .commentReply, .ownerLike, .taggedLike:
             let postTabSb = UIStoryboard(name: "PostTab", bundle: nil)
             guard let postVC = postTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController else { return }
             
@@ -203,6 +196,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
         cell.comment.text = text
         if let url = URL(string: alarm.memberProfileImage ?? "") {
             cell.img.load(with: url)
+            cell.img.contentMode = .scaleAspectFill
         }
     }
 
@@ -210,8 +204,10 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
         if let userSentAlarmHandle = alarm.ownerHandle {
             cell.comment.text = "\(userSentAlarmHandle) 님이 회원님을 포착했습니다."
         }
+        
         if let url = URL(string: alarm.ownerProfileImage ?? "") {
             cell.img.load(with: url)
+            cell.img.contentMode = .scaleAspectFill
         }
         
         cell.previewBtnClickAction = {
@@ -234,7 +230,6 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
                 sheet.delegate = self
                 sheet.prefersGrabberVisible = true
             }
-            
             self.present(previewAlarmVC, animated: true)
         }
     }
