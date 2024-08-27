@@ -17,7 +17,7 @@ protocol BaseAPI: URLRequestConvertible {
 }
 
 extension BaseAPI {
-    var baseURL: String { "http://pochak.site/api" }
+    var baseURL: String { "http://34.47.86.230/api" }
     var method: HTTPMethod { .get }
     var path: String { "" }
     var parameters: RequestParams? { nil }
