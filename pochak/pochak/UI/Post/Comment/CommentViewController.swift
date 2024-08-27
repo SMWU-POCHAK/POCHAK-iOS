@@ -98,7 +98,7 @@ final class CommentViewController: UIViewController {
                 print("== data: \(data)")
                 
                 // 만약 실패한 경우 실패했다고 알림창
-                if(data.isSuccess == false){
+                if data.isSuccess == false {
                     self?.present(UIAlertController.networkErrorAlert(title: "댓글 등록에 실패하였습니다."), animated: true)
                     return
                 }
@@ -316,7 +316,7 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
         
         // 셀을 그리기 위해 인덱스를 계산 해야 함
         var childCommentsSoFar = 0
-        if(section != 0){
+        if(section != 0) {
             for index in 0...section - 1 {
                 childCommentsSoFar += self.parentAndChildCommentList![index].childCommentList.count
             }
@@ -341,7 +341,7 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
         // 자식 댓글인 경우
-        else{
+        else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ReplyTableViewCell.identifier, for: indexPath)
                     as? ReplyTableViewCell else { return UITableViewCell() }
             cell.editingCommentTextField = self.commentTextField
