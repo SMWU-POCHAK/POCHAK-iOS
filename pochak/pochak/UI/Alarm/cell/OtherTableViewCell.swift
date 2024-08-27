@@ -65,18 +65,4 @@ class OtherTableViewCell: UITableViewCell {
             }
         }
     }
-    
-    func configure(with imageUrl: String) {
-        if let url = URL(string: imageUrl) {
-            img.kf.setImage(with: url) { result in
-                switch result {
-                case .success(let value):
-                    print("Image successfully loaded: \(value.image)")
-                    self.img.contentMode = .scaleAspectFill
-                case .failure(let error):
-                    print("Image failed to load with error: \(error.localizedDescription)")
-                }
-            }
-        }
-    }
 }

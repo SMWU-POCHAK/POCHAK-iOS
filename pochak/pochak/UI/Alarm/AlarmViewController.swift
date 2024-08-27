@@ -114,8 +114,8 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             if let userSentAlarmHandle = self.alarmList[indexPath.row].ownerHandle {
                 cell.comment.text = "\(userSentAlarmHandle) 님이 회원님을 포착했습니다."
             }
-            if let image = self.alarmList[indexPath.row].ownerProfileImage {
-                cell.configure(with: image)
+            if let url = URL(string: self.alarmList[indexPath.row].ownerProfileImage) {
+                cell.img.load(with: url)
             }
             cell.previewBtnClickAction = {
                 guard let tagId = self.alarmList[indexPath.row].tagId else {
@@ -160,8 +160,8 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
                     }
                 }
             }
-            if let image = self.alarmList[indexPath.row].memberProfileImage {
-                cell.configure(with: image)
+            if let url = URL(string: self.alarmList[indexPath.row].memberProfileImage) {
+                cell.img.load(with: url)
             }
             return cell
 
@@ -172,8 +172,8 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             if let userSentAlarmHandle = self.alarmList[indexPath.row].memberHandle {
                 cell.comment.text = "\(userSentAlarmHandle) 님이 회원님을 팔로우하였습니다."
             }
-            if let image = self.alarmList[indexPath.row].memberProfileImage {
-                cell.configure(with: image)
+            if let url = URL(string: self.alarmList[indexPath.row].memberProfileImage) {
+                cell.img.load(with: url)
             }
             return cell
 
@@ -184,8 +184,8 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             if let userSentAlarmHandle = self.alarmList[indexPath.row].memberHandle {
                 cell.comment.text = "내 게시물에 \(userSentAlarmHandle)님이 좋아요를 눌렀습니다."
             }
-            if let image = self.alarmList[indexPath.row].memberProfileImage {
-                cell.configure(with: image)
+            if let url = URL(string: self.alarmList[indexPath.row].memberProfileImage) {
+                cell.img.load(with: url)
             }
             return cell
 
@@ -196,8 +196,8 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             if let userSentAlarmHandle = self.alarmList[indexPath.row].memberHandle {
                 cell.comment.text = "내가 포착된 게시물에 \(userSentAlarmHandle)님이 좋아요를 눌렀습니다."
             }
-            if let image = self.alarmList[indexPath.row].memberProfileImage {
-                cell.configure(with: image)
+            if let url = URL(string: self.alarmList[indexPath.row].memberProfileImage) {
+                cell.img.load(with: url)
             }
             return cell
 
