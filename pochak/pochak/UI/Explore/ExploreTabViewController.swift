@@ -12,8 +12,6 @@ final class ExploreTabViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: - Properties
     
-    private var ExploreTabDataResponse: ExploreResponse!
-    private var ExploreTabDataResult: ExploreDataResult!
     private var postList: [ExploreDataPostList]! = []
     
     private var isLastPage: Bool = false
@@ -97,8 +95,7 @@ final class ExploreTabViewController: UIViewController, UISearchBarDelegate {
             print("=== ExploreTab data succeeded ===")
             print("== data: \(data)")
             
-            self?.ExploreTabDataResponse = data
-            guard let result = self?.ExploreTabDataResponse?.result else { return }
+            guard let result = data.result else { return }
 
             let newPosts = result.postList
             let startIndex = self?.postList.count
