@@ -8,15 +8,15 @@
 import Foundation
 
 struct ExploreResponse: Codable {
-    let isSuccess : Bool
+    let isSuccess: Bool
     let code: String
     let message: String
     let result: ExploreDataResult
 }
 
 struct ExploreDataResult: Codable {
-    let pageInfo : ExploreDataPageInfo
-    let postList : [ExploreDataPostList]
+    let pageInfo: ExploreDataPageInfo
+    let postList: [ExploreDataPostList]
 }
 
 struct ExploreDataPageInfo: Codable {
