@@ -12,23 +12,16 @@ final class PostViewController: UIViewController {
     // MARK: - Properties
     
     var receivedPostId: Int?
-    var postOwnerHandle: String = ""  // 게시글 주인 핸들 저장
+    //var postOwnerHandle: String = ""  // 게시글 주인 핸들 저장
     
     private let postStoryBoard = UIStoryboard(name: "PostTab", bundle: nil)
     private let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
     private let refreshControl = UIRefreshControl()
-    
-    private var isFollowing: Bool?
-    
-    private var postDataResponse: PostDataResponse!
-    private var postDataResult: PostDataResponseResult!
-    
-    private var likePostResponse: LikePostDataResponse!
-    
+        
+    private var postDataResult: PostDetailResponseResult?
+        
     private var deletePostResponse: PostDeleteResponse!
-    
-    private var taggedUserList: [TaggedMember] = []
-    
+        
     // MARK: - Views
     
     @IBOutlet weak var profileImageView: UIImageView!
@@ -77,39 +70,41 @@ final class PostViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func followingBtnTapped(_ sender: Any) {
-        if isFollowing! {
-            showAlert(alertType: .confirmAndCancel,
-                      titleText: "팔로우를 취소할까요?",
-                      cancelButtonText: "취소",
-                      confirmButtonText: "확인")
-        }
-        else {
-            postFollowRequest()
+        if let isFollow = postDataResult?.isFollow! {
+            if isFollow {
+                showAlert(alertType: .confirmAndCancel,
+                          titleText: "팔로우를 취소할까요?",
+                          cancelButtonText: "취소",
+                          confirmButtonText: "확인")
+            }
+            else {
+                postFollowRequest()
+            }
         }
     }
 
     @IBAction func likeBtnTapped(_ sender: Any) {
-        LikedUsersDataService.shared.postLikeRequest(receivedPostId!) { response in
-            switch(response) {
-            case .success(let likePostResponse):
-                self.likePostResponse = likePostResponse as? LikePostDataResponse
-                if(!self.likePostResponse.isSuccess!) {
-                    self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
-                    return
+        PostService.postLikePost(postId: receivedPostId!) { [weak self] data, failed in
+            guard let data = data else {
+                // 에러가 난 경우, alert 창 present
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), 
+                                  animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "좋아요에 실패하였습니다."), animated: true)
                 }
-                print(self.likePostResponse.message)
-                self.loadPostDetailData()
-            case .requestErr(let message):
-                print("requestErr", message)
-            case .pathErr:
-                print("pathErr")
-            case .serverErr:
-                print("serverErr")
-                self.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
-            case .networkFail:
-                print("networkFail")
-                self.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
+                return
             }
+            
+            print("=== PostDetail, likeBtnTapped succeeded ===")
+            print("== data: \(data)")
+            
+            if(!data.isSuccess) {
+                self?.present(UIAlertController.networkErrorAlert(title: "좋아요에 실패하였습니다."), animated: true)
+                return
+            }
+            self?.loadPostDetailData()
         }
     }
     
@@ -118,7 +113,7 @@ final class PostViewController: UIViewController {
         guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
         
         if sender.view == profileImageView || sender.view == pochakUserLabel || sender.view == postOwnerHandleLabel {
-            otherUserProfileVC.recievedHandle = postOwnerHandle
+            otherUserProfileVC.recievedHandle = postDataResult?.ownerHandle
         }
         
         else if sender.view == commentUserHandleLabel {
@@ -130,7 +125,7 @@ final class PostViewController: UIViewController {
     
     @objc func showTaggedUsersVC() {
         let taggedUserDetailVC = postStoryBoard.instantiateViewController(withIdentifier: "TaggedUsersDetailVC") as! TaggedUsersDetailViewController
-        taggedUserDetailVC.tagList = taggedUserList
+        taggedUserDetailVC.tagList = postDataResult?.tagList
         
         taggedUserDetailVC.goToOtherProfileVC = { (handle: String) in
             self.dismiss(animated: true)
@@ -150,8 +145,8 @@ final class PostViewController: UIViewController {
     @objc func moreActionButtonDidTap() {
         let postMenuVC = postStoryBoard.instantiateViewController(withIdentifier: "PostMenuVC") as! PostMenuViewController
         postMenuVC.setPostData(postId: receivedPostId!, 
-                               postOwner: postOwnerHandle,
-                               taggedMemberList: taggedUserList.map({ $0.handle }))
+                               postOwner: postDataResult!.ownerHandle,
+                               taggedMemberList: postDataResult!.tagList.map({ $0.handle }))
         let sheet = postMenuVC.sheetPresentationController
         
         /* 메뉴 개수에 맞도록 sheet 높이 설정 */
@@ -162,7 +157,7 @@ final class PostViewController: UIViewController {
         
         let currentLogInUser = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
         
-        let cellCount = (postOwnerHandle == currentLogInUser || taggedUserList.contains(where: { $0.handle == currentLogInUser })) ? 3 : 2
+        let cellCount = (postDataResult?.ownerHandle == currentLogInUser || postDataResult!.tagList.contains(where: { $0.handle == currentLogInUser })) ? 3 : 2
         let height = label.frame.height + CGFloat(36 + 16 + 48 * cellCount)
         let fraction = UISheetPresentationController.Detent.custom { context in
             height
@@ -231,21 +226,21 @@ final class PostViewController: UIViewController {
     }
     
     private func setupData() {
-        if let url = URL(string: postDataResult.postImage) {
+        if let url = URL(string: postDataResult!.postImage) {
             postImageView.load(with: url)
         }
         
-        if let profileUrl = URL(string: postDataResult.ownerProfileImage) {
+        if let profileUrl = URL(string: postDataResult!.ownerProfileImage) {
             profileImageView.load(with: profileUrl)
         }
         
-        self.navigationItem.title = postDataResult.ownerHandle + " 님의 게시물"
+        self.navigationItem.title = postDataResult!.ownerHandle + " 님의 게시물"
         
         // 태그된 사용자, 포착한 사용자
         self.taggedUsersLabel.text = ""
         
-        for taggedUser in self.taggedUserList {
-            if(taggedUser.handle == self.taggedUserList.last?.handle) {
+        for taggedUser in postDataResult!.tagList {
+            if(taggedUser.handle == postDataResult?.tagList.last?.handle) {
                 self.taggedUsersLabel.text! += taggedUser.handle + " 님"
             }
             else {
@@ -253,56 +248,60 @@ final class PostViewController: UIViewController {
             }
         }
         
-        self.pochakUserLabel.text = postDataResult.ownerHandle + "님이 포착"
+        if let ownerHandle = postDataResult?.ownerHandle {
+            self.pochakUserLabel.text = ownerHandle + "님이 포착"
+            self.postOwnerHandleLabel.text = ownerHandle
+        }
         
         // 포스트 내용
-        self.postOwnerHandleLabel.text = postDataResult.ownerHandle
-        self.postContentLabel.text = postDataResult.caption
+        if let caption = postDataResult?.caption {
+            self.postContentLabel.text = caption
+        }
         
         // 댓글 미리보기 -> 있으면 보여주기
-        if(postDataResult.recentComment == nil) {
-            self.hideCommentViews(isHidden: true)
-        }
-        else {
+        if let recentComment = postDataResult?.recentComment {
             self.hideCommentViews(isHidden: false)
             self.setCommentViewContents()
         }
+        else {
+            self.hideCommentViews(isHidden: true)
+        }
         
-        self.likeButton.isSelected = postDataResult.isLike
+        if let isLike = postDataResult?.isLike {
+            self.likeButton.isSelected = isLike
+        }
         
         // 팔로잉 버튼
-        if(isFollowing == nil) {
-            self.followingButton.isHidden = true
+        if let isFollow = postDataResult?.isFollow {
+            self.followingButton.isHidden = false
+            self.followingButton.isSelected = isFollow
+            self.followingButton.backgroundColor = isFollow ? UIColor(named: "gray03") : UIColor(named: "yellow00")
         }
         else {
-            self.followingButton.isHidden = false
-            self.followingButton.isSelected = isFollowing!
-            self.followingButton.backgroundColor = isFollowing! ? UIColor(named: "gray03") : UIColor(named: "yellow00")
+            self.followingButton.isHidden = true
         }
     }
     
     /// 게시글 상세 데이터 조회하기
     func loadPostDetailData() {
-        PostDataService.shared.getPostDetail(receivedPostId!) { response in
-            switch(response) {
-            case .success(let postData):
-                self.postDataResponse = postData as? PostDataResponse
-                self.postDataResult = self.postDataResponse.result
-                self.postOwnerHandle = self.postDataResult.ownerHandle
-                self.taggedUserList = self.postDataResult.tagList
-                self.isFollowing = self.postDataResult.isFollow
-                self.setupData()
-            case .requestErr(let message):
-                print("requestErr", message)
-            case .pathErr:
-                print("pathErr")
-            case .serverErr:
-                print("serverErr")
-                self.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
-            case .networkFail:
-                print("networkFail")
-                self.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
+        PostService.getPostDetail(postId: receivedPostId!) { [weak self] data, failed in
+            guard let data = data else {
+                // 에러가 난 경우, alert 창 present
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
+                                  animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "게시글 조회에 실패하였습니다."), animated: true)
+                }
+                return
             }
+            
+            print("=== PostDetail, loadPostDetailData succeeded ===")
+            print("== data: \(data)")
+            
+            self?.postDataResult = data.result
+            self?.setupData()
         }
     }
     
@@ -316,8 +315,8 @@ final class PostViewController: UIViewController {
         
         commentVC.modalPresentationStyle = .pageSheet
         commentVC.postId = receivedPostId
-        commentVC.postOwnerHandle = postDataResult.ownerHandle
-        commentVC.taggedUserList = taggedUserList.map({ taggedUser in
+        commentVC.postOwnerHandle = postDataResult?.ownerHandle
+        commentVC.taggedUserList = postDataResult!.tagList.map({ taggedUser in
             taggedUser.handle
         })
         commentVC.postVC = self
@@ -343,31 +342,31 @@ final class PostViewController: UIViewController {
     }
     
     private func setCommentViewContents() {
-        commentUserHandleLabel.text = postDataResult.recentComment?.handle
-        commentContentLabel.text = postDataResult.recentComment?.content
+        commentUserHandleLabel.text = postDataResult?.recentComment?.handle
+        commentContentLabel.text = postDataResult?.recentComment?.content
     }
     
     private func postFollowRequest() {
-        FollowDataService.shared.postFollow(postOwnerHandle) { response in
-            switch(response) {
-            case .success(let followDataResponse):
-                if(!followDataResponse.isSuccess) {
-                    self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
-                    return
+        UserService.postFollowRequest(handle: postDataResult!.ownerHandle) { [weak self] data, failed in
+            guard let data = data else {
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), 
+                                  animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "팔로우 요청에 실패하였습니다."), animated: true)
                 }
-                // 바뀐 데이터 반영 위해 다시 포스트 상세 데이터 로드
-                self.loadPostDetailData()
-            case .requestErr(let message):
-                print("requestErr", message)
-            case .pathErr:
-                print("pathErr")
-            case .serverErr:
-                print("serverErr")
-                self.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
-            case .networkFail:
-                print("networkFail")
-                self.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
+                return
             }
+            
+            print("=== PostDetail, postFollowRequest succeeded ===")
+            print("== data: \(data)")
+            
+            if(!data.isSuccess) {
+                self?.present(UIAlertController.networkErrorAlert(title: "팔로우 요청에 실패하였습니다."), animated: true)
+                return
+            }
+            self?.loadPostDetailData()
         }
     }
 }

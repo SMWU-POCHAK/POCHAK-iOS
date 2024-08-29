@@ -31,33 +31,7 @@ struct LikedUsersDataService {
                 // 성공 시 통신 자체의 상태코드와 데이터(value) 수신
                 guard let statusCode = dataResponse.response?.statusCode else { return }
                 guard let value = dataResponse.value else { return }
-                let networkResult = self.judgeStatus(by: statusCode, value, dataType: "LikedUsersDataResponse")  // 통신의 결과(성공이면 데이터, 아니면 에러내용)
-                completion(networkResult)
-            case .failure:
-                completion(.networkFail)
-            }
-        }
-    }
-    
-    
-    /// 좋아요 요청 혹은 취소
-    /// - Parameters:
-    ///   - postId: 좋아요를 누를 혹은 취소할 게시글 아이디
-    ///   - completion: 핸들러
-    func postLikeRequest(_ postId: Int, completion: @escaping (NetworkResult<Any>) -> Void) {
-        
-        let dataRequest = AF.request(APIConstants.baseURLv2+"/api/v2/posts/\(postId)/like",
-                                     method: .post,
-                                     encoding: URLEncoding.default,
-                                     interceptor: RequestInterceptor.getRequestInterceptor())
-        
-        dataRequest.responseData { dataResponse in
-            switch dataResponse.result {
-            case .success:
-                // 성공 시 통신 자체의 상태코드와 데이터 수신
-                guard let statusCode = dataResponse.response?.statusCode else { return }
-                guard let value = dataResponse.value else { return }
-                let networkResult = self.judgeStatus(by: statusCode, value, dataType: "LikePostDataResponse")
+                let networkResult = self.judgeStatus(by: statusCode, value)  // 통신의 결과(성공이면 데이터, 아니면 에러내용)
                 completion(networkResult)
             case .failure:
                 completion(.networkFail)
@@ -66,9 +40,9 @@ struct LikedUsersDataService {
     }
     
     // 요청 후 받은 statusCode를 바탕으로 어떻게 결과값을 처리할 지 정의
-    private func judgeStatus(by statusCode: Int, _ data: Data, dataType: String) -> NetworkResult<Any> {
+    private func judgeStatus(by statusCode: Int, _ data: Data) -> NetworkResult<Any> {
         switch statusCode {
-        case 200: return isValidData(data: data, dataType: dataType)  // 성공 -> 데이터 가공해서 전달해야하므로 isValidData라는 함수로 데이터 넘겨주기
+        case 200: return isValidData(data: data)  // 성공 -> 데이터 가공해서 전달해야하므로 isValidData라는 함수로 데이터 넘겨주기
         case 400: return .pathErr  // 잘못된 요청
         case 500: return .serverErr  // 서버 에러
         default: return .networkFail  // 네트워크 에러
@@ -76,17 +50,11 @@ struct LikedUsersDataService {
     }
     
     // 통신 성공 시 데이터를 가공하기 위한 함수
-    private func isValidData(data: Data, dataType: String) -> NetworkResult<Any> {
+    private func isValidData(data: Data) -> NetworkResult<Any> {
         do {
             let decoder = JSONDecoder()
-            if(dataType == "LikedUsersDataResponse") {  // 좋아요 누른 사람 조회
-                let decodedData = try decoder.decode(LikedUsersDataResponse.self, from: data)  // 디코딩
-                return .success(decodedData)
-            }
-            else {  // 좋아요 누르기 요청
-                let decodedData = try decoder.decode(LikePostDataResponse.self, from: data)
-                return .success(decodedData)
-            }
+            let decodedData = try decoder.decode(LikedUsersDataResponse.self, from: data)
+            return .success(decodedData)
             
         } catch {
             print("Decoding error, likedusers:", error)

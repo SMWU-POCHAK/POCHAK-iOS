@@ -15,7 +15,6 @@ final class PostMenuViewController: UIViewController {
     private var postOwner: String?
     private var taggedMemberList: [String] = []
     private var currentUserIsOwner = false
-    private var postDeleteResponse: PostDeleteResponse?
     
     // MARK: - Views
 
@@ -32,7 +31,7 @@ final class PostMenuViewController: UIViewController {
         
         // 게시물 작성자(포착한 사람, 포착 태그당한 사람)와 현재 로그인된 유저가 같으면 삭제 메뉴 추가
         let currentLogInUser = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
-        
+        print("postOwnerr: \(postOwner)")
         if(currentLogInUser == postOwner || taggedMemberList.contains(currentLogInUser)) {
             currentUserIsOwner = true
         }
@@ -90,6 +89,7 @@ extension PostMenuViewController: UITableViewDelegate, UITableViewDataSource {
     
     // 현재 유저가 게시물 작성자이면 삭제하기 메뉴를 포함해야 하므로 3, 아니면 삭제하기 메뉴가 없어야 하므로 2
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("currentUserIsOwner: \(currentUserIsOwner)")
         return currentUserIsOwner ? 3 : 2
     }
     
@@ -154,31 +154,23 @@ extension PostMenuViewController: UITableViewDelegate, UITableViewDataSource {
 extension PostMenuViewController: CustomAlertDelegate {
     
     func confirmAction() {
-        PostDataService.shared.deletePost(postId!) { [weak self] response in
-            switch(response){
-            case .success(let postDeleteResponse):
-                self?.postDeleteResponse = postDeleteResponse as? PostDeleteResponse
-                if self?.postDeleteResponse?.isSuccess == false {
-                    let alert = UIAlertController(title: "게시글 삭제에 실패하였습니다.", message: "다시 시도해주세요.", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "확인", 
-                                                  style: .default,
-                                                  handler: { action in self?.dismiss(animated: true) }))
-                    return
+        PostService.deletePostDetail(postId: postId!) { [weak self] data, failed in
+            guard let data = data else {
+                // 에러가 난 경우, alert 창 present
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), 
+                                  animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "게시글 삭제에 실패하였습니다."), animated: true)
                 }
-                else {
-                    self?.goBackToHome()
-                }
-            case .requestErr(let message):
-                print("requestErr", message)
-            case .pathErr:
-                print("pathErr")
-            case .serverErr:
-                print("serverErr")
-                self?.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
-            case .networkFail:
-                print("networkFail")
-                self?.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
+                return
             }
+            
+            print("=== PostMenu, delete confirm action succeeded ===")
+            print("== data: \(data)")
+            
+            self?.goBackToHome()
         }
     }
     
