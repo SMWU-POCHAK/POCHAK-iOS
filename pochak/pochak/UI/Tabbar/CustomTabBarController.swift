@@ -19,19 +19,19 @@ class CustomTabBarController: UITabBarController {
     private func setTabbar() {
         // 설정할 뷰 컨트롤러들 생성
         let homeTabViewController = UIStoryboard(name: "HomeTab", bundle: nil).instantiateViewController(withIdentifier: "HomeTabViewController")
-        let postTabViewController = UIStoryboard(name: "PostTab", bundle: nil).instantiateViewController(withIdentifier: "PostTabViewController")
+        let exploreTabViewController = UIStoryboard(name: "ExploreTab", bundle: nil).instantiateViewController(withIdentifier: "ExploreTabViewController")
         let cameraTabViewController = UIStoryboard(name: "CameraTab", bundle: nil).instantiateViewController(withIdentifier: "CameraViewController")
         let alarmTabViewController = UIStoryboard(name: "AlarmTab", bundle: nil).instantiateViewController(withIdentifier: "AlarmViewController")
         let myProfileViewController = UIStoryboard(name: "ProfileTab", bundle: nil).instantiateViewController(withIdentifier: "MyProfileTabVC")
         
         let homeNavController = UINavigationController(rootViewController: homeTabViewController)
-        let postNavController = UINavigationController(rootViewController: postTabViewController)
+        let exploreNavController = UINavigationController(rootViewController: exploreTabViewController)
         let cameraNavController = UINavigationController(rootViewController: cameraTabViewController)
         let alarmNavController = UINavigationController(rootViewController: alarmTabViewController)
         let myProfileNavController = UINavigationController(rootViewController: myProfileViewController)
 
         // 탭 바 컨트롤러에 뷰 컨트롤러들 설정
-        self.setViewControllers([homeNavController, postNavController, cameraNavController, alarmNavController, myProfileNavController], animated: false)
+        self.setViewControllers([homeNavController, exploreNavController, cameraNavController, alarmNavController, myProfileNavController], animated: false)
 
         // 탭 바 아이템 설정
         if let items = tabBar.items {
@@ -41,7 +41,7 @@ class CustomTabBarController: UITabBarController {
             
             items[1].selectedImage = UIImage(named: "post_fill")?.withRenderingMode(.alwaysOriginal)
             items[1].image = UIImage(named: "post")?.withRenderingMode(.alwaysOriginal)
-            items[1].title = "게시글"
+            items[1].title = "탐색"
 
             items[2].selectedImage = UIImage(named: "pochak_fill")?.withRenderingMode(.alwaysOriginal)
             items[2].image = UIImage(named: "pochak")?.withRenderingMode(.alwaysOriginal)

@@ -159,8 +159,8 @@ extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if !noPost {
-            let postTabSb = UIStoryboard(name: "PostTab", bundle: nil)
-            guard let postVC = postTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
+            let exploreTabSb = UIStoryboard(name: "ExploreTab", bundle: nil)
+            guard let postVC = exploreTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
             else { return }
             
             postVC.receivedPostId = postList[indexPath.item].postId

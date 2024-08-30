@@ -257,8 +257,8 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
         // MARK: - 댓글(내가 올린 게시물에 댓글이 달렸을 경우 OWNER_COMMENT)
         else if(self.alarmList[indexPath.row].alarmType == AlarmType.ownerComment){
             // 게시물로 이동
-            let postTabSb = UIStoryboard(name: "PostTab", bundle: nil)
-            guard let postVC = postTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
+            let exploreTabSb = UIStoryboard(name: "ExploreTab", bundle: nil)
+            guard let postVC = exploreTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
             else { return }
             
             postVC.receivedPostId = alarmList[indexPath.row].postId
@@ -267,8 +267,8 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
         // MARK: - 댓글 (내가 태그된 게시물에 댓글이 달렸을 경우 TAGGED_COMMENT)
         else if(self.alarmList[indexPath.row].alarmType == AlarmType.taggedComment){
             // 게시물로 이동
-            let postTabSb = UIStoryboard(name: "PostTab", bundle: nil)
-            guard let postVC = postTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
+            let exploreTabSb = UIStoryboard(name: "ExploreTab", bundle: nil)
+            guard let postVC = exploreTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
             else { return }
             
             postVC.receivedPostId = alarmList[indexPath.row].postId
@@ -277,8 +277,8 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
         // MARK: - 댓글 (내 댓글에 답글이 달렸을 경우 COMMENT_REPLY)
         else if(self.alarmList[indexPath.row].alarmType == AlarmType.commentReply){
             // 게시물로 이동
-            let postTabSb = UIStoryboard(name: "PostTab", bundle: nil)
-            guard let postVC = postTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
+            let exploreTabSb = UIStoryboard(name: "ExploreTab", bundle: nil)
+            guard let postVC = exploreTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
             else { return }
             
             postVC.receivedPostId = alarmList[indexPath.row].postId
@@ -296,8 +296,8 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
         else if(self.alarmList[indexPath.row].alarmType == AlarmType.ownerLike
                 || self.alarmList[indexPath.row].alarmType == AlarmType.taggedLike){
             // 게시물로 이동
-            let postTabSb = UIStoryboard(name: "PostTab", bundle: nil)
-            guard let postVC = postTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
+            let exploreTabSb = UIStoryboard(name: "ExploreTab", bundle: nil)
+            guard let postVC = exploreTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
             else { return }
             
             postVC.receivedPostId = alarmList[indexPath.row].postId
