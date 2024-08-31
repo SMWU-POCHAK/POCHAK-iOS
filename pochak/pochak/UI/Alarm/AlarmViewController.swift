@@ -112,6 +112,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: PochakAlarmTableViewCell.identifier, for: indexPath) as? PochakAlarmTableViewCell else {
                 fatalError("셀 타입 캐스팅 실패")
             }
+            
             configurePochakAlarmCell(cell, with: alarm)
             return cell
 
@@ -119,6 +120,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: OtherTableViewCell.identifier, for: indexPath) as? OtherTableViewCell else {
                 fatalError("셀 타입 캐스팅 실패")
             }
+            
             let userSentAlarmHandle = alarm.memberHandle ?? ""
             let comment = alarm.commentContent ?? ""
             
@@ -133,6 +135,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             default:
                 text = ""
             }
+            
             configureCell(cell, with: alarm, text: text)
             return cell
 
@@ -182,9 +185,6 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             
             postVC.receivedPostId = alarmList[indexPath.row].postId
             self.navigationController?.pushViewController(postVC, animated: true)
-            
-        default:
-            break
         }
     }
     
