@@ -85,7 +85,7 @@ class AlarmViewController: UIViewController, UISheetPresentationControllerDelega
         tableView.register(UINib(nibName: PochakAlarmTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: PochakAlarmTableViewCell.identifier)
     }
     
-    private func setRefreshControl(){
+    private func setRefreshControl() {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         tableView.refreshControl = refreshControl

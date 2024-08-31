@@ -44,8 +44,8 @@ class PochakAlarmTableViewCell: UITableViewCell {
         previewBtn.layer.masksToBounds = true
     }
     
+    ///첫 번째 셀과 마지막 셀의 외형을 설정
     private func configureCellAppearance() {
-        // 첫 번째 셀과 마지막 셀의 외형을 설정
         if let tableView = self.superview as? UITableView {
             let indexPath = tableView.indexPath(for: self)!
             let row = indexPath.row

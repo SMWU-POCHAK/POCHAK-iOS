@@ -23,7 +23,7 @@ class OtherTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+
         setupAttribute()
         configureCellAppearance()
     }
@@ -37,8 +37,8 @@ class OtherTableViewCell: UITableViewCell {
         self.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
     
+    /// 첫 번째 셀과 마지막 셀의 외형을 설정
     private func configureCellAppearance() {
-        // 첫 번째 셀과 마지막 셀의 외형을 설정
         if let tableView = self.superview as? UITableView {
             let indexPath = tableView.indexPath(for: self)!
             let row = indexPath.row
