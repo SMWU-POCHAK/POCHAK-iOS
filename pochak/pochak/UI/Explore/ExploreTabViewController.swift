@@ -95,7 +95,7 @@ final class ExploreTabViewController: UIViewController, UISearchBarDelegate {
             print("=== ExploreTab data succeeded ===")
             print("== data: \(data)")
             
-            guard let result = data.result else { return }
+            let result = data.result
 
             let newPosts = result.postList
             let startIndex = self?.postList.count
