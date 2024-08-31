@@ -20,8 +20,7 @@ final class RecentSearchViewController: UIViewController, UITextFieldDelegate {
     private var realmManager = RecentSearchRealmManager()
     private var recentSearchTerms: Results<RecentSearchModel>!
     
-    private var idSearchResponseData: IdSearchResponse!
-    private var memberList: [IdSearchMember]! = []
+    private var memberList: [SearchMember]! = []
     
     private var isLastPage: Bool = false
     private var isCurrentlyFetching: Bool = false
@@ -228,39 +227,41 @@ final class RecentSearchViewController: UIViewController, UITextFieldDelegate {
     /// - Parameter searchText: 검색어
     func sendTextToServer(_ searchText: String) {
         isCurrentlyFetching = true
-        SearchDataService.shared.getIdSearch(keyword: searchText) { response in
-            switch response {
-            case .success(let data):
-                print("success!!!!")
-                print(data)
-                self.idSearchResponseData = data
-                guard let result = self.idSearchResponseData?.result else { return }
-                
-                let newPosts = result.memberList
-                let startIndex = self.memberList.count
-                let endIndex = startIndex + newPosts.count
-                let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
-                
-                self.memberList.append(contentsOf: newPosts)
-                self.isLastPage = result.pageInfo.lastPage
-                
-                DispatchQueue.main.async {
-                    if self.currentFetchingPage == 0 {
-                        self.resultVC.tableView.reloadData()
-                    } else {
-                        self.resultVC.tableView.insertRows(at: newIndexPaths, with: .none)
-                    }
-                    self.isCurrentlyFetching = false
-                    self.currentFetchingPage += 1;
+        
+        let request = SearchRequest(page: currentFetchingPage, keyword: searchText)
+        SearchService.getSearch(request: request) { [weak self] data, failed in
+            guard let data = data else {
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .serverError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .unknownError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
                 }
-            case .requestErr(let err):
-                print(err)
-            case .pathErr:
-                print("pathErr")
-            case .serverErr:
-                print("serverErr")
-            case .networkFail:
-                print("networkFail")
+                return
+            }
+            print("=== Id Search, setup data succeeded ===")
+            print("== data: \(data)")
+                        
+            let newResult = data.result.memberList
+            let startIndex = self?.memberList.count
+            let endIndex = startIndex! + newResult.count
+            let newIndexPaths = (startIndex! ..< endIndex).map { IndexPath(item: $0, section: 0) }
+            
+            self?.memberList.append(contentsOf: newResult)
+            self?.isLastPage = data.result.pageInfo.lastPage
+            
+            DispatchQueue.main.async {
+                if self?.currentFetchingPage == 0 {
+                    self?.resultVC.tableView.reloadData()
+                } else {
+                    self?.resultVC.tableView.insertRows(at: newIndexPaths, with: .none)
+                }
+                self?.isCurrentlyFetching = false
+                self?.currentFetchingPage += 1;
             }
         }
     }

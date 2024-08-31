@@ -24,11 +24,3 @@ struct LikeMember: Codable {
     let name: String?
     let follow: Bool?  // 팔로우 여부, 자기 자신일 경우 null 값 반환 아마도.....
 }
-
-// MARK: - 좋아요 누르기
-
-struct LikePostDataResponse: Codable {
-    let isSuccess: Bool?
-    let code: String
-    let message: String?
-}
