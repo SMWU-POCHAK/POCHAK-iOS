@@ -11,28 +11,22 @@ import SwiftUI
 
 class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     
-    @IBOutlet weak var previewView: UIView!
-    var captureSession: AVCaptureSession!
-    var stillImageOutput: AVCapturePhotoOutput!
-    var videoPreviewLayer: AVCaptureVideoPreviewLayer!
-    var photoData = Data(count: 0)
+    // MARK: - Properties
     
-    @IBOutlet weak var flashBtnBg: UIButton!
+    private var captureSession: AVCaptureSession!
+    ㅍvar stillImageOutput: AVCapturePhotoOutput!
+    private var videoPreviewLayer: AVCaptureVideoPreviewLayer!
     
-    var flashMode: AVCaptureDevice.FlashMode = .off
+    private var flashMode: AVCaptureDevice.FlashMode = .off
+    private let hapticImpact = UIImpactFeedbackGenerator()
     
-    let hapticImpact = UIImpactFeedbackGenerator()
-    
-    var currentZoomFactor: CGFloat = 1.0
-    var lastScale: CGFloat = 1.0
-    
-    @Published var recentImage: UIImage?
     @Published var isCameraBusy = false
-    
-    @Published var showPreview = false
-    @Published var shutterEffect = false
     @Published var isFlashOn = false
     
+    // MARK: - Views
+    
+    @IBOutlet weak var previewView: UIView!
+    @IBOutlet weak var flashBtnBg: UIButton!
     @IBOutlet weak var flashbtn: UIButton!
     
     @IBAction func flashBtn(_ sender: Any) {
@@ -56,6 +50,8 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         }
     }
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -72,6 +68,8 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         self.captureSession.stopRunning()
     }
     
+    // MARK: - Functions
+    
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         guard let imageData = photo.fileDataRepresentation(), let image = UIImage(data: imageData) else {
             return
@@ -82,7 +80,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         navigationController?.pushViewController(uploadViewController, animated: true)
     }
     
-    func requestAndCheckPermissions() {
+    private func requestAndCheckPermissions() {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .notDetermined:
             AVCaptureDevice.requestAccess(for: .video) { [weak self] authStatus in
@@ -101,7 +99,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         }
     }
     
-    func switchFlash() {
+    private func switchFlash() {
         isFlashOn.toggle()
         flashMode = isFlashOn == true ? .on : .off
         
@@ -109,45 +107,44 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         flashBtnBg.setImage(UIImage(named: buttonImageName), for: .normal)
     }
     
-    func setUpCamera() {
+    private func setUpCamera() {
         DispatchQueue.global(qos: .userInitiated).async {
             self.captureSession = AVCaptureSession()
-
+            
             guard let backCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else {
                 return
             }
-
+            
             do {
                 let input = try AVCaptureDeviceInput(device: backCamera)
-
+                
                 let photoSettings = AVCapturePhotoSettings()
                 photoSettings.isHighResolutionPhotoEnabled = false
-
+                
                 if backCamera.supportsSessionPreset(.photo) {
                     self.captureSession.sessionPreset = .photo
                 }
-
+                
                 self.stillImageOutput = AVCapturePhotoOutput()
-
+                
                 if self.captureSession.canAddInput(input) && self.captureSession.canAddOutput(self.stillImageOutput) {
                     self.captureSession.addInput(input)
                     self.captureSession.addOutput(self.stillImageOutput)
-
+                    
                     // 라이브 프리뷰 설정을 메인 스레드에서 호출
                     DispatchQueue.main.async {
                         self.setupLivePreview()
                     }
-
                     // captureSession.startRunning()을 백그라운드 스레드에서 호출
                     self.captureSession.startRunning()
                 }
-            } catch let error  {
+            } catch let error {
                 print("Error Unable to initialize back camera:  \(error.localizedDescription)")
             }
         }
     }
-
-    func setupLivePreview() {
+    
+    private func setupLivePreview() {
         DispatchQueue.main.async { // 메인 스레드에서 실행되어야 함
             self.videoPreviewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
             self.videoPreviewLayer.videoGravity = .resizeAspectFill

@@ -9,41 +9,32 @@ import UIKit
 import AVFoundation
 import SwiftUI
 
-class UploadViewController: UIViewController,UITextFieldDelegate{
-         
-    // MARK: - Views
-
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var captureImg: UIImageView!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var captionField: UITextView!
-    @IBOutlet weak var searchContainerView: UIView!
-    @IBOutlet weak var captionCountText: UILabel!
+class UploadViewController: UIViewController,UITextFieldDelegate {
     
     // MARK: - Properties
+    
+    private var receivedImage: UIImage?
+    private var searchTextField = UITextField()
+    private var cancelButton = UIButton()
+    
+    private var currentTextCount: Int = 0
+    private var currentText: String = ""
+    private var shouldCallEndEditing = true
 
-    var receivedImage : UIImage?
-    var searchTextField = UITextField()
-    var cancelButton = UIButton()
-    
-    var currentTextCount : Int = 0
-    var currentText : String = ""
-    
-    var memberList : [SearchMember]! = []
+    private var memberList: [SearchMember]! = []
     
     private var isLastPage: Bool = false
     private var isCurrentlyFetching: Bool = false
     private var currentFetchingPage: Int = 0
+
     
-//    private var tagIsFull = false
-    
-    lazy var backButton: UIBarButtonItem = { // 업로드 버튼
+    lazy var backButton: UIBarButtonItem = {
         let backBarButtonItem = UIBarButtonItem(image: UIImage(named: "ChevronLeft")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(backbuttonPressed))
         backBarButtonItem.imageInsets = UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0)
         return backBarButtonItem
-        }()
-
-    lazy var uploadButton: UIBarButtonItem = { // 업로드 버튼
+    } ()
+    
+    lazy var uploadButton: UIBarButtonItem = {
         let button = UIBarButtonItem(title: "업로드", style: .plain, target: self, action: #selector(uploadbuttonPressed(_:)))
         button.setTitleTextAttributes([
             NSAttributedString.Key.font : UIFont(name: "Pretendard-bold", size: 16)!
@@ -51,76 +42,42 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
         button.tintColor = UIColor(named: "gray03")
         
         return button
-        }()
+    } ()
     
-    var searchTextFieldWidthConstraint: NSLayoutConstraint!
-    var cancelButtonLeadingConstraint: NSLayoutConstraint!
+    private var searchTextFieldWidthConstraint: NSLayoutConstraint!
+    private var cancelButtonLeadingConstraint: NSLayoutConstraint!
     
-    var tagId: [String] = [] {
+    private var tagId: [String] = [] {
         didSet {
             tagIdDidChange()
         }
     }
-    
-    var shouldCallEndEditing = true
-    
-    var isUploadAllowed = false
-        
-    // MARK: - lifecycle
 
+    private var isUploadAllowed = false
+    
+    // MARK: - Views
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var captureImg: UIImageView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var captionField: UITextView!
+    @IBOutlet weak var searchContainerView: UIView!
+    @IBOutlet weak var captionCountText: UILabel!
+    
+    // MARK: - lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupInit()
         setupSearchTextField()
-        
-        //아이디 태그 collectionview, tableview
         setupCollectionView()
         setupTableView()
     }
     
-    // MARK: - Functions
-
-    private func setupInit(){
-        // 이미지 설정
-        if let image = receivedImage {
-            captureImg.image = image
-        }
-
-        captionField.text = "내용 입력하기"
-        captionField.textColor = UIColor(named: "gray04")
-        captionField.delegate = self
-        captionField.textContainerInset = UIEdgeInsets.zero
-        captionField.textContainer.lineFragmentPadding = 0
-                
-        if let navigationBar = self.navigationController?.navigationBar {
-                let textAttributes = [
-                    NSAttributedString.Key.foregroundColor: UIColor.black,
-                    NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 18) ?? UIFont.boldSystemFont(ofSize: 18)
-                ]
-                navigationBar.titleTextAttributes = textAttributes
-            }
-
-        
-        self.navigationItem.title = "누구를 포착했나요"
-        
-        self.navigationItem.leftBarButtonItem = backButton
-        self.navigationItem.rightBarButtonItem = uploadButton
-
-    }
+    // MARK: - Actions
     
-    private func tagIdDidChange(){
-        if(!tagId.isEmpty && currentTextCount <= 50){
-            uploadButton.tintColor = UIColor(named: "yellow00")
-            isUploadAllowed = true
-        }
-        else{
-            uploadButton.tintColor = UIColor(named: "gray03")
-            isUploadAllowed = false
-        }
-    }
-    // Button event
-    @objc private func backbuttonPressed(_ sender: Any) {// 뒤로가기 버튼 클릭시 어디로 이동할지
+    @objc private func backbuttonPressed(_ sender: Any) {
         print("back")
         
         showAlert(alertType: .confirmAndCancel,
@@ -131,13 +88,13 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
         )
     }
     
-    @objc private func uploadbuttonPressed(_ sender: Any) {//업로드 버튼 클릭시 어디로 이동할지
-        if(isUploadAllowed){
+    @objc private func uploadbuttonPressed(_ sender: Any) {
+        if(isUploadAllowed) {
             let captionText = captionField.text ?? ""
             
-            let imageData : Data? = captureImg.image?.jpegData(compressionQuality: 0.2)
+            let imageData: Data? = captureImg.image?.jpegData(compressionQuality: 0.2)
             
-            var taggedUserHandles : [String] = []
+            var taggedUserHandles: [String] = []
             for taggedUserHandle in tagId {
                 taggedUserHandles.append(taggedUserHandle)
             }
@@ -145,13 +102,13 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
             print(isUploadAllowed)
             
             showProgressBar()
-    
+            
             UploadDataService.shared.upload(postImage: imageData, caption: captionText, taggedMemberHandleList: taggedUserHandles) { [self] response in
                 // 함수 호출 후 프로그래스 바 숨기기
                 defer {
                     hideProgressBar()
                 }
-    
+                
                 switch response {
                 case .success(let data):
                     print("success")
@@ -173,7 +130,78 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
         }
     }
     
-    // 검색바 설정
+    @objc private func cancelButtonClicked() {
+        searchTextField.text = ""
+        self.shouldCallEndEditing = true
+        searchTextField.resignFirstResponder()
+        self.cancelButton.isHidden = true
+        self.collectionView.isHidden = false
+        self.tableView.isHidden = true
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.searchTextFieldWidthConstraint.constant = self.searchContainerView.frame.width
+            self.cancelButtonLeadingConstraint.constant = 0
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    @objc func didTextFieldChanged() {
+        currentText = self.searchTextField.text ?? ""
+        
+        if currentText.isEmpty {
+            self.currentFetchingPage = 0
+            self.tableView.isHidden = true
+            self.memberList = []
+            self.tableView.reloadData()
+        } else {
+            self.memberList = []
+            self.currentFetchingPage = 0
+            self.tableView.isHidden = false
+            sendTextToServer(currentText)
+        }
+    }
+    
+    // MARK: - Functions
+    
+    private func setupInit() {
+        // 이미지 설정
+        if let image = receivedImage {
+            captureImg.image = image
+        }
+        
+        captionField.text = "내용 입력하기"
+        captionField.textColor = UIColor(named: "gray04")
+        captionField.delegate = self
+        captionField.textContainerInset = UIEdgeInsets.zero
+        captionField.textContainer.lineFragmentPadding = 0
+        
+        if let navigationBar = self.navigationController?.navigationBar {
+            let textAttributes = [
+                NSAttributedString.Key.foregroundColor: UIColor.black,
+                NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 18) ?? UIFont.boldSystemFont(ofSize: 18)
+            ]
+            navigationBar.titleTextAttributes = textAttributes
+        }
+        
+        
+        self.navigationItem.title = "누구를 포착했나요"
+        
+        self.navigationItem.leftBarButtonItem = backButton
+        self.navigationItem.rightBarButtonItem = uploadButton
+    }
+    
+    private func tagIdDidChange() {
+        if(!tagId.isEmpty && currentTextCount <= 50) {
+            uploadButton.tintColor = UIColor(named: "yellow00")
+            isUploadAllowed = true
+        }
+        else {
+            uploadButton.tintColor = UIColor(named: "gray03")
+            isUploadAllowed = false
+        }
+    }
+    
+    /// 검색바 뷰 설정
     private func setupSearchTextField() {
         // 검색 textfield 설정
         searchTextField.delegate = self
@@ -218,7 +246,7 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
                 searchTextField.bottomAnchor.constraint(equalTo: searchContainerView.bottomAnchor)
             ])
             
-
+            
             searchTextFieldWidthConstraint = searchTextField.widthAnchor.constraint(equalToConstant: self.searchContainerView.frame.width)
             searchTextFieldWidthConstraint.isActive = true
             
@@ -234,12 +262,11 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
         }
     }
     
-    // 검색바 입력 시작
     func textFieldDidBeginEditing(_ textField: UITextField) {
         cancelButton.isHidden = false
         shouldCallEndEditing = true
         self.collectionView.isHidden = true
-
+        
         UIView.animate(withDuration: 0.3) {
             self.searchTextFieldWidthConstraint.constant = self.searchContainerView.frame.width - 41
             self.cancelButtonLeadingConstraint.constant = 16
@@ -247,36 +274,18 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
         }
     }
     
-    // 검색바 입력 끝
     func textFieldDidEndEditing(_ textField: UITextField) {
         if shouldCallEndEditing {
             print("shouldCallEndEditing")
             self.cancelButton.isHidden = true
             self.collectionView.isHidden = false
             self.tableView.isHidden = true
-        
+            
             UIView.animate(withDuration: 0.3, animations: {
                 self.searchTextFieldWidthConstraint.constant = self.searchContainerView.frame.width
                 self.cancelButtonLeadingConstraint.constant = 0
                 self.view.layoutIfNeeded()
             })
-        }
-    }
-
-    // 검색바 텍스트
-    @objc func didTextFieldChanged() {
-        currentText = self.searchTextField.text ?? ""
-
-        if currentText.isEmpty {
-            self.currentFetchingPage = 0
-            self.tableView.isHidden = true
-            self.memberList = []
-            self.tableView.reloadData()
-        } else {
-            self.memberList = []
-            self.currentFetchingPage = 0
-            self.tableView.isHidden = false
-            sendTextToServer(currentText)
         }
     }
     
@@ -287,46 +296,26 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
         return true
     }
     
-    // 취소 버튼 클릭
-    @objc private func cancelButtonClicked() {
-        searchTextField.text = ""
-        self.shouldCallEndEditing = true
-        searchTextField.resignFirstResponder()
-        self.cancelButton.isHidden = true
-        self.collectionView.isHidden = false
-        self.tableView.isHidden = true
-    
-        UIView.animate(withDuration: 0.3, animations: {
-            self.searchTextFieldWidthConstraint.constant = self.searchContainerView.frame.width
-            self.cancelButtonLeadingConstraint.constant = 0
-            self.view.layoutIfNeeded()
-        })
-    }
-    
-    
-    private func setupCollectionView(){
-        //delegate 연결
+    private func setupCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        //cell 등록
         collectionView.register(UINib(
-            nibName: "TagCollectionViewCell",
+            nibName: TagSearchTableViewCell.identifier,
             bundle: nil),forCellWithReuseIdentifier: TagCollectionViewCell.identifier)
         
     }
     
-    private func setupTableView(){
+    private func setupTableView() {
         //delegate 연결
         tableView.delegate = self
         tableView.dataSource = self
         tableView.layer.cornerRadius = 8
         tableView.isHidden = true
         
-        tableView.register(UINib(nibName: "TagSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "TagSearchTableViewCell")
-
+        tableView.register(UINib(nibName: TagSearchTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: TagSearchTableViewCell.identifier)
+        
     }
-
     
     func sendTextToServer(_ searchText: String) {
         isCurrentlyFetching = true
@@ -346,7 +335,7 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
                 }
                 return
             }
-                        
+            
             let newResult = data.result.memberList
             let startIndex = self?.memberList.count
             let endIndex = startIndex! + newResult.count
@@ -374,9 +363,9 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
     func textViewDidChange(_ textView: UITextView) {
         currentTextCount = captionField.text.count
         captionCountText.text = "\(currentTextCount)/50"
-
+        
         // 50자 넘었을 때 글자수 빨간색으로 변경
-        if(currentTextCount > 50){
+        if currentTextCount > 50 {
             captionCountText.textColor = .red
         }
         else{
@@ -384,11 +373,11 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
         }
         
         // 50자 넘으면 업로드 안되도록
-        if(currentTextCount <= 50 && !tagId.isEmpty){
+        if(currentTextCount <= 50 && !tagId.isEmpty) {
             uploadButton.tintColor = UIColor(named: "yellow00")
             isUploadAllowed = true
         }
-        else{
+        else {
             uploadButton.tintColor = UIColor(named: "gray03")
             isUploadAllowed = true
         }
@@ -396,6 +385,7 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
 }
 
 // MARK: - 캡션(50자 제한)
+
 extension UploadViewController : UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == "내용 입력하기" {
@@ -403,6 +393,7 @@ extension UploadViewController : UITextViewDelegate{
             textView.textColor = .black
         }
     }
+    
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             textView.text = "내용 입력하기"
@@ -413,14 +404,13 @@ extension UploadViewController : UITextViewDelegate{
 
 // MARK: - 선택 태그 collectionview
 
-extension UploadViewController: UICollectionViewDelegate, UICollectionViewDataSource{
-
+extension UploadViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.tagId.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as? TagCollectionViewCell else{
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as? TagCollectionViewCell else {
             fatalError("셀 타입 캐스팅 실패2")
         }
         cell.tagIdLabel.text = self.tagId[indexPath.item]
@@ -436,43 +426,35 @@ extension UploadViewController: UICollectionViewDelegate, UICollectionViewDataSo
             collectionView.reloadData()
         }
         return cell
-        
     }
-}
-
-        
-extension UploadViewController: UICollectionViewDelegateFlowLayout {
     
-    // 위 아래 간격
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-
         return CGFloat(4)
-
     }
-
-    // 옆 간격
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-            return 8
-        }
-
+        return 8
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-            let totalCellWidth = collectionView.bounds.width - (12 * CGFloat(tagId.count - 1))
-            let cellWidth = totalCellWidth / CGFloat(tagId.count)
-            let inset = max((collectionView.bounds.width - CGFloat(tagId.count) * cellWidth - CGFloat(12 * (tagId.count - 1))) / 2, 0.0)
-            
-            return UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
-        }
+        let totalCellWidth = collectionView.bounds.width - (12 * CGFloat(tagId.count - 1))
+        let cellWidth = totalCellWidth / CGFloat(tagId.count)
+        let inset = max((collectionView.bounds.width - CGFloat(tagId.count) * cellWidth - CGFloat(12 * (tagId.count - 1))) / 2, 0.0)
+        
+        return UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
+    }
 }
 
 // MARK: - 태그 tableview
-extension UploadViewController: UITableViewDelegate,UITableViewDataSource{
+
+extension UploadViewController: UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return memberList.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TagSearchTableViewCell", for: indexPath) as! TagSearchTableViewCell
-
+        
         let urls = self.memberList.map { $0.profileImage }
         let names = self.memberList.map { $0.name }
         let handles = self.memberList.map { $0.handle }
@@ -484,13 +466,9 @@ extension UploadViewController: UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // 셀을 선택했을 때 수행할 동작을 여기에 추가합니다.
-        // 예를 들어, 선택한 셀의 정보를 가져와서 처리하거나 화면 전환 등을 수행할 수 있습니다.
-
-        let selectedUserData = memberList[indexPath.row] // 선택한 셀의 데이터 가져오기
+        let selectedUserData = memberList[indexPath.row]
         let handles = self.memberList.map { $0.handle }
         
-        // 선택한 핸들 가져오기
         let selectedHandle = handles[indexPath.row]
         
         // 태그는 최대 5개까지 가능함
@@ -499,7 +477,7 @@ extension UploadViewController: UITableViewDelegate,UITableViewDataSource{
                       titleText: "태그는 최대 5명까지 가능해요.",
                       confirmButtonText: "확인")
         }
-
+        
         // 태그 추가가 가능한 경우, 중복을 체크하여 중복되지 않는 경우에만 추가
         else {
             if !tagId.contains(selectedHandle) {
@@ -511,29 +489,22 @@ extension UploadViewController: UITableViewDelegate,UITableViewDataSource{
                 print("이미 추가된 핸들입니다.")
             }
         }
-
-        // 원하는 작업을 수행한 후에 선택 해제
         tableView.deselectRow(at: indexPath, animated: true)
         cancelButtonClicked()
     }
-    
-    
-
 }
 
 extension UploadViewController: CustomAlertDelegate {
-
     func confirmAction() {
         print("계속하기 선택됨")
     }
-
+    
     func cancel() {
         print("나가기 선택됨")
         if let navController = self.navigationController {
             navController.popViewController(animated: true)
         }
     }
-
 }
 
 // MARK: - Extension; UIScrollView
