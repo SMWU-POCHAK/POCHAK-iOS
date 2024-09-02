@@ -145,16 +145,14 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
     }
     
     private func setupLivePreview() {
-        DispatchQueue.main.async { // 메인 스레드에서 실행되어야 함
-            self.videoPreviewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
-            self.videoPreviewLayer.videoGravity = .resizeAspectFill
-            self.videoPreviewLayer.connection?.videoOrientation = .portrait
-            
-            // previewView의 bounds에 맞게 frame 설정
-            self.videoPreviewLayer.frame = self.previewView.bounds
-            
-            // previewView의 서브레이어로 추가
-            self.previewView.layer.addSublayer(self.videoPreviewLayer)
-        }
+        self.videoPreviewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
+        self.videoPreviewLayer.videoGravity = .resizeAspectFill
+        self.videoPreviewLayer.connection?.videoOrientation = .portrait
+        
+        // previewView의 bounds에 맞게 frame 설정
+        self.videoPreviewLayer.frame = self.previewView.bounds
+        
+        // previewView의 서브레이어로 추가
+        self.previewView.layer.addSublayer(self.videoPreviewLayer)
     }
 }
