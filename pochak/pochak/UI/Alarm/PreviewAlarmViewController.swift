@@ -9,15 +9,6 @@ import UIKit
 
 class PreviewAlarmViewController: UIViewController {
     
-    // MARK: - Views
-    
-    @IBOutlet weak var postImageView: UIImageView!
-    @IBOutlet weak var taggedUsers: UILabel!
-    @IBOutlet weak var pochakUser: UILabel!
-    @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var acceptBtn: UIButton!
-    @IBOutlet weak var refuseBtn: UIButton!
-    
     // MARK: - Properties
     
     var acceptButtonAction: (() -> Void)?
@@ -51,6 +42,15 @@ class PreviewAlarmViewController: UIViewController {
         }
         postTagData(tagId: tagId, isAccept: false)
     }
+    
+    // MARK: - Views
+    
+    @IBOutlet weak var postImageView: UIImageView!
+    @IBOutlet weak var taggedUsers: UILabel!
+    @IBOutlet weak var pochakUser: UILabel!
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var acceptBtn: UIButton!
+    @IBOutlet weak var refuseBtn: UIButton!
     
     // MARK: - lifecycle
     
@@ -107,14 +107,10 @@ class PreviewAlarmViewController: UIViewController {
                 self.previewDataResult = self.previewDataResponse.result
                 self.tagList = self.previewDataResult.tagList
                 
-                
-                if let profileImageView = self.profileImageView {
-                    if let url = URL(string: self.previewDataResult.ownerProfileImage) {
-                        profileImageView.load(with: url)
-                        profileImageView.contentMode = .scaleAspectFill
-                    }
+                if let url = URL(string: self.previewDataResult.ownerProfileImage) {
+                    profileImageView.load(with: url)
+                    profileImageView.contentMode = .scaleAspectFill
                 }
-                
                 var taggedUserString = ""
                 for taggedMember in tagList {
                     if taggedMember.handle == tagList.last?.handle {

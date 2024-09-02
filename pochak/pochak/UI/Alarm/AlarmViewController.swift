@@ -9,15 +9,15 @@ import UIKit
 
 class AlarmViewController: UIViewController, UISheetPresentationControllerDelegate {
     
-    // MARK: - Views
-    
-    @IBOutlet weak var tableView: UITableView!
-    
     // MARK: - Properties
     
     private var alarmDataResponse: AlarmResponse!
     private var alarmDataResult: AlarmResult!
     private var alarmList: [AlarmElementList]! = []
+    
+    // MARK: - Views
+    
+    @IBOutlet weak var tableView: UITableView!
     
     // MARK: - lifecycle
     
