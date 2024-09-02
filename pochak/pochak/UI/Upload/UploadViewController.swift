@@ -13,7 +13,7 @@ class UploadViewController: UIViewController,UITextFieldDelegate {
     
     // MARK: - Properties
     
-    private var receivedImage: UIImage?
+    var receivedImage: UIImage?
     private var searchTextField = UITextField()
     private var cancelButton = UIButton()
     
@@ -27,33 +27,14 @@ class UploadViewController: UIViewController,UITextFieldDelegate {
     private var isCurrentlyFetching: Bool = false
     private var currentFetchingPage: Int = 0
 
-    
-    lazy var backButton: UIBarButtonItem = {
-        let backBarButtonItem = UIBarButtonItem(image: UIImage(named: "ChevronLeft")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(backbuttonPressed))
-        backBarButtonItem.imageInsets = UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0)
-        return backBarButtonItem
-    } ()
-    
-    lazy var uploadButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(title: "업로드", style: .plain, target: self, action: #selector(uploadbuttonPressed(_:)))
-        button.setTitleTextAttributes([
-            NSAttributedString.Key.font : UIFont(name: "Pretendard-bold", size: 16)!
-        ], for: .normal)
-        button.tintColor = UIColor(named: "gray03")
-        
-        return button
-    } ()
-    
     private var searchTextFieldWidthConstraint: NSLayoutConstraint!
     private var cancelButtonLeadingConstraint: NSLayoutConstraint!
     
-    private var tagId: [String] = [] {
-        didSet {
-            tagIdDidChange()
-        }
+    private var tagId: [String] = []
+    
+    var isUploadAllowed: Bool {
+        return tagId.count >= 1 && tagId.count <= 5 && currentTextCount <= 50
     }
-
-    private var isUploadAllowed = false
     
     // MARK: - Views
     
@@ -69,7 +50,7 @@ class UploadViewController: UIViewController,UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupInit()
+        setupView()
         setupSearchTextField()
         setupCollectionView()
         setupTableView()
@@ -79,7 +60,6 @@ class UploadViewController: UIViewController,UITextFieldDelegate {
     
     @objc private func backbuttonPressed(_ sender: Any) {
         print("back")
-        
         showAlert(alertType: .confirmAndCancel,
                   titleText: "입력을 취소하고\n페이지를 나갈까요?",
                   messageText: "페이지를 벗어나면 현재 입력된 내용은\n저장되지 않으며, 모두 사라집니다.",
@@ -87,49 +67,38 @@ class UploadViewController: UIViewController,UITextFieldDelegate {
                   confirmButtonText: "계속하기"
         )
     }
-    
+
     @objc private func uploadbuttonPressed(_ sender: Any) {
-        if(isUploadAllowed) {
-            let captionText = captionField.text ?? ""
-            
-            let imageData: Data? = captureImg.image?.jpegData(compressionQuality: 0.2)
-            
-            var taggedUserHandles: [String] = []
-            for taggedUserHandle in tagId {
-                taggedUserHandles.append(taggedUserHandle)
-            }
-            print("업로드 완료")
-            print(isUploadAllowed)
-            
-            showProgressBar()
-            
-            UploadDataService.shared.upload(postImage: imageData, caption: captionText, taggedMemberHandleList: taggedUserHandles) { [self] response in
-                // 함수 호출 후 프로그래스 바 숨기기
-                defer {
-                    hideProgressBar()
-                }
-                
-                switch response {
-                case .success(let data):
-                    print("success")
-                    print(data)
-                    if let navController = self.navigationController {
-                        navController.popViewController(animated: true)
-                    }
-                    self.tabBarController?.selectedIndex = 0
-                case .requestErr(let err):
-                    print(err)
-                case .pathErr:
-                    print("pathErr")
-                case .serverErr:
-                    print("serverErr")
-                case .networkFail:
-                    print("networkFail")
-                }
+        guard isUploadAllowed else { return }
+
+        let captionText = captionField.text ?? ""
+        let imageData = captureImg.image?.jpegData(compressionQuality: 0.2)
+        let taggedUserHandles = tagId
+
+        print("업로드 완료")
+        showProgressBar()
+
+        UploadDataService.shared.upload(postImage: imageData, caption: captionText, taggedMemberHandleList: taggedUserHandles) { [weak self] response in
+            guard let self = self else { return }
+            defer { self.hideProgressBar() }
+
+            switch response {
+            case .success(let data):
+                print("success", data)
+                self.navigationController?.popViewController(animated: true)
+                self.tabBarController?.selectedIndex = 0
+            case .requestErr(let err):
+                print("Request error:", err)
+            case .pathErr:
+                print("Path error")
+            case .serverErr:
+                print("Server error")
+            case .networkFail:
+                print("Network failure")
             }
         }
     }
-    
+
     @objc private func cancelButtonClicked() {
         searchTextField.text = ""
         self.shouldCallEndEditing = true
@@ -144,26 +113,26 @@ class UploadViewController: UIViewController,UITextFieldDelegate {
             self.view.layoutIfNeeded()
         })
     }
-    
+
     @objc func didTextFieldChanged() {
-        currentText = self.searchTextField.text ?? ""
-        
+        currentText = searchTextField.text ?? ""
+
         if currentText.isEmpty {
-            self.currentFetchingPage = 0
-            self.tableView.isHidden = true
-            self.memberList = []
-            self.tableView.reloadData()
+            memberList = []
+            currentFetchingPage = 0
+            tableView.isHidden = true
         } else {
-            self.memberList = []
-            self.currentFetchingPage = 0
-            self.tableView.isHidden = false
+            memberList = []
+            currentFetchingPage = 0
+            tableView.isHidden = false
             sendTextToServer(currentText)
         }
+        tableView.reloadData()
     }
     
     // MARK: - Functions
     
-    private func setupInit() {
+    private func setupView() {
         // 이미지 설정
         if let image = receivedImage {
             captureImg.image = image
@@ -174,31 +143,10 @@ class UploadViewController: UIViewController,UITextFieldDelegate {
         captionField.delegate = self
         captionField.textContainerInset = UIEdgeInsets.zero
         captionField.textContainer.lineFragmentPadding = 0
-        
-        if let navigationBar = self.navigationController?.navigationBar {
-            let textAttributes = [
-                NSAttributedString.Key.foregroundColor: UIColor.black,
-                NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 18) ?? UIFont.boldSystemFont(ofSize: 18)
-            ]
-            navigationBar.titleTextAttributes = textAttributes
-        }
-        
-        
+
         self.navigationItem.title = "누구를 포착했나요"
-        
-        self.navigationItem.leftBarButtonItem = backButton
-        self.navigationItem.rightBarButtonItem = uploadButton
-    }
-    
-    private func tagIdDidChange() {
-        if(!tagId.isEmpty && currentTextCount <= 50) {
-            uploadButton.tintColor = UIColor(named: "yellow00")
-            isUploadAllowed = true
-        }
-        else {
-            uploadButton.tintColor = UIColor(named: "gray03")
-            isUploadAllowed = false
-        }
+        self.navigationItem.leftBarButtonItem = createBackButton()
+        self.navigationItem.rightBarButtonItem = createUploadButton()
     }
     
     /// 검색바 뷰 설정
@@ -246,7 +194,6 @@ class UploadViewController: UIViewController,UITextFieldDelegate {
                 searchTextField.bottomAnchor.constraint(equalTo: searchContainerView.bottomAnchor)
             ])
             
-            
             searchTextFieldWidthConstraint = searchTextField.widthAnchor.constraint(equalToConstant: self.searchContainerView.frame.width)
             searchTextFieldWidthConstraint.isActive = true
             
@@ -262,10 +209,45 @@ class UploadViewController: UIViewController,UITextFieldDelegate {
         }
     }
     
+    private func setupCollectionView() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
+        collectionView.register(UINib(
+            nibName: TagCollectionViewCell.identifier,
+            bundle: nil),forCellWithReuseIdentifier: TagCollectionViewCell.identifier)
+    }
+    
+    private func setupTableView() {
+        //delegate 연결
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.backgroundColor = .clear
+        tableView.layer.cornerRadius = 8
+        tableView.isHidden = true
+        
+        tableView.register(UINib(nibName: TagSearchTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: TagSearchTableViewCell.identifier)
+    }
+    
+    private func createBackButton() -> UIBarButtonItem {
+        let backBarButtonItem = UIBarButtonItem(image: UIImage(named: "ChevronLeft")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(backbuttonPressed))
+        backBarButtonItem.imageInsets = UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0)
+        return backBarButtonItem
+    }
+    
+    private func createUploadButton() -> UIBarButtonItem {
+        let button = UIBarButtonItem(title: "업로드", style: .plain, target: self, action: #selector(uploadbuttonPressed(_:)))
+        button.setTitleTextAttributes([
+            NSAttributedString.Key.font : UIFont(name: "Pretendard-bold", size: 16)!
+        ], for: .normal)
+        button.tintColor = UIColor(named: "gray03")
+        return button
+    }
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         cancelButton.isHidden = false
         shouldCallEndEditing = true
-        self.collectionView.isHidden = true
+//        self.collectionView.isHidden = true
         
         UIView.animate(withDuration: 0.3) {
             self.searchTextFieldWidthConstraint.constant = self.searchContainerView.frame.width - 41
@@ -274,11 +256,21 @@ class UploadViewController: UIViewController,UITextFieldDelegate {
         }
     }
     
+    func textViewDidChange(_ textView: UITextView) {
+        currentTextCount = captionField.text.count
+        captionCountText.text = "\(currentTextCount)/50"
+        
+        // 50자 넘었을 때 글자수 빨간색으로 변경
+        captionCountText.textColor = currentTextCount > 50 ? .red : .black
+        
+        updateUploadButton()
+    }
+
     func textFieldDidEndEditing(_ textField: UITextField) {
         if shouldCallEndEditing {
             print("shouldCallEndEditing")
             self.cancelButton.isHidden = true
-            self.collectionView.isHidden = false
+//            self.collectionView.isHidden = false
             self.tableView.isHidden = true
             
             UIView.animate(withDuration: 0.3, animations: {
@@ -294,27 +286,6 @@ class UploadViewController: UIViewController,UITextFieldDelegate {
         searchTextField.resignFirstResponder()
         self.tableView.isHidden = false
         return true
-    }
-    
-    private func setupCollectionView() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        
-        collectionView.register(UINib(
-            nibName: TagSearchTableViewCell.identifier,
-            bundle: nil),forCellWithReuseIdentifier: TagCollectionViewCell.identifier)
-        
-    }
-    
-    private func setupTableView() {
-        //delegate 연결
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.layer.cornerRadius = 8
-        tableView.isHidden = true
-        
-        tableView.register(UINib(nibName: TagSearchTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: TagSearchTableViewCell.identifier)
-        
     }
     
     func sendTextToServer(_ searchText: String) {
@@ -359,34 +330,15 @@ class UploadViewController: UIViewController,UITextFieldDelegate {
             }
         }
     }
-    
-    func textViewDidChange(_ textView: UITextView) {
-        currentTextCount = captionField.text.count
-        captionCountText.text = "\(currentTextCount)/50"
-        
-        // 50자 넘었을 때 글자수 빨간색으로 변경
-        if currentTextCount > 50 {
-            captionCountText.textColor = .red
-        }
-        else{
-            captionCountText.textColor = .black
-        }
-        
-        // 50자 넘으면 업로드 안되도록
-        if(currentTextCount <= 50 && !tagId.isEmpty) {
-            uploadButton.tintColor = UIColor(named: "yellow00")
-            isUploadAllowed = true
-        }
-        else {
-            uploadButton.tintColor = UIColor(named: "gray03")
-            isUploadAllowed = true
-        }
+
+    func updateUploadButton() {
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(named: isUploadAllowed ? "yellow00" : "gray03")
     }
 }
 
 // MARK: - 캡션(50자 제한)
 
-extension UploadViewController : UITextViewDelegate{
+extension UploadViewController : UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == "내용 입력하기" {
             textView.text = nil
@@ -414,16 +366,13 @@ extension UploadViewController: UICollectionViewDelegate, UICollectionViewDataSo
             fatalError("셀 타입 캐스팅 실패2")
         }
         cell.tagIdLabel.text = self.tagId[indexPath.item]
-        
-        
         cell.deleteButtonAction = { [weak self] in
             guard let self = self else { return }
             
-            let itemToRemove = self.tagId[indexPath.item]
-            
             self.tagId.remove(at: indexPath.item)
-            
             collectionView.reloadData()
+            
+            updateUploadButton()
         }
         return cell
     }
@@ -453,22 +402,23 @@ extension UploadViewController: UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TagSearchTableViewCell", for: indexPath) as! TagSearchTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: TagSearchTableViewCell.identifier, for: indexPath) as! TagSearchTableViewCell
         
-        let urls = self.memberList.map { $0.profileImage }
-        let names = self.memberList.map { $0.name }
         let handles = self.memberList.map { $0.handle }
-        
+        let names = self.memberList.map { $0.name }
+        let urls = self.memberList.map { $0.profileImage }
+
         cell.userHandle.text = handles[indexPath.item]
         cell.userName.text = names[indexPath.item]
-        cell.configure(with: urls[indexPath.item])
+        if let url = URL(string: urls[indexPath.item]) {
+            cell.profileImg.load(with: url)
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedUserData = memberList[indexPath.row]
         let handles = self.memberList.map { $0.handle }
-        
         let selectedHandle = handles[indexPath.row]
         
         // 태그는 최대 5개까지 가능함
@@ -490,6 +440,8 @@ extension UploadViewController: UITableViewDelegate,UITableViewDataSource {
             }
         }
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        updateUploadButton()
         cancelButtonClicked()
     }
 }
@@ -511,7 +463,7 @@ extension UploadViewController: CustomAlertDelegate {
 
 extension UploadViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (self.tableView.contentOffset.y > (self.tableView.contentSize.height - self.tableView.bounds.size.height)){
+        if (self.tableView.contentOffset.y > (self.tableView.contentSize.height - self.tableView.bounds.size.height)) {
             if (!isLastPage && !isCurrentlyFetching) {
                 print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
                 isCurrentlyFetching = true
