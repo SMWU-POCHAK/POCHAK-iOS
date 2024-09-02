@@ -235,7 +235,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// MARK: - Profocol : Modal
+// MARK: - Protocol : Modal
 
 protocol UpdateDelegate: AnyObject {
     func modalDidDismiss()
