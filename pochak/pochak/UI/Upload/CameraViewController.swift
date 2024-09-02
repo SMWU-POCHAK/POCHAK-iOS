@@ -14,7 +14,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     // MARK: - Properties
     
     private var captureSession: AVCaptureSession!
-    ㅍvar stillImageOutput: AVCapturePhotoOutput!
+    private var stillImageOutput: AVCapturePhotoOutput!
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer!
     
     private var flashMode: AVCaptureDevice.FlashMode = .off

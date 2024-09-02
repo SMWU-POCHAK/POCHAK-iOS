@@ -9,20 +9,34 @@ import UIKit
 
 class TagCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var deleteBtn: UIImageView!
-    @IBOutlet weak var tagIdLabel: UILabel!
+    // MARK: - Properties
     
     static let identifier = "TagCollectionViewCell"
     
     var deleteButtonAction: (() -> Void)?
-    
+
+    // MARK: - Views
+
+    @IBOutlet weak var deleteBtn: UIImageView!
+    @IBOutlet weak var tagIdLabel: UILabel!
+            
+    // MARK: - Lifecycle
+
     override func awakeFromNib() {
         super.awakeFromNib()
         setupViewCornerRadius()
         setupDeleteButton()
     }
     
-    private func setupViewCornerRadius(){
+    // MARK: - Actions
+
+    @objc private func deleteButtonTapped() {
+        deleteButtonAction?()
+    }
+    
+    // MARK: - Functions
+    
+    private func setupViewCornerRadius() {
         self.layer.cornerRadius = 6
     }
 
@@ -30,9 +44,5 @@ class TagCollectionViewCell: UICollectionViewCell {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(deleteButtonTapped))
         deleteBtn.isUserInteractionEnabled = true
         deleteBtn.addGestureRecognizer(tapGestureRecognizer)
-    }
-    
-    @objc private func deleteButtonTapped() {
-        deleteButtonAction?()
     }
 }
