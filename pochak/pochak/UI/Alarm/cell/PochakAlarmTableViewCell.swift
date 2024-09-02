@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PochakAlarmTableViewCell: UITableViewCell {
+final class PochakAlarmTableViewCell: UITableViewCell {
     
     // MARK: - Properties
 

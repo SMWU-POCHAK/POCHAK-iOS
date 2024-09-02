@@ -7,7 +7,7 @@
 
 import UIKit
 
-class OtherTableViewCell: UITableViewCell {
+final class OtherTableViewCell: UITableViewCell {
     
     // MARK: - Properties
 

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PreviewAlarmViewController: UIViewController {
+final class PreviewAlarmViewController: UIViewController {
     
     // MARK: - Properties
     

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AlarmViewController: UIViewController, UISheetPresentationControllerDelegate {
+final class AlarmViewController: UIViewController, UISheetPresentationControllerDelegate {
     
     // MARK: - Properties
     
