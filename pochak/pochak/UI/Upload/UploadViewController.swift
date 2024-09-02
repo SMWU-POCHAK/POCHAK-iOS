@@ -335,7 +335,7 @@ class UploadViewController: UIViewController,UITextFieldDelegate {
     }
 }
 
-// MARK: - 캡션(50자 제한)
+// MARK: - Extension: 캡션(50자 제한)
 
 extension UploadViewController : UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -353,7 +353,7 @@ extension UploadViewController : UITextViewDelegate {
     }
 }
 
-// MARK: - 선택 태그 collectionview
+// MARK: - Extension: 선택 태그 collectionview
 
 extension UploadViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -393,7 +393,7 @@ extension UploadViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
 }
 
-// MARK: - 태그 tableview
+// MARK: - Extension: 태그 tableview
 
 extension UploadViewController: UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -458,7 +458,7 @@ extension UploadViewController: CustomAlertDelegate {
     }
 }
 
-// MARK: - Extension; UIScrollView
+// MARK: - Extension: UIScrollView
 
 extension UploadViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
