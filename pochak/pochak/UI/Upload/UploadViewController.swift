@@ -247,7 +247,6 @@ class UploadViewController: UIViewController,UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         cancelButton.isHidden = false
         shouldCallEndEditing = true
-//        self.collectionView.isHidden = true
         
         UIView.animate(withDuration: 0.3) {
             self.searchTextFieldWidthConstraint.constant = self.searchContainerView.frame.width - 41
@@ -270,7 +269,6 @@ class UploadViewController: UIViewController,UITextFieldDelegate {
         if shouldCallEndEditing {
             print("shouldCallEndEditing")
             self.cancelButton.isHidden = true
-//            self.collectionView.isHidden = false
             self.tableView.isHidden = true
             
             UIView.animate(withDuration: 0.3, animations: {
@@ -319,6 +317,7 @@ class UploadViewController: UIViewController,UITextFieldDelegate {
             let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
             
             self?.memberList = self?.memberList.filter { $0.handle != handle }
+            self?.memberList = self?.memberList.filter { !self!.tagId.contains($0.handle)}
             DispatchQueue.main.async {
                 if self?.currentFetchingPage == 0 {
                     self?.tableView.reloadData()
