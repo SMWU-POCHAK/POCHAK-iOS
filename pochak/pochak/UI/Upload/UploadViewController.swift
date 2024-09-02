@@ -9,7 +9,7 @@ import UIKit
 import AVFoundation
 import SwiftUI
 
-class UploadViewController: UIViewController,UITextFieldDelegate {
+final class UploadViewController: UIViewController,UITextFieldDelegate {
     
     // MARK: - Properties
     

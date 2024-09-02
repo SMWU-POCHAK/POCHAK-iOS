@@ -9,7 +9,7 @@ import UIKit
 import AVFoundation
 import SwiftUI
 
-class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
+final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     
     // MARK: - Properties
     

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TagSearchTableViewCell: UITableViewCell {
+final class TagSearchTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     

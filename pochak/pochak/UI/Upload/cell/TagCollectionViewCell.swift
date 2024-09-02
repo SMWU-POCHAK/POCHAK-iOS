@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TagCollectionViewCell: UICollectionViewCell {
+final class TagCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     
