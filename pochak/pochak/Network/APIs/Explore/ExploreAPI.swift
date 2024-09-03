@@ -27,7 +27,7 @@ extension ExploreAPI: BaseAPI {
         }
     }
 
-    var parameters: RequestParams {
+    var parameters: RequestParams? {
         switch self {
         case .getExplore(let request): return .query(request)
         }
