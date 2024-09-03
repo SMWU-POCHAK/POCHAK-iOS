@@ -10,7 +10,7 @@ import Foundation
 struct SearchService {
     /// 아이디 검색 데이터 받아오는 함수
     /// - Parameters:
-    ///   - request: 받아올 아이디 검색 결과
+    ///   - request: 받아올 아이디
     ///   - completion: 통신 후 핸들러 (뷰컨트롤러에 있음)
     static func getSearch(
         request: SearchRequest,
