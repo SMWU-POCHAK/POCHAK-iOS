@@ -21,11 +21,6 @@ final class PochakAlarmTableViewCell: UITableViewCell {
     @IBOutlet weak var previewBtn: UIButton!
     @IBOutlet weak var lineView: UIView!
     
-    @IBAction func previewBtnAction(_ sender: Any) {
-        print("버튼 클릭")
-        previewBtnClickAction?()
-    }
-    
     // MARK: - Lifecycle
 
     override func awakeFromNib() {
@@ -33,6 +28,13 @@ final class PochakAlarmTableViewCell: UITableViewCell {
         
         setupAttribute()
         configureCellAppearance()
+    }
+    
+    // MARK: - Actions
+
+    @IBAction func previewBtnAction(_ sender: Any) {
+        print("버튼 클릭")
+        previewBtnClickAction?()
     }
     
     // MARK: - Functions
