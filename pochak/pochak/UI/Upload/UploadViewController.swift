@@ -131,44 +131,54 @@ class UploadViewController: UIViewController,UITextFieldDelegate{
         )
     }
     
-    @objc private func uploadbuttonPressed(_ sender: Any) {//업로드 버튼 클릭시 어디로 이동할지
-        if(isUploadAllowed){
-            let captionText = captionField.text ?? ""
+    @objc private func uploadbuttonPressed(_ sender: Any) {
+        if isUploadAllowed {
+            let captionText = (captionField.text == "내용 입력하기") ? "" : captionField.text ?? ""
+            let postImage: Data? = captureImg.image?.jpegData(compressionQuality: 0.2)
             
-            let imageData : Data? = captureImg.image?.jpegData(compressionQuality: 0.2)
-            
-            var taggedUserHandles : [String] = []
+            var taggedUserHandles: [String] = []
             for taggedUserHandle in tagId {
                 taggedUserHandles.append(taggedUserHandle)
             }
-            print("업로드 완료")
-            print(isUploadAllowed)
             
             showProgressBar()
-    
-            UploadDataService.shared.upload(postImage: imageData, caption: captionText, taggedMemberHandleList: taggedUserHandles) { [self] response in
-                // 함수 호출 후 프로그래스 바 숨기기
+            
+            let request = CameraUploadRequest(caption: captionText, taggedMemberHandleList: taggedUserHandles)
+            
+            var files: [(Data, String, String)] = []
+            if let postImage = postImage {
+                let fileTuple: (Data, String, String) = (postImage, "postImage", "image/jpeg")
+                files.append(fileTuple)
+            }
+            
+            CameraService.postUpload(files: files, request: request) { [weak self] data, failed in
                 defer {
-                    hideProgressBar()
+                    self?.hideProgressBar()
                 }
-    
-                switch response {
-                case .success(let data):
-                    print("success")
-                    print(data)
-                    if let navController = self.navigationController {
-                        navController.popViewController(animated: true)
+                
+                guard let self = self else { return }
+                
+                guard let data = data else {
+                    // 에러가 난 경우, alert 창 present
+                    switch failed {
+                    case .disconnected:
+                        self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    case .serverError:
+                        self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    case .unknownError:
+                        self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    default:
+                        self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
                     }
-                    self.tabBarController?.selectedIndex = 0
-                case .requestErr(let err):
-                    print(err)
-                case .pathErr:
-                    print("pathErr")
-                case .serverErr:
-                    print("serverErr")
-                case .networkFail:
-                    print("networkFail")
+                    return
                 }
+                
+                print("success")
+                print(data)
+                if let navController = self.navigationController {
+                    navController.popViewController(animated: true)
+                }
+                self.tabBarController?.selectedIndex = 0
             }
         }
     }
