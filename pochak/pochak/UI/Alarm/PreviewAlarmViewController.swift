@@ -7,23 +7,18 @@
 
 import UIKit
 
-class PreviewAlarmViewController : UIViewController {
+final class PreviewAlarmViewController: UIViewController {
     
-    @IBOutlet weak var postImageView: UIImageView!
-    @IBOutlet weak var taggedUsers: UILabel!
-    @IBOutlet weak var pochakUser: UILabel!
-    @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var acceptBtn: UIButton!
-    @IBOutlet weak var refuseBtn: UIButton!
+    // MARK: - Properties
     
     var acceptButtonAction: (() -> Void)?
     var refuseButtonAction: (() -> Void)?
     
-    var taggedUserHandle : [String] = []
-    var pochakUserHandle : String?
-    var profileImgUrl : String?
-    var postImgUrl : String?
-    var tagId : Int?
+    var taggedUserHandle: [String] = []
+    var pochakUserHandle: String?
+    var profileImgUrl: String?
+    var postImgUrl: String?
+    var tagId: Int?
     var alarmId: Int?
     
     private var previewDataResponse: PreviewAlarmResponse!
@@ -36,7 +31,6 @@ class PreviewAlarmViewController : UIViewController {
             print("tagId is nil")
             return
         }
-
         postTagData(tagId: tagId, isAccept: true)
     }
     
@@ -46,80 +40,41 @@ class PreviewAlarmViewController : UIViewController {
             print("tagId is nil")
             return
         }
-
         postTagData(tagId: tagId, isAccept: false)
     }
+    
+    // MARK: - Views
+    
+    @IBOutlet weak var postImageView: UIImageView!
+    @IBOutlet weak var taggedUsers: UILabel!
+    @IBOutlet weak var pochakUser: UILabel!
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var acceptBtn: UIButton!
+    @IBOutlet weak var refuseBtn: UIButton!
+    
+    // MARK: - lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupAttribute()
         getTagPreviewData(alarmId: alarmId!)
-        setupUI()
     }
     
     override func viewDidLayoutSubviews() {
-            super.viewDidLayoutSubviews()
-
-            // 모달 창의 높이 설정
-            preferredContentSize = CGSize(width: view.frame.width, height: postImageView.frame.maxY + 13)
-        }
+        super.viewDidLayoutSubviews()
+        // 모달 창의 높이 설정
+        preferredContentSize = CGSize(width: view.frame.width, height: postImageView.frame.maxY + 13)
+    }
     
-    private func setupAttribute(){
+    // MARK: - Functions
+    
+    private func setupAttribute() {
         self.profileImageView?.layer.cornerRadius = 50/2
     }
     
-    private func setupUI(){
-        if let profileImageView = self.profileImageView {
-            configure(imageview: profileImageView, with: profileImgUrl ?? "")
-        } else {
-            print("profileImageView is nil")
-            // Handle the case where postImageView is nil
-        }
-        
-        //        for handle in taggedUserHandle {
-        //            if(handle == taggedUserHandle.last){
-        //                self.taggedUsers.text! != handle + " 님"
-        //            }
-        //            else{
-        //                self.taggedUsers.text! != handle + " 님 • "
-        //            }
-        //        }
-        
-        if let pochakUser = self.pochakUser {
-            pochakUser.text = (self.pochakUserHandle ?? "사용자") + "님이 포착"
-        } else {
-            print("pochakUser is nil")
-            // Handle the case where postImageView is nil
-        }
-        
-        if let postImageView = self.postImageView {
-            configure(imageview: postImageView, with: postImgUrl ?? "")
-        } else {
-            print("postImageView is nil")
-            // Handle the case where postImageView is nil
-        }
-    }
-    
-    func configure(imageview : UIImageView,with imageUrl: String) {
-        if let url = URL(string: imageUrl) {
-            imageview.kf.setImage(with: url) { result in
-                switch result {
-                case .success(let value):
-                    print("Image successfully loaded: \(value.image)")
-                    imageview.contentMode = .scaleAspectFill
-                    
-                case .failure(let error):
-                    print("Image failed to load with error: \(error.localizedDescription)")
-                }
-            }
-        }
-    }
-    
-    func postTagData(tagId: Int, isAccept: Bool){
+    func postTagData(tagId: Int, isAccept: Bool) {
         showProgressBar()
-        PreviewAlarmDataService.shared.postTagAccept(tagId: tagId, isAccept: isAccept){ [self]
-            response in
-            
+        PreviewAlarmDataService.shared.postTagAccept(tagId: tagId, isAccept: isAccept){ [self] response in
             // 함수 호출 후 프로그래스 바 숨기기
             defer {
                 hideProgressBar()
@@ -127,7 +82,6 @@ class PreviewAlarmViewController : UIViewController {
                     NotificationCenter.default.post(name: Notification.Name("ModalDismissed"), object: nil)
                 }
             }
-            
             switch response {
             case .success(let data):
                 print(data)
@@ -141,14 +95,11 @@ class PreviewAlarmViewController : UIViewController {
                 print("networkFail")
             }
         }
-        
     }
     
-    func getTagPreviewData(alarmId: Int){
+    func getTagPreviewData(alarmId: Int) {
         print("======= \(alarmId)번의 알람 미리보기 합니다 =======")
-        PreviewAlarmDataService.shared.getTagPreview(tagId: alarmId){ [self]
-            response in
-            
+        PreviewAlarmDataService.shared.getTagPreview(tagId: alarmId) { [self] response in
             switch response {
             case .success(let data):
                 print(data)
@@ -156,16 +107,11 @@ class PreviewAlarmViewController : UIViewController {
                 self.previewDataResult = self.previewDataResponse.result
                 self.tagList = self.previewDataResult.tagList
                 
-                
-                if let profileImageView = self.profileImageView {
-                    configure(imageview: profileImageView, with: self.previewDataResult.ownerProfileImage ?? "")
-                } else {
-                    print("profileImageView is nil")
-                    // Handle the case where postImageView is nil
+                if let url = URL(string: self.previewDataResult.ownerProfileImage) {
+                    profileImageView.load(with: url)
+                    profileImageView.contentMode = .scaleAspectFill
                 }
-                
                 var taggedUserString = ""
-                //if let tagList = self.tagList{
                 for taggedMember in tagList {
                     if taggedMember.handle == tagList.last?.handle {
                         taggedUserString += "\(taggedMember.handle) 님"
@@ -180,13 +126,10 @@ class PreviewAlarmViewController : UIViewController {
                     pochakUser.text = (self.previewDataResult.ownerHandle ?? "사용자") + "님이 포착"
                 } else {
                     print("pochakUser is nil")
-                    // Handle the case where postImageView is nil
                 }
                 
-                if let postImageView = self.postImageView {
-                    configure(imageview: postImageView, with: self.previewDataResult.postImage ?? "")
-                } else {
-                    print("postImageView is nil")
+                if let url = URL(string: self.previewDataResult.postImage) {
+                    postImageView.load(with: url)
                 }
                 
             case .requestErr(let err):
@@ -199,8 +142,6 @@ class PreviewAlarmViewController : UIViewController {
                 print("networkFail")
             }
         }
-        
     }
-    
 }
-    
+
