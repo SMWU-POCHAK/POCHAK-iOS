@@ -128,10 +128,8 @@ final class PreviewAlarmViewController: UIViewController {
                     print("pochakUser is nil")
                 }
                 
-                if let postImageView = self.postImageView {
-                    if let url = URL(string: self.previewDataResult.postImage) {
-                        postImageView.load(with: url)
-                    }
+                if let url = URL(string: self.previewDataResult.postImage) {
+                    postImageView.load(with: url)
                 }
                 
             case .requestErr(let err):
