@@ -35,7 +35,15 @@ extension BaseAPI {
         if let parameters = parameters {
             switch parameters {
             case .query(let request):
-                let params = request?.toDictionary() ?? [:]
+                var params = request?.toDictionary() ?? [:]
+                // 배열 타입인 파라미터를 쉼표로 구분된 문자열로 변환
+                for (key, value) in params {
+                    if let arrayValue = value as? [String] {
+                        let joinedValue = arrayValue.joined(separator: ",")
+                        params[key] = joinedValue
+                    }
+                }
+
                 let queryParams = params.map { URLQueryItem(name: $0.key, value: "\($0.value)") }
                 var components = URLComponents(string: url.appendingPathComponent(path).absoluteString)
                 components?.queryItems = queryParams
