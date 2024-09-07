@@ -7,19 +7,28 @@
 
 import UIKit
 
-class OtherTableViewCell: UITableViewCell {
+final class OtherTableViewCell: UITableViewCell {
+    
+    // MARK: - Properties
+
     static let identifier = "OtherTableViewCell"
+
+    // MARK: - Views
 
     @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var comment: UILabel!
     @IBOutlet weak var lineView: UIView!
     
+    // MARK: - Lifecycle
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+
         setupAttribute()
         configureCellAppearance()
     }
+
+    // MARK: - Functions
 
     private func setupAttribute(){
         img.layer.cornerRadius = 48/2
@@ -28,46 +37,32 @@ class OtherTableViewCell: UITableViewCell {
         self.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
     
-    func configureCellAppearance() {
-
-        // 첫 번째 셀과 마지막 셀의 외형을 설정
+    /// 첫 번째 셀과 마지막 셀의 외형을 설정
+    private func configureCellAppearance() {
         if let tableView = self.superview as? UITableView {
             let indexPath = tableView.indexPath(for: self)!
-            let isFirstCell = indexPath.row == 0
-            let isLastCell = indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1
+            let row = indexPath.row
+            let numberOfRows = tableView.numberOfRows(inSection: indexPath.section)
             
-            if isFirstCell && isLastCell {
+            switch row {
+            case 0 where numberOfRows == 1:
                 // 아이템이 하나인 경우
                 self.lineView.isHidden = true // separator를 보이지 않도록
-            } else if isFirstCell {
+                
+            case 0:
                 // 첫 번째 셀
                 self.lineView.isHidden = false
                 print("첫번째")
-            } else if isLastCell {
+                
+            case numberOfRows - 1:
                 // 마지막 셀
                 self.lineView.isHidden = true // separator를 보이지 않도록
                 print("마지막")
-            } else {
+                
+            default:
                 // 그 외의 경우
                 self.lineView.isHidden = false
             }
         }
     }
-    
-    
-    
-    func configure(with imageUrl: String) {
-        if let url = URL(string: imageUrl) {
-            img.kf.setImage(with: url) { result in
-                switch result {
-                case .success(let value):
-                    print("Image successfully loaded: \(value.image)")
-                    self.img.contentMode = .scaleAspectFill
-                case .failure(let error):
-                    print("Image failed to load with error: \(error.localizedDescription)")
-                }
-            }
-        }
-    }
-
 }
