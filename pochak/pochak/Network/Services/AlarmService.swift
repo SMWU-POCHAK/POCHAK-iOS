@@ -46,5 +46,27 @@ struct AlarmService {
                 }
             }
         }
+    
+    
+    /// 태그 수락 , 거절
+    /// - Parameters:
+    ///   - tagId: 태그 아이디
+    ///   - request: isAccept - 수락 여부
+    ///   - completion: 핸들러
+    static func postTagApprove(
+        tagId: Int,
+        request: TagApproveRequest,
+        completion: @escaping (_ succeed: TagApproveResponse?, _ failed: NetworkError?) -> Void) {
+            NetworkService.shared.request(TagApproveAPI.postTagApprove(tagId: tagId, tagApproveRequest: request)) { response in
+                switch response {
+                case .success(let data):
+                    completion(data, nil)
+                case .failure(let error):
+                    print("=== postTagApprove service error ===")
+                    print(error.localizedDescription)
+                    completion(nil, error)
+                }
+            }
+        }
 }
     

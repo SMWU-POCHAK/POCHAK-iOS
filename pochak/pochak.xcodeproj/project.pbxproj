@@ -191,6 +191,9 @@
 		EA817AB62B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA817AB52B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift */; };
 		EA96D04C2C8F10C700D80562 /* TagPreviewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96D04B2C8F10C700D80562 /* TagPreviewResponse.swift */; };
 		EA96D0502C8F15E000D80562 /* TagPreviewAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96D04F2C8F15E000D80562 /* TagPreviewAPI.swift */; };
+		EA96D0522C8F186900D80562 /* TagApproveAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96D0512C8F186900D80562 /* TagApproveAPI.swift */; };
+		EA96D0542C8F192000D80562 /* TagApproveRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96D0532C8F192000D80562 /* TagApproveRequest.swift */; };
+		EA96D0562C8F192B00D80562 /* TagApproveResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96D0552C8F192B00D80562 /* TagApproveResponse.swift */; };
 		EA99B63C2A5143A800EBA2AD /* CameraTab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA99B63B2A5143A800EBA2AD /* CameraTab.storyboard */; };
 		EA9F5CB22B0EF7BB0021951F /* UploadDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9F5CB12B0EF7BB0021951F /* UploadDataModel.swift */; };
 		EA9F5CB42B0EF7CC0021951F /* UploadDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9F5CB32B0EF7CC0021951F /* UploadDataService.swift */; };
@@ -431,6 +434,9 @@
 		EA817AB52B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		EA96D04B2C8F10C700D80562 /* TagPreviewResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagPreviewResponse.swift; sourceTree = "<group>"; };
 		EA96D04F2C8F15E000D80562 /* TagPreviewAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagPreviewAPI.swift; sourceTree = "<group>"; };
+		EA96D0512C8F186900D80562 /* TagApproveAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagApproveAPI.swift; sourceTree = "<group>"; };
+		EA96D0532C8F192000D80562 /* TagApproveRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagApproveRequest.swift; sourceTree = "<group>"; };
+		EA96D0552C8F192B00D80562 /* TagApproveResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagApproveResponse.swift; sourceTree = "<group>"; };
 		EA99B63B2A5143A800EBA2AD /* CameraTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CameraTab.storyboard; sourceTree = "<group>"; };
 		EA9F5CB12B0EF7BB0021951F /* UploadDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadDataModel.swift; sourceTree = "<group>"; };
 		EA9F5CB32B0EF7CC0021951F /* UploadDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadDataService.swift; sourceTree = "<group>"; };
@@ -1242,6 +1248,7 @@
 			children = (
 				EA7E146E2C8EA15C001DA769 /* AlarmListAPI.swift */,
 				EA96D04F2C8F15E000D80562 /* TagPreviewAPI.swift */,
+				EA96D0512C8F186900D80562 /* TagApproveAPI.swift */,
 			);
 			path = Alarm;
 			sourceTree = "<group>";
@@ -1252,6 +1259,8 @@
 				EA7E146C2C8EA119001DA769 /* AlarmListResponse.swift */,
 				EA7E14702C8EA26D001DA769 /* AlarmListRequest.swift */,
 				EA96D04B2C8F10C700D80562 /* TagPreviewResponse.swift */,
+				EA96D0532C8F192000D80562 /* TagApproveRequest.swift */,
+				EA96D0552C8F192B00D80562 /* TagApproveResponse.swift */,
 			);
 			path = Alarm;
 			sourceTree = "<group>";
@@ -1683,6 +1692,7 @@
 				3742617A2C31C6F900B67886 /* AppleLoginDataModel.swift in Sources */,
 				373815162A89E6D30032066A /* SocialJoinViewController.swift in Sources */,
 				EA402BDB2C7AE3F200858FF5 /* SearchResponse.swift in Sources */,
+				EA96D0542C8F192000D80562 /* TagApproveRequest.swift in Sources */,
 				086E90112C666A5700A05E76 /* UserService.swift in Sources */,
 				3766F40A2C370CF5001DD239 /* BlockedUserViewController.swift in Sources */,
 				374261782C31C6ED00B67886 /* AppleLoginDataManager.swift in Sources */,
@@ -1704,6 +1714,7 @@
 				3766F4062C370A7C001DD239 /* BlockedUserListDataManager.swift in Sources */,
 				EAC957692C6F34C300046142 /* ExploreRequest.swift in Sources */,
 				3769D6D52B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift in Sources */,
+				EA96D0562C8F192B00D80562 /* TagApproveResponse.swift in Sources */,
 				3769D6B62B3C302C00294CD1 /* JoinDataModel.swift in Sources */,
 				084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */,
 				081689B32C7367CC00EC4D95 /* CommentAPI.swift in Sources */,
@@ -1766,6 +1777,7 @@
 				3769D6BB2B3C347000294CD1 /* FollowListViewController.swift in Sources */,
 				3769D6B42B3C301B00294CD1 /* JoinDataManager.swift in Sources */,
 				081689B62C73697700EC4D95 /* CommentService.swift in Sources */,
+				EA96D0522C8F186900D80562 /* TagApproveAPI.swift in Sources */,
 				37D311DA2B53134200A1D7C1 /* LogoutDataManager.swift in Sources */,
 				EA1B0B5D2A49D23A00F86FBC /* SceneDelegate.swift in Sources */,
 				080AAFAB2C65161100FBBE94 /* PostReportResponse.swift in Sources */,
