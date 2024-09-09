@@ -15,12 +15,32 @@ struct AlarmService {
     static func getAlarmList(
         request: AlarmListRequest,
         completion: @escaping (_ succeed: AlarmListResponse?, _ failed: NetworkError?) -> Void) {
-            NetworkService.shared.request(AlarmAPI.getAlarmList(request)) { response in
+            NetworkService.shared.request(AlarmListAPI.getAlarmList(request)) { response in
                 switch response {
                 case .success(let data):
                     completion(data, nil)
                 case .failure(let error):
                     print("=== getAlarmList service error ===")
+                    print(error.localizedDescription)
+                    completion(nil, error)
+                }
+            }
+        }
+    
+    
+    /// 태그 알림 미리보기 조회
+    /// - Parameters:
+    ///   - alarmId: 미리보기 할 알람 아이디
+    ///   - completion: 핸들러
+    static func getTagPreview(
+        alarmId: Int,
+        completion: @escaping (_ succeed: TagPreviewResponse?, _ failed: NetworkError?) -> Void) {
+            NetworkService.shared.request(TagPreviewAPI.getTagPreview(alarmId)) { response in
+                switch response {
+                case .success(let data):
+                    completion(data, nil)
+                case .failure(let error):
+                    print("=== getTagPreview service error ===")
                     print(error.localizedDescription)
                     completion(nil, error)
                 }
