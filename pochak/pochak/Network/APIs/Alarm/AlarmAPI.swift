@@ -6,12 +6,15 @@
 //
 
 import Foundation
+import Alamofire
 
 enum AlarmAPI {
-    case getAlarmList(AlarmRequest)
+    case getAlarmList(AlarmListRequest)
 }
 
 extension AlarmAPI: BaseAPI {
+    typealias Response = AlarmListResponse
+
     var method: HTTPMethod {
         switch self {
         case .getAlarmList: return .get
@@ -24,7 +27,7 @@ extension AlarmAPI: BaseAPI {
         }
     }
 
-    var parameters: RequestParams {
+    var parameters: RequestParams? {
         switch self {
         case .getAlarmList(let request): return .query(request)
         }

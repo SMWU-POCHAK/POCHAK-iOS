@@ -15,7 +15,6 @@ struct AlarmService {
     static func getAlarmList(
         request: AlarmListRequest,
         completion: @escaping (_ succeed: AlarmListResponse?, _ failed: NetworkError?) -> Void) {
-            
             NetworkService.shared.request(AlarmAPI.getAlarmList(request)) { response in
                 switch response {
                 case .success(let data):
