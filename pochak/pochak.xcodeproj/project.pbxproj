@@ -184,11 +184,13 @@
 		EA6306DA2C2BFE83000DB0A7 /* CustomTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6306D92C2BFE83000DB0A7 /* CustomTabbar.swift */; };
 		EA7E146B2C8E9360001DA769 /* AlarmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7E146A2C8E9360001DA769 /* AlarmService.swift */; };
 		EA7E146D2C8EA119001DA769 /* AlarmListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7E146C2C8EA119001DA769 /* AlarmListResponse.swift */; };
-		EA7E146F2C8EA15C001DA769 /* AlarmAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7E146E2C8EA15C001DA769 /* AlarmAPI.swift */; };
+		EA7E146F2C8EA15C001DA769 /* AlarmListAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7E146E2C8EA15C001DA769 /* AlarmListAPI.swift */; };
 		EA7E14712C8EA26D001DA769 /* AlarmListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7E14702C8EA26D001DA769 /* AlarmListRequest.swift */; };
 		EA7EE1D82BF38921009486CC /* PochakAlarmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7EE1D62BF38921009486CC /* PochakAlarmTableViewCell.swift */; };
 		EA7EE1D92BF38921009486CC /* PochakAlarmTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA7EE1D72BF38921009486CC /* PochakAlarmTableViewCell.xib */; };
 		EA817AB62B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA817AB52B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift */; };
+		EA96D04C2C8F10C700D80562 /* TagPreviewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96D04B2C8F10C700D80562 /* TagPreviewResponse.swift */; };
+		EA96D0502C8F15E000D80562 /* TagPreviewAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96D04F2C8F15E000D80562 /* TagPreviewAPI.swift */; };
 		EA99B63C2A5143A800EBA2AD /* CameraTab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA99B63B2A5143A800EBA2AD /* CameraTab.storyboard */; };
 		EA9F5CB22B0EF7BB0021951F /* UploadDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9F5CB12B0EF7BB0021951F /* UploadDataModel.swift */; };
 		EA9F5CB42B0EF7CC0021951F /* UploadDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9F5CB32B0EF7CC0021951F /* UploadDataService.swift */; };
@@ -203,8 +205,6 @@
 		EACF0F6E2C3044C000C0016C /* TagSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF0F6C2C3044C000C0016C /* TagSearchTableViewCell.swift */; };
 		EACF0F6F2C3044C000C0016C /* TagSearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EACF0F6D2C3044C000C0016C /* TagSearchTableViewCell.xib */; };
 		EAE69F442C315009005762B7 /* UIVIew+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE69F432C315009005762B7 /* UIVIew+.swift */; };
-		EAEADB962C344E160037E116 /* PreviewAlarmDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEADB952C344E160037E116 /* PreviewAlarmDataService.swift */; };
-		EAEADB982C3450FB0037E116 /* PreviewAlarmDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEADB972C3450FB0037E116 /* PreviewAlarmDataModel.swift */; };
 		EAF885262B5677CB00BA184A /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EAF885252B5677CB00BA184A /* libsqlite3.0.tbd */; };
 		EAF885292B567F4F00BA184A /* RecentSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF885282B567F4F00BA184A /* RecentSearchModel.swift */; };
 		EAF8852B2B569B6600BA184A /* RecentSearchRealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF8852A2B569B6600BA184A /* RecentSearchRealmManager.swift */; };
@@ -424,11 +424,13 @@
 		EA6306D92C2BFE83000DB0A7 /* CustomTabbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabbar.swift; sourceTree = "<group>"; };
 		EA7E146A2C8E9360001DA769 /* AlarmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmService.swift; sourceTree = "<group>"; };
 		EA7E146C2C8EA119001DA769 /* AlarmListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListResponse.swift; sourceTree = "<group>"; };
-		EA7E146E2C8EA15C001DA769 /* AlarmAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmAPI.swift; sourceTree = "<group>"; };
+		EA7E146E2C8EA15C001DA769 /* AlarmListAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListAPI.swift; sourceTree = "<group>"; };
 		EA7E14702C8EA26D001DA769 /* AlarmListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListRequest.swift; sourceTree = "<group>"; };
 		EA7EE1D62BF38921009486CC /* PochakAlarmTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakAlarmTableViewCell.swift; sourceTree = "<group>"; };
 		EA7EE1D72BF38921009486CC /* PochakAlarmTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PochakAlarmTableViewCell.xib; sourceTree = "<group>"; };
 		EA817AB52B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		EA96D04B2C8F10C700D80562 /* TagPreviewResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagPreviewResponse.swift; sourceTree = "<group>"; };
+		EA96D04F2C8F15E000D80562 /* TagPreviewAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagPreviewAPI.swift; sourceTree = "<group>"; };
 		EA99B63B2A5143A800EBA2AD /* CameraTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CameraTab.storyboard; sourceTree = "<group>"; };
 		EA9F5CB12B0EF7BB0021951F /* UploadDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadDataModel.swift; sourceTree = "<group>"; };
 		EA9F5CB32B0EF7CC0021951F /* UploadDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadDataService.swift; sourceTree = "<group>"; };
@@ -443,8 +445,6 @@
 		EACF0F6C2C3044C000C0016C /* TagSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagSearchTableViewCell.swift; sourceTree = "<group>"; };
 		EACF0F6D2C3044C000C0016C /* TagSearchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagSearchTableViewCell.xib; sourceTree = "<group>"; };
 		EAE69F432C315009005762B7 /* UIVIew+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIew+.swift"; sourceTree = "<group>"; };
-		EAEADB952C344E160037E116 /* PreviewAlarmDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewAlarmDataService.swift; sourceTree = "<group>"; };
-		EAEADB972C3450FB0037E116 /* PreviewAlarmDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewAlarmDataModel.swift; sourceTree = "<group>"; };
 		EAF885252B5677CB00BA184A /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		EAF885282B567F4F00BA184A /* RecentSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchModel.swift; sourceTree = "<group>"; };
 		EAF8852A2B569B6600BA184A /* RecentSearchRealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchRealmManager.swift; sourceTree = "<group>"; };
@@ -1032,15 +1032,6 @@
 			path = cell;
 			sourceTree = "<group>";
 		};
-		EA1289062B3B280D002EC93E /* AlarmDataManager */ = {
-			isa = PBXGroup;
-			children = (
-				EAEADB972C3450FB0037E116 /* PreviewAlarmDataModel.swift */,
-				EAEADB952C344E160037E116 /* PreviewAlarmDataService.swift */,
-			);
-			path = AlarmDataManager;
-			sourceTree = "<group>";
-		};
 		EA12890F2B3C4F03002EC93E /* SearchDataManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -1067,7 +1058,6 @@
 			children = (
 				EAFB4B8A2A5147C400E0F2FA /* AlarmTab.storyboard */,
 				EA0F23672C31D1300014F94E /* cell */,
-				EA1289062B3B280D002EC93E /* AlarmDataManager */,
 				EA0107A62A5CF73900A3AE85 /* AlarmViewController.swift */,
 				EA0F23652C319C030014F94E /* PreviewAlarmViewController.swift */,
 			);
@@ -1250,7 +1240,8 @@
 		EA7E14682C8E9347001DA769 /* Alarm */ = {
 			isa = PBXGroup;
 			children = (
-				EA7E146E2C8EA15C001DA769 /* AlarmAPI.swift */,
+				EA7E146E2C8EA15C001DA769 /* AlarmListAPI.swift */,
+				EA96D04F2C8F15E000D80562 /* TagPreviewAPI.swift */,
 			);
 			path = Alarm;
 			sourceTree = "<group>";
@@ -1260,6 +1251,7 @@
 			children = (
 				EA7E146C2C8EA119001DA769 /* AlarmListResponse.swift */,
 				EA7E14702C8EA26D001DA769 /* AlarmListRequest.swift */,
+				EA96D04B2C8F10C700D80562 /* TagPreviewResponse.swift */,
 			);
 			path = Alarm;
 			sourceTree = "<group>";
@@ -1672,6 +1664,7 @@
 				EA17182C2A5912A7009168E6 /* UploadViewController.swift in Sources */,
 				089E27B72C4E8C2D00828F4C /* AlarmType.swift in Sources */,
 				3769D6B22B3C300D00294CD1 /* GoogleLoginModel.swift in Sources */,
+				EA96D04C2C8F10C700D80562 /* TagPreviewResponse.swift in Sources */,
 				37D311E52B567AE000A1D7C1 /* OtherUserProfileViewController.swift in Sources */,
 				EA7E146B2C8E9360001DA769 /* AlarmService.swift in Sources */,
 				3769D6BF2B3C349D00294CD1 /* SecondTabmanViewController.swift in Sources */,
@@ -1722,6 +1715,7 @@
 				EAE69F442C315009005762B7 /* UIVIew+.swift in Sources */,
 				EA402BDF2C7AE45900858FF5 /* SearchService.swift in Sources */,
 				0876E23E2C274256008DE88F /* NoPostCollectionViewCell.swift in Sources */,
+				EA96D0502C8F15E000D80562 /* TagPreviewAPI.swift in Sources */,
 				08C02EF62BF3945000627C21 /* UIFont+.swift in Sources */,
 				EABD20652A6CF5CC007543E9 /* TagCollectionViewCell.swift in Sources */,
 				0823B0742A5B0E780085002F /* CommentTableViewCell.swift in Sources */,
@@ -1754,14 +1748,13 @@
 				EA1B0B5B2A49D23A00F86FBC /* AppDelegate.swift in Sources */,
 				0889D1382C5CB69F00206C86 /* String+.swift in Sources */,
 				0844D7F32BF21A80001154AC /* CancelViewCell.swift in Sources */,
-				EAEADB962C344E160037E116 /* PreviewAlarmDataService.swift in Sources */,
 				3766F4032C3706DC001DD239 /* BlockedUserTableViewCell.swift in Sources */,
 				08C9151C2C6461B10044A9A8 /* PostService.swift in Sources */,
 				37D311D52B53056700A1D7C1 /* ProfileUpdateDataManager.swift in Sources */,
 				3769D6B92B3C345800294CD1 /* MyProfileTabViewController.swift in Sources */,
 				EA2CD63D2C5F4C2B00644EFE /* NetworkError.swift in Sources */,
 				080AAFAD2C65174900FBBE94 /* PostReportRequest.swift in Sources */,
-				EA7E146F2C8EA15C001DA769 /* AlarmAPI.swift in Sources */,
+				EA7E146F2C8EA15C001DA769 /* AlarmListAPI.swift in Sources */,
 				08FD3A392B357E6400574880 /* LikedUsersDataService.swift in Sources */,
 				081228CA2A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift in Sources */,
 				089C107F2C749BC3007DB23F /* UICommentModel.swift in Sources */,
@@ -1779,7 +1772,6 @@
 				3747E9722BF3827500364BED /* SettingsViewController.swift in Sources */,
 				3769D6D22B3C56F100294CD1 /* SecondPostTabmanViewController.swift in Sources */,
 				371D337A2B4E8D1F0084FF6A /* KeychainManager.swift in Sources */,
-				EAEADB982C3450FB0037E116 /* PreviewAlarmDataModel.swift in Sources */,
 				EAF918542AA4692E0037C270 /* NetworkResult.swift in Sources */,
 				EA7E146D2C8EA119001DA769 /* AlarmListResponse.swift in Sources */,
 				EA12890C2B3BF1A7002EC93E /* RecentSearchViewController.swift in Sources */,

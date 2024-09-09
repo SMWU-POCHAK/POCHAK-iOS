@@ -14,17 +14,9 @@ final class PreviewAlarmViewController: UIViewController {
     var acceptButtonAction: (() -> Void)?
     var refuseButtonAction: (() -> Void)?
     
-    var taggedUserHandle: [String] = []
-    var pochakUserHandle: String?
-    var profileImgUrl: String?
-    var postImgUrl: String?
     var tagId: Int?
     var alarmId: Int?
-    
-    private var previewDataResponse: PreviewAlarmResponse!
-    private var previewDataResult: PreviewAlarmResult!
-    private var tagList: [PreviewTagList]! = []
-    
+        
     @IBAction func acceptBtnTapped(_ sender: Any) {
         acceptButtonAction?()
         guard let tagId = tagId else {
@@ -74,72 +66,77 @@ final class PreviewAlarmViewController: UIViewController {
     
     func postTagData(tagId: Int, isAccept: Bool) {
         showProgressBar()
-        PreviewAlarmDataService.shared.postTagAccept(tagId: tagId, isAccept: isAccept){ [self] response in
-            // 함수 호출 후 프로그래스 바 숨기기
-            defer {
-                hideProgressBar()
-                dismiss(animated: true) {
-                    NotificationCenter.default.post(name: Notification.Name("ModalDismissed"), object: nil)
-                }
-            }
-            switch response {
-            case .success(let data):
-                print(data)
-            case .requestErr(let err):
-                print(err)
-            case .pathErr:
-                print("pathErr")
-            case .serverErr:
-                print("serverErr")
-            case .networkFail:
-                print("networkFail")
-            }
-        }
+//        PreviewAlarmDataService.shared.postTagAccept(tagId: tagId, isAccept: isAccept){ [self] response in
+//            // 함수 호출 후 프로그래스 바 숨기기
+//            defer {
+//                hideProgressBar()
+//                dismiss(animated: true) {
+//                    NotificationCenter.default.post(name: Notification.Name("ModalDismissed"), object: nil)
+//                }
+//            }
+//            switch response {
+//            case .success(let data):
+//                print(data)
+//            case .requestErr(let err):
+//                print(err)
+//            case .pathErr:
+//                print("pathErr")
+//            case .serverErr:
+//                print("serverErr")
+//            case .networkFail:
+//                print("networkFail")
+//            }
+//        }
     }
     
     func getTagPreviewData(alarmId: Int) {
         print("======= \(alarmId)번의 알람 미리보기 합니다 =======")
-        PreviewAlarmDataService.shared.getTagPreview(tagId: alarmId) { [self] response in
-            switch response {
-            case .success(let data):
-                print(data)
-                self.previewDataResponse = data as? PreviewAlarmResponse
-                self.previewDataResult = self.previewDataResponse.result
-                self.tagList = self.previewDataResult.tagList
-                
-                if let url = URL(string: self.previewDataResult.ownerProfileImage) {
-                    profileImageView.load(with: url)
-                    profileImageView.contentMode = .scaleAspectFill
+        AlarmService.getTagPreview(alarmId: alarmId) { [weak self] data, failed in
+            guard let data = data else {
+                // 에러가 난 경우, alert 창 present
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .serverError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .unknownError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
                 }
-                var taggedUserString = ""
-                for taggedMember in tagList {
-                    if taggedMember.handle == tagList.last?.handle {
-                        taggedUserString += "\(taggedMember.handle) 님"
-                    }
-                    else {
-                        taggedUserString += "\(taggedMember.handle) 님 • "
-                    }
+                return
+            }
+            
+            guard let self = self else { return }
+            
+            let previewDataResult = data.result
+            
+            if let url = URL(string: previewDataResult.ownerProfileImage) {
+                profileImageView.load(with: url)
+                profileImageView.contentMode = .scaleAspectFill
+            }
+            
+            var taggedUserString = ""
+            
+            let tagList = previewDataResult.tagList
+            for taggedMember in tagList {
+                if taggedMember.handle == tagList.last?.handle {
+                    taggedUserString += "\(taggedMember.handle) 님"
                 }
-                taggedUsers.text = taggedUserString
-                
-                if let pochakUser = self.pochakUser {
-                    pochakUser.text = (self.previewDataResult.ownerHandle ?? "사용자") + "님이 포착"
-                } else {
-                    print("pochakUser is nil")
+                else {
+                    taggedUserString += "\(taggedMember.handle) 님 • "
                 }
-                
-                if let url = URL(string: self.previewDataResult.postImage) {
-                    postImageView.load(with: url)
-                }
-                
-            case .requestErr(let err):
-                print(err)
-            case .pathErr:
-                print("pathErr")
-            case .serverErr:
-                print("serverErr")
-            case .networkFail:
-                print("networkFail")
+            }
+            taggedUsers.text = taggedUserString
+            
+            if let pochakUser = self.pochakUser {
+                pochakUser.text = (previewDataResult.ownerHandle ?? "사용자") + "님이 포착"
+            } else {
+                print("pochakUser is nil")
+            }
+            
+            if let url = URL(string: previewDataResult.postImage) {
+                postImageView.load(with: url)
             }
         }
     }
