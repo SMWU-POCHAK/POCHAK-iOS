@@ -32,14 +32,10 @@ final class AlarmViewController: UIViewController, UISheetPresentationController
 
         setupTableView()
         setRefreshControl()
+        loadAlarmData()
         
         // 모달창 닫겼는지 확인
-        NotificationCenter.default.addObserver(self, selector: #selector(loadAlarmData), name: Notification.Name("ModalDismissed"), object: nil)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        print("==========alarm viewwillappear========")
-        loadAlarmData()
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshData(_:)), name: Notification.Name("ModalDismissed"), object: nil)
     }
     
     // MARK: - Actions
@@ -88,10 +84,16 @@ final class AlarmViewController: UIViewController, UISheetPresentationController
         }
     }
     
+    @objc private func reloadData(_ sender: Any) {
+        currentFetchingPage = 0
+        alarmList = []
+        loadAlarmData()
+    }
+    
     @objc private func refreshData(_ sender: Any) {
-        self.currentFetchingPage = 0
-        self.alarmList.removeAll()
-        self.loadAlarmData()
+        currentFetchingPage = 0
+        alarmList = []
+        loadAlarmData()
         DispatchQueue.main.async {
             self.tableView.refreshControl?.endRefreshing()
         }
