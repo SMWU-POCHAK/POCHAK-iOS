@@ -66,27 +66,30 @@ final class PreviewAlarmViewController: UIViewController {
     
     func postTagData(tagId: Int, isAccept: Bool) {
         showProgressBar()
-//        PreviewAlarmDataService.shared.postTagAccept(tagId: tagId, isAccept: isAccept){ [self] response in
-//            // 함수 호출 후 프로그래스 바 숨기기
-//            defer {
-//                hideProgressBar()
-//                dismiss(animated: true) {
-//                    NotificationCenter.default.post(name: Notification.Name("ModalDismissed"), object: nil)
-//                }
-//            }
-//            switch response {
-//            case .success(let data):
-//                print(data)
-//            case .requestErr(let err):
-//                print(err)
-//            case .pathErr:
-//                print("pathErr")
-//            case .serverErr:
-//                print("serverErr")
-//            case .networkFail:
-//                print("networkFail")
-//            }
-//        }
+        let request = TagApproveRequest(isAccept: isAccept)
+        AlarmService.postTagApprove(tagId: tagId, request: request) { [weak self] data, failed in
+            // 함수 호출 후 프로그래스 바 숨기기
+            defer {
+                self?.hideProgressBar()
+                self?.dismiss(animated: true) {
+                    NotificationCenter.default.post(name: Notification.Name("ModalDismissed"), object: nil)
+                }
+            }
+            guard let data = data else {
+                // 에러가 난 경우, alert 창 present
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .serverError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .unknownError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                }
+                return
+            }
+        }
     }
     
     func getTagPreviewData(alarmId: Int) {
