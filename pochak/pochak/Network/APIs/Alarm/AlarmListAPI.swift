@@ -8,11 +8,11 @@
 import Foundation
 import Alamofire
 
-enum AlarmAPI {
+enum AlarmListAPI {
     case getAlarmList(AlarmListRequest)
 }
 
-extension AlarmAPI: BaseAPI {
+extension AlarmListAPI: BaseAPI {
     typealias Response = AlarmListResponse
 
     var method: HTTPMethod {
