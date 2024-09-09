@@ -15,6 +15,10 @@ final class AlarmViewController: UIViewController, UISheetPresentationController
     private var alarmDataResult: AlarmResult!
     private var alarmList: [AlarmElementList]! = []
     
+    private var isLastPage: Bool = false
+    private var currentFetchingPage: Int = 0
+    private var isCurrentlyFetching: Bool = false
+    
     // MARK: - Views
     
     @IBOutlet weak var tableView: UITableView!
@@ -26,6 +30,8 @@ final class AlarmViewController: UIViewController, UISheetPresentationController
         
         self.navigationItem.title = "알림"
         
+        currentFetchingPage = 0
+
         setupTableView()
         setRefreshControl()
         
@@ -41,6 +47,7 @@ final class AlarmViewController: UIViewController, UISheetPresentationController
     // MARK: - Actions
     
     @objc func loadAlarmData() {
+//        let request = AlarmListRequest(page: )
         AlarmDataService.shared.getAlarm { [self] response in
             switch response {
             case .success(let data):
@@ -68,6 +75,8 @@ final class AlarmViewController: UIViewController, UISheetPresentationController
     }
     
     @objc private func refreshData(_ sender: Any) {
+        self.currentFetchingPage = 0
+        self.alarmList.removeAll()
         self.loadAlarmData()
         DispatchQueue.main.async {
             self.tableView.refreshControl?.endRefreshing()
@@ -239,4 +248,24 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
 
 protocol UpdateDelegate: AnyObject {
     func modalDidDismiss()
+}
+
+// MARK: - Extension: UIScrollView
+
+extension AlarmViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (!noPost && collectionView.contentOffset.y > (collectionView.contentSize.height - collectionView.bounds.size.height)){
+            if (!isLastPage && !isCurrentlyFetching) {
+                print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
+                isCurrentlyFetching = true
+                setupData()
+            }
+        }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if refreshControl.isRefreshing {
+             refreshControl.endRefreshing()
+        }
+    }
 }
