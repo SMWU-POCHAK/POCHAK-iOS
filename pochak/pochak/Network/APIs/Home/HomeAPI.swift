@@ -27,7 +27,7 @@ extension HomeAPI: BaseAPI {
         }
     }
 
-    var parameters: RequestParams {
+    var parameters: RequestParams? {
         switch self {
         case .getHomePost(let request): return .query(request)
         }

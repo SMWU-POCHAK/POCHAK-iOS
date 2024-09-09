@@ -23,7 +23,7 @@ extension TagApproveAPI: BaseAPI {
 
     var path: String {
         switch self {
-        case .postTagApprove(let tagId, _): return "/v2/tags\(tagId)"
+        case .postTagApprove(let tagId, _): return "/v2/tags/\(tagId)"
         }
     }
     
