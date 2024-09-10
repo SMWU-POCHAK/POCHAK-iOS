@@ -1711,7 +1711,6 @@
 				373235492B68F9A60042EF94 /* FollowListDataModel.swift in Sources */,
 				EA6306D82C2BFE53000DB0A7 /* CustomTabBarController.swift in Sources */,
 				089C10772C748BB7007DB23F /* CommentPostAPI.swift in Sources */,
-				EA1289132B3C4F1F002EC93E /* SearchDataModel.swift in Sources */,
 				0820B1902A63A18100604DA8 /* ReplyTableViewCell.swift in Sources */,
 				374261702C30917600B67886 /* BlockDataModel.swift in Sources */,
 				083249782C295E4000A77C03 /* CustomAlertViewController.swift in Sources */,
@@ -1761,7 +1760,6 @@
 				EAF918542AA4692E0037C270 /* NetworkResult.swift in Sources */,
 				EA12890C2B3BF1A7002EC93E /* RecentSearchViewController.swift in Sources */,
 				080AAFA72C64EAA200FBBE94 /* PostDeleteResponse.swift in Sources */,
-				EADE01842B383A8B00CECD5B /* PostTabDataModel.swift in Sources */,
 				086E900C2C6669C600A05E76 /* FollowAPI.swift in Sources */,
 				081689B12C73672200EC4D95 /* CommentGetResponse.swift in Sources */,
 				08EB99B42C53D76C00FAC08A /* UIScrollView+.swift in Sources */,
@@ -1949,7 +1947,7 @@
 				DEVELOPMENT_TEAM = 2285AK4JY4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = pochak/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Pochak;
+				INFOPLIST_KEY_CFBundleDisplayName = POCHAK;
 				INFOPLIST_KEY_NSCameraUsageDescription = "사진을 찍으려면 'Pochak'이 카메라에 접근할 수 있도록 허용해야 합니다. 설정에서 언제든지 변경할 수 있습니다.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "사진을 저장합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "프로필 사진을 설정하려면 'Pochak'이 장치의 사진 및 미디어 파일에 접근할 수 있도록 허용해야 합니다. 설정에서 언제든지 변경할 수 있습니다.";
@@ -1989,7 +1987,7 @@
 				DEVELOPMENT_TEAM = JU9BM2NXCW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = pochak/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Pochak;
+				INFOPLIST_KEY_CFBundleDisplayName = POCHAK;
 				INFOPLIST_KEY_NSCameraUsageDescription = "사진을 찍으려면 'Pochak'이 카메라에 접근할 수 있도록 허용해야 합니다. 설정에서 언제든지 변경할 수 있습니다.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "사진을 저장합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "프로필 사진을 설정하려면 'Pochak'이 장치의 사진 및 미디어 파일에 접근할 수 있도록 허용해야 합니다. 설정에서 언제든지 변경할 수 있습니다.";
