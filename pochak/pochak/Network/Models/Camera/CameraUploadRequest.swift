@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CameraUploadRequest:Codable {
+struct CameraUploadRequest: Codable {
     var caption: String
     var taggedMemberHandleList: [String]
 }
