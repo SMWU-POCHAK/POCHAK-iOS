@@ -76,16 +76,13 @@ final class PreviewAlarmViewController: UIViewController {
                 }
             }
             guard let data = data else {
-                // 에러가 난 경우, alert 창 present
                 switch failed {
                 case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .serverError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .unknownError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
+                                  animated: true)
                 default:
-                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                    let message = isAccept ? "태그 수락 요청에 실패하였습니다." : "태그 거절 요청에 실패하였습니다."
+                    self?.present(UIAlertController.networkErrorAlert(title: message), animated: true)
                 }
                 return
             }
@@ -96,16 +93,12 @@ final class PreviewAlarmViewController: UIViewController {
         print("======= \(alarmId)번의 알람 미리보기 합니다 =======")
         AlarmService.getTagPreview(alarmId: alarmId) { [weak self] data, failed in
             guard let data = data else {
-                // 에러가 난 경우, alert 창 present
                 switch failed {
                 case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .serverError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .unknownError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
+                                  animated: true)
                 default:
-                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                    self?.present(UIAlertController.networkErrorAlert(title: "알림 미리보기 요청에 실패하였습니다."), animated: true)
                 }
                 return
             }

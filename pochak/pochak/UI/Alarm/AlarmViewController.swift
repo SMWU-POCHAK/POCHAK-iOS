@@ -46,16 +46,12 @@ final class AlarmViewController: UIViewController, UISheetPresentationController
         let request = AlarmListRequest(page: currentFetchingPage)
         AlarmService.getAlarmList(request: request) { [weak self] data, failed in
             guard let data = data else {
-                // 에러가 난 경우, alert 창 present
                 switch failed {
                 case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .serverError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .unknownError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
+                                  animated: true)
                 default:
-                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                    self?.present(UIAlertController.networkErrorAlert(title: "알림 목록 요청에 실패하였습니다."), animated: true)
                 }
                 return
             }
