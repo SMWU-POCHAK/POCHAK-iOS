@@ -96,16 +96,12 @@ final class UploadViewController: UIViewController,UITextFieldDelegate {
                 guard let self = self else { return }
                 
                 guard let data = data else {
-                    // 에러가 난 경우, alert 창 present
                     switch failed {
                     case .disconnected:
-                        self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                    case .serverError:
-                        self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                    case .unknownError:
-                        self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
+                                      animated: true)
                     default:
-                        self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                        self?.present(UIAlertController.networkErrorAlert(title: "업로드 요청에 실패하였습니다."), animated: true)
                     }
                     return
                 }
@@ -315,13 +311,10 @@ final class UploadViewController: UIViewController,UITextFieldDelegate {
             guard let data = data else {
                 switch failed {
                 case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .serverError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .unknownError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
+                                  animated: true)
                 default:
-                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                    self?.present(UIAlertController.networkErrorAlert(title: "아이디 검색 요청에 실패하였습니다."), animated: true)
                 }
                 return
             }
