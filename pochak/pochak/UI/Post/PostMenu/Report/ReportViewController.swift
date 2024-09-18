@@ -76,36 +76,34 @@ extension ReportViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! ReportTableViewCell
-                
-        PostDataService.shared.reportPost(postId: postId!, reportType: cell.reportType!) { [weak self] result in
-            switch result {
-            case .success(let data):
-                let data = data as! PostReportResponse
-                if data.isSuccess == true {
-                    self?.showAlert(alertType: .confirmOnly,
-                                    titleText: "신고가 완료되었습니다.",
-                                    messageText: "신고해주셔서 감사합니다.\n빠른 시일 내에 해결하겠습니다.",
-                                    confirmButtonText: "확인"
-                                    )
-                }
-                else {
-                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패했습니다."), animated: true)
+        
+        PostService.postReportPost(reportRequest: PostReportRequest(postId: postId!, reportType: cell.reportType!.rawValue)) { [weak self] data, failed in
+            guard let data = data else {
+                // 에러가 난 경우, alert 창 present
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), 
+                                  animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "게시글 신고에 실패하였습니다."), animated: true)
                 }
                 return
-            case .requestErr(let message):
-                print("requestErr", message)
-            case .pathErr:
-                print("pathErr")
-            case .serverErr:
-                print("serverErr")
-                self?.present(UIAlertController.networkErrorAlert(title: "서버에 문제가 있습니다."), animated: true)
-            case .networkFail:
-                print("networkFail")
-                self?.present(UIAlertController.networkErrorAlert(title: "네트워크 연결에 문제가 있습니다."), animated: true)
+            }
+            
+            print("=== Report vc, report cell selected succeeded ===")
+            print("== data: \(data)")
+            
+            if data.isSuccess == true {
+                self?.showAlert(alertType: .confirmOnly,
+                                titleText: "신고가 완료되었습니다.",
+                                messageText: "신고해주셔서 감사합니다.\n빠른 시일 내에 해결하겠습니다.",
+                                confirmButtonText: "확인")
+            }
+            else {
+                self?.present(UIAlertController.networkErrorAlert(title: "게시글 신고에 실패하였습니다."), animated: true)
             }
         }
     }
-    
 }
 
 // MARK: - Extension: CustomAlertDelegate

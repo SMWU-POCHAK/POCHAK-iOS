@@ -131,8 +131,8 @@ extension PochakedPostTabmanViewController : UICollectionViewDelegate, UICollect
     
     // post 클릭 시 해당 post로 이동
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let postTabSb = UIStoryboard(name: "PostTab", bundle: nil)
-        guard let postVC = postTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
+        let exploreTabSb = UIStoryboard(name: "ExploreTab", bundle: nil)
+        guard let postVC = exploreTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
             else { return }
         postVC.receivedPostId = imageArray[indexPath.item].postId
         self.navigationController?.pushViewController(postVC, animated: true)

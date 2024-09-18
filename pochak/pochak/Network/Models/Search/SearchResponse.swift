@@ -1,32 +1,32 @@
 //
-//  TagDataModel.swift
+//  SearchResponse.swift
 //  pochak
 //
-//  Created by 장나리 on 12/27/23.
+//  Created by 장나리 on 8/25/24.
 //
 
 import Foundation
 
-struct IdSearchResponse: Codable {
+struct SearchResponse: Codable {
     let isSuccess: Bool
     let code: String
     let message: String
-    let result: IdSearchResult
+    let result: SearchResult
 }
 
-struct IdSearchResult: Codable {
-    let pageInfo: IdSearchPageInfo
-    let memberList: [IdSearchMember]
+struct SearchResult: Codable {
+    let pageInfo: SearchPageInfo
+    let memberList: [SearchMember]
 }
 
-struct IdSearchPageInfo: Codable {
+struct SearchPageInfo: Codable {
     let lastPage: Bool
     let totalPages: Int
     let totalElements: Int
     let size: Int
 }
 
-struct IdSearchMember: Codable {
+struct SearchMember: Codable {
     let memberId: Int
     let profileImage: String
     let handle: String
