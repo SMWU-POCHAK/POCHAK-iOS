@@ -28,15 +28,19 @@ class ProfilePostCollectionViewCell: UICollectionViewCell {
     
     func setUpCellData(_ postDataModel : PostDataModel) {
         var imageURL = postDataModel.postImage
-        if let url = URL(string: imageURL) {
-            profilePostImage.kf.setImage(with: url) { result in
-                switch result {
-                case .success(let value):
-                    print("Image successfully loaded: \(value.image)")
-                case .failure(let error):
-                    print("Image failed to load with error: \(error.localizedDescription)")
-                }
-            }
+        if let url = URL(string: (imageURL)) {
+            profilePostImage.load(with: url)
         }
+//        if let url = URL(string: imageURL) {
+//            
+//            profilePostImage.kf.setImage(with: url) { result in
+//                switch result {
+//                case .success(let value):
+//                    print("Image successfully loaded: \(value.image)")
+//                case .failure(let error):
+//                    print("Image failed to load with error: \(error.localizedDescription)")
+//                }
+//            }
+//        }
     }
 }
