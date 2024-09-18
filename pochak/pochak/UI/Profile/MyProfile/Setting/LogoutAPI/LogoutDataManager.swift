@@ -21,12 +21,14 @@ class LogoutDataManager{
         .responseDecodable(of: LogoutDataModel.self) { response in
             switch response.result {
             case .success(let result):
-                print("logout success!!!!!!!!!")
+                print("logout success!")
                 let resultData = result
                 completion(resultData)
             case .failure(let error):
                 print("Request Fail : logoutDataManager")
-                print(error)
+                if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
+                    print("Failure Data: \(errorMessage)")
+                }
             }
         }
     }

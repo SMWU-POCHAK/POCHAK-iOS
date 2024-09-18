@@ -7,48 +7,69 @@
 
 import UIKit
 
+// cell 삭제 protocol
 protocol RemoveCellDelegate: AnyObject {
     func removeCell(at indexPath: IndexPath, _ handle: String)
 }
 
 class BlockedUserViewController: UIViewController {
-
-    @IBOutlet weak var tableView: UITableView!
-    var blockedUserList: [BlockedUserListDataModel] = []
-    var cellIndexPath : IndexPath?
-    var cellHandle : String?
     
+    // MARK: - Properties
+    var blockedUserList: [BlockedUserListDataModel] = []
+    var cellIndexPath: IndexPath?
+    var cellHandle: String?
     private var isLastPage: Bool = false
     private var isCurrentlyFetching: Bool = false
     private var currentFetchingPage: Int = 0
     
+    // MARK: - Views
+    @IBOutlet weak var tableView: UITableView!
+    
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // 네비게이션바 title 커스텀
+        currentFetchingPage = 0
+        
+        setUpNavigationBar()
+        setUpTableView()
+        setUpRefreshControl()
+        setUpData()
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func refreshData(_ sender: Any) {
+        blockedUserList = []
+        currentFetchingPage = 0
+        setUpData()
+        DispatchQueue.main.async {
+            self.tableView.refreshControl?.endRefreshing()
+        }
+    }
+    
+    // MARK: - Functions
+    
+    private func setUpNavigationBar() {
         self.navigationController?.navigationBar.backgroundColor = UIColor.clear
         self.navigationController?.navigationBar.tintColor = .black
         self.navigationItem.title = "차단관리"
         self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.black, NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 18) ?? UIFont.systemFont(ofSize: 18, weight: .bold)]
-        
-        // Delegate
-        currentFetchingPage = 0
-        // API
-        loadBlockedUserList()
-    
-        // cell 등록
-        let nib  = UINib(nibName: BlockedUserTableViewCell.identifier, bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: BlockedUserTableViewCell.identifier)
-
-        // 프로토콜 채택
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        // 새로고침 구현
-        setRefreshControl()
     }
     
-    private func loadBlockedUserList(){
+    private func setUpTableView() {
+        let nib  = UINib(nibName: BlockedUserTableViewCell.identifier, bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: BlockedUserTableViewCell.identifier)
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
+    private func setUpRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
+    
+    private func setUpData() {
         let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? "handle not found"
         isCurrentlyFetching = true
         BlockedUserListDataManager.shared.blockedUserListDataManager(handle, currentFetchingPage, { resultData in
@@ -61,71 +82,44 @@ class BlockedUserViewController: UIViewController {
             
             DispatchQueue.main.async {
                 if self.currentFetchingPage == 0 {
-                    self.tableView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
-                    print(">>>>>>> PochakPostDataManager is currently reloading!!!!!!!")
+                    self.tableView.reloadData()
                 } else {
                     self.tableView.insertRows(at: newIndexPaths, with: .none)
-                    print(">>>>>>> PochakPostDataManager is currently insertingRows!!!!!!!")
                 }
                 self.isCurrentlyFetching = false
                 self.currentFetchingPage += 1;
             }
         })
     }
-    private func setRefreshControl(){
-        // UIRefreshControl 생성
-       let refreshControl = UIRefreshControl()
-       refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
-
-       // 테이블 뷰에 UIRefreshControl 설정
-        tableView.refreshControl = refreshControl
-    }
-    
-    @objc private func refreshData(_ sender: Any) {
-        // 데이터 새로고침 완료 후 UIRefreshControl을 종료
-        print("refresh")
-        self.blockedUserList = []
-        self.currentFetchingPage = 0
-        self.loadBlockedUserList()
-        DispatchQueue.main.async {
-            self.tableView.refreshControl?.endRefreshing()
-        }
-    }
 }
 
-
-// MARK: - Extension
+// MARK: - Extension : UITableViewDelegate, UITableViewDataSource, RemoveCellDelegate, CustomAlertDelegate, UIScrollViewDelegate
 
 extension BlockedUserViewController: UITableViewDelegate{
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }
 }
 
 extension BlockedUserViewController: UITableViewDataSource{
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return max(0,(blockedUserList.count))
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BlockedUserTableViewCell.identifier, for: indexPath) as? BlockedUserTableViewCell else { return UITableViewCell() }
-        
-        cell.setData(blockedUserList[indexPath.row])
+        cell.setUpCellData(blockedUserList[indexPath.row])
         cell.delegate = self
         cell.selectionStyle = .none
-        
         return cell
     }
 }
 
-// cell 삭제 로직
 extension BlockedUserViewController: RemoveCellDelegate {
+    
     func removeCell(at indexPath: IndexPath, _ handle: String) {
-        print("inside removeCell")
-        cellIndexPath = indexPath
-        cellHandle = handle
-        print(" >>>> cellIndexPath : \(cellIndexPath)")
-        print(" >>>> cellHandle : \(cellHandle)")
         showAlert(alertType: .confirmAndCancel,
                   titleText: "유저 차단을 취소하겠습니까?",
                   messageText: "유저 차단을 취소하면, 팔로워와 관련된 \n사진 및 소식을 다시 접할 수 있습니다.",
@@ -135,13 +129,11 @@ extension BlockedUserViewController: RemoveCellDelegate {
     }
 }
 
-extension BlockedUserViewController : CustomAlertDelegate {
+extension BlockedUserViewController: CustomAlertDelegate {
+    
     func confirmAction() {
         let userHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
-        // API
         UnBlockDataManager.shared.unBlockDataManager(userHandle ?? "" , cellHandle ?? "", { resultData in
-            print(resultData.message)
-            // cell 삭제
             self.blockedUserList.remove(at: self.cellIndexPath!.row)
             self.tableView.reloadData()
         })
@@ -152,14 +144,14 @@ extension BlockedUserViewController : CustomAlertDelegate {
     }
 }
 
-// Paging
 extension BlockedUserViewController: UIScrollViewDelegate {
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (tableView.contentOffset.y > (tableView.contentSize.height - tableView.bounds.size.height)){
             if (!isLastPage && !isCurrentlyFetching) {
                 print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
                 isCurrentlyFetching = true
-                loadBlockedUserList()
+                setUpData()
             }
         }
     }
