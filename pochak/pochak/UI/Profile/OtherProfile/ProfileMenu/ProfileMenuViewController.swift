@@ -8,16 +8,25 @@
 import UIKit
 
 class ProfileMenuViewController: UIViewController {
-
+    
+    // MARK: - Properties
+    
+    let userHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
+    var receivedHandle: String?
+    weak var delegate: SecondViewControllerDelegate?
+    
+    // MARK: - Views
+    
     @IBOutlet weak var userBlockBtn: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
-    let userHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
-    var receivedHandle : String?
-    weak var delegate: SecondViewControllerDelegate?
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    // MARK: - Actions
     
     @IBAction func userBlockBtnClicked(_ sender: Any) {
         showAlert(alertType: .confirmAndCancel,
@@ -32,6 +41,8 @@ class ProfileMenuViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
 }
+
+// MARK: - Extension : CustomAlertDelegate
 
 extension ProfileMenuViewController: CustomAlertDelegate {
     

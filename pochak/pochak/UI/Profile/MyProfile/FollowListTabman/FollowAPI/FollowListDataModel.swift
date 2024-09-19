@@ -12,14 +12,15 @@ struct FollowListDataResponse: Codable {
     let result: FollowListDataModel
 }
 
-struct FollowListDataModel : Codable {
-    var pageInfo : PageDataModel
-    var memberList : [MemberListDataModel]
+struct FollowListDataModel: Codable {
+    var pageInfo: PageDataModel
+    var memberList: [MemberListDataModel]
 }
 
 struct MemberListDataModel: Codable {
+    var memberId: Int
     var profileImage: String
     var handle: String
     var name: String
-    var isFollow: Bool
+    var isFollow: Bool?
 }
