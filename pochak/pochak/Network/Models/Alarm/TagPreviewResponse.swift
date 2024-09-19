@@ -1,20 +1,19 @@
 //
-//  PreviewDataModel.swift
+//  TagPreviewResponse.swift
 //  pochak
 //
-//  Created by 장나리 on 7/3/24.
+//  Created by 장나리 on 9/9/24.
 //
 
 import Foundation
 
-struct PreviewAlarmResponse: Codable {
+struct TagPreviewResponse: Codable {
     let isSuccess: Bool
     let code: String
     let message: String
     let result: PreviewAlarmResult
 }
 
-// MARK: - Result DTO
 struct PreviewAlarmResult: Codable {
     let ownerId: Int
     let ownerHandle: String
@@ -23,7 +22,6 @@ struct PreviewAlarmResult: Codable {
     let postImage: String
 }
 
-// MARK: - Tag DTO
 struct PreviewTagList: Codable {
     let memberId: Int
     let profileImage: String

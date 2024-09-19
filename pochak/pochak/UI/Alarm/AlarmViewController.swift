@@ -11,9 +11,11 @@ final class AlarmViewController: UIViewController, UISheetPresentationController
     
     // MARK: - Properties
     
-    private var alarmDataResponse: AlarmResponse!
-    private var alarmDataResult: AlarmResult!
     private var alarmList: [AlarmElementList]! = []
+    
+    private var isLastPage: Bool = false
+    private var currentFetchingPage: Int = 0
+    private var isCurrentlyFetching: Bool = false
     
     // MARK: - Views
     
@@ -26,49 +28,68 @@ final class AlarmViewController: UIViewController, UISheetPresentationController
         
         self.navigationItem.title = "알림"
         
+        currentFetchingPage = 0
+
         setupTableView()
         setRefreshControl()
+        loadAlarmData()
         
         // 모달창 닫겼는지 확인
-        NotificationCenter.default.addObserver(self, selector: #selector(loadAlarmData), name: Notification.Name("ModalDismissed"), object: nil)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        print("==========alarm viewwillappear========")
-        loadAlarmData()
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshData(_:)), name: Notification.Name("ModalDismissed"), object: nil)
     }
     
     // MARK: - Actions
     
     @objc func loadAlarmData() {
-        AlarmDataService.shared.getAlarm { [self] response in
-            switch response {
-            case .success(let data):
-                print("success")
-                
-                self.alarmDataResponse = data
-                self.alarmDataResult = self.alarmDataResponse.result
-                print(self.alarmDataResult!)
-                self.alarmList = self.alarmDataResult.alarmList
-                print("+++++++alarmList+++++++")
-                print(self.alarmList)
-                DispatchQueue.main.async {
-                    self.tableView.reloadData() // tableView를 새로고침하여 이미지 업데이트
+        isCurrentlyFetching = true
+        
+        let request = AlarmListRequest(page: currentFetchingPage)
+        AlarmService.getAlarmList(request: request) { [weak self] data, failed in
+            guard let data = data else {
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
+                                  animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "알림 목록 요청에 실패하였습니다."), animated: true)
                 }
-            case .requestErr(let err):
-                print(err)
-            case .pathErr:
-                print("pathErr")
-            case .serverErr:
-                print("serverErr")
-            case .networkFail:
-                print("networkFail")
+                return
+            }
+            
+            guard let self = self else { return }
+            
+            let newResult = data.result.alarmList
+            let startIndex = self.alarmList.count
+            let endIndex = startIndex + newResult.count
+            let newIndexPaths = (startIndex ..< endIndex).map { IndexPath(item: $0, section: 0) }
+            
+            self.alarmList.append(contentsOf: newResult)
+            self.isLastPage = data.result.pageInfo.lastPage
+            
+            print("+++++++alarmList : \(self.alarmList)")
+            
+            DispatchQueue.main.async {
+                if self.currentFetchingPage == 0 {
+                    self.tableView.reloadData()
+                } else {
+                    self.tableView.insertRows(at: newIndexPaths, with: .none)
+                }
+                self.isCurrentlyFetching = false
+                self.currentFetchingPage += 1;
             }
         }
     }
     
+    @objc private func reloadData(_ sender: Any) {
+        currentFetchingPage = 0
+        alarmList = []
+        loadAlarmData()
+    }
+    
     @objc private func refreshData(_ sender: Any) {
-        self.loadAlarmData()
+        currentFetchingPage = 0
+        alarmList = []
+        loadAlarmData()
         DispatchQueue.main.async {
             self.tableView.refreshControl?.endRefreshing()
         }
@@ -180,8 +201,8 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             self.navigationController?.pushViewController(profileTabVC, animated: true)
             
         case .ownerComment, .taggedComment, .commentReply, .ownerLike, .taggedLike:
-            let postTabSb = UIStoryboard(name: "PostTab", bundle: nil)
-            guard let postVC = postTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController else { return }
+            let exploreTabSb = UIStoryboard(name: "ExploreTab", bundle: nil)
+            guard let postVC = exploreTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController else { return }
             
             postVC.receivedPostId = alarmList[indexPath.row].postId
             self.navigationController?.pushViewController(postVC, animated: true)
@@ -239,4 +260,18 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
 
 protocol UpdateDelegate: AnyObject {
     func modalDidDismiss()
+}
+
+// MARK: - Extension: UIScrollView
+
+extension AlarmViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (tableView.contentOffset.y > (tableView.contentSize.height - tableView.bounds.size.height)){
+            if (!isLastPage && !isCurrentlyFetching) {
+                print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
+                isCurrentlyFetching = true
+                loadAlarmData()
+            }
+        }
+    }
 }

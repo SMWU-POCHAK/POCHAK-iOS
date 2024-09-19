@@ -139,8 +139,6 @@
 		EA0107B42A5ECB8A00A3AE85 /* PostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA0107B22A5ECB8A00A3AE85 /* PostCollectionViewCell.xib */; };
 		EA0F23662C319C030014F94E /* PreviewAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0F23652C319C030014F94E /* PreviewAlarmViewController.swift */; };
 		EA0F23692C32DA780014F94E /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0F23682C32DA780014F94E /* UIViewController+.swift */; };
-		EA1289082B3B2823002EC93E /* AlarmDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1289072B3B2823002EC93E /* AlarmDataModel.swift */; };
-		EA12890A2B3B2836002EC93E /* AlarmDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1289092B3B2836002EC93E /* AlarmDataService.swift */; };
 		EA12890C2B3BF1A7002EC93E /* RecentSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA12890B2B3BF1A7002EC93E /* RecentSearchViewController.swift */; };
 		EA1289112B3C4F14002EC93E /* SearchDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1289102B3C4F14002EC93E /* SearchDataService.swift */; };
 		EA1289132B3C4F1F002EC93E /* SearchDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1289122B3C4F1F002EC93E /* SearchDataModel.swift */; };
@@ -164,6 +162,10 @@
 		EA4EF8D82C2EC5F7009549FF /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4EF8D72C2EC5F7009549FF /* UITextField+.swift */; };
 		EA6306D82C2BFE53000DB0A7 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6306D72C2BFE53000DB0A7 /* CustomTabBarController.swift */; };
 		EA6306DA2C2BFE83000DB0A7 /* CustomTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6306D92C2BFE83000DB0A7 /* CustomTabbar.swift */; };
+		EA7E146B2C8E9360001DA769 /* AlarmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7E146A2C8E9360001DA769 /* AlarmService.swift */; };
+		EA7E146D2C8EA119001DA769 /* AlarmListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7E146C2C8EA119001DA769 /* AlarmListResponse.swift */; };
+		EA7E146F2C8EA15C001DA769 /* AlarmListAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7E146E2C8EA15C001DA769 /* AlarmListAPI.swift */; };
+		EA7E14712C8EA26D001DA769 /* AlarmListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7E14702C8EA26D001DA769 /* AlarmListRequest.swift */; };
 		EA7E14612C858EC6001DA769 /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7E14602C858EC6001DA769 /* CameraService.swift */; };
 		EA7E14632C858EEE001DA769 /* CameraUploadResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7E14622C858EEE001DA769 /* CameraUploadResponse.swift */; };
 		EA7E14652C858EFA001DA769 /* CameraUploadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7E14642C858EFA001DA769 /* CameraUploadRequest.swift */; };
@@ -171,6 +173,11 @@
 		EA7EE1D82BF38921009486CC /* PochakAlarmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7EE1D62BF38921009486CC /* PochakAlarmTableViewCell.swift */; };
 		EA7EE1D92BF38921009486CC /* PochakAlarmTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA7EE1D72BF38921009486CC /* PochakAlarmTableViewCell.xib */; };
 		EA817AB62B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA817AB52B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift */; };
+		EA96D04C2C8F10C700D80562 /* TagPreviewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96D04B2C8F10C700D80562 /* TagPreviewResponse.swift */; };
+		EA96D0502C8F15E000D80562 /* TagPreviewAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96D04F2C8F15E000D80562 /* TagPreviewAPI.swift */; };
+		EA96D0522C8F186900D80562 /* TagApproveAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96D0512C8F186900D80562 /* TagApproveAPI.swift */; };
+		EA96D0542C8F192000D80562 /* TagApproveRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96D0532C8F192000D80562 /* TagApproveRequest.swift */; };
+		EA96D0562C8F192B00D80562 /* TagApproveResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96D0552C8F192B00D80562 /* TagApproveResponse.swift */; };
 		EA99B63C2A5143A800EBA2AD /* CameraTab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA99B63B2A5143A800EBA2AD /* CameraTab.storyboard */; };
 		EAAACDB62A5168280041B1B9 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAAACDB42A5168280041B1B9 /* Login.storyboard */; };
 		EABD20652A6CF5CC007543E9 /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD20632A6CF5CC007543E9 /* TagCollectionViewCell.swift */; };
@@ -181,8 +188,6 @@
 		EADE01842B383A8B00CECD5B /* PostTabDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADE01832B383A8B00CECD5B /* PostTabDataModel.swift */; };
 		EADE01862B383A9700CECD5B /* PostTabDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADE01852B383A9700CECD5B /* PostTabDataService.swift */; };
 		EAE69F442C315009005762B7 /* UIVIew+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE69F432C315009005762B7 /* UIVIew+.swift */; };
-		EAEADB962C344E160037E116 /* PreviewAlarmDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEADB952C344E160037E116 /* PreviewAlarmDataService.swift */; };
-		EAEADB982C3450FB0037E116 /* PreviewAlarmDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEADB972C3450FB0037E116 /* PreviewAlarmDataModel.swift */; };
 		EAF885262B5677CB00BA184A /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EAF885252B5677CB00BA184A /* libsqlite3.0.tbd */; };
 		EAF885292B567F4F00BA184A /* RecentSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF885282B567F4F00BA184A /* RecentSearchModel.swift */; };
 		EAF8852B2B569B6600BA184A /* RecentSearchRealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF8852A2B569B6600BA184A /* RecentSearchRealmManager.swift */; };
@@ -261,7 +266,6 @@
 		08C915172C64610C0044A9A8 /* PostDetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailResponse.swift; sourceTree = "<group>"; };
 		08C9151B2C6461B10044A9A8 /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
 		08C9151E2C6461ED0044A9A8 /* PostDetailAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailAPI.swift; sourceTree = "<group>"; };
-		08D2B98C2C68C02D00BD7450 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08D2B98C2C68C02D00BD7450 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08D98C492AFEE8D700E9A097 /* LikedUsersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedUsersDataModel.swift; sourceTree = "<group>"; };
 		08DD9EC12B454356004CCD5F /* FollowDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowDataModel.swift; sourceTree = "<group>"; };
@@ -356,8 +360,6 @@
 		EA0107B22A5ECB8A00A3AE85 /* PostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostCollectionViewCell.xib; sourceTree = "<group>"; };
 		EA0F23652C319C030014F94E /* PreviewAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewAlarmViewController.swift; sourceTree = "<group>"; };
 		EA0F23682C32DA780014F94E /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
-		EA1289072B3B2823002EC93E /* AlarmDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDataModel.swift; sourceTree = "<group>"; };
-		EA1289092B3B2836002EC93E /* AlarmDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDataService.swift; sourceTree = "<group>"; };
 		EA12890B2B3BF1A7002EC93E /* RecentSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchViewController.swift; sourceTree = "<group>"; };
 		EA1289102B3C4F14002EC93E /* SearchDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDataService.swift; sourceTree = "<group>"; };
 		EA1289122B3C4F1F002EC93E /* SearchDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDataModel.swift; sourceTree = "<group>"; };
@@ -385,6 +387,10 @@
 		EA4EF8D72C2EC5F7009549FF /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		EA6306D72C2BFE53000DB0A7 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		EA6306D92C2BFE83000DB0A7 /* CustomTabbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabbar.swift; sourceTree = "<group>"; };
+		EA7E146A2C8E9360001DA769 /* AlarmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmService.swift; sourceTree = "<group>"; };
+		EA7E146C2C8EA119001DA769 /* AlarmListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListResponse.swift; sourceTree = "<group>"; };
+		EA7E146E2C8EA15C001DA769 /* AlarmListAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListAPI.swift; sourceTree = "<group>"; };
+		EA7E14702C8EA26D001DA769 /* AlarmListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListRequest.swift; sourceTree = "<group>"; };
 		EA7E14602C858EC6001DA769 /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
 		EA7E14622C858EEE001DA769 /* CameraUploadResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadResponse.swift; sourceTree = "<group>"; };
 		EA7E14642C858EFA001DA769 /* CameraUploadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadRequest.swift; sourceTree = "<group>"; };
@@ -392,6 +398,11 @@
 		EA7EE1D62BF38921009486CC /* PochakAlarmTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakAlarmTableViewCell.swift; sourceTree = "<group>"; };
 		EA7EE1D72BF38921009486CC /* PochakAlarmTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PochakAlarmTableViewCell.xib; sourceTree = "<group>"; };
 		EA817AB52B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		EA96D04B2C8F10C700D80562 /* TagPreviewResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagPreviewResponse.swift; sourceTree = "<group>"; };
+		EA96D04F2C8F15E000D80562 /* TagPreviewAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagPreviewAPI.swift; sourceTree = "<group>"; };
+		EA96D0512C8F186900D80562 /* TagApproveAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagApproveAPI.swift; sourceTree = "<group>"; };
+		EA96D0532C8F192000D80562 /* TagApproveRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagApproveRequest.swift; sourceTree = "<group>"; };
+		EA96D0552C8F192B00D80562 /* TagApproveResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagApproveResponse.swift; sourceTree = "<group>"; };
 		EA99B63B2A5143A800EBA2AD /* CameraTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CameraTab.storyboard; sourceTree = "<group>"; };
 		EAAACDB52A5168280041B1B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
 		EABD20632A6CF5CC007543E9 /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -402,8 +413,6 @@
 		EADE01832B383A8B00CECD5B /* PostTabDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTabDataModel.swift; sourceTree = "<group>"; };
 		EADE01852B383A9700CECD5B /* PostTabDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTabDataService.swift; sourceTree = "<group>"; };
 		EAE69F432C315009005762B7 /* UIVIew+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIew+.swift"; sourceTree = "<group>"; };
-		EAEADB952C344E160037E116 /* PreviewAlarmDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewAlarmDataService.swift; sourceTree = "<group>"; };
-		EAEADB972C3450FB0037E116 /* PreviewAlarmDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewAlarmDataModel.swift; sourceTree = "<group>"; };
 		EAF885252B5677CB00BA184A /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		EAF885282B567F4F00BA184A /* RecentSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchModel.swift; sourceTree = "<group>"; };
 		EAF8852A2B569B6600BA184A /* RecentSearchRealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchRealmManager.swift; sourceTree = "<group>"; };
@@ -964,17 +973,6 @@
 			path = cell;
 			sourceTree = "<group>";
 		};
-		EA1289062B3B280D002EC93E /* AlarmDataManager */ = {
-			isa = PBXGroup;
-			children = (
-				EA1289072B3B2823002EC93E /* AlarmDataModel.swift */,
-				EA1289092B3B2836002EC93E /* AlarmDataService.swift */,
-				EAEADB972C3450FB0037E116 /* PreviewAlarmDataModel.swift */,
-				EAEADB952C344E160037E116 /* PreviewAlarmDataService.swift */,
-			);
-			path = AlarmDataManager;
-			sourceTree = "<group>";
-		};
 		EA12890F2B3C4F03002EC93E /* SearchDataManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -1002,7 +1000,6 @@
 			children = (
 				EAFB4B8A2A5147C400E0F2FA /* AlarmTab.storyboard */,
 				EA0F23672C31D1300014F94E /* cell */,
-				EA1289062B3B280D002EC93E /* AlarmDataManager */,
 				EA0107A62A5CF73900A3AE85 /* AlarmViewController.swift */,
 				EA0F23652C319C030014F94E /* PreviewAlarmViewController.swift */,
 			);
@@ -1088,6 +1085,7 @@
 				08C9151B2C6461B10044A9A8 /* PostService.swift */,
 				086E90102C666A5700A05E76 /* UserService.swift */,
 				081689B52C73697700EC4D95 /* CommentService.swift */,
+				EA7E146A2C8E9360001DA769 /* AlarmService.swift */,
 				EA7E14602C858EC6001DA769 /* CameraService.swift */,
 			);
 			path = Services;
@@ -1096,6 +1094,7 @@
 		EA2CD6332C5F458900644EFE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				EA7E14692C8E9353001DA769 /* Alarm */,
 				EA7E145F2C858EBD001DA769 /* Camera */,
 				EA402BD92C7AE3C300858FF5 /* Search */,
 				EAC957632C6F344200046142 /* Explore */,
@@ -1121,6 +1120,7 @@
 		EA2CD6352C5F45A100644EFE /* APIs */ = {
 			isa = PBXGroup;
 			children = (
+				EA7E14682C8E9347001DA769 /* Alarm */,
 				EA7E145E2C858EAF001DA769 /* Camera */,
 				EA402BD42C7AE33500858FF5 /* Search */,
 				EAC957602C6F331500046142 /* Explore */,
@@ -1181,6 +1181,28 @@
 				EA7E14642C858EFA001DA769 /* CameraUploadRequest.swift */,
 			);
 			path = Camera;
+			sourceTree = "<group>";
+		};
+		EA7E14682C8E9347001DA769 /* Alarm */ = {
+			isa = PBXGroup;
+			children = (
+				EA7E146E2C8EA15C001DA769 /* AlarmListAPI.swift */,
+				EA96D04F2C8F15E000D80562 /* TagPreviewAPI.swift */,
+				EA96D0512C8F186900D80562 /* TagApproveAPI.swift */,
+			);
+			path = Alarm;
+			sourceTree = "<group>";
+		};
+		EA7E14692C8E9353001DA769 /* Alarm */ = {
+			isa = PBXGroup;
+			children = (
+				EA7E146C2C8EA119001DA769 /* AlarmListResponse.swift */,
+				EA7E14702C8EA26D001DA769 /* AlarmListRequest.swift */,
+				EA96D04B2C8F10C700D80562 /* TagPreviewResponse.swift */,
+				EA96D0532C8F192000D80562 /* TagApproveRequest.swift */,
+				EA96D0552C8F192B00D80562 /* TagApproveResponse.swift */,
+			);
+			path = Alarm;
 			sourceTree = "<group>";
 		};
 		EA817AB42B3C979D00E741E4 /* cell */ = {
@@ -1583,7 +1605,9 @@
 				EA17182C2A5912A7009168E6 /* UploadViewController.swift in Sources */,
 				089E27B72C4E8C2D00828F4C /* AlarmType.swift in Sources */,
 				3769D6B22B3C300D00294CD1 /* GoogleLoginModel.swift in Sources */,
+				EA96D04C2C8F10C700D80562 /* TagPreviewResponse.swift in Sources */,
 				37D311E52B567AE000A1D7C1 /* OtherUserProfileViewController.swift in Sources */,
+				EA7E146B2C8E9360001DA769 /* AlarmService.swift in Sources */,
 				3769D6BF2B3C349D00294CD1 /* FollowingListTabmanViewController.swift in Sources */,
 				08C02EEA2BF3798F00627C21 /* ReportViewController.swift in Sources */,
 				373235562B692C790042EF94 /* DeleteFollowerDataModel.swift in Sources */,
@@ -1598,7 +1622,9 @@
 				371D33782B4E83E90084FF6A /* UserDefaultsManager.swift in Sources */,
 				3742617A2C31C6F900B67886 /* AppleLoginDataModel.swift in Sources */,
 				373815162A89E6D30032066A /* SocialJoinViewController.swift in Sources */,
-				EA1289082B3B2823002EC93E /* AlarmDataModel.swift in Sources */,
+				EA402BDB2C7AE3F200858FF5 /* SearchResponse.swift in Sources */,
+				EA96D0542C8F192000D80562 /* TagApproveRequest.swift in Sources */,
+				086E90112C666A5700A05E76 /* UserService.swift in Sources */,
 				3766F40A2C370CF5001DD239 /* BlockedUserViewController.swift in Sources */,
 				374261782C31C6ED00B67886 /* AppleLoginDataManager.swift in Sources */,
 				0844D7EB2BF218A5001154AC /* ReportViewCell.swift in Sources */,
@@ -1610,21 +1636,24 @@
 				3738151A2A8A09DA0032066A /* MakeProfileViewController.swift in Sources */,
 				EA17182B2A5912A7009168E6 /* CameraViewController.swift in Sources */,
 				080FEF012C551C3200951460 /* ReportType.swift in Sources */,
+				EA7E14712C8EA26D001DA769 /* AlarmListRequest.swift in Sources */,
+				08C915182C64610C0044A9A8 /* PostDetailResponse.swift in Sources */,
 				37D311DF2B566C4D00A1D7C1 /* SignOutDataManager.swift in Sources */,
 				EA817AB62B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				3742616E2C30916C00B67886 /* BlockDataManager.swift in Sources */,
 				379A6A3E2B5FA07D0087FAAC /* NavigationController.swift in Sources */,
 				3766F4062C370A7C001DD239 /* BlockedUserListDataManager.swift in Sources */,
 				3769D6D52B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift in Sources */,
+				EA96D0562C8F192B00D80562 /* TagApproveResponse.swift in Sources */,
 				3769D6B62B3C302C00294CD1 /* JoinDataModel.swift in Sources */,
 				084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */,
 				37C3AF4A2B3CB2C700B4C79C /* MyProfilePochakPostModel.swift in Sources */,
 				08C02EF82BF394B800627C21 /* UIAlertController+.swift in Sources */,
 				089E27B92C4E8CB800828F4C /* AlertType.swift in Sources */,
 				EAF9184E2AA462C50037C270 /* SearchResultTableViewCell.swift in Sources */,
-				EA12890A2B3B2836002EC93E /* AlarmDataService.swift in Sources */,
 				EAE69F442C315009005762B7 /* UIVIew+.swift in Sources */,
 				0876E23E2C274256008DE88F /* NoPostCollectionViewCell.swift in Sources */,
+				EA96D0502C8F15E000D80562 /* TagPreviewAPI.swift in Sources */,
 				08C02EF62BF3945000627C21 /* UIFont+.swift in Sources */,
 				EABD20652A6CF5CC007543E9 /* TagCollectionViewCell.swift in Sources */,
 				0823B0742A5B0E780085002F /* CommentTableViewCell.swift in Sources */,
@@ -1653,11 +1682,12 @@
 				EA1B0B5B2A49D23A00F86FBC /* AppDelegate.swift in Sources */,
 				0889D1382C5CB69F00206C86 /* String+.swift in Sources */,
 				0844D7F32BF21A80001154AC /* CancelViewCell.swift in Sources */,
-				EAEADB962C344E160037E116 /* PreviewAlarmDataService.swift in Sources */,
 				3766F4032C3706DC001DD239 /* BlockedUserTableViewCell.swift in Sources */,
 				37D311D52B53056700A1D7C1 /* ProfileUpdateDataManager.swift in Sources */,
 				3769D6B92B3C345800294CD1 /* MyProfileTabViewController.swift in Sources */,
 				EA2CD63D2C5F4C2B00644EFE /* NetworkError.swift in Sources */,
+				080AAFAD2C65174900FBBE94 /* PostReportRequest.swift in Sources */,
+				EA7E146F2C8EA15C001DA769 /* AlarmListAPI.swift in Sources */,
 				08FD3A392B357E6400574880 /* LikedUsersDataService.swift in Sources */,
 				081228CA2A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift in Sources */,
 				3769D6D02B3C569C00294CD1 /* PochakedPostTabmanViewController.swift in Sources */,
@@ -1666,13 +1696,15 @@
 				EAC582742C3074EA006F44AF /* UIColor+.swift in Sources */,
 				3769D6BB2B3C347000294CD1 /* FollowListViewController.swift in Sources */,
 				3769D6B42B3C301B00294CD1 /* JoinDataManager.swift in Sources */,
+				081689B62C73697700EC4D95 /* CommentService.swift in Sources */,
+				EA96D0522C8F186900D80562 /* TagApproveAPI.swift in Sources */,
 				37D311DA2B53134200A1D7C1 /* LogoutDataManager.swift in Sources */,
 				EA1B0B5D2A49D23A00F86FBC /* SceneDelegate.swift in Sources */,
 				3747E9722BF3827500364BED /* SettingsViewController.swift in Sources */,
 				3769D6D22B3C56F100294CD1 /* PochakPostTabmanViewController.swift in Sources */,
 				371D337A2B4E8D1F0084FF6A /* KeychainManager.swift in Sources */,
-				EAEADB982C3450FB0037E116 /* PreviewAlarmDataModel.swift in Sources */,
 				EAF918542AA4692E0037C270 /* NetworkResult.swift in Sources */,
+				EA7E146D2C8EA119001DA769 /* AlarmListResponse.swift in Sources */,
 				EA12890C2B3BF1A7002EC93E /* RecentSearchViewController.swift in Sources */,
 				080AAFA72C64EAA200FBBE94 /* PostDeleteResponse.swift in Sources */,
 				086E900C2C6669C600A05E76 /* FollowAPI.swift in Sources */,
