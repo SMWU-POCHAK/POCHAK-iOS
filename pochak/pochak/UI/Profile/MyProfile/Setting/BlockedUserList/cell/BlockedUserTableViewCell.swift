@@ -9,24 +9,49 @@ import UIKit
 
 class BlockedUserTableViewCell: UITableViewCell {
     
-    static let identifier = "BlockedUserTableViewCell"
-
+    // MARK: - Properties
+    
+    static let identifier = "BlockedUserTableViewCell" // Table View가 생성할 cell임을 명시
+    
+    var cellHandle: String?
+    weak var delegate: RemoveCellDelegate?
+    
+    // MARK: - Views
+    
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var userHandle: UILabel!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var unblockButton: UIButton!
     
-    var cellHandle: String?
-    weak var delegate: RemoveCellDelegate?
+    // MARK: - LifeCycle
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // 프로필 레이아웃
-        profileImg.contentMode = .scaleAspectFill // 사진 안 넣어지는 문제 -> 버튼 type을 custom으로 변경 + style default로 변경
-        profileImg.clipsToBounds = true // cornerRadius 적용 안되는 경우 추가
+        setUpCell()
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
+    
+    // MARK: - Actions
+    
+    @IBAction func unblockBtnSelected(_ sender: Any) {
+        guard let superView = self.superview as? UITableView else {
+            print("superview is not a UICollectionView - getIndexPath")
+            return
+        }
+        guard let indexPath = superView.indexPath(for: self) else {return}
+        delegate?.removeCell(at: indexPath, cellHandle ?? "")
+    }
+    
+    // MARK: - Functions
+    
+    func setUpCell() {
+        profileImg.contentMode = .scaleAspectFill
+        profileImg.clipsToBounds = true
         profileImg.layer.cornerRadius = 26
         
-        // 버튼 레이아웃
         unblockButton.setTitle("차단해제", for: .normal)
         unblockButton.backgroundColor = UIColor(named: "gray03")
         unblockButton.setTitleColor(UIColor.white, for: .normal)
@@ -34,15 +59,8 @@ class BlockedUserTableViewCell: UITableViewCell {
         unblockButton.layer.cornerRadius = 5
     }
     
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
-    // MARK: - Function
-    
-    func setData(_ blockedUserList :  BlockedUserListDataModel){
-        let imageURL = blockedUserList.profileImage ?? ""
+    func setUpCellData(_ blockedUserList :  BlockedUserListDataModel) {
+        let imageURL = blockedUserList.profileImage
         if let url = URL(string: imageURL) {
             profileImg.kf.setImage(with: url, completionHandler:  { result in
                 switch result {
@@ -55,17 +73,6 @@ class BlockedUserTableViewCell: UITableViewCell {
         }
         userHandle.text = blockedUserList.handle
         userName.text = blockedUserList.name
-        cellHandle = blockedUserList.handle ?? ""
-    }
-    
-    @IBAction func unblockBtnSelected(_ sender: Any) {
-        guard let superView = self.superview as? UITableView else {
-            print("superview is not a UICollectionView - getIndexPath")
-            return
-        }
-        guard let indexPath = superView.indexPath(for: self) else {return}
-        delegate?.removeCell(at: indexPath, cellHandle ?? "")
-        print(delegate)
-        print("unblockBtnSelected!!")
+        cellHandle = blockedUserList.handle
     }
 }
