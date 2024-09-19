@@ -27,7 +27,7 @@ extension SearchAPI: BaseAPI {
         }
     }
 
-    var parameters: RequestParams {
+    var parameters: RequestParams? {
         switch self {
         case .getSearch(let request): return .query(request)
         }

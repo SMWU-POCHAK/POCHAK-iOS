@@ -67,34 +67,51 @@ final class UploadViewController: UIViewController,UITextFieldDelegate {
                   confirmButtonText: "계속하기"
         )
     }
-
+    
     @objc private func uploadbuttonPressed(_ sender: Any) {
-        guard isUploadAllowed else { return }
-
-        let captionText = captionField.text ?? ""
-        let imageData = captureImg.image?.jpegData(compressionQuality: 0.2)
-        let taggedUserHandles = tagId
-
-        print("업로드 완료")
-        showProgressBar()
-
-        UploadDataService.shared.upload(postImage: imageData, caption: captionText, taggedMemberHandleList: taggedUserHandles) { [weak self] response in
-            guard let self = self else { return }
-            defer { self.hideProgressBar() }
-
-            switch response {
-            case .success(let data):
-                print("success", data)
-                self.navigationController?.popViewController(animated: true)
+        if isUploadAllowed {
+            let captionText = (captionField.text == "내용 입력하기") ? "" : captionField.text ?? ""
+            let postImage: Data? = captureImg.image?.jpegData(compressionQuality: 0.2)
+            
+            var taggedUserHandles: [String] = []
+            for taggedUserHandle in tagId {
+                taggedUserHandles.append(taggedUserHandle)
+            }
+            
+            showProgressBar()
+            
+            let request = CameraUploadRequest(caption: captionText, taggedMemberHandleList: taggedUserHandles)
+            
+            var files: [(Data, String, String)] = []
+            if let postImage = postImage {
+                let fileTuple: (Data, String, String) = (postImage, "postImage", "image/jpeg")
+                files.append(fileTuple)
+            }
+            
+            CameraService.postUpload(files: files, request: request) { [weak self] data, failed in
+                defer {
+                    self?.hideProgressBar()
+                }
+                
+                guard let self = self else { return }
+                
+                guard let data = data else {
+                    switch failed {
+                    case .disconnected:
+                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
+                                      animated: true)
+                    default:
+                        self?.present(UIAlertController.networkErrorAlert(title: "업로드 요청에 실패하였습니다."), animated: true)
+                    }
+                    return
+                }
+                
+                print("success")
+                print(data)
+                if let navController = self.navigationController {
+                    navController.popViewController(animated: true)
+                }
                 self.tabBarController?.selectedIndex = 0
-            case .requestErr(let err):
-                print("Request error:", err)
-            case .pathErr:
-                print("Path error")
-            case .serverErr:
-                print("Server error")
-            case .networkFail:
-                print("Network failure")
             }
         }
     }
@@ -294,13 +311,10 @@ final class UploadViewController: UIViewController,UITextFieldDelegate {
             guard let data = data else {
                 switch failed {
                 case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .serverError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .unknownError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
+                                  animated: true)
                 default:
-                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                    self?.present(UIAlertController.networkErrorAlert(title: "아이디 검색 요청에 실패하였습니다."), animated: true)
                 }
                 return
             }
