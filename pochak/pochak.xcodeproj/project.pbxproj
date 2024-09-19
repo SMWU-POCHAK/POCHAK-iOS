@@ -109,6 +109,12 @@
 		3769D6D22B3C56F100294CD1 /* PochakPostTabmanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6D12B3C56F100294CD1 /* PochakPostTabmanViewController.swift */; };
 		3769D6D52B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6D32B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift */; };
 		3769D6D62B3C59F900294CD1 /* ProfilePostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3769D6D42B3C59F900294CD1 /* ProfilePostCollectionViewCell.xib */; };
+		376EA11B2C9B1B5200FEFB63 /* ProfileAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376EA11A2C9B1B5200FEFB63 /* ProfileAPI.swift */; };
+		376EA11D2C9B1BEA00FEFB63 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376EA11C2C9B1BEA00FEFB63 /* ProfileService.swift */; };
+		376EA1202C9B1CD900FEFB63 /* ProfileViewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376EA11F2C9B1CD900FEFB63 /* ProfileViewResponse.swift */; };
+		376EA1222C9B1CE500FEFB63 /* ProfileViewRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376EA1212C9B1CE500FEFB63 /* ProfileViewRequest.swift */; };
+		376EA1242C9B1EAE00FEFB63 /* PochakPostResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376EA1232C9B1EAE00FEFB63 /* PochakPostResponse.swift */; };
+		376EA1262C9B1F3F00FEFB63 /* PochakPostRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376EA1252C9B1F3F00FEFB63 /* PochakPostRequest.swift */; };
 		376F125B2A8B7440005F469B /* SocialLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376F125A2A8B7440005F469B /* SocialLoginViewController.swift */; };
 		379A6A342B569DFA0087FAAC /* AuthenticationCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A6A332B569DFA0087FAAC /* AuthenticationCredential.swift */; };
 		379A6A3A2B56BDBF0087FAAC /* Authenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A6A392B56BDBF0087FAAC /* Authenticator.swift */; };
@@ -318,6 +324,12 @@
 		3769D6D12B3C56F100294CD1 /* PochakPostTabmanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakPostTabmanViewController.swift; sourceTree = "<group>"; };
 		3769D6D32B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePostCollectionViewCell.swift; sourceTree = "<group>"; };
 		3769D6D42B3C59F900294CD1 /* ProfilePostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfilePostCollectionViewCell.xib; sourceTree = "<group>"; };
+		376EA11A2C9B1B5200FEFB63 /* ProfileAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAPI.swift; sourceTree = "<group>"; };
+		376EA11C2C9B1BEA00FEFB63 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
+		376EA11F2C9B1CD900FEFB63 /* ProfileViewResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewResponse.swift; sourceTree = "<group>"; };
+		376EA1212C9B1CE500FEFB63 /* ProfileViewRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewRequest.swift; sourceTree = "<group>"; };
+		376EA1232C9B1EAE00FEFB63 /* PochakPostResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakPostResponse.swift; sourceTree = "<group>"; };
+		376EA1252C9B1F3F00FEFB63 /* PochakPostRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakPostRequest.swift; sourceTree = "<group>"; };
 		376F125A2A8B7440005F469B /* SocialLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginViewController.swift; sourceTree = "<group>"; };
 		379A6A332B569DFA0087FAAC /* AuthenticationCredential.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCredential.swift; sourceTree = "<group>"; };
 		379A6A392B56BDBF0087FAAC /* Authenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authenticator.swift; sourceTree = "<group>"; };
@@ -867,6 +879,25 @@
 			path = PostListTabman;
 			sourceTree = "<group>";
 		};
+		376EA1192C9B1B3800FEFB63 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				376EA11A2C9B1B5200FEFB63 /* ProfileAPI.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		376EA11E2C9B1C3F00FEFB63 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				376EA11F2C9B1CD900FEFB63 /* ProfileViewResponse.swift */,
+				376EA1212C9B1CE500FEFB63 /* ProfileViewRequest.swift */,
+				376EA1232C9B1EAE00FEFB63 /* PochakPostResponse.swift */,
+				376EA1252C9B1F3F00FEFB63 /* PochakPostRequest.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		37C3AF442B3CB26000B4C79C /* ProfileAPI */ = {
 			isa = PBXGroup;
 			children = (
@@ -1077,6 +1108,7 @@
 			isa = PBXGroup;
 			children = (
 				EA2CD6412C5F5A0500644EFE /* HomeService.swift */,
+				376EA11C2C9B1BEA00FEFB63 /* ProfileService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1084,6 +1116,7 @@
 		EA2CD6332C5F458900644EFE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				376EA11E2C9B1C3F00FEFB63 /* Profile */,
 				EA2CD6372C5F45B900644EFE /* Home */,
 			);
 			path = Models;
@@ -1104,6 +1137,7 @@
 		EA2CD6352C5F45A100644EFE /* APIs */ = {
 			isa = PBXGroup;
 			children = (
+				376EA1192C9B1B3800FEFB63 /* Profile */,
 				EA2CD6402C5F59F800644EFE /* Home */,
 			);
 			path = APIs;
@@ -1504,6 +1538,7 @@
 				3766F40F2C398AA8001DD239 /* NetworkResult400.swift in Sources */,
 				3769D6AF2B3C2FD500294CD1 /* GoogleLoginDataManager.swift in Sources */,
 				EA0107AE2A5EC23900A3AE85 /* OtherTableViewCell.swift in Sources */,
+				376EA1202C9B1CD900FEFB63 /* ProfileViewResponse.swift in Sources */,
 				EA9F5CB42B0EF7CC0021951F /* UploadDataService.swift in Sources */,
 				EA2CD6482C5F5B0700644EFE /* HomeRequest.swift in Sources */,
 				EA9F5CB22B0EF7BB0021951F /* UploadDataModel.swift in Sources */,
@@ -1516,6 +1551,7 @@
 				08EB99B72C53EA8500FAC08A /* TaggedUsersTableViewCell.swift in Sources */,
 				EACF0F6E2C3044C000C0016C /* TagSearchTableViewCell.swift in Sources */,
 				08B679632B528D7500F8D585 /* CommentTableViewFooterView.swift in Sources */,
+				376EA1222C9B1CE500FEFB63 /* ProfileViewRequest.swift in Sources */,
 				EA01079C2A59556800A3AE85 /* PostTabViewController.swift in Sources */,
 				EA1289112B3C4F14002EC93E /* SearchDataService.swift in Sources */,
 				EA2CD6442C5F5A0E00644EFE /* HomeAPI.swift in Sources */,
@@ -1558,15 +1594,19 @@
 				371D33782B4E83E90084FF6A /* UserDefaultsManager.swift in Sources */,
 				3742617A2C31C6F900B67886 /* AppleLoginDataModel.swift in Sources */,
 				373815162A89E6D30032066A /* SocialJoinViewController.swift in Sources */,
+				376EA11B2C9B1B5200FEFB63 /* ProfileAPI.swift in Sources */,
 				EA1289082B3B2823002EC93E /* AlarmDataModel.swift in Sources */,
 				3766F40A2C370CF5001DD239 /* BlockedUserViewController.swift in Sources */,
+				376EA1242C9B1EAE00FEFB63 /* PochakPostResponse.swift in Sources */,
 				374261782C31C6ED00B67886 /* AppleLoginDataManager.swift in Sources */,
 				0844D7EB2BF218A5001154AC /* ReportViewCell.swift in Sources */,
 				379A6A342B569DFA0087FAAC /* AuthenticationCredential.swift in Sources */,
 				0844649C2BF0F25900949850 /* PostMenuViewController.swift in Sources */,
 				3766F4132C3A69E5001DD239 /* TermsOfAgreeViewController.swift in Sources */,
 				37D311DC2B53135000A1D7C1 /* LogoutDataModel.swift in Sources */,
+				376EA1262C9B1F3F00FEFB63 /* PochakPostRequest.swift in Sources */,
 				37A284C12B52FC910023EB9D /* UpdateProfileViewController.swift in Sources */,
+				376EA11D2C9B1BEA00FEFB63 /* ProfileService.swift in Sources */,
 				3738151A2A8A09DA0032066A /* MakeProfileViewController.swift in Sources */,
 				EA17182B2A5912A7009168E6 /* CameraViewController.swift in Sources */,
 				080FEF012C551C3200951460 /* ReportType.swift in Sources */,
