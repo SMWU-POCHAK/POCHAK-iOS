@@ -125,7 +125,7 @@ extension FollowerListTabmanViewController : UICollectionViewDelegate, UICollect
         guard let otherUserProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else {return}
         self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
         guard let cell: FollowerCollectionViewCell = self.followerCollectionView.cellForItem(at: indexPath) as? FollowerCollectionViewCell else {return}
-        otherUserProfileVC.recievedHandle = cell.userId.text
+        otherUserProfileVC.receivedHandle = cell.userId.text
     }
 
 }

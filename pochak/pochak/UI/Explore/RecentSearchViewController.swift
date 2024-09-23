@@ -348,7 +348,7 @@ extension RecentSearchViewController: UITableViewDelegate, UITableViewDataSource
         let storyboard = UIStoryboard(name: "ProfileTab", bundle: nil)
         let profileTabVC = storyboard.instantiateViewController(withIdentifier: "OtherUserProfileVC") as! OtherUserProfileViewController
         
-        profileTabVC.recievedHandle = handle
+        profileTabVC.receivedHandle = handle
         self.navigationController?.pushViewController(profileTabVC, animated: true)
     }
 }

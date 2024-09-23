@@ -98,10 +98,10 @@ final class UploadViewController: UIViewController,UITextFieldDelegate {
                 guard let data = data else {
                     switch failed {
                     case .disconnected:
-                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
+                        self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
                                       animated: true)
                     default:
-                        self?.present(UIAlertController.networkErrorAlert(title: "업로드 요청에 실패하였습니다."), animated: true)
+                        self.present(UIAlertController.networkErrorAlert(title: "업로드 요청에 실패하였습니다."), animated: true)
                     }
                     return
                 }

@@ -113,11 +113,11 @@ final class PostViewController: UIViewController {
         guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
         
         if sender.view == profileImageView || sender.view == pochakUserLabel || sender.view == postOwnerHandleLabel {
-            otherUserProfileVC.recievedHandle = postDataResult?.ownerHandle
+            otherUserProfileVC.receivedHandle = postDataResult?.ownerHandle
         }
         
         else if sender.view == commentUserHandleLabel {
-            otherUserProfileVC.recievedHandle = commentUserHandleLabel.text
+            otherUserProfileVC.receivedHandle = commentUserHandleLabel.text
         }
         
         self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
@@ -130,7 +130,7 @@ final class PostViewController: UIViewController {
         taggedUserDetailVC.goToOtherProfileVC = { (handle: String) in
             self.dismiss(animated: true)
             guard let otherUserProfileVC = self.profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
-            otherUserProfileVC.recievedHandle = handle
+            otherUserProfileVC.receivedHandle = handle
             self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
         }
         

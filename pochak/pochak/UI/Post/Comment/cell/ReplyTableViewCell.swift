@@ -71,7 +71,7 @@ final class ReplyTableViewCell: UITableViewCell {
         let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
         
         guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
-        otherUserProfileVC.recievedHandle = userHandleLabel.text
+        otherUserProfileVC.receivedHandle = userHandleLabel.text
         print("post vc의 nav controller: \(self.postVC?.navigationController)")
         self.commentVC?.dismiss(animated: true)
         self.postVC?.navigationController?.pushViewController(otherUserProfileVC, animated: true)

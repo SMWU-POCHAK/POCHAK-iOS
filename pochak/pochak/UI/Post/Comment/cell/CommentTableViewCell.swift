@@ -116,10 +116,10 @@ final class CommentTableViewCell: UITableViewCell {
         
         // 댓글 작성자가 현재 유저라면
         if commentUserHandleLabel.text == currentUserHandle {
-            otherUserProfileVC.recievedHandle = currentUserHandle
+            otherUserProfileVC.receivedHandle = currentUserHandle
         }
         else {
-            otherUserProfileVC.recievedHandle = commentUserHandleLabel.text
+            otherUserProfileVC.receivedHandle = commentUserHandleLabel.text
         }
         print("post vc의 nav controller: \(self.postVC?.navigationController)")
         self.commentVC?.dismiss(animated: true)

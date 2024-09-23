@@ -79,7 +79,7 @@ class OtherUserProfileViewController: UIViewController {
                       confirmButtonText: "계속하기"
             )
         } else {
-            FollowToggleDataManager.shared.followToggleDataManager(self.recievedHandle ?? "", { resultData in
+            FollowToggleDataManager.shared.followToggleDataManager(self.receivedHandle ?? "", { resultData in
                 print(resultData.message)
             })
             self.receivedIsFollow = true
@@ -109,7 +109,7 @@ class OtherUserProfileViewController: UIViewController {
     @objc func moreButtonPressed() {
         guard let profileMenuVC = self.storyboard?.instantiateViewController(withIdentifier: "profileMenuVC") as? ProfileMenuViewController else {return}
         let sheet = profileMenuVC.sheetPresentationController
-        profileMenuVC.receivedHandle = recievedHandle
+        profileMenuVC.receivedHandle = receivedHandle
         
         let multiplier = 0.25
         let fraction = UISheetPresentationController.Detent.custom { context in
@@ -169,7 +169,7 @@ class OtherUserProfileViewController: UIViewController {
     }
     
     private func setUpData() {
-        MyProfilePostDataManager.shared.myProfileUserAndPochakedPostDataManager(recievedHandle ?? "",0,{
+        MyProfilePostDataManager.shared.myProfileUserAndPochakedPostDataManager(receivedHandle ?? "",0,{
             response in
             switch response {
             case .success(let resultData):
@@ -197,7 +197,7 @@ class OtherUserProfileViewController: UIViewController {
                 self.receivedIsFollow = resultData.isFollow
                 
                 // 버튼 설정
-                if currentHandle == self.recievedHandle{
+                if currentHandle == self.receivedHandle{
                     /// 내 프로필 조회한 경우
                     self.followToggleBtn.layer.isHidden = true
                     self.updateProfileBtn.layer.isHidden = false
