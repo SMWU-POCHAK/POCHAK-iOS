@@ -102,19 +102,9 @@
 		2FCBFE6DE98CEA8938EF93DC /* Pods_pochakTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1916A70A802F298FF38F24 /* Pods_pochakTests.framework */; };
 		371D33782B4E83E90084FF6A /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D33772B4E83E90084FF6A /* UserDefaultsManager.swift */; };
 		371D337A2B4E8D1F0084FF6A /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D33792B4E8D1F0084FF6A /* KeychainManager.swift */; };
-		373235472B68F93E0042EF94 /* FollowListDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373235462B68F93E0042EF94 /* FollowListDataManager.swift */; };
-		373235492B68F9A60042EF94 /* FollowListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373235482B68F9A60042EF94 /* FollowListDataModel.swift */; };
-		3732354E2B691E610042EF94 /* FollowToggleDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3732354D2B691E610042EF94 /* FollowToggleDataManager.swift */; };
-		373235502B691E6A0042EF94 /* FollowToggleDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3732354F2B691E6A0042EF94 /* FollowToggleDataModel.swift */; };
-		373235542B692C6D0042EF94 /* DeleteFollowerDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373235532B692C6D0042EF94 /* DeleteFollowerDataManager.swift */; };
-		373235562B692C790042EF94 /* DeleteFollowerDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373235552B692C790042EF94 /* DeleteFollowerDataModel.swift */; };
 		373815162A89E6D30032066A /* SocialJoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373815152A89E6D30032066A /* SocialJoinViewController.swift */; };
 		3738151A2A8A09DA0032066A /* MakeProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373815192A8A09DA0032066A /* MakeProfileViewController.swift */; };
 		374261642C2FEF5F00B67886 /* ProfileMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374261632C2FEF5F00B67886 /* ProfileMenuViewController.swift */; };
-		3742616E2C30916C00B67886 /* BlockDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3742616D2C30916C00B67886 /* BlockDataManager.swift */; };
-		374261702C30917600B67886 /* BlockDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3742616F2C30917600B67886 /* BlockDataModel.swift */; };
-		374261722C3092B100B67886 /* UnblockDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374261712C3092B100B67886 /* UnblockDataManager.swift */; };
-		374261742C3092B900B67886 /* UnblockDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374261732C3092B900B67886 /* UnblockDataModel.swift */; };
 		374261782C31C6ED00B67886 /* AppleLoginDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374261772C31C6ED00B67886 /* AppleLoginDataManager.swift */; };
 		3742617A2C31C6F900B67886 /* AppleLoginDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374261792C31C6F900B67886 /* AppleLoginDataModel.swift */; };
 		3742617D2C359D6100B67886 /* CheckHandleDuplicationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3742617C2C359D6100B67886 /* CheckHandleDuplicationDataManager.swift */; };
@@ -147,8 +137,6 @@
 		3759CF3B2CAAE80700408A4E /* FollowListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF3A2CAAE80700408A4E /* FollowListResponse.swift */; };
 		3766F4022C3706DC001DD239 /* BlockedUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3766F4012C3706DC001DD239 /* BlockedUserTableViewCell.xib */; };
 		3766F4032C3706DC001DD239 /* BlockedUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4002C3706DC001DD239 /* BlockedUserTableViewCell.swift */; };
-		3766F4062C370A7C001DD239 /* BlockedUserListDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4052C370A7C001DD239 /* BlockedUserListDataManager.swift */; };
-		3766F4082C370A82001DD239 /* BlockedUserListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4072C370A82001DD239 /* BlockedUserListDataModel.swift */; };
 		3766F40A2C370CF5001DD239 /* BlockedUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4092C370CF5001DD239 /* BlockedUserViewController.swift */; };
 		3766F40C2C3736F1001DD239 /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F40B2C3736F1001DD239 /* RequestInterceptor.swift */; };
 		3766F40F2C398AA8001DD239 /* NetworkResult400.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F40E2C398AA8001DD239 /* NetworkResult400.swift */; };
@@ -180,15 +168,6 @@
 		379A6A3E2B5FA07D0087FAAC /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A6A3D2B5FA07D0087FAAC /* NavigationController.swift */; };
 		37A284C12B52FC910023EB9D /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A284C02B52FC910023EB9D /* UpdateProfileViewController.swift */; };
 		37BBFDF12C2EB43D003D8DA5 /* Pretendard-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75852A51728A003AAB94 /* Pretendard-ExtraBold.ttf */; };
-		37C3AF482B3CB2B300B4C79C /* MyProfilePochakedPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C3AF472B3CB2B300B4C79C /* MyProfilePochakedPostModel.swift */; };
-		37C3AF4A2B3CB2C700B4C79C /* MyProfilePochakPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C3AF492B3CB2C700B4C79C /* MyProfilePochakPostModel.swift */; };
-		37C3AF4B2B3CB49E00B4C79C /* MyProfilePostDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C3AF452B3CB29A00B4C79C /* MyProfilePostDataManager.swift */; };
-		37D311D52B53056700A1D7C1 /* ProfileUpdateDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311D42B53056700A1D7C1 /* ProfileUpdateDataManager.swift */; };
-		37D311D72B53057700A1D7C1 /* ProfileUpdateDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311D62B53057700A1D7C1 /* ProfileUpdateDataModel.swift */; };
-		37D311DA2B53134200A1D7C1 /* LogoutDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311D92B53134200A1D7C1 /* LogoutDataManager.swift */; };
-		37D311DC2B53135000A1D7C1 /* LogoutDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311DB2B53135000A1D7C1 /* LogoutDataModel.swift */; };
-		37D311DF2B566C4D00A1D7C1 /* SignOutDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311DE2B566C4D00A1D7C1 /* SignOutDataManager.swift */; };
-		37D311E12B566C5A00A1D7C1 /* SignOutDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311E02B566C5900A1D7C1 /* SignOutDataModel.swift */; };
 		37D311E32B56754D00A1D7C1 /* GetToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311E22B56754D00A1D7C1 /* GetToken.swift */; };
 		37D311E52B567AE000A1D7C1 /* OtherUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */; };
 		A6D48ED7F8B86CF57C481991 /* Pods_pochak_pochakUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC75B5747D3AC9026B862E11 /* Pods_pochak_pochakUITests.framework */; };
@@ -367,19 +346,9 @@
 		0DB83F3ED818C9AF01F6A8E0 /* Pods-pochak.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pochak.release.xcconfig"; path = "Target Support Files/Pods-pochak/Pods-pochak.release.xcconfig"; sourceTree = "<group>"; };
 		371D33772B4E83E90084FF6A /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		371D33792B4E8D1F0084FF6A /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
-		373235462B68F93E0042EF94 /* FollowListDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowListDataManager.swift; sourceTree = "<group>"; };
-		373235482B68F9A60042EF94 /* FollowListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowListDataModel.swift; sourceTree = "<group>"; };
-		3732354D2B691E610042EF94 /* FollowToggleDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowToggleDataManager.swift; sourceTree = "<group>"; };
-		3732354F2B691E6A0042EF94 /* FollowToggleDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowToggleDataModel.swift; sourceTree = "<group>"; };
-		373235532B692C6D0042EF94 /* DeleteFollowerDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFollowerDataManager.swift; sourceTree = "<group>"; };
-		373235552B692C790042EF94 /* DeleteFollowerDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFollowerDataModel.swift; sourceTree = "<group>"; };
 		373815152A89E6D30032066A /* SocialJoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialJoinViewController.swift; sourceTree = "<group>"; };
 		373815192A8A09DA0032066A /* MakeProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeProfileViewController.swift; sourceTree = "<group>"; };
 		374261632C2FEF5F00B67886 /* ProfileMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMenuViewController.swift; sourceTree = "<group>"; };
-		3742616D2C30916C00B67886 /* BlockDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockDataManager.swift; sourceTree = "<group>"; };
-		3742616F2C30917600B67886 /* BlockDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockDataModel.swift; sourceTree = "<group>"; };
-		374261712C3092B100B67886 /* UnblockDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockDataManager.swift; sourceTree = "<group>"; };
-		374261732C3092B900B67886 /* UnblockDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockDataModel.swift; sourceTree = "<group>"; };
 		374261752C31C23800B67886 /* pochakDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = pochakDebug.entitlements; sourceTree = "<group>"; };
 		374261772C31C6ED00B67886 /* AppleLoginDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginDataManager.swift; sourceTree = "<group>"; };
 		374261792C31C6F900B67886 /* AppleLoginDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginDataModel.swift; sourceTree = "<group>"; };
@@ -414,8 +383,6 @@
 		3759CF3A2CAAE80700408A4E /* FollowListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowListResponse.swift; sourceTree = "<group>"; };
 		3766F4002C3706DC001DD239 /* BlockedUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserTableViewCell.swift; sourceTree = "<group>"; };
 		3766F4012C3706DC001DD239 /* BlockedUserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlockedUserTableViewCell.xib; sourceTree = "<group>"; };
-		3766F4052C370A7C001DD239 /* BlockedUserListDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserListDataManager.swift; sourceTree = "<group>"; };
-		3766F4072C370A82001DD239 /* BlockedUserListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserListDataModel.swift; sourceTree = "<group>"; };
 		3766F4092C370CF5001DD239 /* BlockedUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserViewController.swift; sourceTree = "<group>"; };
 		3766F40B2C3736F1001DD239 /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		3766F40E2C398AA8001DD239 /* NetworkResult400.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult400.swift; sourceTree = "<group>"; };
@@ -446,15 +413,6 @@
 		379A6A392B56BDBF0087FAAC /* Authenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authenticator.swift; sourceTree = "<group>"; };
 		379A6A3D2B5FA07D0087FAAC /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		37A284C02B52FC910023EB9D /* UpdateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewController.swift; sourceTree = "<group>"; };
-		37C3AF452B3CB29A00B4C79C /* MyProfilePostDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfilePostDataManager.swift; sourceTree = "<group>"; };
-		37C3AF472B3CB2B300B4C79C /* MyProfilePochakedPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfilePochakedPostModel.swift; sourceTree = "<group>"; };
-		37C3AF492B3CB2C700B4C79C /* MyProfilePochakPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfilePochakPostModel.swift; sourceTree = "<group>"; };
-		37D311D42B53056700A1D7C1 /* ProfileUpdateDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUpdateDataManager.swift; sourceTree = "<group>"; };
-		37D311D62B53057700A1D7C1 /* ProfileUpdateDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUpdateDataModel.swift; sourceTree = "<group>"; };
-		37D311D92B53134200A1D7C1 /* LogoutDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutDataManager.swift; sourceTree = "<group>"; };
-		37D311DB2B53135000A1D7C1 /* LogoutDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutDataModel.swift; sourceTree = "<group>"; };
-		37D311DE2B566C4D00A1D7C1 /* SignOutDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutDataManager.swift; sourceTree = "<group>"; };
-		37D311E02B566C5900A1D7C1 /* SignOutDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutDataModel.swift; sourceTree = "<group>"; };
 		37D311E22B56754D00A1D7C1 /* GetToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToken.swift; sourceTree = "<group>"; };
 		37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherUserProfileViewController.swift; sourceTree = "<group>"; };
 		67EA6B5B881844A22EE2A55B /* Pods-pochak.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pochak.debug.xcconfig"; path = "Target Support Files/Pods-pochak/Pods-pochak.debug.xcconfig"; sourceTree = "<group>"; };
@@ -910,19 +868,6 @@
 			path = LikesDataManager;
 			sourceTree = "<group>";
 		};
-		373235452B68F9180042EF94 /* FollowAPI_fin */ = {
-			isa = PBXGroup;
-			children = (
-				373235462B68F93E0042EF94 /* FollowListDataManager.swift */,
-				373235482B68F9A60042EF94 /* FollowListDataModel.swift */,
-				3732354D2B691E610042EF94 /* FollowToggleDataManager.swift */,
-				3732354F2B691E6A0042EF94 /* FollowToggleDataModel.swift */,
-				373235532B692C6D0042EF94 /* DeleteFollowerDataManager.swift */,
-				373235552B692C790042EF94 /* DeleteFollowerDataModel.swift */,
-			);
-			path = FollowAPI_fin;
-			sourceTree = "<group>";
-		};
 		373815142A89E6BE0032066A /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -941,31 +886,9 @@
 			isa = PBXGroup;
 			children = (
 				3747E9712BF3827500364BED /* SettingsViewController.swift */,
-				3766F4042C370A5D001DD239 /* BlockedUserList */,
-				37D311D82B53131D00A1D7C1 /* LogoutAPI_fin */,
-				37D311DD2B566C3D00A1D7C1 /* SignoutAPI_fin */,
+				3766F4042C370A5D001DD239 /* BlockList */,
 			);
 			path = Setting;
-			sourceTree = "<group>";
-		};
-		3742616B2C30911A00B67886 /* ProfileMenu */ = {
-			isa = PBXGroup;
-			children = (
-				374261632C2FEF5F00B67886 /* ProfileMenuViewController.swift */,
-				3742616C2C30914100B67886 /* BlockAPI_fin */,
-			);
-			path = ProfileMenu;
-			sourceTree = "<group>";
-		};
-		3742616C2C30914100B67886 /* BlockAPI_fin */ = {
-			isa = PBXGroup;
-			children = (
-				3742616D2C30916C00B67886 /* BlockDataManager.swift */,
-				3742616F2C30917600B67886 /* BlockDataModel.swift */,
-				374261712C3092B100B67886 /* UnblockDataManager.swift */,
-				374261732C3092B900B67886 /* UnblockDataModel.swift */,
-			);
-			path = BlockAPI_fin;
 			sourceTree = "<group>";
 		};
 		374261762C31C6CD00B67886 /* AppleLogin */ = {
@@ -1013,23 +936,13 @@
 			path = cell;
 			sourceTree = "<group>";
 		};
-		3766F4042C370A5D001DD239 /* BlockedUserList */ = {
+		3766F4042C370A5D001DD239 /* BlockList */ = {
 			isa = PBXGroup;
 			children = (
 				3766F4092C370CF5001DD239 /* BlockedUserViewController.swift */,
-				3766F40D2C373CFF001DD239 /* BlockListAPI_fin */,
 				3766F3FF2C3706C7001DD239 /* cell */,
 			);
-			path = BlockedUserList;
-			sourceTree = "<group>";
-		};
-		3766F40D2C373CFF001DD239 /* BlockListAPI_fin */ = {
-			isa = PBXGroup;
-			children = (
-				3766F4072C370A82001DD239 /* BlockedUserListDataModel.swift */,
-				3766F4052C370A7C001DD239 /* BlockedUserListDataManager.swift */,
-			);
-			path = BlockListAPI_fin;
+			path = BlockList;
 			sourceTree = "<group>";
 		};
 		3769D6AC2B3C2F9900294CD1 /* SignUp */ = {
@@ -1056,8 +969,13 @@
 			isa = PBXGroup;
 			children = (
 				EAFB4B862A5147A300E0F2FA /* ProfileTab.storyboard */,
-				37D311E72B567B3F00A1D7C1 /* OtherProfile */,
-				3769D6C92B3C50D200294CD1 /* MyProfile */,
+				37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */,
+				374261632C2FEF5F00B67886 /* ProfileMenuViewController.swift */,
+				3769D6B82B3C345800294CD1 /* MyProfileTabViewController.swift */,
+				37A284C02B52FC910023EB9D /* UpdateProfileViewController.swift */,
+				3742616A2C3075B400B67886 /* Setting */,
+				3769D6CC2B3C560200294CD1 /* PostList */,
+				3769D6CB2B3C55E500294CD1 /* FollowList */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1073,33 +991,18 @@
 			path = cell;
 			sourceTree = "<group>";
 		};
-		3769D6C92B3C50D200294CD1 /* MyProfile */ = {
-			isa = PBXGroup;
-			children = (
-				3769D6B82B3C345800294CD1 /* MyProfileTabViewController.swift */,
-				37A284C02B52FC910023EB9D /* UpdateProfileViewController.swift */,
-				3742616A2C3075B400B67886 /* Setting */,
-				37D311D32B53053C00A1D7C1 /* ProfileUpdateAPI_fin */,
-				37C3AF442B3CB26000B4C79C /* ProfileAPI_fin */,
-				3769D6CC2B3C560200294CD1 /* PostListTabman */,
-				3769D6CB2B3C55E500294CD1 /* FollowListTabman */,
-			);
-			path = MyProfile;
-			sourceTree = "<group>";
-		};
-		3769D6CB2B3C55E500294CD1 /* FollowListTabman */ = {
+		3769D6CB2B3C55E500294CD1 /* FollowList */ = {
 			isa = PBXGroup;
 			children = (
 				3769D6C02B3C39EA00294CD1 /* cell */,
-				373235452B68F9180042EF94 /* FollowAPI_fin */,
 				3769D6BA2B3C347000294CD1 /* FollowListViewController.swift */,
 				3769D6BC2B3C348800294CD1 /* FollowerListTabmanViewController.swift */,
 				3769D6BE2B3C349D00294CD1 /* FollowingListTabmanViewController.swift */,
 			);
-			path = FollowListTabman;
+			path = FollowList;
 			sourceTree = "<group>";
 		};
-		3769D6CC2B3C560200294CD1 /* PostListTabman */ = {
+		3769D6CC2B3C560200294CD1 /* PostList */ = {
 			isa = PBXGroup;
 			children = (
 				37F1487A2C62382300D9B117 /* cell */,
@@ -1107,7 +1010,7 @@
 				3769D6CF2B3C569C00294CD1 /* PochakedPostTabmanViewController.swift */,
 				3769D6D12B3C56F100294CD1 /* PochakPostTabmanViewController.swift */,
 			);
-			path = PostListTabman;
+			path = PostList;
 			sourceTree = "<group>";
 		};
 		376EA1272CAAAD3500FEFB63 /* Profile */ = {
@@ -1130,52 +1033,6 @@
 				374E46242CAABE07008AE361 /* ProfileUpdateResponse.swift */,
 			);
 			path = Profile;
-			sourceTree = "<group>";
-		};
-		37C3AF442B3CB26000B4C79C /* ProfileAPI_fin */ = {
-			isa = PBXGroup;
-			children = (
-				37C3AF472B3CB2B300B4C79C /* MyProfilePochakedPostModel.swift */,
-				37C3AF492B3CB2C700B4C79C /* MyProfilePochakPostModel.swift */,
-				37C3AF452B3CB29A00B4C79C /* MyProfilePostDataManager.swift */,
-			);
-			path = ProfileAPI_fin;
-			sourceTree = "<group>";
-		};
-		37D311D32B53053C00A1D7C1 /* ProfileUpdateAPI_fin */ = {
-			isa = PBXGroup;
-			children = (
-				37D311D62B53057700A1D7C1 /* ProfileUpdateDataModel.swift */,
-				37D311D42B53056700A1D7C1 /* ProfileUpdateDataManager.swift */,
-			);
-			path = ProfileUpdateAPI_fin;
-			sourceTree = "<group>";
-		};
-		37D311D82B53131D00A1D7C1 /* LogoutAPI_fin */ = {
-			isa = PBXGroup;
-			children = (
-				37D311D92B53134200A1D7C1 /* LogoutDataManager.swift */,
-				37D311DB2B53135000A1D7C1 /* LogoutDataModel.swift */,
-			);
-			path = LogoutAPI_fin;
-			sourceTree = "<group>";
-		};
-		37D311DD2B566C3D00A1D7C1 /* SignoutAPI_fin */ = {
-			isa = PBXGroup;
-			children = (
-				37D311DE2B566C4D00A1D7C1 /* SignOutDataManager.swift */,
-				37D311E02B566C5900A1D7C1 /* SignOutDataModel.swift */,
-			);
-			path = SignoutAPI_fin;
-			sourceTree = "<group>";
-		};
-		37D311E72B567B3F00A1D7C1 /* OtherProfile */ = {
-			isa = PBXGroup;
-			children = (
-				37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */,
-				3742616B2C30911A00B67886 /* ProfileMenu */,
-			);
-			path = OtherProfile;
 			sourceTree = "<group>";
 		};
 		37F1487A2C62382300D9B117 /* cell */ = {
@@ -1778,7 +1635,6 @@
 				3769D6AF2B3C2FD500294CD1 /* GoogleLoginDataManager.swift in Sources */,
 				EA0107AE2A5EC23900A3AE85 /* OtherTableViewCell.swift in Sources */,
 				EA2CD6482C5F5B0700644EFE /* HomeRequest.swift in Sources */,
-				37C3AF4B2B3CB49E00B4C79C /* MyProfilePostDataManager.swift in Sources */,
 				EA7E14672C858F0F001DA769 /* CameraAPI.swift in Sources */,
 				3759CF392CAAE7E900408A4E /* FollowListRequest.swift in Sources */,
 				0822A02D2CA196DF00F87E2C /* PostCollectionViewCell.swift in Sources */,
@@ -1796,11 +1652,9 @@
 				EACF0F6E2C3044C000C0016C /* TagSearchTableViewCell.swift in Sources */,
 				08B679632B528D7500F8D585 /* CommentTableViewFooterView.swift in Sources */,
 				EA2CD6442C5F5A0E00644EFE /* HomeAPI.swift in Sources */,
-				373235502B691E6A0042EF94 /* FollowToggleDataModel.swift in Sources */,
 				0802AE032C31D3E00090FB92 /* UIImageView+.swift in Sources */,
 				3769D6C72B3C4F0900294CD1 /* FollowingCollectionViewCell.swift in Sources */,
 				08E8DCDC2C38118000EC78C2 /* UILabel+.swift in Sources */,
-				373235472B68F93E0042EF94 /* FollowListDataManager.swift in Sources */,
 				374E462D2CAAC399008AE361 /* AuthenticationService.swift in Sources */,
 				08EB5D252C280CFE00E35C16 /* UIImage+.swift in Sources */,
 				374E463B2CAAC762008AE361 /* BlockAPI.swift in Sources */,
@@ -1816,7 +1670,6 @@
 				0822A0312CA196DF00F87E2C /* RecentSearchRealmManager.swift in Sources */,
 				08D98C472AFEE8B300E9A097 /* (null) in Sources */,
 				3769D6C32B3C3A1600294CD1 /* FollowerCollectionViewCell.swift in Sources */,
-				374261722C3092B100B67886 /* UnblockDataManager.swift in Sources */,
 				EA0F23692C32DA780014F94E /* UIViewController+.swift in Sources */,
 				379A6A3A2B56BDBF0087FAAC /* Authenticator.swift in Sources */,
 				EA17182C2A5912A7009168E6 /* UploadViewController.swift in Sources */,
@@ -1832,7 +1685,6 @@
 				3769D6BF2B3C349D00294CD1 /* FollowingListTabmanViewController.swift in Sources */,
 				08C02EEA2BF3798F00627C21 /* ReportViewController.swift in Sources */,
 				0822A0722CA1983C00F87E2C /* PostDeleteResponse.swift in Sources */,
-				373235562B692C790042EF94 /* DeleteFollowerDataModel.swift in Sources */,
 				3766F40C2C3736F1001DD239 /* RequestInterceptor.swift in Sources */,
 				EA0F23662C319C030014F94E /* PreviewAlarmViewController.swift in Sources */,
 				0822A0422CA197E700F87E2C /* PostReportAPI.swift in Sources */,
@@ -1840,9 +1692,7 @@
 				0844D7EF2BF219F6001154AC /* DeleteViewCell.swift in Sources */,
 				374E463D2CAAC82E008AE361 /* BlockResponse.swift in Sources */,
 				3759CF3B2CAAE80700408A4E /* FollowListResponse.swift in Sources */,
-				374261742C3092B900B67886 /* UnblockDataModel.swift in Sources */,
 				EA2CD63B2C5F463700644EFE /* NetworkService.swift in Sources */,
-				373235542B692C6D0042EF94 /* DeleteFollowerDataManager.swift in Sources */,
 				3742617D2C359D6100B67886 /* CheckHandleDuplicationDataManager.swift in Sources */,
 				371D33782B4E83E90084FF6A /* UserDefaultsManager.swift in Sources */,
 				3742617A2C31C6F900B67886 /* AppleLoginDataModel.swift in Sources */,
@@ -1857,7 +1707,6 @@
 				0822A0702CA1983C00F87E2C /* PostReportResponse.swift in Sources */,
 				3766F4132C3A69E5001DD239 /* TermsOfAgreeViewController.swift in Sources */,
 				0822A0472CA197E700F87E2C /* PostLikeAPI.swift in Sources */,
-				37D311DC2B53135000A1D7C1 /* LogoutDataModel.swift in Sources */,
 				374E46432CAAC9B5008AE361 /* UnblockResponse.swift in Sources */,
 				37A284C12B52FC910023EB9D /* UpdateProfileViewController.swift in Sources */,
 				3738151A2A8A09DA0032066A /* MakeProfileViewController.swift in Sources */,
@@ -1867,20 +1716,16 @@
 				080FEF012C551C3200951460 /* ReportType.swift in Sources */,
 				0822A0782CA1986000F87E2C /* UserService.swift in Sources */,
 				EA7E14712C8EA26D001DA769 /* AlarmListRequest.swift in Sources */,
-				37D311DF2B566C4D00A1D7C1 /* SignOutDataManager.swift in Sources */,
 				EA817AB62B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
-				3742616E2C30916C00B67886 /* BlockDataManager.swift in Sources */,
 				379A6A3E2B5FA07D0087FAAC /* NavigationController.swift in Sources */,
 				0822A0462CA197E700F87E2C /* CommentPostAPI.swift in Sources */,
 				374E46372CAAC602008AE361 /* LogOutAPI.swift in Sources */,
-				3766F4062C370A7C001DD239 /* BlockedUserListDataManager.swift in Sources */,
 				3769D6D52B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift in Sources */,
 				376EA12E2CAAAE6800FEFB63 /* ProfileRetrievalRequest.swift in Sources */,
 				EA96D0562C8F192B00D80562 /* TagApproveResponse.swift in Sources */,
 				3769D6B62B3C302C00294CD1 /* JoinDataModel.swift in Sources */,
 				374E461F2CAABAF3008AE361 /* PochakPostRetrievalAPI.swift in Sources */,
 				084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */,
-				37C3AF4A2B3CB2C700B4C79C /* MyProfilePochakPostModel.swift in Sources */,
 				08C02EF82BF394B800627C21 /* UIAlertController+.swift in Sources */,
 				089E27B92C4E8CB800828F4C /* AlertType.swift in Sources */,
 				EAE69F442C315009005762B7 /* UIVIew+.swift in Sources */,
@@ -1898,30 +1743,23 @@
 				081228C62A69624000DFA094 /* PostLikesViewController.swift in Sources */,
 				EA01079B2A59556800A3AE85 /* HomeTabViewController.swift in Sources */,
 				3759CF352CAAE79000408A4E /* FollowerRetrievalAPI.swift in Sources */,
-				373235492B68F9A60042EF94 /* FollowListDataModel.swift in Sources */,
 				0822A0332CA196DF00F87E2C /* RecentSearchViewController.swift in Sources */,
 				0822A06E2CA1983C00F87E2C /* CommentPostResponse.swift in Sources */,
 				EA7E14612C858EC6001DA769 /* CameraService.swift in Sources */,
 				EA6306D82C2BFE53000DB0A7 /* CustomTabBarController.swift in Sources */,
 				0822A06A2CA1983C00F87E2C /* PostLikeResponse.swift in Sources */,
 				0820B1902A63A18100604DA8 /* ReplyTableViewCell.swift in Sources */,
-				374261702C30917600B67886 /* BlockDataModel.swift in Sources */,
 				374E46392CAAC646008AE361 /* LogOutResponse.swift in Sources */,
 				083249782C295E4000A77C03 /* CustomAlertViewController.swift in Sources */,
 				374E46252CAABE08008AE361 /* ProfileUpdateResponse.swift in Sources */,
-				37C3AF482B3CB2B300B4C79C /* MyProfilePochakedPostModel.swift in Sources */,
 				0822A04F2CA1980200F87E2C /* FollowAPI.swift in Sources */,
 				EA2CD6392C5F45E300644EFE /* BaseAPI.swift in Sources */,
-				37D311E12B566C5A00A1D7C1 /* SignOutDataModel.swift in Sources */,
 				374E46302CAAC3F6008AE361 /* SignOutResponse.swift in Sources */,
 				376F125B2A8B7440005F469B /* SocialLoginViewController.swift in Sources */,
-				37D311D72B53057700A1D7C1 /* ProfileUpdateDataModel.swift in Sources */,
 				EA4EF8D82C2EC5F7009549FF /* UITextField+.swift in Sources */,
 				EAF918512AA468670037C270 /* APIConstants.swift in Sources */,
 				0822A0322CA196DF00F87E2C /* RecentSearchModel.swift in Sources */,
-				3766F4082C370A82001DD239 /* BlockedUserListDataModel.swift in Sources */,
 				0822A06D2CA1983C00F87E2C /* CommentPostRequest.swift in Sources */,
-				3732354E2B691E610042EF94 /* FollowToggleDataManager.swift in Sources */,
 				0822A0692CA1983C00F87E2C /* PostReportRequest.swift in Sources */,
 				3769D6BD2B3C348800294CD1 /* FollowerListTabmanViewController.swift in Sources */,
 				0822A0672CA1983C00F87E2C /* SearchResponse.swift in Sources */,
@@ -1931,7 +1769,6 @@
 				0889D1382C5CB69F00206C86 /* String+.swift in Sources */,
 				0844D7F32BF21A80001154AC /* CancelViewCell.swift in Sources */,
 				3766F4032C3706DC001DD239 /* BlockedUserTableViewCell.swift in Sources */,
-				37D311D52B53056700A1D7C1 /* ProfileUpdateDataManager.swift in Sources */,
 				374E46452CAACD33008AE361 /* BlockListAPI.swift in Sources */,
 				3769D6B92B3C345800294CD1 /* MyProfileTabViewController.swift in Sources */,
 				0822A0682CA1983C00F87E2C /* FollowResponse.swift in Sources */,
@@ -1952,7 +1789,6 @@
 				376EA1292CAAADCF00FEFB63 /* ProfileRetrievalAPI.swift in Sources */,
 				EA96D0522C8F186900D80562 /* TagApproveAPI.swift in Sources */,
 				0822A07B2CA1992B00F87E2C /* PostService.swift in Sources */,
-				37D311DA2B53134200A1D7C1 /* LogoutDataManager.swift in Sources */,
 				EA1B0B5D2A49D23A00F86FBC /* SceneDelegate.swift in Sources */,
 				3747E9722BF3827500364BED /* SettingsViewController.swift in Sources */,
 				3769D6D22B3C56F100294CD1 /* PochakPostTabmanViewController.swift in Sources */,
