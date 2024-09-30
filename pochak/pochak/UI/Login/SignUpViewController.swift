@@ -9,7 +9,8 @@ import UIKit
 
 class SignUpViewController: UIViewController {
     
-    // MARK: - Data
+    // MARK: - Properties
+    
     let textViewPlaceHolder = "소개를 입력해주세요.\n(최대 50자, 3줄)"
     let email = UserDefaultsManager.getData(type: String.self, forKey: .email) ?? "email not found"
     let socialType = UserDefaultsManager.getData(type: String.self, forKey: .socialType) ?? "socialType not found"
@@ -17,15 +18,18 @@ class SignUpViewController: UIViewController {
     let socialRefreshToken = UserDefaultsManager.getData(type: String.self, forKey: .socialRefreshToken) ?? "NOTAPPLELOGINUSER"
     var backBtnPressed : Bool = false
     var handleDuplicationChecked : Bool = false
+    let imagePickerController = UIImagePickerController()
     
+    // MARK: - Views
+
     @IBOutlet weak var profileImg: UIButton!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var handleTextField: UITextField!
     @IBOutlet weak var messageTextView: UITextView!
     @IBOutlet weak var checkHandleDuplicationBtn: UIButton!
     
-    // MARK: - View LifeCycle
-    
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -70,14 +74,13 @@ class SignUpViewController: UIViewController {
         checkHandleDuplicationBtn.setImage(UIImage(named: "checkHandle"), for: .normal)
         
         // 핸들 입력 중이면 중복확인 버튼 및 텍스트필드 글자 색 세팅 원래대로 변경
-//        handleTextField.placeholder = "아이디를 입력해주세요.\n (대문자, 소문자"
         handleTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         handleTextField.delegate = self
     }
     
-    // MARK: - Function
-    
-    @objc private func backbuttonPressed(_ sender: Any) {// 뒤로가기 버튼 클릭시 어디로 이동할지
+    // MARK: - Actions
+
+    @objc private func backbuttonPressed(_ sender: Any) {
         backBtnPressed = true
         showAlert(alertType: .confirmAndCancel,
                   titleText: "프로필 설정을 취소하고\n페이지를 나갈까요?",
@@ -96,7 +99,7 @@ class SignUpViewController: UIViewController {
     
     
     @IBAction func checkHandleDuplication(_ sender: Any) {
-        guard let handle = handleTextField.text  else {return}
+        guard let handle = handleTextField.text  else { return }
         let request = CheckDuplicateHandleRequest(handle: handle)
         
         AuthenticationService.checkDuplicateHandle(request: request) { [weak self] data, failed in
@@ -104,7 +107,6 @@ class SignUpViewController: UIViewController {
                 print(failed)
                 return
             }
-            
             if data.code == "MEMBER2001" {
                 // 중복 검사 버튼 상태 변경
                 self?.checkHandleDuplicationBtn.setImage(UIImage(named: "checkedHandle"), for: .normal)
@@ -123,7 +125,6 @@ class SignUpViewController: UIViewController {
     }
     
     @objc private func doneBtnTapped(_ sender: Any) {
-        
         // 새로운 유저 정보 UserDefaults에 저장 : name / handle / message
         guard let name = nameTextField.text  else {return}
         guard let handle = handleTextField.text  else {return}
@@ -131,8 +132,11 @@ class SignUpViewController: UIViewController {
         guard let profileImage = profileImg.currentImage  else {return}
         let profileImageData: Data? = profileImg.currentImage?.jpegData(compressionQuality: 0.2)
         
-        if (name == "" || handle == "" || message == textViewPlaceHolder || message == "" || profileImage == UIImage(named: "chooseProfileIcon")){
-            print("true!")
+        if (name == "" ||
+            handle == "" ||
+            message == textViewPlaceHolder ||
+            message == "" ||
+            profileImage == UIImage(named: "chooseProfileIcon")) {
             showAlert(alertType: .confirmOnly,
                       titleText: "프로필 정보를 모두 입력해주세요.",
                       messageText: "",
@@ -197,17 +201,16 @@ class SignUpViewController: UIViewController {
      3. @IBAction 정의
      4. 프로토콜 채택
      */
-    let imagePickerController = UIImagePickerController()
     @IBAction func profileBtnTapped(_ sender: Any) {
         self.imagePickerController.delegate = self
         self.imagePickerController.sourceType = .photoLibrary
         present(self.imagePickerController, animated: true, completion: nil)
     }
     
+    // MARK: - Functions
+
     private func toHomeTabPage(){
-        
         let tabBarController = CustomTabBarController()
-        
         let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
         guard let delegate = sceneDelegate else {
             return
@@ -216,13 +219,14 @@ class SignUpViewController: UIViewController {
     }
 }
 
-// MARK: - Extension
+// MARK: - Extension : UIImagePickerControllerDelegate, UINavigationControllerDelegate
 
 // 앨범 사진 선택 프로토콜 채택
 extension SignUpViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // 선택한 사진 사용
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             profileImg.setImage(image, for: .normal)
         }
@@ -235,7 +239,8 @@ extension SignUpViewController: UIImagePickerControllerDelegate, UINavigationCon
     }
 }
 
-// TextView 기본 속성 설정
+// MARK: - Extension : UITextViewDelegate, UITextFieldDelegate
+
 extension SignUpViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -244,7 +249,7 @@ extension SignUpViewController: UITextViewDelegate {
             textView.textColor = .black
         }
     }
-        
+    
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             textView.text = textViewPlaceHolder
@@ -264,33 +269,17 @@ extension SignUpViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         guard let text = textView.text else { return }
         
-//        // 글자수 제한
-//        let maxLength = 50
-//        if text.count > maxLength {
-////            textView.text = String(text.prefix(maxLength))
-//            textView.text.removeLast()
-//        }
-//        
         // 줄바꿈(들여쓰기) 제한
         let maxNumberOfLines = 3
         let lineBreakCharacter = "\n"
         let lines = text.components(separatedBy: lineBreakCharacter)
         var consecutiveLineBreakCount = 0 // 연속된 줄 바꿈 횟수
-
+        
         print("lines == \(lines)")
         for line in lines {
-//            if line.isEmpty { // 빈 줄이면 연속된 줄 바꿈으로 간주
-                consecutiveLineBreakCount += 1
-//            }
-//            } else {
-//                consecutiveLineBreakCount = 0
-//            }
-            
-
+            consecutiveLineBreakCount += 1
             if consecutiveLineBreakCount > maxNumberOfLines {
                 textView.text = String(text.dropLast()) // 마지막 입력 문자를 제거
-                
-//                textView.text.removeLast()
                 break
             }
         }
@@ -308,7 +297,8 @@ extension SignUpViewController : UITextFieldDelegate {
     }
 }
 
-// Alert 창
+// MARK: - Extension : CustomAlertDelegate
+
 extension SignUpViewController : CustomAlertDelegate {
     func cancel() {
         if backBtnPressed {
@@ -318,13 +308,14 @@ extension SignUpViewController : CustomAlertDelegate {
         }
     }
     
-    
     func confirmAction() {
         print("confirmed")
     }
 }
 
-// 아이디 허용 가능한 문자 : 대문자, 소문자, 숫자, _(언더바), .(마침표)
+// MARK: - Extension : String
+
+// 아이디 허용 가능한 문자 제한 : 대문자, 소문자, 숫자, _(언더바), .(마침표)
 extension String {
     func hasCharacters() -> Bool{
         do{
