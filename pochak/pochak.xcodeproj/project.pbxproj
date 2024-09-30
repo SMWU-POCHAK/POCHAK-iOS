@@ -135,6 +135,9 @@
 		374E463F2CAAC931008AE361 /* UnblockAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E463E2CAAC931008AE361 /* UnblockAPI.swift */; };
 		374E46412CAAC9AE008AE361 /* UnblockRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46402CAAC9AE008AE361 /* UnblockRequest.swift */; };
 		374E46432CAAC9B5008AE361 /* UnblockResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46422CAAC9B5008AE361 /* UnblockResponse.swift */; };
+		374E46452CAACD33008AE361 /* BlockListAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46442CAACD33008AE361 /* BlockListAPI.swift */; };
+		374E46472CAACE4C008AE361 /* BlockListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46462CAACE4C008AE361 /* BlockListRequest.swift */; };
+		374E46492CAACE53008AE361 /* BlockListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46482CAACE53008AE361 /* BlockListResponse.swift */; };
 		3766F4022C3706DC001DD239 /* BlockedUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3766F4012C3706DC001DD239 /* BlockedUserTableViewCell.xib */; };
 		3766F4032C3706DC001DD239 /* BlockedUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4002C3706DC001DD239 /* BlockedUserTableViewCell.swift */; };
 		3766F4062C370A7C001DD239 /* BlockedUserListDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4052C370A7C001DD239 /* BlockedUserListDataManager.swift */; };
@@ -391,6 +394,9 @@
 		374E463E2CAAC931008AE361 /* UnblockAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockAPI.swift; sourceTree = "<group>"; };
 		374E46402CAAC9AE008AE361 /* UnblockRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockRequest.swift; sourceTree = "<group>"; };
 		374E46422CAAC9B5008AE361 /* UnblockResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockResponse.swift; sourceTree = "<group>"; };
+		374E46442CAACD33008AE361 /* BlockListAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListAPI.swift; sourceTree = "<group>"; };
+		374E46462CAACE4C008AE361 /* BlockListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListRequest.swift; sourceTree = "<group>"; };
+		374E46482CAACE53008AE361 /* BlockListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListResponse.swift; sourceTree = "<group>"; };
 		3750669E2C3BB1660036E264 /* pochak.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = pochak.entitlements; sourceTree = "<group>"; };
 		3766F4002C3706DC001DD239 /* BlockedUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserTableViewCell.swift; sourceTree = "<group>"; };
 		3766F4012C3706DC001DD239 /* BlockedUserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlockedUserTableViewCell.xib; sourceTree = "<group>"; };
@@ -616,6 +622,7 @@
 				0822A04E2CA1980200F87E2C /* FollowAPI.swift */,
 				374E463A2CAAC762008AE361 /* BlockAPI.swift */,
 				374E463E2CAAC931008AE361 /* UnblockAPI.swift */,
+				374E46442CAACD33008AE361 /* BlockListAPI.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -645,6 +652,8 @@
 				374E463C2CAAC82E008AE361 /* BlockResponse.swift */,
 				374E46402CAAC9AE008AE361 /* UnblockRequest.swift */,
 				374E46422CAAC9B5008AE361 /* UnblockResponse.swift */,
+				374E46462CAACE4C008AE361 /* BlockListRequest.swift */,
+				374E46482CAACE53008AE361 /* BlockListResponse.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -987,19 +996,19 @@
 			isa = PBXGroup;
 			children = (
 				3766F4092C370CF5001DD239 /* BlockedUserViewController.swift */,
-				3766F40D2C373CFF001DD239 /* BlockListAPI */,
+				3766F40D2C373CFF001DD239 /* BlockListAPI_fin */,
 				3766F3FF2C3706C7001DD239 /* cell */,
 			);
 			path = BlockedUserList;
 			sourceTree = "<group>";
 		};
-		3766F40D2C373CFF001DD239 /* BlockListAPI */ = {
+		3766F40D2C373CFF001DD239 /* BlockListAPI_fin */ = {
 			isa = PBXGroup;
 			children = (
 				3766F4072C370A82001DD239 /* BlockedUserListDataModel.swift */,
 				3766F4052C370A7C001DD239 /* BlockedUserListDataManager.swift */,
 			);
-			path = BlockListAPI;
+			path = BlockListAPI_fin;
 			sourceTree = "<group>";
 		};
 		3769D6AC2B3C2F9900294CD1 /* SignUp */ = {
@@ -1754,6 +1763,7 @@
 				EA2CD63F2C5F585400644EFE /* HTTPHeaderType.swift in Sources */,
 				3769D6CE2B3C563A00294CD1 /* PostListViewController.swift in Sources */,
 				0822A0542CA1983100F87E2C /* ExploreResponse.swift in Sources */,
+				374E46492CAACE53008AE361 /* BlockListResponse.swift in Sources */,
 				374E46352CAAC445008AE361 /* SignOutAPI.swift in Sources */,
 				0822A0662CA1983C00F87E2C /* SearchRequest.swift in Sources */,
 				0822A0712CA1983C00F87E2C /* PostDetailResponse.swift in Sources */,
@@ -1816,6 +1826,7 @@
 				3766F40A2C370CF5001DD239 /* BlockedUserViewController.swift in Sources */,
 				374261782C31C6ED00B67886 /* AppleLoginDataManager.swift in Sources */,
 				0844D7EB2BF218A5001154AC /* ReportViewCell.swift in Sources */,
+				374E46472CAACE4C008AE361 /* BlockListRequest.swift in Sources */,
 				379A6A342B569DFA0087FAAC /* AuthenticationCredential.swift in Sources */,
 				0844649C2BF0F25900949850 /* PostMenuViewController.swift in Sources */,
 				0822A0702CA1983C00F87E2C /* PostReportResponse.swift in Sources */,
@@ -1894,6 +1905,7 @@
 				0844D7F32BF21A80001154AC /* CancelViewCell.swift in Sources */,
 				3766F4032C3706DC001DD239 /* BlockedUserTableViewCell.swift in Sources */,
 				37D311D52B53056700A1D7C1 /* ProfileUpdateDataManager.swift in Sources */,
+				374E46452CAACD33008AE361 /* BlockListAPI.swift in Sources */,
 				3769D6B92B3C345800294CD1 /* MyProfileTabViewController.swift in Sources */,
 				0822A0682CA1983C00F87E2C /* FollowResponse.swift in Sources */,
 				EA2CD63D2C5F4C2B00644EFE /* NetworkError.swift in Sources */,

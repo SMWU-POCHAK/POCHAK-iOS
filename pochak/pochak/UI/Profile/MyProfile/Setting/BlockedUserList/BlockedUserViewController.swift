@@ -72,13 +72,29 @@ class BlockedUserViewController: UIViewController {
     private func setUpData() {
         let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? "handle not found"
         isCurrentlyFetching = true
-        BlockedUserListDataManager.shared.blockedUserListDataManager(handle, currentFetchingPage, { resultData in
-            let newBlockedUsers = resultData.blockList
-            let startIndex = resultData.blockList.count
+        let request = BlockListRequest(page: currentFetchingPage)
+        UserService.getBlockUserList(handle: handle, request: request) { [weak self] data, failed in
+            guard let data = data else {
+                // 에러가 난 경우, alert 창 present
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .serverError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .unknownError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                }
+                return
+            }
+            
+            let newBlockedUsers = data.result.blockList
+            let startIndex = data.result.blockList.count
             let endIndex = startIndex + newBlockedUsers.count
             let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
             self.blockedUserList.append(contentsOf: newBlockedUsers)
-            self.isLastPage = resultData.pageInfo.lastPage
+            self.isLastPage = data.result.pageInfo.lastPage
             
             DispatchQueue.main.async {
                 if self.currentFetchingPage == 0 {
@@ -89,7 +105,26 @@ class BlockedUserViewController: UIViewController {
                 self.isCurrentlyFetching = false
                 self.currentFetchingPage += 1;
             }
-        })
+            
+        }
+//        BlockedUserListDataManager.shared.blockedUserListDataManager(handle, currentFetchingPage, { resultData in
+//            let newBlockedUsers = resultData.blockList
+//            let startIndex = resultData.blockList.count
+//            let endIndex = startIndex + newBlockedUsers.count
+//            let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
+//            self.blockedUserList.append(contentsOf: newBlockedUsers)
+//            self.isLastPage = resultData.pageInfo.lastPage
+//            
+//            DispatchQueue.main.async {
+//                if self.currentFetchingPage == 0 {
+//                    self.tableView.reloadData()
+//                } else {
+//                    self.tableView.insertRows(at: newIndexPaths, with: .none)
+//                }
+//                self.isCurrentlyFetching = false
+//                self.currentFetchingPage += 1;
+//            }
+//        })
     }
 }
 

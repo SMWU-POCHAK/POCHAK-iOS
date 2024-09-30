@@ -60,17 +60,22 @@ class BlockedUserTableViewCell: UITableViewCell {
     }
     
     func setUpCellData(_ blockedUserList :  BlockedUserListDataModel) {
-        let imageURL = blockedUserList.profileImage
-        if let url = URL(string: imageURL) {
-            profileImg.kf.setImage(with: url, completionHandler:  { result in
-                switch result {
-                case .success(let value):
-                    print("Image successfully loaded: \(value.image)")
-                case .failure(let error):
-                    print("Image failed to load with error: \(error.localizedDescription)")
-                }
-            })
+        // load 프로필 이미지
+        var imageURL = blockedUserList.profileImage
+        if let url = URL(string: (imageURL)) {
+            profileImg.load(with: url)
         }
+//        let imageURL = blockedUserList.profileImage
+//        if let url = URL(string: imageURL) {
+//            profileImg.kf.setImage(with: url, completionHandler:  { result in
+//                switch result {
+//                case .success(let value):
+//                    print("Image successfully loaded: \(value.image)")
+//                case .failure(let error):
+//                    print("Image failed to load with error: \(error.localizedDescription)")
+//                }
+//            })
+//        }
         userHandle.text = blockedUserList.handle
         userName.text = blockedUserList.name
         cellHandle = blockedUserList.handle

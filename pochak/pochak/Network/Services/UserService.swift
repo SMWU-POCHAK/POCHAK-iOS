@@ -66,4 +66,25 @@ struct UserService {
                 }
             }
         }
+    
+    
+    /// 팔로우 요청 혹은 취소하기
+    /// - Parameters:
+    ///   - handle: 팔로우 요청 혹은 취소하려는 사용자의 핸들 (아이디)
+    ///   - completion: 통신 후 핸들러 (뷰컨트롤러)
+    static func getBlockUserList(
+        handle: String,
+        request: BlockListRequest,
+        completion: @escaping (_ succeed: BlockListResponse?, _ failed: NetworkError?) -> Void) {
+            NetworkService.shared.request(BlockListAPI.getBlockUserList(handle: handle, request: request)) { response in
+                switch response {
+                case .success(let data):
+                    completion(data, nil)
+                case .failure(let error):
+                    print("=== getBlockUserList service error ===")
+                    print(error.localizedDescription)
+                    completion(nil, error)
+                }
+            }
+        }
 }
