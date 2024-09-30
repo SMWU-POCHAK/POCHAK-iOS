@@ -63,9 +63,9 @@ class FollowingListTabmanViewController: UIViewController {
     
     private func setUpData() {
         let request = FollowListRequest(page: currentFetchingPage)
+        
         UserService.getFollowings(handle: receivedHandle ?? "", request: request) { [weak self] data, failed in
             guard let data = data else {
-                // 에러가 난 경우, alert 창 present
                 switch failed {
                 case .disconnected:
                     self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
@@ -102,30 +102,6 @@ class FollowingListTabmanViewController: UIViewController {
                 self?.currentFetchingPage += 1;
             }
         }
-        //        FollowListDataManager.shared.followingDataManager(receivedHandle ?? "", currentFetchingPage, { resultData in
-        //            let newMembers = resultData.memberList
-        //            let startIndex = resultData.memberList.count
-        //            print("startIndex : \(startIndex)")
-        //            let endIndex = startIndex + newMembers.count
-        //            print("endIndex : \(endIndex)")
-        //            let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
-        //            print("newIndexPaths : \(newIndexPaths)")
-        //            self.imageArray.append(contentsOf: newMembers)
-        //            self.isLastPage = resultData.pageInfo.lastPage
-        //
-        //            print("보여주는 계정 개수: \(newMembers.count)")
-        //            DispatchQueue.main.async {
-        //                if self.currentFetchingPage == 0 {
-        //                    self.followingCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
-        //                    print(">>>>>>> Follower is currently reloading!!!!!!!")
-        //                } else {
-        //                    self.followingCollectionView.insertItems(at: newIndexPaths)
-        //                    print(">>>>>>> Follower is currently fethcing!!!!!!!")
-        //                }
-        //                self.isCurrentlyFetching = false
-        //                self.currentFetchingPage += 1;
-        //            }
-        //        })
     }
 }
 

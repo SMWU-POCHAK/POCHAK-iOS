@@ -882,15 +882,6 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		3742616A2C3075B400B67886 /* Setting */ = {
-			isa = PBXGroup;
-			children = (
-				3747E9712BF3827500364BED /* SettingsViewController.swift */,
-				3766F4042C370A5D001DD239 /* BlockList */,
-			);
-			path = Setting;
-			sourceTree = "<group>";
-		};
 		374261762C31C6CD00B67886 /* AppleLogin */ = {
 			isa = PBXGroup;
 			children = (
@@ -939,8 +930,8 @@
 		3766F4042C370A5D001DD239 /* BlockList */ = {
 			isa = PBXGroup;
 			children = (
-				3766F4092C370CF5001DD239 /* BlockedUserViewController.swift */,
 				3766F3FF2C3706C7001DD239 /* cell */,
+				3766F4092C370CF5001DD239 /* BlockedUserViewController.swift */,
 			);
 			path = BlockList;
 			sourceTree = "<group>";
@@ -969,11 +960,12 @@
 			isa = PBXGroup;
 			children = (
 				EAFB4B862A5147A300E0F2FA /* ProfileTab.storyboard */,
-				37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */,
-				374261632C2FEF5F00B67886 /* ProfileMenuViewController.swift */,
 				3769D6B82B3C345800294CD1 /* MyProfileTabViewController.swift */,
+				37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */,
 				37A284C02B52FC910023EB9D /* UpdateProfileViewController.swift */,
-				3742616A2C3075B400B67886 /* Setting */,
+				374261632C2FEF5F00B67886 /* ProfileMenuViewController.swift */,
+				3747E9712BF3827500364BED /* SettingsViewController.swift */,
+				3766F4042C370A5D001DD239 /* BlockList */,
 				3769D6CC2B3C560200294CD1 /* PostList */,
 				3769D6CB2B3C55E500294CD1 /* FollowList */,
 			);

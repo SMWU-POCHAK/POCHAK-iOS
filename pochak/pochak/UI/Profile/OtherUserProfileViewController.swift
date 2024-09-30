@@ -96,9 +96,6 @@ class OtherUserProfileViewController: UIViewController {
                 }
                 print(data.message)
             }
-            //            FollowToggleDataManager.shared.followToggleDataManager(self.receivedHandle ?? "", { resultData in
-            //                print(resultData.message)
-            //            })
             self.receivedIsFollow = true
             sender.setTitle("팔로잉", for: .normal)
             sender.backgroundColor = UIColor(named: "gray03")
@@ -189,8 +186,17 @@ class OtherUserProfileViewController: UIViewController {
         let request = ProfileRetrievalRequest(page: 0)
         ProfileService.getProfile(handle: receivedHandle ?? "", request: request) { data, failed in
             guard let data = data else {
-                // 에러가 난 경우, alert 창 present
                 switch failed {
+                case .clientError:
+                    self.navigationController?.popViewController(animated: true)
+                    self.navigationItem.title = ""
+                    self.searchBlockedUser = true
+                    self.showAlert(alertType: .confirmOnly,
+                                   titleText: "차단한 유저의 프로필입니다.",
+                                   messageText: "차단해제를 원하시면\n설정 탭의 차단관리 페이지를 확인해주세요.",
+                                   cancelButtonText: "",
+                                   confirmButtonText: "확인"
+                    )
                 case .disconnected:
                     self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
                 case .serverError:
@@ -206,7 +212,6 @@ class OtherUserProfileViewController: UIViewController {
             print("=== Profile, setup data succeeded ===")
             print("== data: \(data)")
             
-            let currentHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
             // load 프로필 이미지
             if let url = URL(string: data.result.profileImage ?? "") {
                 self.profileImage.load(with: url)
@@ -215,45 +220,8 @@ class OtherUserProfileViewController: UIViewController {
             // 필요한 데이터 뷰에 반영
             self.setUpResponseData(data.result)
             
-            // 버튼 설정
-            if currentHandle == self.receivedHandle{
-                /// 내 프로필 조회한 경우
-                self.followToggleBtn.layer.isHidden = true
-                self.updateProfileBtn.layer.isHidden = false
-                self.postListTabmanView.topAnchor.constraint(equalTo: self.whiteBackground.bottomAnchor, constant: 5).isActive = true
-                self.moreButton.isHidden = true
-                
-            } else {
-                self.followToggleBtn.setTitleColor(UIColor.white, for: .normal)
-                self.followToggleBtn.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 16) // 폰트 설정
-                self.followToggleBtn.layer.cornerRadius = 5
-                
-                if data.result.isFollow == true {
-                    /// 팔로우 중인 유저인 경우
-                    self.followToggleBtn.setTitle("팔로잉", for: .normal)
-                    self.followToggleBtn.backgroundColor = UIColor(named: "gray03")
-                    
-                } else {
-                    /// 팔로우하고 있지 않은 유저인 경우
-                    self.followToggleBtn.setTitle("팔로우", for: .normal)
-                    self.followToggleBtn.backgroundColor = UIColor(named: "yellow00")
-                    
-                }
-                
-            }
-            //            case .MEMBER4002:
-            //                self.navigationController?.popViewController(animated: true)
-            //                print("유효하지 않은 멤버의 handle입니다.")
-            //                self.navigationItem.title = ""
-            //                self.searchBlockedUser = true
-            //                self.showAlert(alertType: .confirmOnly,
-            //                               titleText: "차단한 유저의 프로필입니다.",
-            //                               messageText: "차단해제를 원하시면\n설정 탭의 차단관리 페이지를 확인해주세요.",
-            //                               cancelButtonText: "",
-            //                               confirmButtonText: "확인"
-            //                )
-            //            }
-            //        })
+            // 팔로우 버튼 설정
+            self.setUpFollowBtn(data.result)
         }
     }
     
@@ -267,6 +235,34 @@ class OtherUserProfileViewController: UIViewController {
         self.receivedFollowingCount = resposeData.followingCount ?? 0
         self.receivedIsFollow = resposeData.isFollow
     }
+    
+    private func setUpFollowBtn(_ resposeData: ProfileRetrievalResult) {
+        let currentHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
+        // 버튼 설정
+        if currentHandle == self.receivedHandle {
+            /// 내 프로필 조회한 경우
+            self.followToggleBtn.layer.isHidden = true
+            self.updateProfileBtn.layer.isHidden = false
+            self.postListTabmanView.topAnchor.constraint(equalTo: self.whiteBackground.bottomAnchor, constant: 5).isActive = true
+            self.moreButton.isHidden = true
+            
+        } else {
+            self.followToggleBtn.setTitleColor(UIColor.white, for: .normal)
+            self.followToggleBtn.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 16)
+            self.followToggleBtn.layer.cornerRadius = 5
+            
+            if resposeData.isFollow == true {
+                /// 팔로우 중인 유저인 경우
+                self.followToggleBtn.setTitle("팔로잉", for: .normal)
+                self.followToggleBtn.backgroundColor = UIColor(named: "gray03")
+                
+            } else {
+                /// 팔로우하고 있지 않은 유저인 경우
+                self.followToggleBtn.setTitle("팔로우", for: .normal)
+                self.followToggleBtn.backgroundColor = UIColor(named: "yellow00")
+            }
+        }
+    }
 }
 
 // MARK: - Extension : CustomAlertDelegate, SecondViewControllerDelegate
@@ -279,7 +275,6 @@ extension OtherUserProfileViewController: CustomAlertDelegate {
         } else {
             UserService.postFollowRequest(handle: receivedHandle ?? "") { [weak self] data, failed in
                 guard let data = data else {
-                    // 에러가 난 경우, alert 창 present
                     switch failed {
                     case .disconnected:
                         self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
@@ -294,9 +289,6 @@ extension OtherUserProfileViewController: CustomAlertDelegate {
                 }
                 print(data.message)
             }
-//            FollowToggleDataManager.shared.followToggleDataManager(receivedHandle ?? "", { resultData in
-//                print(resultData.message)
-//            })
             self.receivedIsFollow = false
             followToggleBtn.setTitle("팔로우", for: .normal)
             followToggleBtn.backgroundColor = UIColor(named: "yellow00")

@@ -49,7 +49,6 @@ extension ProfileMenuViewController: CustomAlertDelegate {
     func confirmAction() {
         UserService.blockUser(handle: receivedHandle ?? "") { [weak self] data, failed in
             guard let data = data else {
-                // 에러가 난 경우, alert 창 present
                 switch failed {
                 case .disconnected:
                     self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
@@ -62,18 +61,11 @@ extension ProfileMenuViewController: CustomAlertDelegate {
                 }
                 return
             }
-            
             print(data.message)
             self?.userBlockBtn.setTitle("차단취소", for: .normal)
             self?.delegate?.dismissSecondViewController()
             self?.dismiss(animated: true, completion: nil)
         }
-        //        BlockDataManager.shared.blockDataManager(receivedHandle ?? "", { resultData in
-        //            print(resultData.message)
-        //            self.userBlockBtn.setTitle("차단취소", for: .normal)
-        //            self.delegate?.dismissSecondViewController()
-        //            self.dismiss(animated: true, completion: nil)
-        //        })
     }
     
     func cancel() {
