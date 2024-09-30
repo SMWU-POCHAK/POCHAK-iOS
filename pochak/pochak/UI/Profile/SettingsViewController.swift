@@ -159,12 +159,6 @@ extension SettingsViewController: CustomAlertDelegate {
                 let message = data.message
                 print(message)
             }
-//            LogoutDataManager.shared.logoutDataManager(
-//                { resultData in
-//                    let message = resultData.message
-//                    print(message)
-//                })
-//            
             deleteUserData()
             moveToMainPage()
             
@@ -177,12 +171,6 @@ extension SettingsViewController: CustomAlertDelegate {
                 let message = data.message
                 print(message)
             }
-//            SignOutDataManager.shared.signOutDataManager(
-//                { resultData in
-//                    let message = resultData.message
-//                    print(message)
-//                })
-            
             deleteUserData()
             moveToMainPage()
         }
