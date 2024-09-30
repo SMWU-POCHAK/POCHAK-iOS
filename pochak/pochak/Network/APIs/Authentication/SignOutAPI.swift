@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 enum SignOutAPI {
-    case signOut()
+    case signOut
 }
 
 extension SignOutAPI: BaseAPI {
@@ -24,7 +24,7 @@ extension SignOutAPI: BaseAPI {
 
     var path: String {
         switch self {
-        case .signOut(): return "/v2/signout"
+        case .signOut: return "/v2/signout"
         }
     }
 }

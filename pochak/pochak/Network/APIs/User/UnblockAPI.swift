@@ -9,12 +9,12 @@ import Foundation
 import Alamofire
 
 enum UnblockAPI {
-    case unblockUser(handle: String, request: ProfileRetrievalRequest)
+    case unblockUser(handle: String, request: UnblockRequest)
 }
 
 extension UnblockAPI: BaseAPI {
     
-    typealias Response = BlockResponse
+    typealias Response = UnblockResponse
         
     var method: HTTPMethod {
         switch self {

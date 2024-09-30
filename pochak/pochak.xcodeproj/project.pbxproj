@@ -138,6 +138,13 @@
 		374E46452CAACD33008AE361 /* BlockListAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46442CAACD33008AE361 /* BlockListAPI.swift */; };
 		374E46472CAACE4C008AE361 /* BlockListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46462CAACE4C008AE361 /* BlockListRequest.swift */; };
 		374E46492CAACE53008AE361 /* BlockListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46482CAACE53008AE361 /* BlockListResponse.swift */; };
+		3759CF2F2CAAE42600408A4E /* UnfollowAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF2E2CAAE42600408A4E /* UnfollowAPI.swift */; };
+		3759CF312CAAE4C600408A4E /* UnfollowRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF302CAAE4C600408A4E /* UnfollowRequest.swift */; };
+		3759CF332CAAE4CE00408A4E /* UnfollowResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF322CAAE4CE00408A4E /* UnfollowResponse.swift */; };
+		3759CF352CAAE79000408A4E /* FollowerRetrievalAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF342CAAE79000408A4E /* FollowerRetrievalAPI.swift */; };
+		3759CF372CAAE79F00408A4E /* FollowingRetrievalAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF362CAAE79F00408A4E /* FollowingRetrievalAPI.swift */; };
+		3759CF392CAAE7E900408A4E /* FollowListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF382CAAE7E900408A4E /* FollowListRequest.swift */; };
+		3759CF3B2CAAE80700408A4E /* FollowListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF3A2CAAE80700408A4E /* FollowListResponse.swift */; };
 		3766F4022C3706DC001DD239 /* BlockedUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3766F4012C3706DC001DD239 /* BlockedUserTableViewCell.xib */; };
 		3766F4032C3706DC001DD239 /* BlockedUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4002C3706DC001DD239 /* BlockedUserTableViewCell.swift */; };
 		3766F4062C370A7C001DD239 /* BlockedUserListDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4052C370A7C001DD239 /* BlockedUserListDataManager.swift */; };
@@ -398,6 +405,13 @@
 		374E46462CAACE4C008AE361 /* BlockListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListRequest.swift; sourceTree = "<group>"; };
 		374E46482CAACE53008AE361 /* BlockListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListResponse.swift; sourceTree = "<group>"; };
 		3750669E2C3BB1660036E264 /* pochak.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = pochak.entitlements; sourceTree = "<group>"; };
+		3759CF2E2CAAE42600408A4E /* UnfollowAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfollowAPI.swift; sourceTree = "<group>"; };
+		3759CF302CAAE4C600408A4E /* UnfollowRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfollowRequest.swift; sourceTree = "<group>"; };
+		3759CF322CAAE4CE00408A4E /* UnfollowResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfollowResponse.swift; sourceTree = "<group>"; };
+		3759CF342CAAE79000408A4E /* FollowerRetrievalAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerRetrievalAPI.swift; sourceTree = "<group>"; };
+		3759CF362CAAE79F00408A4E /* FollowingRetrievalAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingRetrievalAPI.swift; sourceTree = "<group>"; };
+		3759CF382CAAE7E900408A4E /* FollowListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowListRequest.swift; sourceTree = "<group>"; };
+		3759CF3A2CAAE80700408A4E /* FollowListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowListResponse.swift; sourceTree = "<group>"; };
 		3766F4002C3706DC001DD239 /* BlockedUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserTableViewCell.swift; sourceTree = "<group>"; };
 		3766F4012C3706DC001DD239 /* BlockedUserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlockedUserTableViewCell.xib; sourceTree = "<group>"; };
 		3766F4052C370A7C001DD239 /* BlockedUserListDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserListDataManager.swift; sourceTree = "<group>"; };
@@ -620,6 +634,9 @@
 			isa = PBXGroup;
 			children = (
 				0822A04E2CA1980200F87E2C /* FollowAPI.swift */,
+				3759CF2E2CAAE42600408A4E /* UnfollowAPI.swift */,
+				3759CF342CAAE79000408A4E /* FollowerRetrievalAPI.swift */,
+				3759CF362CAAE79F00408A4E /* FollowingRetrievalAPI.swift */,
 				374E463A2CAAC762008AE361 /* BlockAPI.swift */,
 				374E463E2CAAC931008AE361 /* UnblockAPI.swift */,
 				374E46442CAACD33008AE361 /* BlockListAPI.swift */,
@@ -649,6 +666,10 @@
 			isa = PBXGroup;
 			children = (
 				0822A0592CA1983C00F87E2C /* FollowResponse.swift */,
+				3759CF302CAAE4C600408A4E /* UnfollowRequest.swift */,
+				3759CF322CAAE4CE00408A4E /* UnfollowResponse.swift */,
+				3759CF382CAAE7E900408A4E /* FollowListRequest.swift */,
+				3759CF3A2CAAE80700408A4E /* FollowListResponse.swift */,
 				374E463C2CAAC82E008AE361 /* BlockResponse.swift */,
 				374E46402CAAC9AE008AE361 /* UnblockRequest.swift */,
 				374E46422CAAC9B5008AE361 /* UnblockResponse.swift */,
@@ -889,7 +910,7 @@
 			path = LikesDataManager;
 			sourceTree = "<group>";
 		};
-		373235452B68F9180042EF94 /* FollowAPI */ = {
+		373235452B68F9180042EF94 /* FollowAPI_fin */ = {
 			isa = PBXGroup;
 			children = (
 				373235462B68F93E0042EF94 /* FollowListDataManager.swift */,
@@ -899,7 +920,7 @@
 				373235532B692C6D0042EF94 /* DeleteFollowerDataManager.swift */,
 				373235552B692C790042EF94 /* DeleteFollowerDataModel.swift */,
 			);
-			path = FollowAPI;
+			path = FollowAPI_fin;
 			sourceTree = "<group>";
 		};
 		373815142A89E6BE0032066A /* Login */ = {
@@ -1070,7 +1091,7 @@
 			isa = PBXGroup;
 			children = (
 				3769D6C02B3C39EA00294CD1 /* cell */,
-				373235452B68F9180042EF94 /* FollowAPI */,
+				373235452B68F9180042EF94 /* FollowAPI_fin */,
 				3769D6BA2B3C347000294CD1 /* FollowListViewController.swift */,
 				3769D6BC2B3C348800294CD1 /* FollowerListTabmanViewController.swift */,
 				3769D6BE2B3C349D00294CD1 /* FollowingListTabmanViewController.swift */,
@@ -1105,8 +1126,8 @@
 				376EA12D2CAAAE6800FEFB63 /* ProfileRetrievalRequest.swift */,
 				376EA12B2CAAAE5600FEFB63 /* ProfileRetrievalResponse.swift */,
 				374E46222CAABB31008AE361 /* PochakPostRetrievalResponse.swift */,
-				374E46242CAABE07008AE361 /* ProfileUpdateResponse.swift */,
 				374E462A2CAABF7A008AE361 /* ProfileUpdateRequest.swift */,
+				374E46242CAABE07008AE361 /* ProfileUpdateResponse.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1759,6 +1780,7 @@
 				EA2CD6482C5F5B0700644EFE /* HomeRequest.swift in Sources */,
 				37C3AF4B2B3CB49E00B4C79C /* MyProfilePostDataManager.swift in Sources */,
 				EA7E14672C858F0F001DA769 /* CameraAPI.swift in Sources */,
+				3759CF392CAAE7E900408A4E /* FollowListRequest.swift in Sources */,
 				0822A02D2CA196DF00F87E2C /* PostCollectionViewCell.swift in Sources */,
 				EA2CD63F2C5F585400644EFE /* HTTPHeaderType.swift in Sources */,
 				3769D6CE2B3C563A00294CD1 /* PostListViewController.swift in Sources */,
@@ -1770,6 +1792,7 @@
 				376EA12C2CAAAE5600FEFB63 /* ProfileRetrievalResponse.swift in Sources */,
 				EA0107A72A5CF73900A3AE85 /* AlarmViewController.swift in Sources */,
 				08EB99B72C53EA8500FAC08A /* TaggedUsersTableViewCell.swift in Sources */,
+				3759CF332CAAE4CE00408A4E /* UnfollowResponse.swift in Sources */,
 				EACF0F6E2C3044C000C0016C /* TagSearchTableViewCell.swift in Sources */,
 				08B679632B528D7500F8D585 /* CommentTableViewFooterView.swift in Sources */,
 				EA2CD6442C5F5A0E00644EFE /* HomeAPI.swift in Sources */,
@@ -1799,6 +1822,7 @@
 				EA17182C2A5912A7009168E6 /* UploadViewController.swift in Sources */,
 				089E27B72C4E8C2D00828F4C /* AlarmType.swift in Sources */,
 				3769D6B22B3C300D00294CD1 /* GoogleLoginModel.swift in Sources */,
+				3759CF2F2CAAE42600408A4E /* UnfollowAPI.swift in Sources */,
 				EA96D04C2C8F10C700D80562 /* TagPreviewResponse.swift in Sources */,
 				0822A06B2CA1983C00F87E2C /* ChildCommentGetResponse.swift in Sources */,
 				0822A0352CA196DF00F87E2C /* ExploreTabViewController.swift in Sources */,
@@ -1815,6 +1839,7 @@
 				374E46292CAABE50008AE361 /* ProfileUpdateAPI.swift in Sources */,
 				0844D7EF2BF219F6001154AC /* DeleteViewCell.swift in Sources */,
 				374E463D2CAAC82E008AE361 /* BlockResponse.swift in Sources */,
+				3759CF3B2CAAE80700408A4E /* FollowListResponse.swift in Sources */,
 				374261742C3092B900B67886 /* UnblockDataModel.swift in Sources */,
 				EA2CD63B2C5F463700644EFE /* NetworkService.swift in Sources */,
 				373235542B692C6D0042EF94 /* DeleteFollowerDataManager.swift in Sources */,
@@ -1859,6 +1884,7 @@
 				08C02EF82BF394B800627C21 /* UIAlertController+.swift in Sources */,
 				089E27B92C4E8CB800828F4C /* AlertType.swift in Sources */,
 				EAE69F442C315009005762B7 /* UIVIew+.swift in Sources */,
+				3759CF312CAAE4C600408A4E /* UnfollowRequest.swift in Sources */,
 				0876E23E2C274256008DE88F /* NoPostCollectionViewCell.swift in Sources */,
 				EA96D0502C8F15E000D80562 /* TagPreviewAPI.swift in Sources */,
 				0822A0482CA197E700F87E2C /* PostDeleteAPI.swift in Sources */,
@@ -1871,6 +1897,7 @@
 				0801765E2A74F4B0005E6953 /* UITextView+Extension.swift in Sources */,
 				081228C62A69624000DFA094 /* PostLikesViewController.swift in Sources */,
 				EA01079B2A59556800A3AE85 /* HomeTabViewController.swift in Sources */,
+				3759CF352CAAE79000408A4E /* FollowerRetrievalAPI.swift in Sources */,
 				373235492B68F9A60042EF94 /* FollowListDataModel.swift in Sources */,
 				0822A0332CA196DF00F87E2C /* RecentSearchViewController.swift in Sources */,
 				0822A06E2CA1983C00F87E2C /* CommentPostResponse.swift in Sources */,
@@ -1918,6 +1945,7 @@
 				3769D6D02B3C569C00294CD1 /* PochakedPostTabmanViewController.swift in Sources */,
 				374261642C2FEF5F00B67886 /* ProfileMenuViewController.swift in Sources */,
 				3742617F2C359D6D00B67886 /* CheckHandleDuplicationDataModel.swift in Sources */,
+				3759CF372CAAE79F00408A4E /* FollowingRetrievalAPI.swift in Sources */,
 				EAC582742C3074EA006F44AF /* UIColor+.swift in Sources */,
 				3769D6BB2B3C347000294CD1 /* FollowListViewController.swift in Sources */,
 				3769D6B42B3C301B00294CD1 /* JoinDataManager.swift in Sources */,
@@ -2118,7 +2146,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = JU9BM2NXCW;
+				DEVELOPMENT_TEAM = 2285AK4JY4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = pochak/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Pochak;
@@ -2158,7 +2186,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = JU9BM2NXCW;
+				DEVELOPMENT_TEAM = 2285AK4JY4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = pochak/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Pochak;

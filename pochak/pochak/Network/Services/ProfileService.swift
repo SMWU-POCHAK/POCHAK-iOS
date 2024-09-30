@@ -29,7 +29,7 @@ struct ProfileService {
     
     static func getProfilePochakPosts(
         handle: String,
-        request: PochakPostRetrievalRequest,
+        request: ProfileRetrievalRequest,
         completion: @escaping (_ succeed: PochakPostRetrievalResponse?, _ failed: NetworkError?) -> Void) {
             NetworkService.shared.request(PochakPostRetrievalAPI.getPochakPost(handle: handle, request: request)) { response in
                 switch response {

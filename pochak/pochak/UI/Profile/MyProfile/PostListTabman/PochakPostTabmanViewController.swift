@@ -12,7 +12,7 @@ class PochakPostTabmanViewController: UIViewController {
     // MARK: - Properties
     
     var receivedHandle: String?
-    var imageArray: [PostDataModel] = []
+    var imageArray: [ProfilePostList] = []
     private var isLastPage: Bool = false
     private var isCurrentlyFetching: Bool = false
     private var currentFetchingPage: Int = 0
@@ -64,7 +64,7 @@ class PochakPostTabmanViewController: UIViewController {
     private func setUpData() {
         isCurrentlyFetching = true
         let request = ProfileRetrievalRequest(page: currentFetchingPage)
-        ProfileService.getProfilePochakPosts(handle: receivedHandle, request: request) { [weak self] data, failed in
+        ProfileService.getProfilePochakPosts(handle: receivedHandle ?? "", request: request) { [weak self] data, failed in
             guard let data = data else {
                 // 에러가 난 경우, alert 창 present
                 switch failed {
@@ -87,18 +87,18 @@ class PochakPostTabmanViewController: UIViewController {
             let startIndex = data.result.postList.count
             let endIndex = startIndex + newPosts.count
             let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
-            self.imageArray.append(contentsOf: newPosts)
-            self.isLastPage = data.result.pageInfo.lastPage
+            self?.imageArray.append(contentsOf: newPosts)
+            self?.isLastPage = data.result.pageInfo.lastPage
             
             DispatchQueue.main.async {
-                if self.currentFetchingPage == 0 {
-                    self.postCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
+                if self?.currentFetchingPage == 0 {
+                    self?.postCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
                     print(">>>>>>> PochakPostDataManager is currently reloading!!!!!!!")
                 } else {
-                    self.postCollectionView.insertItems(at: newIndexPaths)
+                    self?.postCollectionView.insertItems(at: newIndexPaths)
                 }
-                self.isCurrentlyFetching = false
-                self.currentFetchingPage += 1;
+                self?.isCurrentlyFetching = false
+                self?.currentFetchingPage += 1;
             }
         }
 //        MyProfilePostDataManager.shared.myProfilePochakPostDataManager(receivedHandle ?? "",currentFetchingPage,{resultData in

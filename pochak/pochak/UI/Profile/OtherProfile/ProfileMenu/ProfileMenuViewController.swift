@@ -47,7 +47,7 @@ class ProfileMenuViewController: UIViewController {
 extension ProfileMenuViewController: CustomAlertDelegate {
     
     func confirmAction() {
-        UserService.blockUser(handle: receivedHandle) { [weak self] data, failed in
+        UserService.blockUser(handle: receivedHandle ?? "") { [weak self] data, failed in
             guard let data = data else {
                 // 에러가 난 경우, alert 창 present
                 switch failed {
@@ -64,9 +64,9 @@ extension ProfileMenuViewController: CustomAlertDelegate {
             }
             
             print(data.message)
-            self.userBlockBtn.setTitle("차단취소", for: .normal)
-            self.delegate?.dismissSecondViewController()
-            self.dismiss(animated: true, completion: nil)
+            self?.userBlockBtn.setTitle("차단취소", for: .normal)
+            self?.delegate?.dismissSecondViewController()
+            self?.dismiss(animated: true, completion: nil)
         }
         //        BlockDataManager.shared.blockDataManager(receivedHandle ?? "", { resultData in
         //            print(resultData.message)

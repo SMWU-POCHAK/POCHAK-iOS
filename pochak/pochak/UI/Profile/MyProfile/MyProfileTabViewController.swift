@@ -127,18 +127,18 @@ class MyProfileTabViewController: UIViewController {
     
     private func setUpData() {
         let request = ProfileRetrievalRequest(page: 0)
-        ProfileService.getProfile(handle: handle, request: request) { [weak self] data, failed in
+        ProfileService.getProfile(handle: handle, request: request) { data, failed in
             guard let data = data else {
                 // 에러가 난 경우, alert 창 present
                 switch failed {
                 case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
                 case .serverError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
                 case .unknownError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
                 default:
-                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                    self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
                 }
                 return
             }
@@ -147,9 +147,8 @@ class MyProfileTabViewController: UIViewController {
             print("== data: \(data)")
             
             // load 프로필 이미지
-            var imageURL = data.result.profileImage
-            if let url = URL(string: (imageURL)) {
-                profileImage.load(with: url)
+            if let url = URL(string: data.result.profileImage ?? "") {
+                self.profileImage.load(with: url)
             }
             // 필요한 데이터 뷰에 반영
             self.setUpResponseData(data.result)

@@ -59,7 +59,7 @@ class BlockedUserTableViewCell: UITableViewCell {
         unblockButton.layer.cornerRadius = 5
     }
     
-    func setUpCellData(_ blockedUserList :  BlockedUserListDataModel) {
+    func setUpCellData(_ blockedUserList :  BlockList) {
         // load 프로필 이미지
         var imageURL = blockedUserList.profileImage
         if let url = URL(string: (imageURL)) {

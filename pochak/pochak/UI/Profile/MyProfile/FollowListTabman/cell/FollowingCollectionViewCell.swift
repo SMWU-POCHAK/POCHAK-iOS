@@ -32,16 +32,30 @@ class FollowingCollectionViewCell: UICollectionViewCell {
     // MARK: - Actions
     
     @objc func toggleFollowBtn(_ sender: UIButton) {
-        FollowToggleDataManager.shared.followToggleDataManager(cellHandle, { resultData in
-            print(resultData.message)
-            if resultData.message == "성공적으로 팔로우를 취소하였습니다." {
+        UserService.postFollowRequest(handle: cellHandle) { data, failed in
+            guard let data = data else {
+                print("error")
+                return
+            }
+            print(data.message)
+            if data.message == "성공적으로 팔로우를 취소하였습니다." {
                 sender.setTitle("팔로우", for: .normal)
                 sender.backgroundColor = UIColor(named: "yellow00")
-            } else if resultData.message == "성공적으로 팔로우하였습니다."{
+            } else if data.message == "성공적으로 팔로우하였습니다."{
                 sender.setTitle("팔로잉", for: .normal)
                 sender.backgroundColor = UIColor(named: "gray03")
             }
-        })
+        }
+//        FollowToggleDataManager.shared.followToggleDataManager(cellHandle, { resultData in
+//            print(resultData.message)
+//            if resultData.message == "성공적으로 팔로우를 취소하였습니다." {
+//                sender.setTitle("팔로우", for: .normal)
+//                sender.backgroundColor = UIColor(named: "yellow00")
+//            } else if resultData.message == "성공적으로 팔로우하였습니다."{
+//                sender.setTitle("팔로잉", for: .normal)
+//                sender.backgroundColor = UIColor(named: "gray03")
+//            }
+//        })
     }
     
     // MARK: - Functions
@@ -54,7 +68,7 @@ class FollowingCollectionViewCell: UICollectionViewCell {
         followStateToggleBtn.isHidden = false
     }
     
-    func setUpCellData(_ memberDataModel : MemberListDataModel) {
+    func setUpCellData(_ memberDataModel : MemberListData) {
         var imageURL = memberDataModel.profileImage
         if let url = URL(string: imageURL) {
             profileImageBtn.kf.setImage(with: url, for: .normal)

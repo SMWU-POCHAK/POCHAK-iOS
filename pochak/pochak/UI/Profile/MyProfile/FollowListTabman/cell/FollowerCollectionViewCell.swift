@@ -48,9 +48,14 @@ class FollowerCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func toggleFollowBtn(_ sender: UIButton) {
-        FollowToggleDataManager.shared.followToggleDataManager(cellHandle, { resultData in
-            var resultCode = resultData.code
-            print(resultData.message)
+        UserService.postFollowRequest(handle: cellHandle) { data, failed  in
+            guard let data = data else {
+                print("error")
+                return
+            }
+            
+            var resultCode = data.code
+            print(data.message)
             if resultCode == "FOLLOW2002" {
                 sender.setTitle("팔로우", for: .normal)
                 sender.backgroundColor = UIColor(named: "yellow00")
@@ -58,7 +63,19 @@ class FollowerCollectionViewCell: UICollectionViewCell {
                 sender.setTitle("팔로잉", for: .normal)
                 sender.backgroundColor = UIColor(named: "gray03")
             }
-        })
+            
+        }
+//        FollowToggleDataManager.shared.followToggleDataManager(cellHandle, { resultData in
+//            var resultCode = resultData.code
+//            print(resultData.message)
+//            if resultCode == "FOLLOW2002" {
+//                sender.setTitle("팔로우", for: .normal)
+//                sender.backgroundColor = UIColor(named: "yellow00")
+//            } else if resultCode == "FOLLOW2001" {
+//                sender.setTitle("팔로잉", for: .normal)
+//                sender.backgroundColor = UIColor(named: "gray03")
+//            }
+//        })
     }
     
     // MARK: - Functions
@@ -72,7 +89,7 @@ class FollowerCollectionViewCell: UICollectionViewCell {
         followBtn.isHidden = false
     }
     
-    func setUpCellData(_ memberDataModel : MemberListDataModel) {
+    func setUpCellData(_ memberDataModel : MemberListData) {
         let imageURL = memberDataModel.profileImage
         if let url = URL(string: imageURL) {
             profileImageBtn.kf.setImage(with: url, for: .normal, completionHandler:  { result in

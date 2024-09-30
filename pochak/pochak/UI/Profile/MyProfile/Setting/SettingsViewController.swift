@@ -151,7 +151,11 @@ extension SettingsViewController: CustomAlertDelegate {
     
     func confirmAction() {
         if selectedBtn == 0 {
-            AuthenticationService.logOut { [weak self] data, failed in
+            AuthenticationService.logOut { data, failed in
+                guard let data = data else {
+                    print(failed)
+                    return
+                }
                 let message = data.message
                 print(message)
             }
@@ -165,7 +169,11 @@ extension SettingsViewController: CustomAlertDelegate {
             moveToMainPage()
             
         } else if selectedBtn == 1 {
-            AuthenticationService.signOut { [weak self] data, failed in
+            AuthenticationService.signOut { data, failed in
+                guard let data = data else {
+                    print(failed)
+                    return
+                }
                 let message = data.message
                 print(message)
             }

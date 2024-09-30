@@ -19,7 +19,7 @@ extension ProfileUpdateAPI: BaseAPI {
         
     var method: HTTPMethod {
         switch self {
-        case .updateProfile: return .post
+        case .updateProfile: return .put
         }
     }
 

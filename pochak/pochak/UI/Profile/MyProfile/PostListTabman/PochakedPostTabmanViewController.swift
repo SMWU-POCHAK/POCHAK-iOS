@@ -12,7 +12,7 @@ class PochakedPostTabmanViewController: UIViewController {
     // MARK: - Properties
     
     var receivedHandle: String?
-    var imageArray: [PostDataModel] = []
+    var imageArray: [ProfilePostList] = []
     private var isLastPage: Bool = false
     private var isCurrentlyFetching: Bool = false
     private var currentFetchingPage: Int = 0
@@ -63,7 +63,7 @@ class PochakedPostTabmanViewController: UIViewController {
     private func setUpData() {
         isCurrentlyFetching = true
         let request = ProfileRetrievalRequest(page: currentFetchingPage)
-        ProfileService.getProfile(handle: receivedHandle, request: request) { [weak self] data, failed in
+        ProfileService.getProfile(handle: receivedHandle ?? "", request: request) { [weak self] data, failed in
             guard let data = data else {
                 // 에러가 난 경우, alert 창 present
                 switch failed {
@@ -89,53 +89,54 @@ class PochakedPostTabmanViewController: UIViewController {
             print("endIndex : \(endIndex)")
             let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
             print("newIndexPaths : \(newIndexPaths)")
-            self.imageArray.append(contentsOf: newPosts)
-            self.isLastPage = data.result.pageInfo.lastPage
+            self?.imageArray.append(contentsOf: newPosts)
+            self?.isLastPage = data.result.pageInfo.lastPage
             
             print("보여주는 게시글 개수: \(newPosts.count)")
             DispatchQueue.main.async {
-                if self.currentFetchingPage == 0 {
-                    self.postCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
+                if self?.currentFetchingPage == 0 {
+                    self?.postCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
                     print(">>>>>>> PochakedPostDataManager is currently reloading!!!!!!!")
                 } else {
-                    self.postCollectionView.insertItems(at: newIndexPaths)
+                    self?.postCollectionView.insertItems(at: newIndexPaths)
                     print(">>>>>>> PochakedPostDataManager is currently fethcing!!!!!!!")
                 }
-                self.isCurrentlyFetching = false
-                self.currentFetchingPage += 1;
+                self?.isCurrentlyFetching = false
+                self?.currentFetchingPage += 1;
             }
         }
-//        MyProfilePostDataManager.shared.myProfileUserAndPochakedPostDataManager(receivedHandle ?? "", currentFetchingPage, { response in
-//            switch response {
-//            case .success(let resultData):
-//                
-//                let newPosts = resultData.postList
-//                let startIndex = resultData.postList.count
-//                print("startIndex : \(startIndex)")
-//                let endIndex = startIndex + newPosts.count
-//                print("endIndex : \(endIndex)")
-//                let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
-//                print("newIndexPaths : \(newIndexPaths)")
-//                self.imageArray.append(contentsOf: newPosts)
-//                self.isLastPage = resultData.pageInfo.lastPage
-//                
-//                print("보여주는 게시글 개수: \(newPosts.count)")
-//                DispatchQueue.main.async {
-//                    if self.currentFetchingPage == 0 {
-//                        self.postCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
-//                        print(">>>>>>> PochakedPostDataManager is currently reloading!!!!!!!")
-//                    } else {
-//                        self.postCollectionView.insertItems(at: newIndexPaths)
-//                        print(">>>>>>> PochakedPostDataManager is currently fethcing!!!!!!!")
-//                    }
-//                    self.isCurrentlyFetching = false
-//                    self.currentFetchingPage += 1;
-//                }
-//            case .MEMBER4002:
-//                print("유효하지 않은 멤버의 handle입니다.")
-//            }
-//        })
-//    }
+        //        MyProfilePostDataManager.shared.myProfileUserAndPochakedPostDataManager(receivedHandle ?? "", currentFetchingPage, { response in
+        //            switch response {
+        //            case .success(let resultData):
+        //
+        //                let newPosts = resultData.postList
+        //                let startIndex = resultData.postList.count
+        //                print("startIndex : \(startIndex)")
+        //                let endIndex = startIndex + newPosts.count
+        //                print("endIndex : \(endIndex)")
+        //                let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
+        //                print("newIndexPaths : \(newIndexPaths)")
+        //                self.imageArray.append(contentsOf: newPosts)
+        //                self.isLastPage = resultData.pageInfo.lastPage
+        //
+        //                print("보여주는 게시글 개수: \(newPosts.count)")
+        //                DispatchQueue.main.async {
+        //                    if self.currentFetchingPage == 0 {
+        //                        self.postCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
+        //                        print(">>>>>>> PochakedPostDataManager is currently reloading!!!!!!!")
+        //                    } else {
+        //                        self.postCollectionView.insertItems(at: newIndexPaths)
+        //                        print(">>>>>>> PochakedPostDataManager is currently fethcing!!!!!!!")
+        //                    }
+        //                    self.isCurrentlyFetching = false
+        //                    self.currentFetchingPage += 1;
+        //                }
+        //            case .MEMBER4002:
+        //                print("유효하지 않은 멤버의 handle입니다.")
+        //            }
+        //        })
+        //    }
+    }
 }
 
 // MARK: - Extension : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate

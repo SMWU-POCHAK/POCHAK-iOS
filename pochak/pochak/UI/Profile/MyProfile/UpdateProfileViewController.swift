@@ -41,8 +41,7 @@ class UpdateProfileViewController: UIViewController {
         // UserDefaults에 데이터 추가
         guard let name = nameTextField.text  else {return}
         guard let message = messageTextView.text  else {return}
-        guard let profileImage = profileImg.image.jpegData(compressionQuality: 0.2)  else {return}
-        
+        let profileImage: Data? = profileImg.image?.jpegData(compressionQuality: 0.2)        
         let request = ProfileUpdateRequest(name: name, message: message)
         var files: [(Data, String, String)] = []
         if let profileImage = profileImage {
@@ -70,7 +69,7 @@ class UpdateProfileViewController: UIViewController {
             UserDefaultsManager.setData(value: data.result.message, key: .message)
             UserDefaultsManager.setData(value: data.result.profileImage, key: .profileImgUrl)
             // 프로필 화면으로 전환
-            self.navigationController?.popViewController(animated: true)
+            self?.navigationController?.popViewController(animated: true)
         }
         
 //        ProfileUpdateDataManager.shared.updateDataManager(name,

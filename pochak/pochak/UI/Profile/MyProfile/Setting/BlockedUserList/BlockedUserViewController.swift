@@ -15,7 +15,7 @@ protocol RemoveCellDelegate: AnyObject {
 class BlockedUserViewController: UIViewController {
     
     // MARK: - Properties
-    var blockedUserList: [BlockedUserListDataModel] = []
+    var blockedUserList: [BlockList] = []
     var cellIndexPath: IndexPath?
     var cellHandle: String?
     private var isLastPage: Bool = false
@@ -70,21 +70,21 @@ class BlockedUserViewController: UIViewController {
     }
     
     private func setUpData() {
-        let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? "handle not found"
         isCurrentlyFetching = true
+        let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? "handle not found"
         let request = BlockListRequest(page: currentFetchingPage)
-        UserService.getBlockUserList(handle: handle, request: request) { [weak self] data, failed in
+        UserService.getBlockUserList(handle: handle, request: request) { data, failed in
             guard let data = data else {
                 // 에러가 난 경우, alert 창 present
                 switch failed {
                 case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
                 case .serverError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
                 case .unknownError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
                 default:
-                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                    self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
                 }
                 return
             }
@@ -167,8 +167,8 @@ extension BlockedUserViewController: RemoveCellDelegate {
 extension BlockedUserViewController: CustomAlertDelegate {
     
     func confirmAction() {
-        let userHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
-        let request = UnblockRequest(blockedMemberHandle: cellHandle)
+        let userHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
+        let request = UnblockRequest(blockedMemberHandle: cellHandle ?? "")
         UserService.unblockUser(handle: userHandle, request: request) { [weak self] data, failed in
             guard let data = data else {
                 // 에러가 난 경우, alert 창 present
@@ -185,8 +185,8 @@ extension BlockedUserViewController: CustomAlertDelegate {
                 return
             }
             
-            self.blockedUserList.remove(at: self.cellIndexPath!.row)
-            self.tableView.reloadData()
+            self?.blockedUserList.remove(at: self?.cellIndexPath!.row ?? 1000)
+            self?.tableView.reloadData()
             
         }
 //        UnBlockDataManager.shared.unBlockDataManager(userHandle ?? "" , cellHandle ?? "", { resultData in

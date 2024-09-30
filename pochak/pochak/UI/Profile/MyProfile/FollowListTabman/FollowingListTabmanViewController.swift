@@ -11,7 +11,7 @@ class FollowingListTabmanViewController: UIViewController {
     
     // MARK: - Properties
     
-    var imageArray: [MemberListDataModel] = []
+    var imageArray: [MemberListData] = []
     var receivedHandle: String?
     private var isLastPage: Bool = false
     private var isCurrentlyFetching: Bool = false
@@ -62,30 +62,70 @@ class FollowingListTabmanViewController: UIViewController {
     }
     
     private func setUpData() {
-        FollowListDataManager.shared.followingDataManager(receivedHandle ?? "", currentFetchingPage, { resultData in
-            let newMembers = resultData.memberList
-            let startIndex = resultData.memberList.count
+        let request = FollowListRequest(page: currentFetchingPage)
+        UserService.getFollowings(handle: receivedHandle ?? "", request: request) { [weak self] data, failed in
+            guard let data = data else {
+                // 에러가 난 경우, alert 창 present
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .serverError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .unknownError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                }
+                return
+            }
+            
+            let newMembers = data.result.memberList
+            let startIndex = data.result.memberList.count
             print("startIndex : \(startIndex)")
             let endIndex = startIndex + newMembers.count
             print("endIndex : \(endIndex)")
             let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
             print("newIndexPaths : \(newIndexPaths)")
-            self.imageArray.append(contentsOf: newMembers)
-            self.isLastPage = resultData.pageInfo.lastPage
+            self?.imageArray.append(contentsOf: newMembers)
+            self?.isLastPage = data.result.pageInfo.lastPage
             
             print("보여주는 계정 개수: \(newMembers.count)")
             DispatchQueue.main.async {
-                if self.currentFetchingPage == 0 {
-                    self.followingCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
+                if self?.currentFetchingPage == 0 {
+                    self?.followingCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
                     print(">>>>>>> Follower is currently reloading!!!!!!!")
                 } else {
-                    self.followingCollectionView.insertItems(at: newIndexPaths)
+                    self?.followingCollectionView.insertItems(at: newIndexPaths)
                     print(">>>>>>> Follower is currently fethcing!!!!!!!")
                 }
-                self.isCurrentlyFetching = false
-                self.currentFetchingPage += 1;
+                self?.isCurrentlyFetching = false
+                self?.currentFetchingPage += 1;
             }
-        })
+        }
+        //        FollowListDataManager.shared.followingDataManager(receivedHandle ?? "", currentFetchingPage, { resultData in
+        //            let newMembers = resultData.memberList
+        //            let startIndex = resultData.memberList.count
+        //            print("startIndex : \(startIndex)")
+        //            let endIndex = startIndex + newMembers.count
+        //            print("endIndex : \(endIndex)")
+        //            let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
+        //            print("newIndexPaths : \(newIndexPaths)")
+        //            self.imageArray.append(contentsOf: newMembers)
+        //            self.isLastPage = resultData.pageInfo.lastPage
+        //
+        //            print("보여주는 계정 개수: \(newMembers.count)")
+        //            DispatchQueue.main.async {
+        //                if self.currentFetchingPage == 0 {
+        //                    self.followingCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
+        //                    print(">>>>>>> Follower is currently reloading!!!!!!!")
+        //                } else {
+        //                    self.followingCollectionView.insertItems(at: newIndexPaths)
+        //                    print(">>>>>>> Follower is currently fethcing!!!!!!!")
+        //                }
+        //                self.isCurrentlyFetching = false
+        //                self.currentFetchingPage += 1;
+        //            }
+        //        })
     }
 }
 
