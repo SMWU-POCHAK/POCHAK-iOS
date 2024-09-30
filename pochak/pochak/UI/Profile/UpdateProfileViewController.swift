@@ -41,6 +41,7 @@ class UpdateProfileViewController: UIViewController {
         guard let name = nameTextField.text  else {return}
         guard let message = messageTextView.text  else {return}
         let profileImage: Data? = profileImg.image?.jpegData(compressionQuality: 0.2)
+        
         let request = ProfileUpdateRequest(name: name, message: message)
         var files: [(Data, String, String)] = []
         if let profileImage = profileImage {

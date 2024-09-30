@@ -40,4 +40,23 @@ struct AuthenticationService {
                 }
             }
         }
+    
+    /// 핸들 중복 검사
+    /// - Parameters:
+    ///   - request : 중복검사하고자 하는 핸들
+    ///   - completion: 통신 후 핸들러 (뷰컨트롤러)
+    static func checkDuplicateHandle(
+        request: CheckDuplicateHandleRequest,
+        completion: @escaping (_ succeed: CheckDuplicateHandleResponse?, _ failed: NetworkError?) -> Void) {
+            NetworkService.shared.request(CheckDuplicateHandleAPI.checkDuplicateHandle(request)) { response in
+                switch response {
+                case .success(let data):
+                    completion(data, nil)
+                case .failure(let error):
+                    print("=== checkDuplicateHandle service error ===")
+                    print(error.localizedDescription)
+                    completion(nil, error)
+                }
+            }
+        }
 }
