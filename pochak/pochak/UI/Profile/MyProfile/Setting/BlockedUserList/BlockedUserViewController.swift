@@ -133,10 +133,31 @@ extension BlockedUserViewController: CustomAlertDelegate {
     
     func confirmAction() {
         let userHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
-        UnBlockDataManager.shared.unBlockDataManager(userHandle ?? "" , cellHandle ?? "", { resultData in
+        let request = UnblockRequest(blockedMemberHandle: cellHandle)
+        UserService.unblockUser(handle: userHandle, request: request) { [weak self] data, failed in
+            guard let data = data else {
+                // 에러가 난 경우, alert 창 present
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .serverError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .unknownError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                }
+                return
+            }
+            
             self.blockedUserList.remove(at: self.cellIndexPath!.row)
             self.tableView.reloadData()
-        })
+            
+        }
+//        UnBlockDataManager.shared.unBlockDataManager(userHandle ?? "" , cellHandle ?? "", { resultData in
+//            self.blockedUserList.remove(at: self.cellIndexPath!.row)
+//            self.tableView.reloadData()
+//        })
     }
     
     func cancel() {

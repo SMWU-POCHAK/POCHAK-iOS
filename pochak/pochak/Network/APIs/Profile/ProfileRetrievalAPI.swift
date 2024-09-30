@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 enum ProfileRetrievalAPI {
     case getProfile(handle: String, request: ProfileRetrievalRequest)

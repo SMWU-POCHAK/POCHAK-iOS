@@ -47,12 +47,33 @@ class ProfileMenuViewController: UIViewController {
 extension ProfileMenuViewController: CustomAlertDelegate {
     
     func confirmAction() {
-        BlockDataManager.shared.blockDataManager(receivedHandle ?? "", { resultData in
-            print(resultData.message)
+        UserService.blockUser(handle: receivedHandle) { [weak self] data, failed in
+            guard let data = data else {
+                // 에러가 난 경우, alert 창 present
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .serverError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .unknownError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                }
+                return
+            }
+            
+            print(data.message)
             self.userBlockBtn.setTitle("차단취소", for: .normal)
             self.delegate?.dismissSecondViewController()
             self.dismiss(animated: true, completion: nil)
-        })
+        }
+        //        BlockDataManager.shared.blockDataManager(receivedHandle ?? "", { resultData in
+        //            print(resultData.message)
+        //            self.userBlockBtn.setTitle("차단취소", for: .normal)
+        //            self.delegate?.dismissSecondViewController()
+        //            self.dismiss(animated: true, completion: nil)
+        //        })
     }
     
     func cancel() {

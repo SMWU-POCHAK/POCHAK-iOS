@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 enum LogOutAPI {
     case logOut()
@@ -13,7 +14,7 @@ enum LogOutAPI {
 
 extension LogOutAPI: BaseAPI {
     
-    typealias Response = SignOutResponse
+    typealias Response = LogOutResponse
         
     var method: HTTPMethod {
         switch self {
