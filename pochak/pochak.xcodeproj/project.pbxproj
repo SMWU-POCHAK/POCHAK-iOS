@@ -145,6 +145,10 @@
 		3769D6D22B3C56F100294CD1 /* PochakPostTabmanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6D12B3C56F100294CD1 /* PochakPostTabmanViewController.swift */; };
 		3769D6D52B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6D32B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift */; };
 		3769D6D62B3C59F900294CD1 /* ProfilePostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3769D6D42B3C59F900294CD1 /* ProfilePostCollectionViewCell.xib */; };
+		376EA1292CAAADCF00FEFB63 /* ProfileRetrievalAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376EA1282CAAADCF00FEFB63 /* ProfileRetrievalAPI.swift */; };
+		376EA12C2CAAAE5600FEFB63 /* ProfileRetrievalResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376EA12B2CAAAE5600FEFB63 /* ProfileRetrievalResponse.swift */; };
+		376EA12E2CAAAE6800FEFB63 /* ProfileRetrievalRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376EA12D2CAAAE6800FEFB63 /* ProfileRetrievalRequest.swift */; };
+		376EA1302CAAAF6900FEFB63 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376EA12F2CAAAF6900FEFB63 /* ProfileService.swift */; };
 		376F125B2A8B7440005F469B /* SocialLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376F125A2A8B7440005F469B /* SocialLoginViewController.swift */; };
 		379A6A342B569DFA0087FAAC /* AuthenticationCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A6A332B569DFA0087FAAC /* AuthenticationCredential.swift */; };
 		379A6A3A2B56BDBF0087FAAC /* Authenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A6A392B56BDBF0087FAAC /* Authenticator.swift */; };
@@ -326,7 +330,7 @@
 		08C02EF52BF3945000627C21 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		08C02EF72BF394B800627C21 /* UIAlertController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+.swift"; sourceTree = "<group>"; };
 		08C9151B2C6461B10044A9A8 /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
-		08D2B98C2C68C02D00BD7450 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		08D2B98C2C68C02D00BD7450 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08D98C492AFEE8D700E9A097 /* LikedUsersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedUsersDataModel.swift; sourceTree = "<group>"; };
 		08E8DCDB2C38118000EC78C2 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		08EB5D242C280CFE00E35C16 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
@@ -383,6 +387,10 @@
 		3769D6D12B3C56F100294CD1 /* PochakPostTabmanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakPostTabmanViewController.swift; sourceTree = "<group>"; };
 		3769D6D32B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePostCollectionViewCell.swift; sourceTree = "<group>"; };
 		3769D6D42B3C59F900294CD1 /* ProfilePostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfilePostCollectionViewCell.xib; sourceTree = "<group>"; };
+		376EA1282CAAADCF00FEFB63 /* ProfileRetrievalAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRetrievalAPI.swift; sourceTree = "<group>"; };
+		376EA12B2CAAAE5600FEFB63 /* ProfileRetrievalResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRetrievalResponse.swift; sourceTree = "<group>"; };
+		376EA12D2CAAAE6800FEFB63 /* ProfileRetrievalRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRetrievalRequest.swift; sourceTree = "<group>"; };
+		376EA12F2CAAAF6900FEFB63 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		376F125A2A8B7440005F469B /* SocialLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginViewController.swift; sourceTree = "<group>"; };
 		379A6A332B569DFA0087FAAC /* AuthenticationCredential.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCredential.swift; sourceTree = "<group>"; };
 		379A6A392B56BDBF0087FAAC /* Authenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authenticator.swift; sourceTree = "<group>"; };
@@ -1019,6 +1027,23 @@
 			path = PostListTabman;
 			sourceTree = "<group>";
 		};
+		376EA1272CAAAD3500FEFB63 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				376EA1282CAAADCF00FEFB63 /* ProfileRetrievalAPI.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		376EA12A2CAAAE3600FEFB63 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				376EA12B2CAAAE5600FEFB63 /* ProfileRetrievalResponse.swift */,
+				376EA12D2CAAAE6800FEFB63 /* ProfileRetrievalRequest.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		37C3AF442B3CB26000B4C79C /* ProfileAPI */ = {
 			isa = PBXGroup;
 			children = (
@@ -1199,6 +1224,7 @@
 				08C9151B2C6461B10044A9A8 /* PostService.swift */,
 				EA7E146A2C8E9360001DA769 /* AlarmService.swift */,
 				EA7E14602C858EC6001DA769 /* CameraService.swift */,
+				376EA12F2CAAAF6900FEFB63 /* ProfileService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1206,6 +1232,7 @@
 		EA2CD6332C5F458900644EFE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				376EA12A2CAAAE3600FEFB63 /* Profile */,
 				0822A05A2CA1983C00F87E2C /* Post */,
 				0822A0552CA1983C00F87E2C /* Search */,
 				0822A0582CA1983C00F87E2C /* User */,
@@ -1232,6 +1259,7 @@
 		EA2CD6352C5F45A100644EFE /* APIs */ = {
 			isa = PBXGroup;
 			children = (
+				376EA1272CAAAD3500FEFB63 /* Profile */,
 				0822A04D2CA1980200F87E2C /* User */,
 				0822A04A2CA197F800F87E2C /* Search */,
 				0822A0382CA197E700F87E2C /* Post */,
@@ -1652,6 +1680,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA7EE1D82BF38921009486CC /* PochakAlarmTableViewCell.swift in Sources */,
+				376EA1302CAAAF6900FEFB63 /* ProfileService.swift in Sources */,
 				EA01079E2A59556800A3AE85 /* PostViewController.swift in Sources */,
 				3766F40F2C398AA8001DD239 /* NetworkResult400.swift in Sources */,
 				0822A0532CA1983100F87E2C /* ExploreRequest.swift in Sources */,
@@ -1666,6 +1695,7 @@
 				0822A0542CA1983100F87E2C /* ExploreResponse.swift in Sources */,
 				0822A0662CA1983C00F87E2C /* SearchRequest.swift in Sources */,
 				0822A0712CA1983C00F87E2C /* PostDetailResponse.swift in Sources */,
+				376EA12C2CAAAE5600FEFB63 /* ProfileRetrievalResponse.swift in Sources */,
 				EA0107A72A5CF73900A3AE85 /* AlarmViewController.swift in Sources */,
 				08EB99B72C53EA8500FAC08A /* TaggedUsersTableViewCell.swift in Sources */,
 				EACF0F6E2C3044C000C0016C /* TagSearchTableViewCell.swift in Sources */,
@@ -1740,6 +1770,7 @@
 				0822A0462CA197E700F87E2C /* CommentPostAPI.swift in Sources */,
 				3766F4062C370A7C001DD239 /* BlockedUserListDataManager.swift in Sources */,
 				3769D6D52B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift in Sources */,
+				376EA12E2CAAAE6800FEFB63 /* ProfileRetrievalRequest.swift in Sources */,
 				EA96D0562C8F192B00D80562 /* TagApproveResponse.swift in Sources */,
 				3769D6B62B3C302C00294CD1 /* JoinDataModel.swift in Sources */,
 				084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */,
@@ -1804,6 +1835,7 @@
 				EAC582742C3074EA006F44AF /* UIColor+.swift in Sources */,
 				3769D6BB2B3C347000294CD1 /* FollowListViewController.swift in Sources */,
 				3769D6B42B3C301B00294CD1 /* JoinDataManager.swift in Sources */,
+				376EA1292CAAADCF00FEFB63 /* ProfileRetrievalAPI.swift in Sources */,
 				EA96D0522C8F186900D80562 /* TagApproveAPI.swift in Sources */,
 				0822A07B2CA1992B00F87E2C /* PostService.swift in Sources */,
 				37D311DA2B53134200A1D7C1 /* LogoutDataManager.swift in Sources */,

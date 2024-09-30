@@ -126,36 +126,69 @@ class MyProfileTabViewController: UIViewController {
     }
     
     private func setUpData() {
-        MyProfilePostDataManager.shared.myProfileUserAndPochakedPostDataManager(handle, 0,{ response in
-            switch response {
-            case .success(let resultData):
-                let imageURL = resultData.profileImage ?? ""
-                UserDefaultsManager.setData(value: imageURL, key: .profileImgUrl)
-                if let url = URL(string: imageURL) {
-                    self.profileImage.kf.setImage(with: url) { result in
-                        switch result {
-                        case .success(let value):
-                            print("Image successfully loaded: \(value.image)")
-                        case .failure(let error):
-                            print("Image failed to load with error: \(error.localizedDescription)")
-                        }
-                    }
+        
+        let request = ProfileRetrievalRequest(page: 0)
+        ProfileService.getProfile(handle: handle, request: request) { [weak self] data, failed in
+            guard let data = data else {
+                // 에러가 난 경우, alert 창 present
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .serverError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .unknownError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
                 }
-                
-                // 필요한 데이터 뷰에 반영
-                self.setUpResponseData(resultData)
-                
-                // UserDefaultsManager에 새로운 데이터 저장 후 관리 : followerCount, followingCount
-                self.setUpUserDefaults(resultData)
-                
-            case .MEMBER4002:
-                print("유효하지 않은 멤버의 handle입니다.")
-                self.present(UIAlertController.networkErrorAlert(title: "유효하지 않은 멤버의 handle입니다."), animated: true)
+                return
             }
-        })
+            
+            print("=== Profile, setup data succeeded ===")
+            print("== data: \(data)")
+            
+            // load 프로필 이미지
+            var imageURL = data.result.profileImage
+            if let url = URL(string: (imageURL)) {
+                profileImage.load(with: url)
+            }
+            // 필요한 데이터 뷰에 반영
+            self.setUpResponseData(data.result)
+            
+            // UserDefaultsManager에 새로운 데이터 저장 후 관리 : followerCount, followingCount
+            self.setUpUserDefaults(data.result)
+            
+        }
+//        MyProfilePostDataManager.shared.myProfileUserAndPochakedPostDataManager(handle, 0,{ response in
+//            switch response {
+//            case .success(let resultData):
+//                let imageURL = resultData.profileImage ?? ""
+//                UserDefaultsManager.setData(value: imageURL, key: .profileImgUrl)
+//                if let url = URL(string: imageURL) {
+//                    self.profileImage.kf.setImage(with: url) { result in
+//                        switch result {
+//                        case .success(let value):
+//                            print("Image successfully loaded: \(value.image)")
+//                        case .failure(let error):
+//                            print("Image failed to load with error: \(error.localizedDescription)")
+//                        }
+//                    }
+//                }
+//                
+//                // 필요한 데이터 뷰에 반영
+//                self.setUpResponseData(resultData)
+//                
+//                // UserDefaultsManager에 새로운 데이터 저장 후 관리 : followerCount, followingCount
+//                self.setUpUserDefaults(resultData)
+//                
+//            case .MEMBER4002:
+//                print("유효하지 않은 멤버의 handle입니다.")
+//                self.present(UIAlertController.networkErrorAlert(title: "유효하지 않은 멤버의 handle입니다."), animated: true)
+//            }
+//        })
     }
     
-    private func setUpResponseData(_ resposeData: MyProfileUserAndPochakedPostModel) {
+    private func setUpResponseData(_ resposeData: ProfileRetrievalResult) {
         self.profileImage.contentMode = .scaleAspectFill
         self.userName.text = String(resposeData.name ?? "")
         self.userMessage.text = String(resposeData.message ?? "")
@@ -164,7 +197,7 @@ class MyProfileTabViewController: UIViewController {
         self.followingCount.text = String(resposeData.followingCount ?? 0)
     }
     
-    private func setUpUserDefaults(_ resposeData: MyProfileUserAndPochakedPostModel) {
+    private func setUpUserDefaults(_ resposeData: ProfileRetrievalResult) {
         UserDefaultsManager.setData(value: resposeData.name, key: .name)
         UserDefaultsManager.setData(value: resposeData.message, key: .message)
         UserDefaultsManager.setData(value: resposeData.followerCount, key: .followerCount)
