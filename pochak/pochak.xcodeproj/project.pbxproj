@@ -120,6 +120,10 @@
 		3742617D2C359D6100B67886 /* CheckHandleDuplicationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3742617C2C359D6100B67886 /* CheckHandleDuplicationDataManager.swift */; };
 		3742617F2C359D6D00B67886 /* CheckHandleDuplicationDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3742617E2C359D6D00B67886 /* CheckHandleDuplicationDataModel.swift */; };
 		3747E9722BF3827500364BED /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3747E9712BF3827500364BED /* SettingsViewController.swift */; };
+		374E461F2CAABAF3008AE361 /* PochakPostRetrievalAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E461E2CAABAF3008AE361 /* PochakPostRetrievalAPI.swift */; };
+		374E46232CAABB31008AE361 /* PochakPostRetrievalResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46222CAABB31008AE361 /* PochakPostRetrievalResponse.swift */; };
+		374E46252CAABE08008AE361 /* ProfileUpdateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46242CAABE07008AE361 /* ProfileUpdateResponse.swift */; };
+		374E46292CAABE50008AE361 /* ProfileUpdateAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46282CAABE50008AE361 /* ProfileUpdateAPI.swift */; };
 		3766F4022C3706DC001DD239 /* BlockedUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3766F4012C3706DC001DD239 /* BlockedUserTableViewCell.xib */; };
 		3766F4032C3706DC001DD239 /* BlockedUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4002C3706DC001DD239 /* BlockedUserTableViewCell.swift */; };
 		3766F4062C370A7C001DD239 /* BlockedUserListDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4052C370A7C001DD239 /* BlockedUserListDataManager.swift */; };
@@ -361,6 +365,10 @@
 		3742617C2C359D6100B67886 /* CheckHandleDuplicationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckHandleDuplicationDataManager.swift; sourceTree = "<group>"; };
 		3742617E2C359D6D00B67886 /* CheckHandleDuplicationDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckHandleDuplicationDataModel.swift; sourceTree = "<group>"; };
 		3747E9712BF3827500364BED /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		374E461E2CAABAF3008AE361 /* PochakPostRetrievalAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakPostRetrievalAPI.swift; sourceTree = "<group>"; };
+		374E46222CAABB31008AE361 /* PochakPostRetrievalResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakPostRetrievalResponse.swift; sourceTree = "<group>"; };
+		374E46242CAABE07008AE361 /* ProfileUpdateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUpdateResponse.swift; sourceTree = "<group>"; };
+		374E46282CAABE50008AE361 /* ProfileUpdateAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUpdateAPI.swift; sourceTree = "<group>"; };
 		3750669E2C3BB1660036E264 /* pochak.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = pochak.entitlements; sourceTree = "<group>"; };
 		3766F4002C3706DC001DD239 /* BlockedUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserTableViewCell.swift; sourceTree = "<group>"; };
 		3766F4012C3706DC001DD239 /* BlockedUserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlockedUserTableViewCell.xib; sourceTree = "<group>"; };
@@ -997,7 +1005,7 @@
 				37A284C02B52FC910023EB9D /* UpdateProfileViewController.swift */,
 				3742616A2C3075B400B67886 /* Setting */,
 				37D311D32B53053C00A1D7C1 /* ProfileUpdateAPI */,
-				37C3AF442B3CB26000B4C79C /* ProfileAPI */,
+				37C3AF442B3CB26000B4C79C /* ProfileAPI_fin */,
 				3769D6CC2B3C560200294CD1 /* PostListTabman */,
 				3769D6CB2B3C55E500294CD1 /* FollowListTabman */,
 			);
@@ -1031,6 +1039,8 @@
 			isa = PBXGroup;
 			children = (
 				376EA1282CAAADCF00FEFB63 /* ProfileRetrievalAPI.swift */,
+				374E461E2CAABAF3008AE361 /* PochakPostRetrievalAPI.swift */,
+				374E46282CAABE50008AE361 /* ProfileUpdateAPI.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1038,20 +1048,22 @@
 		376EA12A2CAAAE3600FEFB63 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				376EA12B2CAAAE5600FEFB63 /* ProfileRetrievalResponse.swift */,
 				376EA12D2CAAAE6800FEFB63 /* ProfileRetrievalRequest.swift */,
+				376EA12B2CAAAE5600FEFB63 /* ProfileRetrievalResponse.swift */,
+				374E46222CAABB31008AE361 /* PochakPostRetrievalResponse.swift */,
+				374E46242CAABE07008AE361 /* ProfileUpdateResponse.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
 		};
-		37C3AF442B3CB26000B4C79C /* ProfileAPI */ = {
+		37C3AF442B3CB26000B4C79C /* ProfileAPI_fin */ = {
 			isa = PBXGroup;
 			children = (
 				37C3AF472B3CB2B300B4C79C /* MyProfilePochakedPostModel.swift */,
 				37C3AF492B3CB2C700B4C79C /* MyProfilePochakPostModel.swift */,
 				37C3AF452B3CB29A00B4C79C /* MyProfilePostDataManager.swift */,
 			);
-			path = ProfileAPI;
+			path = ProfileAPI_fin;
 			sourceTree = "<group>";
 		};
 		37D311D32B53053C00A1D7C1 /* ProfileUpdateAPI */ = {
@@ -1738,6 +1750,7 @@
 				3766F40C2C3736F1001DD239 /* RequestInterceptor.swift in Sources */,
 				EA0F23662C319C030014F94E /* PreviewAlarmViewController.swift in Sources */,
 				0822A0422CA197E700F87E2C /* PostReportAPI.swift in Sources */,
+				374E46292CAABE50008AE361 /* ProfileUpdateAPI.swift in Sources */,
 				0844D7EF2BF219F6001154AC /* DeleteViewCell.swift in Sources */,
 				374261742C3092B900B67886 /* UnblockDataModel.swift in Sources */,
 				EA2CD63B2C5F463700644EFE /* NetworkService.swift in Sources */,
@@ -1773,6 +1786,7 @@
 				376EA12E2CAAAE6800FEFB63 /* ProfileRetrievalRequest.swift in Sources */,
 				EA96D0562C8F192B00D80562 /* TagApproveResponse.swift in Sources */,
 				3769D6B62B3C302C00294CD1 /* JoinDataModel.swift in Sources */,
+				374E461F2CAABAF3008AE361 /* PochakPostRetrievalAPI.swift in Sources */,
 				084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */,
 				37C3AF4A2B3CB2C700B4C79C /* MyProfilePochakPostModel.swift in Sources */,
 				08C02EF82BF394B800627C21 /* UIAlertController+.swift in Sources */,
@@ -1799,6 +1813,7 @@
 				0820B1902A63A18100604DA8 /* ReplyTableViewCell.swift in Sources */,
 				374261702C30917600B67886 /* BlockDataModel.swift in Sources */,
 				083249782C295E4000A77C03 /* CustomAlertViewController.swift in Sources */,
+				374E46252CAABE08008AE361 /* ProfileUpdateResponse.swift in Sources */,
 				37C3AF482B3CB2B300B4C79C /* MyProfilePochakedPostModel.swift in Sources */,
 				0822A04F2CA1980200F87E2C /* FollowAPI.swift in Sources */,
 				EA2CD6392C5F45E300644EFE /* BaseAPI.swift in Sources */,
@@ -1847,6 +1862,7 @@
 				0822A07D2CA19A9A00F87E2C /* UICommentModel.swift in Sources */,
 				EA7E146D2C8EA119001DA769 /* AlarmListResponse.swift in Sources */,
 				08EB99B42C53D76C00FAC08A /* UIScrollView+.swift in Sources */,
+				374E46232CAABB31008AE361 /* PochakPostRetrievalResponse.swift in Sources */,
 				EA6306DA2C2BFE83000DB0A7 /* CustomTabbar.swift in Sources */,
 				EA2CD6422C5F5A0500644EFE /* HomeService.swift in Sources */,
 				EA7E14652C858EFA001DA769 /* CameraUploadRequest.swift in Sources */,

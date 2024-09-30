@@ -62,13 +62,33 @@ class PochakPostTabmanViewController: UIViewController {
     }
     
     private func setUpData() {
-        MyProfilePostDataManager.shared.myProfilePochakPostDataManager(receivedHandle ?? "",currentFetchingPage,{resultData in
-            let newPosts = resultData.postList
-            let startIndex = resultData.postList.count
+        isCurrentlyFetching = true
+        let request = ProfileRetrievalRequest(page: currentFetchingPage)
+        ProfileService.getProfilePochakPosts(handle: receivedHandle, request: request) { [weak self] data, failed in
+            guard let data = data else {
+                // 에러가 난 경우, alert 창 present
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .serverError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .unknownError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                }
+                return
+            }
+            
+            print("=== Profile Pochak Tab, setup data succeeded ===")
+            print("== data: \(data)")
+            
+            let newPosts = data.result.postList
+            let startIndex = data.result.postList.count
             let endIndex = startIndex + newPosts.count
             let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
             self.imageArray.append(contentsOf: newPosts)
-            self.isLastPage = resultData.pageInfo.lastPage
+            self.isLastPage = data.result.pageInfo.lastPage
             
             DispatchQueue.main.async {
                 if self.currentFetchingPage == 0 {
@@ -80,7 +100,26 @@ class PochakPostTabmanViewController: UIViewController {
                 self.isCurrentlyFetching = false
                 self.currentFetchingPage += 1;
             }
-        })
+        }
+//        MyProfilePostDataManager.shared.myProfilePochakPostDataManager(receivedHandle ?? "",currentFetchingPage,{resultData in
+//            let newPosts = resultData.postList
+//            let startIndex = resultData.postList.count
+//            let endIndex = startIndex + newPosts.count
+//            let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
+//            self.imageArray.append(contentsOf: newPosts)
+//            self.isLastPage = resultData.pageInfo.lastPage
+//            
+//            DispatchQueue.main.async {
+//                if self.currentFetchingPage == 0 {
+//                    self.postCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
+//                    print(">>>>>>> PochakPostDataManager is currently reloading!!!!!!!")
+//                } else {
+//                    self.postCollectionView.insertItems(at: newIndexPaths)
+//                }
+//                self.isCurrentlyFetching = false
+//                self.currentFetchingPage += 1;
+//            }
+//        })
     }
 }
 

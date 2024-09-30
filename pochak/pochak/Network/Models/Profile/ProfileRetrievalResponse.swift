@@ -24,7 +24,7 @@ struct ProfileRetrievalResult : Codable {
     var followingCount: Int?
     var isFollow: Bool?
     var pageInfo : ProfilePageInfo
-    var postList : [ProfilePochakedPostList]
+    var postList : [ProfilePostList]
 }
 
 struct ProfilePageInfo : Codable {
@@ -34,7 +34,7 @@ struct ProfilePageInfo : Codable {
     var size : Int
 }
 
-struct ProfilePochakedPostList : Codable {
+struct ProfilePostList : Codable {
     var postId : Int
     var postImage : String
 }

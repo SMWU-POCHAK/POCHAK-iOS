@@ -126,7 +126,6 @@ class MyProfileTabViewController: UIViewController {
     }
     
     private func setUpData() {
-        
         let request = ProfileRetrievalRequest(page: 0)
         ProfileService.getProfile(handle: handle, request: request) { [weak self] data, failed in
             guard let data = data else {
