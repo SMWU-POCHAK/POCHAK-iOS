@@ -124,6 +124,7 @@
 		374E46232CAABB31008AE361 /* PochakPostRetrievalResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46222CAABB31008AE361 /* PochakPostRetrievalResponse.swift */; };
 		374E46252CAABE08008AE361 /* ProfileUpdateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46242CAABE07008AE361 /* ProfileUpdateResponse.swift */; };
 		374E46292CAABE50008AE361 /* ProfileUpdateAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46282CAABE50008AE361 /* ProfileUpdateAPI.swift */; };
+		374E462B2CAABF7B008AE361 /* ProfileUpdateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E462A2CAABF7A008AE361 /* ProfileUpdateRequest.swift */; };
 		3766F4022C3706DC001DD239 /* BlockedUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3766F4012C3706DC001DD239 /* BlockedUserTableViewCell.xib */; };
 		3766F4032C3706DC001DD239 /* BlockedUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4002C3706DC001DD239 /* BlockedUserTableViewCell.swift */; };
 		3766F4062C370A7C001DD239 /* BlockedUserListDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4052C370A7C001DD239 /* BlockedUserListDataManager.swift */; };
@@ -369,6 +370,7 @@
 		374E46222CAABB31008AE361 /* PochakPostRetrievalResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakPostRetrievalResponse.swift; sourceTree = "<group>"; };
 		374E46242CAABE07008AE361 /* ProfileUpdateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUpdateResponse.swift; sourceTree = "<group>"; };
 		374E46282CAABE50008AE361 /* ProfileUpdateAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUpdateAPI.swift; sourceTree = "<group>"; };
+		374E462A2CAABF7A008AE361 /* ProfileUpdateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUpdateRequest.swift; sourceTree = "<group>"; };
 		3750669E2C3BB1660036E264 /* pochak.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = pochak.entitlements; sourceTree = "<group>"; };
 		3766F4002C3706DC001DD239 /* BlockedUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserTableViewCell.swift; sourceTree = "<group>"; };
 		3766F4012C3706DC001DD239 /* BlockedUserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlockedUserTableViewCell.xib; sourceTree = "<group>"; };
@@ -1004,7 +1006,7 @@
 				3769D6B82B3C345800294CD1 /* MyProfileTabViewController.swift */,
 				37A284C02B52FC910023EB9D /* UpdateProfileViewController.swift */,
 				3742616A2C3075B400B67886 /* Setting */,
-				37D311D32B53053C00A1D7C1 /* ProfileUpdateAPI */,
+				37D311D32B53053C00A1D7C1 /* ProfileUpdateAPI_fin */,
 				37C3AF442B3CB26000B4C79C /* ProfileAPI_fin */,
 				3769D6CC2B3C560200294CD1 /* PostListTabman */,
 				3769D6CB2B3C55E500294CD1 /* FollowListTabman */,
@@ -1052,6 +1054,7 @@
 				376EA12B2CAAAE5600FEFB63 /* ProfileRetrievalResponse.swift */,
 				374E46222CAABB31008AE361 /* PochakPostRetrievalResponse.swift */,
 				374E46242CAABE07008AE361 /* ProfileUpdateResponse.swift */,
+				374E462A2CAABF7A008AE361 /* ProfileUpdateRequest.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1066,13 +1069,13 @@
 			path = ProfileAPI_fin;
 			sourceTree = "<group>";
 		};
-		37D311D32B53053C00A1D7C1 /* ProfileUpdateAPI */ = {
+		37D311D32B53053C00A1D7C1 /* ProfileUpdateAPI_fin */ = {
 			isa = PBXGroup;
 			children = (
 				37D311D62B53057700A1D7C1 /* ProfileUpdateDataModel.swift */,
 				37D311D42B53056700A1D7C1 /* ProfileUpdateDataManager.swift */,
 			);
-			path = ProfileUpdateAPI;
+			path = ProfileUpdateAPI_fin;
 			sourceTree = "<group>";
 		};
 		37D311D82B53131D00A1D7C1 /* LogoutAPI */ = {
@@ -1860,6 +1863,7 @@
 				371D337A2B4E8D1F0084FF6A /* KeychainManager.swift in Sources */,
 				EAF918542AA4692E0037C270 /* NetworkResult.swift in Sources */,
 				0822A07D2CA19A9A00F87E2C /* UICommentModel.swift in Sources */,
+				374E462B2CAABF7B008AE361 /* ProfileUpdateRequest.swift in Sources */,
 				EA7E146D2C8EA119001DA769 /* AlarmListResponse.swift in Sources */,
 				08EB99B42C53D76C00FAC08A /* UIScrollView+.swift in Sources */,
 				374E46232CAABB31008AE361 /* PochakPostRetrievalResponse.swift in Sources */,

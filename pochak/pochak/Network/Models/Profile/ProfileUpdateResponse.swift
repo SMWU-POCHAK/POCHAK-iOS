@@ -1,9 +1,11 @@
 //
-//  MyProfileUpdateDataModel.swift
+//  ProfileUpdateResponse.swift
 //  pochak
 //
-//  Created by Seo Cindy on 1/14/24.
+//  Created by Seo Cindy on 9/30/24.
 //
+
+import Foundation
 
 struct ProfileUpdateResponse: Codable {
     let isSuccess: Bool

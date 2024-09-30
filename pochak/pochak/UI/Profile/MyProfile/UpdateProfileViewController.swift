@@ -41,20 +41,50 @@ class UpdateProfileViewController: UIViewController {
         // UserDefaults에 데이터 추가
         guard let name = nameTextField.text  else {return}
         guard let message = messageTextView.text  else {return}
-        guard let profileImage = profileImg.image  else {return}
+        guard let profileImage = profileImg.image.jpegData(compressionQuality: 0.2)  else {return}
         
-        ProfileUpdateDataManager.shared.updateDataManager(name,
-                                                          handle,
-                                                          message,
-                                                          profileImage,
-                                                          {resultData in
-            UserDefaultsManager.setData(value: resultData.name, key: .name)
-            UserDefaultsManager.setData(value: resultData.handle, key: .handle)
-            UserDefaultsManager.setData(value: resultData.message, key: .message)
-            UserDefaultsManager.setData(value: resultData.profileImage, key: .profileImgUrl)
+        let request = ProfileUpdateRequest(name: name, message: message)
+        var files: [(Data, String, String)] = []
+        if let profileImage = profileImage {
+            let fileTuple: (Data, String, String) = (profileImage, "profileImage", "image/jpeg")
+            files.append(fileTuple)
+        }
+        ProfileService.profileUpdate(handle: handle, files: files, request: request) { [weak self] data, failed in
+            guard let data = data else {
+                // 에러가 난 경우, alert 창 present
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .serverError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .unknownError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                }
+                return
+            }
+            
+            UserDefaultsManager.setData(value: data.result.name, key: .name)
+            UserDefaultsManager.setData(value: data.result.handle, key: .handle)
+            UserDefaultsManager.setData(value: data.result.message, key: .message)
+            UserDefaultsManager.setData(value: data.result.profileImage, key: .profileImgUrl)
             // 프로필 화면으로 전환
             self.navigationController?.popViewController(animated: true)
-        })
+        }
+        
+//        ProfileUpdateDataManager.shared.updateDataManager(name,
+//                                                          handle,
+//                                                          message,
+//                                                          profileImage,
+//                                                          {resultData in
+//            UserDefaultsManager.setData(value: resultData.name, key: .name)
+//            UserDefaultsManager.setData(value: resultData.handle, key: .handle)
+//            UserDefaultsManager.setData(value: resultData.message, key: .message)
+//            UserDefaultsManager.setData(value: resultData.profileImage, key: .profileImgUrl)
+//            // 프로필 화면으로 전환
+//            self.navigationController?.popViewController(animated: true)
+//        })
     }
     
     /* < 앨범 사진 선택 >

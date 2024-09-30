@@ -43,4 +43,21 @@ struct ProfileService {
         }
     }
     
+    static func profileUpdate(
+        handle: String,
+        files: [(Data, String, String)],
+        request: ProfileUpdateRequest,
+        completion: @escaping (_ succeed: ProfileUpdateResponse?, _ failed: NetworkError?) -> Void) {
+            NetworkService.shared.uploadMultipart(ProfileUpdateAPI.updateProfile(handle: handle, request: request), files: files) { response in
+                switch response {
+                case .success(let data):
+                    completion(data, nil)
+                case .failure(let error):
+                    print("=== profileUpdate error ===")
+                    print(error.localizedDescription)
+                    completion(nil, error)
+                }
+            }
+        }
+    
 }
