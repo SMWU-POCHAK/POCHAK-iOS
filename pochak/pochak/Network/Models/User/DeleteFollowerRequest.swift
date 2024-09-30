@@ -1,5 +1,5 @@
 //
-//  UnfollowRequest.swift
+//  DeleteFollowerRequest.swift
 //  pochak
 //
 //  Created by Seo Cindy on 9/30/24.
@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct UnfollowRequest: Encodable {
+struct DeleteFollowerRequest: Encodable {
     let followerHandle: String
 }
