@@ -1,5 +1,5 @@
 //
-//  MakeProfileViewController.swift
+//  SignUpViewController.swift
 //  pochak
 //
 //  Created by Seo Cindy on 2023/08/14.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MakeProfileViewController: UIViewController {
+class SignUpViewController: UIViewController {
     
     // MARK: - Data
     let textViewPlaceHolder = "소개를 입력해주세요.\n(최대 50자, 3줄)"
@@ -97,24 +97,26 @@ class MakeProfileViewController: UIViewController {
     
     @IBAction func checkHandleDuplication(_ sender: Any) {
         guard let handle = handleTextField.text  else {return}
-        print(">>>>> checkHandleDuplication handle : \(handle)")
+        let request = CheckDuplicateHandleRequest(handle: handle)
         
-        // API request : Get
-        CheckHandleDuplicationDataManager.shared.checkHandleDuplicationDataManager(handle) { resultData in
-            if resultData.code == "MEMBER2001" {
-                // 버튼 변경
-                self.checkHandleDuplicationBtn.setImage(UIImage(named: "checkedHandle"), for: .normal)
-                self.handleTextField.textColor = UIColor(named: "yellow00")
-                // 버튼 disable 시키기
-                self.checkHandleDuplicationBtn.isEnabled = false
-                self.handleDuplicationChecked = true
-            } else if resultData.code == "MEMBER4002" {
-                // Alert 창
-                self.showAlert(alertType: .confirmOnly,
-                               titleText: "중복된 아이디입니다",
-                               messageText: "다른 아이디를 입력해주세요.",
-                               cancelButtonText: "",
-                               confirmButtonText: "확인"
+        AuthenticationService.checkDuplicateHandle(request: request) { [weak self] data, failed in
+            guard let data = data else {
+                print(failed)
+                return
+            }
+            
+            if data.code == "MEMBER2001" {
+                // 중복 검사 버튼 상태 변경
+                self?.checkHandleDuplicationBtn.setImage(UIImage(named: "checkedHandle"), for: .normal)
+                self?.handleTextField.textColor = UIColor(named: "yellow00")
+                self?.checkHandleDuplicationBtn.isEnabled = false
+                self?.handleDuplicationChecked = true
+            } else if data.code == "MEMBER4002" {
+                self?.showAlert(alertType: .confirmOnly,
+                                titleText: "중복된 아이디입니다",
+                                messageText: "다른 아이디를 입력해주세요.",
+                                cancelButtonText: "",
+                                confirmButtonText: "확인"
                 )
             }
         }
@@ -127,10 +129,10 @@ class MakeProfileViewController: UIViewController {
         guard let handle = handleTextField.text  else {return}
         guard let message = messageTextView.text  else {return}
         guard let profileImage = profileImg.currentImage  else {return}
+        let profileImageData: Data? = profileImg.currentImage?.jpegData(compressionQuality: 0.2)
         
         if (name == "" || handle == "" || message == textViewPlaceHolder || message == "" || profileImage == UIImage(named: "chooseProfileIcon")){
             print("true!")
-            // Alert창
             showAlert(alertType: .confirmOnly,
                       titleText: "프로필 정보를 모두 입력해주세요.",
                       messageText: "",
@@ -145,32 +147,36 @@ class MakeProfileViewController: UIViewController {
                       confirmButtonText: "확인")
             return
         } else {
-            // API request : POST
-            JoinDataManager.shared.joinDataManager(name,
-                                                   email,
-                                                   handle,
-                                                   message,
-                                                   socialId,
-                                                   socialType,
-                                                   socialRefreshToken,
-                                                   profileImage,
-                                                   {resultData in
-                
-                print("JoinDataManager resultData : \(resultData)")
-                
+            let request = SignUpRequest(name: name,
+                                        email: email,
+                                        handle: handle,
+                                        message: message,
+                                        socialId: socialId,
+                                        socialType: socialType)
+            
+            var files: [(Data, String, String)] = []
+            if let profileImage = profileImageData {
+                let fileTuple: (Data, String, String) = (profileImage, "profileImage", "image/jpeg")
+                files.append(fileTuple)
+            }
+            
+            AuthenticationService.signUp(request: request, files: files) { [weak self] data, failed in
+                guard let data = data else {
+                    print(failed)
+                    return
+                }
                 // 새로운 유저 정보 UserDefaults에 저장 : id / name / handle / message / IsNewMember
-                UserDefaultsManager.setData(value: resultData.name, key: .name)
-                UserDefaultsManager.setData(value: resultData.id, key: .memberId)
+                UserDefaultsManager.setData(value: data.result.name, key: .name)
+                UserDefaultsManager.setData(value: data.result.id, key: .memberId)
                 UserDefaultsManager.setData(value: handle, key: .handle)
                 UserDefaultsManager.setData(value: message, key: .message)
-                UserDefaultsManager.setData(value: resultData.isNewMember, key: .isNewMember)
+                UserDefaultsManager.setData(value: data.result.isNewMember, key: .isNewMember)
                 
                 // 유저 토큰 정보 저장 @KeyChainManager
-                guard let accountAccessToken = resultData.accessToken else { return }
-                guard let accountRefreshToken = resultData.refreshToken else { return }
+                guard let accountAccessToken = data.result.accessToken else { return }
+                guard let accountRefreshToken = data.result.refreshToken else { return }
                 print("JoinDataManager accountAccessToken = \(accountAccessToken)")
                 print("JoinDataManager accountRefreshToken = \(accountRefreshToken)")
-                
                 do {
                     try KeychainManager.save(account: "accessToken", value: accountAccessToken, isForce: true)
                     try KeychainManager.save(account: "refreshToken", value: accountRefreshToken, isForce: true)
@@ -179,10 +185,9 @@ class MakeProfileViewController: UIViewController {
                 }
                 
                 // 회원가입 성공 시 홈 화면으로  전환
-                self.toHomeTabPage()
-            })
+                self?.toHomeTabPage()
+            }
         }
-        
     }
     
     // 프로필 사진 설정
@@ -214,7 +219,7 @@ class MakeProfileViewController: UIViewController {
 // MARK: - Extension
 
 // 앨범 사진 선택 프로토콜 채택
-extension MakeProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension SignUpViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // 선택한 사진 사용
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -231,7 +236,7 @@ extension MakeProfileViewController: UIImagePickerControllerDelegate, UINavigati
 }
 
 // TextView 기본 속성 설정
-extension MakeProfileViewController: UITextViewDelegate {
+extension SignUpViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == textViewPlaceHolder {
@@ -292,7 +297,7 @@ extension MakeProfileViewController: UITextViewDelegate {
     }
 }
 
-extension MakeProfileViewController : UITextFieldDelegate {
+extension SignUpViewController : UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let utf8Char = string.cString(using: .utf8)
         let isBackSpace = strcmp(utf8Char, "\\b")
@@ -304,7 +309,7 @@ extension MakeProfileViewController : UITextFieldDelegate {
 }
 
 // Alert 창
-extension MakeProfileViewController : CustomAlertDelegate {
+extension SignUpViewController : CustomAlertDelegate {
     func cancel() {
         if backBtnPressed {
             self.navigationController?.popViewController(animated: true)
