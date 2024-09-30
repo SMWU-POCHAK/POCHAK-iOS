@@ -151,21 +151,29 @@ extension SettingsViewController: CustomAlertDelegate {
     
     func confirmAction() {
         if selectedBtn == 0 {
-            LogoutDataManager.shared.logoutDataManager(
-                { resultData in
-                    let message = resultData.message
-                    print(message)
-                })
-            
+            AuthenticationService.logOut { [weak self] data, failed in
+                let message = data.message
+                print(message)
+            }
+//            LogoutDataManager.shared.logoutDataManager(
+//                { resultData in
+//                    let message = resultData.message
+//                    print(message)
+//                })
+//            
             deleteUserData()
             moveToMainPage()
             
         } else if selectedBtn == 1 {
-            SignOutDataManager.shared.signOutDataManager(
-                { resultData in
-                    let message = resultData.message
-                    print(message)
-                })
+            AuthenticationService.signOut { [weak self] data, failed in
+                let message = data.message
+                print(message)
+            }
+//            SignOutDataManager.shared.signOutDataManager(
+//                { resultData in
+//                    let message = resultData.message
+//                    print(message)
+//                })
             
             deleteUserData()
             moveToMainPage()

@@ -16,32 +16,32 @@ struct ProfileService {
         request: ProfileRetrievalRequest,
         completion: @escaping (_ succeed: ProfileRetrievalResponse?, _ failed: NetworkError?) -> Void) {
             NetworkService.shared.request(ProfileRetrievalAPI.getProfile(handle: handle, request: request)) { response in
-            switch response {
-            case .success(let data):
-                completion(data, nil)
-            case .failure(let error):
-                print("=== getProfile error ===")
-                print(error.localizedDescription)
-                completion(nil, error)
+                switch response {
+                case .success(let data):
+                    completion(data, nil)
+                case .failure(let error):
+                    print("=== getProfile error ===")
+                    print(error.localizedDescription)
+                    completion(nil, error)
+                }
             }
         }
-    }
     
     static func getProfilePochakPosts(
         handle: String,
         request: PochakPostRetrievalRequest,
         completion: @escaping (_ succeed: PochakPostRetrievalResponse?, _ failed: NetworkError?) -> Void) {
             NetworkService.shared.request(PochakPostRetrievalAPI.getPochakPost(handle: handle, request: request)) { response in
-            switch response {
-            case .success(let data):
-                completion(data, nil)
-            case .failure(let error):
-                print("=== getProfilePochakPosts error ===")
-                print(error.localizedDescription)
-                completion(nil, error)
+                switch response {
+                case .success(let data):
+                    completion(data, nil)
+                case .failure(let error):
+                    print("=== getProfilePochakPosts error ===")
+                    print(error.localizedDescription)
+                    completion(nil, error)
+                }
             }
         }
-    }
     
     static func profileUpdate(
         handle: String,
