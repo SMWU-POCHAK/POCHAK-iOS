@@ -14,6 +14,11 @@ target 'pochak' do
   pod 'Tabman', '~> 2.9'
 
   pod 'RealmSwift', '~>10'
+  
+  # firebase
+  pod 'FirebaseAnalytics'
+  pod 'FirebaseCrashlytics'
+
   # Pods for pochak
 
   target 'pochakTests' do
