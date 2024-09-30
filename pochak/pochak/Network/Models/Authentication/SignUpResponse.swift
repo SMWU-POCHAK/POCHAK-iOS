@@ -1,18 +1,20 @@
 //
-//  JoinDataModel.swift
+//  SignUpResponse.swift
 //  pochak
 //
-//  Created by Seo Cindy on 12/27/23.
+//  Created by Seo Cindy on 10/1/24.
 //
 
-struct JoinAPIResponse: Codable {
+import Foundation
+
+struct SignUpResponse: Codable {
     let isSuccess: Bool
     let code: String
     let message: String
-    let result: JoinDataModel
+    let result: SignUpResult
 }
 
-struct JoinDataModel : Codable {
+struct SignUpResult : Codable {
     var id : Int?
     var socialId : String?
     var name : String?
