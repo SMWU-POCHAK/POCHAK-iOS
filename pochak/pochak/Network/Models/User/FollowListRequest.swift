@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct FollowListRequest: Encodable {
     let page: Int
 }

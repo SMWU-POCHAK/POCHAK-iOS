@@ -28,29 +28,31 @@ struct UserService {
             }
         }
     
-    /// 팔로우 요청 혹은 취소하기
+    /// 팔로우 삭제하기
     /// - Parameters:
-    ///   - handle: 팔로우 요청 혹은 취소하려는 사용자의 핸들 (아이디)
+    ///   - handle: 현재 로그인한 유저의 핸들
+    ///   - request : 삭제하려는 팔로워의 핸들
     ///   - completion: 통신 후 핸들러 (뷰컨트롤러)
-    static func unfollowUser(
+    static func deleteFollower(
         handle: String,
-        request: UnfollowRequest,
-        completion: @escaping (_ succeed: FollowResponse?, _ failed: NetworkError?) -> Void) {
-            NetworkService.shared.request(UnfollowAPI.unfollowUser(handle: handle, request: request)) { response in
+        request: DeleteFollowerRequest,
+        completion: @escaping (_ succeed: DeleteFollowerResponse?, _ failed: NetworkError?) -> Void) {
+            NetworkService.shared.request(DeleteFollowerAPI.deleteFollower(handle: handle, request: request)) { response in
                 switch response {
                 case .success(let data):
                     completion(data, nil)
                 case .failure(let error):
-                    print("=== unfollowUser service error ===")
+                    print("=== deleteFollower service error ===")
                     print(error.localizedDescription)
                     completion(nil, error)
                 }
             }
         }
     
-    /// 팔로우 요청 혹은 취소하기
+    /// 팔로워 리스트 조회하기
     /// - Parameters:
-    ///   - handle: 팔로우 요청 혹은 취소하려는 사용자의 핸들 (아이디)
+    ///   - handle: 해당하는 핸들 유저의 팔로워 리스트 조회
+    ///   - request : page 정보
     ///   - completion: 통신 후 핸들러 (뷰컨트롤러)
     static func getFollowers(
         handle: String,
@@ -68,6 +70,11 @@ struct UserService {
             }
         }
     
+    /// 팔로잉 리스트 조회하기
+    /// - Parameters:
+    ///   - handle: 해당하는 핸들 유저의 팔로잉 리스트 조회
+    ///   - request : page 정보
+    ///   - completion: 통신 후 핸들러 (뷰컨트롤러)
     static func getFollowings(
         handle: String,
         request: FollowListRequest,
@@ -84,9 +91,9 @@ struct UserService {
             }
         }
     
-    /// 팔로우 요청 혹은 취소하기
+    /// 유저 차단하기
     /// - Parameters:
-    ///   - handle: 팔로우 요청 혹은 취소하려는 사용자의 핸들 (아이디)
+    ///   - handle: 차단하고자 하는 사용자의 핸들 (아이디)
     ///   - completion: 통신 후 핸들러 (뷰컨트롤러)
     static func blockUser(
         handle: String,
@@ -103,9 +110,10 @@ struct UserService {
             }
         }
     
-    /// 팔로우 요청 혹은 취소하기
+    /// 유저 차단 해제하기
     /// - Parameters:
-    ///   - handle: 팔로우 요청 혹은 취소하려는 사용자의 핸들 (아이디)
+    ///   - handle : 현재 로그인한 유저의 핸들
+    ///   - request : 차단을 해제하고자 하는 사용자의 핸들 (아이디)
     ///   - completion: 통신 후 핸들러 (뷰컨트롤러)
     static func unblockUser(
         handle: String,
@@ -123,10 +131,10 @@ struct UserService {
             }
         }
     
-    
-    /// 팔로우 요청 혹은 취소하기
+    /// 차단 유저 리스트 조회
     /// - Parameters:
-    ///   - handle: 팔로우 요청 혹은 취소하려는 사용자의 핸들 (아이디)
+    ///   - handle: 현재 로그인한 유저의 핸들
+    ///   - request : page 정보
     ///   - completion: 통신 후 핸들러 (뷰컨트롤러)
     static func getBlockUserList(
         handle: String,

@@ -8,8 +8,10 @@
 import Foundation
 
 struct ProfileService {
+    
     /// - Parameters:
-    ///   - request: 받아올 프로필 탭 페이지
+    ///   - handle : 조회하는 프로필 유저의 핸들
+    ///   - request: page 정보
     ///   - completion: 통신 후 핸들러 (뷰컨트롤러에 있음)
     static func getProfile(
         handle: String,
@@ -27,6 +29,10 @@ struct ProfileService {
             }
         }
     
+    /// - Parameters:
+    ///    - handle : 조회하는 프로필 유저의 핸들
+    ///    - request: page 정보
+    ///    - completion: 통신 후 핸들러 (뷰컨트롤러에 있음)
     static func getProfilePochakPosts(
         handle: String,
         request: ProfileRetrievalRequest,
@@ -43,6 +49,11 @@ struct ProfileService {
             }
         }
     
+    /// - Parameters:
+    ///   - request: 현재 로그인한 유저의 핸들
+    ///   - files : 수정한 프로필 이미지
+    ///   - request : 수정한 name, message 정보
+    ///   - completion: 통신 후 핸들러 (뷰컨트롤러에 있음)
     static func profileUpdate(
         handle: String,
         files: [(Data, String, String)],
@@ -59,5 +70,4 @@ struct ProfileService {
                 }
             }
         }
-    
 }

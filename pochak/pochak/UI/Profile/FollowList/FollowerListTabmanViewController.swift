@@ -179,10 +179,9 @@ extension FollowerListTabmanViewController: RemoveImageDelegate {
 extension FollowerListTabmanViewController : CustomAlertDelegate {
     
     func confirmAction() {
-        let request = UnfollowRequest(followerHandle: cellHandle ?? "")
-        UserService.unfollowUser(handle: receivedHandle ?? "", request: request) { [weak self] data, failed in
+        let request = DeleteFollowerRequest(followerHandle: cellHandle ?? "")
+        UserService.deleteFollower(handle: receivedHandle ?? "", request: request) { [weak self] data, failed in
             guard let data = data else {
-                // 에러가 난 경우, alert 창 present
                 switch failed {
                 case .disconnected:
                     self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
@@ -200,11 +199,6 @@ extension FollowerListTabmanViewController : CustomAlertDelegate {
             self?.imageArray.remove(at: self?.cellIndexPath?.row ?? 10000)
             self?.followerCollectionView.reloadData()
         }
-//        DeleteFollowerDataManager.shared.deleteFollowerDataManager(receivedHandle ?? "", cellHandle ?? "", { resultData in
-//            print(resultData.message)
-//            self.imageArray.remove(at: self.cellIndexPath!.row)
-//            self.followerCollectionView.reloadData()
-//        })
     }
     
     func cancel() {

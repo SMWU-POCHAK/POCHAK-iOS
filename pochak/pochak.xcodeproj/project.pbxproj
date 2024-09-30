@@ -128,9 +128,9 @@
 		374E46452CAACD33008AE361 /* BlockListAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46442CAACD33008AE361 /* BlockListAPI.swift */; };
 		374E46472CAACE4C008AE361 /* BlockListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46462CAACE4C008AE361 /* BlockListRequest.swift */; };
 		374E46492CAACE53008AE361 /* BlockListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46482CAACE53008AE361 /* BlockListResponse.swift */; };
-		3759CF2F2CAAE42600408A4E /* UnfollowAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF2E2CAAE42600408A4E /* UnfollowAPI.swift */; };
-		3759CF312CAAE4C600408A4E /* UnfollowRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF302CAAE4C600408A4E /* UnfollowRequest.swift */; };
-		3759CF332CAAE4CE00408A4E /* UnfollowResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF322CAAE4CE00408A4E /* UnfollowResponse.swift */; };
+		3759CF2F2CAAE42600408A4E /* DeleteFollowerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF2E2CAAE42600408A4E /* DeleteFollowerAPI.swift */; };
+		3759CF312CAAE4C600408A4E /* DeleteFollowerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF302CAAE4C600408A4E /* DeleteFollowerRequest.swift */; };
+		3759CF332CAAE4CE00408A4E /* DeleteFollowerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF322CAAE4CE00408A4E /* DeleteFollowerResponse.swift */; };
 		3759CF352CAAE79000408A4E /* FollowerRetrievalAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF342CAAE79000408A4E /* FollowerRetrievalAPI.swift */; };
 		3759CF372CAAE79F00408A4E /* FollowingRetrievalAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF362CAAE79F00408A4E /* FollowingRetrievalAPI.swift */; };
 		3759CF392CAAE7E900408A4E /* FollowListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF382CAAE7E900408A4E /* FollowListRequest.swift */; };
@@ -374,9 +374,9 @@
 		374E46462CAACE4C008AE361 /* BlockListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListRequest.swift; sourceTree = "<group>"; };
 		374E46482CAACE53008AE361 /* BlockListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListResponse.swift; sourceTree = "<group>"; };
 		3750669E2C3BB1660036E264 /* pochak.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = pochak.entitlements; sourceTree = "<group>"; };
-		3759CF2E2CAAE42600408A4E /* UnfollowAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfollowAPI.swift; sourceTree = "<group>"; };
-		3759CF302CAAE4C600408A4E /* UnfollowRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfollowRequest.swift; sourceTree = "<group>"; };
-		3759CF322CAAE4CE00408A4E /* UnfollowResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfollowResponse.swift; sourceTree = "<group>"; };
+		3759CF2E2CAAE42600408A4E /* DeleteFollowerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFollowerAPI.swift; sourceTree = "<group>"; };
+		3759CF302CAAE4C600408A4E /* DeleteFollowerRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFollowerRequest.swift; sourceTree = "<group>"; };
+		3759CF322CAAE4CE00408A4E /* DeleteFollowerResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFollowerResponse.swift; sourceTree = "<group>"; };
 		3759CF342CAAE79000408A4E /* FollowerRetrievalAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerRetrievalAPI.swift; sourceTree = "<group>"; };
 		3759CF362CAAE79F00408A4E /* FollowingRetrievalAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingRetrievalAPI.swift; sourceTree = "<group>"; };
 		3759CF382CAAE7E900408A4E /* FollowListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowListRequest.swift; sourceTree = "<group>"; };
@@ -592,7 +592,7 @@
 			isa = PBXGroup;
 			children = (
 				0822A04E2CA1980200F87E2C /* FollowAPI.swift */,
-				3759CF2E2CAAE42600408A4E /* UnfollowAPI.swift */,
+				3759CF2E2CAAE42600408A4E /* DeleteFollowerAPI.swift */,
 				3759CF342CAAE79000408A4E /* FollowerRetrievalAPI.swift */,
 				3759CF362CAAE79F00408A4E /* FollowingRetrievalAPI.swift */,
 				374E463A2CAAC762008AE361 /* BlockAPI.swift */,
@@ -624,8 +624,8 @@
 			isa = PBXGroup;
 			children = (
 				0822A0592CA1983C00F87E2C /* FollowResponse.swift */,
-				3759CF302CAAE4C600408A4E /* UnfollowRequest.swift */,
-				3759CF322CAAE4CE00408A4E /* UnfollowResponse.swift */,
+				3759CF302CAAE4C600408A4E /* DeleteFollowerRequest.swift */,
+				3759CF322CAAE4CE00408A4E /* DeleteFollowerResponse.swift */,
 				3759CF382CAAE7E900408A4E /* FollowListRequest.swift */,
 				3759CF3A2CAAE80700408A4E /* FollowListResponse.swift */,
 				374E463C2CAAC82E008AE361 /* BlockResponse.swift */,
@@ -1640,7 +1640,7 @@
 				376EA12C2CAAAE5600FEFB63 /* ProfileRetrievalResponse.swift in Sources */,
 				EA0107A72A5CF73900A3AE85 /* AlarmViewController.swift in Sources */,
 				08EB99B72C53EA8500FAC08A /* TaggedUsersTableViewCell.swift in Sources */,
-				3759CF332CAAE4CE00408A4E /* UnfollowResponse.swift in Sources */,
+				3759CF332CAAE4CE00408A4E /* DeleteFollowerResponse.swift in Sources */,
 				EACF0F6E2C3044C000C0016C /* TagSearchTableViewCell.swift in Sources */,
 				08B679632B528D7500F8D585 /* CommentTableViewFooterView.swift in Sources */,
 				EA2CD6442C5F5A0E00644EFE /* HomeAPI.swift in Sources */,
@@ -1667,7 +1667,7 @@
 				EA17182C2A5912A7009168E6 /* UploadViewController.swift in Sources */,
 				089E27B72C4E8C2D00828F4C /* AlarmType.swift in Sources */,
 				3769D6B22B3C300D00294CD1 /* GoogleLoginModel.swift in Sources */,
-				3759CF2F2CAAE42600408A4E /* UnfollowAPI.swift in Sources */,
+				3759CF2F2CAAE42600408A4E /* DeleteFollowerAPI.swift in Sources */,
 				EA96D04C2C8F10C700D80562 /* TagPreviewResponse.swift in Sources */,
 				0822A06B2CA1983C00F87E2C /* ChildCommentGetResponse.swift in Sources */,
 				0822A0352CA196DF00F87E2C /* ExploreTabViewController.swift in Sources */,
@@ -1721,7 +1721,7 @@
 				08C02EF82BF394B800627C21 /* UIAlertController+.swift in Sources */,
 				089E27B92C4E8CB800828F4C /* AlertType.swift in Sources */,
 				EAE69F442C315009005762B7 /* UIVIew+.swift in Sources */,
-				3759CF312CAAE4C600408A4E /* UnfollowRequest.swift in Sources */,
+				3759CF312CAAE4C600408A4E /* DeleteFollowerRequest.swift in Sources */,
 				0876E23E2C274256008DE88F /* NoPostCollectionViewCell.swift in Sources */,
 				EA96D0502C8F15E000D80562 /* TagPreviewAPI.swift in Sources */,
 				0822A0482CA197E700F87E2C /* PostDeleteAPI.swift in Sources */,

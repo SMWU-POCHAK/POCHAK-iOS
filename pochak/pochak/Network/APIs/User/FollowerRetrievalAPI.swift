@@ -15,13 +15,13 @@ enum FollowerRetrievalAPI {
 extension FollowerRetrievalAPI: BaseAPI {
     
     typealias Response = FollowListResponse
-        
+    
     var method: HTTPMethod {
         switch self {
         case .getFollowers: return .get
         }
     }
-
+    
     var path: String {
         switch self {
         case .getFollowers(let handle, _): return "/v2/members/\(handle)/follower"

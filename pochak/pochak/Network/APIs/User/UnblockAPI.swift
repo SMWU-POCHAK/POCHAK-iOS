@@ -15,13 +15,13 @@ enum UnblockAPI {
 extension UnblockAPI: BaseAPI {
     
     typealias Response = UnblockResponse
-        
+    
     var method: HTTPMethod {
         switch self {
         case .unblockUser: return .delete
         }
     }
-
+    
     var path: String {
         switch self {
         case .unblockUser(let handle, _): return "/v2/members/\(handle)/block"

@@ -15,13 +15,13 @@ enum BlockListAPI {
 extension BlockListAPI: BaseAPI {
     
     typealias Response = BlockListResponse
-        
+    
     var method: HTTPMethod {
         switch self {
         case .getBlockUserList: return .get
         }
     }
-
+    
     var path: String {
         switch self {
         case .getBlockUserList(let handle, _): return "/v2/members/\(handle)/block"
