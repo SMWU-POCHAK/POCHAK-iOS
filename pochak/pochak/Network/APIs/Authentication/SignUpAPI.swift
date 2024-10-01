@@ -24,13 +24,13 @@ extension SignUpAPI: BaseAPI {
     
     var path: String {
         switch self {
-        case .signUp: return "/v2/signUp"
+        case .signUp: return "/v2/signup"
         }
     }
     
     var parameters: RequestParams? {
         switch self {
-        case .signUp(let request): return .body(request)
+        case .signUp(let request): return .query(request)
         }
     }
 }

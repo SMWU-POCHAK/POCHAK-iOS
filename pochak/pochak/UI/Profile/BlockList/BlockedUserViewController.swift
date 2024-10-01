@@ -136,6 +136,8 @@ extension BlockedUserViewController: UITableViewDataSource{
 extension BlockedUserViewController: RemoveCellDelegate {
     
     func removeCell(at indexPath: IndexPath, _ handle: String) {
+        cellHandle = handle
+        cellIndexPath = indexPath
         showAlert(alertType: .confirmAndCancel,
                   titleText: "유저 차단을 취소하겠습니까?",
                   messageText: "유저 차단을 취소하면, 팔로워와 관련된 \n사진 및 소식을 다시 접할 수 있습니다.",

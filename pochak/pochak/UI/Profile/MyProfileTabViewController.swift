@@ -155,7 +155,7 @@ class MyProfileTabViewController: UIViewController {
             // 필요한 데이터 뷰에 반영
             self.setUpResponseData(data.result)
             
-            // UserDefaultsManager에 새로운 데이터 저장 후 관리 : followerCount, followingCount
+            // UserDefaultsManager에 데이터 저장 후 관리
             self.setUpUserDefaults(data.result)
         }
     }
@@ -174,5 +174,6 @@ class MyProfileTabViewController: UIViewController {
         UserDefaultsManager.setData(value: resposeData.message, key: .message)
         UserDefaultsManager.setData(value: resposeData.followerCount, key: .followerCount)
         UserDefaultsManager.setData(value: resposeData.followingCount, key: .followingCount)
+        UserDefaultsManager.setData(value: resposeData.profileImage, key: .profileImgUrl)
     }
 }

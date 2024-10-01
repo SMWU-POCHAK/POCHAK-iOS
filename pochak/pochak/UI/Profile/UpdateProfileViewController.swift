@@ -113,15 +113,9 @@ class UpdateProfileViewController: UIViewController {
         handleTextField.isUserInteractionEnabled = false
         handleTextField.textColor = UIColor(named: "gray03")
         
+        // load 프로필 이미지
         if let url = URL(string: profileImgUrl) {
-            self.profileImg.kf.setImage(with: url) { result in
-                switch result {
-                case .success(let value):
-                    print("Image successfully loaded: \(value.image)")
-                case .failure(let error):
-                    print("Image failed to load with error: \(error.localizedDescription)")
-                }
-            }
+            self.profileImg.load(with: url)
         }
         
         self.profileImg.contentMode = .scaleAspectFill
