@@ -18,6 +18,7 @@ target 'pochak' do
   # firebase
   pod 'FirebaseAnalytics'
   pod 'FirebaseCrashlytics'
+  pod 'FirebaseMessaging'
 
   # Pods for pochak
 
