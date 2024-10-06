@@ -95,10 +95,11 @@ class OtherUserProfileViewController: UIViewController {
                     return
                 }
                 print(data.message)
+                self?.receivedIsFollow = true
+                sender.setTitle("팔로잉", for: .normal)
+                sender.backgroundColor = UIColor(named: "gray03")
+                self?.setUpData()
             }
-            self.receivedIsFollow = true
-            sender.setTitle("팔로잉", for: .normal)
-            sender.backgroundColor = UIColor(named: "gray03")
         }
     }
     
@@ -288,10 +289,11 @@ extension OtherUserProfileViewController: CustomAlertDelegate {
                     return
                 }
                 print(data.message)
+                self?.receivedIsFollow = false
+                self?.followToggleBtn.setTitle("팔로우", for: .normal)
+                self?.followToggleBtn.backgroundColor = UIColor(named: "yellow00")
+                self?.setUpData()
             }
-            self.receivedIsFollow = false
-            followToggleBtn.setTitle("팔로우", for: .normal)
-            followToggleBtn.backgroundColor = UIColor(named: "yellow00")
         }
     }
     

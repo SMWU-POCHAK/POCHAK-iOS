@@ -165,6 +165,8 @@ extension FollowerListTabmanViewController : UICollectionViewDelegateFlowLayout 
 extension FollowerListTabmanViewController: RemoveImageDelegate {
     
     func removeFromCollectionView(at indexPath: IndexPath, _ handle: String) {
+        cellHandle = handle
+        cellIndexPath = indexPath
         showAlert(alertType: .confirmAndCancel,
                   titleText: "팔로워를 삭제하시겠습니까?",
                   messageText: "팔로워를 삭제하면, 팔로워와 관련된 \n사진이 사라집니다.",
@@ -180,24 +182,24 @@ extension FollowerListTabmanViewController : CustomAlertDelegate {
     
     func confirmAction() {
         let request = DeleteFollowerRequest(followerHandle: cellHandle ?? "")
-        UserService.deleteFollower(handle: receivedHandle ?? "", request: request) { [weak self] data, failed in
+        UserService.deleteFollower(handle: receivedHandle ?? "", request: request) { data, failed in
             guard let data = data else {
                 switch failed {
                 case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
                 case .serverError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
                 case .unknownError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
                 default:
-                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                    self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
                 }
                 return
             }
             
             print(data.message)
-            self?.imageArray.remove(at: self?.cellIndexPath?.row ?? 10000)
-            self?.followerCollectionView.reloadData()
+            self.imageArray.remove(at: self.cellIndexPath!.row)
+            self.followerCollectionView.reloadData()
         }
     }
     
