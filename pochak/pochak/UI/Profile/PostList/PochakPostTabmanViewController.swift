@@ -40,7 +40,7 @@ class PochakPostTabmanViewController: UIViewController {
         imageArray = []
         currentFetchingPage = 0
         setUpData()
-        DispatchQueue.main.async {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
             self.postCollectionView.refreshControl?.endRefreshing()
         }
     }
