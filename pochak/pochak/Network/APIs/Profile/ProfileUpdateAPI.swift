@@ -31,7 +31,7 @@ extension ProfileUpdateAPI: BaseAPI {
     
     var parameters: RequestParams? {
         switch self {
-        case .updateProfile(_, let request): return .body(request)
+        case .updateProfile(_, let request): return .query(request)
         }
     }
 }
