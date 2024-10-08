@@ -102,36 +102,51 @@
 		2FCBFE6DE98CEA8938EF93DC /* Pods_pochakTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1916A70A802F298FF38F24 /* Pods_pochakTests.framework */; };
 		371D33782B4E83E90084FF6A /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D33772B4E83E90084FF6A /* UserDefaultsManager.swift */; };
 		371D337A2B4E8D1F0084FF6A /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D33792B4E8D1F0084FF6A /* KeychainManager.swift */; };
-		373235472B68F93E0042EF94 /* FollowListDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373235462B68F93E0042EF94 /* FollowListDataManager.swift */; };
-		373235492B68F9A60042EF94 /* FollowListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373235482B68F9A60042EF94 /* FollowListDataModel.swift */; };
-		3732354E2B691E610042EF94 /* FollowToggleDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3732354D2B691E610042EF94 /* FollowToggleDataManager.swift */; };
-		373235502B691E6A0042EF94 /* FollowToggleDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3732354F2B691E6A0042EF94 /* FollowToggleDataModel.swift */; };
-		373235542B692C6D0042EF94 /* DeleteFollowerDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373235532B692C6D0042EF94 /* DeleteFollowerDataManager.swift */; };
-		373235562B692C790042EF94 /* DeleteFollowerDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373235552B692C790042EF94 /* DeleteFollowerDataModel.swift */; };
 		373815162A89E6D30032066A /* SocialJoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373815152A89E6D30032066A /* SocialJoinViewController.swift */; };
-		3738151A2A8A09DA0032066A /* MakeProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373815192A8A09DA0032066A /* MakeProfileViewController.swift */; };
+		3738151A2A8A09DA0032066A /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373815192A8A09DA0032066A /* SignUpViewController.swift */; };
 		374261642C2FEF5F00B67886 /* ProfileMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374261632C2FEF5F00B67886 /* ProfileMenuViewController.swift */; };
-		3742616E2C30916C00B67886 /* BlockDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3742616D2C30916C00B67886 /* BlockDataManager.swift */; };
-		374261702C30917600B67886 /* BlockDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3742616F2C30917600B67886 /* BlockDataModel.swift */; };
-		374261722C3092B100B67886 /* UnblockDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374261712C3092B100B67886 /* UnblockDataManager.swift */; };
-		374261742C3092B900B67886 /* UnblockDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374261732C3092B900B67886 /* UnblockDataModel.swift */; };
 		374261782C31C6ED00B67886 /* AppleLoginDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374261772C31C6ED00B67886 /* AppleLoginDataManager.swift */; };
 		3742617A2C31C6F900B67886 /* AppleLoginDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374261792C31C6F900B67886 /* AppleLoginDataModel.swift */; };
-		3742617D2C359D6100B67886 /* CheckHandleDuplicationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3742617C2C359D6100B67886 /* CheckHandleDuplicationDataManager.swift */; };
-		3742617F2C359D6D00B67886 /* CheckHandleDuplicationDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3742617E2C359D6D00B67886 /* CheckHandleDuplicationDataModel.swift */; };
 		3747E9722BF3827500364BED /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3747E9712BF3827500364BED /* SettingsViewController.swift */; };
+		374E461F2CAABAF3008AE361 /* PochakPostRetrievalAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E461E2CAABAF3008AE361 /* PochakPostRetrievalAPI.swift */; };
+		374E46232CAABB31008AE361 /* PochakPostRetrievalResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46222CAABB31008AE361 /* PochakPostRetrievalResponse.swift */; };
+		374E46252CAABE08008AE361 /* ProfileUpdateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46242CAABE07008AE361 /* ProfileUpdateResponse.swift */; };
+		374E46292CAABE50008AE361 /* ProfileUpdateAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46282CAABE50008AE361 /* ProfileUpdateAPI.swift */; };
+		374E462B2CAABF7B008AE361 /* ProfileUpdateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E462A2CAABF7A008AE361 /* ProfileUpdateRequest.swift */; };
+		374E462D2CAAC399008AE361 /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E462C2CAAC399008AE361 /* AuthenticationService.swift */; };
+		374E46302CAAC3F6008AE361 /* SignOutResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E462F2CAAC3F6008AE361 /* SignOutResponse.swift */; };
+		374E46352CAAC445008AE361 /* SignOutAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46342CAAC445008AE361 /* SignOutAPI.swift */; };
+		374E46372CAAC602008AE361 /* LogOutAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46362CAAC602008AE361 /* LogOutAPI.swift */; };
+		374E46392CAAC646008AE361 /* LogOutResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46382CAAC646008AE361 /* LogOutResponse.swift */; };
+		374E463B2CAAC762008AE361 /* BlockAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E463A2CAAC762008AE361 /* BlockAPI.swift */; };
+		374E463D2CAAC82E008AE361 /* BlockResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E463C2CAAC82E008AE361 /* BlockResponse.swift */; };
+		374E463F2CAAC931008AE361 /* UnblockAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E463E2CAAC931008AE361 /* UnblockAPI.swift */; };
+		374E46412CAAC9AE008AE361 /* UnblockRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46402CAAC9AE008AE361 /* UnblockRequest.swift */; };
+		374E46432CAAC9B5008AE361 /* UnblockResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46422CAAC9B5008AE361 /* UnblockResponse.swift */; };
+		374E46452CAACD33008AE361 /* BlockListAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46442CAACD33008AE361 /* BlockListAPI.swift */; };
+		374E46472CAACE4C008AE361 /* BlockListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46462CAACE4C008AE361 /* BlockListRequest.swift */; };
+		374E46492CAACE53008AE361 /* BlockListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374E46482CAACE53008AE361 /* BlockListResponse.swift */; };
+		3759CF2F2CAAE42600408A4E /* DeleteFollowerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF2E2CAAE42600408A4E /* DeleteFollowerAPI.swift */; };
+		3759CF312CAAE4C600408A4E /* DeleteFollowerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF302CAAE4C600408A4E /* DeleteFollowerRequest.swift */; };
+		3759CF332CAAE4CE00408A4E /* DeleteFollowerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF322CAAE4CE00408A4E /* DeleteFollowerResponse.swift */; };
+		3759CF352CAAE79000408A4E /* FollowerRetrievalAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF342CAAE79000408A4E /* FollowerRetrievalAPI.swift */; };
+		3759CF372CAAE79F00408A4E /* FollowingRetrievalAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF362CAAE79F00408A4E /* FollowingRetrievalAPI.swift */; };
+		3759CF392CAAE7E900408A4E /* FollowListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF382CAAE7E900408A4E /* FollowListRequest.swift */; };
+		3759CF3B2CAAE80700408A4E /* FollowListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF3A2CAAE80700408A4E /* FollowListResponse.swift */; };
+		3759CF3F2CAB145500408A4E /* CheckDuplicateHandleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF3E2CAB145500408A4E /* CheckDuplicateHandleAPI.swift */; };
+		3759CF412CAB150500408A4E /* CheckDuplicateHandleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF402CAB150500408A4E /* CheckDuplicateHandleRequest.swift */; };
+		3759CF432CAB152200408A4E /* CheckDuplicateHandleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF422CAB152200408A4E /* CheckDuplicateHandleResponse.swift */; };
+		3759CF452CAB16E600408A4E /* SignUpAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF442CAB16E600408A4E /* SignUpAPI.swift */; };
+		3759CF492CAB178800408A4E /* SignUpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF482CAB178800408A4E /* SignUpRequest.swift */; };
+		3759CF4B2CAB179100408A4E /* SignUpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759CF4A2CAB179100408A4E /* SignUpResponse.swift */; };
 		3766F4022C3706DC001DD239 /* BlockedUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3766F4012C3706DC001DD239 /* BlockedUserTableViewCell.xib */; };
 		3766F4032C3706DC001DD239 /* BlockedUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4002C3706DC001DD239 /* BlockedUserTableViewCell.swift */; };
-		3766F4062C370A7C001DD239 /* BlockedUserListDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4052C370A7C001DD239 /* BlockedUserListDataManager.swift */; };
-		3766F4082C370A82001DD239 /* BlockedUserListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4072C370A82001DD239 /* BlockedUserListDataModel.swift */; };
 		3766F40A2C370CF5001DD239 /* BlockedUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4092C370CF5001DD239 /* BlockedUserViewController.swift */; };
 		3766F40C2C3736F1001DD239 /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F40B2C3736F1001DD239 /* RequestInterceptor.swift */; };
 		3766F40F2C398AA8001DD239 /* NetworkResult400.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F40E2C398AA8001DD239 /* NetworkResult400.swift */; };
 		3766F4132C3A69E5001DD239 /* TermsOfAgreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3766F4122C3A69E5001DD239 /* TermsOfAgreeViewController.swift */; };
 		3769D6AF2B3C2FD500294CD1 /* GoogleLoginDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6AE2B3C2FD500294CD1 /* GoogleLoginDataManager.swift */; };
 		3769D6B22B3C300D00294CD1 /* GoogleLoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6B12B3C300D00294CD1 /* GoogleLoginModel.swift */; };
-		3769D6B42B3C301B00294CD1 /* JoinDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6B32B3C301B00294CD1 /* JoinDataManager.swift */; };
-		3769D6B62B3C302C00294CD1 /* JoinDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6B52B3C302C00294CD1 /* JoinDataModel.swift */; };
 		3769D6B92B3C345800294CD1 /* MyProfileTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6B82B3C345800294CD1 /* MyProfileTabViewController.swift */; };
 		3769D6BB2B3C347000294CD1 /* FollowListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6BA2B3C347000294CD1 /* FollowListViewController.swift */; };
 		3769D6BD2B3C348800294CD1 /* FollowerListTabmanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6BC2B3C348800294CD1 /* FollowerListTabmanViewController.swift */; };
@@ -145,21 +160,15 @@
 		3769D6D22B3C56F100294CD1 /* PochakPostTabmanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6D12B3C56F100294CD1 /* PochakPostTabmanViewController.swift */; };
 		3769D6D52B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6D32B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift */; };
 		3769D6D62B3C59F900294CD1 /* ProfilePostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3769D6D42B3C59F900294CD1 /* ProfilePostCollectionViewCell.xib */; };
-		376F125B2A8B7440005F469B /* SocialLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376F125A2A8B7440005F469B /* SocialLoginViewController.swift */; };
+		376EA1292CAAADCF00FEFB63 /* ProfileRetrievalAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376EA1282CAAADCF00FEFB63 /* ProfileRetrievalAPI.swift */; };
+		376EA12C2CAAAE5600FEFB63 /* ProfileRetrievalResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376EA12B2CAAAE5600FEFB63 /* ProfileRetrievalResponse.swift */; };
+		376EA12E2CAAAE6800FEFB63 /* ProfileRetrievalRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376EA12D2CAAAE6800FEFB63 /* ProfileRetrievalRequest.swift */; };
+		376EA1302CAAAF6900FEFB63 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376EA12F2CAAAF6900FEFB63 /* ProfileService.swift */; };
 		379A6A342B569DFA0087FAAC /* AuthenticationCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A6A332B569DFA0087FAAC /* AuthenticationCredential.swift */; };
 		379A6A3A2B56BDBF0087FAAC /* Authenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A6A392B56BDBF0087FAAC /* Authenticator.swift */; };
 		379A6A3E2B5FA07D0087FAAC /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A6A3D2B5FA07D0087FAAC /* NavigationController.swift */; };
 		37A284C12B52FC910023EB9D /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A284C02B52FC910023EB9D /* UpdateProfileViewController.swift */; };
 		37BBFDF12C2EB43D003D8DA5 /* Pretendard-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75852A51728A003AAB94 /* Pretendard-ExtraBold.ttf */; };
-		37C3AF482B3CB2B300B4C79C /* MyProfilePochakedPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C3AF472B3CB2B300B4C79C /* MyProfilePochakedPostModel.swift */; };
-		37C3AF4A2B3CB2C700B4C79C /* MyProfilePochakPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C3AF492B3CB2C700B4C79C /* MyProfilePochakPostModel.swift */; };
-		37C3AF4B2B3CB49E00B4C79C /* MyProfilePostDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C3AF452B3CB29A00B4C79C /* MyProfilePostDataManager.swift */; };
-		37D311D52B53056700A1D7C1 /* ProfileUpdateDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311D42B53056700A1D7C1 /* ProfileUpdateDataManager.swift */; };
-		37D311D72B53057700A1D7C1 /* ProfileUpdateDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311D62B53057700A1D7C1 /* ProfileUpdateDataModel.swift */; };
-		37D311DA2B53134200A1D7C1 /* LogoutDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311D92B53134200A1D7C1 /* LogoutDataManager.swift */; };
-		37D311DC2B53135000A1D7C1 /* LogoutDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311DB2B53135000A1D7C1 /* LogoutDataModel.swift */; };
-		37D311DF2B566C4D00A1D7C1 /* SignOutDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311DE2B566C4D00A1D7C1 /* SignOutDataManager.swift */; };
-		37D311E12B566C5A00A1D7C1 /* SignOutDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311E02B566C5900A1D7C1 /* SignOutDataModel.swift */; };
 		37D311E32B56754D00A1D7C1 /* GetToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311E22B56754D00A1D7C1 /* GetToken.swift */; };
 		37D311E52B567AE000A1D7C1 /* OtherUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */; };
 		A6D48ED7F8B86CF57C481991 /* Pods_pochak_pochakUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC75B5747D3AC9026B862E11 /* Pods_pochak_pochakUITests.framework */; };
@@ -326,7 +335,7 @@
 		08C02EF52BF3945000627C21 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		08C02EF72BF394B800627C21 /* UIAlertController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+.swift"; sourceTree = "<group>"; };
 		08C9151B2C6461B10044A9A8 /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
-		08D2B98C2C68C02D00BD7450 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		08D2B98C2C68C02D00BD7450 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08D98C492AFEE8D700E9A097 /* LikedUsersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedUsersDataModel.swift; sourceTree = "<group>"; };
 		08E8DCDB2C38118000EC78C2 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		08EB5D242C280CFE00E35C16 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
@@ -338,38 +347,53 @@
 		0DB83F3ED818C9AF01F6A8E0 /* Pods-pochak.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pochak.release.xcconfig"; path = "Target Support Files/Pods-pochak/Pods-pochak.release.xcconfig"; sourceTree = "<group>"; };
 		371D33772B4E83E90084FF6A /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		371D33792B4E8D1F0084FF6A /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
-		373235462B68F93E0042EF94 /* FollowListDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowListDataManager.swift; sourceTree = "<group>"; };
-		373235482B68F9A60042EF94 /* FollowListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowListDataModel.swift; sourceTree = "<group>"; };
-		3732354D2B691E610042EF94 /* FollowToggleDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowToggleDataManager.swift; sourceTree = "<group>"; };
-		3732354F2B691E6A0042EF94 /* FollowToggleDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowToggleDataModel.swift; sourceTree = "<group>"; };
-		373235532B692C6D0042EF94 /* DeleteFollowerDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFollowerDataManager.swift; sourceTree = "<group>"; };
-		373235552B692C790042EF94 /* DeleteFollowerDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFollowerDataModel.swift; sourceTree = "<group>"; };
 		373815152A89E6D30032066A /* SocialJoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialJoinViewController.swift; sourceTree = "<group>"; };
-		373815192A8A09DA0032066A /* MakeProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeProfileViewController.swift; sourceTree = "<group>"; };
+		373815192A8A09DA0032066A /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		374261632C2FEF5F00B67886 /* ProfileMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMenuViewController.swift; sourceTree = "<group>"; };
-		3742616D2C30916C00B67886 /* BlockDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockDataManager.swift; sourceTree = "<group>"; };
-		3742616F2C30917600B67886 /* BlockDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockDataModel.swift; sourceTree = "<group>"; };
-		374261712C3092B100B67886 /* UnblockDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockDataManager.swift; sourceTree = "<group>"; };
-		374261732C3092B900B67886 /* UnblockDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockDataModel.swift; sourceTree = "<group>"; };
 		374261752C31C23800B67886 /* pochakDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = pochakDebug.entitlements; sourceTree = "<group>"; };
 		374261772C31C6ED00B67886 /* AppleLoginDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginDataManager.swift; sourceTree = "<group>"; };
 		374261792C31C6F900B67886 /* AppleLoginDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginDataModel.swift; sourceTree = "<group>"; };
-		3742617C2C359D6100B67886 /* CheckHandleDuplicationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckHandleDuplicationDataManager.swift; sourceTree = "<group>"; };
-		3742617E2C359D6D00B67886 /* CheckHandleDuplicationDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckHandleDuplicationDataModel.swift; sourceTree = "<group>"; };
 		3747E9712BF3827500364BED /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		374E461E2CAABAF3008AE361 /* PochakPostRetrievalAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakPostRetrievalAPI.swift; sourceTree = "<group>"; };
+		374E46222CAABB31008AE361 /* PochakPostRetrievalResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakPostRetrievalResponse.swift; sourceTree = "<group>"; };
+		374E46242CAABE07008AE361 /* ProfileUpdateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUpdateResponse.swift; sourceTree = "<group>"; };
+		374E46282CAABE50008AE361 /* ProfileUpdateAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUpdateAPI.swift; sourceTree = "<group>"; };
+		374E462A2CAABF7A008AE361 /* ProfileUpdateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUpdateRequest.swift; sourceTree = "<group>"; };
+		374E462C2CAAC399008AE361 /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
+		374E462F2CAAC3F6008AE361 /* SignOutResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutResponse.swift; sourceTree = "<group>"; };
+		374E46342CAAC445008AE361 /* SignOutAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutAPI.swift; sourceTree = "<group>"; };
+		374E46362CAAC602008AE361 /* LogOutAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogOutAPI.swift; sourceTree = "<group>"; };
+		374E46382CAAC646008AE361 /* LogOutResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogOutResponse.swift; sourceTree = "<group>"; };
+		374E463A2CAAC762008AE361 /* BlockAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockAPI.swift; sourceTree = "<group>"; };
+		374E463C2CAAC82E008AE361 /* BlockResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockResponse.swift; sourceTree = "<group>"; };
+		374E463E2CAAC931008AE361 /* UnblockAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockAPI.swift; sourceTree = "<group>"; };
+		374E46402CAAC9AE008AE361 /* UnblockRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockRequest.swift; sourceTree = "<group>"; };
+		374E46422CAAC9B5008AE361 /* UnblockResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockResponse.swift; sourceTree = "<group>"; };
+		374E46442CAACD33008AE361 /* BlockListAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListAPI.swift; sourceTree = "<group>"; };
+		374E46462CAACE4C008AE361 /* BlockListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListRequest.swift; sourceTree = "<group>"; };
+		374E46482CAACE53008AE361 /* BlockListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListResponse.swift; sourceTree = "<group>"; };
 		3750669E2C3BB1660036E264 /* pochak.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = pochak.entitlements; sourceTree = "<group>"; };
+		3759CF2E2CAAE42600408A4E /* DeleteFollowerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFollowerAPI.swift; sourceTree = "<group>"; };
+		3759CF302CAAE4C600408A4E /* DeleteFollowerRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFollowerRequest.swift; sourceTree = "<group>"; };
+		3759CF322CAAE4CE00408A4E /* DeleteFollowerResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFollowerResponse.swift; sourceTree = "<group>"; };
+		3759CF342CAAE79000408A4E /* FollowerRetrievalAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerRetrievalAPI.swift; sourceTree = "<group>"; };
+		3759CF362CAAE79F00408A4E /* FollowingRetrievalAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingRetrievalAPI.swift; sourceTree = "<group>"; };
+		3759CF382CAAE7E900408A4E /* FollowListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowListRequest.swift; sourceTree = "<group>"; };
+		3759CF3A2CAAE80700408A4E /* FollowListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowListResponse.swift; sourceTree = "<group>"; };
+		3759CF3E2CAB145500408A4E /* CheckDuplicateHandleAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDuplicateHandleAPI.swift; sourceTree = "<group>"; };
+		3759CF402CAB150500408A4E /* CheckDuplicateHandleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDuplicateHandleRequest.swift; sourceTree = "<group>"; };
+		3759CF422CAB152200408A4E /* CheckDuplicateHandleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDuplicateHandleResponse.swift; sourceTree = "<group>"; };
+		3759CF442CAB16E600408A4E /* SignUpAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAPI.swift; sourceTree = "<group>"; };
+		3759CF482CAB178800408A4E /* SignUpRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRequest.swift; sourceTree = "<group>"; };
+		3759CF4A2CAB179100408A4E /* SignUpResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpResponse.swift; sourceTree = "<group>"; };
 		3766F4002C3706DC001DD239 /* BlockedUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserTableViewCell.swift; sourceTree = "<group>"; };
 		3766F4012C3706DC001DD239 /* BlockedUserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlockedUserTableViewCell.xib; sourceTree = "<group>"; };
-		3766F4052C370A7C001DD239 /* BlockedUserListDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserListDataManager.swift; sourceTree = "<group>"; };
-		3766F4072C370A82001DD239 /* BlockedUserListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserListDataModel.swift; sourceTree = "<group>"; };
 		3766F4092C370CF5001DD239 /* BlockedUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserViewController.swift; sourceTree = "<group>"; };
 		3766F40B2C3736F1001DD239 /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		3766F40E2C398AA8001DD239 /* NetworkResult400.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult400.swift; sourceTree = "<group>"; };
 		3766F4122C3A69E5001DD239 /* TermsOfAgreeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfAgreeViewController.swift; sourceTree = "<group>"; };
 		3769D6AE2B3C2FD500294CD1 /* GoogleLoginDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginDataManager.swift; sourceTree = "<group>"; };
 		3769D6B12B3C300D00294CD1 /* GoogleLoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginModel.swift; sourceTree = "<group>"; };
-		3769D6B32B3C301B00294CD1 /* JoinDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinDataManager.swift; sourceTree = "<group>"; };
-		3769D6B52B3C302C00294CD1 /* JoinDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinDataModel.swift; sourceTree = "<group>"; };
 		3769D6B82B3C345800294CD1 /* MyProfileTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileTabViewController.swift; sourceTree = "<group>"; };
 		3769D6BA2B3C347000294CD1 /* FollowListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowListViewController.swift; sourceTree = "<group>"; };
 		3769D6BC2B3C348800294CD1 /* FollowerListTabmanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerListTabmanViewController.swift; sourceTree = "<group>"; };
@@ -383,20 +407,14 @@
 		3769D6D12B3C56F100294CD1 /* PochakPostTabmanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakPostTabmanViewController.swift; sourceTree = "<group>"; };
 		3769D6D32B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePostCollectionViewCell.swift; sourceTree = "<group>"; };
 		3769D6D42B3C59F900294CD1 /* ProfilePostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfilePostCollectionViewCell.xib; sourceTree = "<group>"; };
-		376F125A2A8B7440005F469B /* SocialLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginViewController.swift; sourceTree = "<group>"; };
+		376EA1282CAAADCF00FEFB63 /* ProfileRetrievalAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRetrievalAPI.swift; sourceTree = "<group>"; };
+		376EA12B2CAAAE5600FEFB63 /* ProfileRetrievalResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRetrievalResponse.swift; sourceTree = "<group>"; };
+		376EA12D2CAAAE6800FEFB63 /* ProfileRetrievalRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRetrievalRequest.swift; sourceTree = "<group>"; };
+		376EA12F2CAAAF6900FEFB63 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		379A6A332B569DFA0087FAAC /* AuthenticationCredential.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCredential.swift; sourceTree = "<group>"; };
 		379A6A392B56BDBF0087FAAC /* Authenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authenticator.swift; sourceTree = "<group>"; };
 		379A6A3D2B5FA07D0087FAAC /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		37A284C02B52FC910023EB9D /* UpdateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewController.swift; sourceTree = "<group>"; };
-		37C3AF452B3CB29A00B4C79C /* MyProfilePostDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfilePostDataManager.swift; sourceTree = "<group>"; };
-		37C3AF472B3CB2B300B4C79C /* MyProfilePochakedPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfilePochakedPostModel.swift; sourceTree = "<group>"; };
-		37C3AF492B3CB2C700B4C79C /* MyProfilePochakPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfilePochakPostModel.swift; sourceTree = "<group>"; };
-		37D311D42B53056700A1D7C1 /* ProfileUpdateDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUpdateDataManager.swift; sourceTree = "<group>"; };
-		37D311D62B53057700A1D7C1 /* ProfileUpdateDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUpdateDataModel.swift; sourceTree = "<group>"; };
-		37D311D92B53134200A1D7C1 /* LogoutDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutDataManager.swift; sourceTree = "<group>"; };
-		37D311DB2B53135000A1D7C1 /* LogoutDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutDataModel.swift; sourceTree = "<group>"; };
-		37D311DE2B566C4D00A1D7C1 /* SignOutDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutDataManager.swift; sourceTree = "<group>"; };
-		37D311E02B566C5900A1D7C1 /* SignOutDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutDataModel.swift; sourceTree = "<group>"; };
 		37D311E22B56754D00A1D7C1 /* GetToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToken.swift; sourceTree = "<group>"; };
 		37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherUserProfileViewController.swift; sourceTree = "<group>"; };
 		67EA6B5B881844A22EE2A55B /* Pods-pochak.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pochak.debug.xcconfig"; path = "Target Support Files/Pods-pochak/Pods-pochak.debug.xcconfig"; sourceTree = "<group>"; };
@@ -576,6 +594,12 @@
 			isa = PBXGroup;
 			children = (
 				0822A04E2CA1980200F87E2C /* FollowAPI.swift */,
+				3759CF2E2CAAE42600408A4E /* DeleteFollowerAPI.swift */,
+				3759CF342CAAE79000408A4E /* FollowerRetrievalAPI.swift */,
+				3759CF362CAAE79F00408A4E /* FollowingRetrievalAPI.swift */,
+				374E463A2CAAC762008AE361 /* BlockAPI.swift */,
+				374E463E2CAAC931008AE361 /* UnblockAPI.swift */,
+				374E46442CAACD33008AE361 /* BlockListAPI.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -602,6 +626,15 @@
 			isa = PBXGroup;
 			children = (
 				0822A0592CA1983C00F87E2C /* FollowResponse.swift */,
+				3759CF302CAAE4C600408A4E /* DeleteFollowerRequest.swift */,
+				3759CF322CAAE4CE00408A4E /* DeleteFollowerResponse.swift */,
+				3759CF382CAAE7E900408A4E /* FollowListRequest.swift */,
+				3759CF3A2CAAE80700408A4E /* FollowListResponse.swift */,
+				374E463C2CAAC82E008AE361 /* BlockResponse.swift */,
+				374E46402CAAC9AE008AE361 /* UnblockRequest.swift */,
+				374E46422CAAC9B5008AE361 /* UnblockResponse.swift */,
+				374E46462CAACE4C008AE361 /* BlockListRequest.swift */,
+				374E46482CAACE53008AE361 /* BlockListResponse.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -837,62 +870,17 @@
 			path = LikesDataManager;
 			sourceTree = "<group>";
 		};
-		373235452B68F9180042EF94 /* FollowAPI */ = {
-			isa = PBXGroup;
-			children = (
-				373235462B68F93E0042EF94 /* FollowListDataManager.swift */,
-				373235482B68F9A60042EF94 /* FollowListDataModel.swift */,
-				3732354D2B691E610042EF94 /* FollowToggleDataManager.swift */,
-				3732354F2B691E6A0042EF94 /* FollowToggleDataModel.swift */,
-				373235532B692C6D0042EF94 /* DeleteFollowerDataManager.swift */,
-				373235552B692C790042EF94 /* DeleteFollowerDataModel.swift */,
-			);
-			path = FollowAPI;
-			sourceTree = "<group>";
-		};
 		373815142A89E6BE0032066A /* Login */ = {
 			isa = PBXGroup;
 			children = (
 				EAAACDB42A5168280041B1B9 /* Login.storyboard */,
 				373815152A89E6D30032066A /* SocialJoinViewController.swift */,
 				3766F4122C3A69E5001DD239 /* TermsOfAgreeViewController.swift */,
-				376F125A2A8B7440005F469B /* SocialLoginViewController.swift */,
+				373815192A8A09DA0032066A /* SignUpViewController.swift */,
 				374261762C31C6CD00B67886 /* AppleLogin */,
-				3769D6AD2B3C2FA800294CD1 /* GoogleLoginDataManager */,
-				3769D6AC2B3C2F9900294CD1 /* SignUp */,
+				3769D6AD2B3C2FA800294CD1 /* GoogleLogin */,
 			);
 			path = Login;
-			sourceTree = "<group>";
-		};
-		3742616A2C3075B400B67886 /* Setting */ = {
-			isa = PBXGroup;
-			children = (
-				3747E9712BF3827500364BED /* SettingsViewController.swift */,
-				3766F4042C370A5D001DD239 /* BlockedUserList */,
-				37D311D82B53131D00A1D7C1 /* LogoutAPI */,
-				37D311DD2B566C3D00A1D7C1 /* SignoutAPI */,
-			);
-			path = Setting;
-			sourceTree = "<group>";
-		};
-		3742616B2C30911A00B67886 /* ProfileMenu */ = {
-			isa = PBXGroup;
-			children = (
-				374261632C2FEF5F00B67886 /* ProfileMenuViewController.swift */,
-				3742616C2C30914100B67886 /* BlockAPI */,
-			);
-			path = ProfileMenu;
-			sourceTree = "<group>";
-		};
-		3742616C2C30914100B67886 /* BlockAPI */ = {
-			isa = PBXGroup;
-			children = (
-				3742616D2C30916C00B67886 /* BlockDataManager.swift */,
-				3742616F2C30917600B67886 /* BlockDataModel.swift */,
-				374261712C3092B100B67886 /* UnblockDataManager.swift */,
-				374261732C3092B900B67886 /* UnblockDataModel.swift */,
-			);
-			path = BlockAPI;
 			sourceTree = "<group>";
 		};
 		374261762C31C6CD00B67886 /* AppleLogin */ = {
@@ -904,13 +892,28 @@
 			path = AppleLogin;
 			sourceTree = "<group>";
 		};
-		3742617B2C359D3700B67886 /* CheckHandle */ = {
+		374E462E2CAAC3CB008AE361 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				3742617C2C359D6100B67886 /* CheckHandleDuplicationDataManager.swift */,
-				3742617E2C359D6D00B67886 /* CheckHandleDuplicationDataModel.swift */,
+				3759CF482CAB178800408A4E /* SignUpRequest.swift */,
+				3759CF4A2CAB179100408A4E /* SignUpResponse.swift */,
+				374E462F2CAAC3F6008AE361 /* SignOutResponse.swift */,
+				374E46382CAAC646008AE361 /* LogOutResponse.swift */,
+				3759CF402CAB150500408A4E /* CheckDuplicateHandleRequest.swift */,
+				3759CF422CAB152200408A4E /* CheckDuplicateHandleResponse.swift */,
 			);
-			path = CheckHandle;
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		374E46332CAAC437008AE361 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				3759CF442CAB16E600408A4E /* SignUpAPI.swift */,
+				374E46342CAAC445008AE361 /* SignOutAPI.swift */,
+				374E46362CAAC602008AE361 /* LogOutAPI.swift */,
+				3759CF3E2CAB145500408A4E /* CheckDuplicateHandleAPI.swift */,
+			);
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 		3766F3FF2C3706C7001DD239 /* cell */ = {
@@ -922,51 +925,36 @@
 			path = cell;
 			sourceTree = "<group>";
 		};
-		3766F4042C370A5D001DD239 /* BlockedUserList */ = {
+		3766F4042C370A5D001DD239 /* BlockList */ = {
 			isa = PBXGroup;
 			children = (
-				3766F4092C370CF5001DD239 /* BlockedUserViewController.swift */,
-				3766F40D2C373CFF001DD239 /* BlockListAPI */,
 				3766F3FF2C3706C7001DD239 /* cell */,
+				3766F4092C370CF5001DD239 /* BlockedUserViewController.swift */,
 			);
-			path = BlockedUserList;
+			path = BlockList;
 			sourceTree = "<group>";
 		};
-		3766F40D2C373CFF001DD239 /* BlockListAPI */ = {
-			isa = PBXGroup;
-			children = (
-				3766F4072C370A82001DD239 /* BlockedUserListDataModel.swift */,
-				3766F4052C370A7C001DD239 /* BlockedUserListDataManager.swift */,
-			);
-			path = BlockListAPI;
-			sourceTree = "<group>";
-		};
-		3769D6AC2B3C2F9900294CD1 /* SignUp */ = {
-			isa = PBXGroup;
-			children = (
-				3742617B2C359D3700B67886 /* CheckHandle */,
-				373815192A8A09DA0032066A /* MakeProfileViewController.swift */,
-				3769D6B32B3C301B00294CD1 /* JoinDataManager.swift */,
-				3769D6B52B3C302C00294CD1 /* JoinDataModel.swift */,
-			);
-			path = SignUp;
-			sourceTree = "<group>";
-		};
-		3769D6AD2B3C2FA800294CD1 /* GoogleLoginDataManager */ = {
+		3769D6AD2B3C2FA800294CD1 /* GoogleLogin */ = {
 			isa = PBXGroup;
 			children = (
 				3769D6AE2B3C2FD500294CD1 /* GoogleLoginDataManager.swift */,
 				3769D6B12B3C300D00294CD1 /* GoogleLoginModel.swift */,
 			);
-			path = GoogleLoginDataManager;
+			path = GoogleLogin;
 			sourceTree = "<group>";
 		};
 		3769D6B72B3C342900294CD1 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
 				EAFB4B862A5147A300E0F2FA /* ProfileTab.storyboard */,
-				37D311E72B567B3F00A1D7C1 /* OtherProfile */,
-				3769D6C92B3C50D200294CD1 /* MyProfile */,
+				3769D6B82B3C345800294CD1 /* MyProfileTabViewController.swift */,
+				37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */,
+				37A284C02B52FC910023EB9D /* UpdateProfileViewController.swift */,
+				374261632C2FEF5F00B67886 /* ProfileMenuViewController.swift */,
+				3747E9712BF3827500364BED /* SettingsViewController.swift */,
+				3766F4042C370A5D001DD239 /* BlockList */,
+				3769D6CC2B3C560200294CD1 /* PostList */,
+				3769D6CB2B3C55E500294CD1 /* FollowList */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -982,33 +970,18 @@
 			path = cell;
 			sourceTree = "<group>";
 		};
-		3769D6C92B3C50D200294CD1 /* MyProfile */ = {
-			isa = PBXGroup;
-			children = (
-				3769D6B82B3C345800294CD1 /* MyProfileTabViewController.swift */,
-				37A284C02B52FC910023EB9D /* UpdateProfileViewController.swift */,
-				3742616A2C3075B400B67886 /* Setting */,
-				37D311D32B53053C00A1D7C1 /* ProfileUpdateAPI */,
-				37C3AF442B3CB26000B4C79C /* ProfileAPI */,
-				3769D6CC2B3C560200294CD1 /* PostListTabman */,
-				3769D6CB2B3C55E500294CD1 /* FollowListTabman */,
-			);
-			path = MyProfile;
-			sourceTree = "<group>";
-		};
-		3769D6CB2B3C55E500294CD1 /* FollowListTabman */ = {
+		3769D6CB2B3C55E500294CD1 /* FollowList */ = {
 			isa = PBXGroup;
 			children = (
 				3769D6C02B3C39EA00294CD1 /* cell */,
-				373235452B68F9180042EF94 /* FollowAPI */,
 				3769D6BA2B3C347000294CD1 /* FollowListViewController.swift */,
 				3769D6BC2B3C348800294CD1 /* FollowerListTabmanViewController.swift */,
 				3769D6BE2B3C349D00294CD1 /* FollowingListTabmanViewController.swift */,
 			);
-			path = FollowListTabman;
+			path = FollowList;
 			sourceTree = "<group>";
 		};
-		3769D6CC2B3C560200294CD1 /* PostListTabman */ = {
+		3769D6CC2B3C560200294CD1 /* PostList */ = {
 			isa = PBXGroup;
 			children = (
 				37F1487A2C62382300D9B117 /* cell */,
@@ -1016,53 +989,29 @@
 				3769D6CF2B3C569C00294CD1 /* PochakedPostTabmanViewController.swift */,
 				3769D6D12B3C56F100294CD1 /* PochakPostTabmanViewController.swift */,
 			);
-			path = PostListTabman;
+			path = PostList;
 			sourceTree = "<group>";
 		};
-		37C3AF442B3CB26000B4C79C /* ProfileAPI */ = {
+		376EA1272CAAAD3500FEFB63 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				37C3AF472B3CB2B300B4C79C /* MyProfilePochakedPostModel.swift */,
-				37C3AF492B3CB2C700B4C79C /* MyProfilePochakPostModel.swift */,
-				37C3AF452B3CB29A00B4C79C /* MyProfilePostDataManager.swift */,
+				376EA1282CAAADCF00FEFB63 /* ProfileRetrievalAPI.swift */,
+				374E461E2CAABAF3008AE361 /* PochakPostRetrievalAPI.swift */,
+				374E46282CAABE50008AE361 /* ProfileUpdateAPI.swift */,
 			);
-			path = ProfileAPI;
+			path = Profile;
 			sourceTree = "<group>";
 		};
-		37D311D32B53053C00A1D7C1 /* ProfileUpdateAPI */ = {
+		376EA12A2CAAAE3600FEFB63 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				37D311D62B53057700A1D7C1 /* ProfileUpdateDataModel.swift */,
-				37D311D42B53056700A1D7C1 /* ProfileUpdateDataManager.swift */,
+				376EA12D2CAAAE6800FEFB63 /* ProfileRetrievalRequest.swift */,
+				376EA12B2CAAAE5600FEFB63 /* ProfileRetrievalResponse.swift */,
+				374E46222CAABB31008AE361 /* PochakPostRetrievalResponse.swift */,
+				374E462A2CAABF7A008AE361 /* ProfileUpdateRequest.swift */,
+				374E46242CAABE07008AE361 /* ProfileUpdateResponse.swift */,
 			);
-			path = ProfileUpdateAPI;
-			sourceTree = "<group>";
-		};
-		37D311D82B53131D00A1D7C1 /* LogoutAPI */ = {
-			isa = PBXGroup;
-			children = (
-				37D311D92B53134200A1D7C1 /* LogoutDataManager.swift */,
-				37D311DB2B53135000A1D7C1 /* LogoutDataModel.swift */,
-			);
-			path = LogoutAPI;
-			sourceTree = "<group>";
-		};
-		37D311DD2B566C3D00A1D7C1 /* SignoutAPI */ = {
-			isa = PBXGroup;
-			children = (
-				37D311DE2B566C4D00A1D7C1 /* SignOutDataManager.swift */,
-				37D311E02B566C5900A1D7C1 /* SignOutDataModel.swift */,
-			);
-			path = SignoutAPI;
-			sourceTree = "<group>";
-		};
-		37D311E72B567B3F00A1D7C1 /* OtherProfile */ = {
-			isa = PBXGroup;
-			children = (
-				37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */,
-				3742616B2C30911A00B67886 /* ProfileMenu */,
-			);
-			path = OtherProfile;
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		37F1487A2C62382300D9B117 /* cell */ = {
@@ -1199,6 +1148,8 @@
 				08C9151B2C6461B10044A9A8 /* PostService.swift */,
 				EA7E146A2C8E9360001DA769 /* AlarmService.swift */,
 				EA7E14602C858EC6001DA769 /* CameraService.swift */,
+				376EA12F2CAAAF6900FEFB63 /* ProfileService.swift */,
+				374E462C2CAAC399008AE361 /* AuthenticationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1206,6 +1157,8 @@
 		EA2CD6332C5F458900644EFE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				374E462E2CAAC3CB008AE361 /* Authentication */,
+				376EA12A2CAAAE3600FEFB63 /* Profile */,
 				0822A05A2CA1983C00F87E2C /* Post */,
 				0822A0552CA1983C00F87E2C /* Search */,
 				0822A0582CA1983C00F87E2C /* User */,
@@ -1232,6 +1185,8 @@
 		EA2CD6352C5F45A100644EFE /* APIs */ = {
 			isa = PBXGroup;
 			children = (
+				374E46332CAAC437008AE361 /* Authentication */,
+				376EA1272CAAAD3500FEFB63 /* Profile */,
 				0822A04D2CA1980200F87E2C /* User */,
 				0822A04A2CA197F800F87E2C /* Search */,
 				0822A0382CA197E700F87E2C /* Post */,
@@ -1652,31 +1607,37 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA7EE1D82BF38921009486CC /* PochakAlarmTableViewCell.swift in Sources */,
+				376EA1302CAAAF6900FEFB63 /* ProfileService.swift in Sources */,
 				EA01079E2A59556800A3AE85 /* PostViewController.swift in Sources */,
+				3759CF432CAB152200408A4E /* CheckDuplicateHandleResponse.swift in Sources */,
 				3766F40F2C398AA8001DD239 /* NetworkResult400.swift in Sources */,
 				0822A0532CA1983100F87E2C /* ExploreRequest.swift in Sources */,
 				3769D6AF2B3C2FD500294CD1 /* GoogleLoginDataManager.swift in Sources */,
 				EA0107AE2A5EC23900A3AE85 /* OtherTableViewCell.swift in Sources */,
 				EA2CD6482C5F5B0700644EFE /* HomeRequest.swift in Sources */,
-				37C3AF4B2B3CB49E00B4C79C /* MyProfilePostDataManager.swift in Sources */,
 				EA7E14672C858F0F001DA769 /* CameraAPI.swift in Sources */,
+				3759CF392CAAE7E900408A4E /* FollowListRequest.swift in Sources */,
 				0822A02D2CA196DF00F87E2C /* PostCollectionViewCell.swift in Sources */,
 				EA2CD63F2C5F585400644EFE /* HTTPHeaderType.swift in Sources */,
 				3769D6CE2B3C563A00294CD1 /* PostListViewController.swift in Sources */,
 				0822A0542CA1983100F87E2C /* ExploreResponse.swift in Sources */,
+				374E46492CAACE53008AE361 /* BlockListResponse.swift in Sources */,
+				374E46352CAAC445008AE361 /* SignOutAPI.swift in Sources */,
 				0822A0662CA1983C00F87E2C /* SearchRequest.swift in Sources */,
 				0822A0712CA1983C00F87E2C /* PostDetailResponse.swift in Sources */,
+				376EA12C2CAAAE5600FEFB63 /* ProfileRetrievalResponse.swift in Sources */,
 				EA0107A72A5CF73900A3AE85 /* AlarmViewController.swift in Sources */,
 				08EB99B72C53EA8500FAC08A /* TaggedUsersTableViewCell.swift in Sources */,
+				3759CF332CAAE4CE00408A4E /* DeleteFollowerResponse.swift in Sources */,
 				EACF0F6E2C3044C000C0016C /* TagSearchTableViewCell.swift in Sources */,
 				08B679632B528D7500F8D585 /* CommentTableViewFooterView.swift in Sources */,
 				EA2CD6442C5F5A0E00644EFE /* HomeAPI.swift in Sources */,
-				373235502B691E6A0042EF94 /* FollowToggleDataModel.swift in Sources */,
 				0802AE032C31D3E00090FB92 /* UIImageView+.swift in Sources */,
 				3769D6C72B3C4F0900294CD1 /* FollowingCollectionViewCell.swift in Sources */,
 				08E8DCDC2C38118000EC78C2 /* UILabel+.swift in Sources */,
-				373235472B68F93E0042EF94 /* FollowListDataManager.swift in Sources */,
+				374E462D2CAAC399008AE361 /* AuthenticationService.swift in Sources */,
 				08EB5D252C280CFE00E35C16 /* UIImage+.swift in Sources */,
+				374E463B2CAAC762008AE361 /* BlockAPI.swift in Sources */,
 				08D98C4A2AFEE8D700E9A097 /* LikedUsersDataModel.swift in Sources */,
 				EA2CD6462C5F5A1E00644EFE /* HomeResponse.swift in Sources */,
 				EA7E14632C858EEE001DA769 /* CameraUploadResponse.swift in Sources */,
@@ -1689,12 +1650,12 @@
 				0822A0312CA196DF00F87E2C /* RecentSearchRealmManager.swift in Sources */,
 				08D98C472AFEE8B300E9A097 /* (null) in Sources */,
 				3769D6C32B3C3A1600294CD1 /* FollowerCollectionViewCell.swift in Sources */,
-				374261722C3092B100B67886 /* UnblockDataManager.swift in Sources */,
 				EA0F23692C32DA780014F94E /* UIViewController+.swift in Sources */,
 				379A6A3A2B56BDBF0087FAAC /* Authenticator.swift in Sources */,
 				EA17182C2A5912A7009168E6 /* UploadViewController.swift in Sources */,
 				089E27B72C4E8C2D00828F4C /* AlarmType.swift in Sources */,
 				3769D6B22B3C300D00294CD1 /* GoogleLoginModel.swift in Sources */,
+				3759CF2F2CAAE42600408A4E /* DeleteFollowerAPI.swift in Sources */,
 				EA96D04C2C8F10C700D80562 /* TagPreviewResponse.swift in Sources */,
 				0822A06B2CA1983C00F87E2C /* ChildCommentGetResponse.swift in Sources */,
 				0822A0352CA196DF00F87E2C /* ExploreTabViewController.swift in Sources */,
@@ -1704,15 +1665,14 @@
 				3769D6BF2B3C349D00294CD1 /* FollowingListTabmanViewController.swift in Sources */,
 				08C02EEA2BF3798F00627C21 /* ReportViewController.swift in Sources */,
 				0822A0722CA1983C00F87E2C /* PostDeleteResponse.swift in Sources */,
-				373235562B692C790042EF94 /* DeleteFollowerDataModel.swift in Sources */,
 				3766F40C2C3736F1001DD239 /* RequestInterceptor.swift in Sources */,
 				EA0F23662C319C030014F94E /* PreviewAlarmViewController.swift in Sources */,
 				0822A0422CA197E700F87E2C /* PostReportAPI.swift in Sources */,
+				374E46292CAABE50008AE361 /* ProfileUpdateAPI.swift in Sources */,
 				0844D7EF2BF219F6001154AC /* DeleteViewCell.swift in Sources */,
-				374261742C3092B900B67886 /* UnblockDataModel.swift in Sources */,
+				374E463D2CAAC82E008AE361 /* BlockResponse.swift in Sources */,
+				3759CF3B2CAAE80700408A4E /* FollowListResponse.swift in Sources */,
 				EA2CD63B2C5F463700644EFE /* NetworkService.swift in Sources */,
-				373235542B692C6D0042EF94 /* DeleteFollowerDataManager.swift in Sources */,
-				3742617D2C359D6100B67886 /* CheckHandleDuplicationDataManager.swift in Sources */,
 				371D33782B4E83E90084FF6A /* UserDefaultsManager.swift in Sources */,
 				3742617A2C31C6F900B67886 /* AppleLoginDataModel.swift in Sources */,
 				373815162A89E6D30032066A /* SocialJoinViewController.swift in Sources */,
@@ -1720,33 +1680,34 @@
 				3766F40A2C370CF5001DD239 /* BlockedUserViewController.swift in Sources */,
 				374261782C31C6ED00B67886 /* AppleLoginDataManager.swift in Sources */,
 				0844D7EB2BF218A5001154AC /* ReportViewCell.swift in Sources */,
+				374E46472CAACE4C008AE361 /* BlockListRequest.swift in Sources */,
 				379A6A342B569DFA0087FAAC /* AuthenticationCredential.swift in Sources */,
 				0844649C2BF0F25900949850 /* PostMenuViewController.swift in Sources */,
 				0822A0702CA1983C00F87E2C /* PostReportResponse.swift in Sources */,
 				3766F4132C3A69E5001DD239 /* TermsOfAgreeViewController.swift in Sources */,
 				0822A0472CA197E700F87E2C /* PostLikeAPI.swift in Sources */,
-				37D311DC2B53135000A1D7C1 /* LogoutDataModel.swift in Sources */,
+				374E46432CAAC9B5008AE361 /* UnblockResponse.swift in Sources */,
 				37A284C12B52FC910023EB9D /* UpdateProfileViewController.swift in Sources */,
-				3738151A2A8A09DA0032066A /* MakeProfileViewController.swift in Sources */,
+				3738151A2A8A09DA0032066A /* SignUpViewController.swift in Sources */,
 				0822A0442CA197E700F87E2C /* CommentDeleteAPI.swift in Sources */,
 				EA17182B2A5912A7009168E6 /* CameraViewController.swift in Sources */,
+				374E46412CAAC9AE008AE361 /* UnblockRequest.swift in Sources */,
 				080FEF012C551C3200951460 /* ReportType.swift in Sources */,
 				0822A0782CA1986000F87E2C /* UserService.swift in Sources */,
 				EA7E14712C8EA26D001DA769 /* AlarmListRequest.swift in Sources */,
-				37D311DF2B566C4D00A1D7C1 /* SignOutDataManager.swift in Sources */,
 				EA817AB62B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
-				3742616E2C30916C00B67886 /* BlockDataManager.swift in Sources */,
 				379A6A3E2B5FA07D0087FAAC /* NavigationController.swift in Sources */,
 				0822A0462CA197E700F87E2C /* CommentPostAPI.swift in Sources */,
-				3766F4062C370A7C001DD239 /* BlockedUserListDataManager.swift in Sources */,
+				374E46372CAAC602008AE361 /* LogOutAPI.swift in Sources */,
 				3769D6D52B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift in Sources */,
+				376EA12E2CAAAE6800FEFB63 /* ProfileRetrievalRequest.swift in Sources */,
 				EA96D0562C8F192B00D80562 /* TagApproveResponse.swift in Sources */,
-				3769D6B62B3C302C00294CD1 /* JoinDataModel.swift in Sources */,
+				374E461F2CAABAF3008AE361 /* PochakPostRetrievalAPI.swift in Sources */,
 				084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */,
-				37C3AF4A2B3CB2C700B4C79C /* MyProfilePochakPostModel.swift in Sources */,
 				08C02EF82BF394B800627C21 /* UIAlertController+.swift in Sources */,
 				089E27B92C4E8CB800828F4C /* AlertType.swift in Sources */,
 				EAE69F442C315009005762B7 /* UIVIew+.swift in Sources */,
+				3759CF312CAAE4C600408A4E /* DeleteFollowerRequest.swift in Sources */,
 				0876E23E2C274256008DE88F /* NoPostCollectionViewCell.swift in Sources */,
 				EA96D0502C8F15E000D80562 /* TagPreviewAPI.swift in Sources */,
 				0822A0482CA197E700F87E2C /* PostDeleteAPI.swift in Sources */,
@@ -1759,28 +1720,27 @@
 				0801765E2A74F4B0005E6953 /* UITextView+Extension.swift in Sources */,
 				081228C62A69624000DFA094 /* PostLikesViewController.swift in Sources */,
 				EA01079B2A59556800A3AE85 /* HomeTabViewController.swift in Sources */,
-				373235492B68F9A60042EF94 /* FollowListDataModel.swift in Sources */,
+				3759CF352CAAE79000408A4E /* FollowerRetrievalAPI.swift in Sources */,
 				0822A0332CA196DF00F87E2C /* RecentSearchViewController.swift in Sources */,
 				0822A06E2CA1983C00F87E2C /* CommentPostResponse.swift in Sources */,
 				EA7E14612C858EC6001DA769 /* CameraService.swift in Sources */,
 				EA6306D82C2BFE53000DB0A7 /* CustomTabBarController.swift in Sources */,
 				0822A06A2CA1983C00F87E2C /* PostLikeResponse.swift in Sources */,
+				3759CF492CAB178800408A4E /* SignUpRequest.swift in Sources */,
 				0820B1902A63A18100604DA8 /* ReplyTableViewCell.swift in Sources */,
-				374261702C30917600B67886 /* BlockDataModel.swift in Sources */,
+				374E46392CAAC646008AE361 /* LogOutResponse.swift in Sources */,
 				083249782C295E4000A77C03 /* CustomAlertViewController.swift in Sources */,
-				37C3AF482B3CB2B300B4C79C /* MyProfilePochakedPostModel.swift in Sources */,
+				374E46252CAABE08008AE361 /* ProfileUpdateResponse.swift in Sources */,
 				0822A04F2CA1980200F87E2C /* FollowAPI.swift in Sources */,
 				EA2CD6392C5F45E300644EFE /* BaseAPI.swift in Sources */,
-				37D311E12B566C5A00A1D7C1 /* SignOutDataModel.swift in Sources */,
-				376F125B2A8B7440005F469B /* SocialLoginViewController.swift in Sources */,
-				37D311D72B53057700A1D7C1 /* ProfileUpdateDataModel.swift in Sources */,
+				3759CF4B2CAB179100408A4E /* SignUpResponse.swift in Sources */,
+				374E46302CAAC3F6008AE361 /* SignOutResponse.swift in Sources */,
 				EA4EF8D82C2EC5F7009549FF /* UITextField+.swift in Sources */,
 				EAF918512AA468670037C270 /* APIConstants.swift in Sources */,
 				0822A0322CA196DF00F87E2C /* RecentSearchModel.swift in Sources */,
-				3766F4082C370A82001DD239 /* BlockedUserListDataModel.swift in Sources */,
 				0822A06D2CA1983C00F87E2C /* CommentPostRequest.swift in Sources */,
-				3732354E2B691E610042EF94 /* FollowToggleDataManager.swift in Sources */,
 				0822A0692CA1983C00F87E2C /* PostReportRequest.swift in Sources */,
+				3759CF412CAB150500408A4E /* CheckDuplicateHandleRequest.swift in Sources */,
 				3769D6BD2B3C348800294CD1 /* FollowerListTabmanViewController.swift in Sources */,
 				0822A0672CA1983C00F87E2C /* SearchResponse.swift in Sources */,
 				EA1B0B5B2A49D23A00F86FBC /* AppDelegate.swift in Sources */,
@@ -1789,7 +1749,7 @@
 				0889D1382C5CB69F00206C86 /* String+.swift in Sources */,
 				0844D7F32BF21A80001154AC /* CancelViewCell.swift in Sources */,
 				3766F4032C3706DC001DD239 /* BlockedUserTableViewCell.swift in Sources */,
-				37D311D52B53056700A1D7C1 /* ProfileUpdateDataManager.swift in Sources */,
+				374E46452CAACD33008AE361 /* BlockListAPI.swift in Sources */,
 				3769D6B92B3C345800294CD1 /* MyProfileTabViewController.swift in Sources */,
 				0822A0682CA1983C00F87E2C /* FollowResponse.swift in Sources */,
 				EA2CD63D2C5F4C2B00644EFE /* NetworkError.swift in Sources */,
@@ -1797,24 +1757,28 @@
 				0822A07A2CA1986000F87E2C /* ExploreService.swift in Sources */,
 				08FD3A392B357E6400574880 /* LikedUsersDataService.swift in Sources */,
 				081228CA2A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift in Sources */,
+				374E463F2CAAC931008AE361 /* UnblockAPI.swift in Sources */,
 				0822A06C2CA1983C00F87E2C /* CommentGetResponse.swift in Sources */,
 				3769D6D02B3C569C00294CD1 /* PochakedPostTabmanViewController.swift in Sources */,
 				374261642C2FEF5F00B67886 /* ProfileMenuViewController.swift in Sources */,
-				3742617F2C359D6D00B67886 /* CheckHandleDuplicationDataModel.swift in Sources */,
+				3759CF372CAAE79F00408A4E /* FollowingRetrievalAPI.swift in Sources */,
 				EAC582742C3074EA006F44AF /* UIColor+.swift in Sources */,
 				3769D6BB2B3C347000294CD1 /* FollowListViewController.swift in Sources */,
-				3769D6B42B3C301B00294CD1 /* JoinDataManager.swift in Sources */,
+				376EA1292CAAADCF00FEFB63 /* ProfileRetrievalAPI.swift in Sources */,
 				EA96D0522C8F186900D80562 /* TagApproveAPI.swift in Sources */,
 				0822A07B2CA1992B00F87E2C /* PostService.swift in Sources */,
-				37D311DA2B53134200A1D7C1 /* LogoutDataManager.swift in Sources */,
+				3759CF452CAB16E600408A4E /* SignUpAPI.swift in Sources */,
 				EA1B0B5D2A49D23A00F86FBC /* SceneDelegate.swift in Sources */,
 				3747E9722BF3827500364BED /* SettingsViewController.swift in Sources */,
 				3769D6D22B3C56F100294CD1 /* PochakPostTabmanViewController.swift in Sources */,
 				371D337A2B4E8D1F0084FF6A /* KeychainManager.swift in Sources */,
 				EAF918542AA4692E0037C270 /* NetworkResult.swift in Sources */,
 				0822A07D2CA19A9A00F87E2C /* UICommentModel.swift in Sources */,
+				3759CF3F2CAB145500408A4E /* CheckDuplicateHandleAPI.swift in Sources */,
+				374E462B2CAABF7B008AE361 /* ProfileUpdateRequest.swift in Sources */,
 				EA7E146D2C8EA119001DA769 /* AlarmListResponse.swift in Sources */,
 				08EB99B42C53D76C00FAC08A /* UIScrollView+.swift in Sources */,
+				374E46232CAABB31008AE361 /* PochakPostRetrievalResponse.swift in Sources */,
 				EA6306DA2C2BFE83000DB0A7 /* CustomTabbar.swift in Sources */,
 				EA2CD6422C5F5A0500644EFE /* HomeService.swift in Sources */,
 				EA7E14652C858EFA001DA769 /* CameraUploadRequest.swift in Sources */,
@@ -1998,7 +1962,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = JU9BM2NXCW;
+				DEVELOPMENT_TEAM = 2285AK4JY4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = pochak/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Pochak;
@@ -2038,7 +2002,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = JU9BM2NXCW;
+				DEVELOPMENT_TEAM = 2285AK4JY4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = pochak/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Pochak;
