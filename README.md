@@ -33,34 +33,40 @@ POCHAK은 사용자들이 서로의 순간에 참여하고 상호 작용할 수 
 * Pageboy
 
 ## Developers
-
+> 2차 -> 1차 순으로 정렬되어있습니다.
 <table align="center">
   <tr>
     <td align="center"><img src="https://github.com/user-attachments/assets/7c4890b1-4d13-47e2-998a-2e908fc73671"></td>
+    <td align="center"><img src="https://avatars.githubusercontent.com/u/53874628?v=4"></td>
     <td><img src="https://avatars.githubusercontent.com/u/90668082?v=4"></td>
     <td><img src="https://avatars.githubusercontent.com/u/90389093?v=4"></td>
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/syhwang1231">황수연</a><br>iOS Developer</td>
+    <td align="center"><a href="https://github.com/yoogail105">성민주</a><br>iOS Developer</td>
     <td align="center"><a href="https://github.com/skfl0282">장나리</a><br>iOS Developer</td>
     <td align="center"><a href="https://github.com/cyndii20">서정연</a><br>iOS Developer</td>
   </tr>
   <tr>
     <td>
       <ul>
-        <li>홈 탭 개발</li>
+        <li>1차 홈 탭 개발</li>
         <li>포스트 상세 페이지 개발(좋아요, 댓글, 팔로잉, 게시글 삭제, 신고)</li>
     </td>
     <td>
       <ul>
-        <li>탐색 탭 개발(아이디 검색 등)</li>
-        <li>포착하기 탭 개발</li>
-        <li>알람 탭 개발</li>
+        <li>2차 포착하기 카메라 기능 개발</li>
+    </td>
+    <td>
+      <ul>
+        <li>1차 탐색 페이지 및 아이디 검색 개발</li>
+        <li>1차 포착하기 페이지 및 포착 기능 개발</li>
+        <li>1차 알람 페이지 개발</li>
     </td>
     <td>
       <ul>
         <li>구글, 애플 로그인 및 토큰 관리 기능 개발</li>
-        <li>프로필 탭 개발</li>
+        <li>1차 프로필 페이지 개발</li>
     </td>
   </tr>
 </table>
