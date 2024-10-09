@@ -30,6 +30,13 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
     @Published var isCameraBusy = false
     @Published var isFlashOn = false
     
+    private var currentCamera: AVCaptureDevice?
+    private var ultraWideCamera: AVCaptureDevice?
+    private var wideCamera: AVCaptureDevice?
+    private var ultraWideInput: AVCaptureDeviceInput?
+    private var wideInput: AVCaptureDeviceInput?
+    
+    
     // MARK: - Views
     
     @IBOutlet weak var captureBtn: UIButton!
@@ -44,6 +51,9 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    private var transitionView: UIView!
+    private var currentPreviewLayer: AVCaptureVideoPreviewLayer?
+    private var nextPreviewLayer: AVCaptureVideoPreviewLayer?
     
     @IBAction func flashBtn(_ sender: Any) {
         switchFlash()
@@ -73,9 +83,9 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         
         self.navigationItem.title = "포착하기"
         
-        handlePinchGestureForZoom()
-        
         setupZoomLabel()
+        setupTransitionView()
+        handlePinchGestureForZoom()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -106,6 +116,21 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         DispatchQueue.main.async {
             self.zoomLabel.text = String(format: "%.1fx", self.currentZoomFactor)
         }
+    }
+    
+    private func setupTransitionView() {
+        transitionView = UIView(frame: previewView.bounds)
+        transitionView.backgroundColor = .clear
+        transitionView.alpha = 0
+        transitionView.translatesAutoresizingMaskIntoConstraints = false
+        previewView.addSubview(transitionView)
+        
+        NSLayoutConstraint.activate([
+            transitionView.topAnchor.constraint(equalTo: previewView.topAnchor),
+            transitionView.leadingAnchor.constraint(equalTo: previewView.leadingAnchor),
+            transitionView.trailingAnchor.constraint(equalTo: previewView.trailingAnchor),
+            transitionView.bottomAnchor.constraint(equalTo: previewView.bottomAnchor)
+        ])
     }
     
     // MARK: - Functions
@@ -151,48 +176,53 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         DispatchQueue.global(qos: .userInitiated).async {
             self.captureSession = AVCaptureSession()
             
-            guard let backCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else {
+            self.wideCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
+            self.ultraWideCamera = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back)
+            
+            guard let wideCamera = self.wideCamera, let ultraWideCamera = self.ultraWideCamera else {
+                print("Error: Required cameras are not available")
                 return
             }
             
             do {
-                let input = try AVCaptureDeviceInput(device: backCamera)
+                self.wideInput = try AVCaptureDeviceInput(device: wideCamera)
+                self.ultraWideInput = try AVCaptureDeviceInput(device: ultraWideCamera)
                 
-                let photoSettings = AVCapturePhotoSettings()
-                photoSettings.isHighResolutionPhotoEnabled = false
-                
-                if backCamera.supportsSessionPreset(.photo) {
-                    self.captureSession.sessionPreset = .photo
+                if self.captureSession.canAddInput(self.wideInput!) {
+                    self.captureSession.addInput(self.wideInput!)
+                    self.currentCamera = wideCamera
                 }
                 
                 self.stillImageOutput = AVCapturePhotoOutput()
-                
-                if self.captureSession.canAddInput(input) && self.captureSession.canAddOutput(self.stillImageOutput) {
-                    self.captureSession.addInput(input)
+                if self.captureSession.canAddOutput(self.stillImageOutput) {
                     self.captureSession.addOutput(self.stillImageOutput)
-                    
-                    DispatchQueue.main.async {
-                        self.setupLivePreview()
-                    }
-                    
-                    self.captureSession.startRunning()
                 }
-            } catch let error {
-                print("Error Unable to initialize back camera:  \(error.localizedDescription)")
+                
+                if wideCamera.supportsSessionPreset(.photo) {
+                    self.captureSession.sessionPreset = .photo
+                }
+                
+                DispatchQueue.main.async {
+                    self.setupLivePreview()
+                }
+                
+                self.captureSession.startRunning()
+                self.setInitialZoom()
+            } catch {
+                print("Error setting up camera: \(error.localizedDescription)")
             }
         }
     }
     
     private func setupLivePreview() {
-        self.videoPreviewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
-        self.videoPreviewLayer.videoGravity = .resizeAspectFill
-        self.videoPreviewLayer.connection?.videoOrientation = .portrait
+        self.currentPreviewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
+        self.currentPreviewLayer?.videoGravity = .resizeAspectFill
+        self.currentPreviewLayer?.connection?.videoOrientation = .portrait
+        self.currentPreviewLayer?.frame = self.previewView.bounds
         
-        // previewView의 bounds에 맞게 frame 설정
-        self.videoPreviewLayer.frame = self.previewView.bounds
-        
-        // previewView의 서브레이어로 추가
-        self.previewView.layer.addSublayer(self.videoPreviewLayer)
+        if let currentPreviewLayer = self.currentPreviewLayer {
+            self.previewView.layer.addSublayer(currentPreviewLayer)
+        }
     }
     
     private func handlePinchGestureForZoom() {
@@ -210,19 +240,94 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         }
     }
     
+    
+    private func setInitialZoom() {
+        guard let camera = self.currentCamera else { return }
+        
+        do {
+            try camera.lockForConfiguration()
+            camera.videoZoomFactor = 1.0
+            self.currentZoomFactor = 1.0
+            camera.unlockForConfiguration()
+            
+            DispatchQueue.main.async {
+                self.updateZoomLabel()
+            }
+        } catch {
+            print("Error setting initial zoom: \(error.localizedDescription)")
+        }
+    }
+    
+    private func switchToUltraWideCamera() {
+        guard let ultraWideCamera = self.ultraWideCamera,
+              let currentInput = captureSession.inputs.first as? AVCaptureDeviceInput else { return }
+        
+        captureSession.beginConfiguration()
+        captureSession.removeInput(currentInput)
+        
+        do {
+            let newInput = try AVCaptureDeviceInput(device: ultraWideCamera)
+            if captureSession.canAddInput(newInput) {
+                captureSession.addInput(newInput)
+                currentCamera = ultraWideCamera
+            }
+        } catch {
+            print("Error switching to ultra wide camera: \(error.localizedDescription)")
+        }
+        
+        captureSession.commitConfiguration()
+    }
+    
+    private func switchToCamera(_ newCamera: AVCaptureDevice) {
+        guard let currentInput = captureSession.inputs.first as? AVCaptureDeviceInput,
+              let newInput = (newCamera == wideCamera) ? wideInput : ultraWideInput else { return }
+        
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.transitionView.alpha = 0.5
+            })
+        }
+        
+        captureSession.beginConfiguration()
+        captureSession.removeInput(currentInput)
+        
+        if captureSession.canAddInput(newInput) {
+            captureSession.addInput(newInput)
+            currentCamera = newCamera
+        }
+        
+        captureSession.commitConfiguration()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.transitionView.alpha = 0
+            })
+        }
+    }
+    
     @objc func handlePinchToZoom(_ gesture: UIPinchGestureRecognizer) {
-        guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else { return }
+        guard let wideCamera = self.wideCamera,
+              let ultraWideCamera = self.ultraWideCamera else { return }
         
         func minMaxZoom(_ factor: CGFloat) -> CGFloat {
-            return min(max(factor, 1.0), 6.0)
+            return min(max(factor, 0.5), 6.0)
         }
         
         func update(scale factor: CGFloat) {
             do {
-                try device.lockForConfiguration()
-                defer { device.unlockForConfiguration() }
-                device.videoZoomFactor = factor
+                if factor < 1.0 && currentCamera != ultraWideCamera {
+                    switchToCamera(ultraWideCamera)
+                } else if factor >= 1.0 && currentCamera != wideCamera {
+                    switchToCamera(wideCamera)
+                }
+                
+                try currentCamera?.lockForConfiguration()
+                defer { currentCamera?.unlockForConfiguration() }
+                
+                let zoomFactor = (currentCamera == ultraWideCamera) ? factor * 2 : factor
+                currentCamera?.videoZoomFactor = zoomFactor
                 self.currentZoomFactor = factor
+                
             } catch {
                 print("Error setting zoom: \(error.localizedDescription)")
             }
@@ -235,14 +340,13 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
             lastScale = currentZoomFactor
         case .changed:
             let delta = gesture.scale - 1.0
-            if gesture.scale < 1.0 {
+            if gesture.scale < 1.0 && currentZoomFactor > 1.0 {
                 let fastZoomRate: CGFloat = 2
-                let newScaleFactor = minMaxZoom(lastScale + (delta * zoomRate * fastZoomRate))
-                update(scale: newScaleFactor)
+                newScaleFactor = minMaxZoom(lastScale + (delta * zoomRate * fastZoomRate))
             } else {
-                let newScaleFactor = minMaxZoom(lastScale + (delta * zoomRate))
-                update(scale: newScaleFactor)
+                newScaleFactor = minMaxZoom(lastScale + (delta * zoomRate))
             }
+            update(scale: newScaleFactor)
         case .ended:
             newScaleFactor = currentZoomFactor
             lastScale = newScaleFactor
