@@ -86,6 +86,7 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         setupZoomLabel()
         setupTransitionView()
         handlePinchGestureForZoom()
+        handleTapGestrueToFocus()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -225,11 +226,6 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         }
     }
     
-    private func handlePinchGestureForZoom() {
-        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchToZoom(_:)))
-        view.addGestureRecognizer(pinchGesture)
-    }
-    
     private func setupZoom(for device: AVCaptureDevice) {
         do {
             try device.lockForConfiguration()
@@ -352,6 +348,71 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
             lastScale = newScaleFactor
         default:
             break
+        }
+    }
+}
+
+extension CameraViewController {
+    private func handlePinchGestureForZoom() {
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchToZoom(_:)))
+        view.addGestureRecognizer(pinchGesture)
+    }
+    
+    private func handleTapGestrueToFocus() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        previewView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func handleTap(_ gesture: UITapGestureRecognizer) {
+        let touchPoint = gesture.location(in: previewView)
+        focusOnPoint(touchPoint)
+    }
+    
+    private func focusOnPoint(_ point: CGPoint) {
+        guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else { return }
+        
+        do {
+            try device.lockForConfiguration()
+            
+            if device.isFocusPointOfInterestSupported {
+                let focusPoint = CGPoint(x: point.x / previewView.bounds.size.width,
+                                         y: point.y / previewView.bounds.size.height)
+                device.focusPointOfInterest = focusPoint
+                device.focusMode = .autoFocus
+            }
+            
+            if device.isExposurePointOfInterestSupported {
+                let exposurePoint = CGPoint(x: point.x / previewView.bounds.size.width,
+                                            y: point.y / previewView.bounds.size.height)
+                device.exposurePointOfInterest = exposurePoint
+                device.exposureMode = .autoExpose
+            }
+            
+            device.unlockForConfiguration()
+            
+            showFocusIndicator(at: point)
+        } catch {
+            print("Error setting focus: \(error.localizedDescription)")
+        }
+    }
+    
+    private func showFocusIndicator(at point: CGPoint) {
+        let focusIndicator = UIView(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
+        focusIndicator.layer.borderWidth = 1.0
+        focusIndicator.layer.borderColor = UIColor.yellow.cgColor
+        focusIndicator.center = point
+        focusIndicator.alpha = 0.0
+        
+        previewView.addSubview(focusIndicator)
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            focusIndicator.alpha = 1.0
+        }) { _ in
+            UIView.animate(withDuration: 0.3, delay: 0.5, options: [], animations: {
+                focusIndicator.alpha = 0.0
+            }) { _ in
+                focusIndicator.removeFromSuperview()
+            }
         }
     }
 }
