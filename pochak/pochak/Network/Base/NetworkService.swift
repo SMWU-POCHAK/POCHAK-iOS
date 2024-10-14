@@ -33,6 +33,26 @@ class NetworkService: NetworkServable {
             }
     }
     
+    /// Alamofire을 사용해서 실제로 통신하는 함수
+    /// - Parameters:
+    ///   - api: BaseApi를 구현한 api
+    ///   - T: API.Response의 타입 제약 없는 반환 타입
+    ///   - completion: Handler
+    func requestWithCommonResponse<API: BaseAPI, T: Codable>(
+        _ api: API,
+        responseType: T.Type,
+        completion: @escaping (Result<T, NetworkError>) -> Void
+    ) {
+        print("===NetworkService===")
+        print(api.urlRequest as Any)
+        
+        AF.request(api.urlRequest!, interceptor: RequestInterceptor.getRequestInterceptor())
+            .validate()
+            .responseData { response in
+                self.handleResponse(response: response, responseType: T.self, completion: completion)
+            }
+    }
+    
     /// Alamofire을 사용해서 multipart 업로드 하는 함수
     /// - Parameters:
     ///   - api: BaseApi를 구현한 api
