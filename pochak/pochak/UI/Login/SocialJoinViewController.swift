@@ -13,47 +13,22 @@ protocol SendDelegate {
     func sendAgreed(agree : Bool)
 }
 
-class SocialJoinViewController: UIViewController, SendDelegate {
-    func sendAgreed(agree: Bool) {
-        if agree {
-            guard let makeProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "MakeProfileVC") as? MakeProfileViewController else {return}
-            self.navigationController?.pushViewController(makeProfileVC, animated: true)
-        } else {
-            print("not agreed yet!")
-        }
-    }
+final class SocialJoinViewController: UIViewController {
     
-    
-    // MARK: - Data
+    // MARK: - Views
     
     @IBOutlet weak var startPochak: UILabel!
     @IBOutlet weak var googleLoginBtn: UIButton!
     @IBOutlet weak var appleLoginBtn: UIButton!
     
+    // MARK: - Lifecycle
     
-    // MARK: - View LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Title
-        //        let attrs : [NSAttributedString.Key : Any] = [
-        //            NSAttributedString.Key.foregroundColor: UIColor.black,
-        //            NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 20)!
-        ////        ]
-        //
-        //        UINavigationBar.appearance().titleTextAttributes = attrs
-        //        self.navigationController?.navigationBar.titleTextAttributes = attrs
-        
-        // 네비게이션 바 Back Button 커스텀
-        /// 주의점 : backBarButtonItem 사용 시 FirstViewController에서 지정!
-//        let backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
-//        backBarButtonItem.tintColor = .black
-//        self.navigationItem.backBarButtonItem = backBarButtonItem
-        
-        // 로그인 버튼 디자인 커스텀
         btnLayout()
     }
-    override func viewWillAppear(_ animated: Bool){
+    
+    override func viewWillAppear(_ animated: Bool) {
         // 뷰가 나타날 때에는 네비게이션 바 숨기기
         self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
@@ -63,7 +38,7 @@ class SocialJoinViewController: UIViewController, SendDelegate {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
-    // MARK: - Google Login
+    // MARK: - Actions
     
     @IBAction func googleLoginAction(_ sender: Any) {
         GIDSignIn.sharedInstance.signIn(withPresenting: self) { signInResult, error in
@@ -75,13 +50,13 @@ class SocialJoinViewController: UIViewController, SendDelegate {
             let accessToken = user.accessToken.tokenString
             print("googleLogin 시스템 안의 accessToken : \(accessToken)")
             
-            // 로딩모달
+            // 로딩 모달
             self.showProgressBar()
-
+            
             GoogleLoginDataManager.shared.googleLoginDataManager(accessToken, {resultData in
                 
                 print("GoogleLoginDataManager 안의 resultData : \(resultData)")
-                // 사용자 기본 데이터 저장 : socialId / email / socialType
+                // 사용자 기본 데이터 저장 : socialId, email, socialType
                 UserDefaultsManager.setData(value: resultData.socialId, key: .socialId)
                 UserDefaultsManager.setData(value: resultData.email, key: .email)
                 UserDefaultsManager.setData(value: resultData.socialType, key: .socialType)
@@ -95,8 +70,6 @@ class SocialJoinViewController: UIViewController, SendDelegate {
         }
     }
     
-    // MARK: - Apple Login
-    
     @IBAction func appleLoginAction(_ sender: Any) {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
@@ -108,19 +81,19 @@ class SocialJoinViewController: UIViewController, SendDelegate {
         authorizationController.performRequests()
     }
     
-    // MARK: - Function
+    // MARK: - Functions
     
-    private func btnLayout(){
+    private func btnLayout() {
         googleLoginBtn.layer.cornerRadius = 30
         googleLoginBtn.layer.borderWidth = 1
         googleLoginBtn.layer.borderColor = UIColor(named: "gray02")?.cgColor
         appleLoginBtn.layer.cornerRadius = 30
     }
     
-    private func changeViewControllerAccordingToisNewMemeberStateForGoogle(_ isNewMember : Bool, _ resultDataForGoogle : GoogleLoginModel){
+    private func changeViewControllerAccordingToisNewMemeberStateForGoogle(_ isNewMember : Bool, _ resultDataForGoogle : GoogleLoginModel) {
         if isNewMember == true {
             guard let termsOfAgreeVC = self.storyboard?.instantiateViewController(withIdentifier: "TermsOfAgreeVC") as? TermsOfAgreeViewController else {return}
-            termsOfAgreeVC.modalPresentationStyle = .overCurrentContext    //  투명도가 있으면 투명도에 맞춰서 나오게 해주는 코드(뒤에있는 배경이 보일 수 있게)
+            termsOfAgreeVC.modalPresentationStyle = .overCurrentContext //  투명도가 있으면 투명도에 맞춰서 나오게 해주는 코드(뒤에있는 배경이 보일 수 있게)
             termsOfAgreeVC.delegate = self
             self.present(termsOfAgreeVC, animated: false, completion: nil)
         } else {
@@ -133,19 +106,18 @@ class SocialJoinViewController: UIViewController, SendDelegate {
             } catch {
                 print(error)
             }
-            
+            // UserDefaults에 handle 정보 저장
             UserDefaultsManager.setData(value: resultDataForGoogle.handle, key: .handle)
             // 홈탭으로 이동
             toHomeTabPage()
         }
     }
     
-    private func changeViewControllerAccordingToisNewMemeberStateForApple(_ isNewMember : Bool, _ resultDataForApple : AppleLoginModel){
+    private func changeViewControllerAccordingToisNewMemeberStateForApple(_ isNewMember : Bool, _ resultDataForApple : AppleLoginModel) {
         if isNewMember == true {
-            print("inside changeVCForApple")
             // 프로필 설정 페이지로 이동
             guard let termsOfAgreeVC = self.storyboard?.instantiateViewController(withIdentifier: "TermsOfAgreeVC") as? TermsOfAgreeViewController else {return}
-            termsOfAgreeVC.modalPresentationStyle = .overCurrentContext    //  투명도가 있으면 투명도에 맞춰서 나오게 해주는 코드(뒤에있는 배경이 보일 수 있게)
+            termsOfAgreeVC.modalPresentationStyle = .overCurrentContext
             termsOfAgreeVC.delegate = self
             self.present(termsOfAgreeVC, animated: false, completion: nil)
         } else {
@@ -158,16 +130,15 @@ class SocialJoinViewController: UIViewController, SendDelegate {
             } catch {
                 print(error)
             }
+            // UserDefaults에 handle 정보 저장
             UserDefaultsManager.setData(value: resultDataForApple.handle, key: .handle)
             // 홈탭으로 이동
             toHomeTabPage()
         }
     }
     
-    private func toHomeTabPage(){
-        
+    private func toHomeTabPage() {
         let tabBarController = CustomTabBarController()
-        
         let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
         guard let delegate = sceneDelegate else {
             return
@@ -176,14 +147,15 @@ class SocialJoinViewController: UIViewController, SendDelegate {
     }
 }
 
-// MARK: - Apple Login Extension
-extension SocialJoinViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding{
-  func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+// MARK: - Extension : ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding
+
+extension SocialJoinViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
     }
-
+    
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-    //로그인 성공
+        //로그인 성공 시
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
             // You can create an account in your system.
@@ -201,11 +173,11 @@ extension SocialJoinViewController: ASAuthorizationControllerDelegate, ASAuthori
                 print("authCodeString: \(authCodeString)")
                 print("identifyTokenString: \(identifyTokenString)")
                 
-                // 로딩모달
+                // 로딩 모달
                 self.showProgressBar()
                 
                 // API request : POST
-                AppleLoginDataManager.shared.appleLoginDataManager(identifyTokenString, authCodeString, {resultData in
+                AppleLoginDataManager.shared.appleLoginDataManager(identifyTokenString, authCodeString, { resultData in
                     
                     // 사용자 기본 데이터 저장 : id / email / socialType / isNewMember
                     UserDefaultsManager.setData(value: resultData.socialId, key: .socialId)
@@ -218,9 +190,7 @@ extension SocialJoinViewController: ASAuthorizationControllerDelegate, ASAuthori
                     // 로딩 숨김
                     self.hideProgressBar()
                 })
-                
             }
-            
         case let passwordCredential as ASPasswordCredential:
             // Sign in using an existing iCloud Keychain credential.
             let username = passwordCredential.user
@@ -234,9 +204,22 @@ extension SocialJoinViewController: ASAuthorizationControllerDelegate, ASAuthori
         }
     }
     
-
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        // 로그인 실패(유저의 취소도 포함)
+        // 로그인 실패 시 (유저의 취소도 포함)
         print("login failed - \(error.localizedDescription)")
+    }
+}
+
+// MARK: - Extension : SendDelegate
+
+extension SocialJoinViewController: SendDelegate {
+    func sendAgreed(agree: Bool) {
+        if agree {
+            guard let signUpVC = self.storyboard?.instantiateViewController(withIdentifier: "SignUpVC")
+                    as? SignUpViewController else { return }
+            self.navigationController?.pushViewController(signUpVC, animated: true)
+        } else {
+            print("not agreed yet!")
+        }
     }
 }
