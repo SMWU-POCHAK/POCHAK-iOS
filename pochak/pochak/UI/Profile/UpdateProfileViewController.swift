@@ -7,18 +7,18 @@
 
 import UIKit
 
-class UpdateProfileViewController: UIViewController {
+final class UpdateProfileViewController: UIViewController {
     
     // MARK: - Properties
     
     let imagePickerController = UIImagePickerController()
-    let textViewPlaceHolder = "소개를 입력해주세요.\n(최대 50자, 3줄)"
-    let name = UserDefaultsManager.getData(type: String.self, forKey: .name) ?? "name not found"
-    let email = UserDefaultsManager.getData(type: String.self, forKey: .email) ?? "email not found"
-    let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
-    let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? "handle not found"
-    let message = UserDefaultsManager.getData(type: String.self, forKey: .message) ?? "message not found"
-    let profileImgUrl = UserDefaultsManager.getData(type: String.self, forKey: .profileImgUrl) ?? "profileImgUrl not found"
+    private let textViewPlaceHolder = "소개를 입력해주세요.\n(최대 50자, 3줄)"
+    private let name = UserDefaultsManager.getData(type: String.self, forKey: .name) ?? "name not found"
+    private let email = UserDefaultsManager.getData(type: String.self, forKey: .email) ?? "email not found"
+    private let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
+    private let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? "handle not found"
+    private let message = UserDefaultsManager.getData(type: String.self, forKey: .message) ?? "message not found"
+    private let profileImgUrl = UserDefaultsManager.getData(type: String.self, forKey: .profileImgUrl) ?? "profileImgUrl not found"
     
     // MARK: - Views
 

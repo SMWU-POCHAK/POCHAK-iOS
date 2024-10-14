@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BlockedUserTableViewCell: UITableViewCell {
+final class BlockedUserTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     

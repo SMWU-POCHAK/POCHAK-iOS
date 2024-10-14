@@ -1,5 +1,5 @@
 //
-//  FirstTabmanViewController.swift
+//  FollowerListTabmanViewController.swift
 //  pochak
 //
 //  Created by Seo Cindy on 12/27/23.
@@ -12,15 +12,15 @@ protocol RemoveImageDelegate: AnyObject {
     func removeFromCollectionView(at indexPath: IndexPath, _ handle: String)
 }
 
-class FollowerListTabmanViewController: UIViewController {
+final class FollowerListTabmanViewController: UIViewController {
     
     // MARK: - Properties
     
     var imageArray: [MemberListData] = []
     var receivedHandle: String?
-    var cellIndexPath: IndexPath?
-    var cellHandle: String?
-    var loginUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
+    private var cellIndexPath: IndexPath?
+    private var cellHandle: String?
+    private var loginUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
     private var isLastPage: Bool = false
     private var isCurrentlyFetching: Bool = false
     private var currentFetchingPage: Int = 0
@@ -71,44 +71,47 @@ class FollowerListTabmanViewController: UIViewController {
     
     private func setUpData() {
         let request = FollowListRequest(page: currentFetchingPage)
-        
-        UserService.getFollowers(handle: receivedHandle ?? "", request: request) { [weak self] data, failed in
-            guard let data = data else {
-                switch failed {
-                case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .serverError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .unknownError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                default:
-                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+        if let handle = receivedHandle {
+            UserService.getFollowers(handle: handle, request: request) { [weak self] data, failed in
+                guard let data = data else {
+                    switch failed {
+                    case .disconnected:
+                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    case .serverError:
+                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    case .unknownError:
+                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    default:
+                        self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                    }
+                    return
                 }
-                return
-            }
-            
-            let newMembers = data.result.memberList
-            let startIndex = data.result.memberList.count
-            print("startIndex : \(startIndex)")
-            let endIndex = startIndex + newMembers.count
-            print("endIndex : \(endIndex)")
-            let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
-            print("newIndexPaths : \(newIndexPaths)")
-            self?.imageArray.append(contentsOf: newMembers)
-            self?.isLastPage = data.result.pageInfo.lastPage
-            
-            print("보여주는 계정 개수: \(newMembers.count)")
-            DispatchQueue.main.async {
-                if self?.currentFetchingPage == 0 {
-                    self?.followerCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
-                    print(">>>>>>> Follower is currently reloading!!!!!!!")
-                } else {
-                    self?.followerCollectionView.insertItems(at: newIndexPaths)
-                    print(">>>>>>> Follower is currently fethcing!!!!!!!")
+                
+                let newMembers = data.result.memberList
+                let startIndex = data.result.memberList.count
+                print("startIndex : \(startIndex)")
+                let endIndex = startIndex + newMembers.count
+                print("endIndex : \(endIndex)")
+                let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
+                print("newIndexPaths : \(newIndexPaths)")
+                self?.imageArray.append(contentsOf: newMembers)
+                self?.isLastPage = data.result.pageInfo.lastPage
+                
+                print("보여주는 계정 개수: \(newMembers.count)")
+                DispatchQueue.main.async {
+                    if self?.currentFetchingPage == 0 {
+                        self?.followerCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
+                        print(">>>>>>> Follower is currently reloading!!!!!!!")
+                    } else {
+                        self?.followerCollectionView.insertItems(at: newIndexPaths)
+                        print(">>>>>>> Follower is currently fethcing!!!!!!!")
+                    }
+                    self?.isCurrentlyFetching = false
+                    self?.currentFetchingPage += 1;
                 }
-                self?.isCurrentlyFetching = false
-                self?.currentFetchingPage += 1;
             }
+        } else {
+            print("No handle received")
         }
     }
 }
@@ -182,24 +185,28 @@ extension FollowerListTabmanViewController : CustomAlertDelegate {
     
     func confirmAction() {
         let request = DeleteFollowerRequest(followerHandle: cellHandle ?? "")
-        UserService.deleteFollower(handle: receivedHandle ?? "", request: request) { data, failed in
-            guard let data = data else {
-                switch failed {
-                case .disconnected:
-                    self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .serverError:
-                    self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .unknownError:
-                    self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                default:
-                    self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+        if let handle = receivedHandle {
+            UserService.deleteFollower(handle: handle, request: request) { data, failed in
+                guard let data = data else {
+                    switch failed {
+                    case .disconnected:
+                        self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    case .serverError:
+                        self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    case .unknownError:
+                        self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    default:
+                        self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                    }
+                    return
                 }
-                return
+                
+                print(data.message)
+                self.imageArray.remove(at: self.cellIndexPath!.row)
+                self.followerCollectionView.reloadData()
             }
-            
-            print(data.message)
-            self.imageArray.remove(at: self.cellIndexPath!.row)
-            self.followerCollectionView.reloadData()
+        } else {
+            print("No handle received")
         }
     }
     

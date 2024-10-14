@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FollowingCollectionViewCell: UICollectionViewCell {
+final class FollowingCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     
@@ -46,16 +46,6 @@ class FollowingCollectionViewCell: UICollectionViewCell {
                 sender.backgroundColor = UIColor(named: "gray03")
             }
         }
-//        FollowToggleDataManager.shared.followToggleDataManager(cellHandle, { resultData in
-//            print(resultData.message)
-//            if resultData.message == "성공적으로 팔로우를 취소하였습니다." {
-//                sender.setTitle("팔로우", for: .normal)
-//                sender.backgroundColor = UIColor(named: "yellow00")
-//            } else if resultData.message == "성공적으로 팔로우하였습니다."{
-//                sender.setTitle("팔로잉", for: .normal)
-//                sender.backgroundColor = UIColor(named: "gray03")
-//            }
-//        })
     }
     
     // MARK: - Functions

@@ -7,18 +7,18 @@
 
 import UIKit
 
-class SignUpViewController: UIViewController {
+final class SignUpViewController: UIViewController {
     
     // MARK: - Properties
     
-    let textViewPlaceHolder = "소개를 입력해주세요.\n(최대 50자, 3줄)"
-    let email = UserDefaultsManager.getData(type: String.self, forKey: .email) ?? "email not found"
-    let socialType = UserDefaultsManager.getData(type: String.self, forKey: .socialType) ?? "socialType not found"
-    let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
-    let socialRefreshToken = UserDefaultsManager.getData(type: String.self, forKey: .socialRefreshToken) ?? "NOTAPPLELOGINUSER"
-    var backBtnPressed : Bool = false
-    var handleDuplicationChecked : Bool = false
-    let imagePickerController = UIImagePickerController()
+    private let textViewPlaceHolder = "소개를 입력해주세요.\n(최대 50자, 3줄)"
+    private let email = UserDefaultsManager.getData(type: String.self, forKey: .email) ?? "email not found"
+    private let socialType = UserDefaultsManager.getData(type: String.self, forKey: .socialType) ?? "socialType not found"
+    private let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
+    private let socialRefreshToken = UserDefaultsManager.getData(type: String.self, forKey: .socialRefreshToken) ?? "NOTAPPLELOGINUSER"
+    private var backBtnPressed : Bool = false
+    private var handleDuplicationChecked : Bool = false
+    private let imagePickerController = UIImagePickerController()
     
     // MARK: - Views
 
@@ -317,13 +317,15 @@ extension SignUpViewController : CustomAlertDelegate {
 
 // 아이디 허용 가능한 문자 제한 : 대문자, 소문자, 숫자, _(언더바), .(마침표)
 extension String {
-    func hasCharacters() -> Bool{
-        do{
+    func hasCharacters() -> Bool {
+        do {
             let regex = try NSRegularExpression(pattern: "^[0-9a-zA-Z_.]$", options: .caseInsensitive)
-            if let _ = regex.firstMatch(in: self, options: NSRegularExpression.MatchingOptions.reportCompletion, range: NSMakeRange(0, self.count)){
+            if let _ = regex.firstMatch(in: self,
+                                        options: NSRegularExpression.MatchingOptions.reportCompletion,
+                                        range: NSMakeRange(0, self.count)) {
                 return true
             }
-        }catch{
+        } catch {
             print(error.localizedDescription)
             return false
         }

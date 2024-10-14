@@ -9,12 +9,12 @@ import UIKit
 import Tabman
 import Pageboy
 
-class PostListViewController: TabmanViewController {
+final class PostListViewController: TabmanViewController {
     
     // MARK: - Properties
     
-    private var viewControllers: [UIViewController] = []
     var handle: String?
+    private var viewControllers: [UIViewController] = []
     
     // MARK: - LifeCycle
     

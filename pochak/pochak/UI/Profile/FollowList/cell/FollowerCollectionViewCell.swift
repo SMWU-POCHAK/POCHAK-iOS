@@ -1,5 +1,5 @@
 //
-//  TabbarHeadingCollectionViewCell.swift
+//  FollowerCollectionViewCell.swift
 //  pochak
 //
 //  Created by Seo Cindy on 12/27/23.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FollowerCollectionViewCell: UICollectionViewCell {
+final class FollowerCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     
@@ -65,17 +65,6 @@ class FollowerCollectionViewCell: UICollectionViewCell {
             }
             
         }
-//        FollowToggleDataManager.shared.followToggleDataManager(cellHandle, { resultData in
-//            var resultCode = resultData.code
-//            print(resultData.message)
-//            if resultCode == "FOLLOW2002" {
-//                sender.setTitle("팔로우", for: .normal)
-//                sender.backgroundColor = UIColor(named: "yellow00")
-//            } else if resultCode == "FOLLOW2001" {
-//                sender.setTitle("팔로잉", for: .normal)
-//                sender.backgroundColor = UIColor(named: "gray03")
-//            }
-//        })
     }
     
     // MARK: - Functions

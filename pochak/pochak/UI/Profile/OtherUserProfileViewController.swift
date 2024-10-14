@@ -11,16 +11,16 @@ protocol SecondViewControllerDelegate: AnyObject {
     func dismissSecondViewController()
 }
 
-class OtherUserProfileViewController: UIViewController {
+final class OtherUserProfileViewController: UIViewController {
     
     // MARK: - Properties
     
-    let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId)
     var receivedHandle: String?
     var receivedFollowerCount: Int = 0
     var receivedFollowingCount: Int = 0
     var receivedIsFollow: Bool?
-    var searchBlockedUser: Bool = false
+    private let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId)
+    private var searchBlockedUser: Bool = false
     lazy var moreButton: UIBarButtonItem = { // 업로드 버튼
         let barButton = UIBarButtonItem(image: UIImage(named: "moreButtonIcon"), style: .plain, target: self, action: #selector(moreButtonPressed))
         return barButton
@@ -83,26 +83,30 @@ class OtherUserProfileViewController: UIViewController {
                       confirmButtonText: "계속하기"
             )
         } else {
-            UserService.postFollowRequest(handle: receivedHandle ?? "") { [weak self] data, failed in
-                guard let data = data else {
-                    // 에러가 난 경우, alert 창 present
-                    switch failed {
-                    case .disconnected:
-                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                    case .serverError:
-                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                    case .unknownError:
-                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                    default:
-                        self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+            if let handle = receivedHandle {
+                UserService.postFollowRequest(handle: handle) { [weak self] data, failed in
+                    guard let data = data else {
+                        // 에러가 난 경우, alert 창 present
+                        switch failed {
+                        case .disconnected:
+                            self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                        case .serverError:
+                            self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                        case .unknownError:
+                            self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                        default:
+                            self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                        }
+                        return
                     }
-                    return
+                    print(data.message)
+                    self?.receivedIsFollow = true
+                    sender.setTitle("팔로잉", for: .normal)
+                    sender.backgroundColor = UIColor(named: "gray03")
+                    self?.setUpData()
                 }
-                print(data.message)
-                self?.receivedIsFollow = true
-                sender.setTitle("팔로잉", for: .normal)
-                sender.backgroundColor = UIColor(named: "gray03")
-                self?.setUpData()
+            } else {
+                print("No handle received")
             }
         }
     }
@@ -111,8 +115,6 @@ class OtherUserProfileViewController: UIViewController {
         guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC") as? FollowListViewController else {return}
         followListVC.index = 0
         followListVC.handle = receivedHandle ?? ""
-        followListVC.followerCount = receivedFollowerCount
-        followListVC.followingCount = receivedFollowingCount
         self.navigationController?.pushViewController(followListVC, animated: true)
     }
     
@@ -120,8 +122,6 @@ class OtherUserProfileViewController: UIViewController {
         guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC") as? FollowListViewController else {return}
         followListVC.index = 1
         followListVC.handle = receivedHandle ?? ""
-        followListVC.followerCount = receivedFollowerCount
-        followListVC.followingCount = receivedFollowingCount
         self.navigationController?.pushViewController(followListVC, animated: true)
     }
     
@@ -240,59 +240,63 @@ class OtherUserProfileViewController: UIViewController {
     
     private func setUpData() {
         let request = ProfileRetrievalRequest(page: 0)
-        ProfileService.getProfile(handle: receivedHandle ?? "", request: request) { data, failed in
-            guard let data = data else {
-                switch failed {
-                case .clientError:
-                    self.navigationController?.popViewController(animated: true)
-                    self.navigationItem.title = ""
-                    self.searchBlockedUser = true
-                    self.showAlert(alertType: .confirmOnly,
-                                   titleText: "차단한 유저의 프로필입니다.",
-                                   messageText: "차단해제를 원하시면\n설정 탭의 차단관리 페이지를 확인해주세요.",
-                                   cancelButtonText: "",
-                                   confirmButtonText: "확인"
-                    )
-                case .disconnected:
-                    self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .serverError:
-                    self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .unknownError:
-                    self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                default:
-                    self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+        if let handle = receivedHandle {
+            ProfileService.getProfile(handle: handle, request: request) { data, failed in
+                guard let data = data else {
+                    switch failed {
+                    case .clientError:
+                        self.navigationController?.popViewController(animated: true)
+                        self.navigationItem.title = ""
+                        self.searchBlockedUser = true
+                        self.showAlert(alertType: .confirmOnly,
+                                       titleText: "차단한 유저의 프로필입니다.",
+                                       messageText: "차단해제를 원하시면\n설정 탭의 차단관리 페이지를 확인해주세요.",
+                                       cancelButtonText: "",
+                                       confirmButtonText: "확인"
+                        )
+                    case .disconnected:
+                        self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    case .serverError:
+                        self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    case .unknownError:
+                        self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    default:
+                        self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                    }
+                    return
                 }
-                return
+                
+                print("=== Profile, setup data succeeded ===")
+                print("== data: \(data)")
+                
+                // load 프로필 이미지
+                if let url = URL(string: data.result.profileImage ?? "") {
+                    self.profileImage.load(with: url)
+                }
+                
+                // 필요한 데이터 뷰에 반영
+                self.setUpResponseData(data.result)
+                
+                // 팔로우 버튼 설정
+                self.setUpFollowBtn(data.result)
             }
-            
-            print("=== Profile, setup data succeeded ===")
-            print("== data: \(data)")
-            
-            // load 프로필 이미지
-            if let url = URL(string: data.result.profileImage ?? "") {
-                self.profileImage.load(with: url)
-            }
-            
-            // 필요한 데이터 뷰에 반영
-            self.setUpResponseData(data.result)
-            
-            // 팔로우 버튼 설정
-            self.setUpFollowBtn(data.result)
+        } else {
+            print("No handle received")
         }
     }
     
-    private func setUpResponseData(_ resposeData: ProfileRetrievalResult) {
-        self.userName.text = String(resposeData.name ?? "")
-        self.userMessage.text = String(resposeData.message ?? "")
-        self.postCount.text = String(resposeData.totalPostNum ?? 0)
-        self.followerCount.text = String(resposeData.followerCount ?? 0)
-        self.followingCount.text = String(resposeData.followingCount ?? 0)
-        self.receivedFollowerCount = resposeData.followerCount ?? 0
-        self.receivedFollowingCount = resposeData.followingCount ?? 0
-        self.receivedIsFollow = resposeData.isFollow
+    private func setUpResponseData(_ responseData: ProfileRetrievalResult) {
+        self.userName.text = String(responseData.name ?? "")
+        self.userMessage.text = String(responseData.message ?? "")
+        self.postCount.text = String(responseData.totalPostNum ?? 0)
+        self.followerCount.text = String(responseData.followerCount ?? 0)
+        self.followingCount.text = String(responseData.followingCount ?? 0)
+        self.receivedFollowerCount = responseData.followerCount ?? 0
+        self.receivedFollowingCount = responseData.followingCount ?? 0
+        self.receivedIsFollow = responseData.isFollow
     }
     
-    private func setUpFollowBtn(_ resposeData: ProfileRetrievalResult) {
+    private func setUpFollowBtn(_ responseData: ProfileRetrievalResult) {
         let currentHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
         // 버튼 설정
         if currentHandle == self.receivedHandle {
@@ -307,7 +311,7 @@ class OtherUserProfileViewController: UIViewController {
             self.followToggleBtn.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 16)
             self.followToggleBtn.layer.cornerRadius = 5
             
-            if resposeData.isFollow == true {
+            if responseData.isFollow == true {
                 /// 팔로우 중인 유저인 경우
                 self.followToggleBtn.setTitle("팔로잉", for: .normal)
                 self.followToggleBtn.backgroundColor = UIColor(named: "gray03")
@@ -329,25 +333,29 @@ extension OtherUserProfileViewController: CustomAlertDelegate {
         if searchBlockedUser {
             print("confirm selected!")
         } else {
-            UserService.postFollowRequest(handle: receivedHandle ?? "") { [weak self] data, failed in
-                guard let data = data else {
-                    switch failed {
-                    case .disconnected:
-                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                    case .serverError:
-                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                    case .unknownError:
-                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                    default:
-                        self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+            if let handle = receivedHandle {
+                UserService.postFollowRequest(handle: handle) { [weak self] data, failed in
+                    guard let data = data else {
+                        switch failed {
+                        case .disconnected:
+                            self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                        case .serverError:
+                            self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                        case .unknownError:
+                            self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                        default:
+                            self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                        }
+                        return
                     }
-                    return
+                    print(data.message)
+                    self?.receivedIsFollow = false
+                    self?.followToggleBtn.setTitle("팔로우", for: .normal)
+                    self?.followToggleBtn.backgroundColor = UIColor(named: "yellow00")
+                    self?.setUpData()
                 }
-                print(data.message)
-                self?.receivedIsFollow = false
-                self?.followToggleBtn.setTitle("팔로우", for: .normal)
-                self?.followToggleBtn.backgroundColor = UIColor(named: "yellow00")
-                self?.setUpData()
+            } else {
+                print("No handle received")
             }
         }
     }

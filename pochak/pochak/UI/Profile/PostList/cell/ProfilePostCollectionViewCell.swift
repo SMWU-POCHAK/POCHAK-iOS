@@ -1,5 +1,5 @@
 //
-//  PostCollectionViewCell.swift
+//  ProfilePostCollectionViewCell.swift
 //  pochak
 //
 //  Created by Seo Cindy on 12/27/23.
@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class ProfilePostCollectionViewCell: UICollectionViewCell {
+final class ProfilePostCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     

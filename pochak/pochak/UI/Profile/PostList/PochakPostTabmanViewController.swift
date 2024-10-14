@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PochakPostTabmanViewController: UIViewController {
+final class PochakPostTabmanViewController: UIViewController {
     
     // MARK: - Properties
     
@@ -64,39 +64,42 @@ class PochakPostTabmanViewController: UIViewController {
     private func setUpData() {
         isCurrentlyFetching = true
         let request = ProfileRetrievalRequest(page: currentFetchingPage)
-        
-        ProfileService.getProfilePochakPosts(handle: receivedHandle ?? "", request: request) { [weak self] data, failed in
-            guard let data = data else {
-                switch failed {
-                case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .serverError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .unknownError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                default:
-                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+        if let handle = receivedHandle {
+            ProfileService.getProfilePochakPosts(handle: handle, request: request) { [weak self] data, failed in
+                guard let data = data else {
+                    switch failed {
+                    case .disconnected:
+                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    case .serverError:
+                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    case .unknownError:
+                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    default:
+                        self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                    }
+                    return
                 }
-                return
-            }
-            
-            let newPosts = data.result.postList
-            let startIndex = data.result.postList.count
-            let endIndex = startIndex + newPosts.count
-            let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
-            self?.imageArray.append(contentsOf: newPosts)
-            self?.isLastPage = data.result.pageInfo.lastPage
-            
-            DispatchQueue.main.async {
-                if self?.currentFetchingPage == 0 {
-                    self?.postCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
-                    print(">>>>>>> PochakPostDataManager is currently reloading!!!!!!!")
-                } else {
-                    self?.postCollectionView.insertItems(at: newIndexPaths)
+                
+                let newPosts = data.result.postList
+                let startIndex = data.result.postList.count
+                let endIndex = startIndex + newPosts.count
+                let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
+                self?.imageArray.append(contentsOf: newPosts)
+                self?.isLastPage = data.result.pageInfo.lastPage
+                
+                DispatchQueue.main.async {
+                    if self?.currentFetchingPage == 0 {
+                        self?.postCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
+                        print(">>>>>>> PochakPostDataManager is currently reloading!!!!!!!")
+                    } else {
+                        self?.postCollectionView.insertItems(at: newIndexPaths)
+                    }
+                    self?.isCurrentlyFetching = false
+                    self?.currentFetchingPage += 1;
                 }
-                self?.isCurrentlyFetching = false
-                self?.currentFetchingPage += 1;
             }
+        } else {
+            print("No handle received")
         }
     }
 }

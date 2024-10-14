@@ -8,12 +8,12 @@
 import UIKit
 import SafariServices
 
-class TermsOfAgreeViewController: UIViewController, UIViewControllerTransitioningDelegate {
+final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransitioningDelegate {
     
     // MARK: - Properties
     
-    var didAgreeForPrivacyPolicy : Bool = false
-    var didAgreeForTermsOfUse : Bool = false
+    private var didAgreeForPrivacyPolicy : Bool = false
+    private var didAgreeForTermsOfUse : Bool = false
     var delegate : SendDelegate?
     
     // MARK: - Views

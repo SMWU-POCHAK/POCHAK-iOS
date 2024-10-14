@@ -13,7 +13,7 @@ protocol SendDelegate {
     func sendAgreed(agree : Bool)
 }
 
-class SocialJoinViewController: UIViewController {
+final class SocialJoinViewController: UIViewController {
     
     // MARK: - Views
     

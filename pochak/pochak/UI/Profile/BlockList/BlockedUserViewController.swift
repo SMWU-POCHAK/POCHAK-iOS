@@ -12,12 +12,12 @@ protocol RemoveCellDelegate: AnyObject {
     func removeCell(at indexPath: IndexPath, _ handle: String)
 }
 
-class BlockedUserViewController: UIViewController {
+final class BlockedUserViewController: UIViewController {
     
     // MARK: - Properties
-    var blockedUserList: [BlockList] = []
-    var cellIndexPath: IndexPath?
-    var cellHandle: String?
+    private var cellIndexPath: IndexPath?
+    private var cellHandle: String?
+    private var blockedUserList: [BlockList] = []
     private var isLastPage: Bool = false
     private var isCurrentlyFetching: Bool = false
     private var currentFetchingPage: Int = 0

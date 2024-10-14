@@ -9,15 +9,13 @@ import Tabman
 import Pageboy
 import UIKit
 
-class FollowListViewController: TabmanViewController {
+final class FollowListViewController: TabmanViewController {
     
     // MARK: - Properties
-
+    
+    var handle: String?
     var viewControllers: [UIViewController] = []
     var index: Int = 0
-    var handle: String?
-    var followerCount = UserDefaultsManager.getData(type: Int.self, forKey: .followerCount)
-    var followingCount = UserDefaultsManager.getData(type: Int.self, forKey: .followingCount)
 
     // MARK: - LifeCycle
 

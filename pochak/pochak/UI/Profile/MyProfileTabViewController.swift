@@ -1,5 +1,5 @@
 //
-//  ProfileTabViewController.swift
+//  MyProfileTabViewController.swift
 //  pochak
 //
 //  Created by Seo Cindy on 12/27/23.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-class MyProfileTabViewController: UIViewController {
+final class MyProfileTabViewController: UIViewController {
     
     // MARK: - Properties
     
-    let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
+    private let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
     
     // MARK: - Views
     
@@ -78,8 +78,6 @@ class MyProfileTabViewController: UIViewController {
         guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC") as? FollowListViewController else {return}
         followListVC.index = 0
         followListVC.handle = handle
-        followListVC.followerCount = UserDefaultsManager.getData(type: Int.self, forKey: .followerCount) ?? 0
-        followListVC.followingCount = UserDefaultsManager.getData(type: Int.self, forKey: .followingCount) ?? 0
         self.navigationController?.pushViewController(followListVC, animated: true)
     }
     
@@ -87,8 +85,6 @@ class MyProfileTabViewController: UIViewController {
         guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC") as? FollowListViewController else {return}
         followListVC.index = 1
         followListVC.handle = handle
-        followListVC.followerCount = UserDefaultsManager.getData(type: Int.self, forKey: .followerCount) ?? 0
-        followListVC.followingCount = UserDefaultsManager.getData(type: Int.self, forKey: .followingCount) ?? 0
         self.navigationController?.pushViewController(followListVC, animated: true)
     }
         
@@ -212,20 +208,18 @@ class MyProfileTabViewController: UIViewController {
         }
     }
     
-    private func setUpResponseData(_ resposeData: ProfileRetrievalResult) {
+    private func setUpResponseData(_ responseData: ProfileRetrievalResult) {
         self.profileImage.contentMode = .scaleAspectFill
-        self.userName.text = String(resposeData.name ?? "")
-        self.userMessage.text = String(resposeData.message ?? "")
-        self.postCount.text = String(resposeData.totalPostNum ?? 0)
-        self.followerCount.text = String(resposeData.followerCount ?? 0)
-        self.followingCount.text = String(resposeData.followingCount ?? 0)
+        self.userName.text = String(responseData.name ?? "")
+        self.userMessage.text = String(responseData.message ?? "")
+        self.postCount.text = String(responseData.totalPostNum ?? 0)
+        self.followerCount.text = String(responseData.followerCount ?? 0)
+        self.followingCount.text = String(responseData.followingCount ?? 0)
     }
     
-    private func setUpUserDefaults(_ resposeData: ProfileRetrievalResult) {
-        UserDefaultsManager.setData(value: resposeData.name, key: .name)
-        UserDefaultsManager.setData(value: resposeData.message, key: .message)
-        UserDefaultsManager.setData(value: resposeData.followerCount, key: .followerCount)
-        UserDefaultsManager.setData(value: resposeData.followingCount, key: .followingCount)
-        UserDefaultsManager.setData(value: resposeData.profileImage, key: .profileImgUrl)
+    private func setUpUserDefaults(_ responseData: ProfileRetrievalResult) {
+        UserDefaultsManager.setData(value: responseData.name, key: .name)
+        UserDefaultsManager.setData(value: responseData.message, key: .message)
+        UserDefaultsManager.setData(value: responseData.profileImage, key: .profileImgUrl)
     }
 }

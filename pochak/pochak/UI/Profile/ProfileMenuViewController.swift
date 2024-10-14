@@ -7,12 +7,12 @@
 
 import UIKit
 
-class ProfileMenuViewController: UIViewController {
+final class ProfileMenuViewController: UIViewController {
     
     // MARK: - Properties
     
-    let userHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
     var receivedHandle: String?
+    private let userHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
     weak var delegate: SecondViewControllerDelegate?
     
     // MARK: - Views
@@ -47,24 +47,28 @@ class ProfileMenuViewController: UIViewController {
 extension ProfileMenuViewController: CustomAlertDelegate {
     
     func confirmAction() {
-        UserService.blockUser(handle: receivedHandle ?? "") { [weak self] data, failed in
-            guard let data = data else {
-                switch failed {
-                case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .serverError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .unknownError:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                default:
-                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+        if let handle = receivedHandle {
+            UserService.blockUser(handle: handle) { [weak self] data, failed in
+                guard let data = data else {
+                    switch failed {
+                    case .disconnected:
+                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    case .serverError:
+                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    case .unknownError:
+                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                    default:
+                        self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                    }
+                    return
                 }
-                return
+                print(data.message)
+                self?.userBlockBtn.setTitle("차단취소", for: .normal)
+                self?.delegate?.dismissSecondViewController()
+                self?.dismiss(animated: true, completion: nil)
             }
-            print(data.message)
-            self?.userBlockBtn.setTitle("차단취소", for: .normal)
-            self?.delegate?.dismissSecondViewController()
-            self?.dismiss(animated: true, completion: nil)
+        } else {
+            print("No handle received")
         }
     }
     
