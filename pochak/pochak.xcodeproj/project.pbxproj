@@ -162,6 +162,8 @@
 		37D311E12B566C5A00A1D7C1 /* SignOutDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311E02B566C5900A1D7C1 /* SignOutDataModel.swift */; };
 		37D311E32B56754D00A1D7C1 /* GetToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311E22B56754D00A1D7C1 /* GetToken.swift */; };
 		37D311E52B567AE000A1D7C1 /* OtherUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */; };
+		46C669FA2CC648FF009239E0 /* MemoriesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C669F82CC648FF009239E0 /* MemoriesAPI.swift */; };
+		46C669FD2CC6492F009239E0 /* MemoriesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C669FB2CC6492F009239E0 /* MemoriesResponse.swift */; };
 		A6D48ED7F8B86CF57C481991 /* Pods_pochak_pochakUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC75B5747D3AC9026B862E11 /* Pods_pochak_pochakUITests.framework */; };
 		AF5AAB97DDEAC75EAEDDCFE4 /* Pods_pochak.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65A7656D9D72CC873C98FD4 /* Pods_pochak.framework */; };
 		EA01079A2A59556800A3AE85 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0107952A59556800A3AE85 /* CommentViewController.swift */; };
@@ -399,6 +401,8 @@
 		37D311E02B566C5900A1D7C1 /* SignOutDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutDataModel.swift; sourceTree = "<group>"; };
 		37D311E22B56754D00A1D7C1 /* GetToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToken.swift; sourceTree = "<group>"; };
 		37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherUserProfileViewController.swift; sourceTree = "<group>"; };
+		46C669F82CC648FF009239E0 /* MemoriesAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoriesAPI.swift; sourceTree = "<group>"; };
+		46C669FB2CC6492F009239E0 /* MemoriesResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoriesResponse.swift; sourceTree = "<group>"; };
 		67EA6B5B881844A22EE2A55B /* Pods-pochak.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pochak.debug.xcconfig"; path = "Target Support Files/Pods-pochak/Pods-pochak.debug.xcconfig"; sourceTree = "<group>"; };
 		6E1916A70A802F298FF38F24 /* Pods_pochakTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pochakTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D5440AA571B5DB6291304B2 /* Pods-pochakTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pochakTests.debug.xcconfig"; path = "Target Support Files/Pods-pochakTests/Pods-pochakTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1074,6 +1078,22 @@
 			path = cell;
 			sourceTree = "<group>";
 		};
+		46C669F92CC648FF009239E0 /* Memories */ = {
+			isa = PBXGroup;
+			children = (
+				46C669F82CC648FF009239E0 /* MemoriesAPI.swift */,
+			);
+			path = Memories;
+			sourceTree = "<group>";
+		};
+		46C669FC2CC6492F009239E0 /* Memories */ = {
+			isa = PBXGroup;
+			children = (
+				46C669FB2CC6492F009239E0 /* MemoriesResponse.swift */,
+			);
+			path = Memories;
+			sourceTree = "<group>";
+		};
 		A526D36E9922857B343AC7F0 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1213,6 +1233,7 @@
 				EA7E14692C8E9353001DA769 /* Alarm */,
 				EA7E145F2C858EBD001DA769 /* Camera */,
 				EA2CD6372C5F45B900644EFE /* Home */,
+				46C669FC2CC6492F009239E0 /* Memories */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1342,6 +1363,7 @@
 			children = (
 				EA2CD6362C5F45AE00644EFE /* Authentication */,
 				EA2CD6352C5F45A100644EFE /* APIs */,
+				46C669F92CC648FF009239E0 /* Memories */,
 				EA2CD6342C5F459B00644EFE /* Base */,
 				EA2CD6332C5F458900644EFE /* Models */,
 				EA2CD6322C5F458200644EFE /* Services */,
@@ -1800,11 +1822,13 @@
 				0822A06C2CA1983C00F87E2C /* CommentGetResponse.swift in Sources */,
 				3769D6D02B3C569C00294CD1 /* PochakedPostTabmanViewController.swift in Sources */,
 				374261642C2FEF5F00B67886 /* ProfileMenuViewController.swift in Sources */,
+				46C669FA2CC648FF009239E0 /* MemoriesAPI.swift in Sources */,
 				3742617F2C359D6D00B67886 /* CheckHandleDuplicationDataModel.swift in Sources */,
 				EAC582742C3074EA006F44AF /* UIColor+.swift in Sources */,
 				3769D6BB2B3C347000294CD1 /* FollowListViewController.swift in Sources */,
 				3769D6B42B3C301B00294CD1 /* JoinDataManager.swift in Sources */,
 				EA96D0522C8F186900D80562 /* TagApproveAPI.swift in Sources */,
+				46C669FD2CC6492F009239E0 /* MemoriesResponse.swift in Sources */,
 				0822A07B2CA1992B00F87E2C /* PostService.swift in Sources */,
 				37D311DA2B53134200A1D7C1 /* LogoutDataManager.swift in Sources */,
 				EA1B0B5D2A49D23A00F86FBC /* SceneDelegate.swift in Sources */,
