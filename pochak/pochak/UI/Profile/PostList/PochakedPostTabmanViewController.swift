@@ -13,6 +13,8 @@ class PochakedPostTabmanViewController: UIViewController {
     
     var receivedHandle: String?
     var imageArray: [ProfilePostList] = []
+    private let minimumLineSpacing: CGFloat = 9
+    private let minimumInterItemSpacing: CGFloat = 8
     private var isLastPage: Bool = false
     private var isCurrentlyFetching: Bool = false
     private var currentFetchingPage: Int = 0
@@ -28,7 +30,7 @@ class PochakedPostTabmanViewController: UIViewController {
         currentFetchingPage = 0
         
         setUpCollectionView()
-        setUpRefreshControl()
+//        setUpRefreshControl()
         setUpData()
     }
     
@@ -127,15 +129,15 @@ extension PochakedPostTabmanViewController : UICollectionViewDelegate, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt: Int) -> CGFloat {
-        return 5
+        return minimumLineSpacing
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 5
+        return minimumInterItemSpacing
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = CGFloat((collectionView.frame.width - 10) / 3)
+        let width = CGFloat((collectionView.frame.width - (20 * 2) - (minimumInterItemSpacing * 2)) / 3)
         return CGSize(width: width, height: width * 4 / 3)
     }
     

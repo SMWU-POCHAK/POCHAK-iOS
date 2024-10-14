@@ -28,7 +28,7 @@ class PochakPostTabmanViewController: UIViewController {
         currentFetchingPage = 0
         
         setUpCollectionView()
-        setUpRefreshControl()
+//        setUpRefreshControl()
         setUpData()
     }
     

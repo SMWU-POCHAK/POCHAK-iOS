@@ -41,6 +41,7 @@ class OtherUserProfileViewController: UIViewController {
     @IBOutlet weak var followToggleBtn: UIButton!
     @IBOutlet weak var postListTabmanView: UIView!
     @IBOutlet weak var updateProfileBtn: UIButton!
+    @IBOutlet weak var topUIView: UIView!
     
     // MARK: - Lifecycle
     
@@ -55,6 +56,9 @@ class OtherUserProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addSubview()
+        setUpUIConstraints()
+        setUpRefreshControl()
         setUpNavigationBar()
         setUpViewController()
         setUpData()
@@ -139,7 +143,58 @@ class OtherUserProfileViewController: UIViewController {
         present(profileMenuVC, animated: true)
     }
     
+    @objc private func refreshData(_ sender: Any) {
+        print("refresh")
+    //        imageArray = []
+    //        currentFetchingPage = 0
+        setUpData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+            self.contentScrollView.refreshControl?.endRefreshing()
+        }
+    }
+    
     // MARK: - Functions
+    
+    private let contentScrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+//        scrollView.backgroundColor = UIColor(named: "gray01")
+        scrollView.backgroundColor = .red
+        scrollView.showsVerticalScrollIndicator = false
+        
+        return scrollView
+    }()
+    
+    private func addSubview() {
+        self.view.addSubview(contentScrollView)
+        contentScrollView.addSubview(topUIView)
+        contentScrollView.addSubview(postListTabmanView)
+    }
+    
+    private func setUpUIConstraints() {
+        NSLayoutConstraint.activate([
+                contentScrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
+                contentScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+                contentScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+                contentScrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+                contentScrollView.heightAnchor.constraint(equalTo: self.view.heightAnchor),
+                topUIView.topAnchor.constraint(equalTo: contentScrollView.topAnchor, constant: 60),
+                topUIView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
+                topUIView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
+                topUIView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
+                topUIView.widthAnchor.constraint(equalTo: contentScrollView.widthAnchor), // 세로 방향의 스크롤뷰
+        ])
+        // 세로 방향의 스크롤뷰
+//        let constraint = topUIView.widthAnchor.constraint(equalTo: contentScrollView.widthAnchor)
+//        constraint.priority = UILayoutPriority(250)
+//        constraint.isActive = true
+    }
+    
+    private func setUpRefreshControl() {
+        contentScrollView.refreshControl = UIRefreshControl()
+        contentScrollView.refreshControl?.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+    }
+    
     
     @IBAction func updateProfile(_ sender: Any) {
         guard let updateProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "UpdateProfileVC") as? UpdateProfileViewController else {return}
