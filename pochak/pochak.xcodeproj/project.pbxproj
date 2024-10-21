@@ -162,6 +162,7 @@
 		37D311E12B566C5A00A1D7C1 /* SignOutDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311E02B566C5900A1D7C1 /* SignOutDataModel.swift */; };
 		37D311E32B56754D00A1D7C1 /* GetToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311E22B56754D00A1D7C1 /* GetToken.swift */; };
 		37D311E52B567AE000A1D7C1 /* OtherUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */; };
+		46BA13362CBD551600C81729 /* SecretKeyInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46BA13352CBD551600C81729 /* SecretKeyInfo.plist */; };
 		A6D48ED7F8B86CF57C481991 /* Pods_pochak_pochakUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC75B5747D3AC9026B862E11 /* Pods_pochak_pochakUITests.framework */; };
 		AF5AAB97DDEAC75EAEDDCFE4 /* Pods_pochak.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65A7656D9D72CC873C98FD4 /* Pods_pochak.framework */; };
 		EA01079A2A59556800A3AE85 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0107952A59556800A3AE85 /* CommentViewController.swift */; };
@@ -399,6 +400,7 @@
 		37D311E02B566C5900A1D7C1 /* SignOutDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutDataModel.swift; sourceTree = "<group>"; };
 		37D311E22B56754D00A1D7C1 /* GetToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToken.swift; sourceTree = "<group>"; };
 		37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherUserProfileViewController.swift; sourceTree = "<group>"; };
+		46BA13352CBD551600C81729 /* SecretKeyInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SecretKeyInfo.plist; sourceTree = "<group>"; };
 		67EA6B5B881844A22EE2A55B /* Pods-pochak.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pochak.debug.xcconfig"; path = "Target Support Files/Pods-pochak/Pods-pochak.debug.xcconfig"; sourceTree = "<group>"; };
 		6E1916A70A802F298FF38F24 /* Pods_pochakTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pochakTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D5440AA571B5DB6291304B2 /* Pods-pochakTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pochakTests.debug.xcconfig"; path = "Target Support Files/Pods-pochakTests/Pods-pochakTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1162,6 +1164,7 @@
 				089E27B12C4E8B3D00828F4C /* Resources */,
 				EAF918522AA468FF0037C270 /* Network */,
 				EA1B0B682A49D23B00F86FBC /* Info.plist */,
+				46BA13352CBD551600C81729 /* SecretKeyInfo.plist */,
 				08D2B98C2C68C02D00BD7450 /* GoogleService-Info.plist */,
 				3750669E2C3BB1660036E264 /* pochak.entitlements */,
 				374261752C31C23800B67886 /* pochakDebug.entitlements */,
@@ -1482,6 +1485,7 @@
 				3766F4022C3706DC001DD239 /* BlockedUserTableViewCell.xib in Resources */,
 				083249762C2956A000A77C03 /* CustomAlertViewController.storyboard in Resources */,
 				0822A02E2CA196DF00F87E2C /* PostCollectionViewCell.xib in Resources */,
+				46BA13362CBD551600C81729 /* SecretKeyInfo.plist in Resources */,
 				08D2B98D2C68C02D00BD7450 /* GoogleService-Info.plist in Resources */,
 				EA99B63C2A5143A800EBA2AD /* CameraTab.storyboard in Resources */,
 				EAFB4B842A51478600E0F2FA /* HomeTab.storyboard in Resources */,
@@ -1542,7 +1546,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+			shellScript = "# 구글 로그인 키 설정\nINFO_PLIST_PATH=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nSECRET_KEY_PLIST_PATH=\"${PROJECT_DIR}/pochak/SecretKeyInfo.plist\"\n\nGID_CLIENT_ID=$(/usr/libexec/PlistBuddy -c \"Print :GIDClientID\" \"$SECRET_KEY_PLIST_PATH\")\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleURLTypes:0:CFBundleURLSchemes:0 com.googleusercontent.apps.${GID_CLIENT_ID}\" \"$INFO_PLIST_PATH\"\n\n/usr/libexec/PlistBuddy -c \"Set :GIDClientID ${GID_CLIENT_ID}.apps.googleusercontent.com\" \"$INFO_PLIST_PATH\"\n\necho \"GIDClientID and URL Scheme have been updated in Info.plist\"\n";
 		};
 		23F02C78EFBCD81179944B0A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
