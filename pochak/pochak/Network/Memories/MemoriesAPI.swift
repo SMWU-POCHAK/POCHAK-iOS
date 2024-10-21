@@ -33,7 +33,7 @@ extension MemoriesAPI: BaseAPI {
         case .getMemoriesSummary(let id):
             return "/v1/memories/\(id)"
         case .getPochakMemoryList(let id):
-            return "v2/memories/\(id)/pochak"
+            return "v1/memories/\(id)/pochak"
         case .getPochakedMemoryList(let id):
             return "v1/memories/\(id)/pochaked"
         case .getBondedMemoryList(let id):
@@ -78,7 +78,7 @@ struct MemoriesService {
             case .success(let data):
                 completion(.success(data))
             case .failure(let error):
-                print("=== getMemorySummary service error ===")
+                print("=== getMemoriesPochak service error ===")
                 print(error.localizedDescription)
                 completion(.failure(error))
             }
