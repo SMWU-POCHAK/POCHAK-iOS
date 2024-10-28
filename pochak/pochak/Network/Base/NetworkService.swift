@@ -74,9 +74,18 @@ class NetworkService: NetworkServable {
         responseType: APIResponse.Type,
         completion: @escaping (Result<APIResponse, NetworkError>) -> Void
     ) {
+        print("=======================")
         print("handleResponse switch문 밖 = \(response)")
+        print("=======================")
         switch response.result {
         case .success(let data):
+            let jsonDecoder = JSONDecoder()
+            do {
+                try print(jsonDecoder.decode(String.self, from: data))
+            }
+            catch {
+                
+            }
             let decodeResult: Result<APIResponse, NetworkError> = self.decode(responseType, from: data)
             completion(decodeResult)
         case .failure(let error):
