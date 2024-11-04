@@ -188,10 +188,17 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, 
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        print("Foreground, 메시지 수신")
+        print("====== Foreground, 메시지 수신 ======")
         let userInfo = notification.request.content.userInfo
         print("userInfo: \(userInfo)")
         completionHandler([.banner, .badge, .sound])
+    }
+    
+    /// Background에 있거나 앱이 종료됐을 때 알림 오는 설정
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("====== Background, 메시지 수신 ======")
+        let userInfo = response.notification.request.content.userInfo
+        print("userInfo: \(userInfo)")
     }
 }
 

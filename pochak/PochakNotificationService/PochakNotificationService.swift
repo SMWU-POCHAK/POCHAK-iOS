@@ -52,6 +52,8 @@ class PochakNotificationService: UNNotificationServiceExtension {
     
     /// didReceive에서 contentHandler가 호출되지 않고 특정 시간이 경과되면 호출되는 메소드
     override func serviceExtensionTimeWillExpire() {
+        print("content handler 안됨")
+        print("===service extension time will expire ===")
         // Called just before the extension will be terminated by the system.
         // Use this as an opportunity to deliver your "best attempt" at modified content, otherwise the original push payload will be used.
         if let contentHandler = contentHandler, let bestAttemptContent =  bestAttemptContent {
