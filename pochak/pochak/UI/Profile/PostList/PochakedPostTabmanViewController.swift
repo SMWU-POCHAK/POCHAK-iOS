@@ -10,9 +10,18 @@ import UIKit
 final class PochakedPostTabmanViewController: UIViewController {
     
     // MARK: - Properties
-    
     var receivedHandle: String?
     var imageArray: [ProfilePostList] = []
+    var needRefresh: Bool = false {
+        didSet {
+            if needRefresh {
+                if (!isLastPage && !isCurrentlyFetching) {
+                    print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
+                    setUpData()
+                }
+            }
+        }
+    }
     private let minimumLineSpacing: CGFloat = 9
     private let minimumInterItemSpacing: CGFloat = 8
     private var isLastPage: Bool = false
@@ -28,24 +37,10 @@ final class PochakedPostTabmanViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         currentFetchingPage = 0
-        
         setUpCollectionView()
-//        setUpRefreshControl()
         setUpData()
     }
-    
-    // MARK: - Actions
-    
-//    @objc private func refreshData(_ sender: Any) {
-//        print("refresh")
-//        imageArray = []
-//        currentFetchingPage = 0
-//        setUpData()
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-//            self.postCollectionView.refreshControl?.endRefreshing()
-//        }
-//    }
-    
+
     // MARK: - Functions
     
     private func setUpCollectionView() {
@@ -57,12 +52,7 @@ final class PochakedPostTabmanViewController: UIViewController {
         postCollectionView.isScrollEnabled = false
 
     }
-    
-//    private func setUpRefreshControl() {
-//        let refreshControl = UIRefreshControl()
-//        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
-//        postCollectionView.refreshControl = refreshControl
-//    }
+
     
     private func setUpData() {
         isCurrentlyFetching = true
@@ -82,7 +72,7 @@ final class PochakedPostTabmanViewController: UIViewController {
                     }
                     return
                 }
-                
+                                
                 let newPosts = data.result.postList
                 let startIndex = data.result.postList.count
                 print("startIndex : \(startIndex)")
@@ -103,6 +93,7 @@ final class PochakedPostTabmanViewController: UIViewController {
                         print(">>>>>>> PochakedPostDataManager is currently fethcing!!!!!!!")
                     }
                     self?.isCurrentlyFetching = false
+                    self?.needRefresh = false
                     self?.currentFetchingPage += 1;
                 }
             }
@@ -157,20 +148,5 @@ extension PochakedPostTabmanViewController : UICollectionViewDelegate, UICollect
             else { return }
         postVC.receivedPostId = imageArray[indexPath.item].postId
         self.navigationController?.pushViewController(postVC, animated: true)
-    }
-}
-
-extension PochakedPostTabmanViewController: UIScrollViewDelegate {
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (postCollectionView.contentOffset.y > (postCollectionView.contentSize.height - postCollectionView.bounds.size.height)){
-            if (!isLastPage && !isCurrentlyFetching) {
-                postCollectionView.isScrollEnabled = true
-                print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
-                isCurrentlyFetching = true
-                setUpData()
-                postCollectionView.isScrollEnabled = false
-            }
-        }
     }
 }

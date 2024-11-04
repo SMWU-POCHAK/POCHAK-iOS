@@ -25,6 +25,14 @@ final class OtherUserProfileViewController: UIViewController {
         let barButton = UIBarButtonItem(image: UIImage(named: "moreButtonIcon"), style: .plain, target: self, action: #selector(moreButtonPressed))
         return barButton
     }()
+    private let contentScrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.backgroundColor = UIColor(named: "gray01")
+        scrollView.showsVerticalScrollIndicator = false
+        
+        return scrollView
+    }()
     
     // MARK: - Views
     
@@ -155,16 +163,6 @@ final class OtherUserProfileViewController: UIViewController {
     
     // MARK: - Functions
     
-    private let contentScrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.backgroundColor = UIColor(named: "gray01")
-        scrollView.showsVerticalScrollIndicator = false
-
-        
-        return scrollView
-    }()
-    
     private func addSubview() {
         self.view.addSubview(contentScrollView)
         contentScrollView.addSubview(topUIView)
@@ -175,25 +173,24 @@ final class OtherUserProfileViewController: UIViewController {
         let scrollContentGuide = contentScrollView.contentLayoutGuide
         topUIView.translatesAutoresizingMaskIntoConstraints = false
         postListTabmanView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
-                contentScrollView.topAnchor.constraint(equalTo: view.topAnchor),
-                contentScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                contentScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                contentScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-                
-                topUIView.heightAnchor.constraint(equalTo: contentScrollView.heightAnchor),
-                
-//                topUIView.widthAnchor.constraint(equalTo: scrollContentGuide.widthAnchor),
-                topUIView.topAnchor.constraint(equalTo: scrollContentGuide.topAnchor, constant: -95),
-                topUIView.leadingAnchor.constraint(equalTo: scrollContentGuide.leadingAnchor),
-                topUIView.trailingAnchor.constraint(equalTo: scrollContentGuide.trailingAnchor),
-                topUIView.bottomAnchor.constraint(equalTo: scrollContentGuide.bottomAnchor),
-                
-                postListTabmanView.topAnchor.constraint(equalTo: self.followToggleBtn.bottomAnchor, constant: 5),
-                postListTabmanView.leadingAnchor.constraint(equalTo: scrollContentGuide.leadingAnchor),
-                postListTabmanView.trailingAnchor.constraint(equalTo: scrollContentGuide.trailingAnchor),
-                postListTabmanView.bottomAnchor.constraint(equalTo: scrollContentGuide.bottomAnchor),
+            contentScrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            contentScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            contentScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            contentScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            contentScrollView.heightAnchor.constraint(equalTo: scrollContentGuide.heightAnchor),
+
+//            topUIView.heightAnchor.constraint(equalTo: scrollContentGuide.heightAnchor),
+            topUIView.topAnchor.constraint(equalTo: scrollContentGuide.topAnchor, constant: -95),
+            topUIView.leadingAnchor.constraint(equalTo: scrollContentGuide.leadingAnchor),
+            topUIView.trailingAnchor.constraint(equalTo: scrollContentGuide.trailingAnchor),
+            topUIView.bottomAnchor.constraint(equalTo: scrollContentGuide.bottomAnchor),
+            
+            postListTabmanView.topAnchor.constraint(equalTo: self.followToggleBtn.bottomAnchor, constant: 5),
+            postListTabmanView.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor),
+            postListTabmanView.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor),
+            postListTabmanView.bottomAnchor.constraint(equalTo: topUIView.bottomAnchor),
         ])
     }
     
@@ -228,6 +225,8 @@ final class OtherUserProfileViewController: UIViewController {
         viewFollowingList()
 
         updateProfileBtn.layer.isHidden = true
+        
+        contentScrollView.delegate = self
     }
     
     private func viewFollowerList() { //  UITapGestureRecognizer 사용
@@ -376,16 +375,22 @@ extension OtherUserProfileViewController: SecondViewControllerDelegate {
 }
 
 
-//extension PochakedPostTabmanViewController: UIScrollViewDelegate {
-//    
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if (postCollectionView.contentOffset.y > (postCollectionView.contentSize.height - postCollectionView.bounds.size.height)){
-//            print("TRUE!!!!")
-//            if (!isLastPage && !isCurrentlyFetching) {
-//                print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
-//                isCurrentlyFetching = true
-//                setUpData()
-//            }
-//        }
-//    }
-//}
+extension OtherUserProfileViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (contentScrollView.contentOffset.y > (contentScrollView.contentSize.height - contentScrollView.frame.size.height)){
+            print("has hit the bottom")
+            guard let firstPostTabmanVC = self.storyboard?.instantiateViewController(withIdentifier: "FirstPostTabmanVC") as? PochakedPostTabmanViewController else {return}
+            firstPostTabmanVC.receivedHandle = receivedHandle
+            firstPostTabmanVC.needRefresh = true
+            setUpData()
+            contentScrollView.heightAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.heightAnchor).isActive = true
+        }
+    }
+}
+
+extension UIScrollView {
+   func updateContentView() {
+      contentSize.height = subviews.sorted(by: { $0.frame.maxY < $1.frame.maxY }).last?.frame.maxY ?? contentSize.height
+   }
+}

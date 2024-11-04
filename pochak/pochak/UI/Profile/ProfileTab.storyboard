@@ -1017,6 +1017,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="XJW-nH-6KV"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <size key="freeformSize" width="393" height="852"/>
                     <connections>
                         <outlet property="followToggleBtn" destination="5xB-q2-OTa" id="a9f-sc-W9N"/>
                         <outlet property="followerCount" destination="eGf-XG-16e" id="0Yb-kL-8Df"/>
