@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5QZ-aX-rLd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5QZ-aX-rLd">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -858,7 +858,7 @@
                                 <rect key="frame" x="116.66666666666669" y="0.0" width="160" height="852"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ORo-fh-fM5">
-                                        <rect key="frame" x="19.999999999999986" y="95.333333333333314" width="116.00000000000001" height="116"/>
+                                        <rect key="frame" x="19.999999999999986" y="170" width="116.00000000000001" height="116"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="w1h-9D-Wgk">
                                                 <rect key="frame" x="3" y="3" width="110" height="110"/>
@@ -891,7 +891,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tv1-2d-9jt">
-                                        <rect key="frame" x="19.999999999999986" y="231.33333333333337" width="120.00000000000001" height="60"/>
+                                        <rect key="frame" x="19.999999999999986" y="306" width="120.00000000000001" height="60"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="m7q-qn-G6D">
                                                 <rect key="frame" x="41.666666666666686" y="10.666666666666671" width="36.333333333333343" height="39"/>
@@ -958,19 +958,19 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4R-1F-ADt">
-                                        <rect key="frame" x="156" y="110.33333333333334" width="4" height="19.333333333333343"/>
+                                        <rect key="frame" x="156" y="185" width="4" height="19.333333333333343"/>
                                         <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="16"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text=" " lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wre-Lz-Jv2">
-                                        <rect key="frame" x="156" y="139.66666666666666" width="4" height="17"/>
+                                        <rect key="frame" x="156" y="214.33333333333334" width="4" height="17"/>
                                         <fontDescription key="fontDescription" name="Pretendard-Regular" family="Pretendard" pointSize="14"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5xB-q2-OTa">
-                                        <rect key="frame" x="19.999999999999986" y="300.33333333333331" width="120.00000000000001" height="40"/>
+                                        <rect key="frame" x="19.999999999999986" y="375" width="120.00000000000001" height="40"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="SL1-aB-FC4"/>
@@ -1017,6 +1017,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="XJW-nH-6KV"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <size key="freeformSize" width="393" height="852"/>
                     <connections>
                         <outlet property="followToggleBtn" destination="5xB-q2-OTa" id="a9f-sc-W9N"/>
                         <outlet property="followerCount" destination="eGf-XG-16e" id="0Yb-kL-8Df"/>

@@ -103,8 +103,7 @@ final class MyProfileTabViewController: UIViewController {
     private let contentScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-//        scrollView.backgroundColor = UIColor(named: "gray01")
-        scrollView.backgroundColor = .red
+        scrollView.backgroundColor = UIColor(named: "gray01")
         scrollView.showsVerticalScrollIndicator = false
         
         return scrollView
@@ -113,25 +112,24 @@ final class MyProfileTabViewController: UIViewController {
     private func addSubview() {
         self.view.addSubview(contentScrollView)
         contentScrollView.addSubview(topUIView)
-        contentScrollView.addSubview(postListTabmanView)
+        topUIView.addSubview(postListTabmanView)
+        
     }
     
     private func setUpUIConstraints() {
+        topUIView.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
                 contentScrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
                 contentScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
                 contentScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
                 contentScrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-                contentScrollView.heightAnchor.constraint(equalTo: self.view.heightAnchor),
-                topUIView.topAnchor.constraint(equalTo: contentScrollView.topAnchor, constant: 15),
+                topUIView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
                 topUIView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
                 topUIView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
                 topUIView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
+                topUIView.heightAnchor.constraint(equalTo: contentScrollView.heightAnchor),
         ])
-        // 세로 방향의 스크롤뷰
-        let constraint = topUIView.widthAnchor.constraint(equalTo: contentScrollView.widthAnchor)
-        constraint.priority = UILayoutPriority(250)
-        constraint.isActive = true
     }
     
     private func setUpRefreshControl() {

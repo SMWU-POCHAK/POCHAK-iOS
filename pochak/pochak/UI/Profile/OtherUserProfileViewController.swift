@@ -66,7 +66,7 @@ final class OtherUserProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // VC가 나타날 때 네비게이션바 숨김
+//        // VC가 나타날 때 네비게이션바 숨김
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.backgroundColor = UIColor.clear
         setUpData()
@@ -158,8 +158,7 @@ final class OtherUserProfileViewController: UIViewController {
     private let contentScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-//        scrollView.backgroundColor = UIColor(named: "gray01")
-        scrollView.backgroundColor = .red
+        scrollView.backgroundColor = UIColor(named: "gray01")
         scrollView.showsVerticalScrollIndicator = false
         
         return scrollView
@@ -168,26 +167,23 @@ final class OtherUserProfileViewController: UIViewController {
     private func addSubview() {
         self.view.addSubview(contentScrollView)
         contentScrollView.addSubview(topUIView)
-        contentScrollView.addSubview(postListTabmanView)
+        topUIView.addSubview(postListTabmanView)
     }
     
     private func setUpUIConstraints() {
+        topUIView.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
                 contentScrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
                 contentScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
                 contentScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
                 contentScrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-                contentScrollView.heightAnchor.constraint(equalTo: self.view.heightAnchor),
-                topUIView.topAnchor.constraint(equalTo: contentScrollView.topAnchor, constant: 60),
+                topUIView.topAnchor.constraint(equalTo: contentScrollView.topAnchor, constant: -90),
                 topUIView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
                 topUIView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
                 topUIView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
-                topUIView.widthAnchor.constraint(equalTo: contentScrollView.widthAnchor), // 세로 방향의 스크롤뷰
+                topUIView.heightAnchor.constraint(equalTo: contentScrollView.heightAnchor),
         ])
-        // 세로 방향의 스크롤뷰
-//        let constraint = topUIView.widthAnchor.constraint(equalTo: contentScrollView.widthAnchor)
-//        constraint.priority = UILayoutPriority(250)
-//        constraint.isActive = true
     }
     
     private func setUpRefreshControl() {
@@ -202,10 +198,11 @@ final class OtherUserProfileViewController: UIViewController {
     }
     
     private func setUpNavigationBar() {
-        self.navigationController?.isNavigationBarHidden = false
-        self.navigationController?.navigationBar.backgroundColor = UIColor.clear
-        self.navigationItem.title = "@" + (receivedHandle ?? "handle not found")
-        self.navigationItem.rightBarButtonItem = moreButton
+//        navigationController?.hidesBarsOnSwipe = true
+        navigationController?.isNavigationBarHidden = false
+        navigationController?.navigationBar.backgroundColor = UIColor.clear
+        navigationItem.title = "@" + (receivedHandle ?? "handle not found")
+        navigationItem.rightBarButtonItem = moreButton
     }
     
     private func setUpViewController() {

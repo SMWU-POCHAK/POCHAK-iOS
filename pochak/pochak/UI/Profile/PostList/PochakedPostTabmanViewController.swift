@@ -32,6 +32,8 @@ final class PochakedPostTabmanViewController: UIViewController {
         setUpCollectionView()
 //        setUpRefreshControl()
         setUpData()
+        postCollectionView.isScrollEnabled = false
+
     }
     
     // MARK: - Actions
@@ -156,15 +158,15 @@ extension PochakedPostTabmanViewController : UICollectionViewDelegate, UICollect
      collectionView.setContentOffset(offset, animated: true)*/
 }
 
-extension PochakedPostTabmanViewController: UIScrollViewDelegate {
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (postCollectionView.contentOffset.y > (postCollectionView.contentSize.height - postCollectionView.bounds.size.height)){
-            if (!isLastPage && !isCurrentlyFetching) {
-                print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
-                isCurrentlyFetching = true
-                setUpData()
-            }
-        }
-    }
-}
+//extension PochakedPostTabmanViewController: UIScrollViewDelegate {
+//    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if (postCollectionView.contentOffset.y > (postCollectionView.contentSize.height - postCollectionView.bounds.size.height)){
+//            if (!isLastPage && !isCurrentlyFetching) {
+//                print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
+//                isCurrentlyFetching = true
+//                setUpData()
+//            }
+//        }
+//    }
+//}
