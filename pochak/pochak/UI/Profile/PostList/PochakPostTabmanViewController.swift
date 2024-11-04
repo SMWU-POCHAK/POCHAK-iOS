@@ -13,6 +13,8 @@ final class PochakPostTabmanViewController: UIViewController {
     
     var receivedHandle: String?
     var imageArray: [ProfilePostList] = []
+    private let minimumLineSpacing: CGFloat = 9
+    private let minimumInterItemSpacing: CGFloat = 8
     private var isLastPage: Bool = false
     private var isCurrentlyFetching: Bool = false
     private var currentFetchingPage: Int = 0
@@ -53,6 +55,7 @@ final class PochakPostTabmanViewController: UIViewController {
         postCollectionView.register(
             UINib(nibName: ProfilePostCollectionViewCell.identifier, bundle: nil),
             forCellWithReuseIdentifier: ProfilePostCollectionViewCell.identifier)
+        postCollectionView.isScrollEnabled = false
     }
     
     private func setUpRefreshControl() {
@@ -124,15 +127,19 @@ extension PochakPostTabmanViewController : UICollectionViewDelegate, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt: Int) -> CGFloat {
-        return 5
+        return minimumLineSpacing
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 5
+        return minimumInterItemSpacing
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = CGFloat((collectionView.frame.width - 10) / 3)
+        let width = CGFloat((collectionView.frame.width - 20 * 2 - minimumInterItemSpacing * 2) / 3)
         return CGSize(width: width, height: width * 4 / 3)
     }
     
@@ -146,15 +153,15 @@ extension PochakPostTabmanViewController : UICollectionViewDelegate, UICollectio
     }
 }
 
-//extension PochakPostTabmanViewController: UIScrollViewDelegate {
-//    
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if (postCollectionView.contentOffset.y > (postCollectionView.contentSize.height - postCollectionView.bounds.size.height)){
-//            if (!isLastPage && !isCurrentlyFetching) {
-//                print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
-//                isCurrentlyFetching = true
-//                setUpData()
-//            }
-//        }
-//    }
-//}
+extension PochakPostTabmanViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (postCollectionView.contentOffset.y > (postCollectionView.contentSize.height - postCollectionView.bounds.size.height)){
+            if (!isLastPage && !isCurrentlyFetching) {
+                print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
+                isCurrentlyFetching = true
+                setUpData()
+            }
+        }
+    }
+}

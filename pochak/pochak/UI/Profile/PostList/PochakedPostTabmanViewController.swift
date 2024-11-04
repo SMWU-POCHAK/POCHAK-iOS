@@ -32,21 +32,19 @@ final class PochakedPostTabmanViewController: UIViewController {
         setUpCollectionView()
 //        setUpRefreshControl()
         setUpData()
-        postCollectionView.isScrollEnabled = false
-
     }
     
     // MARK: - Actions
     
-    @objc private func refreshData(_ sender: Any) {
-        print("refresh")
-        imageArray = []
-        currentFetchingPage = 0
-        setUpData()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-            self.postCollectionView.refreshControl?.endRefreshing()
-        }
-    }
+//    @objc private func refreshData(_ sender: Any) {
+//        print("refresh")
+//        imageArray = []
+//        currentFetchingPage = 0
+//        setUpData()
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+//            self.postCollectionView.refreshControl?.endRefreshing()
+//        }
+//    }
     
     // MARK: - Functions
     
@@ -56,13 +54,15 @@ final class PochakedPostTabmanViewController: UIViewController {
         postCollectionView.register(
             UINib(nibName: ProfilePostCollectionViewCell.identifier, bundle: nil),
             forCellWithReuseIdentifier: ProfilePostCollectionViewCell.identifier)
+        postCollectionView.isScrollEnabled = false
+
     }
     
-    private func setUpRefreshControl() {
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
-        postCollectionView.refreshControl = refreshControl
-    }
+//    private func setUpRefreshControl() {
+//        let refreshControl = UIRefreshControl()
+//        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+//        postCollectionView.refreshControl = refreshControl
+//    }
     
     private func setUpData() {
         isCurrentlyFetching = true
@@ -141,8 +141,12 @@ extension PochakedPostTabmanViewController : UICollectionViewDelegate, UICollect
         return minimumInterItemSpacing
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = CGFloat((collectionView.frame.width - (20 * 2) - (minimumInterItemSpacing * 2)) / 3)
+        let width = CGFloat((collectionView.frame.width - 20 * 2 - minimumInterItemSpacing * 2) / 3)
         return CGSize(width: width, height: width * 4 / 3)
     }
     
@@ -154,19 +158,19 @@ extension PochakedPostTabmanViewController : UICollectionViewDelegate, UICollect
         postVC.receivedPostId = imageArray[indexPath.item].postId
         self.navigationController?.pushViewController(postVC, animated: true)
     }
-    /*let offset = CGPoint(x: 0, y: layout.frame.minY - headerHeight)
-     collectionView.setContentOffset(offset, animated: true)*/
 }
 
-//extension PochakedPostTabmanViewController: UIScrollViewDelegate {
-//    
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if (postCollectionView.contentOffset.y > (postCollectionView.contentSize.height - postCollectionView.bounds.size.height)){
-//            if (!isLastPage && !isCurrentlyFetching) {
-//                print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
-//                isCurrentlyFetching = true
-//                setUpData()
-//            }
-//        }
-//    }
-//}
+extension PochakedPostTabmanViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (postCollectionView.contentOffset.y > (postCollectionView.contentSize.height - postCollectionView.bounds.size.height)){
+            if (!isLastPage && !isCurrentlyFetching) {
+                postCollectionView.isScrollEnabled = true
+                print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
+                isCurrentlyFetching = true
+                setUpData()
+                postCollectionView.isScrollEnabled = false
+            }
+        }
+    }
+}

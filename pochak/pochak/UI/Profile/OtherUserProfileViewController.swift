@@ -160,6 +160,7 @@ final class OtherUserProfileViewController: UIViewController {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.backgroundColor = UIColor(named: "gray01")
         scrollView.showsVerticalScrollIndicator = false
+
         
         return scrollView
     }()
@@ -171,23 +172,28 @@ final class OtherUserProfileViewController: UIViewController {
     }
     
     private func setUpUIConstraints() {
+        let scrollContentGuide = contentScrollView.contentLayoutGuide
         topUIView.translatesAutoresizingMaskIntoConstraints = false
         postListTabmanView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-                contentScrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
-                contentScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-                contentScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-                contentScrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-                topUIView.topAnchor.constraint(equalTo: contentScrollView.topAnchor, constant: -90),
-                topUIView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
-                topUIView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
-                topUIView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
+                contentScrollView.topAnchor.constraint(equalTo: view.topAnchor),
+                contentScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                contentScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                contentScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                
                 topUIView.heightAnchor.constraint(equalTo: contentScrollView.heightAnchor),
+                
+//                topUIView.widthAnchor.constraint(equalTo: scrollContentGuide.widthAnchor),
+                topUIView.topAnchor.constraint(equalTo: scrollContentGuide.topAnchor, constant: -95),
+                topUIView.leadingAnchor.constraint(equalTo: scrollContentGuide.leadingAnchor),
+                topUIView.trailingAnchor.constraint(equalTo: scrollContentGuide.trailingAnchor),
+                topUIView.bottomAnchor.constraint(equalTo: scrollContentGuide.bottomAnchor),
+                
                 postListTabmanView.topAnchor.constraint(equalTo: self.followToggleBtn.bottomAnchor, constant: 5),
-                postListTabmanView.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor),
-                postListTabmanView.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor),
-                postListTabmanView.bottomAnchor.constraint(equalTo: topUIView.bottomAnchor),
+                postListTabmanView.leadingAnchor.constraint(equalTo: scrollContentGuide.leadingAnchor),
+                postListTabmanView.trailingAnchor.constraint(equalTo: scrollContentGuide.trailingAnchor),
+                postListTabmanView.bottomAnchor.constraint(equalTo: scrollContentGuide.bottomAnchor),
         ])
     }
     
@@ -368,3 +374,18 @@ extension OtherUserProfileViewController: SecondViewControllerDelegate {
         self.navigationController?.popViewController(animated: true)
     }
 }
+
+
+//extension PochakedPostTabmanViewController: UIScrollViewDelegate {
+//    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if (postCollectionView.contentOffset.y > (postCollectionView.contentSize.height - postCollectionView.bounds.size.height)){
+//            print("TRUE!!!!")
+//            if (!isLastPage && !isCurrentlyFetching) {
+//                print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
+//                isCurrentlyFetching = true
+//                setUpData()
+//            }
+//        }
+//    }
+//}
