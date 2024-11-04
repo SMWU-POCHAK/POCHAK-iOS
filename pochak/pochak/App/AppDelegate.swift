@@ -10,6 +10,7 @@ import GoogleSignIn
 import RealmSwift
 import FirebaseCore
 import FirebaseMessaging
+import UserNotifications
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -184,15 +185,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
     
     /// Foreground(앱 켜진 상태) 에서 알림 오는 설정
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification,withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, 
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         print("Foreground, 메시지 수신")
+        let userInfo = notification.request.content.userInfo
+        print("userInfo: \(userInfo)")
         completionHandler([.banner, .badge, .sound])
     }
-
-//    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse,withCompletionHandler completionHandler: @escaping () -> Void) {
-//        
-//        completionHandler()
-//    }
 }
 
 // MARK: - Extension: MessagingDelegate (for Firebase Messaging)
