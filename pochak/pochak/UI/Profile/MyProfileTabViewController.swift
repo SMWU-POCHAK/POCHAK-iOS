@@ -124,7 +124,7 @@ final class MyProfileTabViewController: UIViewController {
                 contentScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
                 contentScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
                 contentScrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-                topUIView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
+                topUIView.topAnchor.constraint(equalTo: contentScrollView.topAnchor, constant: -60),
                 topUIView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
                 topUIView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
                 topUIView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
