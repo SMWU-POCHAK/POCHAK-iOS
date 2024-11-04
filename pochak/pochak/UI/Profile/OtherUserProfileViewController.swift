@@ -172,6 +172,7 @@ final class OtherUserProfileViewController: UIViewController {
     
     private func setUpUIConstraints() {
         topUIView.translatesAutoresizingMaskIntoConstraints = false
+        postListTabmanView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
                 contentScrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -183,6 +184,10 @@ final class OtherUserProfileViewController: UIViewController {
                 topUIView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
                 topUIView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
                 topUIView.heightAnchor.constraint(equalTo: contentScrollView.heightAnchor),
+                postListTabmanView.topAnchor.constraint(equalTo: self.followToggleBtn.bottomAnchor, constant: 5),
+                postListTabmanView.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor),
+                postListTabmanView.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor),
+                postListTabmanView.bottomAnchor.constraint(equalTo: topUIView.bottomAnchor),
         ])
     }
     
@@ -198,8 +203,8 @@ final class OtherUserProfileViewController: UIViewController {
     }
     
     private func setUpNavigationBar() {
-//        navigationController?.hidesBarsOnSwipe = true
         navigationController?.isNavigationBarHidden = false
+        navigationController?.hidesBarsOnSwipe = true
         navigationController?.navigationBar.backgroundColor = UIColor.clear
         navigationItem.title = "@" + (receivedHandle ?? "handle not found")
         navigationItem.rightBarButtonItem = moreButton
@@ -215,13 +220,7 @@ final class OtherUserProfileViewController: UIViewController {
         
         viewFollowerList()
         viewFollowingList()
-        
-        postListTabmanView.translatesAutoresizingMaskIntoConstraints = false
-        postListTabmanView.topAnchor.constraint(equalTo: self.followToggleBtn.bottomAnchor, constant: 5).isActive = true
-        postListTabmanView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
-        postListTabmanView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
-        postListTabmanView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
-        
+
         updateProfileBtn.layer.isHidden = true
     }
     

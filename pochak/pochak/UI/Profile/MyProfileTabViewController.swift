@@ -118,17 +118,22 @@ final class MyProfileTabViewController: UIViewController {
     
     private func setUpUIConstraints() {
         topUIView.translatesAutoresizingMaskIntoConstraints = false
+        postListTabmanView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
                 contentScrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
                 contentScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
                 contentScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
                 contentScrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-                topUIView.topAnchor.constraint(equalTo: contentScrollView.topAnchor, constant: -60),
+                topUIView.topAnchor.constraint(equalTo: contentScrollView.topAnchor, constant: -50),
                 topUIView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
                 topUIView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
                 topUIView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
                 topUIView.heightAnchor.constraint(equalTo: contentScrollView.heightAnchor),
+                postListTabmanView.topAnchor.constraint(equalTo: self.whiteBackground1.bottomAnchor, constant: 5),
+                postListTabmanView.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor),
+                postListTabmanView.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor),
+                postListTabmanView.bottomAnchor.constraint(equalTo: topUIView.bottomAnchor),
         ])
     }
     
@@ -153,12 +158,6 @@ final class MyProfileTabViewController: UIViewController {
         let backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
         backBarButtonItem.tintColor = .black
         self.navigationItem.backBarButtonItem = backBarButtonItem
-        
-        postListTabmanView.translatesAutoresizingMaskIntoConstraints = false
-        postListTabmanView.topAnchor.constraint(equalTo: self.whiteBackground1.bottomAnchor, constant: 5).isActive = true
-        postListTabmanView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
-        postListTabmanView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
-        postListTabmanView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
     }
     
     private func viewFollowerList() { /*  UITapGestureRecognizer 사용 */
