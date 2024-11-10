@@ -12,7 +12,7 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
     
     // MARK: - Properties
     
-    var didAgreeForAll: Bool = false {
+    private var didAgreeForAll: Bool = false {
         didSet {
             if didAgreeForAll {
                 agreeToAllButton.isChecked = true
@@ -25,17 +25,18 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
         }
     }
     
-    var didAgreeForPrivacyPolicy: Bool = false {
+    private var didAgreeForPrivacyPolicy: Bool = false {
         didSet {
             privacyPolicyAgreeButton.isChecked = didAgreeForPrivacyPolicy
         }
     }
 
-    var didAgreeForTermsOfUse: Bool = false {
+    private var didAgreeForTermsOfUse: Bool = false {
         didSet {
             termsOfUseAgreeButton.isChecked = didAgreeForTermsOfUse
         }
     }
+    
     var delegate: SendDelegate?
     
     // MARK: - Views
