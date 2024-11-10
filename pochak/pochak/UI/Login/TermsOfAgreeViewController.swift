@@ -12,12 +12,30 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
     
     // MARK: - Properties
     
-    var didAgreeForPrivacyPolicy: Bool = false {
+    var didAgreeForAll: Bool = false {
         didSet {
-            
+            if didAgreeForAll {
+                agreeToAllButton.isChecked = true
+                nextButton.isActive = true
+            }
+            else {
+                agreeToAllButton.isChecked = false
+                nextButton.isActive = false
+            }
         }
     }
-    var didAgreeForTermsOfUse: Bool = false
+    
+    var didAgreeForPrivacyPolicy: Bool = false {
+        didSet {
+            privacyPolicyAgreeButton.isChecked = didAgreeForPrivacyPolicy
+        }
+    }
+
+    var didAgreeForTermsOfUse: Bool = false {
+        didSet {
+            termsOfUseAgreeButton.isChecked = didAgreeForTermsOfUse
+        }
+    }
     var delegate: SendDelegate?
     
     // MARK: - Views
@@ -157,10 +175,9 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
     
     @objc private func termsOfUseAgreeButtonDidTap() {
         print("이용약관 선택됨")
-        print(termsOfUseAgreeButton.isSelected)
         termsOfUseAgreeButton.isChecked.toggle()
-        
-        print(termsOfUseAgreeButton.isSelected)
+        didAgreeForTermsOfUse = termsOfUseAgreeButton.isChecked
+        checkEachAgreeStatus()
     }
     
     @IBAction func pressAgreeForPrivacyPolicy(_ sender: Any) {
@@ -180,10 +197,9 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
     
     @objc private func privacyPolicyAgreeButtonDidTap() {
         print("개인정보 동의 선택됨")
-        print(privacyPolicyAgreeButton.isSelected)
         privacyPolicyAgreeButton.isChecked.toggle()
-        
-        print(privacyPolicyAgreeButton.isSelected)
+        didAgreeForPrivacyPolicy = privacyPolicyAgreeButton.isChecked
+        checkEachAgreeStatus()
     }
     
     @IBAction func pressAgreeForTermsOfUSe(_ sender: Any) {
@@ -238,10 +254,9 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
     
     @objc private func agreeToAllButtonDidTap() {
         print("전체 동의 눌림")
-        print(agreeToAllButton.isSelected)
         agreeToAllButton.isChecked.toggle()
-        
-        print(agreeToAllButton.isSelected)
+        didAgreeForAll = agreeToAllButton.isChecked
+        changeAllAgreeStatus()
     }
     
     // MARK: - Layout
@@ -411,6 +426,15 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
         )
 
         label.attributedText = mutableString
+    }
+    
+    private func changeAllAgreeStatus() {
+        didAgreeForTermsOfUse = didAgreeForAll
+        didAgreeForPrivacyPolicy = didAgreeForAll
+    }
+    
+    private func checkEachAgreeStatus() {
+        didAgreeForAll = didAgreeForTermsOfUse && didAgreeForPrivacyPolicy
     }
 }
 
