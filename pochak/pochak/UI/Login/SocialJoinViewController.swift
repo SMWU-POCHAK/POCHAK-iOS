@@ -119,7 +119,7 @@ class SocialJoinViewController: UIViewController, SendDelegate {
     
     private func changeViewControllerAccordingToisNewMemeberStateForGoogle(_ isNewMember : Bool, _ resultDataForGoogle : GoogleLoginModel){
         if isNewMember == true {
-            guard let termsOfAgreeVC = self.storyboard?.instantiateViewController(withIdentifier: "TermsOfAgreeVC") as? TermsOfAgreeViewController else {return}
+            let termsOfAgreeVC = TermsOfAgreeViewController()
             termsOfAgreeVC.modalPresentationStyle = .overCurrentContext    //  투명도가 있으면 투명도에 맞춰서 나오게 해주는 코드(뒤에있는 배경이 보일 수 있게)
             termsOfAgreeVC.delegate = self
             self.present(termsOfAgreeVC, animated: false, completion: nil)
@@ -144,7 +144,7 @@ class SocialJoinViewController: UIViewController, SendDelegate {
         if isNewMember == true {
             print("inside changeVCForApple")
             // 프로필 설정 페이지로 이동
-            guard let termsOfAgreeVC = self.storyboard?.instantiateViewController(withIdentifier: "TermsOfAgreeVC") as? TermsOfAgreeViewController else {return}
+            let termsOfAgreeVC = TermsOfAgreeViewController()
             termsOfAgreeVC.modalPresentationStyle = .overCurrentContext    //  투명도가 있으면 투명도에 맞춰서 나오게 해주는 코드(뒤에있는 배경이 보일 수 있게)
             termsOfAgreeVC.delegate = self
             self.present(termsOfAgreeVC, animated: false, completion: nil)
