@@ -103,6 +103,7 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
     private let nextButton: NextButton = {
         let button = NextButton()
         button.isActive = false
+        button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -257,6 +258,13 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
         agreeToAllButton.isChecked.toggle()
         didAgreeForAll = agreeToAllButton.isChecked
         changeAllAgreeStatus()
+    }
+    
+    @objc private func nextButtonDidTap() {
+        if didAgreeForAll {
+            self.dismiss(animated: true)
+            delegate?.sendAgreed(agree: true)
+        }
     }
     
     // MARK: - Layout
