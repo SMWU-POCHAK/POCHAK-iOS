@@ -2,7 +2,7 @@
 name: Bug Report
 about: 발생한 버그를 이슈에 등록한다.
 title: "[Fix]"
-labels: ''
+labels: "\U0001F41E bug"
 assignees: ''
 
 ---
