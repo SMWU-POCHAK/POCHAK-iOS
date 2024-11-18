@@ -8,7 +8,7 @@
 import UserNotifications
 import FirebaseMessaging
 
-class PochakNotificationService: UNNotificationServiceExtension {
+class NotificationService: UNNotificationServiceExtension {
 
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?

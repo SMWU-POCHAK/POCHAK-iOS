@@ -15,7 +15,7 @@
 		081228CB2A699B5A00DFA094 /* LikedPeopleListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 081228C92A699B5A00DFA094 /* LikedPeopleListTableViewCell.xib */; };
 		0820B1902A63A18100604DA8 /* ReplyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0820B18E2A63A18100604DA8 /* ReplyTableViewCell.swift */; };
 		0820B1912A63A18100604DA8 /* ReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0820B18F2A63A18100604DA8 /* ReplyTableViewCell.xib */; };
-		08224C122CCFBDF8002DA825 /* PochakNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08224C112CCFBDF8002DA825 /* PochakNotificationService.swift */; };
+		08224C122CCFBDF8002DA825 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08224C112CCFBDF8002DA825 /* NotificationService.swift */; };
 		08224C162CCFBDF8002DA825 /* PochakNotificationService.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 08224C0F2CCFBDF7002DA825 /* PochakNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0822A02D2CA196DF00F87E2C /* PostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0822A0232CA196DF00F87E2C /* PostCollectionViewCell.swift */; };
 		0822A02E2CA196DF00F87E2C /* PostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0822A0242CA196DF00F87E2C /* PostCollectionViewCell.xib */; };
@@ -295,7 +295,7 @@
 		0820B18E2A63A18100604DA8 /* ReplyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyTableViewCell.swift; sourceTree = "<group>"; };
 		0820B18F2A63A18100604DA8 /* ReplyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReplyTableViewCell.xib; sourceTree = "<group>"; };
 		08224C0F2CCFBDF7002DA825 /* PochakNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PochakNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		08224C112CCFBDF8002DA825 /* PochakNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakNotificationService.swift; sourceTree = "<group>"; };
+		08224C112CCFBDF8002DA825 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		08224C132CCFBDF8002DA825 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0822A0232CA196DF00F87E2C /* PostCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCollectionViewCell.swift; sourceTree = "<group>"; };
 		0822A0242CA196DF00F87E2C /* PostCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -579,7 +579,7 @@
 		08224C102CCFBDF7002DA825 /* PochakNotificationService */ = {
 			isa = PBXGroup;
 			children = (
-				08224C112CCFBDF8002DA825 /* PochakNotificationService.swift */,
+				08224C112CCFBDF8002DA825 /* NotificationService.swift */,
 				08224C132CCFBDF8002DA825 /* Info.plist */,
 			);
 			path = PochakNotificationService;
@@ -1704,7 +1704,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08224C122CCFBDF8002DA825 /* PochakNotificationService.swift in Sources */,
+				08224C122CCFBDF8002DA825 /* NotificationService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
