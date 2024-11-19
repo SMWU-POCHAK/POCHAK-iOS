@@ -71,6 +71,8 @@
 		0844D7F42BF21A80001154AC /* CancelViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0844D7F22BF21A80001154AC /* CancelViewCell.xib */; };
 		084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */; };
 		084AF4C82A5D831100C6454A /* HomeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */; };
+		086BF1FA2CEC99D800735BB4 /* PushNotificationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF1F92CEC99D800735BB4 /* PushNotificationRequest.swift */; };
+		086BF1FC2CEC9A3100735BB4 /* PushNotificationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF1FB2CEC9A3100735BB4 /* PushNotificationResponse.swift */; };
 		0876E23E2C274256008DE88F /* NoPostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */; };
 		0876E23F2C274256008DE88F /* NoPostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */; };
 		0889D1382C5CB69F00206C86 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0889D1372C5CB69F00206C86 /* String+.swift */; };
@@ -350,6 +352,8 @@
 		0844D7F22BF21A80001154AC /* CancelViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CancelViewCell.xib; sourceTree = "<group>"; };
 		084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCollectionViewCell.xib; sourceTree = "<group>"; };
+		086BF1F92CEC99D800735BB4 /* PushNotificationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationRequest.swift; sourceTree = "<group>"; };
+		086BF1FB2CEC9A3100735BB4 /* PushNotificationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationResponse.swift; sourceTree = "<group>"; };
 		0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoPostCollectionViewCell.swift; sourceTree = "<group>"; };
 		0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoPostCollectionViewCell.xib; sourceTree = "<group>"; };
 		0889D1372C5CB69F00206C86 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
@@ -802,6 +806,15 @@
 			path = cell;
 			sourceTree = "<group>";
 		};
+		086BF1F82CEC99CB00735BB4 /* PushNotification */ = {
+			isa = PBXGroup;
+			children = (
+				086BF1F92CEC99D800735BB4 /* PushNotificationRequest.swift */,
+				086BF1FB2CEC9A3100735BB4 /* PushNotificationResponse.swift */,
+			);
+			path = PushNotification;
+			sourceTree = "<group>";
+		};
 		089C757A2A51713C003AAB94 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -1206,6 +1219,7 @@
 			children = (
 				374E462E2CAAC3CB008AE361 /* Authentication */,
 				376EA12A2CAAAE3600FEFB63 /* Profile */,
+				086BF1F82CEC99CB00735BB4 /* PushNotification */,
 				0822A05A2CA1983C00F87E2C /* Post */,
 				0822A0552CA1983C00F87E2C /* Search */,
 				0822A0582CA1983C00F87E2C /* User */,
@@ -1785,6 +1799,7 @@
 				373815162A89E6D30032066A /* SocialJoinViewController.swift in Sources */,
 				EA96D0542C8F192000D80562 /* TagApproveRequest.swift in Sources */,
 				3766F40A2C370CF5001DD239 /* BlockedUserViewController.swift in Sources */,
+				086BF1FC2CEC9A3100735BB4 /* PushNotificationResponse.swift in Sources */,
 				374261782C31C6ED00B67886 /* AppleLoginDataManager.swift in Sources */,
 				0844D7EB2BF218A5001154AC /* ReportViewCell.swift in Sources */,
 				374E46472CAACE4C008AE361 /* BlockListRequest.swift in Sources */,
@@ -1817,6 +1832,7 @@
 				3759CF312CAAE4C600408A4E /* DeleteFollowerRequest.swift in Sources */,
 				0876E23E2C274256008DE88F /* NoPostCollectionViewCell.swift in Sources */,
 				EA96D0502C8F15E000D80562 /* TagPreviewAPI.swift in Sources */,
+				086BF1FA2CEC99D800735BB4 /* PushNotificationRequest.swift in Sources */,
 				0822A0482CA197E700F87E2C /* PostDeleteAPI.swift in Sources */,
 				08C02EF62BF3945000627C21 /* UIFont+.swift in Sources */,
 				0822A0492CA197E700F87E2C /* PostDetailAPI.swift in Sources */,
