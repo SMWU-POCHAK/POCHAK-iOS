@@ -75,6 +75,7 @@
 		086BF1FC2CEC9A3100735BB4 /* PushNotificationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF1FB2CEC9A3100735BB4 /* PushNotificationResponse.swift */; };
 		086BF1FE2CEC9B1100735BB4 /* PushNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF1FD2CEC9B1100735BB4 /* PushNotificationService.swift */; };
 		086BF2012CEC9B7600735BB4 /* TokenRegistrationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF2002CEC9B7600735BB4 /* TokenRegistrationAPI.swift */; };
+		086BF2042CEC9D7800735BB4 /* FCMTokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF2032CEC9D7800735BB4 /* FCMTokenManager.swift */; };
 		0876E23E2C274256008DE88F /* NoPostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */; };
 		0876E23F2C274256008DE88F /* NoPostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */; };
 		0889D1382C5CB69F00206C86 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0889D1372C5CB69F00206C86 /* String+.swift */; };
@@ -358,6 +359,7 @@
 		086BF1FB2CEC9A3100735BB4 /* PushNotificationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationResponse.swift; sourceTree = "<group>"; };
 		086BF1FD2CEC9B1100735BB4 /* PushNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationService.swift; sourceTree = "<group>"; };
 		086BF2002CEC9B7600735BB4 /* TokenRegistrationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRegistrationAPI.swift; sourceTree = "<group>"; };
+		086BF2032CEC9D7800735BB4 /* FCMTokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMTokenManager.swift; sourceTree = "<group>"; };
 		0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoPostCollectionViewCell.swift; sourceTree = "<group>"; };
 		0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoPostCollectionViewCell.xib; sourceTree = "<group>"; };
 		0889D1372C5CB69F00206C86 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
@@ -827,6 +829,14 @@
 			path = PushNotification;
 			sourceTree = "<group>";
 		};
+		086BF2022CEC9D5A00735BB4 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				086BF2032CEC9D7800735BB4 /* FCMTokenManager.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		089C757A2A51713C003AAB94 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -855,6 +865,7 @@
 		089E27B42C4E8BCD00828F4C /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				086BF2022CEC9D5A00735BB4 /* Helper */,
 				089E27B52C4E8C1E00828F4C /* Types */,
 				08C02EF32BF3942300627C21 /* Extensions */,
 			);
@@ -1909,6 +1920,7 @@
 				0822A07B2CA1992B00F87E2C /* PostService.swift in Sources */,
 				3759CF452CAB16E600408A4E /* SignUpAPI.swift in Sources */,
 				EA1B0B5D2A49D23A00F86FBC /* SceneDelegate.swift in Sources */,
+				086BF2042CEC9D7800735BB4 /* FCMTokenManager.swift in Sources */,
 				3747E9722BF3827500364BED /* SettingsViewController.swift in Sources */,
 				3769D6D22B3C56F100294CD1 /* PochakPostTabmanViewController.swift in Sources */,
 				371D337A2B4E8D1F0084FF6A /* KeychainManager.swift in Sources */,
