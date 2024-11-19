@@ -73,6 +73,8 @@
 		084AF4C82A5D831100C6454A /* HomeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */; };
 		086BF1FA2CEC99D800735BB4 /* PushNotificationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF1F92CEC99D800735BB4 /* PushNotificationRequest.swift */; };
 		086BF1FC2CEC9A3100735BB4 /* PushNotificationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF1FB2CEC9A3100735BB4 /* PushNotificationResponse.swift */; };
+		086BF1FE2CEC9B1100735BB4 /* PushNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF1FD2CEC9B1100735BB4 /* PushNotificationService.swift */; };
+		086BF2012CEC9B7600735BB4 /* TokenRegistrationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF2002CEC9B7600735BB4 /* TokenRegistrationAPI.swift */; };
 		0876E23E2C274256008DE88F /* NoPostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */; };
 		0876E23F2C274256008DE88F /* NoPostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */; };
 		0889D1382C5CB69F00206C86 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0889D1372C5CB69F00206C86 /* String+.swift */; };
@@ -354,6 +356,8 @@
 		084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCollectionViewCell.xib; sourceTree = "<group>"; };
 		086BF1F92CEC99D800735BB4 /* PushNotificationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationRequest.swift; sourceTree = "<group>"; };
 		086BF1FB2CEC9A3100735BB4 /* PushNotificationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationResponse.swift; sourceTree = "<group>"; };
+		086BF1FD2CEC9B1100735BB4 /* PushNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationService.swift; sourceTree = "<group>"; };
+		086BF2002CEC9B7600735BB4 /* TokenRegistrationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRegistrationAPI.swift; sourceTree = "<group>"; };
 		0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoPostCollectionViewCell.swift; sourceTree = "<group>"; };
 		0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoPostCollectionViewCell.xib; sourceTree = "<group>"; };
 		0889D1372C5CB69F00206C86 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
@@ -815,6 +819,14 @@
 			path = PushNotification;
 			sourceTree = "<group>";
 		};
+		086BF1FF2CEC9B6A00735BB4 /* PushNotification */ = {
+			isa = PBXGroup;
+			children = (
+				086BF2002CEC9B7600735BB4 /* TokenRegistrationAPI.swift */,
+			);
+			path = PushNotification;
+			sourceTree = "<group>";
+		};
 		089C757A2A51713C003AAB94 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -1210,6 +1222,7 @@
 				EA7E14602C858EC6001DA769 /* CameraService.swift */,
 				376EA12F2CAAAF6900FEFB63 /* ProfileService.swift */,
 				374E462C2CAAC399008AE361 /* AuthenticationService.swift */,
+				086BF1FD2CEC9B1100735BB4 /* PushNotificationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1248,6 +1261,7 @@
 			children = (
 				374E46332CAAC437008AE361 /* Authentication */,
 				376EA1272CAAAD3500FEFB63 /* Profile */,
+				086BF1FF2CEC9B6A00735BB4 /* PushNotification */,
 				0822A04D2CA1980200F87E2C /* User */,
 				0822A04A2CA197F800F87E2C /* Search */,
 				0822A0382CA197E700F87E2C /* Post */,
@@ -1838,6 +1852,7 @@
 				0822A0492CA197E700F87E2C /* PostDetailAPI.swift in Sources */,
 				EABD20652A6CF5CC007543E9 /* TagCollectionViewCell.swift in Sources */,
 				0822A0792CA1986000F87E2C /* SearchService.swift in Sources */,
+				086BF1FE2CEC9B1100735BB4 /* PushNotificationService.swift in Sources */,
 				0823B0742A5B0E780085002F /* CommentTableViewCell.swift in Sources */,
 				0822A0432CA197E700F87E2C /* CommentAPI.swift in Sources */,
 				0801765E2A74F4B0005E6953 /* UITextView+Extension.swift in Sources */,
@@ -1873,6 +1888,7 @@
 				0844D7F32BF21A80001154AC /* CancelViewCell.swift in Sources */,
 				3766F4032C3706DC001DD239 /* BlockedUserTableViewCell.swift in Sources */,
 				374E46452CAACD33008AE361 /* BlockListAPI.swift in Sources */,
+				086BF2012CEC9B7600735BB4 /* TokenRegistrationAPI.swift in Sources */,
 				3769D6B92B3C345800294CD1 /* MyProfileTabViewController.swift in Sources */,
 				0822A0682CA1983C00F87E2C /* FollowResponse.swift in Sources */,
 				EA2CD63D2C5F4C2B00644EFE /* NetworkError.swift in Sources */,
