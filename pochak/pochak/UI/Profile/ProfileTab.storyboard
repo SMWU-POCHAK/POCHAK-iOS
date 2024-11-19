@@ -691,12 +691,13 @@
             <objects>
                 <viewController storyboardIdentifier="PostListVC" id="A8c-zA-jyb" customClass="PostListViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="J5d-Go-gxw">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="477"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="Ixl-d3-zOE"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="xT4-6K-Xdq"/>
+                    <size key="freeformSize" width="393" height="600"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dAa-JV-w6W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -713,6 +714,9 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kyJ-9S-nXZ">
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="759" id="8QX-NS-XQH"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Q5G-7l-dWl">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -732,6 +736,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="collectionViewHeight" destination="8QX-NS-XQH" id="zhP-Ix-TUg"/>
                         <outlet property="postCollectionView" destination="kyJ-9S-nXZ" id="Wqd-DT-oKL"/>
                     </connections>
                 </viewController>
@@ -1017,7 +1022,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="XJW-nH-6KV"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <size key="freeformSize" width="393" height="852"/>
                     <connections>
                         <outlet property="followToggleBtn" destination="5xB-q2-OTa" id="a9f-sc-W9N"/>
                         <outlet property="followerCount" destination="eGf-XG-16e" id="0Yb-kL-8Df"/>

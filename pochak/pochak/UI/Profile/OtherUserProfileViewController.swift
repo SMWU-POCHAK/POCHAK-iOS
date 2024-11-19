@@ -28,7 +28,8 @@ final class OtherUserProfileViewController: UIViewController {
     private let contentScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.backgroundColor = UIColor(named: "gray01")
+//        scrollView.backgroundColor = UIColor(named: "gray01")
+        scrollView.backgroundColor = .red
         scrollView.showsVerticalScrollIndicator = false
         
         return scrollView
@@ -74,11 +75,16 @@ final class OtherUserProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        // VC가 나타날 때 네비게이션바 숨김
+        // VC가 나타날 때 네비게이션바 숨김
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.backgroundColor = UIColor.clear
         setUpData()
     }
+    
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//        contentScrollView.contentSize = postListTabmanView.intrinsicContentSize
+//    }
     
     // MARK: - Actions
     
@@ -165,12 +171,16 @@ final class OtherUserProfileViewController: UIViewController {
     
     private func addSubview() {
         self.view.addSubview(contentScrollView)
+        topUIView.backgroundColor = .yellow
+
         contentScrollView.addSubview(topUIView)
+        
+        postListTabmanView.backgroundColor = .green
+
         topUIView.addSubview(postListTabmanView)
     }
     
     private func setUpUIConstraints() {
-        let scrollContentGuide = contentScrollView.contentLayoutGuide
         topUIView.translatesAutoresizingMaskIntoConstraints = false
         postListTabmanView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -179,19 +189,23 @@ final class OtherUserProfileViewController: UIViewController {
             contentScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             contentScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             contentScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            contentScrollView.heightAnchor.constraint(equalTo: scrollContentGuide.heightAnchor),
-
-//            topUIView.heightAnchor.constraint(equalTo: scrollContentGuide.heightAnchor),
-            topUIView.topAnchor.constraint(equalTo: scrollContentGuide.topAnchor, constant: -95),
+        ])
+        
+        let scrollContentGuide = contentScrollView.contentLayoutGuide
+        NSLayoutConstraint.activate([
+            topUIView.topAnchor.constraint(equalTo: scrollContentGuide.topAnchor),
             topUIView.leadingAnchor.constraint(equalTo: scrollContentGuide.leadingAnchor),
             topUIView.trailingAnchor.constraint(equalTo: scrollContentGuide.trailingAnchor),
-            topUIView.bottomAnchor.constraint(equalTo: scrollContentGuide.bottomAnchor),
-            
+//            topUIView.bottomAnchor.constraint(equalTo: scrollContentGuide.bottomAnchor),
+            topUIView.heightAnchor.constraint(equalTo: scrollContentGuide.widthAnchor, constant: 1600),
+
             postListTabmanView.topAnchor.constraint(equalTo: self.followToggleBtn.bottomAnchor, constant: 5),
             postListTabmanView.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor),
             postListTabmanView.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor),
             postListTabmanView.bottomAnchor.constraint(equalTo: topUIView.bottomAnchor),
         ])
+        
+        view.layoutIfNeeded()
     }
     
     private func setUpRefreshControl() {
@@ -382,15 +396,10 @@ extension OtherUserProfileViewController: UIScrollViewDelegate {
             print("has hit the bottom")
             guard let firstPostTabmanVC = self.storyboard?.instantiateViewController(withIdentifier: "FirstPostTabmanVC") as? PochakedPostTabmanViewController else {return}
             firstPostTabmanVC.receivedHandle = receivedHandle
+            firstPostTabmanVC.currentFetchingPage += 1
             firstPostTabmanVC.needRefresh = true
+            contentScrollView.updateContentSize()
             setUpData()
-            contentScrollView.heightAnchor.constraint(equalTo: contentScrollView.contentLayoutGuide.heightAnchor).isActive = true
         }
     }
-}
-
-extension UIScrollView {
-   func updateContentView() {
-      contentSize.height = subviews.sorted(by: { $0.frame.maxY < $1.frame.maxY }).last?.frame.maxY ?? contentSize.height
-   }
 }

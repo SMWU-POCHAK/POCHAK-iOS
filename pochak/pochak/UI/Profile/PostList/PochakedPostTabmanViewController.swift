@@ -16,20 +16,23 @@ final class PochakedPostTabmanViewController: UIViewController {
         didSet {
             if needRefresh {
                 if (!isLastPage && !isCurrentlyFetching) {
+                    print("currentFetchingPage === \(currentFetchingPage)")
                     print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
+                    isCurrentlyFetching = true
                     setUpData()
                 }
             }
         }
     }
+    var currentFetchingPage: Int = 0
     private let minimumLineSpacing: CGFloat = 9
     private let minimumInterItemSpacing: CGFloat = 8
     private var isLastPage: Bool = false
     private var isCurrentlyFetching: Bool = false
-    private var currentFetchingPage: Int = 0
     
     // MARK: - Views
     
+    @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var postCollectionView: UICollectionView!
     
     // MARK: - Lifecycle
@@ -39,7 +42,17 @@ final class PochakedPostTabmanViewController: UIViewController {
         currentFetchingPage = 0
         setUpCollectionView()
         setUpData()
+        self.view.layoutIfNeeded()
     }
+    
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//        postCollectionView.layoutIfNeeded()
+//        print("collectionViewHeight.constant\(collectionViewHeight.constant)")
+//        collectionViewHeight.constant = postCollectionView.contentSize.height
+//        print("AFTER collectionViewHeight.constant\(collectionViewHeight.constant)")
+//
+//    }
 
     // MARK: - Functions
     
@@ -50,7 +63,8 @@ final class PochakedPostTabmanViewController: UIViewController {
             UINib(nibName: ProfilePostCollectionViewCell.identifier, bundle: nil),
             forCellWithReuseIdentifier: ProfilePostCollectionViewCell.identifier)
         postCollectionView.isScrollEnabled = false
-
+        postCollectionView.backgroundColor = .green
+//        postCollectionView.invalidateIntrinsicContentSize()
     }
 
     
@@ -89,7 +103,17 @@ final class PochakedPostTabmanViewController: UIViewController {
                         self?.postCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
                         print(">>>>>>> PochakedPostDataManager is currently reloading!!!!!!!")
                     } else {
-                        self?.postCollectionView.insertItems(at: newIndexPaths)
+                        self?.postCollectionView.isScrollEnabled = true
+                        self?.postCollectionView.performBatchUpdates({
+                            self?.postCollectionView.insertItems(at: newIndexPaths)
+                        }) { completed in
+                            // 레이아웃 갱신 후 UI 업데이트
+                            self?.postCollectionView.isScrollEnabled = false
+
+//                            self?.postCollectionView.collectionViewLayout.invalidateLayout()
+//                            self?.postCollectionView.setNeedsLayout()
+//                            self?.postCollectionView.layoutIfNeeded()
+                        }
                         print(">>>>>>> PochakedPostDataManager is currently fethcing!!!!!!!")
                     }
                     self?.isCurrentlyFetching = false
