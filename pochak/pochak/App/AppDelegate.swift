@@ -62,30 +62,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 앱이 시작될 때 Firebase 연동
         FirebaseApp.configure()
         
-        /// 앱 실행 시 사용자에게 알림 허용 권한 받기
-        UNUserNotificationCenter.current().delegate = self
+//        /// 앱 실행 시 사용자에게 알림 허용 권한 받기
+//        UNUserNotificationCenter.current().delegate = self
+//        
+//        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]  // 필요한 알림 권한 설정(알람창, 앱에 뱃지, 알람소리)
+//        UNUserNotificationCenter.current().requestAuthorization(
+//            options: authOptions,
+//            completionHandler: { _, _ in }
+//        )
+//        
+//        /// UNUserNotificationCenterDelegate를 구현한 메소드 실행
+//        application.registerForRemoteNotifications()
         
-        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound] // 필요한 알림 권한 설정(알람창, 앱에 뱃지, 알람소리)
-        UNUserNotificationCenter.current().requestAuthorization(
-            options: authOptions,
-            completionHandler: { _, _ in }
-        )
-        
-        /// UNUserNotificationCenterDelegate를 구현한 메소드 실행
-        application.registerForRemoteNotifications()
-        
-        /// Firebase Meesaging delegate 설정
-        Messaging.messaging().delegate = self
-        
-        /// FCM 발급받은 토큰 가져오기
-        Messaging.messaging().token { token, error in
-            if let error = error {
-                print("Error fetching FCM registration token: \(error)")
-            } 
-            else if let token = token {
-                print("FCM registration token: \(token)")
-            }
-        }
+//        /// Firebase Meesaging delegate 설정
+//        Messaging.messaging().delegate = self
+//        
+//        /// FCM 발급받은 토큰 가져오기
+//        Messaging.messaging().token { token, error in
+//            if let error = error {
+//                print("Error fetching FCM registration token: \(error)")
+//            } 
+//            else if let token = token {
+//                print("FCM registration token: \(token)")
+//            }
+//        }
         
         // 앱 첫 실행 시 keyChain 정보를 삭제
         removeKeychainAtFirstLaunch()
@@ -171,6 +171,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
         return GIDSignIn.sharedInstance.handle(url)
     }
+    
+    // MARK: - Functions
+    
+    func fetchFCMToken() {
+        /// Firebase Meesaging delegate 설정
+        Messaging.messaging().delegate = self
+        
+        /// FCM 발급받은 토큰 가져오기
+        Messaging.messaging().token { token, error in
+            if let error = error {
+                print("Error fetching FCM registration token: \(error)")
+            }
+            else if let token = token {
+                print("FCM registration token: \(token)")
+                PushNotificationService.postFCMToken(request: PushNotificationRequest(token: token)) { [weak self] data, failed in
+                    guard let data = data else {
+                        self?.handleError(failed!)
+                        return
+                    }
+                    print("=== AppDelegate, post fcm token succeeded ===")
+                    print("== data: \(data)")
+                }
+            }
+        }
+    }
+    
+    func handleError(_ error: NetworkError) {
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        
+        if let presentViewController = window.rootViewController {
+            presentViewController.present(UIAlertController.networkErrorAlert(title: "네트워킹 오류"), animated: true)
+        } else {
+            fatalError(error.localizedDescription)
+        }
+    }
 }
 
 // MARK: - Extension: UNUserNotificationCenterDelegate
@@ -182,6 +217,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         print("Background, APNS token: \(deviceToken)")
         Messaging.messaging().apnsToken = deviceToken
+        fetchFCMToken()
     }
     
     /// Foreground(앱 켜진 상태) 에서 알림 오는 설정
