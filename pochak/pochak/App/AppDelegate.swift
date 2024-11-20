@@ -244,16 +244,24 @@ extension AppDelegate: MessagingDelegate {
     
     /// FCM토큰이 변경되었을 때를 감지, 새로운 토큰으로 갱신해서 저장
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-      print("Firebase registration token: \(String(describing: fcmToken))")
+        print("Firebase registration token: \(String(describing: fcmToken))")
 
-      let dataDict: [String: String] = ["token": fcmToken ?? ""]
-      NotificationCenter.default.post(
-        name: Notification.Name("FCMToken"),
-        object: nil,
-        userInfo: dataDict
-      )
-      // TODO: If necessary send token to application server.
-      // Note: This callback is fired at each app startup and whenever a new token is generated.
+        let dataDict: [String: String] = ["token": fcmToken ?? ""]
+        NotificationCenter.default.post(
+            name: Notification.Name("FCMToken"),
+            object: nil,
+            userInfo: dataDict
+        )
+        // TODO: If necessary send token to application server.
+        // Note: This callback is fired at each app startup and whenever a new token is generated.
+        PushNotificationService.postFCMToken(request: PushNotificationRequest(token: fcmToken ?? "")) { [weak self] data, failed in
+            guard let data = data else {
+                self?.handleError(failed!)
+                return
+            }
+            print("=== AppDelegate, post fcm token succeeded ===")
+            print("== data: \(data)")
+        }
     }
 
 }
