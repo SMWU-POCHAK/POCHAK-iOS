@@ -26,4 +26,19 @@ struct PushNotificationService {
                 }
             }
     }
+    
+    /// FCM 토큰을 삭제합니다.
+    /// - Parameter completion: 통신 후 핸들러
+    static func deleteFCMToken(completion: @escaping (_ succeed: PushNotificationResponse?, _ failed: NetworkError?) -> Void) {
+        NetworkService.shared.request(FCMTokenAPI.deleteFCMToken) { response in
+            switch response {
+            case .success(let data):
+                completion(data, nil)
+            case .failure(let error):
+                print("=== deleteFCMToken Service error ===")
+                print(error.localizedDescription)
+                completion(nil, error)
+            }
+        }
+    }
 }
