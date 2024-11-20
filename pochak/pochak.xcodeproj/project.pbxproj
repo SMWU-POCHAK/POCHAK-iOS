@@ -74,7 +74,7 @@
 		086BF1FA2CEC99D800735BB4 /* PushNotificationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF1F92CEC99D800735BB4 /* PushNotificationRequest.swift */; };
 		086BF1FC2CEC9A3100735BB4 /* PushNotificationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF1FB2CEC9A3100735BB4 /* PushNotificationResponse.swift */; };
 		086BF1FE2CEC9B1100735BB4 /* PushNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF1FD2CEC9B1100735BB4 /* PushNotificationService.swift */; };
-		086BF2012CEC9B7600735BB4 /* TokenRegistrationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF2002CEC9B7600735BB4 /* TokenRegistrationAPI.swift */; };
+		086BF2012CEC9B7600735BB4 /* FCMTokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF2002CEC9B7600735BB4 /* FCMTokenAPI.swift */; };
 		086BF2042CEC9D7800735BB4 /* FCMTokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF2032CEC9D7800735BB4 /* FCMTokenManager.swift */; };
 		0876E23E2C274256008DE88F /* NoPostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */; };
 		0876E23F2C274256008DE88F /* NoPostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */; };
@@ -358,7 +358,7 @@
 		086BF1F92CEC99D800735BB4 /* PushNotificationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationRequest.swift; sourceTree = "<group>"; };
 		086BF1FB2CEC9A3100735BB4 /* PushNotificationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationResponse.swift; sourceTree = "<group>"; };
 		086BF1FD2CEC9B1100735BB4 /* PushNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationService.swift; sourceTree = "<group>"; };
-		086BF2002CEC9B7600735BB4 /* TokenRegistrationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRegistrationAPI.swift; sourceTree = "<group>"; };
+		086BF2002CEC9B7600735BB4 /* FCMTokenAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMTokenAPI.swift; sourceTree = "<group>"; };
 		086BF2032CEC9D7800735BB4 /* FCMTokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMTokenManager.swift; sourceTree = "<group>"; };
 		0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoPostCollectionViewCell.swift; sourceTree = "<group>"; };
 		0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoPostCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -824,7 +824,7 @@
 		086BF1FF2CEC9B6A00735BB4 /* PushNotification */ = {
 			isa = PBXGroup;
 			children = (
-				086BF2002CEC9B7600735BB4 /* TokenRegistrationAPI.swift */,
+				086BF2002CEC9B7600735BB4 /* FCMTokenAPI.swift */,
 			);
 			path = PushNotification;
 			sourceTree = "<group>";
@@ -1900,6 +1900,7 @@
 				3766F4032C3706DC001DD239 /* BlockedUserTableViewCell.swift in Sources */,
 				374E46452CAACD33008AE361 /* BlockListAPI.swift in Sources */,
 				086BF2012CEC9B7600735BB4 /* TokenRegistrationAPI.swift in Sources */,
+				086BF2012CEC9B7600735BB4 /* FCMTokenAPI.swift in Sources */,
 				3769D6B92B3C345800294CD1 /* MyProfileTabViewController.swift in Sources */,
 				0822A0682CA1983C00F87E2C /* FollowResponse.swift in Sources */,
 				EA2CD63D2C5F4C2B00644EFE /* NetworkError.swift in Sources */,

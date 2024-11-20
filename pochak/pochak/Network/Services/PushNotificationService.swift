@@ -15,7 +15,7 @@ struct PushNotificationService {
     static func postFCMToken(
         request: PushNotificationRequest,
         completion: @escaping (_ succeed: PushNotificationResponse?, _ failed: NetworkError?) -> Void) {
-            NetworkService.shared.request(TokenRegistrationAPI.postFCMToken(request)) { response in
+            NetworkService.shared.request(FCMTokenAPI.postFCMToken(request)) { response in
                 switch response {
                 case .success(let data):
                     completion(data, nil)

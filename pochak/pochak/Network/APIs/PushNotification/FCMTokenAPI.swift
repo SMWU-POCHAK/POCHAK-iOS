@@ -8,11 +8,11 @@
 import Foundation
 import Alamofire
 
-enum TokenRegistrationAPI {
+enum FCMTokenAPI {
     case postFCMToken(PushNotificationRequest)
 }
 
-extension TokenRegistrationAPI: BaseAPI {
+extension FCMTokenAPI: BaseAPI {
     
     typealias Response = PushNotificationResponse
         
