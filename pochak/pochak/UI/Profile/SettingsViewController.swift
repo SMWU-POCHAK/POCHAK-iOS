@@ -89,6 +89,17 @@ final class SettingsViewController: UIViewController {
     }
     
     private func deleteUserData() {
+        // 로그아웃, 회원탈퇴 시 FCM token 삭제 필요
+        PushNotificationService.deleteFCMToken { data, failed in
+            guard let data = data else {
+                print("=== SettingsVC, delete FCM token failed ===")
+                print(">> \(failed!.localizedDescription)")
+                return
+            }
+            print("=== Settings, delete FCM token succeeded ===")
+            print("== data: \(data)")
+        }
+        
         do {
             // Keychain 삭제
             try KeychainManager.delete(account: "accessToken")
