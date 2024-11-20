@@ -158,6 +158,17 @@ extension SettingsViewController: CustomAlertDelegate {
                 guard let data = data else { return }
                 print(data.message)
             }
+
+            PushNotificationService.deleteFCMToken { data, failed in
+                guard let data = data else {
+                    print("=== SettingsVC, delete FCM token failed ===")
+                    print(">> \(failed!.localizedDescription)")
+                    return
+                }
+                print("=== Settings, delete FCM token succeeded ===")
+                print("== data: \(data)")
+            }
+            
             deleteUserData()
             moveToMainPage()
         }
