@@ -62,31 +62,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 앱이 시작될 때 Firebase 연동
         FirebaseApp.configure()
         
-//        /// 앱 실행 시 사용자에게 알림 허용 권한 받기
-//        UNUserNotificationCenter.current().delegate = self
-//        
-//        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]  // 필요한 알림 권한 설정(알람창, 앱에 뱃지, 알람소리)
-//        UNUserNotificationCenter.current().requestAuthorization(
-//            options: authOptions,
-//            completionHandler: { _, _ in }
-//        )
-//        
-//        /// UNUserNotificationCenterDelegate를 구현한 메소드 실행
-//        application.registerForRemoteNotifications()
-        
-//        /// Firebase Meesaging delegate 설정
-//        Messaging.messaging().delegate = self
-//        
-//        /// FCM 발급받은 토큰 가져오기
-//        Messaging.messaging().token { token, error in
-//            if let error = error {
-//                print("Error fetching FCM registration token: \(error)")
-//            } 
-//            else if let token = token {
-//                print("FCM registration token: \(token)")
-//            }
-//        }
-        
         // 앱 첫 실행 시 keyChain 정보를 삭제
         removeKeychainAtFirstLaunch()
         return true
@@ -212,7 +187,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
 
-    /// 백그라운드에서 푸시 알림을 탭했을 때 실행
+    /// APN 서비스에 앱 등록 성공했을 때
     func application(_ application: UIApplication,
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         print("Background, APNS token: \(deviceToken)")
@@ -244,7 +219,7 @@ extension AppDelegate: MessagingDelegate {
     
     /// FCM토큰이 변경되었을 때를 감지, 새로운 토큰으로 갱신해서 저장
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        print("Firebase registration token: \(String(describing: fcmToken))")
+        print("Firebase registration token did receive: \(String(describing: fcmToken))")
 
         let dataDict: [String: String] = ["token": fcmToken ?? ""]
         NotificationCenter.default.post(
@@ -263,5 +238,4 @@ extension AppDelegate: MessagingDelegate {
             print("== data: \(data)")
         }
     }
-
 }
