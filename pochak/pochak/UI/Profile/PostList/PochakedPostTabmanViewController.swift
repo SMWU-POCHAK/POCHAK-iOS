@@ -69,7 +69,7 @@ class PochakedPostTabmanViewController: UIViewController {
                 print("Delegate Insets - Top: \(topInset), Bottom: \(bottomInset)")
                 // contentHeight 계산
                 let contentHeight = self.postCollectionView.collectionViewLayout.collectionViewContentSize.height
-                let totalHeight = contentHeight + topInset + bottomInset
+                let totalHeight = floor(contentHeight + topInset + bottomInset)
                 
                 print("Total height with section insets: \(totalHeight)")
                 
@@ -195,7 +195,6 @@ extension PochakedPostTabmanViewController : UICollectionViewDelegate, UICollect
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = CGFloat((collectionView.frame.width - 20 * 2 - minimumInterItemSpacing * 2) / 3)
-        print("width : \(width * 4 / 3)")
         return CGSize(width: width, height: width * 4 / 3)
     }
     
