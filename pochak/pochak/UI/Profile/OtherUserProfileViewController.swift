@@ -65,6 +65,8 @@ final class OtherUserProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Notification 구독
+        NotificationCenter.default.addObserver(self, selector: #selector(contentHeightUpdated(_:)), name: .didUpdateContentHeight, object: nil)
         addSubview()
         setUpUIConstraints()
         setUpRefreshControl()
@@ -80,11 +82,6 @@ final class OtherUserProfileViewController: UIViewController {
         self.navigationController?.navigationBar.backgroundColor = UIColor.clear
         setUpData()
     }
-    
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        contentScrollView.contentSize = postListTabmanView.intrinsicContentSize
-//    }
     
     // MARK: - Actions
     
@@ -167,7 +164,42 @@ final class OtherUserProfileViewController: UIViewController {
         }
     }
     
+    @objc func contentHeightUpdated(_ notification: Notification) {
+        if let userInfo = notification.userInfo,
+           let contentHeight = userInfo["contentHeight"] as? CGFloat {
+            // contentHeight를 받아서 사용
+            print("받은 contentHeight: \(contentHeight)")
+            updatePostListTabmanViewHeight(contentHeight)
+        }
+    }
+
+
+    
     // MARK: - Functions
+    
+    private func updatePostListTabmanViewHeight(_ height: CGFloat) {
+        // 기존 높이 제약 조건 제거
+        postListTabmanView.constraints.forEach { constraint in
+            if constraint.firstAttribute == .height {
+                constraint.isActive = false
+            }
+        }
+        
+        // 새로운 높이 제약 조건 추가
+        postListTabmanView.heightAnchor.constraint(equalToConstant: height).isActive = true
+        
+        // ScrollView의 contentSize 업데이트
+        contentScrollView.layoutIfNeeded()
+        contentScrollView.contentSize = CGSize(
+            width: contentScrollView.frame.width,
+            height: topUIView.frame.height
+        )
+        
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+        
     
     private func addSubview() {
         self.view.addSubview(contentScrollView)
@@ -181,6 +213,7 @@ final class OtherUserProfileViewController: UIViewController {
     }
     
     private func setUpUIConstraints() {
+        contentScrollView.translatesAutoresizingMaskIntoConstraints = false
         topUIView.translatesAutoresizingMaskIntoConstraints = false
         postListTabmanView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -193,18 +226,20 @@ final class OtherUserProfileViewController: UIViewController {
         
         let scrollContentGuide = contentScrollView.contentLayoutGuide
         NSLayoutConstraint.activate([
-            topUIView.topAnchor.constraint(equalTo: scrollContentGuide.topAnchor),
-            topUIView.leadingAnchor.constraint(equalTo: scrollContentGuide.leadingAnchor),
-            topUIView.trailingAnchor.constraint(equalTo: scrollContentGuide.trailingAnchor),
-//            topUIView.bottomAnchor.constraint(equalTo: scrollContentGuide.bottomAnchor),
-            topUIView.heightAnchor.constraint(equalTo: scrollContentGuide.widthAnchor, constant: 1200),
-            postListTabmanView.topAnchor.constraint(equalTo: self.followToggleBtn.bottomAnchor, constant: 5),
-            postListTabmanView.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor),
-            postListTabmanView.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor),
-            postListTabmanView.bottomAnchor.constraint(equalTo: topUIView.bottomAnchor),
-        ])
-        
-        view.layoutIfNeeded()
+                // topUIView
+                topUIView.topAnchor.constraint(equalTo: scrollContentGuide.topAnchor),
+                topUIView.leadingAnchor.constraint(equalTo: scrollContentGuide.leadingAnchor),
+                topUIView.trailingAnchor.constraint(equalTo: scrollContentGuide.trailingAnchor),
+
+                // postListTabmanView
+                postListTabmanView.topAnchor.constraint(equalTo: followToggleBtn.bottomAnchor, constant: 5),
+                postListTabmanView.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor),
+                postListTabmanView.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor),
+                postListTabmanView.heightAnchor.constraint(equalTo: contentScrollView.heightAnchor),
+
+                // Dynamic height for topUIView
+                topUIView.bottomAnchor.constraint(equalTo: postListTabmanView.bottomAnchor),
+            ])
     }
     
     private func setUpRefreshControl() {
@@ -236,7 +271,7 @@ final class OtherUserProfileViewController: UIViewController {
         
         viewFollowerList()
         viewFollowingList()
-
+        
         updateProfileBtn.layer.isHidden = true
         
         contentScrollView.delegate = self
@@ -337,6 +372,11 @@ final class OtherUserProfileViewController: UIViewController {
             }
         }
     }
+    
+    deinit {
+        // Observer 해제
+        NotificationCenter.default.removeObserver(self, name: .didUpdateContentHeight, object: nil)
+    }
 }
 
 // MARK: - Extension : CustomAlertDelegate, SecondViewControllerDelegate
@@ -393,12 +433,13 @@ extension OtherUserProfileViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (contentScrollView.contentOffset.y > (contentScrollView.contentSize.height - contentScrollView.frame.size.height)){
             print("has hit the bottom")
-//            guard let firstPostTabmanVC = self.storyboard?.instantiateViewController(withIdentifier: "FirstPostTabmanVC") as? PochakedPostTabmanViewController else {return}
-//            firstPostTabmanVC.receivedHandle = receivedHandle
-//            firstPostTabmanVC.currentFetchingPage += 1
-//            firstPostTabmanVC.needRefresh = true
-            contentScrollView.updateContentSize()
-//            setUpData()
+            guard let firstPostTabmanVC = self.storyboard?.instantiateViewController(withIdentifier: "FirstPostTabmanVC") as? PochakedPostTabmanViewController else {return}
+            firstPostTabmanVC.setUpData()
         }
     }
+}
+
+extension Notification.Name {
+    static let didUpdateContentHeight = Notification.Name("didUpdateContentHeight")
+    static let didHitBottom = Notification.Name("didHitBottom")
 }
