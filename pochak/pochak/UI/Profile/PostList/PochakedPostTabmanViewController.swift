@@ -93,7 +93,7 @@ class PochakedPostTabmanViewController: UIViewController {
                 
                 let newPosts = data.result.postList
                 let startIndex = self?.imageArray.count
-                print("startIndex : \(startIndex)")
+                print("startIndex : \(String(describing: startIndex))")
                 let endIndex = startIndex! + newPosts.count
                 print("endIndex : \(endIndex)")
                 let newIndexPaths = (startIndex!..<endIndex).map { IndexPath(item: $0, section: 0) }

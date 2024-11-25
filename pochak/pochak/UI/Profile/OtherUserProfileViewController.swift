@@ -19,11 +19,11 @@ final class OtherUserProfileViewController: UIViewController {
     var receivedFollowerCount: Int = 0
     var receivedFollowingCount: Int = 0
     var receivedIsFollow: Bool?
-    var isCurrentlyFetching: Bool = false
-    var isLastPage: Bool = false
+    private var isCurrentlyFetching: Bool = false
+    private var isLastPage: Bool = false
     private let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId)
     private var searchBlockedUser: Bool = false
-    lazy var moreButton: UIBarButtonItem = { // 업로드 버튼
+    private lazy var moreButton: UIBarButtonItem = { // 업로드 버튼
         let barButton = UIBarButtonItem(image: UIImage(named: "moreButtonIcon"), style: .plain, target: self, action: #selector(moreButtonPressed))
         return barButton
     }()
