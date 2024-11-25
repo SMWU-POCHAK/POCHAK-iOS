@@ -68,6 +68,7 @@ final class PochakPostTabmanViewController: UIViewController {
     
     private func setUpData() {
         isCurrentlyFetching = true
+        NotificationCenter.default.post(name: .didStartFetchingData, object: nil)
         let request = ProfileRetrievalRequest(page: currentFetchingPage)
         if let handle = receivedHandle {
             ProfileService.getProfilePochakPosts(handle: handle, request: request) { [weak self] data, failed in
@@ -100,6 +101,7 @@ final class PochakPostTabmanViewController: UIViewController {
                         self?.postCollectionView.insertItems(at: newIndexPaths)
                     }
                     self?.isCurrentlyFetching = false
+                    NotificationCenter.default.post(name: .didFinishFetchingData, object: nil)
                     self?.currentFetchingPage += 1;
                 }
             }

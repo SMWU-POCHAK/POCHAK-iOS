@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol FirstPostTabmanVCDelegate: AnyObject {
-    func didUpdateContentHeight(_ height: CGFloat)
-}
-
 class PochakedPostTabmanViewController: UIViewController {
     
     // MARK: - Properties
@@ -56,10 +52,31 @@ class PochakedPostTabmanViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        let contentHeight = postCollectionView.collectionViewLayout.collectionViewContentSize.height
-        print("contentHeight:\(contentHeight)")
-        // Notification 보내기
-        NotificationCenter.default.post(name: .didUpdateContentHeight, object: nil, userInfo: ["contentHeight": contentHeight])
+        
+        DispatchQueue.main.async {
+            if let flowLayout = self.postCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+                let delegateInsets = (self.collectionView(
+                    self.postCollectionView,
+                    layout: flowLayout,
+                    insetForSectionAt: 0
+                ))
+                print("Delegate Insets: \(delegateInsets)")
+                
+                // UIEdgeInsets의 top, bottom 값 추출
+                let topInset = delegateInsets.top
+                let bottomInset = delegateInsets.bottom
+                
+                print("Delegate Insets - Top: \(topInset), Bottom: \(bottomInset)")
+                // contentHeight 계산
+                let contentHeight = self.postCollectionView.collectionViewLayout.collectionViewContentSize.height
+                let totalHeight = contentHeight + topInset + bottomInset
+                
+                print("Total height with section insets: \(totalHeight)")
+                
+                // Notification 보내기
+                NotificationCenter.default.post(name: .didUpdateTotalHeight, object: nil, userInfo: ["totalHeight": totalHeight])
+            }
+        }
     }
     
     // MARK: - Functions
@@ -77,6 +94,7 @@ class PochakedPostTabmanViewController: UIViewController {
     
     func setUpData() {
         isCurrentlyFetching = true
+        NotificationCenter.default.post(name: .didStartFetchingData, object: nil)
         let request = ProfileRetrievalRequest(page: currentFetchingPage)
         if let handle = receivedHandle {
             ProfileService.getProfile(handle: handle, request: request) { [weak self] data, failed in
@@ -104,6 +122,10 @@ class PochakedPostTabmanViewController: UIViewController {
                 self?.imageArray.append(contentsOf: newPosts)
                 self?.isLastPage = data.result.pageInfo.lastPage
                 
+                if self?.isLastPage == true {
+                    NotificationCenter.default.post(name: .didReachLastPage, object: nil)
+                }
+                
                 print("보여주는 게시글 개수: \(newPosts.count)")
                 DispatchQueue.main.async {
                     if self?.currentFetchingPage == 0 {
@@ -114,7 +136,10 @@ class PochakedPostTabmanViewController: UIViewController {
                         print(">>>>>>> PochakedPostDataManager is currently fethcing!!!!!!!")
                     }
                     self?.isCurrentlyFetching = false
-                    self?.currentFetchingPage += 1;
+                    NotificationCenter.default.post(name: .didFinishFetchingData, object: nil)
+                    self?.currentFetchingPage += 1
+                    let contentHeight = self?.postCollectionView.collectionViewLayout.collectionViewContentSize.height
+                    print("contentHeight : \(contentHeight)")
                 }
             }
         } else {
@@ -164,11 +189,13 @@ extension PochakedPostTabmanViewController : UICollectionViewDelegate, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        print("Inset method called")
         return UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = CGFloat((collectionView.frame.width - 20 * 2 - minimumInterItemSpacing * 2) / 3)
+        print("width : \(width * 4 / 3)")
         return CGSize(width: width, height: width * 4 / 3)
     }
     

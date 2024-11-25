@@ -19,6 +19,8 @@ final class OtherUserProfileViewController: UIViewController {
     var receivedFollowerCount: Int = 0
     var receivedFollowingCount: Int = 0
     var receivedIsFollow: Bool?
+    var isCurrentlyFetching: Bool = false
+    var isLastPage: Bool = false
     private let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId)
     private var searchBlockedUser: Bool = false
     lazy var moreButton: UIBarButtonItem = { // 업로드 버튼
@@ -28,7 +30,7 @@ final class OtherUserProfileViewController: UIViewController {
     private let contentScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-//        scrollView.backgroundColor = UIColor(named: "gray01")
+        //        scrollView.backgroundColor = UIColor(named: "gray01")
         scrollView.backgroundColor = .red
         scrollView.showsVerticalScrollIndicator = false
         
@@ -66,13 +68,16 @@ final class OtherUserProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Notification 구독
-        NotificationCenter.default.addObserver(self, selector: #selector(contentHeightUpdated(_:)), name: .didUpdateContentHeight, object: nil)
         addSubview()
         setUpUIConstraints()
         setUpRefreshControl()
         setUpNavigationBar()
         setUpViewController()
         setUpData()
+        NotificationCenter.default.addObserver(self, selector: #selector(totalHeightUpdated(_:)), name: .didUpdateTotalHeight, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didStartFetchingData), name: .didStartFetchingData, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didFinishFetchingData), name: .didFinishFetchingData, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReachLastPage), name: .didReachLastPage, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -156,24 +161,37 @@ final class OtherUserProfileViewController: UIViewController {
     
     @objc private func refreshData(_ sender: Any) {
         print("refresh")
-    //        imageArray = []
-    //        currentFetchingPage = 0
+        //        imageArray = []
+        //        currentFetchingPage = 0
         setUpData()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.contentScrollView.refreshControl?.endRefreshing()
         }
     }
     
-    @objc func contentHeightUpdated(_ notification: Notification) {
+    @objc func totalHeightUpdated(_ notification: Notification) {
         if let userInfo = notification.userInfo,
-           let contentHeight = userInfo["contentHeight"] as? CGFloat {
-            // contentHeight를 받아서 사용
-            print("받은 contentHeight: \(contentHeight)")
-            updatePostListTabmanViewHeight(contentHeight)
+           let totalHeight = userInfo["totalHeight"] as? CGFloat {
+            // TotalHeight를 받아서 사용
+            print("받은 totalHeight: \(totalHeight)")
+            updatePostListTabmanViewHeight(totalHeight)
         }
     }
-
-
+    
+    @objc func didStartFetchingData() {
+        isCurrentlyFetching = true
+    }
+    
+    @objc func didFinishFetchingData() {
+        isCurrentlyFetching = false
+    }
+    
+    @objc func didReachLastPage() {
+        isLastPage = true
+        print("Reached last page")
+    }
+    
+    
     
     // MARK: - Functions
     
@@ -181,6 +199,7 @@ final class OtherUserProfileViewController: UIViewController {
         // 기존 높이 제약 조건 제거
         postListTabmanView.constraints.forEach { constraint in
             if constraint.firstAttribute == .height {
+                print("constraint:\(constraint)")
                 constraint.isActive = false
             }
         }
@@ -195,20 +214,23 @@ final class OtherUserProfileViewController: UIViewController {
             height: topUIView.frame.height
         )
         
+        print("contentScrollView.contentSize : \(contentScrollView.contentSize)")
+        
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
-    }
         
+    }
+    
     
     private func addSubview() {
         self.view.addSubview(contentScrollView)
         topUIView.backgroundColor = .yellow
-
+        
         contentScrollView.addSubview(topUIView)
         
         postListTabmanView.backgroundColor = .green
-
+        
         topUIView.addSubview(postListTabmanView)
     }
     
@@ -226,20 +248,20 @@ final class OtherUserProfileViewController: UIViewController {
         
         let scrollContentGuide = contentScrollView.contentLayoutGuide
         NSLayoutConstraint.activate([
-                // topUIView
-                topUIView.topAnchor.constraint(equalTo: scrollContentGuide.topAnchor),
-                topUIView.leadingAnchor.constraint(equalTo: scrollContentGuide.leadingAnchor),
-                topUIView.trailingAnchor.constraint(equalTo: scrollContentGuide.trailingAnchor),
-
-                // postListTabmanView
-                postListTabmanView.topAnchor.constraint(equalTo: followToggleBtn.bottomAnchor, constant: 5),
-                postListTabmanView.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor),
-                postListTabmanView.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor),
-                postListTabmanView.heightAnchor.constraint(equalTo: contentScrollView.heightAnchor),
-
-                // Dynamic height for topUIView
-                topUIView.bottomAnchor.constraint(equalTo: postListTabmanView.bottomAnchor),
-            ])
+            // topUIView
+            topUIView.topAnchor.constraint(equalTo: scrollContentGuide.topAnchor),
+            topUIView.leadingAnchor.constraint(equalTo: scrollContentGuide.leadingAnchor),
+            topUIView.trailingAnchor.constraint(equalTo: scrollContentGuide.trailingAnchor),
+            
+            // postListTabmanView
+            postListTabmanView.topAnchor.constraint(equalTo: followToggleBtn.bottomAnchor, constant: 5),
+            postListTabmanView.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor),
+            postListTabmanView.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor),
+            postListTabmanView.heightAnchor.constraint(equalTo: scrollContentGuide.heightAnchor),
+            
+            // Dynamic height for topUIView
+            topUIView.bottomAnchor.constraint(equalTo: postListTabmanView.bottomAnchor),
+        ])
     }
     
     private func setUpRefreshControl() {
@@ -373,9 +395,10 @@ final class OtherUserProfileViewController: UIViewController {
         }
     }
     
+    
     deinit {
         // Observer 해제
-        NotificationCenter.default.removeObserver(self, name: .didUpdateContentHeight, object: nil)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -432,14 +455,19 @@ extension OtherUserProfileViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (contentScrollView.contentOffset.y > (contentScrollView.contentSize.height - contentScrollView.frame.size.height)){
-            print("has hit the bottom")
-            guard let firstPostTabmanVC = self.storyboard?.instantiateViewController(withIdentifier: "FirstPostTabmanVC") as? PochakedPostTabmanViewController else {return}
-            firstPostTabmanVC.setUpData()
+            if (!isLastPage && !isCurrentlyFetching) {
+                print("has hit the bottom")
+                // Notification을 통해 FirstPostTabmanVC에 데이터 새로고침을 요청
+                NotificationCenter.default.post(name: .didHitBottom, object: nil)
+            }
         }
     }
 }
 
 extension Notification.Name {
-    static let didUpdateContentHeight = Notification.Name("didUpdateContentHeight")
+    static let didUpdateTotalHeight = Notification.Name("didUpdateTotalHeight")
     static let didHitBottom = Notification.Name("didHitBottom")
+    static let didReachLastPage = Notification.Name("didReachLastPage")
+    static let didStartFetchingData = Notification.Name("didStartFetchingData")
+    static let didFinishFetchingData = Notification.Name("didFinishFetchingData")
 }
