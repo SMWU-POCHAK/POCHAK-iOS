@@ -13,11 +13,11 @@ final class PochakPostTabmanViewController: UIViewController {
     
     var receivedHandle: String?
     var imageArray: [ProfilePostList]! = []
+    private var isCurrentlyFetching: Bool = false
+    private var currentFetchingPage: Int = 0
     private let minimumLineSpacing: CGFloat = 9
     private let minimumInterItemSpacing: CGFloat = 8
     private var isLastPage: Bool = false
-    private var isCurrentlyFetching: Bool = false
-    private var currentFetchingPage: Int = 0
     
     // MARK: - Views
     
@@ -27,24 +27,35 @@ final class PochakPostTabmanViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Notification을 수신하여 데이터를 갱신
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveRefreshRequest), name: .didHitBottom, object: nil)
         currentFetchingPage = 0
-        
         setUpCollectionView()
-        setUpRefreshControl()
         setUpData()
     }
     
-    // MARK: - Actions
-    
-    @objc private func refreshData(_ sender: Any) {
-        print("Inside refreshData")
-        // 데이터 새로고침 완료 후 UIRefreshControl을 종료
-        print("refresh")
-        imageArray = []
-        currentFetchingPage = 0
-        setUpData()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-            self.postCollectionView.refreshControl?.endRefreshing()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        DispatchQueue.main.async {
+            if let flowLayout = self.postCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+                let delegateInsets = (self.collectionView(
+                    self.postCollectionView,
+                    layout: flowLayout,
+                    insetForSectionAt: 0
+                ))
+                print("Delegate Insets: \(delegateInsets)")
+                
+                // UIEdgeInsets의 top, bottom 값 추출
+                let topInset = delegateInsets.top
+                let bottomInset = delegateInsets.bottom
+                print("Delegate Insets - Top: \(topInset), Bottom: \(bottomInset)")
+                let contentHeight = self.postCollectionView.collectionViewLayout.collectionViewContentSize.height
+                print("contentHeight : \(contentHeight)")
+                let totalHeight = contentHeight + topInset + bottomInset
+                print("Total height with section insets: \(totalHeight)")
+                NotificationCenter.default.post(name: .didUpdateTotalHeight, object: nil, userInfo: ["totalHeight": totalHeight])
+            }
         }
     }
     
@@ -56,14 +67,7 @@ final class PochakPostTabmanViewController: UIViewController {
         postCollectionView.register(
             UINib(nibName: ProfilePostCollectionViewCell.identifier, bundle: nil),
             forCellWithReuseIdentifier: ProfilePostCollectionViewCell.identifier)
-//        postCollectionView.isScrollEnabled = false
-    }
-  
-    private func setUpRefreshControl() {
-        print("Inside setUpRefreshControl")
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
-        postCollectionView.refreshControl = refreshControl
+        postCollectionView.isScrollEnabled = false
     }
     
     private func setUpData() {
@@ -93,12 +97,17 @@ final class PochakPostTabmanViewController: UIViewController {
                 self?.imageArray.append(contentsOf: newPosts)
                 self?.isLastPage = data.result.pageInfo.lastPage
                 
+                if self?.isLastPage == true {
+                    NotificationCenter.default.post(name: .didReachLastPage, object: nil)
+                }
+                
                 DispatchQueue.main.async {
                     if self?.currentFetchingPage == 0 {
                         self?.postCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
                         print(">>>>>>> PochakPostDataManager is currently reloading!!!!!!!")
                     } else {
                         self?.postCollectionView.insertItems(at: newIndexPaths)
+                        print(">>>>>>> PochakPostDataManager is currently fethcing!!!!!!!")
                     }
                     self?.isCurrentlyFetching = false
                     NotificationCenter.default.post(name: .didFinishFetchingData, object: nil)
@@ -109,6 +118,15 @@ final class PochakPostTabmanViewController: UIViewController {
             print("No handle received")
         }
     }
+    
+    @objc func didReceiveRefreshRequest() {
+        setUpData()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .didHitBottom, object: nil)
+    }
+    
 }
 
 // MARK: - Extension : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate
@@ -155,18 +173,5 @@ extension PochakPostTabmanViewController : UICollectionViewDelegate, UICollectio
             else { return }
         postVC.receivedPostId = imageArray[indexPath.item].postId
         self.navigationController?.pushViewController(postVC, animated: true)
-    }
-}
-
-extension PochakPostTabmanViewController: UIScrollViewDelegate {
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (postCollectionView.contentOffset.y > (postCollectionView.contentSize.height - postCollectionView.bounds.size.height)){
-            if (!isLastPage && !isCurrentlyFetching) {
-                print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
-                isCurrentlyFetching = true
-                setUpData()
-            }
-        }
     }
 }

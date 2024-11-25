@@ -12,31 +12,14 @@ class PochakedPostTabmanViewController: UIViewController {
     // MARK: - Properties
     var receivedHandle: String?
     var imageArray: [ProfilePostList]! = []
-    var currentFetchingPage: Int = 0
-    var isCurrentlyFetching: Bool = false
+    private var isCurrentlyFetching: Bool = false
+    private var currentFetchingPage: Int = 0
     private let minimumLineSpacing: CGFloat = 9
     private let minimumInterItemSpacing: CGFloat = 8
     private var isLastPage: Bool = false
     
-    
-    //    var needRefresh: Bool = false {
-    //        didSet {
-    //            if needRefresh {
-    //                if (!isLastPage && !isCurrentlyFetching) {
-    //                    print("currentFetchingPage === \(currentFetchingPage)")
-    //                    print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
-    //                    isCurrentlyFetching = true
-    //                    setUpData()
-    ////                    postCollectionView.reloadData()
-    ////                    refreshData()
-    //                }
-    //            }
-    //        }
-    //    }
-    
     // MARK: - Views
     
-    @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var postCollectionView: UICollectionView!
     
     // MARK: - Lifecycle
@@ -65,15 +48,11 @@ class PochakedPostTabmanViewController: UIViewController {
                 // UIEdgeInsets의 top, bottom 값 추출
                 let topInset = delegateInsets.top
                 let bottomInset = delegateInsets.bottom
-                
                 print("Delegate Insets - Top: \(topInset), Bottom: \(bottomInset)")
-                // contentHeight 계산
                 let contentHeight = self.postCollectionView.collectionViewLayout.collectionViewContentSize.height
-                let totalHeight = floor(contentHeight + topInset + bottomInset)
-                
+                print("contentHeight : \(contentHeight)")
+                let totalHeight = contentHeight + topInset + bottomInset
                 print("Total height with section insets: \(totalHeight)")
-                
-                // Notification 보내기
                 NotificationCenter.default.post(name: .didUpdateTotalHeight, object: nil, userInfo: ["totalHeight": totalHeight])
             }
         }
@@ -138,8 +117,6 @@ class PochakedPostTabmanViewController: UIViewController {
                     self?.isCurrentlyFetching = false
                     NotificationCenter.default.post(name: .didFinishFetchingData, object: nil)
                     self?.currentFetchingPage += 1
-                    let contentHeight = self?.postCollectionView.collectionViewLayout.collectionViewContentSize.height
-                    print("contentHeight : \(contentHeight)")
                 }
             }
         } else {
@@ -147,13 +124,11 @@ class PochakedPostTabmanViewController: UIViewController {
         }
     }
     
-    // Notification이 수신되었을 때 데이터를 갱신하는 메서드
     @objc func didReceiveRefreshRequest() {
-        setUpData()  // 데이터를 새로 고침
+        setUpData()
     }
     
     deinit {
-        // 메모리 누수를 방지하기 위해 Observer를 제거
         NotificationCenter.default.removeObserver(self, name: .didHitBottom, object: nil)
     }
 }
@@ -163,7 +138,6 @@ class PochakedPostTabmanViewController: UIViewController {
 extension PochakedPostTabmanViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("===imageArray.count:\(imageArray.count)===")
         return max(0,(imageArray.count))
     }
     
