@@ -12,7 +12,7 @@ final class PochakPostTabmanViewController: UIViewController {
     // MARK: - Properties
     
     var receivedHandle: String?
-    var imageArray: [ProfilePostList] = []
+    var imageArray: [ProfilePostList]! = []
     private let minimumLineSpacing: CGFloat = 9
     private let minimumInterItemSpacing: CGFloat = 8
     private var isLastPage: Bool = false
@@ -30,13 +30,14 @@ final class PochakPostTabmanViewController: UIViewController {
         currentFetchingPage = 0
         
         setUpCollectionView()
-//        setUpRefreshControl()
+        setUpRefreshControl()
         setUpData()
     }
     
     // MARK: - Actions
     
     @objc private func refreshData(_ sender: Any) {
+        print("Inside refreshData")
         // 데이터 새로고침 완료 후 UIRefreshControl을 종료
         print("refresh")
         imageArray = []
@@ -55,10 +56,11 @@ final class PochakPostTabmanViewController: UIViewController {
         postCollectionView.register(
             UINib(nibName: ProfilePostCollectionViewCell.identifier, bundle: nil),
             forCellWithReuseIdentifier: ProfilePostCollectionViewCell.identifier)
-        postCollectionView.isScrollEnabled = false
+//        postCollectionView.isScrollEnabled = false
     }
-    
+  
     private func setUpRefreshControl() {
+        print("Inside setUpRefreshControl")
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         postCollectionView.refreshControl = refreshControl
@@ -84,9 +86,9 @@ final class PochakPostTabmanViewController: UIViewController {
                 }
                 
                 let newPosts = data.result.postList
-                let startIndex = data.result.postList.count
-                let endIndex = startIndex + newPosts.count
-                let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
+                let startIndex = self?.imageArray.count
+                let endIndex = startIndex! + newPosts.count
+                let newIndexPaths = (startIndex!..<endIndex).map { IndexPath(item: $0, section: 0) }
                 self?.imageArray.append(contentsOf: newPosts)
                 self?.isLastPage = data.result.pageInfo.lastPage
                 
@@ -112,6 +114,7 @@ final class PochakPostTabmanViewController: UIViewController {
 extension PochakPostTabmanViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("===imageArray.count:\(imageArray.count)===")
         return max(0,(imageArray.count))
     }
     

@@ -162,7 +162,7 @@ final class OtherUserProfileViewController: UIViewController {
     //        imageArray = []
     //        currentFetchingPage = 0
         setUpData()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.contentScrollView.refreshControl?.endRefreshing()
         }
     }
@@ -197,8 +197,7 @@ final class OtherUserProfileViewController: UIViewController {
             topUIView.leadingAnchor.constraint(equalTo: scrollContentGuide.leadingAnchor),
             topUIView.trailingAnchor.constraint(equalTo: scrollContentGuide.trailingAnchor),
 //            topUIView.bottomAnchor.constraint(equalTo: scrollContentGuide.bottomAnchor),
-            topUIView.heightAnchor.constraint(equalTo: scrollContentGuide.widthAnchor, constant: 1600),
-
+            topUIView.heightAnchor.constraint(equalTo: scrollContentGuide.widthAnchor, constant: 1200),
             postListTabmanView.topAnchor.constraint(equalTo: self.followToggleBtn.bottomAnchor, constant: 5),
             postListTabmanView.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor),
             postListTabmanView.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor),
@@ -394,12 +393,12 @@ extension OtherUserProfileViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (contentScrollView.contentOffset.y > (contentScrollView.contentSize.height - contentScrollView.frame.size.height)){
             print("has hit the bottom")
-            guard let firstPostTabmanVC = self.storyboard?.instantiateViewController(withIdentifier: "FirstPostTabmanVC") as? PochakedPostTabmanViewController else {return}
-            firstPostTabmanVC.receivedHandle = receivedHandle
-            firstPostTabmanVC.currentFetchingPage += 1
-            firstPostTabmanVC.needRefresh = true
+//            guard let firstPostTabmanVC = self.storyboard?.instantiateViewController(withIdentifier: "FirstPostTabmanVC") as? PochakedPostTabmanViewController else {return}
+//            firstPostTabmanVC.receivedHandle = receivedHandle
+//            firstPostTabmanVC.currentFetchingPage += 1
+//            firstPostTabmanVC.needRefresh = true
             contentScrollView.updateContentSize()
-            setUpData()
+//            setUpData()
         }
     }
 }
