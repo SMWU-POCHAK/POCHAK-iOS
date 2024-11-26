@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="w5l-aB-8rx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="w5l-aB-8rx">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -14,8 +14,14 @@
         <array key="Pretendard-Bold.ttf">
             <string>Pretendard-Bold</string>
         </array>
+        <array key="Pretendard-Light.ttf">
+            <string>Pretendard-Light</string>
+        </array>
         <array key="Pretendard-Medium.ttf">
             <string>Pretendard-Medium</string>
+        </array>
+        <array key="Pretendard-SemiBold.ttf">
+            <string>Pretendard-SemiBold</string>
         </array>
     </customFonts>
     <scenes>
@@ -422,9 +428,6 @@
                                         <state key="normal" title="보기">
                                             <color key="titleColor" name="gray04"/>
                                         </state>
-                                        <connections>
-                                            <action selector="openPrivacyPolicy:" destination="3Iw-Cb-BdT" eventType="touchUpInside" id="glY-T0-Ucx"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c7L-9Z-VnX">
                                         <rect key="frame" x="260" y="149.66666666666669" width="30" height="30"/>
@@ -433,9 +436,6 @@
                                         <state key="normal" title="보기">
                                             <color key="titleColor" name="gray04"/>
                                         </state>
-                                        <connections>
-                                            <action selector="openTermsOfUSe:" destination="3Iw-Cb-BdT" eventType="touchUpInside" id="h0F-15-PlT"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W25-HF-kds">
                                         <rect key="frame" x="10" y="298.33333333333337" width="280" height="33.333333333333314"/>
@@ -497,8 +497,6 @@
                         <outlet property="backgroundView" destination="9PP-lq-jel" id="zfn-GI-c1I"/>
                         <outlet property="pochakCorpLabel" destination="QJt-RG-HKZ" id="01Q-WZ-lzQ"/>
                         <outlet property="pochakLabel" destination="zpj-Id-v3Y" id="Cqc-Vk-xSt"/>
-                        <outlet property="seePrivacyPolicy" destination="vJI-PQ-G2a" id="9ze-Sn-jR8"/>
-                        <outlet property="seeTermsOfUse" destination="c7L-9Z-VnX" id="13B-J4-PUe"/>
                         <outlet property="titleLabel" destination="6GH-cM-sso" id="KEY-zp-4im"/>
                     </connections>
                 </viewController>
