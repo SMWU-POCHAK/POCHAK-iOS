@@ -228,8 +228,9 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
         NSLayoutConstraint.activate([
             agreeToAllButton.widthAnchor.constraint(equalToConstant: 20),
             agreeToAllButton.heightAnchor.constraint(equalTo: agreeToAllButton.widthAnchor, multiplier: 1),
+            agreeToAllButton.leadingAnchor.constraint(greaterThanOrEqualTo: agreeToAllLabel.trailingAnchor, constant: 50),
             agreeToAllButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
-            agreeToAllButton.centerYAnchor.constraint(equalTo: agreeToAllLabel.centerYAnchor)
+            agreeToAllButton.topAnchor.constraint(equalTo: agreeToAllLabel.topAnchor),
         ])
     }
     
@@ -252,7 +253,7 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
         termsOfUseAgreeLabel.translatesAutoresizingMaskIntoConstraints = false
         
         configureUnderlineAttributes(linkText: "이용약관",
-                                     generalText: String(format: "[필수]  %@ 동의", "이용약관"),
+                                     generalText: String(format: "[필수]  서비스 %@ 동의", "이용약관"),
                                      label: termsOfUseAgreeLabel)
         
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(termsOfUseLabelDidTap(_: )))
@@ -270,8 +271,9 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
         termsOfUseAgreeButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
+            termsOfUseAgreeButton.leadingAnchor.constraint(greaterThanOrEqualTo: termsOfUseAgreeLabel.trailingAnchor, constant: 50),
             termsOfUseAgreeButton.trailingAnchor.constraint(equalTo: agreeToAllButton.trailingAnchor),
-            termsOfUseAgreeButton.centerYAnchor.constraint(equalTo: termsOfUseAgreeLabel.centerYAnchor),
+            termsOfUseAgreeButton.topAnchor.constraint(equalTo: termsOfUseAgreeLabel.topAnchor),
             termsOfUseAgreeButton.widthAnchor.constraint(equalToConstant: 20),
             termsOfUseAgreeButton.heightAnchor.constraint(equalTo: termsOfUseAgreeButton.widthAnchor, multiplier: 1)
         ])
@@ -301,8 +303,9 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
         privacyPolicyAgreeButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
+            privacyPolicyAgreeButton.leadingAnchor.constraint(greaterThanOrEqualTo: privacyPolicyAgreeLabel.trailingAnchor, constant: 50),
             privacyPolicyAgreeButton.trailingAnchor.constraint(equalTo: termsOfUseAgreeButton.trailingAnchor),
-            privacyPolicyAgreeButton.centerYAnchor.constraint(equalTo: privacyPolicyAgreeLabel.centerYAnchor),
+            privacyPolicyAgreeButton.topAnchor.constraint(equalTo: privacyPolicyAgreeLabel.topAnchor),
             privacyPolicyAgreeButton.widthAnchor.constraint(equalToConstant: 20),
             privacyPolicyAgreeButton.heightAnchor.constraint(equalTo: privacyPolicyAgreeButton.widthAnchor, multiplier: 1)
         ])
