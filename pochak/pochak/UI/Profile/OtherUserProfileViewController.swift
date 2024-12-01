@@ -195,48 +195,10 @@ final class OtherUserProfileViewController: UIViewController {
     
     // MARK: - Functions
     
-//    private func updatePostListTabmanViewHeight(_ height: CGFloat) {
-//        // 현재 contentOffset 저장
-////        let currentOffset = contentScrollView.contentOffset
-//
-//        // 기존 높이 제약 조건 제거
-//        postListTabmanView.constraints.forEach { constraint in
-//            if constraint.firstAttribute == .height {
-//                constraint.isActive = false
-//            }
-//        }
-//
-//        // 새로운 높이 제약 조건 추가
-//        postListTabmanView.heightAnchor.constraint(equalToConstant: height).isActive = true
-//        
-//        // contentSize를 올바르게 계산
-//        contentScrollView.layoutIfNeeded()
-//        let newContentHeight = max(
-//            self.topUIView.frame.height,  // 새로운 높이를 포함한 계산
-//            self.contentScrollView.contentSize.height // 기존 높이와 비교
-//        )
-//        self.contentScrollView.contentSize = CGSize(
-//            width: self.contentScrollView.frame.width,
-//            height: self.topUIView.frame.height + height
-//        )
-//
-//        // 스크롤 offset 복원
-////        self.contentScrollView.setContentOffset(currentOffset, animated: false)
-//
-//        print("Updated contentScrollView.contentSize: \(self.contentScrollView.contentSize)")
-//
-//        // 레이아웃을 업데이트하고 스크롤 위치 복원
-//        UIView.animate(withDuration: 0.3){
-//            // 레이아웃 강제 업데이트
-//            self.view.layoutIfNeeded()
-//        }
-//    }
-    
     private func updatePostListTabmanViewHeight(_ height: CGFloat) {
         // 기존 높이 제약 조건 제거
         postListTabmanView.constraints.forEach { constraint in
             if constraint.firstAttribute == .height {
-                print("constraint:\(constraint)")
                 constraint.isActive = false
             }
         }
@@ -493,7 +455,7 @@ extension OtherUserProfileViewController: UIScrollViewDelegate {
         if (contentScrollView.contentOffset.y > (contentScrollView.contentSize.height - contentScrollView.frame.size.height)){
             if (!isLastPage && !isCurrentlyFetching) {
                 print("has hit the bottom")
-                // Notification을 통해 FirstPostTabmanVC에 데이터 새로고침을 요청
+                // Notification을 통해 TabmanVC에 데이터 새로고침을 요청
                 NotificationCenter.default.post(name: .didHitBottom, object: nil)
             }
         }

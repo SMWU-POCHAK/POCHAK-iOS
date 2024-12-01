@@ -36,6 +36,7 @@ final class PochakPostTabmanViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        print("inside viewDidLayoutSubviews!!!")
         
         DispatchQueue.main.async {
             if let flowLayout = self.postCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
