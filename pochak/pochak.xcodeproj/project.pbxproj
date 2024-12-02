@@ -99,7 +99,7 @@
 		08EB99B72C53EA8500FAC08A /* TaggedUsersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB99B52C53EA8500FAC08A /* TaggedUsersTableViewCell.swift */; };
 		08EB99B82C53EA8500FAC08A /* TaggedUsersTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EB99B62C53EA8500FAC08A /* TaggedUsersTableViewCell.xib */; };
 		08FD3A392B357E6400574880 /* LikedUsersDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FD3A382B357E6400574880 /* LikedUsersDataService.swift */; };
-		2FCBFE6DE98CEA8938EF93DC /* Pods_pochakTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1916A70A802F298FF38F24 /* Pods_pochakTests.framework */; };
+		2FCBFE6DE98CEA8938EF93DC /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		371D33782B4E83E90084FF6A /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D33772B4E83E90084FF6A /* UserDefaultsManager.swift */; };
 		371D337A2B4E8D1F0084FF6A /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D33792B4E8D1F0084FF6A /* KeychainManager.swift */; };
 		373235472B68F93E0042EF94 /* FollowListDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373235462B68F93E0042EF94 /* FollowListDataManager.swift */; };
@@ -172,7 +172,7 @@
 		46B0B42C2CFDFDB500950554 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B42B2CFDFDB500950554 /* FirebaseCore */; };
 		46B0B42E2CFDFDB500950554 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B42D2CFDFDB500950554 /* FirebaseCrashlytics */; };
 		46B0B4312CFDFE3300950554 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B4302CFDFE3300950554 /* RealmSwift */; };
-		A6D48ED7F8B86CF57C481991 /* Pods_pochak_pochakUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC75B5747D3AC9026B862E11 /* Pods_pochak_pochakUITests.framework */; };
+		A6D48ED7F8B86CF57C481991 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		EA01079A2A59556800A3AE85 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0107952A59556800A3AE85 /* CommentViewController.swift */; };
 		EA01079B2A59556800A3AE85 /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0107962A59556800A3AE85 /* HomeTabViewController.swift */; };
 		EA01079E2A59556800A3AE85 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0107992A59556800A3AE85 /* PostViewController.swift */; };
@@ -493,7 +493,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FCBFE6DE98CEA8938EF93DC /* Pods_pochakTests.framework in Frameworks */,
+				2FCBFE6DE98CEA8938EF93DC /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,7 +501,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A6D48ED7F8B86CF57C481991 /* Pods_pochak_pochakUITests.framework in Frameworks */,
+				A6D48ED7F8B86CF57C481991 /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1087,9 +1087,6 @@
 			isa = PBXGroup;
 			children = (
 				EAF885252B5677CB00BA184A /* libsqlite3.0.tbd */,
-				A65A7656D9D72CC873C98FD4 /* Pods_pochak.framework */,
-				BC75B5747D3AC9026B862E11 /* Pods_pochak_pochakUITests.framework */,
-				6E1916A70A802F298FF38F24 /* Pods_pochakTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1361,8 +1358,8 @@
 				EA1B0B532A49D23A00F86FBC /* Sources */,
 				EA1B0B542A49D23A00F86FBC /* Frameworks */,
 				EA1B0B552A49D23A00F86FBC /* Resources */,
-				42914AF2E4C4F9BD17F4DE35 /* [CP] Embed Pods Frameworks */,
 				08D2B98E2C68C1B800BD7450 /* ShellScript */,
+				465D6E0D2CFE057300847542 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1581,21 +1578,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		42914AF2E4C4F9BD17F4DE35 /* [CP] Embed Pods Frameworks */ = {
+		465D6E0D2CFE057300847542 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
 			outputFileListPaths = (
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "
-";
-			showEnvVarsInLog = 0;
+			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
 		};
 		F0BA8870B3C73640294FA57C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
