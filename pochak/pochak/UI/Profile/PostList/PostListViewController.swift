@@ -75,17 +75,14 @@ extension PostListViewController: PageboyViewControllerDataSource, TMBarDataSour
     
     func viewController(for pageboyViewController: PageboyViewController,
                         at index: PageboyViewController.PageIndex) -> UIViewController? {
-//        NotificationCenter.default.post(name: .sendTabIndex, object: nil, userInfo: ["tabIndex": index])
         ProfileDataSingleton.shared.currentTabIndex = index
         return viewControllers[index]
     }
     
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-        // index를 통해 처음에 보이는 탭을 설정
         return .at(index: 0)
     }
     
-    // 팔로워 페이지 혹은 팔로잉 페이지인지에 따라 defualtPage 다르게 하기
     func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
         switch index {
         case 0:

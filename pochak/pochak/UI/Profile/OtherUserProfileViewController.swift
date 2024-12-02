@@ -6,13 +6,10 @@
 //
 
 import UIKit
+import Foundation
 
 protocol SecondViewControllerDelegate: AnyObject {
     func dismissSecondViewController()
-}
-
-protocol TabIndexDelegate: AnyObject {
-    func getCurrentTabIndex(index : Int)
 }
 
 final class OtherUserProfileViewController: UIViewController {
@@ -32,8 +29,7 @@ final class OtherUserProfileViewController: UIViewController {
     private let contentScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        //        scrollView.backgroundColor = UIColor(named: "gray01")
-        scrollView.backgroundColor = .red
+        scrollView.backgroundColor = UIColor(named: "gray01")
         scrollView.showsVerticalScrollIndicator = false
         
         return scrollView
@@ -69,16 +65,13 @@ final class OtherUserProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        // Notification 구독
         addSubview()
         setUpUIConstraints()
         setUpRefreshControl()
         setUpNavigationBar()
         setUpViewController()
         setUpData()
-        initializeSingleTon()
+        initializeSingleton()
         NotificationCenter.default.addObserver(self, selector: #selector(totalHeightUpdated), name: .didUpdateTotalHeight, object: nil)
     }
     
@@ -129,6 +122,11 @@ final class OtherUserProfileViewController: UIViewController {
         }
     }
     
+    @IBAction func updateProfile(_ sender: Any) {
+        guard let updateProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "UpdateProfileVC") as? UpdateProfileViewController else {return}
+        self.navigationController?.pushViewController(updateProfileVC, animated: true)
+    }
+
     @objc private func viewFollowerTapped() {
         guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC") as? FollowListViewController else {return}
         followListVC.index = 0
@@ -156,15 +154,11 @@ final class OtherUserProfileViewController: UIViewController {
         sheet?.prefersGrabberVisible = true
         sheet?.prefersScrollingExpandsWhenScrolledToEdge = false
         
-        // delegate 채택
         profileMenuVC.delegate = self
         present(profileMenuVC, animated: true)
     }
     
     @objc private func refreshData(_ sender: Any) {
-        print("refresh")
-        //        imageArray = []
-        //        currentFetchingPage = 0
         setUpData()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.contentScrollView.refreshControl?.endRefreshing()
@@ -172,12 +166,10 @@ final class OtherUserProfileViewController: UIViewController {
     }
     
     @objc private func totalHeightUpdated() {
-        // TotalHeight를 받아서 사용
-        print("totalHeightUpdated : \(ProfileDataSingleton.shared.firstTabHeight)")
-        print("totalHeightUpdated : \(ProfileDataSingleton.shared.currentTabIndex)")
-        ProfileDataSingleton.shared.currentTabIndex == 0 ? (updatePostListTabmanViewHeight(ProfileDataSingleton.shared.firstTabHeight)) : (updatePostListTabmanViewHeight(ProfileDataSingleton.shared.secondTabHeight))
+        ProfileDataSingleton.shared.currentTabIndex == 0 ?
+        (updatePostListTabmanViewHeight(ProfileDataSingleton.shared.firstTabHeight)) :
+        (updatePostListTabmanViewHeight(ProfileDataSingleton.shared.secondTabHeight))
     }
-    
     
     // MARK: - Functions
     
@@ -203,28 +195,13 @@ final class OtherUserProfileViewController: UIViewController {
                 width: self.contentScrollView.frame.width,
                 height: self.topUIView.frame.height
             )
-            print("contentScrollView.contentSize : \(self.contentScrollView.contentSize)")
-            
         }
     }
     
-    
     private func addSubview() {
         self.view.addSubview(contentScrollView)
-        topUIView.backgroundColor = .yellow
         contentScrollView.addSubview(topUIView)
-        postListTabmanView.backgroundColor = .green
         topUIView.addSubview(postListTabmanView)
-    }
-    
-    private func initializeSingleTon() {
-        ProfileDataSingleton.shared.currentTabIndex = 0
-        ProfileDataSingleton.shared.firstTabHeight = 0.0
-        ProfileDataSingleton.shared.secondTabHeight = 0.0
-        ProfileDataSingleton.shared.firstTabIsCurrentlyFetching = false
-        ProfileDataSingleton.shared.secondTabIsCurrentlyFetching = false
-        ProfileDataSingleton.shared.firstTabIsLastPage = false
-        ProfileDataSingleton.shared.secondTabIsLastPage = false
     }
     
     private func setUpUIConstraints() {
@@ -239,8 +216,6 @@ final class OtherUserProfileViewController: UIViewController {
         profileImage.translatesAutoresizingMaskIntoConstraints = false
         updateProfileBtn.translatesAutoresizingMaskIntoConstraints = false
         
-        
-        
         NSLayoutConstraint.activate([
             contentScrollView.topAnchor.constraint(equalTo: view.topAnchor),
             contentScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -250,10 +225,10 @@ final class OtherUserProfileViewController: UIViewController {
         
         let scrollContentGuide = contentScrollView.contentLayoutGuide
         NSLayoutConstraint.activate([
-            // topUIView
             topUIView.topAnchor.constraint(equalTo: scrollContentGuide.topAnchor),
             topUIView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             topUIView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            topUIView.bottomAnchor.constraint(equalTo: postListTabmanView.bottomAnchor), // Dynamic height for topUIView
             
             profileBackground.topAnchor.constraint(equalTo: topUIView.topAnchor, constant: 20),
             profileBackground.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor, constant: 20),
@@ -281,26 +256,16 @@ final class OtherUserProfileViewController: UIViewController {
             followToggleBtn.leadingAnchor.constraint(equalTo: whiteBackground.leadingAnchor),
             followToggleBtn.trailingAnchor.constraint(equalTo: whiteBackground.trailingAnchor),
             
-            // postListTabmanView
             postListTabmanView.topAnchor.constraint(equalTo: followToggleBtn.bottomAnchor, constant: 5),
             postListTabmanView.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor),
             postListTabmanView.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor),
             postListTabmanView.heightAnchor.constraint(equalTo: scrollContentGuide.heightAnchor),
-            
-            // Dynamic height for topUIView
-            topUIView.bottomAnchor.constraint(equalTo: postListTabmanView.bottomAnchor),
         ])
     }
     
     private func setUpRefreshControl() {
         contentScrollView.refreshControl = UIRefreshControl()
         contentScrollView.refreshControl?.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
-    }
-    
-    
-    @IBAction func updateProfile(_ sender: Any) {
-        guard let updateProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "UpdateProfileVC") as? UpdateProfileViewController else {return}
-        self.navigationController?.pushViewController(updateProfileVC, animated: true)
     }
     
     private func setUpNavigationBar() {
@@ -315,26 +280,12 @@ final class OtherUserProfileViewController: UIViewController {
         profileBackground.layer.cornerRadius = 58
         profileImage.layer.cornerRadius = 55
         profileImage.contentMode = .scaleAspectFill
-        
         whiteBackground.layer.cornerRadius = 8
         followToggleBtn.layer.cornerRadius = 8
-        
         viewFollowerList()
         viewFollowingList()
-        
         updateProfileBtn.layer.isHidden = true
-        
         contentScrollView.delegate = self
-    }
-    
-    private func viewFollowerList() { //  UITapGestureRecognizer 사용
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewFollowerTapped))
-        followerList.addGestureRecognizer(tapGestureRecognizer)
-    }
-    
-    private func viewFollowingList() { //  UITapGestureRecognizer 사용
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewFollowingTapped))
-        followingList.addGestureRecognizer(tapGestureRecognizer)
     }
     
     private func setUpData() {
@@ -365,9 +316,6 @@ final class OtherUserProfileViewController: UIViewController {
                     return
                 }
                 
-                print("=== Profile, setup data succeeded ===")
-                print("== data: \(data)")
-                
                 // load 프로필 이미지
                 if let url = URL(string: data.result.profileImage ?? "") {
                     self.profileImage.load(with: url)
@@ -382,6 +330,26 @@ final class OtherUserProfileViewController: UIViewController {
         } else {
             print("No handle received")
         }
+    }
+    
+    private func initializeSingleton() {
+        ProfileDataSingleton.shared.currentTabIndex = 0
+        ProfileDataSingleton.shared.firstTabHeight = 0.0
+        ProfileDataSingleton.shared.secondTabHeight = 0.0
+        ProfileDataSingleton.shared.firstTabIsCurrentlyFetching = false
+        ProfileDataSingleton.shared.secondTabIsCurrentlyFetching = false
+        ProfileDataSingleton.shared.firstTabIsLastPage = false
+        ProfileDataSingleton.shared.secondTabIsLastPage = false
+    }
+    
+    private func viewFollowerList() { //  UITapGestureRecognizer 사용
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewFollowerTapped))
+        followerList.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    private func viewFollowingList() { //  UITapGestureRecognizer 사용
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewFollowingTapped))
+        followingList.addGestureRecognizer(tapGestureRecognizer)
     }
     
     private func setUpResponseData(_ responseData: ProfileRetrievalResult) {
@@ -422,10 +390,9 @@ final class OtherUserProfileViewController: UIViewController {
             }
         }
     }
+    
     deinit {
-        // Observer 해제
         NotificationCenter.default.removeObserver(self)
-        print("observer removed!")
     }
 }
 
@@ -481,25 +448,16 @@ extension OtherUserProfileViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (contentScrollView.contentOffset.y > (contentScrollView.contentSize.height - contentScrollView.frame.size.height)) {
-            print("has hit the bottom")
-            print("bottom ProfileDataSingleton.shared.firstTabHeight :: \(ProfileDataSingleton.shared.firstTabHeight)")
-            print("bottom ProfileDataSingleton.shared.secondTabHeight :: \(ProfileDataSingleton.shared.secondTabHeight)")
-            if (ProfileDataSingleton.shared.currentTabIndex == 0 && !ProfileDataSingleton.shared.firstTabIsCurrentlyFetching && !ProfileDataSingleton.shared.firstTabIsLastPage) {
+            if (ProfileDataSingleton.shared.currentTabIndex == 0 &&
+                !ProfileDataSingleton.shared.firstTabIsCurrentlyFetching &&
+                !ProfileDataSingleton.shared.firstTabIsLastPage) {
                 NotificationCenter.default.post(name: .didHitBottom, object: nil)
-            } else if (ProfileDataSingleton.shared.currentTabIndex == 1 && !ProfileDataSingleton.shared.secondTabIsCurrentlyFetching && !ProfileDataSingleton.shared.secondTabIsLastPage){
+            } else if (ProfileDataSingleton.shared.currentTabIndex == 1 &&
+                       !ProfileDataSingleton.shared.secondTabIsCurrentlyFetching &&
+                       !ProfileDataSingleton.shared.secondTabIsLastPage) {
                 print("has hit the second tab bottom && reloading")
-                // Notification을 통해 TabmanVC에 데이터 새로고침을 요청
                 NotificationCenter.default.post(name: .didHitBottom, object: nil)
             }
         }
     }
-}
-
-extension Notification.Name {
-    static let didUpdateTotalHeight = Notification.Name("didUpdateTotalHeight")
-    static let didHitBottom = Notification.Name("didHitBottom")
-    static let didReachLastPage = Notification.Name("didReachLastPage")
-    static let didStartFetchingData = Notification.Name("didStartFetchingData")
-    static let didFinishFetchingData = Notification.Name("didFinishFetchingData")
-    static let sendTabIndex = Notification.Name("sendTabIndex")
 }

@@ -6,16 +6,15 @@
 //
 
 import UIKit
+import Foundation
 
 class PochakedPostTabmanViewController: UIViewController {
     
     // MARK: - Properties
     var receivedHandle: String?
     var imageArray: [ProfilePostList]! = []
-    var otherUserProfileVC: OtherUserProfileViewController?
     private var isCurrentlyFetching: Bool = false
     private var currentFetchingPage: Int = 0
-    private let currentTabIndex: Int = 0
     private let minimumLineSpacing: CGFloat = 9
     private let minimumInterItemSpacing: CGFloat = 8
     private var isLastPage: Bool = false
@@ -28,61 +27,26 @@ class PochakedPostTabmanViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("inside PochakedPostTabmanViewController viewdidload!!")
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveRefreshRequest), name: .didHitBottom, object: nil)
         currentFetchingPage = 0
-        setUpCollectionView()
         setUpData()
+        setUpCollectionView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print("inside viewDidAppear!!")
         calculateCurentHeight()
     }
+        
+    // MARK: - Actions
     
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        print("inside viewDidLayoutSubviews!!")
-//        calculateCurentHeight()
-//    }
-    
-    // MARK: - Functions
-    
-    private func setUpCollectionView() {
-        postCollectionView.delegate = self
-        postCollectionView.dataSource = self
-        postCollectionView.register(
-            UINib(nibName: ProfilePostCollectionViewCell.identifier, bundle: nil),
-            forCellWithReuseIdentifier: ProfilePostCollectionViewCell.identifier)
-        postCollectionView.isScrollEnabled = false
-        postCollectionView.backgroundColor = .green
-    }
-
-    
-    private func calculateCurentHeight() {
-        DispatchQueue.main.async {
-            if let flowLayout = self.postCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-                let delegateInsets = (self.collectionView(
-                    self.postCollectionView,
-                    layout: flowLayout,
-                    insetForSectionAt: 0
-                ))
-                print("Delegate Insets: \(delegateInsets)")
-                
-                // UIEdgeInsets의 top, bottom 값 추출
-                let topInset = delegateInsets.top
-                let bottomInset = delegateInsets.bottom
-                print("Delegate Insets - Top: \(topInset), Bottom: \(bottomInset)")
-                let contentHeight = self.postCollectionView.collectionViewLayout.collectionViewContentSize.height
-                print("contentHeight : \(contentHeight)")
-                let totalHeight = contentHeight + topInset + bottomInset
-                print("Total height with section insets: \(totalHeight)")
-                ProfileDataSingleton.shared.firstTabHeight = totalHeight
-                NotificationCenter.default.post(name: .didUpdateTotalHeight, object: nil)
-            }
+    @objc private func didReceiveRefreshRequest(_ notification: Notification) {
+        if ProfileDataSingleton.shared.currentTabIndex == 0 {
+            setUpData()
         }
     }
+    
+    // MARK: - Functions
     
     func setUpData() {
         isCurrentlyFetching = true
@@ -106,11 +70,8 @@ class PochakedPostTabmanViewController: UIViewController {
                 
                 let newPosts = data.result.postList
                 let startIndex = self?.imageArray.count
-                print("startIndex : \(String(describing: startIndex))")
                 let endIndex = startIndex! + newPosts.count
-                print("endIndex : \(endIndex)")
                 let newIndexPaths = (startIndex!..<endIndex).map { IndexPath(item: $0, section: 0) }
-                print("newIndexPaths : \(newIndexPaths)")
                 self?.imageArray.append(contentsOf: newPosts)
                 self?.isLastPage = data.result.pageInfo.lastPage
                 
@@ -118,20 +79,16 @@ class PochakedPostTabmanViewController: UIViewController {
                     ProfileDataSingleton.shared.firstTabIsLastPage = true
                 }
                 
-                print("보여주는 게시글 개수: \(newPosts.count)")
                 DispatchQueue.main.async {
                     if self?.currentFetchingPage == 0 {
                         self?.postCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
-                        print(">>>>>>> PochakedPostDataManager is currently reloading!!!!!!!")
                     } else {
                         self?.postCollectionView.insertItems(at: newIndexPaths)
-                        print(">>>>>>> PochakedPostDataManager is currently fethcing!!!!!!!")
                     }
                     self?.isCurrentlyFetching = false
                     ProfileDataSingleton.shared.firstTabIsCurrentlyFetching = false
                     self?.currentFetchingPage += 1
                     self?.calculateCurentHeight()
-
                 }
             }
         } else {
@@ -139,16 +96,36 @@ class PochakedPostTabmanViewController: UIViewController {
         }
     }
     
-    @objc private func didReceiveRefreshRequest(_ notification: Notification) {
-        
-        if ProfileDataSingleton.shared.currentTabIndex == 0 {
-            print("First tab received didHitBottom notification!")
-            setUpData()
+    private func setUpCollectionView() {
+        postCollectionView.delegate = self
+        postCollectionView.dataSource = self
+        postCollectionView.register(
+            UINib(nibName: ProfilePostCollectionViewCell.identifier, bundle: nil),
+            forCellWithReuseIdentifier: ProfilePostCollectionViewCell.identifier)
+        postCollectionView.isScrollEnabled = false
+        postCollectionView.backgroundColor = .green
+    }
+    
+    private func calculateCurentHeight() {
+        DispatchQueue.main.async {
+            if let flowLayout = self.postCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+                let delegateInsets = (self.collectionView(
+                    self.postCollectionView,
+                    layout: flowLayout,
+                    insetForSectionAt: 0
+                ))
+                
+                // UIEdgeInsets의 top, bottom 값 추출
+                let topInset = delegateInsets.top
+                let bottomInset = delegateInsets.bottom
+                let contentHeight = self.postCollectionView.collectionViewLayout.collectionViewContentSize.height
+                let totalHeight = contentHeight + topInset + bottomInset
+                ProfileDataSingleton.shared.firstTabHeight = totalHeight
+            }
         }
     }
     
     deinit {
-        // Observer 해제
         NotificationCenter.default.removeObserver(self)
     }
 }
