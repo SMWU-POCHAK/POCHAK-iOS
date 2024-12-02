@@ -69,6 +69,8 @@ final class OtherUserProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         // Notification 구독
         addSubview()
         setUpUIConstraints()
@@ -76,6 +78,7 @@ final class OtherUserProfileViewController: UIViewController {
         setUpNavigationBar()
         setUpViewController()
         setUpData()
+        initializeSingleTon()
         NotificationCenter.default.addObserver(self, selector: #selector(totalHeightUpdated), name: .didUpdateTotalHeight, object: nil)
     }
     
@@ -212,6 +215,16 @@ final class OtherUserProfileViewController: UIViewController {
         contentScrollView.addSubview(topUIView)
         postListTabmanView.backgroundColor = .green
         topUIView.addSubview(postListTabmanView)
+    }
+    
+    private func initializeSingleTon() {
+        ProfileDataSingleton.shared.currentTabIndex = 0
+        ProfileDataSingleton.shared.firstTabHeight = 0.0
+        ProfileDataSingleton.shared.secondTabHeight = 0.0
+        ProfileDataSingleton.shared.firstTabIsCurrentlyFetching = false
+        ProfileDataSingleton.shared.secondTabIsCurrentlyFetching = false
+        ProfileDataSingleton.shared.firstTabIsLastPage = false
+        ProfileDataSingleton.shared.secondTabIsLastPage = false
     }
     
     private func setUpUIConstraints() {
@@ -412,6 +425,7 @@ final class OtherUserProfileViewController: UIViewController {
     deinit {
         // Observer 해제
         NotificationCenter.default.removeObserver(self)
+        print("observer removed!")
     }
 }
 
@@ -468,40 +482,15 @@ extension OtherUserProfileViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (contentScrollView.contentOffset.y > (contentScrollView.contentSize.height - contentScrollView.frame.size.height)) {
             print("has hit the bottom")
-            print("ProfileDataSingleton.shared.currentTabIndex :: \(ProfileDataSingleton.shared.currentTabIndex)")
-            if (!ProfileDataSingleton.shared.firstTabIsCurrentlyFetching && !ProfileDataSingleton.shared.firstTabIsLastPage) {
-                print("has hit the first tab bottom && reloading")
-                print("firstTabHeight : \(ProfileDataSingleton.shared.firstTabHeight)")
-                print("secondTabHeight : \(ProfileDataSingleton.shared.secondTabHeight)")
-                print("currentTabIndex : \(ProfileDataSingleton.shared.currentTabIndex)")
-                // Notification을 통해 TabmanVC에 데이터 새로고침을 요청
+            print("bottom ProfileDataSingleton.shared.firstTabHeight :: \(ProfileDataSingleton.shared.firstTabHeight)")
+            print("bottom ProfileDataSingleton.shared.secondTabHeight :: \(ProfileDataSingleton.shared.secondTabHeight)")
+            if (ProfileDataSingleton.shared.currentTabIndex == 0 && !ProfileDataSingleton.shared.firstTabIsCurrentlyFetching && !ProfileDataSingleton.shared.firstTabIsLastPage) {
                 NotificationCenter.default.post(name: .didHitBottom, object: nil)
-//                ProfileDataSingleton.shared.didHitBottom = true
-            } else if (!ProfileDataSingleton.shared.secondTabIsCurrentlyFetching && !ProfileDataSingleton.shared.secondTabIsLastPage){
+            } else if (ProfileDataSingleton.shared.currentTabIndex == 1 && !ProfileDataSingleton.shared.secondTabIsCurrentlyFetching && !ProfileDataSingleton.shared.secondTabIsLastPage){
                 print("has hit the second tab bottom && reloading")
-                print("firstTabHeight : \(ProfileDataSingleton.shared.firstTabHeight)")
-                print("secondTabHeight : \(ProfileDataSingleton.shared.secondTabHeight)")
-                print("currentTabIndex : \(ProfileDataSingleton.shared.currentTabIndex)")
                 // Notification을 통해 TabmanVC에 데이터 새로고침을 요청
                 NotificationCenter.default.post(name: .didHitBottom, object: nil)
-//                ProfileDataSingleton.shared.didHitBottom = true
             }
-//        } else if (currentTabIndex == 0 && firstTabHeight >= contentScrollView.frame.size.height) {
-//            print("firstTabHeight : \(firstTabHeight)")
-//            print("firstTabHeight contentScrollView.frame.size.height : \(contentScrollView.frame.size.height)")
-//            if (!isLastPage && !isCurrentlyFetching) {
-//                print("change of first tabman height")
-//                // Notification을 통해 TabmanVC에 데이터 새로고침을 요청
-//                NotificationCenter.default.post(name: .didHitBottom, object: nil, userInfo: ["tabIndex": currentTabIndex])
-//            }
-//        } else if (currentTabIndex == 1 && secondTabHeight >= contentScrollView.frame.size.height) {
-//            print("secondTabHeight : \(secondTabHeight)")
-//            print("secondTabHeight contentScrollView.frame.size.height : \(contentScrollView.frame.size.height)")
-//            if (!isLastPage && !isCurrentlyFetching) {
-//                print("change of second tabman height")
-//                // Notification을 통해 TabmanVC에 데이터 새로고침을 요청
-//                NotificationCenter.default.post(name: .didHitBottom, object: nil, userInfo: ["tabIndex": currentTabIndex])
-//            }
         }
     }
 }

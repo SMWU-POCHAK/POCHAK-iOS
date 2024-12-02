@@ -28,16 +28,25 @@ final class PochakPostTabmanViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("inside PochakPostTabmanViewController viewdidload!!")
+
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveRefreshRequest), name: .didHitBottom, object: nil)
         currentFetchingPage = 0
         setUpCollectionView()
         setUpData()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("inside viewDidAppear!!")
         calculateCurentHeight()
     }
+    
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//        print("inside viewDidLayoutSubviews!!")
+//    }
+
     
     // MARK: - Functions
     
@@ -74,9 +83,18 @@ final class PochakPostTabmanViewController: UIViewController {
         }
     }
     
+    private func initializeSingleTon() {
+        ProfileDataSingleton.shared.currentTabIndex = 0
+        ProfileDataSingleton.shared.firstTabHeight = 0.0
+        ProfileDataSingleton.shared.secondTabHeight = 0.0
+        ProfileDataSingleton.shared.firstTabIsCurrentlyFetching = false
+        ProfileDataSingleton.shared.secondTabIsCurrentlyFetching = false
+        ProfileDataSingleton.shared.firstTabIsLastPage = false
+        ProfileDataSingleton.shared.secondTabIsLastPage = false
+    }
+    
     func setUpData() {
         isCurrentlyFetching = true
-//        NotificationCenter.default.post(name: .didStartFetchingData, object: nil, userInfo: ["tabIndex": currentTabIndex])
         ProfileDataSingleton.shared.secondTabIsCurrentlyFetching = true
         let request = ProfileRetrievalRequest(page: currentFetchingPage)
         if let handle = receivedHandle {
@@ -103,7 +121,6 @@ final class PochakPostTabmanViewController: UIViewController {
                 self?.isLastPage = data.result.pageInfo.lastPage
                 
                 if self?.isLastPage == true {
-//                    NotificationCenter.default.post(name: .didReachLastPage, object: nil, userInfo: ["tabIndex": self?.currentTabIndex])
                     ProfileDataSingleton.shared.secondTabIsLastPage = true
                 }
                 
@@ -118,6 +135,9 @@ final class PochakPostTabmanViewController: UIViewController {
                     self?.isCurrentlyFetching = false
                     ProfileDataSingleton.shared.secondTabIsCurrentlyFetching = false
                     self?.currentFetchingPage += 1;
+                    
+                    self?.calculateCurentHeight()
+
                 }
             }
         } else {

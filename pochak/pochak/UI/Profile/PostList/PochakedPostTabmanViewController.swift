@@ -28,21 +28,24 @@ class PochakedPostTabmanViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("inside PochakedPostTabmanViewController viewdidload!!")
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveRefreshRequest), name: .didHitBottom, object: nil)
         currentFetchingPage = 0
         setUpCollectionView()
         setUpData()
-        
-        // storyboard에서 OtherVC 인스턴스를 가져오기
-        if let otherUserProfileVC = storyboard?.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController {
-            self.otherUserProfileVC = otherUserProfileVC
-        }
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("inside viewDidAppear!!")
         calculateCurentHeight()
     }
+    
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//        print("inside viewDidLayoutSubviews!!")
+//        calculateCurentHeight()
+//    }
     
     // MARK: - Functions
     
@@ -55,6 +58,7 @@ class PochakedPostTabmanViewController: UIViewController {
         postCollectionView.isScrollEnabled = false
         postCollectionView.backgroundColor = .green
     }
+
     
     private func calculateCurentHeight() {
         DispatchQueue.main.async {
@@ -82,7 +86,6 @@ class PochakedPostTabmanViewController: UIViewController {
     
     func setUpData() {
         isCurrentlyFetching = true
-//        NotificationCenter.default.post(name: .didStartFetchingData, object: nil, userInfo: ["tabIndex": currentTabIndex])
         ProfileDataSingleton.shared.firstTabIsCurrentlyFetching = true
         let request = ProfileRetrievalRequest(page: currentFetchingPage)
         if let handle = receivedHandle {
@@ -127,6 +130,8 @@ class PochakedPostTabmanViewController: UIViewController {
                     self?.isCurrentlyFetching = false
                     ProfileDataSingleton.shared.firstTabIsCurrentlyFetching = false
                     self?.currentFetchingPage += 1
+                    self?.calculateCurentHeight()
+
                 }
             }
         } else {
