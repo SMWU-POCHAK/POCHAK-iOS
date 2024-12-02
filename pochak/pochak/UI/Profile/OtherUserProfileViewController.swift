@@ -19,10 +19,15 @@ final class OtherUserProfileViewController: UIViewController {
     var receivedFollowerCount: Int = 0
     var receivedFollowingCount: Int = 0
     var receivedIsFollow: Bool?
-    private var isCurrentlyFetching: Bool = false
-    private var isLastPage: Bool = false
+    private var firstTabHeight: CGFloat = 0.0
+    private var secondTabHeight: CGFloat = 0.0
+    private var firstTabIsCurrentlyFetching: Bool = false
+    private var secondTabIsCurrentlyFetching: Bool = false
+    private var firstTabIsLastPage: Bool = false
+    private var secondTabIsLastPage: Bool = false
     private let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId)
     private var searchBlockedUser: Bool = false
+    private var currentTabIndex: Int = 0
     private lazy var moreButton: UIBarButtonItem = { // 업로드 버튼
         let barButton = UIBarButtonItem(image: UIImage(named: "moreButtonIcon"), style: .plain, target: self, action: #selector(moreButtonPressed))
         return barButton
@@ -74,6 +79,7 @@ final class OtherUserProfileViewController: UIViewController {
         setUpNavigationBar()
         setUpViewController()
         setUpData()
+        NotificationCenter.default.addObserver(self, selector: #selector(handleTabChangeNotification(_:)), name: .sendTabIndex, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(totalHeightUpdated(_:)), name: .didUpdateTotalHeight, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didStartFetchingData), name: .didStartFetchingData, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didFinishFetchingData), name: .didFinishFetchingData, object: nil)
@@ -171,24 +177,44 @@ final class OtherUserProfileViewController: UIViewController {
     
     @objc func totalHeightUpdated(_ notification: Notification) {
         if let userInfo = notification.userInfo,
-           let totalHeight = userInfo["totalHeight"] as? CGFloat {
+           let totalHeight = userInfo["totalHeight"] as? CGFloat, let tabIndex = userInfo["tabIndex"] as? Int {
             // TotalHeight를 받아서 사용
             print("받은 totalHeight: \(totalHeight)")
-            updatePostListTabmanViewHeight(totalHeight)
+            tabIndex == 0 ? (firstTabHeight = totalHeight) : (secondTabHeight = totalHeight)
+            currentTabIndex == 0 ? (updatePostListTabmanViewHeight(firstTabHeight)) : (updatePostListTabmanViewHeight(secondTabHeight))
         }
     }
     
-    @objc func didStartFetchingData() {
-        isCurrentlyFetching = true
+    @objc func didStartFetchingData(_ notification: Notification) {
+        if let userInfo = notification.userInfo,
+           let tabIndex = userInfo["tabIndex"] as? Int {
+            tabIndex == 0 ? (firstTabIsCurrentlyFetching = true) : (secondTabIsCurrentlyFetching = true)
+        }
     }
     
-    @objc func didFinishFetchingData() {
-        isCurrentlyFetching = false
+    @objc func didFinishFetchingData(_ notification: Notification) {
+        if let userInfo = notification.userInfo,
+           let tabIndex = userInfo["tabIndex"] as? Int {
+            tabIndex == 0 ? (firstTabIsCurrentlyFetching = false) : (secondTabIsCurrentlyFetching = false)
+        }
     }
     
-    @objc func didReachLastPage() {
-        isLastPage = true
-        print("Reached last page")
+    @objc func didReachLastPage(_ notification: Notification) {
+        if let userInfo = notification.userInfo,
+           let tabIndex = userInfo["tabIndex"] as? Int {
+            tabIndex == 0 ? (firstTabIsLastPage = true) : (secondTabIsLastPage = true)
+            print("Reached last page")
+        }
+    }
+    
+    @objc func handleTabChangeNotification(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let tabIndex = userInfo["tabIndex"] as? Int else {return}
+        
+        currentTabIndex = tabIndex
+        // tabIndex를 사용하여 원하는 작업을 수행
+        currentTabIndex == 0 ? (updatePostListTabmanViewHeight(firstTabHeight)) : (updatePostListTabmanViewHeight(secondTabHeight))
+        print("현재 선택된 탭 인덱스: \(tabIndex)")
     }
     
     
@@ -452,12 +478,39 @@ extension OtherUserProfileViewController: SecondViewControllerDelegate {
 extension OtherUserProfileViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (contentScrollView.contentOffset.y > (contentScrollView.contentSize.height - contentScrollView.frame.size.height)){
-            if (!isLastPage && !isCurrentlyFetching) {
-                print("has hit the bottom")
+        if (contentScrollView.contentOffset.y > (contentScrollView.contentSize.height - contentScrollView.frame.size.height)) {
+            print("has hit the bottom")
+            if (!firstTabIsCurrentlyFetching && !firstTabIsLastPage) {
+                print("has hit the first tab bottom && reloading")
+                print("firstTabHeight : \(firstTabHeight)")
+                print("secondTabHeight : \(secondTabHeight)")
+                print("currentTabIndex : \(currentTabIndex)")
                 // Notification을 통해 TabmanVC에 데이터 새로고침을 요청
-                NotificationCenter.default.post(name: .didHitBottom, object: nil)
+                NotificationCenter.default.post(name: .didHitBottom, object: nil, userInfo: ["tabIndex": 0])
+            } else if (!secondTabIsCurrentlyFetching && !secondTabIsLastPage){
+                print("has hit the second tab bottom && reloading")
+                print("firstTabHeight : \(firstTabHeight)")
+                print("secondTabHeight : \(secondTabHeight)")
+                print("currentTabIndex : \(currentTabIndex)")
+                // Notification을 통해 TabmanVC에 데이터 새로고침을 요청
+                NotificationCenter.default.post(name: .didHitBottom, object: nil, userInfo: ["tabIndex": 1])
             }
+//        } else if (currentTabIndex == 0 && firstTabHeight >= contentScrollView.frame.size.height) {
+//            print("firstTabHeight : \(firstTabHeight)")
+//            print("firstTabHeight contentScrollView.frame.size.height : \(contentScrollView.frame.size.height)")
+//            if (!isLastPage && !isCurrentlyFetching) {
+//                print("change of first tabman height")
+//                // Notification을 통해 TabmanVC에 데이터 새로고침을 요청
+//                NotificationCenter.default.post(name: .didHitBottom, object: nil, userInfo: ["tabIndex": currentTabIndex])
+//            }
+//        } else if (currentTabIndex == 1 && secondTabHeight >= contentScrollView.frame.size.height) {
+//            print("secondTabHeight : \(secondTabHeight)")
+//            print("secondTabHeight contentScrollView.frame.size.height : \(contentScrollView.frame.size.height)")
+//            if (!isLastPage && !isCurrentlyFetching) {
+//                print("change of second tabman height")
+//                // Notification을 통해 TabmanVC에 데이터 새로고침을 요청
+//                NotificationCenter.default.post(name: .didHitBottom, object: nil, userInfo: ["tabIndex": currentTabIndex])
+//            }
         }
     }
 }
@@ -468,4 +521,5 @@ extension Notification.Name {
     static let didReachLastPage = Notification.Name("didReachLastPage")
     static let didStartFetchingData = Notification.Name("didStartFetchingData")
     static let didFinishFetchingData = Notification.Name("didFinishFetchingData")
+    static let sendTabIndex = Notification.Name("sendTabIndex")
 }

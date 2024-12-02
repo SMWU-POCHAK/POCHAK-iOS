@@ -75,6 +75,7 @@ extension PostListViewController: PageboyViewControllerDataSource, TMBarDataSour
     
     func viewController(for pageboyViewController: PageboyViewController,
                         at index: PageboyViewController.PageIndex) -> UIViewController? {
+        NotificationCenter.default.post(name: .sendTabIndex, object: nil, userInfo: ["tabIndex": index])
         return viewControllers[index]
     }
     

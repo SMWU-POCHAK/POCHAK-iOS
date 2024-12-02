@@ -14,6 +14,7 @@ class PochakedPostTabmanViewController: UIViewController {
     var imageArray: [ProfilePostList]! = []
     private var isCurrentlyFetching: Bool = false
     private var currentFetchingPage: Int = 0
+    private let currentTabIndex: Int = 0
     private let minimumLineSpacing: CGFloat = 9
     private let minimumInterItemSpacing: CGFloat = 8
     private var isLastPage: Bool = false
@@ -26,7 +27,6 @@ class PochakedPostTabmanViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Notification을 수신하여 데이터를 갱신
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveRefreshRequest), name: .didHitBottom, object: nil)
         currentFetchingPage = 0
         setUpCollectionView()
@@ -35,7 +35,22 @@ class PochakedPostTabmanViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+        calculateCurentHeight()
+    }
+    
+    // MARK: - Functions
+    
+    private func setUpCollectionView() {
+        postCollectionView.delegate = self
+        postCollectionView.dataSource = self
+        postCollectionView.register(
+            UINib(nibName: ProfilePostCollectionViewCell.identifier, bundle: nil),
+            forCellWithReuseIdentifier: ProfilePostCollectionViewCell.identifier)
+        postCollectionView.isScrollEnabled = false
+        postCollectionView.backgroundColor = .green
+    }
+    
+    private func calculateCurentHeight() {
         DispatchQueue.main.async {
             if let flowLayout = self.postCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
                 let delegateInsets = (self.collectionView(
@@ -53,27 +68,14 @@ class PochakedPostTabmanViewController: UIViewController {
                 print("contentHeight : \(contentHeight)")
                 let totalHeight = contentHeight + topInset + bottomInset
                 print("Total height with section insets: \(totalHeight)")
-                NotificationCenter.default.post(name: .didUpdateTotalHeight, object: nil, userInfo: ["totalHeight": totalHeight])
+                NotificationCenter.default.post(name: .didUpdateTotalHeight, object: nil, userInfo: ["totalHeight": totalHeight, "tabIndex": self.currentTabIndex])
             }
         }
     }
     
-    // MARK: - Functions
-    
-    private func setUpCollectionView() {
-        postCollectionView.delegate = self
-        postCollectionView.dataSource = self
-        postCollectionView.register(
-            UINib(nibName: ProfilePostCollectionViewCell.identifier, bundle: nil),
-            forCellWithReuseIdentifier: ProfilePostCollectionViewCell.identifier)
-        postCollectionView.isScrollEnabled = false
-        postCollectionView.backgroundColor = .green
-    }
-    
-    
     func setUpData() {
         isCurrentlyFetching = true
-        NotificationCenter.default.post(name: .didStartFetchingData, object: nil)
+        NotificationCenter.default.post(name: .didStartFetchingData, object: nil, userInfo: ["tabIndex": currentTabIndex])
         let request = ProfileRetrievalRequest(page: currentFetchingPage)
         if let handle = receivedHandle {
             ProfileService.getProfile(handle: handle, request: request) { [weak self] data, failed in
@@ -102,7 +104,7 @@ class PochakedPostTabmanViewController: UIViewController {
                 self?.isLastPage = data.result.pageInfo.lastPage
                 
                 if self?.isLastPage == true {
-                    NotificationCenter.default.post(name: .didReachLastPage, object: nil)
+                    NotificationCenter.default.post(name: .didReachLastPage, object: nil, userInfo: ["tabIndex": self?.currentTabIndex])
                 }
                 
                 print("보여주는 게시글 개수: \(newPosts.count)")
@@ -115,7 +117,7 @@ class PochakedPostTabmanViewController: UIViewController {
                         print(">>>>>>> PochakedPostDataManager is currently fethcing!!!!!!!")
                     }
                     self?.isCurrentlyFetching = false
-                    NotificationCenter.default.post(name: .didFinishFetchingData, object: nil)
+                    NotificationCenter.default.post(name: .didFinishFetchingData, object: nil, userInfo: ["tabIndex": self?.currentTabIndex])
                     self?.currentFetchingPage += 1
                 }
             }
@@ -124,7 +126,12 @@ class PochakedPostTabmanViewController: UIViewController {
         }
     }
     
-    @objc func didReceiveRefreshRequest() {
+    @objc private func didReceiveRefreshRequest(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let tabIndex = userInfo["tabIndex"] as? Int, tabIndex == 0 else {return}
+
+        print("First tab received didHitBottom notification!")
+        // 알림 처리 로직
         setUpData()
     }
     
