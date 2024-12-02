@@ -22,16 +22,17 @@ final class OtherUserProfileViewController: UIViewController {
     var receivedIsFollow: Bool?
     private let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId)
     private var searchBlockedUser: Bool = false
+    
     private lazy var moreButton: UIBarButtonItem = { // 업로드 버튼
         let barButton = UIBarButtonItem(image: UIImage(named: "moreButtonIcon"), style: .plain, target: self, action: #selector(moreButtonPressed))
         return barButton
     }()
+    
     private let contentScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.backgroundColor = UIColor(named: "gray01")
         scrollView.showsVerticalScrollIndicator = false
-        
+        scrollView.backgroundColor = UIColor(named: "gray01")
         return scrollView
     }()
     
@@ -160,7 +161,7 @@ final class OtherUserProfileViewController: UIViewController {
     
     @objc private func refreshData(_ sender: Any) {
         setUpData()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.async() {
             self.contentScrollView.refreshControl?.endRefreshing()
         }
     }
@@ -172,31 +173,6 @@ final class OtherUserProfileViewController: UIViewController {
     }
     
     // MARK: - Functions
-    
-    func updatePostListTabmanViewHeight(_ height: CGFloat) {
-        
-        print("updatePostListTabmanViewHeight : \(height)")
-        // 기존 높이 제약 조건 제거
-        postListTabmanView.constraints.forEach { constraint in
-            if constraint.firstAttribute == .height {
-                constraint.isActive = false
-            }
-        }
-        
-        // 새로운 높이 제약 조건 추가
-        postListTabmanView.heightAnchor.constraint(equalToConstant: height).isActive = true
-        
-        // 레이아웃 애니메이션 처리
-        UIView.animate(withDuration: 0.3, animations: {
-            self.contentScrollView.layoutIfNeeded()
-        }) { _ in
-            // ScrollView의 contentSize 업데이트
-            self.contentScrollView.contentSize = CGSize(
-                width: self.contentScrollView.frame.width,
-                height: self.topUIView.frame.height
-            )
-        }
-    }
     
     private func addSubview() {
         self.view.addSubview(contentScrollView)
@@ -259,7 +235,7 @@ final class OtherUserProfileViewController: UIViewController {
             postListTabmanView.topAnchor.constraint(equalTo: followToggleBtn.bottomAnchor, constant: 5),
             postListTabmanView.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor),
             postListTabmanView.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor),
-            postListTabmanView.heightAnchor.constraint(equalTo: scrollContentGuide.heightAnchor),
+            postListTabmanView.heightAnchor.constraint(equalToConstant: view.frame.height - 270),
         ])
     }
     
@@ -365,7 +341,6 @@ final class OtherUserProfileViewController: UIViewController {
     
     private func setUpFollowBtn(_ responseData: ProfileRetrievalResult) {
         let currentHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
-        // 버튼 설정
         if currentHandle == self.receivedHandle {
             /// 내 프로필 조회한 경우
             self.followToggleBtn.layer.isHidden = true
@@ -388,6 +363,31 @@ final class OtherUserProfileViewController: UIViewController {
                 self.followToggleBtn.setTitle("팔로우", for: .normal)
                 self.followToggleBtn.backgroundColor = UIColor(named: "yellow00")
             }
+        }
+    }
+    
+    private func updatePostListTabmanViewHeight(_ height: CGFloat) {
+        print("height === \(topUIView.frame.height)")
+        // 기존 높이 제약 조건 제거
+        postListTabmanView.constraints.forEach { constraint in
+            if constraint.firstAttribute == .height {
+                print("inside contraint")
+                constraint.isActive = false
+            }
+        }
+        
+        // 새로운 높이 제약 조건 추가
+        postListTabmanView.heightAnchor.constraint(equalToConstant: height).isActive = true
+        
+        // 레이아웃 애니메이션 처리
+        UIView.animate(withDuration: 0.3, animations: {
+            self.contentScrollView.layoutIfNeeded()
+        }) { _ in
+            // ScrollView의 contentSize 업데이트
+            self.contentScrollView.contentSize = CGSize(
+                width: self.contentScrollView.frame.width,
+                height: self.topUIView.frame.height
+            )
         }
     }
     
@@ -455,7 +455,6 @@ extension OtherUserProfileViewController: UIScrollViewDelegate {
             } else if (ProfileDataSingleton.shared.currentTabIndex == 1 &&
                        !ProfileDataSingleton.shared.secondTabIsCurrentlyFetching &&
                        !ProfileDataSingleton.shared.secondTabIsLastPage) {
-                print("has hit the second tab bottom && reloading")
                 NotificationCenter.default.post(name: .didHitBottom, object: nil)
             }
         }

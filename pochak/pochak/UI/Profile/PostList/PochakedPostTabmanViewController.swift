@@ -103,7 +103,6 @@ class PochakedPostTabmanViewController: UIViewController {
             UINib(nibName: ProfilePostCollectionViewCell.identifier, bundle: nil),
             forCellWithReuseIdentifier: ProfilePostCollectionViewCell.identifier)
         postCollectionView.isScrollEnabled = false
-        postCollectionView.backgroundColor = .green
     }
     
     private func calculateCurentHeight() {
