@@ -68,14 +68,16 @@ final class PochakPostTabmanViewController: UIViewController {
                 print("contentHeight : \(contentHeight)")
                 let totalHeight = contentHeight + topInset + bottomInset
                 print("Total height with section insets: \(totalHeight)")
-                NotificationCenter.default.post(name: .didUpdateTotalHeight, object: nil, userInfo: ["totalHeight": totalHeight, "tabIndex": self.currentTabIndex])
+                ProfileDataSingleton.shared.secondTabHeight = totalHeight
+                NotificationCenter.default.post(name: .didUpdateTotalHeight, object: nil)
             }
         }
     }
     
     func setUpData() {
         isCurrentlyFetching = true
-        NotificationCenter.default.post(name: .didStartFetchingData, object: nil, userInfo: ["tabIndex": currentTabIndex])
+//        NotificationCenter.default.post(name: .didStartFetchingData, object: nil, userInfo: ["tabIndex": currentTabIndex])
+        ProfileDataSingleton.shared.secondTabIsCurrentlyFetching = true
         let request = ProfileRetrievalRequest(page: currentFetchingPage)
         if let handle = receivedHandle {
             ProfileService.getProfilePochakPosts(handle: handle, request: request) { [weak self] data, failed in
@@ -101,7 +103,8 @@ final class PochakPostTabmanViewController: UIViewController {
                 self?.isLastPage = data.result.pageInfo.lastPage
                 
                 if self?.isLastPage == true {
-                    NotificationCenter.default.post(name: .didReachLastPage, object: nil, userInfo: ["tabIndex": self?.currentTabIndex])
+//                    NotificationCenter.default.post(name: .didReachLastPage, object: nil, userInfo: ["tabIndex": self?.currentTabIndex])
+                    ProfileDataSingleton.shared.secondTabIsLastPage = true
                 }
                 
                 DispatchQueue.main.async {
@@ -113,7 +116,7 @@ final class PochakPostTabmanViewController: UIViewController {
                         print(">>>>>>> PochakPostDataManager is currently fethcing!!!!!!!")
                     }
                     self?.isCurrentlyFetching = false
-                    NotificationCenter.default.post(name: .didFinishFetchingData, object: nil, userInfo: ["tabIndex": self?.currentTabIndex])
+                    ProfileDataSingleton.shared.secondTabIsCurrentlyFetching = false
                     self?.currentFetchingPage += 1;
                 }
             }
@@ -122,19 +125,17 @@ final class PochakPostTabmanViewController: UIViewController {
         }
     }
     
-    @objc func didReceiveRefreshRequest(_ notification: Notification) {
-        guard let userInfo = notification.userInfo,
-              let tabIndex = userInfo["tabIndex"] as? Int, tabIndex == 1 else {
-            return // 다른 탭의 알림이면 무시
+    @objc private func didReceiveRefreshRequest(_ notification: Notification) {
+        if ProfileDataSingleton.shared.currentTabIndex == 1 {
+            print("Second tab received didHitBottom notification!")
+            // 알림 처리 로직
+            setUpData()
         }
-
-        print("Second tab received didHitBottom notification!")
-        // 알림 처리 로직
-        setUpData()
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: .didHitBottom, object: nil)
+        // Observer 해제
+        NotificationCenter.default.removeObserver(self)
     }
     
 }

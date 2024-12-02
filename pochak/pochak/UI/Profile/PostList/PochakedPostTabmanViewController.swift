@@ -12,6 +12,7 @@ class PochakedPostTabmanViewController: UIViewController {
     // MARK: - Properties
     var receivedHandle: String?
     var imageArray: [ProfilePostList]! = []
+    var otherUserProfileVC: OtherUserProfileViewController?
     private var isCurrentlyFetching: Bool = false
     private var currentFetchingPage: Int = 0
     private let currentTabIndex: Int = 0
@@ -31,6 +32,11 @@ class PochakedPostTabmanViewController: UIViewController {
         currentFetchingPage = 0
         setUpCollectionView()
         setUpData()
+        
+        // storyboard에서 OtherVC 인스턴스를 가져오기
+        if let otherUserProfileVC = storyboard?.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController {
+            self.otherUserProfileVC = otherUserProfileVC
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -68,14 +74,16 @@ class PochakedPostTabmanViewController: UIViewController {
                 print("contentHeight : \(contentHeight)")
                 let totalHeight = contentHeight + topInset + bottomInset
                 print("Total height with section insets: \(totalHeight)")
-                NotificationCenter.default.post(name: .didUpdateTotalHeight, object: nil, userInfo: ["totalHeight": totalHeight, "tabIndex": self.currentTabIndex])
+                ProfileDataSingleton.shared.firstTabHeight = totalHeight
+                NotificationCenter.default.post(name: .didUpdateTotalHeight, object: nil)
             }
         }
     }
     
     func setUpData() {
         isCurrentlyFetching = true
-        NotificationCenter.default.post(name: .didStartFetchingData, object: nil, userInfo: ["tabIndex": currentTabIndex])
+//        NotificationCenter.default.post(name: .didStartFetchingData, object: nil, userInfo: ["tabIndex": currentTabIndex])
+        ProfileDataSingleton.shared.firstTabIsCurrentlyFetching = true
         let request = ProfileRetrievalRequest(page: currentFetchingPage)
         if let handle = receivedHandle {
             ProfileService.getProfile(handle: handle, request: request) { [weak self] data, failed in
@@ -104,7 +112,7 @@ class PochakedPostTabmanViewController: UIViewController {
                 self?.isLastPage = data.result.pageInfo.lastPage
                 
                 if self?.isLastPage == true {
-                    NotificationCenter.default.post(name: .didReachLastPage, object: nil, userInfo: ["tabIndex": self?.currentTabIndex])
+                    ProfileDataSingleton.shared.firstTabIsLastPage = true
                 }
                 
                 print("보여주는 게시글 개수: \(newPosts.count)")
@@ -117,7 +125,7 @@ class PochakedPostTabmanViewController: UIViewController {
                         print(">>>>>>> PochakedPostDataManager is currently fethcing!!!!!!!")
                     }
                     self?.isCurrentlyFetching = false
-                    NotificationCenter.default.post(name: .didFinishFetchingData, object: nil, userInfo: ["tabIndex": self?.currentTabIndex])
+                    ProfileDataSingleton.shared.firstTabIsCurrentlyFetching = false
                     self?.currentFetchingPage += 1
                 }
             }
@@ -127,16 +135,16 @@ class PochakedPostTabmanViewController: UIViewController {
     }
     
     @objc private func didReceiveRefreshRequest(_ notification: Notification) {
-        guard let userInfo = notification.userInfo,
-              let tabIndex = userInfo["tabIndex"] as? Int, tabIndex == 0 else {return}
-
-        print("First tab received didHitBottom notification!")
-        // 알림 처리 로직
-        setUpData()
+        
+        if ProfileDataSingleton.shared.currentTabIndex == 0 {
+            print("First tab received didHitBottom notification!")
+            setUpData()
+        }
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: .didHitBottom, object: nil)
+        // Observer 해제
+        NotificationCenter.default.removeObserver(self)
     }
 }
 

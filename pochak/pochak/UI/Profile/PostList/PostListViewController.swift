@@ -75,7 +75,8 @@ extension PostListViewController: PageboyViewControllerDataSource, TMBarDataSour
     
     func viewController(for pageboyViewController: PageboyViewController,
                         at index: PageboyViewController.PageIndex) -> UIViewController? {
-        NotificationCenter.default.post(name: .sendTabIndex, object: nil, userInfo: ["tabIndex": index])
+//        NotificationCenter.default.post(name: .sendTabIndex, object: nil, userInfo: ["tabIndex": index])
+        ProfileDataSingleton.shared.currentTabIndex = index
         return viewControllers[index]
     }
     

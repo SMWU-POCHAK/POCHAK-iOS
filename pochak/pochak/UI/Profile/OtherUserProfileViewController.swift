@@ -11,6 +11,10 @@ protocol SecondViewControllerDelegate: AnyObject {
     func dismissSecondViewController()
 }
 
+protocol TabIndexDelegate: AnyObject {
+    func getCurrentTabIndex(index : Int)
+}
+
 final class OtherUserProfileViewController: UIViewController {
     
     // MARK: - Properties
@@ -19,15 +23,8 @@ final class OtherUserProfileViewController: UIViewController {
     var receivedFollowerCount: Int = 0
     var receivedFollowingCount: Int = 0
     var receivedIsFollow: Bool?
-    private var firstTabHeight: CGFloat = 0.0
-    private var secondTabHeight: CGFloat = 0.0
-    private var firstTabIsCurrentlyFetching: Bool = false
-    private var secondTabIsCurrentlyFetching: Bool = false
-    private var firstTabIsLastPage: Bool = false
-    private var secondTabIsLastPage: Bool = false
     private let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId)
     private var searchBlockedUser: Bool = false
-    private var currentTabIndex: Int = 0
     private lazy var moreButton: UIBarButtonItem = { // 업로드 버튼
         let barButton = UIBarButtonItem(image: UIImage(named: "moreButtonIcon"), style: .plain, target: self, action: #selector(moreButtonPressed))
         return barButton
@@ -79,11 +76,7 @@ final class OtherUserProfileViewController: UIViewController {
         setUpNavigationBar()
         setUpViewController()
         setUpData()
-        NotificationCenter.default.addObserver(self, selector: #selector(handleTabChangeNotification(_:)), name: .sendTabIndex, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(totalHeightUpdated(_:)), name: .didUpdateTotalHeight, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didStartFetchingData), name: .didStartFetchingData, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didFinishFetchingData), name: .didFinishFetchingData, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReachLastPage), name: .didReachLastPage, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(totalHeightUpdated), name: .didUpdateTotalHeight, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -175,53 +168,19 @@ final class OtherUserProfileViewController: UIViewController {
         }
     }
     
-    @objc func totalHeightUpdated(_ notification: Notification) {
-        if let userInfo = notification.userInfo,
-           let totalHeight = userInfo["totalHeight"] as? CGFloat, let tabIndex = userInfo["tabIndex"] as? Int {
-            // TotalHeight를 받아서 사용
-            print("받은 totalHeight: \(totalHeight)")
-            tabIndex == 0 ? (firstTabHeight = totalHeight) : (secondTabHeight = totalHeight)
-            currentTabIndex == 0 ? (updatePostListTabmanViewHeight(firstTabHeight)) : (updatePostListTabmanViewHeight(secondTabHeight))
-        }
+    @objc private func totalHeightUpdated() {
+        // TotalHeight를 받아서 사용
+        print("totalHeightUpdated : \(ProfileDataSingleton.shared.firstTabHeight)")
+        print("totalHeightUpdated : \(ProfileDataSingleton.shared.currentTabIndex)")
+        ProfileDataSingleton.shared.currentTabIndex == 0 ? (updatePostListTabmanViewHeight(ProfileDataSingleton.shared.firstTabHeight)) : (updatePostListTabmanViewHeight(ProfileDataSingleton.shared.secondTabHeight))
     }
-    
-    @objc func didStartFetchingData(_ notification: Notification) {
-        if let userInfo = notification.userInfo,
-           let tabIndex = userInfo["tabIndex"] as? Int {
-            tabIndex == 0 ? (firstTabIsCurrentlyFetching = true) : (secondTabIsCurrentlyFetching = true)
-        }
-    }
-    
-    @objc func didFinishFetchingData(_ notification: Notification) {
-        if let userInfo = notification.userInfo,
-           let tabIndex = userInfo["tabIndex"] as? Int {
-            tabIndex == 0 ? (firstTabIsCurrentlyFetching = false) : (secondTabIsCurrentlyFetching = false)
-        }
-    }
-    
-    @objc func didReachLastPage(_ notification: Notification) {
-        if let userInfo = notification.userInfo,
-           let tabIndex = userInfo["tabIndex"] as? Int {
-            tabIndex == 0 ? (firstTabIsLastPage = true) : (secondTabIsLastPage = true)
-            print("Reached last page")
-        }
-    }
-    
-    @objc func handleTabChangeNotification(_ notification: Notification) {
-        guard let userInfo = notification.userInfo,
-              let tabIndex = userInfo["tabIndex"] as? Int else {return}
-        
-        currentTabIndex = tabIndex
-        // tabIndex를 사용하여 원하는 작업을 수행
-        currentTabIndex == 0 ? (updatePostListTabmanViewHeight(firstTabHeight)) : (updatePostListTabmanViewHeight(secondTabHeight))
-        print("현재 선택된 탭 인덱스: \(tabIndex)")
-    }
-    
     
     
     // MARK: - Functions
     
-    private func updatePostListTabmanViewHeight(_ height: CGFloat) {
+    func updatePostListTabmanViewHeight(_ height: CGFloat) {
+        
+        print("updatePostListTabmanViewHeight : \(height)")
         // 기존 높이 제약 조건 제거
         postListTabmanView.constraints.forEach { constraint in
             if constraint.firstAttribute == .height {
@@ -231,7 +190,7 @@ final class OtherUserProfileViewController: UIViewController {
         
         // 새로운 높이 제약 조건 추가
         postListTabmanView.heightAnchor.constraint(equalToConstant: height).isActive = true
-                
+        
         // 레이아웃 애니메이션 처리
         UIView.animate(withDuration: 0.3, animations: {
             self.contentScrollView.layoutIfNeeded()
@@ -242,7 +201,7 @@ final class OtherUserProfileViewController: UIViewController {
                 height: self.topUIView.frame.height
             )
             print("contentScrollView.contentSize : \(self.contentScrollView.contentSize)")
-
+            
         }
     }
     
@@ -250,11 +209,8 @@ final class OtherUserProfileViewController: UIViewController {
     private func addSubview() {
         self.view.addSubview(contentScrollView)
         topUIView.backgroundColor = .yellow
-        
         contentScrollView.addSubview(topUIView)
-        
         postListTabmanView.backgroundColor = .green
-        
         topUIView.addSubview(postListTabmanView)
     }
     
@@ -262,6 +218,15 @@ final class OtherUserProfileViewController: UIViewController {
         contentScrollView.translatesAutoresizingMaskIntoConstraints = false
         topUIView.translatesAutoresizingMaskIntoConstraints = false
         postListTabmanView.translatesAutoresizingMaskIntoConstraints = false
+        profileBackground.translatesAutoresizingMaskIntoConstraints = false
+        whiteBackground.translatesAutoresizingMaskIntoConstraints = false
+        userName.translatesAutoresizingMaskIntoConstraints = false
+        userMessage.translatesAutoresizingMaskIntoConstraints = false
+        followToggleBtn.translatesAutoresizingMaskIntoConstraints = false
+        profileImage.translatesAutoresizingMaskIntoConstraints = false
+        updateProfileBtn.translatesAutoresizingMaskIntoConstraints = false
+        
+        
         
         NSLayoutConstraint.activate([
             contentScrollView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -274,8 +239,34 @@ final class OtherUserProfileViewController: UIViewController {
         NSLayoutConstraint.activate([
             // topUIView
             topUIView.topAnchor.constraint(equalTo: scrollContentGuide.topAnchor),
-            topUIView.leadingAnchor.constraint(equalTo: scrollContentGuide.leadingAnchor),
-            topUIView.trailingAnchor.constraint(equalTo: scrollContentGuide.trailingAnchor),
+            topUIView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            topUIView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            profileBackground.topAnchor.constraint(equalTo: topUIView.topAnchor, constant: 20),
+            profileBackground.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor, constant: 20),
+            
+            userName.topAnchor.constraint(equalTo: profileBackground.topAnchor, constant: 15),
+            userName.leadingAnchor.constraint(equalTo: profileBackground.trailingAnchor, constant: 20),
+            userName.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor),
+            
+            profileImage.centerXAnchor.constraint(equalTo: profileBackground.centerXAnchor),
+            profileImage.centerYAnchor.constraint(equalTo: profileBackground.centerYAnchor),
+            
+            updateProfileBtn.bottomAnchor.constraint(equalTo: profileBackground.bottomAnchor, constant: -5),
+            updateProfileBtn.trailingAnchor.constraint(equalTo: profileBackground.trailingAnchor, constant: -5),
+            
+            userMessage.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: 10),
+            userMessage.leadingAnchor.constraint(equalTo: profileBackground.trailingAnchor, constant: 20),
+            userMessage.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor),
+            
+            whiteBackground.topAnchor.constraint(equalTo: profileBackground.bottomAnchor, constant: 20),
+            whiteBackground.leadingAnchor.constraint(equalTo: profileBackground.leadingAnchor),
+            whiteBackground.centerXAnchor.constraint(equalTo: topUIView.centerXAnchor),
+            whiteBackground.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor, constant: -20),
+            
+            followToggleBtn.topAnchor.constraint(equalTo: whiteBackground.bottomAnchor, constant: 9),
+            followToggleBtn.leadingAnchor.constraint(equalTo: whiteBackground.leadingAnchor),
+            followToggleBtn.trailingAnchor.constraint(equalTo: whiteBackground.trailingAnchor),
             
             // postListTabmanView
             postListTabmanView.topAnchor.constraint(equalTo: followToggleBtn.bottomAnchor, constant: 5),
@@ -418,8 +409,6 @@ final class OtherUserProfileViewController: UIViewController {
             }
         }
     }
-    
-    
     deinit {
         // Observer 해제
         NotificationCenter.default.removeObserver(self)
@@ -474,26 +463,28 @@ extension OtherUserProfileViewController: SecondViewControllerDelegate {
     }
 }
 
-
 extension OtherUserProfileViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (contentScrollView.contentOffset.y > (contentScrollView.contentSize.height - contentScrollView.frame.size.height)) {
             print("has hit the bottom")
-            if (!firstTabIsCurrentlyFetching && !firstTabIsLastPage) {
+            print("ProfileDataSingleton.shared.currentTabIndex :: \(ProfileDataSingleton.shared.currentTabIndex)")
+            if (!ProfileDataSingleton.shared.firstTabIsCurrentlyFetching && !ProfileDataSingleton.shared.firstTabIsLastPage) {
                 print("has hit the first tab bottom && reloading")
-                print("firstTabHeight : \(firstTabHeight)")
-                print("secondTabHeight : \(secondTabHeight)")
-                print("currentTabIndex : \(currentTabIndex)")
+                print("firstTabHeight : \(ProfileDataSingleton.shared.firstTabHeight)")
+                print("secondTabHeight : \(ProfileDataSingleton.shared.secondTabHeight)")
+                print("currentTabIndex : \(ProfileDataSingleton.shared.currentTabIndex)")
                 // Notification을 통해 TabmanVC에 데이터 새로고침을 요청
-                NotificationCenter.default.post(name: .didHitBottom, object: nil, userInfo: ["tabIndex": 0])
-            } else if (!secondTabIsCurrentlyFetching && !secondTabIsLastPage){
+                NotificationCenter.default.post(name: .didHitBottom, object: nil)
+//                ProfileDataSingleton.shared.didHitBottom = true
+            } else if (!ProfileDataSingleton.shared.secondTabIsCurrentlyFetching && !ProfileDataSingleton.shared.secondTabIsLastPage){
                 print("has hit the second tab bottom && reloading")
-                print("firstTabHeight : \(firstTabHeight)")
-                print("secondTabHeight : \(secondTabHeight)")
-                print("currentTabIndex : \(currentTabIndex)")
+                print("firstTabHeight : \(ProfileDataSingleton.shared.firstTabHeight)")
+                print("secondTabHeight : \(ProfileDataSingleton.shared.secondTabHeight)")
+                print("currentTabIndex : \(ProfileDataSingleton.shared.currentTabIndex)")
                 // Notification을 통해 TabmanVC에 데이터 새로고침을 요청
-                NotificationCenter.default.post(name: .didHitBottom, object: nil, userInfo: ["tabIndex": 1])
+                NotificationCenter.default.post(name: .didHitBottom, object: nil)
+//                ProfileDataSingleton.shared.didHitBottom = true
             }
 //        } else if (currentTabIndex == 0 && firstTabHeight >= contentScrollView.frame.size.height) {
 //            print("firstTabHeight : \(firstTabHeight)")
