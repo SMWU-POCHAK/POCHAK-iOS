@@ -299,6 +299,7 @@ final class MyProfileTabViewController: UIViewController {
 // MARK: - Extension: CustomAlertDelegate, SecondViewControllerDelegate
 
 extension MyProfileTabViewController: UIScrollViewDelegate {
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (contentScrollView.contentOffset.y > (contentScrollView.contentSize.height - contentScrollView.frame.size.height)) {
             if (ProfileDataSingleton.shared.currentTabIndex == 0 &&
