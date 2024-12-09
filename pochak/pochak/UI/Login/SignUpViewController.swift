@@ -187,8 +187,7 @@ final class SignUpViewController: UIViewController {
                 } catch {
                     print(error)
                 }
-                
-                // 회원가입 성공 시 홈 화면으로  전환
+                self?.saveRefreshTokenIssuedAt()
                 self?.toHomeTabPage()
             }
         }
@@ -216,6 +215,11 @@ final class SignUpViewController: UIViewController {
             return
         }
         delegate.window?.rootViewController = tabBarController
+    }
+    
+    private func saveRefreshTokenIssuedAt() {
+        let issuedAt = Date() // 현재 시간 저장
+        UserDefaultsManager.setData(value: issuedAt, key: .refreshTokenIssuedAt)
     }
 }
 

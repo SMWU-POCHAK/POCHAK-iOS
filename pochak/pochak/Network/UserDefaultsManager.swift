@@ -21,6 +21,7 @@ class UserDefaultsManager {
         case profileImgUrl
         case followerCount
         case followingCount
+        case refreshTokenIssuedAt
     }
     
     static func setData<T>(value: T, key: UserDefaultsKeys) {
