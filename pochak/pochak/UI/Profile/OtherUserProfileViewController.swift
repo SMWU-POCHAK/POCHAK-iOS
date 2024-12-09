@@ -206,7 +206,7 @@ final class OtherUserProfileViewController: UIViewController {
             topUIView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             topUIView.bottomAnchor.constraint(equalTo: postListTabmanView.bottomAnchor), // Dynamic height for topUIView
             
-            profileBackground.topAnchor.constraint(equalTo: topUIView.topAnchor, constant: 28),
+            profileBackground.topAnchor.constraint(equalTo: topUIView.topAnchor, constant: 20),
             profileBackground.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor, constant: 20),
             
             userName.topAnchor.constraint(equalTo: profileBackground.topAnchor, constant: 15),
@@ -271,8 +271,7 @@ final class OtherUserProfileViewController: UIViewController {
                 guard let data = data else {
                     switch failed {
                     case .clientError:
-                        self.navigationController?.popViewController(animated: true)
-                        self.navigationItem.title = ""
+                        print("its client Error!")
                         self.searchBlockedUser = true
                         self.showAlert(alertType: .confirmOnly,
                                        titleText: "차단한 유저의 프로필입니다.",
@@ -401,7 +400,8 @@ extension OtherUserProfileViewController: CustomAlertDelegate {
     
     func confirmAction() {
         if searchBlockedUser {
-            print("confirm selected!")
+            self.navigationController?.popViewController(animated: true)
+            self.navigationItem.title = ""
         } else {
             if let handle = receivedHandle {
                 UserService.postFollowRequest(handle: handle) { [weak self] data, failed in
