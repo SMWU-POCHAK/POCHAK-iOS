@@ -104,22 +104,26 @@ final class SignUpViewController: UIViewController {
         
         AuthenticationService.checkDuplicateHandle(request: request) { [weak self] data, failed in
             guard let data = data else {
-                print(failed)
                 return
             }
-            if data.code == "MEMBER2001" {
-                // 중복 검사 버튼 상태 변경
+            
+            let code = data.code
+            let memberCode = MemberCode(rawValue: code)
+            switch memberCode {
+            case .success:
                 self?.checkHandleDuplicationBtn.setImage(UIImage(named: "checkedHandle"), for: .normal)
                 self?.handleTextField.textColor = UIColor(named: "yellow00")
                 self?.checkHandleDuplicationBtn.isEnabled = false
                 self?.handleDuplicationChecked = true
-            } else if data.code == "MEMBER4002" {
+            case .duplicationError:
                 self?.showAlert(alertType: .confirmOnly,
                                 titleText: "중복된 아이디입니다",
                                 messageText: "다른 아이디를 입력해주세요.",
                                 cancelButtonText: "",
                                 confirmButtonText: "확인"
                 )
+            case .unknown:
+                print("Unknown code: \(code)")
             }
         }
     }
