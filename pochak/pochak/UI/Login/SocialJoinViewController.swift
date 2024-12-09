@@ -10,7 +10,7 @@ import GoogleSignIn
 import AuthenticationServices // 애플 로그인
 
 protocol SendDelegate {
-    func sendAgreed(agree : Bool)
+    func sendAgreed(agree: Bool)
 }
 
 final class SocialJoinViewController: UIViewController {
@@ -48,15 +48,11 @@ final class SocialJoinViewController: UIViewController {
             // Get User Info
             let user = signInResult.user
             let accessToken = user.accessToken.tokenString
-            print("googleLogin 시스템 안의 accessToken : \(accessToken)")
             
-            // 로딩 모달
             self.showProgressBar()
             
-            GoogleLoginDataManager.shared.googleLoginDataManager(accessToken, {resultData in
-                
-                print("GoogleLoginDataManager 안의 resultData : \(resultData)")
-                // 사용자 기본 데이터 저장 : socialId, email, socialType
+            GoogleLoginDataManager.shared.googleLoginDataManager(accessToken, { resultData in
+                // 사용자 기본 데이터 저장: socialId, email, socialType
                 UserDefaultsManager.setData(value: resultData.socialId, key: .socialId)
                 UserDefaultsManager.setData(value: resultData.email, key: .email)
                 UserDefaultsManager.setData(value: resultData.socialType, key: .socialType)
@@ -64,7 +60,6 @@ final class SocialJoinViewController: UIViewController {
                 guard let isNewMember = resultData.isNewMember else { return }
                 self.changeViewControllerAccordingToisNewMemeberStateForGoogle(isNewMember, resultData)
                 
-                // 로딩 숨김
                 self.hideProgressBar()
             })
         }
@@ -90,14 +85,13 @@ final class SocialJoinViewController: UIViewController {
         appleLoginBtn.layer.cornerRadius = 30
     }
     
-    private func changeViewControllerAccordingToisNewMemeberStateForGoogle(_ isNewMember : Bool, _ resultDataForGoogle : GoogleLoginModel) {
+    private func changeViewControllerAccordingToisNewMemeberStateForGoogle(_ isNewMember: Bool, _ resultDataForGoogle: GoogleLoginModel) {
         if isNewMember == true {
-            guard let termsOfAgreeVC = self.storyboard?.instantiateViewController(withIdentifier: "TermsOfAgreeVC") as? TermsOfAgreeViewController else {return}
+            guard let termsOfAgreeVC = self.storyboard?.instantiateViewController(withIdentifier: "TermsOfAgreeVC") as? TermsOfAgreeViewController else { return }
             termsOfAgreeVC.modalPresentationStyle = .overCurrentContext //  투명도가 있으면 투명도에 맞춰서 나오게 해주는 코드(뒤에있는 배경이 보일 수 있게)
             termsOfAgreeVC.delegate = self
             self.present(termsOfAgreeVC, animated: false, completion: nil)
         } else {
-            // 이미 회원인 유저의 경우 토큰 정보 저장 @KeyChainManager
             guard let accountAccessToken = resultDataForGoogle.accessToken else { return }
             guard let accountRefreshToken = resultDataForGoogle.refreshToken else { return }
             do {
@@ -106,22 +100,18 @@ final class SocialJoinViewController: UIViewController {
             } catch {
                 print(error)
             }
-            // UserDefaults에 handle 정보 저장
             UserDefaultsManager.setData(value: resultDataForGoogle.handle, key: .handle)
-            // 홈탭으로 이동
             toHomeTabPage()
         }
     }
     
-    private func changeViewControllerAccordingToisNewMemeberStateForApple(_ isNewMember : Bool, _ resultDataForApple : AppleLoginModel) {
+    private func changeViewControllerAccordingToisNewMemeberStateForApple(_ isNewMember: Bool, _ resultDataForApple: AppleLoginModel) {
         if isNewMember == true {
-            // 프로필 설정 페이지로 이동
-            guard let termsOfAgreeVC = self.storyboard?.instantiateViewController(withIdentifier: "TermsOfAgreeVC") as? TermsOfAgreeViewController else {return}
+            guard let termsOfAgreeVC = self.storyboard?.instantiateViewController(withIdentifier: "TermsOfAgreeVC") as? TermsOfAgreeViewController else { return }
             termsOfAgreeVC.modalPresentationStyle = .overCurrentContext
             termsOfAgreeVC.delegate = self
             self.present(termsOfAgreeVC, animated: false, completion: nil)
         } else {
-            // 이미 회원인 유저의 경우 토큰 정보 저장 @KeyChainManager
             guard let accountAccessToken = resultDataForApple.accessToken else { return }
             guard let accountRefreshToken = resultDataForApple.refreshToken else { return }
             do {
@@ -130,9 +120,7 @@ final class SocialJoinViewController: UIViewController {
             } catch {
                 print(error)
             }
-            // UserDefaults에 handle 정보 저장
             UserDefaultsManager.setData(value: resultDataForApple.handle, key: .handle)
-            // 홈탭으로 이동
             toHomeTabPage()
         }
     }
@@ -140,16 +128,15 @@ final class SocialJoinViewController: UIViewController {
     private func toHomeTabPage() {
         let tabBarController = CustomTabBarController()
         let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
-        guard let delegate = sceneDelegate else {
-            return
-        }
+        guard let delegate = sceneDelegate else { return }
         delegate.window?.rootViewController = tabBarController
     }
 }
 
-// MARK: - Extension : ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding
+// MARK: - Extension: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding
 
 extension SocialJoinViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
     }
@@ -164,22 +151,16 @@ extension SocialJoinViewController: ASAuthorizationControllerDelegate, ASAuthori
             let email = appleIDCredential.email
             
             
-            if  let authorizationCode = appleIDCredential.authorizationCode,
-                let identityToken = appleIDCredential.identityToken,
-                let authCodeString = String(data: authorizationCode, encoding: .utf8),
-                let identifyTokenString = String(data: identityToken, encoding: .utf8) {
-                print("authorizationCode: \(authorizationCode)")
-                print("identityToken: \(identityToken)")
-                print("authCodeString: \(authCodeString)")
-                print("identifyTokenString: \(identifyTokenString)")
+            if let authorizationCode = appleIDCredential.authorizationCode,
+               let identityToken = appleIDCredential.identityToken,
+               let authCodeString = String(data: authorizationCode, encoding: .utf8),
+               let identifyTokenString = String(data: identityToken, encoding: .utf8) {
                 
-                // 로딩 모달
                 self.showProgressBar()
                 
-                // API request : POST
+                // API request: POST
                 AppleLoginDataManager.shared.appleLoginDataManager(identifyTokenString, authCodeString, { resultData in
-                    
-                    // 사용자 기본 데이터 저장 : id / email / socialType / isNewMember
+                    // 사용자 기본 데이터 저장: id, email, socialType, isNewMember
                     UserDefaultsManager.setData(value: resultData.socialId, key: .socialId)
                     UserDefaultsManager.setData(value: resultData.email, key: .email)
                     UserDefaultsManager.setData(value: resultData.socialType, key: .socialType)
@@ -187,7 +168,6 @@ extension SocialJoinViewController: ASAuthorizationControllerDelegate, ASAuthori
                     
                     guard let isNewMember = resultData.isNewMember else { return }
                     self.changeViewControllerAccordingToisNewMemeberStateForApple(isNewMember, resultData)
-                    // 로딩 숨김
                     self.hideProgressBar()
                 })
             }
@@ -195,10 +175,6 @@ extension SocialJoinViewController: ASAuthorizationControllerDelegate, ASAuthori
             // Sign in using an existing iCloud Keychain credential.
             let username = passwordCredential.user
             let password = passwordCredential.password
-            
-            print("username: \(username)")
-            print("password: \(password)")
-            
         default:
             break
         }
@@ -210,7 +186,7 @@ extension SocialJoinViewController: ASAuthorizationControllerDelegate, ASAuthori
     }
 }
 
-// MARK: - Extension : SendDelegate
+// MARK: - Extension: SendDelegate
 
 extension SocialJoinViewController: SendDelegate {
     func sendAgreed(agree: Bool) {
@@ -219,7 +195,7 @@ extension SocialJoinViewController: SendDelegate {
                     as? SignUpViewController else { return }
             self.navigationController?.pushViewController(signUpVC, animated: true)
         } else {
-            print("not agreed yet!")
+            print("not agreed yet")
         }
     }
 }

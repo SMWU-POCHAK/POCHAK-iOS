@@ -11,20 +11,19 @@ class GoogleLoginDataManager {
     
     static let shared = GoogleLoginDataManager()
     
-    func googleLoginDataManager(_ accessToken : String, _ completion: @escaping (GoogleLoginModel) -> Void) {
+    func googleLoginDataManager(_ accessToken: String, _ completion: @escaping (GoogleLoginModel) -> Void) {
         let url = "\(APIConstants.baseURL)/google/login/\(accessToken)"
-
+        
         AF.request(url, method: .get).validate().responseDecodable(of: GoogleLoginResponse.self) { response in
-               switch response.result {
-               case .success(let result):
-                   let resultData = result.result
-                   completion(resultData)
-               case .failure(let error):
-                   print("googleLoginDataManager error : \(error)")
-                   if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
-                       print("Failure Data: \(errorMessage)")
-                   }
-               }
-           }
+            switch response.result {
+            case .success(let result):
+                let resultData = result.result
+                completion(resultData)
+            case .failure(let error):
+                if let data = response.data, let errorMessage = String(data: data, encoding: .utf8) {
+                    print("Failure Data: \(errorMessage)")
+                }
+            }
+        }
     }
 }

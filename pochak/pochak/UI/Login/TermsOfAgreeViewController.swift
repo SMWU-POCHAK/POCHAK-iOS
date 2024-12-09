@@ -12,9 +12,9 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
     
     // MARK: - Properties
     
-    private var didAgreeForPrivacyPolicy : Bool = false
-    private var didAgreeForTermsOfUse : Bool = false
-    var delegate : SendDelegate?
+    var delegate: SendDelegate?
+    private var didAgreeForPrivacyPolicy: Bool = false
+    private var didAgreeForTermsOfUse: Bool = false
     
     // MARK: - Views
     
@@ -51,7 +51,6 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
         titleLabel.font = UIFont(name: "Pretendard-SemiBold", size: 18)
         titleLabel.textColor = .black
         
-        
         agreeForPrivacyPolicy.setTitle(" [필수] 개인정보 제3자 제공 동의", for: .normal)
         agreeForPrivacyPolicy.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
         agreeForPrivacyPolicy.titleLabel?.font =  UIFont(name: "Pretendard-Medium", size: 15)
@@ -67,7 +66,7 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
     }
     
     // MARK: - Actions
-
+    
     @IBAction func pressAgreeForPrivacyPolicy(_ sender: Any) {
         if !didAgreeForPrivacyPolicy {
             didAgreeForPrivacyPolicy = true
@@ -80,7 +79,6 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
             agreeForPrivacyPolicy.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
             agreeForPrivacyPolicy.tintColor = UIColor(named: "gray04")
         }
-        
     }
     
     @IBAction func pressAgreeForTermsOfUSe(_ sender: Any) {
@@ -97,21 +95,17 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
         }
     }
     
-    
     @IBAction func openPrivacyPolicy(_ sender: Any) {
         guard let url = URL(string: "https://pochak.notion.site/e365e34f018949b88543adbe6b0b3746") else { return }
         let safariVC = SFSafariViewController(url: url)
-        // delegate 지정 및 presentation style 설정
         safariVC.transitioningDelegate = self
         safariVC.modalPresentationStyle = .pageSheet
         present(safariVC, animated: true, completion: nil)
     }
     
-    
     @IBAction func openTermsOfUSe(_ sender: Any) {
         guard let url = URL(string: "https://pochak.notion.site/6520996186464c36a8b3a04bc17fa000?pvs=74") else { return }
         let safariVC = SFSafariViewController(url: url)
-        // delegate 지정 및 presentation style 설정
         safariVC.transitioningDelegate = self
         safariVC.modalPresentationStyle = .pageSheet
         present(safariVC, animated: true, completion: nil)
@@ -135,8 +129,7 @@ extension UIButton {
         let attributedString = NSMutableAttributedString(string: title)
         attributedString.addAttribute(.underlineStyle,
                                       value: NSUnderlineStyle.single.rawValue,
-                                      range: NSRange(location: 0, length: title.count)
-        )
+                                      range: NSRange(location: 0, length: title.count))
         setAttributedTitle(attributedString, for: .normal)
     }
 }
