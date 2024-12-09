@@ -16,6 +16,7 @@ final class MyProfileTabViewController: UIViewController {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = false
+        scrollView.backgroundColor = UIColor(named: "gray01")
         return scrollView
     }()
     
@@ -122,6 +123,14 @@ final class MyProfileTabViewController: UIViewController {
         contentScrollView.translatesAutoresizingMaskIntoConstraints = false
         topUIView.translatesAutoresizingMaskIntoConstraints = false
         postListTabmanView.translatesAutoresizingMaskIntoConstraints = false
+        profileBackground.translatesAutoresizingMaskIntoConstraints = false
+        whiteBackground1.translatesAutoresizingMaskIntoConstraints = false
+        userName.translatesAutoresizingMaskIntoConstraints = false
+        userHandle.translatesAutoresizingMaskIntoConstraints = false
+        userMessage.translatesAutoresizingMaskIntoConstraints = false
+        profileImage.translatesAutoresizingMaskIntoConstraints = false
+        updateProfileBtn.translatesAutoresizingMaskIntoConstraints = false
+        settingBtn.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             contentScrollView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -137,10 +146,38 @@ final class MyProfileTabViewController: UIViewController {
             topUIView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             topUIView.bottomAnchor.constraint(equalTo: postListTabmanView.bottomAnchor), // Dynamic height for topUIView
             
+            userHandle.topAnchor.constraint(equalTo: topUIView.topAnchor, constant: 15),
+            userHandle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
+            settingBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            settingBtn.centerYAnchor.constraint(equalTo: userHandle.centerYAnchor),
+            
+            profileBackground.topAnchor.constraint(equalTo: userHandle.bottomAnchor, constant: 25),
+            profileBackground.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor, constant: 20),
+            
+            userName.topAnchor.constraint(equalTo: profileBackground.topAnchor, constant: 15),
+            userName.leadingAnchor.constraint(equalTo: profileBackground.trailingAnchor, constant: 20),
+            userName.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor),
+            
+            profileImage.centerXAnchor.constraint(equalTo: profileBackground.centerXAnchor),
+            profileImage.centerYAnchor.constraint(equalTo: profileBackground.centerYAnchor),
+            
+            updateProfileBtn.bottomAnchor.constraint(equalTo: profileBackground.bottomAnchor, constant: -5),
+            updateProfileBtn.trailingAnchor.constraint(equalTo: profileBackground.trailingAnchor, constant: -5),
+            
+            userMessage.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: 10),
+            userMessage.leadingAnchor.constraint(equalTo: profileBackground.trailingAnchor, constant: 20),
+            userMessage.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor),
+            
+            whiteBackground1.topAnchor.constraint(equalTo: profileBackground.bottomAnchor, constant: 20),
+            whiteBackground1.leadingAnchor.constraint(equalTo: profileBackground.leadingAnchor),
+            whiteBackground1.centerXAnchor.constraint(equalTo: topUIView.centerXAnchor),
+            whiteBackground1.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor, constant: -20),
+            
             postListTabmanView.topAnchor.constraint(equalTo: whiteBackground1.bottomAnchor, constant: 5),
             postListTabmanView.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor),
             postListTabmanView.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor),
-            postListTabmanView.heightAnchor.constraint(equalTo: scrollContentGuide.heightAnchor),
+            postListTabmanView.heightAnchor.constraint(equalToConstant: view.frame.height),
         ])
     }
     
@@ -230,25 +267,26 @@ final class MyProfileTabViewController: UIViewController {
     }
     
     private func updatePostListTabmanViewHeight(_ height: CGFloat) {
-        // 기존 높이 제약 조건 제거
         postListTabmanView.constraints.forEach { constraint in
             if constraint.firstAttribute == .height {
-                constraint.isActive = false
+                if height >= constraint.constant && constraint.constant != 0 {
+                    constraint.isActive = false
+                    
+                    // 새로운 높이 제약 조건 추가
+                    postListTabmanView.heightAnchor.constraint(equalToConstant: height).isActive = true
+                    UIView.animate(withDuration: 0.3, animations: {
+                        self.contentScrollView.layoutIfNeeded()
+                    }) { _ in
+                        // ScrollView의 contentSize 업데이트
+                        self.contentScrollView.contentSize = CGSize(
+                            width: self.contentScrollView.frame.width,
+                            height: self.topUIView.frame.height
+                        )
+                    }
+                } else {
+                    print("no posts yet")
+                }
             }
-        }
-        
-        // 새로운 높이 제약 조건 추가
-        postListTabmanView.heightAnchor.constraint(equalToConstant: height).isActive = true
-        
-        // 레이아웃 애니메이션 처리
-        UIView.animate(withDuration: 0.3, animations: {
-            self.contentScrollView.layoutIfNeeded()
-        }) { _ in
-            // ScrollView의 contentSize 업데이트
-            self.contentScrollView.contentSize = CGSize(
-                width: self.contentScrollView.frame.width,
-                height: self.topUIView.frame.height
-            )
         }
     }
     

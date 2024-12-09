@@ -235,7 +235,7 @@ final class OtherUserProfileViewController: UIViewController {
             postListTabmanView.topAnchor.constraint(equalTo: followToggleBtn.bottomAnchor, constant: 5),
             postListTabmanView.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor),
             postListTabmanView.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor),
-            postListTabmanView.heightAnchor.constraint(equalToConstant: view.frame.height - 270),
+            postListTabmanView.heightAnchor.constraint(equalToConstant: view.frame.height),
         ])
     }
     
@@ -367,27 +367,26 @@ final class OtherUserProfileViewController: UIViewController {
     }
     
     private func updatePostListTabmanViewHeight(_ height: CGFloat) {
-        print("height === \(topUIView.frame.height)")
-        // 기존 높이 제약 조건 제거
         postListTabmanView.constraints.forEach { constraint in
             if constraint.firstAttribute == .height {
-                print("inside contraint")
-                constraint.isActive = false
+                if height >= constraint.constant && constraint.constant != 0 {
+                    constraint.isActive = false
+                    
+                    // 새로운 높이 제약 조건 추가
+                    postListTabmanView.heightAnchor.constraint(equalToConstant: height).isActive = true
+                    UIView.animate(withDuration: 0.3, animations: {
+                        self.contentScrollView.layoutIfNeeded()
+                    }) { _ in
+                        // ScrollView의 contentSize 업데이트
+                        self.contentScrollView.contentSize = CGSize(
+                            width: self.contentScrollView.frame.width,
+                            height: self.topUIView.frame.height
+                        )
+                    }
+                } else {
+                    print("no posts yet")
+                }
             }
-        }
-        
-        // 새로운 높이 제약 조건 추가
-        postListTabmanView.heightAnchor.constraint(equalToConstant: height).isActive = true
-        
-        // 레이아웃 애니메이션 처리
-        UIView.animate(withDuration: 0.3, animations: {
-            self.contentScrollView.layoutIfNeeded()
-        }) { _ in
-            // ScrollView의 contentSize 업데이트
-            self.contentScrollView.contentSize = CGSize(
-                width: self.contentScrollView.frame.width,
-                height: self.topUIView.frame.height
-            )
         }
     }
     
