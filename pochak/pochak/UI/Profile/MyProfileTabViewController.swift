@@ -146,13 +146,13 @@ final class MyProfileTabViewController: UIViewController {
             topUIView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             topUIView.bottomAnchor.constraint(equalTo: postListTabmanView.bottomAnchor), // Dynamic height for topUIView
             
-            userHandle.topAnchor.constraint(equalTo: topUIView.topAnchor, constant: 15),
+            userHandle.topAnchor.constraint(equalTo: topUIView.topAnchor, constant: 20),
             userHandle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             
             settingBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             settingBtn.centerYAnchor.constraint(equalTo: userHandle.centerYAnchor),
             
-            profileBackground.topAnchor.constraint(equalTo: topUIView.bottomAnchor, constant: 28),
+            profileBackground.topAnchor.constraint(equalTo: userHandle.bottomAnchor, constant: 28),
             profileBackground.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor, constant: 20),
             
             userName.topAnchor.constraint(equalTo: profileBackground.topAnchor, constant: 15),
