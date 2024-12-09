@@ -271,7 +271,7 @@ final class OtherUserProfileViewController: UIViewController {
                 guard let data = data else {
                     switch failed {
                     case .clientError:
-                        print("its client Error!")
+                        self.navigationItem.title = ""
                         self.searchBlockedUser = true
                         self.showAlert(alertType: .confirmOnly,
                                        titleText: "차단한 유저의 프로필입니다.",
@@ -401,7 +401,6 @@ extension OtherUserProfileViewController: CustomAlertDelegate {
     func confirmAction() {
         if searchBlockedUser {
             self.navigationController?.popViewController(animated: true)
-            self.navigationItem.title = ""
         } else {
             if let handle = receivedHandle {
                 UserService.postFollowRequest(handle: handle) { [weak self] data, failed in

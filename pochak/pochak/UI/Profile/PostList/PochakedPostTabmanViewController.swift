@@ -56,6 +56,8 @@ class PochakedPostTabmanViewController: UIViewController {
             ProfileService.getProfile(handle: handle, request: request) { [weak self] data, failed in
                 guard let data = data else {
                     switch failed {
+                    case .clientError:
+                        print("client error")
                     case .disconnected:
                         self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
                     case .serverError:
