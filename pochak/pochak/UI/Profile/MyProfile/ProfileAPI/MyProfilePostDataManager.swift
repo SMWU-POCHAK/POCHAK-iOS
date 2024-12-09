@@ -5,6 +5,7 @@
 //  Created by Seo Cindy on 12/28/23.
 //
 
+import Foundation
 import Alamofire
 
 struct SimpleJson: Codable {

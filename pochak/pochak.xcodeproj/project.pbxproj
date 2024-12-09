@@ -99,7 +99,7 @@
 		08EB99B72C53EA8500FAC08A /* TaggedUsersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB99B52C53EA8500FAC08A /* TaggedUsersTableViewCell.swift */; };
 		08EB99B82C53EA8500FAC08A /* TaggedUsersTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08EB99B62C53EA8500FAC08A /* TaggedUsersTableViewCell.xib */; };
 		08FD3A392B357E6400574880 /* LikedUsersDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FD3A382B357E6400574880 /* LikedUsersDataService.swift */; };
-		2FCBFE6DE98CEA8938EF93DC /* Pods_pochakTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1916A70A802F298FF38F24 /* Pods_pochakTests.framework */; };
+		2FCBFE6DE98CEA8938EF93DC /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		371D33782B4E83E90084FF6A /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D33772B4E83E90084FF6A /* UserDefaultsManager.swift */; };
 		371D337A2B4E8D1F0084FF6A /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D33792B4E8D1F0084FF6A /* KeychainManager.swift */; };
 		373235472B68F93E0042EF94 /* FollowListDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373235462B68F93E0042EF94 /* FollowListDataManager.swift */; };
@@ -163,8 +163,16 @@
 		37D311E32B56754D00A1D7C1 /* GetToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311E22B56754D00A1D7C1 /* GetToken.swift */; };
 		37D311E52B567AE000A1D7C1 /* OtherUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */; };
 		46BA13362CBD551600C81729 /* SecretKeyInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46BA13352CBD551600C81729 /* SecretKeyInfo.plist */; };
-		A6D48ED7F8B86CF57C481991 /* Pods_pochak_pochakUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC75B5747D3AC9026B862E11 /* Pods_pochak_pochakUITests.framework */; };
-		AF5AAB97DDEAC75EAEDDCFE4 /* Pods_pochak.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65A7656D9D72CC873C98FD4 /* Pods_pochak.framework */; };
+		46B0B41C2CFDFC6900950554 /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B41B2CFDFC6900950554 /* Tabman */; };
+		46B0B41F2CFDFC7700950554 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B41E2CFDFC7700950554 /* GoogleSignIn */; };
+		46B0B4212CFDFC7700950554 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B4202CFDFC7700950554 /* GoogleSignInSwift */; };
+		46B0B4242CFDFC8900950554 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B4232CFDFC8900950554 /* Kingfisher */; };
+		46B0B4272CFDFC9F00950554 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B4262CFDFC9F00950554 /* Alamofire */; };
+		46B0B42A2CFDFDB500950554 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B4292CFDFDB500950554 /* FirebaseAnalytics */; };
+		46B0B42C2CFDFDB500950554 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B42B2CFDFDB500950554 /* FirebaseCore */; };
+		46B0B42E2CFDFDB500950554 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B42D2CFDFDB500950554 /* FirebaseCrashlytics */; };
+		46B0B4312CFDFE3300950554 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B4302CFDFE3300950554 /* RealmSwift */; };
+		A6D48ED7F8B86CF57C481991 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		EA01079A2A59556800A3AE85 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0107952A59556800A3AE85 /* CommentViewController.swift */; };
 		EA01079B2A59556800A3AE85 /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0107962A59556800A3AE85 /* HomeTabViewController.swift */; };
 		EA01079E2A59556800A3AE85 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0107992A59556800A3AE85 /* PostViewController.swift */; };
@@ -335,8 +343,6 @@
 		08EB99B52C53EA8500FAC08A /* TaggedUsersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggedUsersTableViewCell.swift; sourceTree = "<group>"; };
 		08EB99B62C53EA8500FAC08A /* TaggedUsersTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaggedUsersTableViewCell.xib; sourceTree = "<group>"; };
 		08FD3A382B357E6400574880 /* LikedUsersDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedUsersDataService.swift; sourceTree = "<group>"; };
-		0994FB0CA794651C5C9BDE8F /* Pods-pochak-pochakUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pochak-pochakUITests.debug.xcconfig"; path = "Target Support Files/Pods-pochak-pochakUITests/Pods-pochak-pochakUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		0DB83F3ED818C9AF01F6A8E0 /* Pods-pochak.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pochak.release.xcconfig"; path = "Target Support Files/Pods-pochak/Pods-pochak.release.xcconfig"; sourceTree = "<group>"; };
 		371D33772B4E83E90084FF6A /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		371D33792B4E8D1F0084FF6A /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		373235462B68F93E0042EF94 /* FollowListDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowListDataManager.swift; sourceTree = "<group>"; };
@@ -401,12 +407,6 @@
 		37D311E22B56754D00A1D7C1 /* GetToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToken.swift; sourceTree = "<group>"; };
 		37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherUserProfileViewController.swift; sourceTree = "<group>"; };
 		46BA13352CBD551600C81729 /* SecretKeyInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SecretKeyInfo.plist; sourceTree = "<group>"; };
-		67EA6B5B881844A22EE2A55B /* Pods-pochak.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pochak.debug.xcconfig"; path = "Target Support Files/Pods-pochak/Pods-pochak.debug.xcconfig"; sourceTree = "<group>"; };
-		6E1916A70A802F298FF38F24 /* Pods_pochakTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pochakTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D5440AA571B5DB6291304B2 /* Pods-pochakTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pochakTests.debug.xcconfig"; path = "Target Support Files/Pods-pochakTests/Pods-pochakTests.debug.xcconfig"; sourceTree = "<group>"; };
-		A5D3B19C2AEC946ECCF7054B /* Pods-pochakTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pochakTests.release.xcconfig"; path = "Target Support Files/Pods-pochakTests/Pods-pochakTests.release.xcconfig"; sourceTree = "<group>"; };
-		A65A7656D9D72CC873C98FD4 /* Pods_pochak.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pochak.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BC75B5747D3AC9026B862E11 /* Pods_pochak_pochakUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pochak_pochakUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA0107952A59556800A3AE85 /* CommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		EA0107962A59556800A3AE85 /* HomeTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabViewController.swift; sourceTree = "<group>"; };
 		EA0107992A59556800A3AE85 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
@@ -469,7 +469,6 @@
 		EAFB4B832A51478600E0F2FA /* HomeTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeTab.storyboard; sourceTree = "<group>"; };
 		EAFB4B862A5147A300E0F2FA /* ProfileTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfileTab.storyboard; sourceTree = "<group>"; };
 		EAFB4B8A2A5147C400E0F2FA /* AlarmTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AlarmTab.storyboard; sourceTree = "<group>"; };
-		F9A6AE07B1A942C2FFC48F28 /* Pods-pochak-pochakUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pochak-pochakUITests.release.xcconfig"; path = "Target Support Files/Pods-pochak-pochakUITests/Pods-pochak-pochakUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -477,8 +476,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46B0B4272CFDFC9F00950554 /* Alamofire in Frameworks */,
+				46B0B41C2CFDFC6900950554 /* Tabman in Frameworks */,
+				46B0B42C2CFDFDB500950554 /* FirebaseCore in Frameworks */,
+				46B0B4212CFDFC7700950554 /* GoogleSignInSwift in Frameworks */,
+				46B0B4242CFDFC8900950554 /* Kingfisher in Frameworks */,
 				EAF885262B5677CB00BA184A /* libsqlite3.0.tbd in Frameworks */,
-				AF5AAB97DDEAC75EAEDDCFE4 /* Pods_pochak.framework in Frameworks */,
+				46B0B42E2CFDFDB500950554 /* FirebaseCrashlytics in Frameworks */,
+				46B0B4312CFDFE3300950554 /* RealmSwift in Frameworks */,
+				46B0B42A2CFDFDB500950554 /* FirebaseAnalytics in Frameworks */,
+				46B0B41F2CFDFC7700950554 /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -486,7 +493,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FCBFE6DE98CEA8938EF93DC /* Pods_pochakTests.framework in Frameworks */,
+				2FCBFE6DE98CEA8938EF93DC /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,7 +501,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A6D48ED7F8B86CF57C481991 /* Pods_pochak_pochakUITests.framework in Frameworks */,
+				A6D48ED7F8B86CF57C481991 /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1076,26 +1083,10 @@
 			path = cell;
 			sourceTree = "<group>";
 		};
-		A526D36E9922857B343AC7F0 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				67EA6B5B881844A22EE2A55B /* Pods-pochak.debug.xcconfig */,
-				0DB83F3ED818C9AF01F6A8E0 /* Pods-pochak.release.xcconfig */,
-				0994FB0CA794651C5C9BDE8F /* Pods-pochak-pochakUITests.debug.xcconfig */,
-				F9A6AE07B1A942C2FFC48F28 /* Pods-pochak-pochakUITests.release.xcconfig */,
-				9D5440AA571B5DB6291304B2 /* Pods-pochakTests.debug.xcconfig */,
-				A5D3B19C2AEC946ECCF7054B /* Pods-pochakTests.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		BDC17F86F20255B8BDA204A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				EAF885252B5677CB00BA184A /* libsqlite3.0.tbd */,
-				A65A7656D9D72CC873C98FD4 /* Pods_pochak.framework */,
-				BC75B5747D3AC9026B862E11 /* Pods_pochak_pochakUITests.framework */,
-				6E1916A70A802F298FF38F24 /* Pods_pochakTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1140,7 +1131,6 @@
 				EA1B0B702A49D23B00F86FBC /* pochakTests */,
 				EA1B0B7A2A49D23B00F86FBC /* pochakUITests */,
 				EA1B0B582A49D23A00F86FBC /* Products */,
-				A526D36E9922857B343AC7F0 /* Pods */,
 				BDC17F86F20255B8BDA204A0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -1365,18 +1355,28 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EA1B0B812A49D23B00F86FBC /* Build configuration list for PBXNativeTarget "pochak" */;
 			buildPhases = (
-				DFB444394226E6589450B718 /* [CP] Check Pods Manifest.lock */,
 				EA1B0B532A49D23A00F86FBC /* Sources */,
 				EA1B0B542A49D23A00F86FBC /* Frameworks */,
 				EA1B0B552A49D23A00F86FBC /* Resources */,
-				42914AF2E4C4F9BD17F4DE35 /* [CP] Embed Pods Frameworks */,
 				08D2B98E2C68C1B800BD7450 /* ShellScript */,
+				465D6E0D2CFE057300847542 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = pochak;
+			packageProductDependencies = (
+				46B0B41B2CFDFC6900950554 /* Tabman */,
+				46B0B41E2CFDFC7700950554 /* GoogleSignIn */,
+				46B0B4202CFDFC7700950554 /* GoogleSignInSwift */,
+				46B0B4232CFDFC8900950554 /* Kingfisher */,
+				46B0B4262CFDFC9F00950554 /* Alamofire */,
+				46B0B4292CFDFDB500950554 /* FirebaseAnalytics */,
+				46B0B42B2CFDFDB500950554 /* FirebaseCore */,
+				46B0B42D2CFDFDB500950554 /* FirebaseCrashlytics */,
+				46B0B4302CFDFE3300950554 /* RealmSwift */,
+			);
 			productName = pochak;
 			productReference = EA1B0B572A49D23A00F86FBC /* pochak.app */;
 			productType = "com.apple.product-type.application";
@@ -1452,6 +1452,14 @@
 				Base,
 			);
 			mainGroup = EA1B0B4E2A49D23A00F86FBC;
+			packageReferences = (
+				46B0B41A2CFDFC6900950554 /* XCRemoteSwiftPackageReference "Tabman" */,
+				46B0B41D2CFDFC7700950554 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				46B0B4222CFDFC8900950554 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				46B0B4252CFDFC9F00950554 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				46B0B4282CFDFDB500950554 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				46B0B42F2CFDFE3300950554 /* XCRemoteSwiftPackageReference "realm-swift" */,
+			);
 			productRefGroup = EA1B0B582A49D23A00F86FBC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1570,24 +1578,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		42914AF2E4C4F9BD17F4DE35 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-pochak/Pods-pochak-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-pochak/Pods-pochak-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-pochak/Pods-pochak-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DFB444394226E6589450B718 /* [CP] Check Pods Manifest.lock */ = {
+		465D6E0D2CFE057300847542 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1595,19 +1586,16 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 			);
-			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-pochak-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
 		};
 		F0BA8870B3C73640294FA57C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1994,7 +1982,6 @@
 		};
 		EA1B0B822A49D23B00F86FBC /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 67EA6B5B881844A22EE2A55B /* Pods-pochak.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2034,7 +2021,6 @@
 		};
 		EA1B0B832A49D23B00F86FBC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0DB83F3ED818C9AF01F6A8E0 /* Pods-pochak.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2074,7 +2060,6 @@
 		};
 		EA1B0B852A49D23B00F86FBC /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9D5440AA571B5DB6291304B2 /* Pods-pochakTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -2095,7 +2080,6 @@
 		};
 		EA1B0B862A49D23B00F86FBC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A5D3B19C2AEC946ECCF7054B /* Pods-pochakTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -2116,7 +2100,6 @@
 		};
 		EA1B0B882A49D23B00F86FBC /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0994FB0CA794651C5C9BDE8F /* Pods-pochak-pochakUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -2135,7 +2118,6 @@
 		};
 		EA1B0B892A49D23B00F86FBC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F9A6AE07B1A942C2FFC48F28 /* Pods-pochak-pochakUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -2192,6 +2174,105 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		46B0B41A2CFDFC6900950554 /* XCRemoteSwiftPackageReference "Tabman" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/uias/Tabman.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.2.0;
+			};
+		};
+		46B0B41D2CFDFC7700950554 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+		46B0B4222CFDFC8900950554 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.1.1;
+			};
+		};
+		46B0B4252CFDFC9F00950554 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+		46B0B4282CFDFDB500950554 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.5.0;
+			};
+		};
+		46B0B42F2CFDFE3300950554 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.20.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		46B0B41B2CFDFC6900950554 /* Tabman */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46B0B41A2CFDFC6900950554 /* XCRemoteSwiftPackageReference "Tabman" */;
+			productName = Tabman;
+		};
+		46B0B41E2CFDFC7700950554 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46B0B41D2CFDFC7700950554 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		46B0B4202CFDFC7700950554 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46B0B41D2CFDFC7700950554 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+		46B0B4232CFDFC8900950554 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46B0B4222CFDFC8900950554 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		46B0B4262CFDFC9F00950554 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46B0B4252CFDFC9F00950554 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		46B0B4292CFDFDB500950554 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46B0B4282CFDFDB500950554 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		46B0B42B2CFDFDB500950554 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46B0B4282CFDFDB500950554 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		46B0B42D2CFDFDB500950554 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46B0B4282CFDFDB500950554 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		46B0B4302CFDFE3300950554 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46B0B42F2CFDFE3300950554 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EA1B0B4F2A49D23A00F86FBC /* Project object */;
 }
