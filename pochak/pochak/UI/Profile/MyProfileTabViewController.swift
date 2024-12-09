@@ -152,7 +152,7 @@ final class MyProfileTabViewController: UIViewController {
             settingBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             settingBtn.centerYAnchor.constraint(equalTo: userHandle.centerYAnchor),
             
-            profileBackground.topAnchor.constraint(equalTo: userHandle.bottomAnchor, constant: 25),
+            profileBackground.topAnchor.constraint(equalTo: topUIView.bottomAnchor, constant: 28),
             profileBackground.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor, constant: 20),
             
             userName.topAnchor.constraint(equalTo: profileBackground.topAnchor, constant: 15),
