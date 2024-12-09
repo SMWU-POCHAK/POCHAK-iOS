@@ -125,8 +125,6 @@ final class SettingsViewController: UIViewController {
         let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? "handle not found"
         let message = UserDefaultsManager.getData(type: String.self, forKey: .message) ?? "message not found"
         let profileImgUrl = UserDefaultsManager.getData(type: String.self, forKey: .profileImgUrl) ?? "profileImgUrl not found"
-        let followerCount = UserDefaultsManager.getData(type: Int.self, forKey: .followerCount) ?? -1
-        let followingCount = UserDefaultsManager.getData(type: Int.self, forKey: .followingCount) ?? -1
         
         // Print values
         print("Access Token: \(accessToken)")
@@ -140,8 +138,6 @@ final class SettingsViewController: UIViewController {
         print("Handle: \(handle)")
         print("Message: \(message)")
         print("Profile Image URL: \(profileImgUrl)")
-        print("Follower Count: \(followerCount)")
-        print("Following Count: \(followingCount)")
     }
 }
 

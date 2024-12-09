@@ -8,26 +8,26 @@
 import Foundation
 
 struct BlockListResponse : Codable {
-    var isSuccess: Bool
-    var code: String
-    var message: String
-    var result : BlockListResult
+    let isSuccess: Bool
+    let code: String
+    let message: String
+    let result : BlockListResult
 }
 
 struct BlockListResult : Codable {
-    var pageInfo: BlockListPageInfo
-    var blockList: [BlockList]
+    let pageInfo: BlockListPageInfo
+    let blockList: [BlockList]
 }
 
 struct BlockListPageInfo : Codable {
-    var lastPage : Bool
-    var totalPages: Int
-    var totalElements: Int
-    var size: Int
+    let lastPage : Bool
+    let totalPages: Int
+    let totalElements: Int
+    let size: Int
 }
 
 struct BlockList : Codable {
-    var profileImage: String
-    var handle: String
-    var name: String
+    let profileImage: String
+    let handle: String
+    let name: String
 }

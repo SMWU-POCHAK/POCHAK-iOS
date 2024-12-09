@@ -37,7 +37,6 @@ final class FollowingCollectionViewCell: UICollectionViewCell {
                 print("error")
                 return
             }
-            print(data.message)
             if data.message == "성공적으로 팔로우를 취소하였습니다." {
                 sender.setTitle("팔로우", for: .normal)
                 sender.backgroundColor = UIColor(named: "yellow00")
@@ -54,7 +53,6 @@ final class FollowingCollectionViewCell: UICollectionViewCell {
         profileImageBtn.imageView?.contentMode = .scaleAspectFill
         profileImageBtn.clipsToBounds = true
         profileImageBtn.layer.cornerRadius = 26
-        
         followStateToggleBtn.isHidden = false
     }
     

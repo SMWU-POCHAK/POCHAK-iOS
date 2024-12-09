@@ -12,9 +12,7 @@ import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
-    var realmManager = RecentSearchRealmManager()
-    
+        
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         sleep(2)
@@ -86,6 +84,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func handleRefreshToken() {
         if !isRefreshTokenValid() {
+            print("Refresh Token 만료됨.. 재로그인 필요")
+            AuthenticationService.logOut { data, failed in
+                guard let data = data else {
+                    return
+                }
+                let message = data.message
+                print(message)
+            }
             deleteUserData()
             moveToMainPage()
         }
@@ -106,13 +112,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Keychain 삭제
             try KeychainManager.delete(account: "accessToken")
             try KeychainManager.delete(account: "refreshToken")
-            
-            // 최근 검색 기록 삭제
-            if realmManager.deleteAllData() {
-                print("Successfully deleted all data")
-            } else {
-                print("Failed to delete all data")
-            }
             
             // UserDefaults 삭제
             UserDefaultsManager.UserDefaultsKeys.allCases.forEach { key in

@@ -15,21 +15,21 @@ struct FollowListResponse: Codable {
 }
 
 struct FollowListResult: Codable {
-    var pageInfo: FollowListPageInfo
-    var memberList: [MemberListData]
+    let pageInfo: FollowListPageInfo
+    let memberList: [MemberListData]
 }
 
 struct FollowListPageInfo: Codable {
-    var lastPage : Bool
-    var totalPages : Int
-    var totalElements : Int
-    var size : Int
+    let lastPage : Bool
+    let totalPages : Int
+    let totalElements : Int
+    let size : Int
 }
 
 struct MemberListData: Codable {
-    var memberId: Int
-    var profileImage: String
-    var handle: String
-    var name: String
-    var isFollow: Bool?
+    let memberId: Int
+    let profileImage: String
+    let handle: String
+    let name: String
+    let isFollow: Bool?
 }
