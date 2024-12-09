@@ -26,7 +26,6 @@ final class FollowingListTabmanViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         currentFetchingPage = 0
-        
         setUpCollectionView()
         setUpRefreshControl()
         setUpData()
@@ -35,12 +34,10 @@ final class FollowingListTabmanViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func refreshData(_ sender: Any) {
-        // 데이터 새로고침 완료 후 UIRefreshControl을 종료
-        print("refresh")
         imageArray = []
         currentFetchingPage = 0
         setUpData()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+        DispatchQueue.main.async() {
             self.followingCollectionView.refreshControl?.endRefreshing()
         }
     }
@@ -81,22 +78,16 @@ final class FollowingListTabmanViewController: UIViewController {
                 
                 let newMembers = data.result.memberList
                 let startIndex = data.result.memberList.count
-                print("startIndex : \(startIndex)")
                 let endIndex = startIndex + newMembers.count
-                print("endIndex : \(endIndex)")
                 let newIndexPaths = (startIndex..<endIndex).map { IndexPath(item: $0, section: 0) }
-                print("newIndexPaths : \(newIndexPaths)")
                 self?.imageArray.append(contentsOf: newMembers)
                 self?.isLastPage = data.result.pageInfo.lastPage
                 
-                print("보여주는 계정 개수: \(newMembers.count)")
                 DispatchQueue.main.async {
                     if self?.currentFetchingPage == 0 {
-                        self?.followingCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
-                        print(">>>>>>> Follower is currently reloading!!!!!!!")
+                        self?.followingCollectionView.reloadData()
                     } else {
                         self?.followingCollectionView.insertItems(at: newIndexPaths)
-                        print(">>>>>>> Follower is currently fethcing!!!!!!!")
                     }
                     self?.isCurrentlyFetching = false
                     self?.currentFetchingPage += 1;
@@ -108,7 +99,7 @@ final class FollowingListTabmanViewController: UIViewController {
     }
 }
 
-// MARK: - Extension : UICollectionViewDelegate, UICollectionViewDataSource
+// MARK: - Extension: UICollectionViewDelegate, UICollectionViewDataSource
 
 extension FollowingListTabmanViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -130,14 +121,16 @@ extension FollowingListTabmanViewController: UICollectionViewDelegate, UICollect
     
     // 유저 클릭 시 해당 프로필로 이동
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let otherUserProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else {return}
+        guard let otherUserProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "OtherUserProfileVC")
+                as? OtherUserProfileViewController else { return }
         self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
-        guard let cell: FollowingCollectionViewCell = self.followingCollectionView.cellForItem(at: indexPath) as? FollowingCollectionViewCell else {return}
+        guard let cell: FollowingCollectionViewCell = self.followingCollectionView.cellForItem(at: indexPath)
+                as? FollowingCollectionViewCell else { return }
         otherUserProfileVC.receivedHandle = cell.userId.text
     }
 }
 
-// MARK: - Extension : UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
+// MARK: - Extension: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
 
 extension FollowingListTabmanViewController: UICollectionViewDelegateFlowLayout {
     
@@ -151,7 +144,7 @@ extension FollowingListTabmanViewController: UICollectionViewDelegateFlowLayout 
     }
 }
 
-// MARK: - Extension : UIScrollViewDelegate
+// MARK: - Extension: UIScrollViewDelegate
 
 extension FollowingListTabmanViewController: UIScrollViewDelegate {
     

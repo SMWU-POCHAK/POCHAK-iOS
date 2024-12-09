@@ -13,11 +13,11 @@ final class PochakPostTabmanViewController: UIViewController {
     
     var receivedHandle: String?
     var imageArray: [ProfilePostList]! = []
+    private var isLastPage: Bool = false
     private var isCurrentlyFetching: Bool = false
     private var currentFetchingPage: Int = 0
     private let minimumLineSpacing: CGFloat = 9
     private let minimumInterItemSpacing: CGFloat = 8
-    private var isLastPage: Bool = false
     
     // MARK: - Views
     
@@ -27,12 +27,10 @@ final class PochakPostTabmanViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("inside PochakPostTabmanViewController viewdidload!!")
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveRefreshRequest), name: .didHitBottom, object: nil)
         currentFetchingPage = 0
         setUpData()
         setUpCollectionView()
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveRefreshRequest), name: .didHitBottom, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -84,7 +82,7 @@ final class PochakPostTabmanViewController: UIViewController {
                 
                 DispatchQueue.main.async {
                     if self?.currentFetchingPage == 0 {
-                        self?.postCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
+                        self?.postCollectionView.reloadData()
                     } else {
                         self?.postCollectionView.insertItems(at: newIndexPaths)
                     }
@@ -132,9 +130,9 @@ final class PochakPostTabmanViewController: UIViewController {
     }
 }
 
-// MARK: - Extension : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate
+// MARK: - Extension: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate
 
-extension PochakPostTabmanViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension PochakPostTabmanViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return max(0,(imageArray.count))

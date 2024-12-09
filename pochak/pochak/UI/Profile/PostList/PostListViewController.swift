@@ -65,7 +65,7 @@ final class PostListViewController: TabmanViewController {
     }
 }
 
-// MARK: - Extension : PageboyViewControllerDataSource, TMBarDataSource
+// MARK: - Extension: PageboyViewControllerDataSource, TMBarDataSource
 
 extension PostListViewController: PageboyViewControllerDataSource, TMBarDataSource {
     

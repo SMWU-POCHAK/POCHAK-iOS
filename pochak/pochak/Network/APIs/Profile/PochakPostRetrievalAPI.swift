@@ -8,7 +8,6 @@
 import Foundation
 import Alamofire
 
-
 enum PochakPostRetrievalAPI {
     case getPochakPost(handle: String, request: ProfileRetrievalRequest)
 }

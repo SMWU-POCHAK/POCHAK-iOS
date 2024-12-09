@@ -12,8 +12,8 @@ final class ProfileMenuViewController: UIViewController {
     // MARK: - Properties
     
     var receivedHandle: String?
-    private let userHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
     weak var delegate: SecondViewControllerDelegate?
+    private let userHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
     
     // MARK: - Views
     
@@ -33,8 +33,7 @@ final class ProfileMenuViewController: UIViewController {
                   titleText: "유저를 차단하시겠습니까?",
                   messageText: "유저를 차단하면, 팔로워와 관련된 \n사진 및 소식을 접할 수 없습니다.",
                   cancelButtonText: "취소",
-                  confirmButtonText: "차단하기"
-        )
+                  confirmButtonText: "차단하기")
     }
     
     @IBAction func cancelBtnClicked(_ sender: Any) {
@@ -42,7 +41,7 @@ final class ProfileMenuViewController: UIViewController {
     }
 }
 
-// MARK: - Extension : CustomAlertDelegate
+// MARK: - Extension: CustomAlertDelegate
 
 extension ProfileMenuViewController: CustomAlertDelegate {
     
@@ -62,7 +61,6 @@ extension ProfileMenuViewController: CustomAlertDelegate {
                     }
                     return
                 }
-                print(data.message)
                 self?.userBlockBtn.setTitle("차단취소", for: .normal)
                 self?.delegate?.dismissSecondViewController()
                 self?.dismiss(animated: true, completion: nil)

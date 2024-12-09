@@ -26,7 +26,7 @@ final class ProfilePostCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Functions
     
-    func setUpCellData(_ postDataModel : ProfilePostList) {
+    func setUpCellData(_ postDataModel: ProfilePostList) {
         var imageURL = postDataModel.postImage
         if let url = URL(string: (imageURL)) {
             profilePostImage.load(with: url)

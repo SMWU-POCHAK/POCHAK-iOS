@@ -73,7 +73,6 @@ final class OtherUserProfileViewController: UIViewController {
         setUpViewController()
         setUpData()
         initializeSingleton()
-        NotificationCenter.default.addObserver(self, selector: #selector(totalHeightUpdated), name: .didUpdateTotalHeight, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -92,13 +91,11 @@ final class OtherUserProfileViewController: UIViewController {
                       titleText: "팔로우를 취소할까요?",
                       messageText: "",
                       cancelButtonText: "나가기",
-                      confirmButtonText: "계속하기"
-            )
+                      confirmButtonText: "계속하기")
         } else {
             if let handle = receivedHandle {
                 UserService.postFollowRequest(handle: handle) { [weak self] data, failed in
                     guard let data = data else {
-                        // 에러가 난 경우, alert 창 present
                         switch failed {
                         case .disconnected:
                             self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
@@ -111,7 +108,6 @@ final class OtherUserProfileViewController: UIViewController {
                         }
                         return
                     }
-                    print(data.message)
                     self?.receivedIsFollow = true
                     sender.setTitle("팔로잉", for: .normal)
                     sender.backgroundColor = UIColor(named: "gray03")
@@ -124,26 +120,28 @@ final class OtherUserProfileViewController: UIViewController {
     }
     
     @IBAction func updateProfile(_ sender: Any) {
-        guard let updateProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "UpdateProfileVC") as? UpdateProfileViewController else {return}
+        guard let updateProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "UpdateProfileVC") as? UpdateProfileViewController else { return }
         self.navigationController?.pushViewController(updateProfileVC, animated: true)
     }
 
     @objc private func viewFollowerTapped() {
-        guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC") as? FollowListViewController else {return}
+        guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC") as? FollowListViewController else { return }
         followListVC.index = 0
         followListVC.handle = receivedHandle ?? ""
         self.navigationController?.pushViewController(followListVC, animated: true)
     }
     
     @objc private func viewFollowingTapped() {
-        guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC") as? FollowListViewController else {return}
+        guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC")
+                as? FollowListViewController else { return }
         followListVC.index = 1
         followListVC.handle = receivedHandle ?? ""
         self.navigationController?.pushViewController(followListVC, animated: true)
     }
     
-    @objc func moreButtonPressed() {
-        guard let profileMenuVC = self.storyboard?.instantiateViewController(withIdentifier: "profileMenuVC") as? ProfileMenuViewController else {return}
+    @objc private func moreButtonPressed() {
+        guard let profileMenuVC = self.storyboard?.instantiateViewController(withIdentifier: "profileMenuVC")
+                as? ProfileMenuViewController else { return }
         let sheet = profileMenuVC.sheetPresentationController
         profileMenuVC.receivedHandle = receivedHandle
         
@@ -262,6 +260,7 @@ final class OtherUserProfileViewController: UIViewController {
         viewFollowingList()
         updateProfileBtn.layer.isHidden = true
         contentScrollView.delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(totalHeightUpdated), name: .didUpdateTotalHeight, object: nil)
     }
     
     private func setUpData() {
@@ -277,8 +276,7 @@ final class OtherUserProfileViewController: UIViewController {
                                        titleText: "차단한 유저의 프로필입니다.",
                                        messageText: "차단해제를 원하시면\n설정 탭의 차단관리 페이지를 확인해주세요.",
                                        cancelButtonText: "",
-                                       confirmButtonText: "확인"
-                        )
+                                       confirmButtonText: "확인")
                     case .disconnected:
                         self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
                     case .serverError:
@@ -291,7 +289,7 @@ final class OtherUserProfileViewController: UIViewController {
                     return
                 }
                 
-                // load 프로필 이미지
+                // 프로필 이미지 로드
                 if let url = URL(string: data.result.profileImage ?? "") {
                     self.profileImage.load(with: url)
                 }
@@ -394,7 +392,7 @@ final class OtherUserProfileViewController: UIViewController {
     }
 }
 
-// MARK: - Extension : CustomAlertDelegate, SecondViewControllerDelegate
+// MARK: - Extension: CustomAlertDelegate, SecondViewControllerDelegate
 
 extension OtherUserProfileViewController: CustomAlertDelegate {
     
@@ -435,7 +433,6 @@ extension OtherUserProfileViewController: CustomAlertDelegate {
 }
 
 extension OtherUserProfileViewController: SecondViewControllerDelegate {
-    
     // 차단한 유저의 프로필 조회 시 VC를 dismiss하여 전 화면으로 돌아감
     func dismissSecondViewController() {
         self.navigationController?.popViewController(animated: true)
@@ -443,7 +440,6 @@ extension OtherUserProfileViewController: SecondViewControllerDelegate {
 }
 
 extension OtherUserProfileViewController: UIScrollViewDelegate {
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (contentScrollView.contentOffset.y > (contentScrollView.contentSize.height - contentScrollView.frame.size.height)) {
             if (ProfileDataSingleton.shared.currentTabIndex == 0 &&

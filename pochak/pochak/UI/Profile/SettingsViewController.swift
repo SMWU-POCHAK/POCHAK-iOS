@@ -11,6 +11,7 @@ import SafariServices
 final class SettingsViewController: UIViewController {
     
     // MARK: - Properties
+    
     var realmManager = RecentSearchRealmManager()
     private var selectedBtn: Int = 0
     
@@ -21,6 +22,7 @@ final class SettingsViewController: UIViewController {
     @IBOutlet weak var deleteAccountButton: UIButton!
     
     // MARK: - LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavigationBar()
@@ -29,12 +31,11 @@ final class SettingsViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func openTermsOfUse(_ sender: Any) {
-        // 배포 시 삭제(로그 확인 용)
+        // !! 배포 시 삭제(로그 확인 용) !!
         printUserData()
         
         guard let url = URL(string: "https://pochak.notion.site/6520996186464c36a8b3a04bc17fa000?pvs=74") else { return }
         let safariVC = SFSafariViewController(url: url)
-        /// delegate 지정 및 presentation style 설정
         safariVC.transitioningDelegate = self
         safariVC.modalPresentationStyle = .pageSheet
         present(safariVC, animated: true, completion: nil)
@@ -44,14 +45,14 @@ final class SettingsViewController: UIViewController {
     @IBAction func openPrivacyPolicy(_ sender: Any) {
         guard let url = URL(string: "https://pochak.notion.site/e365e34f018949b88543adbe6b0b3746") else { return }
         let safariVC = SFSafariViewController(url: url)
-        /// delegate 지정 및 presentation style 설정
         safariVC.transitioningDelegate = self
         safariVC.modalPresentationStyle = .pageSheet
         present(safariVC, animated: true, completion: nil)
     }
     
     @IBAction func viewBlockList(_ sender: Any) {
-        guard let blockedUserVC = self.storyboard?.instantiateViewController(withIdentifier: "BlockedUserVC") as? BlockedUserViewController else {return}
+        guard let blockedUserVC = self.storyboard?.instantiateViewController(withIdentifier: "BlockedUserVC")
+                as? BlockedUserViewController else { return }
         self.navigationController?.pushViewController(blockedUserVC, animated: true)
     }
     
@@ -61,8 +62,7 @@ final class SettingsViewController: UIViewController {
                   titleText: "로그아웃 하시겠습니까?",
                   messageText: "",
                   cancelButtonText: "취소",
-                  confirmButtonText: "확인"
-        )
+                  confirmButtonText: "확인")
     }
     
     @IBAction func deleteAccount(_ sender: Any) {
@@ -71,8 +71,7 @@ final class SettingsViewController: UIViewController {
                   titleText: "회원탈퇴하시겠습니까?",
                   messageText: "회원 탈퇴 시, 개인정보 및 기존에 업로드된 \n피드 정보가 모두 사라집니다.",
                   cancelButtonText: "취소",
-                  confirmButtonText: "탈퇴하기"
-        )
+                  confirmButtonText: "탈퇴하기")
     }
     
     // MARK: - Functions
@@ -80,7 +79,7 @@ final class SettingsViewController: UIViewController {
     private func setUpNavigationBar() {
         self.navigationController?.navigationBar.tintColor = .black
         self.navigationItem.title = "설정"
-        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.black, NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 18) ?? UIFont.systemFont(ofSize: 18, weight: .bold)]
+        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 18) ?? UIFont.systemFont(ofSize: 18, weight: .bold)]
     }
     
     private func moveToMainPage() {
@@ -112,7 +111,7 @@ final class SettingsViewController: UIViewController {
     }
     
     private func printUserData() {
-        // 현재 저장된 모든 Keycahin : accessToken, refreshToken
+        // 현재 저장된 모든 Keycahin: accessToken, refreshToken
         let accessToken = GetToken.getAccessToken()
         let refreshToken = GetToken.getRefreshToken()
         
@@ -141,31 +140,23 @@ final class SettingsViewController: UIViewController {
     }
 }
 
-// MARK: - Extension : CustomAlertDelegate, UIViewControllerTransitioningDelegate
+// MARK: - Extension: CustomAlertDelegate, UIViewControllerTransitioningDelegate
 
 extension SettingsViewController: CustomAlertDelegate {
     
     func confirmAction() {
         if selectedBtn == 0 {
             AuthenticationService.logOut { data, failed in
-                guard let data = data else {
-                    print(failed)
-                    return
-                }
-                let message = data.message
-                print(message)
+                guard let data = data else { return }
+                print(data.message)
             }
             deleteUserData()
             moveToMainPage()
             
         } else if selectedBtn == 1 {
             AuthenticationService.signOut { data, failed in
-                guard let data = data else {
-                    print(failed)
-                    return
-                }
-                let message = data.message
-                print(message)
+                guard let data = data else { return }
+                print(data.message)
             }
             deleteUserData()
             moveToMainPage()

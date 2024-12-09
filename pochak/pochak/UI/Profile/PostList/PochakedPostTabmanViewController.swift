@@ -8,16 +8,16 @@
 import UIKit
 import Foundation
 
-class PochakedPostTabmanViewController: UIViewController {
+final class PochakedPostTabmanViewController: UIViewController {
     
     // MARK: - Properties
     var receivedHandle: String?
     var imageArray: [ProfilePostList]! = []
+    private var isLastPage: Bool = false
     private var isCurrentlyFetching: Bool = false
     private var currentFetchingPage: Int = 0
     private let minimumLineSpacing: CGFloat = 9
     private let minimumInterItemSpacing: CGFloat = 8
-    private var isLastPage: Bool = false
     
     // MARK: - Views
     
@@ -83,7 +83,7 @@ class PochakedPostTabmanViewController: UIViewController {
                 
                 DispatchQueue.main.async {
                     if self?.currentFetchingPage == 0 {
-                        self?.postCollectionView.reloadData() // collectionView를 새로고침하여 이미지 업데이트
+                        self?.postCollectionView.reloadData()
                     } else {
                         self?.postCollectionView.insertItems(at: newIndexPaths)
                     }
@@ -131,9 +131,9 @@ class PochakedPostTabmanViewController: UIViewController {
     }
 }
 
-// MARK: - Extension : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate
+// MARK: - Extension: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate
 
-extension PochakedPostTabmanViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension PochakedPostTabmanViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return max(0,(imageArray.count))
@@ -161,7 +161,6 @@ extension PochakedPostTabmanViewController : UICollectionViewDelegate, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        print("Inset method called")
         return UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
     }
     

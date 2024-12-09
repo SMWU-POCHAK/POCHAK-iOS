@@ -15,6 +15,7 @@ protocol RemoveCellDelegate: AnyObject {
 final class BlockedUserViewController: UIViewController {
     
     // MARK: - Properties
+    
     private var cellIndexPath: IndexPath?
     private var cellHandle: String?
     private var blockedUserList: [BlockList] = []
@@ -23,13 +24,14 @@ final class BlockedUserViewController: UIViewController {
     private var currentFetchingPage: Int = 0
     
     // MARK: - Views
+    
     @IBOutlet weak var tableView: UITableView!
     
     // MARK: - LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         currentFetchingPage = 0
-        
         setUpNavigationBar()
         setUpTableView()
         setUpRefreshControl()
@@ -42,7 +44,7 @@ final class BlockedUserViewController: UIViewController {
         blockedUserList = []
         currentFetchingPage = 0
         setUpData()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+        DispatchQueue.main.async() {
             self.tableView.refreshControl?.endRefreshing()
         }
     }
@@ -53,7 +55,7 @@ final class BlockedUserViewController: UIViewController {
         self.navigationController?.navigationBar.backgroundColor = UIColor.clear
         self.navigationController?.navigationBar.tintColor = .black
         self.navigationItem.title = "차단관리"
-        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.black, NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 18) ?? UIFont.systemFont(ofSize: 18, weight: .bold)]
+        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 18) ?? UIFont.systemFont(ofSize: 18, weight: .bold)]
     }
     
     private func setUpTableView() {
@@ -109,7 +111,7 @@ final class BlockedUserViewController: UIViewController {
     }
 }
 
-// MARK: - Extension : UITableViewDelegate, UITableViewDataSource, RemoveCellDelegate, CustomAlertDelegate, UIScrollViewDelegate
+// MARK: - Extension: UITableViewDelegate, UITableViewDataSource, RemoveCellDelegate, CustomAlertDelegate, UIScrollViewDelegate
 
 extension BlockedUserViewController: UITableViewDelegate{
     
@@ -142,8 +144,7 @@ extension BlockedUserViewController: RemoveCellDelegate {
                   titleText: "유저 차단을 취소하겠습니까?",
                   messageText: "유저 차단을 취소하면, 팔로워와 관련된 \n사진 및 소식을 다시 접할 수 있습니다.",
                   cancelButtonText: "나가기",
-                  confirmButtonText: "계속하기"
-        )
+                  confirmButtonText: "계속하기")
     }
 }
 
@@ -153,7 +154,7 @@ extension BlockedUserViewController: CustomAlertDelegate {
         let userHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
         let request = UnblockRequest(blockedMemberHandle: cellHandle ?? "")
         UserService.unblockUser(handle: userHandle, request: request) { data, failed in
-            guard let data = data else {
+            guard data != nil else {
                 switch failed {
                 case .disconnected:
                     self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
@@ -179,7 +180,7 @@ extension BlockedUserViewController: CustomAlertDelegate {
 extension BlockedUserViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (tableView.contentOffset.y > (tableView.contentSize.height - tableView.bounds.size.height)){
+        if (tableView.contentOffset.y > (tableView.contentSize.height - tableView.bounds.size.height)) {
             if (!isLastPage && !isCurrentlyFetching) {
                 print("스크롤에 의해 새 데이터 가져오는 중, page: \(currentFetchingPage)")
                 isCurrentlyFetching = true

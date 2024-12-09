@@ -41,17 +41,16 @@ final class BlockedUserTableViewCell: UITableViewCell {
             print("superview is not a UICollectionView - getIndexPath")
             return
         }
-        guard let indexPath = superView.indexPath(for: self) else {return}
+        guard let indexPath = superView.indexPath(for: self) else { return }
         delegate?.removeCell(at: indexPath, cellHandle ?? "")
     }
     
     // MARK: - Functions
     
-    func setUpCell() {
+    private func setUpCell() {
         profileImg.contentMode = .scaleAspectFill
         profileImg.clipsToBounds = true
         profileImg.layer.cornerRadius = 26
-        
         unblockButton.setTitle("차단해제", for: .normal)
         unblockButton.backgroundColor = UIColor(named: "gray03")
         unblockButton.setTitleColor(UIColor.white, for: .normal)
@@ -59,8 +58,7 @@ final class BlockedUserTableViewCell: UITableViewCell {
         unblockButton.layer.cornerRadius = 5
     }
     
-    func setUpCellData(_ blockedUserList :  BlockList) {
-        // load 프로필 이미지
+    func setUpCellData(_ blockedUserList:  BlockList) {
         var imageURL = blockedUserList.profileImage
         if let url = URL(string: (imageURL)) {
             profileImg.load(with: url)

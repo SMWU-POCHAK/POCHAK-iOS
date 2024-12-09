@@ -36,10 +36,22 @@ final class UpdateProfileViewController: UIViewController {
     }
     
     // MARK: - Actions
-
+    
+    /* < 앨범 사진 선택 >
+    1. 권한 설정: Info.plist > Photo Library Usage 권한 추가
+    2. UIImagePickerController 선언
+    3. @IBAction 정의
+    4. 프로토콜 채택
+     */
+    @IBAction func profileBtnTapped(_ sender: Any) {
+        self.imagePickerController.delegate = self
+        self.imagePickerController.sourceType = .photoLibrary
+        present(self.imagePickerController, animated: true, completion: nil)
+    }
+    
     @objc private func doneBtnTapped(_ sender: Any) {
-        guard let name = nameTextField.text  else {return}
-        guard let message = messageTextView.text  else {return}
+        guard let name = nameTextField.text  else { return }
+        guard let message = messageTextView.text  else { return }
         let profileImage: Data? = profileImg.image?.jpegData(compressionQuality: 0.2)
         
         let request = ProfileUpdateRequest(name: name, message: message)
@@ -75,18 +87,6 @@ final class UpdateProfileViewController: UIViewController {
         }
     }
     
-    /* < 앨범 사진 선택 >
-    1. 권한 설정 : Info.plist > Photo Library Usage 권한 추가
-    2. UIImagePickerController 선언
-    3. @IBAction 정의
-    4. 프로토콜 채택
-     */
-    @IBAction func profileBtnTapped(_ sender: Any) {
-        self.imagePickerController.delegate = self
-        self.imagePickerController.sourceType = .photoLibrary
-        present(self.imagePickerController, animated: true, completion: nil)
-    }
-    
     // MARK: - Functions
     
     private func setUpNavigationBar() {
@@ -102,7 +102,7 @@ final class UpdateProfileViewController: UIViewController {
         // 네비게이션바 title 커스텀
         self.navigationController?.navigationBar.tintColor = .black
         self.navigationItem.title = "프로필 수정"
-        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor : UIColor.black, NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 18) ?? UIFont.systemFont(ofSize: 18, weight: .bold)]
+        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 18) ?? UIFont.systemFont(ofSize: 18, weight: .bold)]
     }
     
     private func setUpViewController() {
@@ -122,22 +122,21 @@ final class UpdateProfileViewController: UIViewController {
         self.profileImg.layer.cornerRadius = 58
         
         messageTextView.delegate = self
-        /// textView 기본 마진 제거
-        messageTextView.textContainer.lineFragmentPadding = 0
+        messageTextView.textContainer.lineFragmentPadding = 0 // textView 기본 마진 제거
         messageTextView.textContainerInset = .zero
     }
 }
 
-// MARK: - Extension : UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, CustomAlertDelegate
+// MARK: - Extension: UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, CustomAlertDelegate
 
 extension UpdateProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // 선택한 사진 사용
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             profileImg.image = image
         }
-        picker.dismiss(animated: true, completion: nil) // 주의점 : picker 숨기기 위한 dismiss를 직접 해야함
+        picker.dismiss(animated: true, completion: nil) // 주의점: picker 숨기기 위한 dismiss를 직접 해야함
     }
     
     // 취소
@@ -174,31 +173,28 @@ extension UpdateProfileViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         guard let text = textView.text else { return }
         
-        // 줄바꿈(들여쓰기) 제한
         let maxNumberOfLines = 3
         let lineBreakCharacter = "\n"
         let lines = text.components(separatedBy: lineBreakCharacter)
         var consecutiveLineBreakCount = 0 // 연속된 줄 바꿈 횟수
         
-        print("lines == \(lines)")
-        for line in lines {
+        for _ in lines {
             consecutiveLineBreakCount += 1
             if consecutiveLineBreakCount > maxNumberOfLines {
                 textView.text = String(text.dropLast()) // 마지막 입력 문자를 제거
-                
                 break
             }
         }
     }
 }
 
-extension UpdateProfileViewController : CustomAlertDelegate {
-    
-    func cancel() {
-        print("canceled")
-    }
+extension UpdateProfileViewController: CustomAlertDelegate {
     
     func confirmAction() {
         print("confirmed")
+    }
+    
+    func cancel() {
+        print("canceled")
     }
 }

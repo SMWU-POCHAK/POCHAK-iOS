@@ -22,7 +22,6 @@ class ProfileDataSingleton {
     private var _firstTabHeight: CGFloat = 0.0
     private var _secondTabHeight: CGFloat = 0.0
     
-    
     var firstTabHeight: CGFloat {
         get {
             return _firstTabHeight

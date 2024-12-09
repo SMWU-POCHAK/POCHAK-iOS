@@ -33,7 +33,6 @@ class MyAuthenticator : Authenticator {
     
     // 3. 인증이 필요한 urlRequest에 대해서만 refresh가 되도록, 이 경우에만 true를 리턴하여 refresh 요청
     func isRequest(_ urlRequest: URLRequest, authenticatedWith credential: MyAuthenticationCredential) -> Bool {
-        // bearerToken의 urlRequest대해서만 refresh를 시도 (true)
         let bearerToken = HTTPHeader.authorization(bearerToken: credential.accessToken).value
         let startIndex = bearerToken.index(bearerToken.startIndex, offsetBy: 7)
         let newBearerToken = String(bearerToken[startIndex...])

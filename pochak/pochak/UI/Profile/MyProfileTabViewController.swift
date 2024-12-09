@@ -57,7 +57,6 @@ final class MyProfileTabViewController: UIViewController {
         setUpViewController()
         setUpData()
         initializeSingleton()
-        NotificationCenter.default.addObserver(self, selector: #selector(totalHeightUpdated), name: .didUpdateTotalHeight, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,31 +73,32 @@ final class MyProfileTabViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func clickSettingBtn(_ sender: Any) {
-        guard let settingsVC = self.storyboard?.instantiateViewController(withIdentifier: "SettingsVC") as? SettingsViewController else {return}
+        guard let settingsVC = self.storyboard?.instantiateViewController(withIdentifier: "SettingsVC") as? SettingsViewController else { return }
         self.navigationController?.pushViewController(settingsVC, animated: true)
     }
     
     @IBAction func updateProfile(_ sender: Any) {
-        guard let updateProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "UpdateProfileVC") as? UpdateProfileViewController else {return}
+        guard let updateProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "UpdateProfileVC") as? UpdateProfileViewController else { return }
         self.navigationController?.pushViewController(updateProfileVC, animated: true)
     }
     
     @objc private func viewFollowerTapped() {
-        guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC") as? FollowListViewController else {return}
+        guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC")
+                as? FollowListViewController else { return }
         followListVC.index = 0
         followListVC.handle = handle
         self.navigationController?.pushViewController(followListVC, animated: true)
     }
     
     @objc private func viewFollowingTapped() {
-        guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC") as? FollowListViewController else {return}
+        guard let followListVC = self.storyboard?.instantiateViewController(withIdentifier: "FollowListVC")
+                as? FollowListViewController else { return }
         followListVC.index = 1
         followListVC.handle = handle
         self.navigationController?.pushViewController(followListVC, animated: true)
     }
     
     @objc private func refreshData(_ sender: Any) {
-        print("refresh")
         setUpData()
         DispatchQueue.main.async() {
             self.contentScrollView.refreshControl?.endRefreshing()
@@ -197,6 +197,7 @@ final class MyProfileTabViewController: UIViewController {
         let backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
         backBarButtonItem.tintColor = .black
         self.navigationItem.backBarButtonItem = backBarButtonItem
+        NotificationCenter.default.addObserver(self, selector: #selector(totalHeightUpdated), name: .didUpdateTotalHeight, object: nil)
     }
     
     private func setUpData() {
@@ -218,7 +219,7 @@ final class MyProfileTabViewController: UIViewController {
                 return
             }
             
-            // load 프로필 이미지
+            // 프로필 이미지 로드
             if let url = URL(string: data.result.profileImage ?? "") {
                 self.profileImage.load(with: url)
             }
@@ -295,11 +296,9 @@ final class MyProfileTabViewController: UIViewController {
     }
 }
 
-
-// MARK: - Extension : CustomAlertDelegate, SecondViewControllerDelegate
+// MARK: - Extension: CustomAlertDelegate, SecondViewControllerDelegate
 
 extension MyProfileTabViewController: UIScrollViewDelegate {
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (contentScrollView.contentOffset.y > (contentScrollView.contentSize.height - contentScrollView.frame.size.height)) {
             if (ProfileDataSingleton.shared.currentTabIndex == 0 &&

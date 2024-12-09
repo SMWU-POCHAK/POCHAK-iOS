@@ -79,7 +79,7 @@ final class SignUpViewController: UIViewController {
         present(self.imagePickerController, animated: true, completion: nil)
     }
     
-    @objc func backbuttonPressed(_ sender: Any) {
+    @objc private func backbuttonPressed(_ sender: Any) {
         backBtnPressed = true
         showAlert(alertType: .confirmAndCancel,
                   titleText: "프로필 설정을 취소하고\n페이지를 나갈까요?",
@@ -89,14 +89,14 @@ final class SignUpViewController: UIViewController {
         )
     }
     
-    @objc func textFieldDidChange(_ sender: Any?) {
+    @objc private func textFieldDidChange(_ sender: Any?) {
         handleDuplicationChecked = false
         checkHandleDuplicationBtn.isEnabled = true
         handleTextField.textColor = .black
         checkHandleDuplicationBtn.setImage(UIImage(named: "checkHandle"), for: .normal)
     }
     
-    @objc func doneBtnTapped(_ sender: Any) {
+    @objc private func doneBtnTapped(_ sender: Any) {
         guard let name = nameTextField.text  else { return }
         guard let handle = handleTextField.text  else { return }
         guard let message = messageTextView.text  else { return }

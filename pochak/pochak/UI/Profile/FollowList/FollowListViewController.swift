@@ -14,20 +14,19 @@ final class FollowListViewController: TabmanViewController {
     // MARK: - Properties
     
     var handle: String?
-    var viewControllers: [UIViewController] = []
     var index: Int = 0
-
+    private var viewControllers: [UIViewController] = []
+    
     // MARK: - LifeCycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTabman()
         setUpNavigationBar()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // View Controller 생길 때 네비게이션 바 숨김
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.backgroundColor = UIColor.clear
     }
@@ -39,7 +38,7 @@ final class FollowListViewController: TabmanViewController {
         self.navigationController?.navigationBar.backgroundColor = UIColor.clear
         self.navigationItem.title = handle ?? "handle not found"
     }
-
+    
     private func setUpTabman() {
         // Tabman 사용
         /* 1. tab에 보여질 VC 추가 */
@@ -79,7 +78,7 @@ final class FollowListViewController: TabmanViewController {
     }
 }
 
-// MARK: - Extension : PageboyViewControllerDataSource, TMBarDataSource
+// MARK: - Extension: PageboyViewControllerDataSource, TMBarDataSource
 
 extension FollowListViewController: PageboyViewControllerDataSource, TMBarDataSource {
     
@@ -93,11 +92,9 @@ extension FollowListViewController: PageboyViewControllerDataSource, TMBarDataSo
     }
     
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-        // index를 통해 처음에 보이는 탭을 설정
-        return .at(index: index)
+        return .at(index: index) // index를 통해 처음에 보이는 탭을 설정
     }
     
-    // 팔로워 페이지 혹은 팔로잉 페이지인지에 따라 defualtPage 다르게 하기
     func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
         switch index {
         case 0:
