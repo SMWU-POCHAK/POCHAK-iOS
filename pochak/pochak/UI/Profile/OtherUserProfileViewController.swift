@@ -233,7 +233,7 @@ final class OtherUserProfileViewController: UIViewController {
             postListTabmanView.topAnchor.constraint(equalTo: followToggleBtn.bottomAnchor, constant: 5),
             postListTabmanView.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor),
             postListTabmanView.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor),
-            postListTabmanView.heightAnchor.constraint(equalToConstant: view.frame.height),
+            postListTabmanView.heightAnchor.constraint(equalToConstant: view.frame.height - 270)
         ])
     }
     

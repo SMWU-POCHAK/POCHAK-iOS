@@ -146,7 +146,7 @@ final class MyProfileTabViewController: UIViewController {
             topUIView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             topUIView.bottomAnchor.constraint(equalTo: postListTabmanView.bottomAnchor), // Dynamic height for topUIView
             
-            userHandle.topAnchor.constraint(equalTo: topUIView.topAnchor, constant: 20),
+            userHandle.topAnchor.constraint(equalTo: topUIView.topAnchor, constant: 13),
             userHandle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             
             settingBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -177,7 +177,7 @@ final class MyProfileTabViewController: UIViewController {
             postListTabmanView.topAnchor.constraint(equalTo: whiteBackground1.bottomAnchor, constant: 5),
             postListTabmanView.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor),
             postListTabmanView.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor),
-            postListTabmanView.heightAnchor.constraint(equalToConstant: view.frame.height),
+            postListTabmanView.heightAnchor.constraint(equalToConstant: view.frame.height - 270)
         ])
     }
     
