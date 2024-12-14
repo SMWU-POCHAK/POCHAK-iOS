@@ -135,14 +135,12 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
     // MARK: - Actions
     
     @objc private func termsOfUseAgreeButtonDidTap() {
-        print("이용약관 선택됨")
         termsOfUseAgreeButton.isChecked.toggle()
         didAgreeForTermsOfUse = termsOfUseAgreeButton.isChecked
         checkEachAgreeStatus()
     }
     
     @objc private func privacyPolicyAgreeButtonDidTap() {
-        print("개인정보 동의 선택됨")
         privacyPolicyAgreeButton.isChecked.toggle()
         didAgreeForPrivacyPolicy = privacyPolicyAgreeButton.isChecked
         checkEachAgreeStatus()
@@ -176,7 +174,6 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
     }
     
     @objc private func agreeToAllButtonDidTap() {
-        print("전체 동의 눌림")
         agreeToAllButton.isChecked.toggle()
         didAgreeForAll = agreeToAllButton.isChecked
         changeAllAgreeStatus()
@@ -327,17 +324,5 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
     
     private func checkEachAgreeStatus() {
         didAgreeForAll = didAgreeForTermsOfUse && didAgreeForPrivacyPolicy
-    }
-}
-
-extension UIButton {
-    func setUnderline() {
-        guard let title = title(for: .normal) else { return }
-        let attributedString = NSMutableAttributedString(string: title)
-        attributedString.addAttribute(.underlineStyle,
-                                      value: NSUnderlineStyle.single.rawValue,
-                                      range: NSRange(location: 0, length: title.count)
-        )
-        setAttributedTitle(attributedString, for: .normal)
     }
 }
