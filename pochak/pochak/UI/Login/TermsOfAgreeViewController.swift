@@ -43,12 +43,14 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
     
     private let pochakLetterLogoImageView: UIImageView = {
         let view = UIImageView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.image = UIImage(named: "logo_full")
         return view
     }()
     
     private let guideLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "서비스 이용을 위해\n이용약관 동의가 필요합니다."
         label.font = UIFont(name: "Pretendard-Bold", size: 26)
         label.numberOfLines = 2
@@ -57,6 +59,7 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
     
     private let agreeToAllLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "약관 전체 동의"
         label.font = UIFont(name: "Pretendard-Bold", size: 20)
         return label
@@ -64,6 +67,7 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
     
     private let agreeToAllButton: CheckButton = {
         let button = CheckButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(agreeToAllButtonDidTap), for: .touchUpInside)
         button.isChecked = false
         return button
@@ -71,18 +75,21 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
     
     private let borderLine: UIView = {
         let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor(named: "gray00")
         return view
     }()
     
     private let termsOfUseAgreeLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = true
         return label
     }()
     
     private let termsOfUseAgreeButton: CheckButton = {
         let button = CheckButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(termsOfUseAgreeButtonDidTap), for: .touchUpInside)
         button.isChecked = false
         return button
@@ -90,12 +97,14 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
     
     private let privacyPolicyAgreeLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = true
         return label
     }()
     
     private let privacyPolicyAgreeButton: CheckButton = {
         let button = CheckButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(privacyPolicyAgreeButtonDidTap), for: .touchUpInside)
         button.isChecked = false
         return button
@@ -103,6 +112,7 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
     
     private let nextButton: NextButton = {
         let button = NextButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.isActive = false
         button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
         return button
@@ -115,16 +125,11 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
         
         view.backgroundColor = .white
         
-        setupPochakLogoImageView()
-        setupGuideLabel()
-        setupAgreeToAllLabel()
-        setupAgreeToAllButton()
-        setupBorderLine()
-        setupTermsOfUseAgreeLabel()
-        setupTermsOfUseAgreeButton()
-        setupPrivacyPolicyAgreeLabel()
-        setupPrivacyPolicyAgreeButton()
-        setupNextButton()
+        addViews()
+        setupLayout()
+        
+        configureTermsOfUseAgreeLabel()
+        configurePrivacyPolicyAgreeLabel()
     }
     
     // MARK: - Actions
@@ -186,44 +191,35 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
     
     // MARK: - Layout
     
-    private func setupPochakLogoImageView() {
+    private func addViews() {
         view.addSubview(pochakLetterLogoImageView)
-        
-        pochakLetterLogoImageView.translatesAutoresizingMaskIntoConstraints = false
-        
+        view.addSubview(guideLabel)
+        view.addSubview(agreeToAllLabel)
+        view.addSubview(agreeToAllButton)
+        view.addSubview(borderLine)
+        view.addSubview(termsOfUseAgreeLabel)
+        view.addSubview(termsOfUseAgreeButton)
+        view.addSubview(privacyPolicyAgreeLabel)
+        view.addSubview(privacyPolicyAgreeButton)
+        view.addSubview(nextButton)
+    }
+    
+    private func setupLayout() {
         NSLayoutConstraint.activate([
             pochakLetterLogoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 44),
             pochakLetterLogoImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
         ])
-    }
-    
-    private func setupGuideLabel() {
-        view.addSubview(guideLabel)
-        
-        guideLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             guideLabel.leadingAnchor.constraint(equalTo: pochakLetterLogoImageView.leadingAnchor),
             guideLabel.topAnchor.constraint(equalTo: pochakLetterLogoImageView.bottomAnchor, constant: 8),
             
         ])
-    }
-    
-    private func setupAgreeToAllLabel() {
-        view.addSubview(agreeToAllLabel)
-        
-        agreeToAllLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             agreeToAllLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 26),
             agreeToAllLabel.topAnchor.constraint(equalTo: guideLabel.bottomAnchor, constant: 127),
         ])
-    }
-    
-    private func setupAgreeToAllButton() {
-        view.addSubview(agreeToAllButton)
-        
-        agreeToAllButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             agreeToAllButton.widthAnchor.constraint(equalToConstant: 20),
@@ -232,12 +228,6 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
             agreeToAllButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
             agreeToAllButton.topAnchor.constraint(equalTo: agreeToAllLabel.topAnchor),
         ])
-    }
-    
-    private func setupBorderLine() {
-        view.addSubview(borderLine)
-        
-        borderLine.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             borderLine.heightAnchor.constraint(equalToConstant: 1),
@@ -245,31 +235,12 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
             borderLine.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             borderLine.topAnchor.constraint(equalTo: agreeToAllLabel.bottomAnchor, constant: 13)
         ])
-    }
-    
-    private func setupTermsOfUseAgreeLabel() {
-        view.addSubview(termsOfUseAgreeLabel)
-        
-        termsOfUseAgreeLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        configureUnderlineAttributes(linkText: "이용약관",
-                                     generalText: String(format: "[필수]  서비스 %@ 동의", "이용약관"),
-                                     label: termsOfUseAgreeLabel)
-        
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(termsOfUseLabelDidTap(_: )))
-        termsOfUseAgreeLabel.addGestureRecognizer(recognizer)
-        
+
         NSLayoutConstraint.activate([
             termsOfUseAgreeLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 22),
             termsOfUseAgreeLabel.topAnchor.constraint(equalTo: borderLine.bottomAnchor, constant: 17)
         ])
-    }
-    
-    private func setupTermsOfUseAgreeButton() {
-        view.addSubview(termsOfUseAgreeButton)
-        
-        termsOfUseAgreeButton.translatesAutoresizingMaskIntoConstraints = false
-        
+                
         NSLayoutConstraint.activate([
             termsOfUseAgreeButton.leadingAnchor.constraint(greaterThanOrEqualTo: termsOfUseAgreeLabel.trailingAnchor, constant: 50),
             termsOfUseAgreeButton.trailingAnchor.constraint(equalTo: agreeToAllButton.trailingAnchor),
@@ -277,31 +248,12 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
             termsOfUseAgreeButton.widthAnchor.constraint(equalToConstant: 20),
             termsOfUseAgreeButton.heightAnchor.constraint(equalTo: termsOfUseAgreeButton.widthAnchor, multiplier: 1)
         ])
-    }
-    
-    private func setupPrivacyPolicyAgreeLabel() {
-        view.addSubview(privacyPolicyAgreeLabel)
-        
-        privacyPolicyAgreeLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        configureUnderlineAttributes(linkText: "개인정보 수집 및 제공",
-                                     generalText: String(format: "[필수]  %@ 동의", "개인정보 수집 및 제공"),
-                                     label: privacyPolicyAgreeLabel)
-        
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(privacyPolicyLabelDidTap(_: )))
-        privacyPolicyAgreeLabel.addGestureRecognizer(recognizer)
         
         NSLayoutConstraint.activate([
             privacyPolicyAgreeLabel.leadingAnchor.constraint(equalTo: termsOfUseAgreeLabel.leadingAnchor),
             privacyPolicyAgreeLabel.topAnchor.constraint(equalTo: termsOfUseAgreeLabel.bottomAnchor, constant: 16)
         ])
-    }
-    
-    private func setupPrivacyPolicyAgreeButton() {
-        view.addSubview(privacyPolicyAgreeButton)
-        
-        privacyPolicyAgreeButton.translatesAutoresizingMaskIntoConstraints = false
-        
+                
         NSLayoutConstraint.activate([
             privacyPolicyAgreeButton.leadingAnchor.constraint(greaterThanOrEqualTo: privacyPolicyAgreeLabel.trailingAnchor, constant: 50),
             privacyPolicyAgreeButton.trailingAnchor.constraint(equalTo: termsOfUseAgreeButton.trailingAnchor),
@@ -309,13 +261,7 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
             privacyPolicyAgreeButton.widthAnchor.constraint(equalToConstant: 20),
             privacyPolicyAgreeButton.heightAnchor.constraint(equalTo: privacyPolicyAgreeButton.widthAnchor, multiplier: 1)
         ])
-    }
-    
-    private func setupNextButton() {
-        view.addSubview(nextButton)
-        
-        nextButton.translatesAutoresizingMaskIntoConstraints = false
-        
+                
         NSLayoutConstraint.activate([
             nextButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             nextButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
@@ -325,6 +271,24 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
     }
     
     // MARK: - Functions
+    
+    private func configureTermsOfUseAgreeLabel() {
+        configureUnderlineAttributes(linkText: "이용약관",
+                                     generalText: String(format: "[필수]  서비스 %@ 동의", "이용약관"),
+                                     label: termsOfUseAgreeLabel)
+        
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(termsOfUseLabelDidTap(_: )))
+        termsOfUseAgreeLabel.addGestureRecognizer(recognizer)
+    }
+    
+    private func configurePrivacyPolicyAgreeLabel() {
+        configureUnderlineAttributes(linkText: "개인정보 수집 및 제공",
+                                     generalText: String(format: "[필수]  %@ 동의", "개인정보 수집 및 제공"),
+                                     label: privacyPolicyAgreeLabel)
+        
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(privacyPolicyLabelDidTap(_: )))
+        privacyPolicyAgreeLabel.addGestureRecognizer(recognizer)
+    }
     
     private func configureUnderlineAttributes(linkText: String, generalText: String, label: UILabel) {
         let generalFont = UIFont(name: "Pretendard-Medium", size: 16)
