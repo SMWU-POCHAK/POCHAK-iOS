@@ -5,6 +5,7 @@
 //  Created by Seo Cindy on 1/14/24.
 //
 
+import UIKit
 import Alamofire
 
 class ProfileUpdateDataManager{

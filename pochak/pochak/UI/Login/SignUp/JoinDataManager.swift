@@ -5,6 +5,7 @@
 //  Created by Seo Cindy on 12/27/23.
 //
 
+import UIKit
 import Alamofire
 
 struct JoinDataManager {

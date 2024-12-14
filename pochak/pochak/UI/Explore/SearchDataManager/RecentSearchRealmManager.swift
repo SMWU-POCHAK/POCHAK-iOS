@@ -4,6 +4,7 @@
 //
 //  Created by 장나리 on 1/16/24.
 //
+import Foundation
 import RealmSwift
 
 final class RecentSearchRealmManager {

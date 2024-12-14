@@ -11,12 +11,12 @@
 			<string></string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.945839932916-6fnaq5ui2e4l9blgmkes438vbtf2rlb8</string>
+				<string>com.googleusercontent.apps.${GIDClientID}</string>
 			</array>
 		</dict>
 	</array>
 	<key>GIDClientID</key>
-	<string>945839932916-6fnaq5ui2e4l9blgmkes438vbtf2rlb8.apps.googleusercontent.com</string>
+	<string>${GIDClientID}.apps.googleusercontent.com</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSAppTransportSecurity</key>
