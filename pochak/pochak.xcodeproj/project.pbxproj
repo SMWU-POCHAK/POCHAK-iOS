@@ -163,6 +163,7 @@
 		37D311E32B56754D00A1D7C1 /* GetToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311E22B56754D00A1D7C1 /* GetToken.swift */; };
 		37D311E52B567AE000A1D7C1 /* OtherUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */; };
 		46BA13362CBD551600C81729 /* SecretKeyInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46BA13352CBD551600C81729 /* SecretKeyInfo.plist */; };
+		46AE2E7C2D0EFEA0009DFA2A /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B4302CFDFE3300950554 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		46B0B41C2CFDFC6900950554 /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B41B2CFDFC6900950554 /* Tabman */; };
 		46B0B41F2CFDFC7700950554 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B41E2CFDFC7700950554 /* GoogleSignIn */; };
 		46B0B4212CFDFC7700950554 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B4202CFDFC7700950554 /* GoogleSignInSwift */; };
@@ -249,6 +250,20 @@
 			remoteInfo = pochak;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		46AE2E7D2D0EFEA0009DFA2A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				46AE2E7C2D0EFEA0009DFA2A /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0801765D2A74F4B0005E6953 /* UITextView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extension.swift"; sourceTree = "<group>"; };
@@ -1358,6 +1373,7 @@
 				EA1B0B532A49D23A00F86FBC /* Sources */,
 				EA1B0B542A49D23A00F86FBC /* Frameworks */,
 				EA1B0B552A49D23A00F86FBC /* Resources */,
+				46AE2E7D2D0EFEA0009DFA2A /* Embed Frameworks */,
 				08D2B98E2C68C1B800BD7450 /* ShellScript */,
 				465D6E0D2CFE057300847542 /* ShellScript */,
 			);
