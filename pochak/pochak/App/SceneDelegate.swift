@@ -11,12 +11,6 @@ import GoogleSignIn
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    
-//    func changeRootVC(_ vc:UIViewController, animated: Bool) {
-//        guard let window = self.window else { return }
-//        window.rootViewController = vc // root 전환
-//        UIView.transition(with: window, duration: 0.2, options: [.transitionCrossDissolve], animations: nil, completion: nil)
-//    }
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -30,7 +24,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         if let keyChainToken = (try? KeychainManager.load(account: "accessToken")) {
             // 로그인 된 상태
-            print("scene delegate login succeed")
             print(keyChainToken)
             let access = GetToken.getAccessToken()
             print(access)
@@ -42,7 +35,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
         } else {
             // 로그인 안된 상태
-            print("scene delegate login not yet!")
+            print("New User")
 
             let mainNavigationVC = storyboard.instantiateViewController(withIdentifier: "NavigationVC")
             

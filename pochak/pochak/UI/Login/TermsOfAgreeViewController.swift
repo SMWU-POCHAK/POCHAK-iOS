@@ -8,8 +8,16 @@
 import UIKit
 import SafariServices
 
-class TermsOfAgreeViewController: UIViewController, UIViewControllerTransitioningDelegate {
-
+final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransitioningDelegate {
+    
+    // MARK: - Properties
+    
+    var delegate: SendDelegate?
+    private var didAgreeForPrivacyPolicy: Bool = false
+    private var didAgreeForTermsOfUse: Bool = false
+    
+    // MARK: - Views
+    
     @IBOutlet weak var pochakLabel: UILabel!
     @IBOutlet weak var pochakCorpLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
@@ -19,14 +27,9 @@ class TermsOfAgreeViewController: UIViewController, UIViewControllerTransitionin
     @IBOutlet weak var seePrivacyPolicy: UIButton!
     @IBOutlet weak var seeTermsOfUse: UIButton!
     @IBOutlet weak var agreeAndContinueButton: UIButton!
-    
     @IBOutlet weak var backgroundView: UIView!
     
-    
-    var didAgreeForPrivacyPolicy : Bool = false
-    var didAgreeForTermsOfUse : Bool = false
-    var delegate : SendDelegate?
-    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,22 +51,21 @@ class TermsOfAgreeViewController: UIViewController, UIViewControllerTransitionin
         titleLabel.font = UIFont(name: "Pretendard-SemiBold", size: 18)
         titleLabel.textColor = .black
         
-        
         agreeForPrivacyPolicy.setTitle(" [필수] 개인정보 제3자 제공 동의", for: .normal)
         agreeForPrivacyPolicy.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
         agreeForPrivacyPolicy.titleLabel?.font =  UIFont(name: "Pretendard-Medium", size: 15)
         agreeForPrivacyPolicy.setTitleColor(UIColor(named: "gray04"), for: .normal)
         agreeForPrivacyPolicy.tintColor = UIColor(named: "gray04")
-
+        
         
         agreeForTermsOfUSe.setTitle(" [필수] 이용약관 항목", for: .normal)
         agreeForTermsOfUSe.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
         agreeForTermsOfUSe.titleLabel?.font =  UIFont(name: "Pretendard-Medium", size: 15)
         agreeForTermsOfUSe.setTitleColor(UIColor(named: "gray04"), for: .normal)
         agreeForTermsOfUSe.tintColor = UIColor(named: "gray04")
-
-        // Do any additional setup after loading the view.
     }
+    
+    // MARK: - Actions
     
     @IBAction func pressAgreeForPrivacyPolicy(_ sender: Any) {
         if !didAgreeForPrivacyPolicy {
@@ -77,7 +79,6 @@ class TermsOfAgreeViewController: UIViewController, UIViewControllerTransitionin
             agreeForPrivacyPolicy.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
             agreeForPrivacyPolicy.tintColor = UIColor(named: "gray04")
         }
-        
     }
     
     @IBAction func pressAgreeForTermsOfUSe(_ sender: Any) {
@@ -94,25 +95,19 @@ class TermsOfAgreeViewController: UIViewController, UIViewControllerTransitionin
         }
     }
     
-    
     @IBAction func openPrivacyPolicy(_ sender: Any) {
         guard let url = URL(string: "https://pochak.notion.site/e365e34f018949b88543adbe6b0b3746") else { return }
         let safariVC = SFSafariViewController(url: url)
-        // delegate 지정 및 presentation style 설정.
         safariVC.transitioningDelegate = self
         safariVC.modalPresentationStyle = .pageSheet
-
         present(safariVC, animated: true, completion: nil)
     }
-    
     
     @IBAction func openTermsOfUSe(_ sender: Any) {
         guard let url = URL(string: "https://pochak.notion.site/6520996186464c36a8b3a04bc17fa000?pvs=74") else { return }
         let safariVC = SFSafariViewController(url: url)
-        // delegate 지정 및 presentation style 설정.
         safariVC.transitioningDelegate = self
         safariVC.modalPresentationStyle = .pageSheet
-
         present(safariVC, animated: true, completion: nil)
     }
     
@@ -124,8 +119,9 @@ class TermsOfAgreeViewController: UIViewController, UIViewControllerTransitionin
             print("not agreed yet")
         }
     }
-
 }
+
+// MARK: - Extension
 
 extension UIButton {
     func setUnderline() {
@@ -133,8 +129,7 @@ extension UIButton {
         let attributedString = NSMutableAttributedString(string: title)
         attributedString.addAttribute(.underlineStyle,
                                       value: NSUnderlineStyle.single.rawValue,
-                                      range: NSRange(location: 0, length: title.count)
-        )
+                                      range: NSRange(location: 0, length: title.count))
         setAttributedTitle(attributedString, for: .normal)
     }
 }

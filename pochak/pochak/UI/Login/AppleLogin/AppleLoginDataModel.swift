@@ -14,13 +14,13 @@ struct AppleLoginResponse: Codable {
     let result: AppleLoginModel
 }
 
-struct AppleLoginModel : Codable {
-    var socialId : String?
-    var name : String?
-    var email : String?
-    var handle : String?
-    var socialType : String?
-    var accessToken : String?
-    var refreshToken : String?
-    var isNewMember : Bool?
+struct AppleLoginModel: Codable {
+    let socialId: String?
+    let name: String?
+    let email: String?
+    let handle: String?
+    let socialType: String?
+    let accessToken: String?
+    let refreshToken: String?
+    let isNewMember: Bool?
 }

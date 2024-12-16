@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="w5l-aB-8rx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="w5l-aB-8rx">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -14,8 +14,14 @@
         <array key="Pretendard-Bold.ttf">
             <string>Pretendard-Bold</string>
         </array>
+        <array key="Pretendard-Light.ttf">
+            <string>Pretendard-Light</string>
+        </array>
         <array key="Pretendard-Medium.ttf">
             <string>Pretendard-Medium</string>
+        </array>
+        <array key="Pretendard-SemiBold.ttf">
+            <string>Pretendard-SemiBold</string>
         </array>
     </customFonts>
     <scenes>
@@ -209,10 +215,10 @@
             </objects>
             <point key="canvasLocation" x="3645" y="-975"/>
         </scene>
-        <!--Make Profile View Controller-->
+        <!--Sign Up View Controller-->
         <scene sceneID="RFd-Ez-X9q">
             <objects>
-                <viewController storyboardIdentifier="MakeProfileVC" id="5Yd-x5-rIb" customClass="MakeProfileViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignUpVC" id="5Yd-x5-rIb" customClass="SignUpViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Hkb-L2-eue">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
