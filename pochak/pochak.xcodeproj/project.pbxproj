@@ -78,6 +78,11 @@
 		0876E23E2C274256008DE88F /* NoPostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */; };
 		0876E23F2C274256008DE88F /* NoPostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */; };
 		08867D5C2D106A1F00FA6FD9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08867D5B2D106A1F00FA6FD9 /* GoogleService-Info.plist */; };
+		08867D5F2D106C3300FA6FD9 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 08867D5E2D106C3300FA6FD9 /* FirebaseAnalytics */; };
+		08867D612D106C3300FA6FD9 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 08867D602D106C3300FA6FD9 /* FirebaseCore */; };
+		08867D632D106C3300FA6FD9 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 08867D622D106C3300FA6FD9 /* FirebaseCrashlytics */; };
+		08867D652D106C3300FA6FD9 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 08867D642D106C3300FA6FD9 /* FirebaseMessaging */; };
+		08867D672D106C4700FA6FD9 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 08867D662D106C4700FA6FD9 /* FirebaseMessaging */; };
 		0889D1382C5CB69F00206C86 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0889D1372C5CB69F00206C86 /* String+.swift */; };
 		089C75882A51728A003AAB94 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C757F2A517289003AAB94 /* Pretendard-Regular.ttf */; };
 		089C75892A51728A003AAB94 /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75802A517289003AAB94 /* Pretendard-Thin.ttf */; };
@@ -185,9 +190,6 @@
 		46B0B4212CFDFC7700950554 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B4202CFDFC7700950554 /* GoogleSignInSwift */; };
 		46B0B4242CFDFC8900950554 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B4232CFDFC8900950554 /* Kingfisher */; };
 		46B0B4272CFDFC9F00950554 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B4262CFDFC9F00950554 /* Alamofire */; };
-		46B0B42A2CFDFDB500950554 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B4292CFDFDB500950554 /* FirebaseAnalytics */; };
-		46B0B42C2CFDFDB500950554 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B42B2CFDFDB500950554 /* FirebaseCore */; };
-		46B0B42E2CFDFDB500950554 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B42D2CFDFDB500950554 /* FirebaseCrashlytics */; };
 		46B0B4312CFDFE3300950554 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B4302CFDFE3300950554 /* RealmSwift */; };
 		46BA13362CBD551600C81729 /* SecretKeyInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46BA13352CBD551600C81729 /* SecretKeyInfo.plist */; };
 		A6D48ED7F8B86CF57C481991 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
@@ -521,6 +523,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08867D672D106C4700FA6FD9 /* FirebaseMessaging in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -530,13 +533,14 @@
 			files = (
 				46B0B4272CFDFC9F00950554 /* Alamofire in Frameworks */,
 				46B0B41C2CFDFC6900950554 /* Tabman in Frameworks */,
-				46B0B42C2CFDFDB500950554 /* FirebaseCore in Frameworks */,
+				08867D5F2D106C3300FA6FD9 /* FirebaseAnalytics in Frameworks */,
 				46B0B4212CFDFC7700950554 /* GoogleSignInSwift in Frameworks */,
 				46B0B4242CFDFC8900950554 /* Kingfisher in Frameworks */,
 				EAF885262B5677CB00BA184A /* libsqlite3.0.tbd in Frameworks */,
-				46B0B42E2CFDFDB500950554 /* FirebaseCrashlytics in Frameworks */,
 				46B0B4312CFDFE3300950554 /* RealmSwift in Frameworks */,
-				46B0B42A2CFDFDB500950554 /* FirebaseAnalytics in Frameworks */,
+				08867D632D106C3300FA6FD9 /* FirebaseCrashlytics in Frameworks */,
+				08867D612D106C3300FA6FD9 /* FirebaseCore in Frameworks */,
+				08867D652D106C3300FA6FD9 /* FirebaseMessaging in Frameworks */,
 				46B0B41F2CFDFC7700950554 /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1423,10 +1427,11 @@
 				46B0B4202CFDFC7700950554 /* GoogleSignInSwift */,
 				46B0B4232CFDFC8900950554 /* Kingfisher */,
 				46B0B4262CFDFC9F00950554 /* Alamofire */,
-				46B0B4292CFDFDB500950554 /* FirebaseAnalytics */,
-				46B0B42B2CFDFDB500950554 /* FirebaseCore */,
-				46B0B42D2CFDFDB500950554 /* FirebaseCrashlytics */,
 				46B0B4302CFDFE3300950554 /* RealmSwift */,
+				08867D5E2D106C3300FA6FD9 /* FirebaseAnalytics */,
+				08867D602D106C3300FA6FD9 /* FirebaseCore */,
+				08867D622D106C3300FA6FD9 /* FirebaseCrashlytics */,
+				08867D642D106C3300FA6FD9 /* FirebaseMessaging */,
 			);
 			productName = pochak;
 			productReference = EA1B0B572A49D23A00F86FBC /* pochak.app */;
@@ -1511,8 +1516,8 @@
 				46B0B41D2CFDFC7700950554 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				46B0B4222CFDFC8900950554 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				46B0B4252CFDFC9F00950554 /* XCRemoteSwiftPackageReference "Alamofire" */,
-				46B0B4282CFDFDB500950554 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				46B0B42F2CFDFE3300950554 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				08867D5D2D106C3300FA6FD9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = EA1B0B582A49D23A00F86FBC /* Products */;
 			projectDirPath = "";
@@ -2363,6 +2368,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		08867D5D2D106C3300FA6FD9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.5.0;
+			};
+		};
 		46B0B41A2CFDFC6900950554 /* XCRemoteSwiftPackageReference "Tabman" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/uias/Tabman.git";
@@ -2395,14 +2408,6 @@
 				minimumVersion = 5.10.2;
 			};
 		};
-		46B0B4282CFDFDB500950554 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 11.5.0;
-			};
-		};
 		46B0B42F2CFDFE3300950554 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift.git";
@@ -2414,6 +2419,31 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		08867D5E2D106C3300FA6FD9 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 08867D5D2D106C3300FA6FD9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		08867D602D106C3300FA6FD9 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 08867D5D2D106C3300FA6FD9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		08867D622D106C3300FA6FD9 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 08867D5D2D106C3300FA6FD9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		08867D642D106C3300FA6FD9 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 08867D5D2D106C3300FA6FD9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		08867D662D106C4700FA6FD9 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 08867D5D2D106C3300FA6FD9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
 		46B0B41B2CFDFC6900950554 /* Tabman */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 46B0B41A2CFDFC6900950554 /* XCRemoteSwiftPackageReference "Tabman" */;
@@ -2438,21 +2468,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 46B0B4252CFDFC9F00950554 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
-		};
-		46B0B4292CFDFDB500950554 /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 46B0B4282CFDFDB500950554 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
-		46B0B42B2CFDFDB500950554 /* FirebaseCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 46B0B4282CFDFDB500950554 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCore;
-		};
-		46B0B42D2CFDFDB500950554 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 46B0B4282CFDFDB500950554 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
 		};
 		46B0B4302CFDFE3300950554 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
