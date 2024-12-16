@@ -177,7 +177,7 @@ final class MyProfileTabViewController: UIViewController {
             postListTabmanView.topAnchor.constraint(equalTo: whiteBackground1.bottomAnchor, constant: 5),
             postListTabmanView.leadingAnchor.constraint(equalTo: topUIView.leadingAnchor),
             postListTabmanView.trailingAnchor.constraint(equalTo: topUIView.trailingAnchor),
-            postListTabmanView.heightAnchor.constraint(equalToConstant: view.frame.height - 270)
+            postListTabmanView.heightAnchor.constraint(equalToConstant: view.frame.height - 350)
         ])
     }
     
@@ -285,6 +285,8 @@ final class MyProfileTabViewController: UIViewController {
                         )
                     }
                 } else {
+                    print("height : \(height)")
+                    print("constraint.constant : \(constraint.constant)")
                     print("no posts yet")
                 }
             }
