@@ -10,10 +10,10 @@ import UIKit
 final class SignUpViewController: UIViewController {
     
     // MARK: - Properties
-    
+        
     private var backBtnPressed: Bool = false
     private var handleDuplicationChecked: Bool = false
-    private let textViewPlaceHolder = "소개를 입력해주세요.\n(최대 50자, 3줄)"
+    private let textViewPlaceHolder = "소개를 입력해주세요."
     private let email = UserDefaultsManager.getData(type: String.self, forKey: .email) ?? "email not found"
     private let socialType = UserDefaultsManager.getData(type: String.self, forKey: .socialType) ?? "socialType not found"
     private let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
@@ -28,12 +28,162 @@ final class SignUpViewController: UIViewController {
     @IBOutlet weak var messageTextView: UITextView!
     @IBOutlet weak var checkHandleDuplicationBtn: UIButton!
     
+    private let doneButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("완료", for: .normal)
+        button.setTitleColor(UIColor(named: "yellow00"), for: .normal)
+        button.titleLabel?.font =  UIFont(name: "Pretendard-Bold", size: 16)
+        button.addTarget(self, action: #selector(doneButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+    
+    private let profileImageButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "PlusIcon"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(profileImageButtonDidTap), for: .touchUpInside)
+        button.backgroundColor = UIColor(named: "gray01")
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 116 / 2
+        return button
+    }()
+    
+    private let nicknameLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "닉네임"
+        label.font = UIFont(name: "Pretendard-Bold", size: 16)
+        return label
+    }()
+    
+    private let nicknameTextField: UITextField = {
+        let tf = UITextField()
+        tf.translatesAutoresizingMaskIntoConstraints = false
+        tf.placeholder = "닉네임을 입력해주세요."
+        tf.font = UIFont(name: "Pretendard-Medium", size: 16)
+        return tf
+    }()
+    
+    private let borderLine1: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(named: "gray01")
+        return view
+    }()
+    
+    private let idLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "아이디"
+        label.font = UIFont(name: "Pretendard-Bold", size: 16)
+        return label
+    }()
+    
+    private let idTextField: UITextField = {
+        let tf = UITextField()
+        tf.translatesAutoresizingMaskIntoConstraints = false
+        tf.placeholder = "아이디를 입력해주세요."
+        tf.font = UIFont(name: "Pretendard-Medium", size: 16)
+        return tf
+    }()
+    
+    private let idValidationCheckImageView: UIImageView = {
+        let view = UIImageView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.contentMode = .scaleAspectFit
+        view.image = UIImage(named: "CheckIcon")
+        return view
+    }()
+    
+    private let idRuleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "영문, 숫자, 밑줄, 마침표의 조합으로 15자 이내"
+        label.font = UIFont(name: "Pretendard-Regular", size: 13)
+        label.textColor = UIColor(named: "gray03")
+        return label
+    }()
+    
+    private let handleDuplicateCheckButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        var config = UIButton.Configuration.filled()
+        config.attributedTitle = AttributedString("중복확인",
+                                                  attributes: AttributeContainer([NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 14), NSAttributedString.Key.foregroundColor: UIColor(named: "yellow00")]))
+        config.background.cornerRadius = 12.5
+        config.contentInsets = .init(top: 2, leading: 6, bottom: 2, trailing: 6)
+        config.baseBackgroundColor = UIColor(named: "yellow00")
+        config.baseBackgroundColor = UIColor(named: "yellow01")
+        
+        button.configuration = config
+        return button
+    }()
+    
+    private let borderLine2: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(named: "gray01")
+        return view
+    }()
+    
+    private let selfIntroLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "소개"
+        label.font = UIFont(name: "Pretendard-Bold", size: 16)
+        return label
+    }()
+    
+    private lazy var selfIntroTextView: UITextView = {
+        let view = UITextView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        view.textContainer.lineFragmentPadding = 0  // textView 기본 마진 제거
+        view.textContainerInset = .zero  // textView 기본 마진 제거
+        view.text = "소개를 입력해주세요."  // PlaceHolder 커스텀
+        view.font = UIFont(name: "Pretendard-Medium", size: 16)
+        view.textColor = UIColor(named: "gray03") // PlaceHolder 커스텀
+        view.isScrollEnabled = false
+        view.delegate = self
+        return view
+    }()
+    
+    private let selfIntroRuleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "최대 50자, 3줄 이내"
+        label.font = UIFont(name: "Pretendard-Regular", size: 13)
+        label.textColor = UIColor(named: "gray03")
+        return label
+    }()
+    
+    private let borderLine3: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(named: "gray01")
+        return view
+    }()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpViewController()
-        setUpNavigationBar()
+        
+        view.backgroundColor = .white
+        
+        setupNavigation()
+//        setupIntroTextView()
+        
+        addViews()
+        setupConstraints()
+        
+        selfIntroTextView.text = textViewPlaceHolder
+        
+        print(selfIntroTextView.text)
+        //setUpViewController()
+        //setUpNavigationBar()
     }
     
     // MARK: - Actions
@@ -73,7 +223,7 @@ final class SignUpViewController: UIViewController {
      3. @IBAction 정의
      4. 프로토콜 채택
      */
-    @IBAction func profileBtnTapped(_ sender: Any) {
+    @IBAction func profileImageButtonDidTap(_ sender: Any) {
         self.imagePickerController.delegate = self
         self.imagePickerController.sourceType = .photoLibrary
         present(self.imagePickerController, animated: true, completion: nil)
@@ -96,7 +246,7 @@ final class SignUpViewController: UIViewController {
         checkHandleDuplicationBtn.setImage(UIImage(named: "checkHandle"), for: .normal)
     }
     
-    @objc private func doneBtnTapped(_ sender: Any) {
+    @objc private func doneButtonDidTap(_ sender: Any) {
         guard let name = nameTextField.text  else { return }
         guard let handle = handleTextField.text  else { return }
         guard let message = messageTextView.text  else { return }
@@ -157,7 +307,126 @@ final class SignUpViewController: UIViewController {
         }
     }
     
+    // MARK: - Layout
+    
+    private func setupNavigation() {
+        print("==== setup navigation new ====")
+        self.navigationItem.title = "프로필 설정"
+        
+        let barButtonItem = UIBarButtonItem(customView: doneButton)
+        
+        // left bar button을 추가하면 기존의 스와이프 pop 기능이 해제되므로 다시 세팅
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+
+        self.navigationItem.rightBarButtonItem = barButtonItem
+    }
+    
+    private func addViews() {
+        view.addSubview(profileImageButton)
+        
+        view.addSubview(nicknameLabel)
+        view.addSubview(nicknameTextField)
+        view.addSubview(borderLine1)
+        
+        view.addSubview(idLabel)
+        view.addSubview(idTextField)
+        view.addSubview(handleDuplicateCheckButton)
+        view.addSubview(idValidationCheckImageView)
+        view.addSubview(idRuleLabel)
+        view.addSubview(borderLine2)
+        
+        view.addSubview(selfIntroLabel)
+        view.addSubview(selfIntroTextView)
+        view.addSubview(selfIntroRuleLabel)
+        view.addSubview(borderLine3)
+    }
+    
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            profileImageButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            profileImageButton.widthAnchor.constraint(equalToConstant: 116),
+            profileImageButton.heightAnchor.constraint(equalTo: profileImageButton.widthAnchor, multiplier: 1),
+            profileImageButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 35)
+        ])
+        
+        NSLayoutConstraint.activate([
+            nicknameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            nicknameLabel.topAnchor.constraint(equalTo: profileImageButton.bottomAnchor, constant: 41)
+        ])
+        NSLayoutConstraint.activate([
+            nicknameTextField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            nicknameTextField.widthAnchor.constraint(equalToConstant: 245),
+            nicknameTextField.centerYAnchor.constraint(equalTo: nicknameLabel.centerYAnchor)
+        ])
+        NSLayoutConstraint.activate([
+            borderLine1.heightAnchor.constraint(equalToConstant: 1),
+            borderLine1.leadingAnchor.constraint(equalTo: nicknameLabel.leadingAnchor),
+            borderLine1.trailingAnchor.constraint(equalTo: nicknameTextField.trailingAnchor),
+            borderLine1.topAnchor.constraint(equalTo: nicknameLabel.bottomAnchor, constant: 14)
+        ])
+        
+        NSLayoutConstraint.activate([
+            idLabel.leadingAnchor.constraint(equalTo: nicknameLabel.leadingAnchor),
+            idLabel.topAnchor.constraint(equalTo: borderLine1.bottomAnchor, constant: 17)
+        ])
+        NSLayoutConstraint.activate([
+            //idTextField.trailingAnchor.constraint(equalTo: handleDuplicateCheckButton.leadingAnchor, constant: -5),
+            idTextField.leadingAnchor.constraint(equalTo: nicknameTextField.leadingAnchor),
+            idTextField.centerYAnchor.constraint(equalTo: idLabel.centerYAnchor)
+        ])
+        NSLayoutConstraint.activate([
+            handleDuplicateCheckButton.leadingAnchor.constraint(greaterThanOrEqualTo: idTextField.trailingAnchor, constant: 5),
+            handleDuplicateCheckButton.trailingAnchor.constraint(equalTo: nicknameTextField.trailingAnchor),
+            handleDuplicateCheckButton.centerYAnchor.constraint(equalTo: idLabel.centerYAnchor)
+        ])
+        NSLayoutConstraint.activate([
+            idRuleLabel.leadingAnchor.constraint(equalTo: idTextField.leadingAnchor),
+            idRuleLabel.topAnchor.constraint(equalTo: idTextField.bottomAnchor, constant: 8)
+        ])
+        NSLayoutConstraint.activate([
+            idValidationCheckImageView.trailingAnchor.constraint(equalTo: idRuleLabel.leadingAnchor, constant: -5),
+            idValidationCheckImageView.centerYAnchor.constraint(equalTo: idRuleLabel.centerYAnchor)
+        ])
+        NSLayoutConstraint.activate([
+            borderLine2.heightAnchor.constraint(equalToConstant: 1),
+            borderLine2.leadingAnchor.constraint(equalTo: idLabel.leadingAnchor),
+            borderLine2.trailingAnchor.constraint(equalTo: handleDuplicateCheckButton.trailingAnchor),
+            borderLine2.topAnchor.constraint(equalTo: idRuleLabel.bottomAnchor, constant: 12)
+        ])
+        
+        NSLayoutConstraint.activate([
+            selfIntroLabel.leadingAnchor.constraint(equalTo: idLabel.leadingAnchor),
+            selfIntroLabel.topAnchor.constraint(equalTo: borderLine2.bottomAnchor, constant: 17)
+        ])
+        NSLayoutConstraint.activate([
+            selfIntroTextView.leadingAnchor.constraint(equalTo: nicknameTextField.leadingAnchor),
+            selfIntroTextView.trailingAnchor.constraint(equalTo: nicknameTextField.trailingAnchor),
+            selfIntroTextView.topAnchor.constraint(equalTo: selfIntroLabel.topAnchor),
+            selfIntroTextView.heightAnchor.constraint(equalTo: idTextField.heightAnchor)
+        ])
+        NSLayoutConstraint.activate([
+            selfIntroRuleLabel.leadingAnchor.constraint(equalTo: selfIntroTextView.leadingAnchor),
+            selfIntroRuleLabel.topAnchor.constraint(equalTo: selfIntroTextView.bottomAnchor, constant: 8),
+        ])
+        NSLayoutConstraint.activate([
+            borderLine3.heightAnchor.constraint(equalToConstant: 1),
+            borderLine3.leadingAnchor.constraint(equalTo: selfIntroLabel.leadingAnchor),
+            borderLine3.trailingAnchor.constraint(equalTo: selfIntroTextView.trailingAnchor),
+            borderLine3.topAnchor.constraint(equalTo: selfIntroRuleLabel.bottomAnchor, constant: 12)
+        ])
+    }
+    
     // MARK: - Functions
+    
+    private func setupIntroTextView() {
+        print("=== setup intro text view ===")
+        selfIntroTextView.delegate = self
+        selfIntroTextView.textContainer.lineFragmentPadding = 0  // textView 기본 마진 제거
+        selfIntroTextView.textContainerInset = .zero  // textView 기본 마진 제거
+        selfIntroTextView.text = "소개를 입력해주세요."  // PlaceHolder 커스텀
+        selfIntroTextView.textColor = UIColor(named: "gray03") // PlaceHolder 커스텀
+    }
     
     private func setUpViewController() {
         // 프로필 image 레이아웃
@@ -181,28 +450,28 @@ final class SignUpViewController: UIViewController {
         handleTextField.delegate = self
     }
     
-    private func setUpNavigationBar() {
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-        
-        // 네비게이션바 완료 버튼 커스텀
-        let button = UIButton()
-        button.setTitle("완료", for: .normal)
-        button.setTitleColor(UIColor(named: "yellow00"), for: .normal)
-        button.titleLabel?.font =  UIFont(name: "Pretendard-Bold", size: 16)
-        button.addTarget(self, action: #selector(doneBtnTapped), for: .touchUpInside)
-        let barButton = UIBarButtonItem(customView: button)
-        self.navigationItem.rightBarButtonItem = barButton
-        
-        // 네비게이션바 title 커스텀
-        self.navigationController?.navigationBar.tintColor = .black
-        self.navigationItem.title = "프로필 설정"
-        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 20) ?? UIFont.systemFont(ofSize: 20, weight: .bold)]
-        
-        // 네비게이션바 Back 버튼 커스텀
-        let backBarButtonItem = UIBarButtonItem(image: UIImage(named: "ChevronLeft")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(backbuttonPressed))
-        backBarButtonItem.imageInsets = UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0)
-        self.navigationItem.leftBarButtonItem = backBarButtonItem
-    }
+//    private func setUpNavigationBar() {
+//        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+//        
+//        // 네비게이션바 완료 버튼 커스텀
+//        let button = UIButton()
+//        button.setTitle("완료", for: .normal)
+//        button.setTitleColor(UIColor(named: "yellow00"), for: .normal)
+//        button.titleLabel?.font =  UIFont(name: "Pretendard-Bold", size: 16)
+//        button.addTarget(self, action: #selector(doneBtnTapped), for: .touchUpInside)
+//        let barButton = UIBarButtonItem(customView: button)
+//        self.navigationItem.rightBarButtonItem = barButton
+//        
+//        // 네비게이션바 title 커스텀
+//        self.navigationController?.navigationBar.tintColor = .black
+//        self.navigationItem.title = "프로필 설정"
+//        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 20) ?? UIFont.systemFont(ofSize: 20, weight: .bold)]
+//        
+//        // 네비게이션바 Back 버튼 커스텀
+//        let backBarButtonItem = UIBarButtonItem(image: UIImage(named: "ChevronLeft")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(backbuttonPressed))
+//        backBarButtonItem.imageInsets = UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0)
+//        self.navigationItem.leftBarButtonItem = backBarButtonItem
+//    }
     
     private func toHomeTabPage() {
         let tabBarController = CustomTabBarController()
@@ -219,19 +488,18 @@ final class SignUpViewController: UIViewController {
 
 // MARK: - Extension: UIImagePickerControllerDelegate, UINavigationControllerDelegate
 
-// 앨범 사진 선택 프로토콜 채택
 extension SignUpViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // 선택한 사진 사용
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            profileImg.setImage(image, for: .normal)
+            profileImageButton.setImage(image, for: .normal)
         }
         picker.dismiss(animated: true, completion: nil) // 주의점: picker 숨기기 위한 dismiss를 직접 해야함
     }
     
-    // 취소
+    // 사진 선택 취소
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
@@ -265,6 +533,22 @@ extension SignUpViewController: UITextViewDelegate {
     
     // 최대 줄 수 3줄 제한
     func textViewDidChange(_ textView: UITextView) {
+        
+        let size = CGSize(width: textView.frame.width, height: .infinity)
+        let estimatedSize = textView.sizeThatFits(size)
+                
+        textView.constraints.forEach { (constraint) in
+            /// 180 이하일때는 더 이상 줄어들지 않게하기
+            if estimatedSize.height <= 25 {
+                    
+            }
+            else {
+                if constraint.firstAttribute == .height {
+                    constraint.constant = estimatedSize.height
+                }
+            }
+        }
+        
         guard let text = textView.text else { return }
         
         // 줄바꿈(들여쓰기) 제한
@@ -328,3 +612,7 @@ extension String {
         return false
     }
 }
+
+// MARK: - Extension: UIGestureRecognizerDelegate
+
+extension SignUpViewController: UIGestureRecognizerDelegate { }
