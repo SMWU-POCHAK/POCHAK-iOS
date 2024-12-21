@@ -52,11 +52,11 @@ extension String {
         }
     }
     
-    /// 아이디(핸들)로 허용 가능한 문자를 제한하는 메소드 (영어 대 소문자, 숫자, _(언더바), .(마침표) 만 허용함)
+    /// 아이디(핸들)로 허용 가능한 문자를 제한하는 메소드 (영어 대소문자, 숫자, _(언더바), .(마침표) 만 허용함)
     /// - Returns: 아이디(핸들) 규칙 따르는지의 여부(Bool()
     func checkHandleValidity() -> Bool {
         do {
-            let regex = try NSRegularExpression(pattern: "^[0-9a-zA-Z_.]$", options: .caseInsensitive)
+            let regex = try NSRegularExpression(pattern: "^[0-9a-zA-Z_.]+$", options: .caseInsensitive)
             if let _ = regex.firstMatch(in: self,
                                         options: NSRegularExpression.MatchingOptions.reportCompletion,
                                         range: NSMakeRange(0, self.count)) {
