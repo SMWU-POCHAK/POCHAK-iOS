@@ -22,18 +22,18 @@ final class SignUpViewController: UIViewController {
     
     // MARK: - Views
     
-    @IBOutlet weak var profileImg: UIButton!
-    @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var handleTextField: UITextField!
-    @IBOutlet weak var messageTextView: UITextView!
-    @IBOutlet weak var checkHandleDuplicationBtn: UIButton!
+//    @IBOutlet weak var profileImg: UIButton!
+//    @IBOutlet weak var nameTextField: UITextField!
+//    @IBOutlet weak var handleTextField: UITextField!
+//    @IBOutlet weak var messageTextView: UITextView!
+//    @IBOutlet weak var checkHandleDuplicationBtn: UIButton!
     
     private let doneButton: UIButton = {
         let button = UIButton()
         button.setTitle("완료", for: .normal)
         button.setTitleColor(UIColor(named: "yellow00"), for: .normal)
         button.titleLabel?.font =  UIFont(name: "Pretendard-Bold", size: 16)
-        button.addTarget(self, action: #selector(doneButtonDidTap), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(doneButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -80,11 +80,13 @@ final class SignUpViewController: UIViewController {
         return label
     }()
     
-    private let idTextField: UITextField = {
+    private lazy var idTextField: UITextField = {
         let tf = UITextField()
         tf.translatesAutoresizingMaskIntoConstraints = false
         tf.placeholder = "아이디를 입력해주세요."
         tf.font = UIFont(name: "Pretendard-Medium", size: 16)
+        tf.addTarget(self, action: #selector(idTextFieldDidChange), for: .editingChanged)
+        tf.delegate = self
         return tf
     }()
     
@@ -93,6 +95,7 @@ final class SignUpViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFit
         view.image = UIImage(named: "CheckIcon")
+        view.isHidden = true
         return view
     }()
     
@@ -105,19 +108,10 @@ final class SignUpViewController: UIViewController {
         return label
     }()
     
-    private let handleDuplicateCheckButton: UIButton = {
-        let button = UIButton()
+    private let handleDuplicateCheckButton: HandleDuplicateCheckButton = {
+        let button = HandleDuplicateCheckButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        
-        var config = UIButton.Configuration.filled()
-        config.attributedTitle = AttributedString("중복확인",
-                                                  attributes: AttributeContainer([NSAttributedString.Key.font : UIFont(name: "Pretendard-Bold", size: 14), NSAttributedString.Key.foregroundColor: UIColor(named: "yellow00")]))
-        config.background.cornerRadius = 12.5
-        config.contentInsets = .init(top: 2, leading: 6, bottom: 2, trailing: 6)
-        config.baseBackgroundColor = UIColor(named: "yellow00")
-        config.baseBackgroundColor = UIColor(named: "yellow01")
-        
-        button.configuration = config
+        button.addTarget(self, action: #selector(handleDuplicateCheckButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -188,8 +182,26 @@ final class SignUpViewController: UIViewController {
     
     // MARK: - Actions
     
-    @IBAction func checkHandleDuplication(_ sender: Any) {
-        guard let handle = handleTextField.text  else { return }
+    @objc private func handleDuplicateCheckButtonDidTap(_ sender: Any) {
+        guard let handle = idTextField.text else { return }
+        
+        // 아이디가 빈 문자열일 때 api 요청 보내지 않기 위해 알람창을 띄움
+        if handle == "" {
+            self.showAlert(alertType: .confirmOnly,
+                           titleText: "아이디를 입력해주세요.",
+                           confirmButtonText: "확인")
+            return
+        }
+        
+        // 아이디가 규칙을 안 지켰을 때 api 요청 보내지 않기 위해
+        if idTextField.text!.checkHandleValidity() == false {
+            self.showAlert(alertType: .confirmOnly,
+                           titleText: "아이디가 유효하지 않습니다.",
+                           messageText: "입력한 아이디를 확인해주세요.",
+                           confirmButtonText: "확인")
+            return
+        }
+        
         let request = CheckDuplicateHandleRequest(handle: handle)
         
         AuthenticationService.checkDuplicateHandle(request: request) { [weak self] data, failed in
@@ -200,13 +212,11 @@ final class SignUpViewController: UIViewController {
             
             switch memberCode {
             case .success:
-                self?.checkHandleDuplicationBtn.setImage(UIImage(named: "checkedHandle"), for: .normal)
-                self?.handleTextField.textColor = UIColor(named: "yellow00")
-                self?.checkHandleDuplicationBtn.isEnabled = false
+                self?.handleDuplicateCheckButton.isActive = false
                 self?.handleDuplicationChecked = true
             case .duplicationError:
                 self?.showAlert(alertType: .confirmOnly,
-                                titleText: "중복된 아이디입니다",
+                                titleText: "중복된 아이디입니다.",
                                 messageText: "다른 아이디를 입력해주세요.",
                                 cancelButtonText: "",
                                 confirmButtonText: "확인")
@@ -223,7 +233,7 @@ final class SignUpViewController: UIViewController {
      3. @IBAction 정의
      4. 프로토콜 채택
      */
-    @IBAction func profileImageButtonDidTap(_ sender: Any) {
+    @objc func profileImageButtonDidTap(_ sender: Any) {
         self.imagePickerController.delegate = self
         self.imagePickerController.sourceType = .photoLibrary
         present(self.imagePickerController, animated: true, completion: nil)
@@ -239,78 +249,83 @@ final class SignUpViewController: UIViewController {
         )
     }
     
-    @objc private func textFieldDidChange(_ sender: Any?) {
+    @objc private func idTextFieldDidChange(_ sender: Any?) {
         handleDuplicationChecked = false
-        checkHandleDuplicationBtn.isEnabled = true
-        handleTextField.textColor = .black
-        checkHandleDuplicationBtn.setImage(UIImage(named: "checkHandle"), for: .normal)
-    }
-    
-    @objc private func doneButtonDidTap(_ sender: Any) {
-        guard let name = nameTextField.text  else { return }
-        guard let handle = handleTextField.text  else { return }
-        guard let message = messageTextView.text  else { return }
-        guard let profileImage = profileImg.currentImage  else { return }
-        let profileImageData: Data? = profileImg.currentImage?.jpegData(compressionQuality: 0.2)
-        
-        if (name == "" || handle == "" || message == textViewPlaceHolder || message == ""
-            || profileImage == UIImage(named: "chooseProfileIcon")) {
-            showAlert(alertType: .confirmOnly,
-                      titleText: "프로필 정보를 모두 입력해주세요.",
-                      messageText: "",
-                      cancelButtonText: "",
-                      confirmButtonText: "확인")
-            return
-        } else if !handleDuplicationChecked {
-            showAlert(alertType: .confirmOnly,
-                      titleText: "아이디 중복확인을 진행해주세요.",
-                      messageText: "",
-                      cancelButtonText: "",
-                      confirmButtonText: "확인")
-            return
-        } else {
-            let request = SignUpRequest(name: name,
-                                        email: email,
-                                        handle: handle,
-                                        message: message,
-                                        socialId: socialId,
-                                        socialType: socialType)
-            
-            var files: [(Data, String, String)] = []
-            if let profileImage = profileImageData {
-                let fileTuple: (Data, String, String) = (profileImage, "profileImage", "image/jpeg")
-                files.append(fileTuple)
-            }
-            
-            AuthenticationService.signUp(request: request, files: files) { [weak self] data, failed in
-                guard let data = data else { return }
-                
-                // 새로운 유저 정보 UserDefaults에 저장: id, name, handle, message, isNewMember
-                UserDefaultsManager.setData(value: data.result.name, key: .name)
-                UserDefaultsManager.setData(value: data.result.id, key: .memberId)
-                UserDefaultsManager.setData(value: handle, key: .handle)
-                UserDefaultsManager.setData(value: message, key: .message)
-                UserDefaultsManager.setData(value: data.result.isNewMember, key: .isNewMember)
-                
-                // 유저 토큰 정보 KeyChainManager에 저장
-                guard let accountAccessToken = data.result.accessToken else { return }
-                guard let accountRefreshToken = data.result.refreshToken else { return }
-                do {
-                    try KeychainManager.save(account: "accessToken", value: accountAccessToken, isForce: true)
-                    try KeychainManager.save(account: "refreshToken", value: accountRefreshToken, isForce: true)
-                } catch {
-                    print(error)
-                }
-                self?.saveRefreshTokenIssuedAt()
-                self?.toHomeTabPage()
-            }
+        handleDuplicateCheckButton.isActive = true
+        if idTextField.text!.checkHandleValidity() {
+            idValidationCheckImageView.isHidden = false
+            idRuleLabel.textColor = UIColor(named: "blue")
+        }
+        else {
+            idValidationCheckImageView.isHidden = true
+            idRuleLabel.textColor = UIColor(named: "red")
         }
     }
+    
+//    @objc private func doneButtonDidTap(_ sender: Any) {
+//        guard let name = nameTextField.text  else { return }
+//        guard let handle = handleTextField.text  else { return }
+//        guard let message = messageTextView.text  else { return }
+//        guard let profileImage = profileImg.currentImage  else { return }
+//        let profileImageData: Data? = profileImg.currentImage?.jpegData(compressionQuality: 0.2)
+//        
+//        if (name == "" || handle == "" || message == textViewPlaceHolder || message == ""
+//            || profileImage == UIImage(named: "chooseProfileIcon")) {
+//            showAlert(alertType: .confirmOnly,
+//                      titleText: "프로필 정보를 모두 입력해주세요.",
+//                      messageText: "",
+//                      cancelButtonText: "",
+//                      confirmButtonText: "확인")
+//            return
+//        } else if !handleDuplicationChecked {
+//            showAlert(alertType: .confirmOnly,
+//                      titleText: "아이디 중복확인을 진행해주세요.",
+//                      messageText: "",
+//                      cancelButtonText: "",
+//                      confirmButtonText: "확인")
+//            return
+//        } else {
+//            let request = SignUpRequest(name: name,
+//                                        email: email,
+//                                        handle: handle,
+//                                        message: message,
+//                                        socialId: socialId,
+//                                        socialType: socialType)
+//            
+//            var files: [(Data, String, String)] = []
+//            if let profileImage = profileImageData {
+//                let fileTuple: (Data, String, String) = (profileImage, "profileImage", "image/jpeg")
+//                files.append(fileTuple)
+//            }
+//            
+//            AuthenticationService.signUp(request: request, files: files) { [weak self] data, failed in
+//                guard let data = data else { return }
+//                
+//                // 새로운 유저 정보 UserDefaults에 저장: id, name, handle, message, isNewMember
+//                UserDefaultsManager.setData(value: data.result.name, key: .name)
+//                UserDefaultsManager.setData(value: data.result.id, key: .memberId)
+//                UserDefaultsManager.setData(value: handle, key: .handle)
+//                UserDefaultsManager.setData(value: message, key: .message)
+//                UserDefaultsManager.setData(value: data.result.isNewMember, key: .isNewMember)
+//                
+//                // 유저 토큰 정보 KeyChainManager에 저장
+//                guard let accountAccessToken = data.result.accessToken else { return }
+//                guard let accountRefreshToken = data.result.refreshToken else { return }
+//                do {
+//                    try KeychainManager.save(account: "accessToken", value: accountAccessToken, isForce: true)
+//                    try KeychainManager.save(account: "refreshToken", value: accountRefreshToken, isForce: true)
+//                } catch {
+//                    print(error)
+//                }
+//                self?.saveRefreshTokenIssuedAt()
+//                self?.toHomeTabPage()
+//            }
+//        }
+//    }
     
     // MARK: - Layout
     
     private func setupNavigation() {
-        print("==== setup navigation new ====")
         self.navigationItem.title = "프로필 설정"
         
         let barButtonItem = UIBarButtonItem(customView: doneButton)
@@ -420,7 +435,6 @@ final class SignUpViewController: UIViewController {
     // MARK: - Functions
     
     private func setupIntroTextView() {
-        print("=== setup intro text view ===")
         selfIntroTextView.delegate = self
         selfIntroTextView.textContainer.lineFragmentPadding = 0  // textView 기본 마진 제거
         selfIntroTextView.textContainerInset = .zero  // textView 기본 마진 제거
@@ -428,27 +442,27 @@ final class SignUpViewController: UIViewController {
         selfIntroTextView.textColor = UIColor(named: "gray03") // PlaceHolder 커스텀
     }
     
-    private func setUpViewController() {
-        // 프로필 image 레이아웃
-        profileImg.setImage(UIImage(named: "chooseProfileIcon"), for: .normal)
-        profileImg.imageView?.contentMode = .scaleAspectFill
-        profileImg.layer.masksToBounds = true
-        profileImg.layer.cornerRadius = 58
-        
-        // textView 레이아웃 설정
-        messageTextView.delegate = self
-        messageTextView.textContainer.lineFragmentPadding = 0 // textView 기본 마진 제거
-        messageTextView.textContainerInset = .zero // textView 기본 마진 제거
-        messageTextView.text = textViewPlaceHolder // PlaceHolder 커스텀
-        messageTextView.textColor = UIColor(named: "gray03") // PlaceHolder 커스텀
-        
-        // 중복확인 버튼 기본 이미지 세팅
-        checkHandleDuplicationBtn.setImage(UIImage(named: "checkHandle"), for: .normal)
-        
-        // 핸들 입력 중이면 중복확인 버튼 및 텍스트필드 글자 색 세팅 원래대로 변경
-        handleTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
-        handleTextField.delegate = self
-    }
+//    private func setUpViewController() {
+//        // 프로필 image 레이아웃
+//        profileImg.setImage(UIImage(named: "chooseProfileIcon"), for: .normal)
+//        profileImg.imageView?.contentMode = .scaleAspectFill
+//        profileImg.layer.masksToBounds = true
+//        profileImg.layer.cornerRadius = 58
+//        
+//        // textView 레이아웃 설정
+//        messageTextView.delegate = self
+//        messageTextView.textContainer.lineFragmentPadding = 0 // textView 기본 마진 제거
+//        messageTextView.textContainerInset = .zero // textView 기본 마진 제거
+//        messageTextView.text = textViewPlaceHolder // PlaceHolder 커스텀
+//        messageTextView.textColor = UIColor(named: "gray03") // PlaceHolder 커스텀
+//        
+//        // 중복확인 버튼 기본 이미지 세팅
+//        checkHandleDuplicationBtn.setImage(UIImage(named: "checkHandle"), for: .normal)
+//        
+//        // 핸들 입력 중이면 중복확인 버튼 및 텍스트필드 글자 색 세팅 원래대로 변경
+//        handleTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+//        handleTextField.delegate = self
+//    }
     
 //    private func setUpNavigationBar() {
 //        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
@@ -505,7 +519,7 @@ extension SignUpViewController: UIImagePickerControllerDelegate, UINavigationCon
     }
 }
 
-// MARK: - Extension: UITextViewDelegate, UITextFieldDelegate
+// MARK: - Extension: UITextViewDelegate
 
 extension SignUpViewController: UITextViewDelegate {
     
@@ -538,7 +552,7 @@ extension SignUpViewController: UITextViewDelegate {
         let estimatedSize = textView.sizeThatFits(size)
                 
         textView.constraints.forEach { (constraint) in
-            /// 180 이하일때는 더 이상 줄어들지 않게하기
+            // 25 이하일때는 더 이상 줄어들지 않게하기
             if estimatedSize.height <= 25 {
                     
             }
@@ -568,11 +582,14 @@ extension SignUpViewController: UITextViewDelegate {
     }
 }
 
+// MARK: - Extension: UITextFieldDelegate
+
 extension SignUpViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // 백스페이스 처리 (백스페이스도 text로 처리되기 때문) + 글자 수 제한
         let utf8Char = string.cString(using: .utf8)
         let isBackSpace = strcmp(utf8Char, "\\b")
-        if string.hasCharacters() || isBackSpace == -92 { return true }
+        if isBackSpace == -92 || textField.text!.count < 15 { return true }
         return false
     }
 }
@@ -590,26 +607,6 @@ extension SignUpViewController: CustomAlertDelegate {
     
     func confirmAction() {
         print("confirmed")
-    }
-}
-
-// MARK: - Extension: String
-
-// 아이디 허용 가능한 문자 제한: 대문자, 소문자, 숫자, _(언더바), .(마침표)
-extension String {
-    func hasCharacters() -> Bool {
-        do {
-            let regex = try NSRegularExpression(pattern: "^[0-9a-zA-Z_.]$", options: .caseInsensitive)
-            if let _ = regex.firstMatch(in: self,
-                                        options: NSRegularExpression.MatchingOptions.reportCompletion,
-                                        range: NSMakeRange(0, self.count)) {
-                return true
-            }
-        } catch {
-            print(error.localizedDescription)
-            return false
-        }
-        return false
     }
 }
 
