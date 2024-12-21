@@ -191,8 +191,7 @@ extension SocialJoinViewController: ASAuthorizationControllerDelegate, ASAuthori
 extension SocialJoinViewController: SendDelegate {
     func sendAgreed(agree: Bool) {
         if agree {
-            guard let signUpVC = self.storyboard?.instantiateViewController(withIdentifier: "SignUpVC")
-                    as? SignUpViewController else { return }
+            let signUpVC = SignUpViewController()
             self.navigationController?.pushViewController(signUpVC, animated: true)
         } else {
             print("not agreed yet")
