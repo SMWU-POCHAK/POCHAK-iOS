@@ -418,7 +418,6 @@ final class SignUpViewController: UIViewController {
             selfIntroTextView.leadingAnchor.constraint(equalTo: nicknameTextField.leadingAnchor),
             selfIntroTextView.trailingAnchor.constraint(equalTo: nicknameTextField.trailingAnchor),
             selfIntroTextView.topAnchor.constraint(equalTo: selfIntroLabel.topAnchor),
-            selfIntroTextView.heightAnchor.constraint(equalTo: idTextField.heightAnchor)
         ])
         NSLayoutConstraint.activate([
             selfIntroRuleLabel.leadingAnchor.constraint(equalTo: selfIntroTextView.leadingAnchor),
