@@ -1365,7 +1365,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EA1B0B842A49D23B00F86FBC /* Build configuration list for PBXNativeTarget "pochakTests" */;
 			buildPhases = (
-				23F02C78EFBCD81179944B0A /* [CP] Check Pods Manifest.lock */,
 				EA1B0B692A49D23B00F86FBC /* Sources */,
 				EA1B0B6A2A49D23B00F86FBC /* Frameworks */,
 				EA1B0B6B2A49D23B00F86FBC /* Resources */,
@@ -1384,11 +1383,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EA1B0B872A49D23B00F86FBC /* Build configuration list for PBXNativeTarget "pochakUITests" */;
 			buildPhases = (
-				F0DDD486106194338BA7DCC7 /* [CP] Check Pods Manifest.lock */,
 				EA1B0B732A49D23B00F86FBC /* Sources */,
 				EA1B0B742A49D23B00F86FBC /* Frameworks */,
 				EA1B0B752A49D23B00F86FBC /* Resources */,
-				F0BA8870B3C73640294FA57C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1536,28 +1533,6 @@
 			shellPath = /bin/sh;
 			shellScript = "# 구글 로그인 키 설정\nINFO_PLIST_PATH=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nSECRET_KEY_PLIST_PATH=\"${PROJECT_DIR}/pochak/SecretKeyInfo.plist\"\n\nGID_CLIENT_ID=$(/usr/libexec/PlistBuddy -c \"Print :GIDClientID\" \"$SECRET_KEY_PLIST_PATH\")\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleURLTypes:0:CFBundleURLSchemes:0 com.googleusercontent.apps.${GID_CLIENT_ID}\" \"$INFO_PLIST_PATH\"\n\n/usr/libexec/PlistBuddy -c \"Set :GIDClientID ${GID_CLIENT_ID}.apps.googleusercontent.com\" \"$INFO_PLIST_PATH\"\n\necho \"GIDClientID and URL Scheme have been updated in Info.plist\"\n";
 		};
-		23F02C78EFBCD81179944B0A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-pochakTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		465D6E0D2CFE057300847542 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1576,45 +1551,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
-		};
-		F0BA8870B3C73640294FA57C /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-pochak-pochakUITests/Pods-pochak-pochakUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-pochak-pochakUITests/Pods-pochak-pochakUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-pochak-pochakUITests/Pods-pochak-pochakUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F0DDD486106194338BA7DCC7 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-pochak-pochakUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
