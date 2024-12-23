@@ -9,6 +9,8 @@ import UIKit
 import GoogleSignIn
 import RealmSwift
 import FirebaseCore
+import FirebaseMessaging
+import UserNotifications
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -143,5 +145,97 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Google 로그인 등록
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
         return GIDSignIn.sharedInstance.handle(url)
+    }
+    
+    // MARK: - Functions
+    
+    func fetchFCMToken() {
+        /// Firebase Meesaging delegate 설정
+        Messaging.messaging().delegate = self
+        
+        /// FCM 발급받은 토큰 가져오기
+        Messaging.messaging().token { token, error in
+            if let error = error {
+                print("Error fetching FCM registration token: \(error)")
+            }
+            else if let token = token {
+                print("FCM registration token: \(token)")
+                PushNotificationService.postFCMToken(request: PushNotificationRequest(token: token)) { [weak self] data, failed in
+                    guard let data = data else {
+                        self?.handleError(failed!)
+                        return
+                    }
+                    print("=== AppDelegate, post fcm token succeeded ===")
+                    print("== data: \(data)")
+                }
+            }
+        }
+    }
+    
+    func handleError(_ error: NetworkError) {
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        
+        if let presentViewController = window.rootViewController {
+            presentViewController.present(UIAlertController.networkErrorAlert(title: "네트워킹 오류"), animated: true)
+        } else {
+            fatalError(error.localizedDescription)
+        }
+    }
+}
+
+// MARK: - Extension: UNUserNotificationCenterDelegate
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+
+    /// APN 서비스에 앱 등록 성공했을 때
+    func application(_ application: UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("Background, APNS token: \(deviceToken)")
+        Messaging.messaging().apnsToken = deviceToken
+        fetchFCMToken()
+    }
+    
+    /// Foreground(앱 켜진 상태) 에서 알림 오는 설정
+    func userNotificationCenter(_ center: UNUserNotificationCenter, 
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        print("====== Foreground, 메시지 수신 ======")
+        let userInfo = notification.request.content.userInfo
+        print("userInfo: \(userInfo)")
+        completionHandler([.banner, .badge, .sound])
+    }
+    
+    /// Background에 있거나 앱이 종료됐을 때 알림 오는 설정
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("====== Background, 메시지 수신 ======")
+        let userInfo = response.notification.request.content.userInfo
+        print("userInfo: \(userInfo)")
+    }
+}
+
+// MARK: - Extension: MessagingDelegate (for Firebase Messaging)
+
+extension AppDelegate: MessagingDelegate {
+    
+    /// FCM토큰이 변경되었을 때를 감지, 새로운 토큰으로 갱신해서 저장
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        print("Firebase registration token did receive: \(String(describing: fcmToken))")
+
+        let dataDict: [String: String] = ["token": fcmToken ?? ""]
+        NotificationCenter.default.post(
+            name: Notification.Name("FCMToken"),
+            object: nil,
+            userInfo: dataDict
+        )
+        // TODO: If necessary send token to application server.
+        // Note: This callback is fired at each app startup and whenever a new token is generated.
+        PushNotificationService.postFCMToken(request: PushNotificationRequest(token: fcmToken ?? "")) { [weak self] data, failed in
+            guard let data = data else {
+                self?.handleError(failed!)
+                return
+            }
+            print("=== AppDelegate, post fcm token succeeded ===")
+            print("== data: \(data)")
+        }
     }
 }
