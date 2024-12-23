@@ -127,7 +127,9 @@ final class SocialJoinViewController: UIViewController {
         }
     }
     
-    private func toHomeTabPage() {
+    private func toHomeTabPage(){
+        FCMTokenManager.shared.getPushNotificationPermission()
+        
         let tabBarController = CustomTabBarController()
         let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
         guard let delegate = sceneDelegate else { return }
