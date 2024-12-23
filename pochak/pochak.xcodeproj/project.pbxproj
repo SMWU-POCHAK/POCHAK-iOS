@@ -2111,7 +2111,7 @@
 				DEVELOPMENT_TEAM = 2285AK4JY4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = pochak/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Pochak;
+				INFOPLIST_KEY_CFBundleDisplayName = POCHAK;
 				INFOPLIST_KEY_NSCameraUsageDescription = "사진을 찍으려면 'Pochak'이 카메라에 접근할 수 있도록 허용해야 합니다. 설정에서 언제든지 변경할 수 있습니다.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "사진을 저장합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "프로필 사진을 설정하려면 'Pochak'이 장치의 사진 및 미디어 파일에 접근할 수 있도록 허용해야 합니다. 설정에서 언제든지 변경할 수 있습니다.";
@@ -2151,7 +2151,7 @@
 				DEVELOPMENT_TEAM = 2285AK4JY4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = pochak/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Pochak;
+				INFOPLIST_KEY_CFBundleDisplayName = POCHAK;
 				INFOPLIST_KEY_NSCameraUsageDescription = "사진을 찍으려면 'Pochak'이 카메라에 접근할 수 있도록 허용해야 합니다. 설정에서 언제든지 변경할 수 있습니다.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "사진을 저장합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "프로필 사진을 설정하려면 'Pochak'이 장치의 사진 및 미디어 파일에 접근할 수 있도록 허용해야 합니다. 설정에서 언제든지 변경할 수 있습니다.";
