@@ -79,13 +79,14 @@ class NetworkService: NetworkServable {
         print("=======================")
         switch response.result {
         case .success(let data):
-            let jsonDecoder = JSONDecoder()
+            #if DEBUG
             do {
-                try print(jsonDecoder.decode(String.self, from: data))
+                let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
+                print(jsonObject)
+            } catch {
+                print("Invalid JSON format: \(error.localizedDescription)")
             }
-            catch {
-                
-            }
+            #endif
             let decodeResult: Result<APIResponse, NetworkError> = self.decode(responseType, from: data)
             completion(decodeResult)
         case .failure(let error):
