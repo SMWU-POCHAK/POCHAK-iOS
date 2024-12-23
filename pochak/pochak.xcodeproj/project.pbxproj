@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -510,6 +510,10 @@
 		EAFB4B8A2A5147C400E0F2FA /* AlarmTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AlarmTab.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		082638162CDDEDE000EE1521 /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		EA1B0B542A49D23A00F86FBC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -905,6 +909,7 @@
 		373815142A89E6BE0032066A /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				082638162CDDEDE000EE1521 /* Views */,
 				EAAACDB42A5168280041B1B9 /* Login.storyboard */,
 				373815152A89E6D30032066A /* SocialJoinViewController.swift */,
 				3766F4122C3A69E5001DD239 /* TermsOfAgreeViewController.swift */,
@@ -1344,6 +1349,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				082638162CDDEDE000EE1521 /* Views */,
 			);
 			name = pochak;
 			packageProductDependencies = (
