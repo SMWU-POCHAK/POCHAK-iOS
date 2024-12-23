@@ -12,7 +12,7 @@ import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
+        
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         sleep(2)
@@ -64,13 +64,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         removeKeychainAtFirstLaunch()
         return true
     }
-    
+
     private func removeKeychainAtFirstLaunch() {
         guard UserDefaults.isFirstLaunch() else {
             return
         }
-        
-        // 첫 실행이라면 keyChain 정보를 삭제
         do {
             try KeychainManager.delete(account: "accessToken")
             try KeychainManager.delete(account: "refreshToken")
@@ -78,8 +76,57 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print(error)
         }
     }
-
-    // MARK: UISceneSession Lifecycle
+    
+    // 리프레시 토큰 유효성 검사
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        handleRefreshToken()
+    }
+    
+    private func handleRefreshToken() {
+        if !isRefreshTokenValid() {
+            print("Refresh Token 만료됨.. 재로그인 필요")
+            AuthenticationService.logOut { data, failed in
+                guard let data = data else {
+                    return
+                }
+                let message = data.message
+                print(message)
+            }
+            deleteUserData()
+            moveToMainPage()
+        }
+    }
+    
+    private func isRefreshTokenValid() -> Bool {
+        guard let issuedAt = UserDefaultsManager.getData(type: Date.self, forKey: .refreshTokenIssuedAt) else {
+            return false // 발급 시점을 알 수 없으면 토큰이 유효하지 않음
+        }
+        let validityPeriod: TimeInterval = 30 * 24 * 60 * 60 // 1달(30일)을 초 단위로
+        let expirationDate = issuedAt.addingTimeInterval(validityPeriod)
+        
+        return Date() < expirationDate // 현재 시간과 만료 시간을 비교
+    }
+    
+    private func deleteUserData() {
+        do {
+            // Keychain 삭제
+            try KeychainManager.delete(account: "accessToken")
+            try KeychainManager.delete(account: "refreshToken")
+            
+            // UserDefaults 삭제
+            UserDefaultsManager.UserDefaultsKeys.allCases.forEach { key in
+                UserDefaultsManager.removeData(key: key)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    private func moveToMainPage() {
+        let mainVCBundle = UIStoryboard.init(name: "Login", bundle: nil)
+        guard let mainVC = mainVCBundle.instantiateViewController(withIdentifier: "NavigationVC") as? NavigationController else { return }
+        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainVC, animated: false)
+    }
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
@@ -93,7 +140,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
-    // Google 로그인
+    // Google 로그인 등록
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
         return GIDSignIn.sharedInstance.handle(url)
     }

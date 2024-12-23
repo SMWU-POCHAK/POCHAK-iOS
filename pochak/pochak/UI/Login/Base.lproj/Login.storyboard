@@ -13,8 +13,14 @@
         <array key="Pretendard-Bold.ttf">
             <string>Pretendard-Bold</string>
         </array>
+        <array key="Pretendard-Light.ttf">
+            <string>Pretendard-Light</string>
+        </array>
         <array key="Pretendard-Medium.ttf">
             <string>Pretendard-Medium</string>
+        </array>
+        <array key="Pretendard-SemiBold.ttf">
+            <string>Pretendard-SemiBold</string>
         </array>
     </customFonts>
     <scenes>
@@ -208,10 +214,10 @@
             </objects>
             <point key="canvasLocation" x="3645" y="-975"/>
         </scene>
-        <!--Make Profile View Controller-->
+        <!--Sign Up View Controller-->
         <scene sceneID="RFd-Ez-X9q">
             <objects>
-                <viewController storyboardIdentifier="MakeProfileVC" id="5Yd-x5-rIb" customClass="MakeProfileViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignUpVC" id="5Yd-x5-rIb" customClass="SignUpViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Hkb-L2-eue">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
