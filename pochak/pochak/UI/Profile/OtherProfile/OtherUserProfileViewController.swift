@@ -138,8 +138,8 @@ class OtherUserProfileViewController: UIViewController {
     
     private func navigateToMemoryView() {
         guard let userID = receivedHandle else { return }
-        let viewModel = MemoriesSummaryViewModel(userID: userID)
-        let summaryViewController = MemoriesSummaryPageViewController(viewModel: viewModel)
+        let viewModel = MemoryViewModel(userID: userID)
+        let summaryViewController = MemoryViewController(viewModel: viewModel)
         self.navigationController?.pushViewController(summaryViewController, animated: true)
     }
     
