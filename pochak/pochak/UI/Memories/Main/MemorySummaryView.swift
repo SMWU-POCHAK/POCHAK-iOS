@@ -1,0 +1,224 @@
+//
+//  MemorySummaryView.swift
+//  pochak
+//
+//  Created by Haru on 12/2/24.
+//
+
+import UIKit
+import SnapKit
+
+protocol MemorySummaryViewDelegate: AnyObject {
+    func didSelectMemoryCount(type: MemoryType)
+}
+
+class MemorySummaryView: UIView {
+    weak var delegate: MemorySummaryViewDelegate?
+    
+    override var intrinsicContentSize: CGSize {
+        let width = UIScreen.main.bounds.width - 40
+        let height: CGFloat = 210
+        return CGSize(width: width, height: height)
+    }
+    
+    private let containerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 12
+        view.clipsToBounds = true
+        return view
+    }()
+    
+    private var profileImageGroupView = UIView()
+    
+    private let friendProfileView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = .lightGray
+        imageView.layer.cornerRadius = 42
+        imageView.layer.borderWidth = 1.5
+        imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
+    private let myProfileView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = .lightGray
+        imageView.layer.cornerRadius = 42
+        imageView.layer.borderWidth = 1.5
+        imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
+    private let dateRangeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "2024년 5월 14일 ~ 2024년 10월 5일"
+        label.textColor = .darkGray
+        label.applyPochakFont(.body3_1)
+        return label
+    }()
+    
+    private let postCountLabel: UILabel = {
+        let label = UILabel()
+        label.text = "서로 포착해준지 167일"
+        label.textColor = .darkGray
+        label.applyPochakFont(.body3_1)
+        return label
+    }()
+    
+    private let statsStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .equalSpacing
+        stack.alignment = .center
+        return stack
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configure(with viewModel: MemorySummary) {
+        if let url = URL(string: viewModel.memberProfileImage) {
+            friendProfileView.load(with: url)
+        }
+        
+        if let url = URL(string: viewModel.loginMemberProfileImage) {
+            myProfileView.load(with: url)
+        }
+        
+        let followPeriod = Date.formatDateRange(fromDateString: viewModel.followDate)
+        dateRangeLabel.text = followPeriod
+        postCountLabel.text = "서로 포착해준지 \(viewModel.followDay)일"
+        setupStatsItems(pochakCount: viewModel.pochakCount,
+                        bondedCount: viewModel.bondedCount,
+                        pochakedCount: viewModel.pochakedCount)
+    }
+    
+    private func configure(memberProfileImage: String,
+                           loginMemberProfileImage: String,
+                           followedDate: Date,
+                           followDay: Int,
+                           pochakCount: Int,
+                           bondedCount: Int,
+                           pochakedCount: Int
+    ) {
+        if let url = URL(string: memberProfileImage) {
+            friendProfileView.load(with: url)
+        }
+        
+        if let url = URL(string: loginMemberProfileImage) {
+            myProfileView.load(with: url)
+        }
+    }
+    
+    private func setupUI() {
+        backgroundColor = .clear
+        
+        addSubview(containerView)
+        containerView.addSubview(dateRangeLabel)
+        containerView.addSubview(postCountLabel)
+        containerView.addSubview(statsStackView)
+        addSubview(friendProfileView)
+        addSubview(myProfileView)
+        
+        setupConstraints()
+    }
+    
+    private func setupStatsItems(pochakCount: Int,
+                                 bondedCount: Int,
+                                 pochakedCount: Int
+    ) {
+        let statsItems: [(MemoryType, Int)] = [
+            (.pochak, pochakCount),
+            (.bonded, bondedCount),
+            (.pochaked, pochakedCount)
+        ]
+        
+        statsItems.forEach { type, count in
+            let containerView = createStatsItemView(type: type, count: count)
+            statsStackView.addArrangedSubview(containerView)
+        }
+    }
+    
+    private func createStatsItemView(type: MemoryType, count: Int) -> UIView {
+        let containerButton = UIButton()
+        containerButton.tag = type.hashValue
+        containerButton.addAction(UIAction { _ in
+            self.didSelectMemoryCount(type: type)
+        }, for: .touchUpInside)
+
+        
+        let titleLabel = UILabel()
+        titleLabel.text = type.rawValue
+        titleLabel.applyPochakFont(.body3)
+        titleLabel.textColor = .darkGray
+        
+        let countLabel = UILabel()
+        countLabel.text = "\(count)"
+        titleLabel.applyPochakFont(.body3_1)
+        
+        containerButton.addSubview(titleLabel)
+        containerButton.addSubview(countLabel)
+        
+        titleLabel.snp.makeConstraints { make in
+            make.top.centerX.equalToSuperview()
+        }
+        
+        countLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(4)
+            make.centerX.bottom.equalToSuperview()
+        }
+        
+        return containerButton
+    }
+    
+    private func setupConstraints() {
+        friendProfileView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalToSuperview().offset(102)
+            $0.width.height.equalTo(84)
+        }
+        
+        myProfileView.snp.makeConstraints { make in
+            make.centerY.equalTo(friendProfileView.snp.centerY)
+            make.left.equalTo(friendProfileView.snp.right).offset(-20)
+            make.width.height.equalTo(84)
+        }
+        
+        containerView.snp.makeConstraints { make in
+            make.top.equalTo(friendProfileView.snp.bottom).offset(-26)
+            make.height.equalTo(152)
+            make.width.equalToSuperview()
+        }
+        
+        dateRangeLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(37)
+            $0.centerX.equalToSuperview()
+        }
+        
+        postCountLabel.snp.makeConstraints { make in
+            make.top.equalTo(dateRangeLabel.snp.bottom).offset(5)
+            make.centerX.equalToSuperview()
+        }
+        
+        statsStackView.snp.makeConstraints { make in
+            make.top.equalTo(postCountLabel.snp.bottom).offset(12)
+            make.centerX.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(55)
+            make.height.equalTo(42)
+        }
+    }
+    
+    private func didSelectMemoryCount(type: MemoryType) {
+        delegate?.didSelectMemoryCount(type: type)
+    }
+}
