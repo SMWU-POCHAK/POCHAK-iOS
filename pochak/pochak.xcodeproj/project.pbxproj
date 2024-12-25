@@ -1376,6 +1376,7 @@
 				46B0B42B2CFDFDB500950554 /* FirebaseCore */,
 				46B0B42D2CFDFDB500950554 /* FirebaseCrashlytics */,
 				46B0B4302CFDFE3300950554 /* RealmSwift */,
+				46923F772D071035006C49E5 /* SnapKit */,
 			);
 			productName = pochak;
 			productReference = EA1B0B572A49D23A00F86FBC /* pochak.app */;
@@ -1459,6 +1460,7 @@
 				46B0B4252CFDFC9F00950554 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				46B0B4282CFDFDB500950554 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				46B0B42F2CFDFE3300950554 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				46923F762D071035006C49E5 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = EA1B0B582A49D23A00F86FBC /* Products */;
 			projectDirPath = "";
@@ -2176,6 +2178,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		46923F762D071035006C49E5 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
 		46B0B41A2CFDFC6900950554 /* XCRemoteSwiftPackageReference "Tabman" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/uias/Tabman.git";
@@ -2227,6 +2237,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		46923F772D071035006C49E5 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46923F762D071035006C49E5 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
 		46B0B41B2CFDFC6900950554 /* Tabman */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 46B0B41A2CFDFC6900950554 /* XCRemoteSwiftPackageReference "Tabman" */;
