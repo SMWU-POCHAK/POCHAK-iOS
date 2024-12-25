@@ -29,6 +29,3 @@ enum TimelineIcon {
     case profile
     case camera
 }
-
-    }
-}

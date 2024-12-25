@@ -35,8 +35,7 @@ class MemoryGalleryViewModel {
             guard let self = self else { return }
             switch result {
             case .success(let pochakMemoryList):
-                print("💡내가 찍은 것: pochakMemoryList\n", pochakMemoryList.result)
-                let sectionList = pochakMemoryList.result.createMonthSections()//MemoryList.sampleData.createMonthSections()
+                let sectionList = pochakMemoryList.result.createMonthSections()
                 self.memorySectionList = sectionList
                 self.onPostListUpdated?(sectionList)
             case .failure(let error):
@@ -51,7 +50,7 @@ class MemoryGalleryViewModel {
             guard let self = self else { return }
             switch result {
             case .success(let bondedMemoryList):
-                let sectionList = MemoryList.sampleData.createMonthSections()
+                let sectionList = bondedMemoryList.result.createMonthSections()
                 self.memorySectionList = sectionList
                 self.onPostListUpdated?(sectionList)
             case .failure(let error):
@@ -66,7 +65,7 @@ class MemoryGalleryViewModel {
             guard let self = self else { return }
             switch result {
             case .success(let pochakedMemoryList):
-                let sectionList = MemoryList.sampleData.createMonthSections()
+                let sectionList = pochakedMemoryList.result.createMonthSections()
                 self.memorySectionList = sectionList
                 self.onPostListUpdated?(sectionList)
             case .failure(let error):
