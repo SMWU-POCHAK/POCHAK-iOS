@@ -14,46 +14,21 @@ struct CommonResponse<T: Codable>: Codable {
     let result: T
 }
 
-// MARK: - Memories
-struct MemorySummary: Codable {
-    let handle: String
-    let loginMemberProfileImage, memberProfileImage: String
-    let followDate, followedDate: String
-    let followDay, pochakCount, bondedCount, pochakedCount: Int
-    let firstPochaked, firstPochak, firstBonded, latestPost: FirstBonded
+struct SummaryGalleryItem {
+    let type: MemoryType
+    let post: MemoryPost
 }
 
-// MARK: - FirstBonded
-struct FirstBonded: Codable {
-    let postID: Int
-    let postImage: String
-    let postDate: String
-    
-    enum CodingKeys: String, CodingKey {
-        case postID = "postId"
-        case postImage, postDate
-    }
+struct TimelineItem {
+    let date: String?
+    let icon: TimelineIcon
+    let message: String
 }
 
-// MARK: - MemoryList
-struct MemoryList: Codable {
-    let pageInfo: PageInfo
-    let pochakedPostList: [PochakedPost]
-    
-    enum CodingKeys: String, CodingKey {
-        case pageInfo = "pageInfo"
-        case pochakedPostList = "postList"
-    }
+enum TimelineIcon {
+    case profile
+    case camera
 }
 
-
-// MARK: - PochakedPost
-struct PochakedPost: Codable {
-    let postID: Int
-    let postImage: String
-
-    enum CodingKeys: String, CodingKey {
-        case postID = "postId"
-        case postImage
     }
 }
