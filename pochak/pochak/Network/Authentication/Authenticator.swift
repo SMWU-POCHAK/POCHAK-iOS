@@ -5,7 +5,7 @@
 //  Created by Seo Cindy on 1/16/24.
 //
 
-import Foundation
+import UIKit
 import Alamofire
 
 // MARK: - Token Refresh Data Model
