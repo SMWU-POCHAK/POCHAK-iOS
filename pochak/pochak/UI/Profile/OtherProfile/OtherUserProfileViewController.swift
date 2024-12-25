@@ -42,6 +42,17 @@ class OtherUserProfileViewController: UIViewController {
     @IBOutlet weak var postListTabmanView: UIView!
     @IBOutlet weak var updateProfileBtn: UIButton!
     
+    private lazy var memoryButton: UIButton = {
+        let button = UIButton()
+        let memoryImage = UIImage(resource: .icMemory)
+        button.setImage(memoryImage, for: .normal)
+        button.addAction(UIAction { _ in
+            self.navigateToMemoryView()
+        }, for: .touchUpInside)
+        button.isHidden = true
+        return button
+    }()
+    
     // MARK: - Lifecycle
     
     // Container View에 데이터 전달(ViewDidLoad보다 먼저 실행)
@@ -56,6 +67,7 @@ class OtherUserProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavigationBar()
+        setUpMemoryButton()
         setUpViewController()
         setUpData()
     }
@@ -124,7 +136,12 @@ class OtherUserProfileViewController: UIViewController {
         present(profileMenuVC, animated: true)
     }
     
-    // MARK: - Functions
+    private func navigateToMemoryView() {
+        guard let userID = receivedHandle else { return }
+        let viewModel = MemoriesSummaryViewModel(userID: userID)
+        let summaryViewController = MemoriesSummaryPageViewController(viewModel: viewModel)
+        self.navigationController?.pushViewController(summaryViewController, animated: true)
+    }
     
     @IBAction func updateProfile(_ sender: Any) {
         guard let updateProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "UpdateProfileVC") as? UpdateProfileViewController else {return}
@@ -156,6 +173,16 @@ class OtherUserProfileViewController: UIViewController {
         postListTabmanView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
         
         updateProfileBtn.layer.isHidden = true
+    }
+    
+    private func setUpMemoryButton() {
+        view.addSubview(memoryButton)
+        
+        memoryButton.snp.makeConstraints { make in
+            make.width.height.equalTo(48)
+            make.trailing.equalTo(profileBackground.snp.trailing)
+            make.bottom.equalTo(profileBackground.snp.bottom).offset(11)
+        }
     }
     
     private func viewFollowerList() { //  UITapGestureRecognizer 사용
@@ -213,12 +240,12 @@ class OtherUserProfileViewController: UIViewController {
                         /// 팔로우 중인 유저인 경우
                         self.followToggleBtn.setTitle("팔로잉", for: .normal)
                         self.followToggleBtn.backgroundColor = UIColor(named: "gray03")
-                        
+                        self.profileBackground.backgroundColor = UIColor(resource: .yellow00)
+                        self.memoryButton.isHidden = false
                     } else {
                         /// 팔로우하고 있지 않은 유저인 경우
                         self.followToggleBtn.setTitle("팔로우", for: .normal)
                         self.followToggleBtn.backgroundColor = UIColor(named: "yellow00")
-                        
                     }
                 }
             case .MEMBER4002:
