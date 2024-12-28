@@ -8,133 +8,321 @@
 import UIKit
 import SafariServices
 
-class TermsOfAgreeViewController: UIViewController, UIViewControllerTransitioningDelegate {
+final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransitioningDelegate {
+    
+    // MARK: - Properties
+    
+    private var didAgreeForAll: Bool = false {
+        didSet {
+            if didAgreeForAll {
+                agreeToAllButton.isChecked = true
+                nextButton.isActive = true
+            }
+            else {
+                agreeToAllButton.isChecked = false
+                nextButton.isActive = false
+            }
+        }
+    }
+    
+    private var didAgreeForPrivacyPolicy: Bool = false {
+        didSet {
+            privacyPolicyAgreeButton.isChecked = didAgreeForPrivacyPolicy
+        }
+    }
 
-    @IBOutlet weak var pochakLabel: UILabel!
-    @IBOutlet weak var pochakCorpLabel: UILabel!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var appIcon: UIImageView!
-    @IBOutlet weak var agreeForPrivacyPolicy: UIButton!
-    @IBOutlet weak var agreeForTermsOfUSe: UIButton!
-    @IBOutlet weak var seePrivacyPolicy: UIButton!
-    @IBOutlet weak var seeTermsOfUse: UIButton!
-    @IBOutlet weak var agreeAndContinueButton: UIButton!
+    private var didAgreeForTermsOfUse: Bool = false {
+        didSet {
+            termsOfUseAgreeButton.isChecked = didAgreeForTermsOfUse
+        }
+    }
     
-    @IBOutlet weak var backgroundView: UIView!
+    var delegate: SendDelegate?
     
+    // MARK: - Views
     
-    var didAgreeForPrivacyPolicy : Bool = false
-    var didAgreeForTermsOfUse : Bool = false
-    var delegate : SendDelegate?
+    private let pochakLetterLogoImageView: UIImageView = {
+        let view = UIImageView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.image = UIImage(named: "logo_full")
+        return view
+    }()
     
+    private let guideLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "서비스 이용을 위해\n이용약관 동의가 필요합니다."
+        label.font = UIFont(name: "Pretendard-Bold", size: 26)
+        label.numberOfLines = 2
+        return label
+    }()
+    
+    private let agreeToAllLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "약관 전체 동의"
+        label.font = UIFont(name: "Pretendard-Bold", size: 20)
+        return label
+    }()
+    
+    private let agreeToAllButton: CheckButton = {
+        let button = CheckButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(agreeToAllButtonDidTap), for: .touchUpInside)
+        button.isChecked = false
+        return button
+    }()
+    
+    private let borderLine: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(named: "gray00")
+        return view
+    }()
+    
+    private let termsOfUseAgreeLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isUserInteractionEnabled = true
+        return label
+    }()
+    
+    private let termsOfUseAgreeButton: CheckButton = {
+        let button = CheckButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(termsOfUseAgreeButtonDidTap), for: .touchUpInside)
+        button.isChecked = false
+        return button
+    }()
+    
+    private let privacyPolicyAgreeLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isUserInteractionEnabled = true
+        return label
+    }()
+    
+    private let privacyPolicyAgreeButton: CheckButton = {
+        let button = CheckButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(privacyPolicyAgreeButtonDidTap), for: .touchUpInside)
+        button.isChecked = false
+        return button
+    }()
+    
+    private let nextButton: NextButton = {
+        let button = NextButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.isActive = false
+        button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        backgroundView.layer.cornerRadius = 8
-        appIcon.layer.cornerRadius = 5
-        agreeAndContinueButton.layer.cornerRadius = 5
-        seePrivacyPolicy.setUnderline()
-        seeTermsOfUse.setUnderline()
         
-        pochakLabel.text = "Pochak"
-        pochakLabel.font = UIFont(name: "Pretendard-SemiBold", size: 20)
-        pochakLabel.textColor = .black
+        view.backgroundColor = .white
         
-        pochakCorpLabel.text = "Pochak Corp."
-        pochakCorpLabel.font = UIFont(name: "Pretendard-Light", size: 16)
-        pochakCorpLabel.textColor = UIColor(named: "gray04")
+        addViews()
+        setupLayout()
         
-        titleLabel.text = "개인정보 및 이용약관 동의 항목"
-        titleLabel.font = UIFont(name: "Pretendard-SemiBold", size: 18)
-        titleLabel.textColor = .black
-        
-        
-        agreeForPrivacyPolicy.setTitle(" [필수] 개인정보 제3자 제공 동의", for: .normal)
-        agreeForPrivacyPolicy.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
-        agreeForPrivacyPolicy.titleLabel?.font =  UIFont(name: "Pretendard-Medium", size: 15)
-        agreeForPrivacyPolicy.setTitleColor(UIColor(named: "gray04"), for: .normal)
-        agreeForPrivacyPolicy.tintColor = UIColor(named: "gray04")
-
-        
-        agreeForTermsOfUSe.setTitle(" [필수] 이용약관 항목", for: .normal)
-        agreeForTermsOfUSe.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
-        agreeForTermsOfUSe.titleLabel?.font =  UIFont(name: "Pretendard-Medium", size: 15)
-        agreeForTermsOfUSe.setTitleColor(UIColor(named: "gray04"), for: .normal)
-        agreeForTermsOfUSe.tintColor = UIColor(named: "gray04")
-
-        // Do any additional setup after loading the view.
+        configureTermsOfUseAgreeLabel()
+        configurePrivacyPolicyAgreeLabel()
     }
     
-    @IBAction func pressAgreeForPrivacyPolicy(_ sender: Any) {
-        if !didAgreeForPrivacyPolicy {
-            didAgreeForPrivacyPolicy = true
-            agreeForPrivacyPolicy.setTitleColor(UIColor.black, for: .normal)
-            agreeForPrivacyPolicy.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
-            agreeForPrivacyPolicy.tintColor = UIColor.black
-        } else if didAgreeForPrivacyPolicy {
-            didAgreeForPrivacyPolicy = false
-            agreeForPrivacyPolicy.setTitleColor(UIColor(named: "gray04"), for: .normal)
-            agreeForPrivacyPolicy.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
-            agreeForPrivacyPolicy.tintColor = UIColor(named: "gray04")
-        }
-        
+    // MARK: - Actions
+    
+    @objc private func termsOfUseAgreeButtonDidTap() {
+        termsOfUseAgreeButton.isChecked.toggle()
+        didAgreeForTermsOfUse = termsOfUseAgreeButton.isChecked
+        checkEachAgreeStatus()
     }
     
-    @IBAction func pressAgreeForTermsOfUSe(_ sender: Any) {
-        if !didAgreeForTermsOfUse {
-            didAgreeForTermsOfUse = true
-            agreeForTermsOfUSe.setTitleColor(UIColor.black, for: .normal)
-            agreeForTermsOfUSe.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
-            agreeForTermsOfUSe.tintColor = UIColor.black
-        } else if didAgreeForTermsOfUse {
-            didAgreeForTermsOfUse = false
-            agreeForTermsOfUSe.setTitleColor(UIColor(named: "gray04"), for: .normal)
-            agreeForTermsOfUSe.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
-            agreeForTermsOfUSe.tintColor = UIColor(named: "gray04")
+    @objc private func privacyPolicyAgreeButtonDidTap() {
+        privacyPolicyAgreeButton.isChecked.toggle()
+        didAgreeForPrivacyPolicy = privacyPolicyAgreeButton.isChecked
+        checkEachAgreeStatus()
+    }
+    
+    @objc private func termsOfUseLabelDidTap(_ sender: UITapGestureRecognizer) {
+        // termsOfUseAgreeLabel에서 선택된 부분의 CGPoint 구하기
+        let point = sender.location(in: termsOfUseAgreeLabel)
+        
+        if let rect = termsOfUseAgreeLabel.boundingRectForCharacterRange(subText: "이용약관"), rect.contains(point) {
+            guard let url = URL(string: "https://pochak.notion.site/6520996186464c36a8b3a04bc17fa000?pvs=74") else { return }
+            let safariVC = SFSafariViewController(url: url)
+            safariVC.transitioningDelegate = self
+            safariVC.modalPresentationStyle = .pageSheet
+
+            present(safariVC, animated: true, completion: nil)
         }
     }
     
-    
-    @IBAction func openPrivacyPolicy(_ sender: Any) {
-        guard let url = URL(string: "https://pochak.notion.site/e365e34f018949b88543adbe6b0b3746") else { return }
-        let safariVC = SFSafariViewController(url: url)
-        // delegate 지정 및 presentation style 설정.
-        safariVC.transitioningDelegate = self
-        safariVC.modalPresentationStyle = .pageSheet
-
-        present(safariVC, animated: true, completion: nil)
+    @objc private func privacyPolicyLabelDidTap(_ sender: UITapGestureRecognizer) {
+        // privacyPolicyAgreeLabel에서 선택된 부분의 CGPoint 구하기
+        let point = sender.location(in: privacyPolicyAgreeLabel)
+        
+        if let rect = privacyPolicyAgreeLabel.boundingRectForCharacterRange(subText: "개인정보 수집 및 제공"), rect.contains(point) {
+            guard let url = URL(string: "https://pochak.notion.site/e365e34f018949b88543adbe6b0b3746") else { return }
+            let safariVC = SFSafariViewController(url: url)
+            safariVC.transitioningDelegate = self
+            safariVC.modalPresentationStyle = .pageSheet
+            present(safariVC, animated: true, completion: nil)
+        }
     }
     
-    
-    @IBAction func openTermsOfUSe(_ sender: Any) {
-        guard let url = URL(string: "https://pochak.notion.site/6520996186464c36a8b3a04bc17fa000?pvs=74") else { return }
-        let safariVC = SFSafariViewController(url: url)
-        // delegate 지정 및 presentation style 설정.
-        safariVC.transitioningDelegate = self
-        safariVC.modalPresentationStyle = .pageSheet
-
-        present(safariVC, animated: true, completion: nil)
+    @objc private func agreeToAllButtonDidTap() {
+        agreeToAllButton.isChecked.toggle()
+        didAgreeForAll = agreeToAllButton.isChecked
+        changeAllAgreeStatus()
     }
     
-    @IBAction func agreeAndContinue(_ sender: Any) {
-        if didAgreeForPrivacyPolicy && didAgreeForTermsOfUse {
+    @objc private func nextButtonDidTap() {
+        if didAgreeForAll {
             self.dismiss(animated: true)
             delegate?.sendAgreed(agree: true)
-        } else {
-            print("not agreed yet")
         }
     }
+    
+    // MARK: - Layout
+    
+    private func addViews() {
+        view.addSubview(pochakLetterLogoImageView)
+        view.addSubview(guideLabel)
+        view.addSubview(agreeToAllLabel)
+        view.addSubview(agreeToAllButton)
+        view.addSubview(borderLine)
+        view.addSubview(termsOfUseAgreeLabel)
+        view.addSubview(termsOfUseAgreeButton)
+        view.addSubview(privacyPolicyAgreeLabel)
+        view.addSubview(privacyPolicyAgreeButton)
+        view.addSubview(nextButton)
+    }
+    
+    private func setupLayout() {
+        NSLayoutConstraint.activate([
+            pochakLetterLogoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 44),
+            pochakLetterLogoImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+        ])
+        
+        NSLayoutConstraint.activate([
+            guideLabel.leadingAnchor.constraint(equalTo: pochakLetterLogoImageView.leadingAnchor),
+            guideLabel.topAnchor.constraint(equalTo: pochakLetterLogoImageView.bottomAnchor, constant: 8),
+            
+        ])
+        
+        NSLayoutConstraint.activate([
+            agreeToAllLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 26),
+            agreeToAllLabel.topAnchor.constraint(equalTo: guideLabel.bottomAnchor, constant: 127),
+        ])
+        
+        NSLayoutConstraint.activate([
+            agreeToAllButton.widthAnchor.constraint(equalToConstant: 20),
+            agreeToAllButton.heightAnchor.constraint(equalTo: agreeToAllButton.widthAnchor, multiplier: 1),
+            agreeToAllButton.leadingAnchor.constraint(greaterThanOrEqualTo: agreeToAllLabel.trailingAnchor, constant: 50),
+            agreeToAllButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
+            agreeToAllButton.topAnchor.constraint(equalTo: agreeToAllLabel.topAnchor),
+        ])
+        
+        NSLayoutConstraint.activate([
+            borderLine.heightAnchor.constraint(equalToConstant: 1),
+            borderLine.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            borderLine.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            borderLine.topAnchor.constraint(equalTo: agreeToAllLabel.bottomAnchor, constant: 13)
+        ])
 
-}
+        NSLayoutConstraint.activate([
+            termsOfUseAgreeLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 22),
+            termsOfUseAgreeLabel.topAnchor.constraint(equalTo: borderLine.bottomAnchor, constant: 17)
+        ])
+                
+        NSLayoutConstraint.activate([
+            termsOfUseAgreeButton.leadingAnchor.constraint(greaterThanOrEqualTo: termsOfUseAgreeLabel.trailingAnchor, constant: 50),
+            termsOfUseAgreeButton.trailingAnchor.constraint(equalTo: agreeToAllButton.trailingAnchor),
+            termsOfUseAgreeButton.topAnchor.constraint(equalTo: termsOfUseAgreeLabel.topAnchor),
+            termsOfUseAgreeButton.widthAnchor.constraint(equalToConstant: 20),
+            termsOfUseAgreeButton.heightAnchor.constraint(equalTo: termsOfUseAgreeButton.widthAnchor, multiplier: 1)
+        ])
+        
+        NSLayoutConstraint.activate([
+            privacyPolicyAgreeLabel.leadingAnchor.constraint(equalTo: termsOfUseAgreeLabel.leadingAnchor),
+            privacyPolicyAgreeLabel.topAnchor.constraint(equalTo: termsOfUseAgreeLabel.bottomAnchor, constant: 16)
+        ])
+                
+        NSLayoutConstraint.activate([
+            privacyPolicyAgreeButton.leadingAnchor.constraint(greaterThanOrEqualTo: privacyPolicyAgreeLabel.trailingAnchor, constant: 50),
+            privacyPolicyAgreeButton.trailingAnchor.constraint(equalTo: termsOfUseAgreeButton.trailingAnchor),
+            privacyPolicyAgreeButton.topAnchor.constraint(equalTo: privacyPolicyAgreeLabel.topAnchor),
+            privacyPolicyAgreeButton.widthAnchor.constraint(equalToConstant: 20),
+            privacyPolicyAgreeButton.heightAnchor.constraint(equalTo: privacyPolicyAgreeButton.widthAnchor, multiplier: 1)
+        ])
+                
+        NSLayoutConstraint.activate([
+            nextButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            nextButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            nextButton.heightAnchor.constraint(equalToConstant: 48)
+        ])
+    }
+    
+    // MARK: - Functions
+    
+    private func configureTermsOfUseAgreeLabel() {
+        configureUnderlineAttributes(linkText: "이용약관",
+                                     generalText: String(format: "[필수]  서비스 %@ 동의", "이용약관"),
+                                     label: termsOfUseAgreeLabel)
+        
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(termsOfUseLabelDidTap(_: )))
+        termsOfUseAgreeLabel.addGestureRecognizer(recognizer)
+    }
+    
+    private func configurePrivacyPolicyAgreeLabel() {
+        configureUnderlineAttributes(linkText: "개인정보 수집 및 제공",
+                                     generalText: String(format: "[필수]  %@ 동의", "개인정보 수집 및 제공"),
+                                     label: privacyPolicyAgreeLabel)
+        
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(privacyPolicyLabelDidTap(_: )))
+        privacyPolicyAgreeLabel.addGestureRecognizer(recognizer)
+    }
+    
+    private func configureUnderlineAttributes(linkText: String, generalText: String, label: UILabel) {
+        let generalFont = UIFont(name: "Pretendard-Medium", size: 16)
 
-extension UIButton {
-    func setUnderline() {
-        guard let title = title(for: .normal) else { return }
-        let attributedString = NSMutableAttributedString(string: title)
-        attributedString.addAttribute(.underlineStyle,
-                                      value: NSUnderlineStyle.single.rawValue,
-                                      range: NSRange(location: 0, length: title.count)
+        // NSAttributedString.Key, Value 속성 정의
+        let generalAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor(named: "gray05"),
+            .font: generalFont
+        ]
+        let linkAttributes: [NSAttributedString.Key: Any] = [
+            .underlineStyle: NSUnderlineStyle.single.rawValue,
+            .foregroundColor: UIColor(named: "gray05"),
+            .font: generalFont
+        ]
+        
+        let mutableString = NSMutableAttributedString()
+
+        // generalAttributes(기본 스타일) 적용
+        mutableString.append(
+            NSAttributedString(string: generalText, attributes: generalAttributes)
         )
-        setAttributedTitle(attributedString, for: .normal)
+
+        // 각 문자열의 range에 linkAttributes 적용
+        mutableString.setAttributes(
+            linkAttributes,
+            range: (generalText as NSString).range(of: linkText)
+        )
+
+        label.attributedText = mutableString
+    }
+    
+    private func changeAllAgreeStatus() {
+        didAgreeForTermsOfUse = didAgreeForAll
+        didAgreeForPrivacyPolicy = didAgreeForAll
+    }
+    
+    private func checkEachAgreeStatus() {
+        didAgreeForAll = didAgreeForTermsOfUse && didAgreeForPrivacyPolicy
     }
 }

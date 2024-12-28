@@ -94,9 +94,19 @@ class NetworkService: NetworkServable {
         responseType: APIResponse.Type,
         completion: @escaping (Result<APIResponse, NetworkError>) -> Void
     ) {
+        print("=======================")
         print("handleResponse switch문 밖 = \(response)")
+        print("=======================")
         switch response.result {
         case .success(let data):
+            #if DEBUG
+            do {
+                let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
+                print(jsonObject)
+            } catch {
+                print("Invalid JSON format: \(error.localizedDescription)")
+            }
+            #endif
             let decodeResult: Result<APIResponse, NetworkError> = self.decode(responseType, from: data)
             completion(decodeResult)
         case .failure(let error):
