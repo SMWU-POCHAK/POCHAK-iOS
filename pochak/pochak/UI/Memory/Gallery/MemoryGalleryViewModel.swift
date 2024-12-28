@@ -39,7 +39,7 @@ class MemoryGalleryViewModel {
                 self.memorySectionList = sectionList
                 self.onPostListUpdated?(sectionList)
             case .failure(let error):
-                print("💡", error.localizedDescription)
+                print("[Error] GET POCHAK MEMORIES", error.localizedDescription)
             }
         }
     }
@@ -54,7 +54,7 @@ class MemoryGalleryViewModel {
                 self.memorySectionList = sectionList
                 self.onPostListUpdated?(sectionList)
             case .failure(let error):
-                print("💡", error.localizedDescription)
+                print("[Error] GET BONDED MEMORIES", error.localizedDescription)
             }
         }
     }
@@ -69,7 +69,7 @@ class MemoryGalleryViewModel {
                 self.memorySectionList = sectionList
                 self.onPostListUpdated?(sectionList)
             case .failure(let error):
-                print("💡", error.localizedDescription)
+                print("[Error] GET POCHAKED MEMORIES", error.localizedDescription)
             }
         }
     }

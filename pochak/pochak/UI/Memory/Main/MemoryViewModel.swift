@@ -33,9 +33,8 @@ class MemoryViewModel {
                 self.timeLineEvent = self.sortTimeLineEvent(memorySummary.result)
                 self.summaryGalleryItem = converGalleryPostList(memorySummary: memorySummary.result)
                 self.onMemorySummaryUpdated?(memorySummary.result)
-                print("💡써머리: memorySummary\n", memorySummary.result)
             case .failure(let error):
-                print("💡", error.localizedDescription)
+                print("[Error] GET SUMMARY", error.localizedDescription)
             }
         }
     }
