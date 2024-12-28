@@ -141,6 +141,7 @@ class NetworkService: NetworkServable {
             let decodedData = try JSONDecoder().decode(type, from: data)
             return .success(decodedData)
         } catch {
+            print("[ERROR] Decode Error: \(error)")
             return .failure(.unableToDecode)
         }
     }
