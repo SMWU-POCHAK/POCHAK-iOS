@@ -38,6 +38,7 @@ class TimelineView: UIView {
         stack.axis = .vertical
         stack.alignment = .top
         stack.spacing = 16
+        stack.distribution = .equalSpacing
         return stack
     }()
     
@@ -77,6 +78,12 @@ class TimelineView: UIView {
             $0.edges.equalToSuperview()
         }
         
+        timelineStackView.snp.makeConstraints {
+            $0.top.equalTo(dateRangeLabel.snp.bottom).offset(16)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.bottom.equalToSuperview().offset(-16)
+        }
+        
         titleLabel.snp.makeConstraints {
             $0.top.leading.equalToSuperview().offset(16)
             $0.height.equalTo(24)
@@ -85,12 +92,6 @@ class TimelineView: UIView {
         dateRangeLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(8)
             $0.leading.equalToSuperview().offset(16)
-        }
-        
-        timelineStackView.snp.makeConstraints {
-            $0.top.equalTo(dateRangeLabel.snp.bottom).offset(16)
-            $0.leading.trailing.equalToSuperview().inset(16)
-            $0.bottom.equalToSuperview().offset(-16)
         }
     }
     
@@ -115,20 +116,24 @@ class TimelineView: UIView {
         messageLabel.applyPochakFont(.bodyMini)
         messageLabel.textColor = .black.withAlphaComponent(0.55)
         messageLabel.numberOfLines = 0
+        messageLabel.lineBreakMode = .byWordWrapping
         
         containerView.addSubview(iconImageView)
         containerView.addSubview(textContainerView)
         textContainerView.addSubview(dateLabel)
         textContainerView.addSubview(messageLabel)
         
-        containerView.snp.makeConstraints {
-            $0.height.greaterThanOrEqualTo(35)
-        }
-        
         iconImageView.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+            $0.top.equalToSuperview().offset(6)
             $0.leading.equalToSuperview()
             $0.width.height.equalTo(24)
+        }
+        
+        textContainerView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalTo(iconImageView.snp.trailing).offset(18)
+            $0.trailing.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview()
         }
         
         dateLabel.snp.makeConstraints {
@@ -137,11 +142,12 @@ class TimelineView: UIView {
         
         messageLabel.snp.makeConstraints {
             $0.top.equalTo(dateLabel.snp.bottom).offset(4)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
         
-        textContainerView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalTo(iconImageView.snp.trailing).offset(18)
+        containerView.snp.makeConstraints {
+            $0.height.greaterThanOrEqualTo(35)
         }
         
         return containerView
@@ -163,7 +169,7 @@ class TimelineView: UIView {
         case .latestPost:
             return "@\(event.postOwnerHandle ?? "")님이 최근에 나를 포착했어요."
         case .firstBonded:
-            return "@\(event.postOwnerHandle ?? "")님이 처음 우리를 함께 포착했어요"
+            return "@\(event.postOwnerHandle ?? "")님이dkwndlrxprtmxmmadmlajifljalfijalfjlafijldasfijlaisfjdlais 처음 우리를 함께 포착했어요"
         case .firstPochak:
             return "내가 @\(userID)님을 처음 포착했어요."
         case .firstPochaked:
