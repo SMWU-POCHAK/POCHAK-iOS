@@ -178,7 +178,7 @@ extension CarouselView: UICollectionViewDataSource, UICollectionViewDelegate, UI
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedItem = memoryList[indexPath.item]
-        delegate?.didSelectMemoryPost(postID: selectedItem.post.id)
+        delegate?.didSelectMemoryPost(postID: selectedItem.post.id ?? 0)
     }
     
     private func createCarouselLayout() -> UICollectionViewCompositionalLayout {
@@ -285,7 +285,7 @@ class CarouselCell: UICollectionViewCell {
     }
     
     func configure(memory: SummaryGalleryItem) {
-        if let url = URL(string: memory.post.imageURL) {
+        if let url = URL(string: memory.post.imageURL ?? "") {
             imageView.load(with: url)
         }
     }

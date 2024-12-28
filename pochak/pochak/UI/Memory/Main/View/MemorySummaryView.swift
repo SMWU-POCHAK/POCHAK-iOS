@@ -158,7 +158,7 @@ class MemorySummaryView: UIView {
 
         
         let titleLabel = UILabel()
-        titleLabel.text = type.rawValue
+        titleLabel.text = type.title
         titleLabel.applyPochakFont(.body3)
         titleLabel.textColor = .darkGray
         

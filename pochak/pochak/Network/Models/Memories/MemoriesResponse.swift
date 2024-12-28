@@ -20,7 +20,7 @@ struct SummaryGalleryItem {
 }
 
 struct TimelineItem {
-    let date: String?
+    let date: String
     let icon: TimelineIcon
     let message: String
 }

@@ -9,8 +9,8 @@ import Foundation
 
 // MARK: - MemoryPost
 struct MemoryPost: Codable {
-    let id: Int
-    let imageURL: String
+    let id: Int?
+    let imageURL: String?
     let date: String?
 
     enum CodingKeys: String, CodingKey {

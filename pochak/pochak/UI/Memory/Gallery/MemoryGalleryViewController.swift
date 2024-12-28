@@ -10,9 +10,11 @@ import UIKit
 import SnapKit
 
 enum MemoryType: String {
-    case pochak = "POCHAK"
-    case bonded = "BONDED"
-    case pochaked = "POCHAKED"
+    case pochak = "FirstPochak"
+    case bonded = "FirstBonded"
+    case pochaked = "FirstPochaked"
+    case latestPost = "LatestPost"
+    case post1YearAgo = "Post1YearAgo"
     
     var description: String {
         switch self {
@@ -22,6 +24,23 @@ enum MemoryType: String {
             "처음 함께 포착된 순간"
         case .pochaked:
             "처음 포착된 순간"
+        case .latestPost:
+            "최근 포스트"
+        case .post1YearAgo:
+            "1년 전 포스트"
+        }
+    }
+    
+    var title: String {
+        switch self {
+        case .pochak:
+            return "POCHAK"
+        case .bonded:
+            return "BONDED"
+        case .pochaked:
+            return "POCHAKED"
+        default:
+            return ""
         }
     }
 }
@@ -79,6 +98,8 @@ class MemoryGalleryViewController: UIViewController {
             title = "POCHAKED BY @\(viewModel.userID)"
         case .bonded:
             title = "BONDED WITH @\(viewModel.userID)"
+        default:
+            title = ""
         }
     }
     private func setupViews() {

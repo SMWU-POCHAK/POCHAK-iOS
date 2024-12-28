@@ -26,8 +26,9 @@ class MemoryGalleryViewModel {
             return getBondedMemories()
         case .pochaked:
             return getPochackedMemories()
+        default:
+            return
         }
-        
     }
     
     private func getPochackMemories() {

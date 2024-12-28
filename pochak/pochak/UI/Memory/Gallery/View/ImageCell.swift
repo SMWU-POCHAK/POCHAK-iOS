@@ -56,7 +56,7 @@ class ImageCell: UICollectionViewCell {
             self.dateLabel.text =  Date.extractDay(from: date)
         }
                 
-        if let url = URL(string: post.imageURL) {
+        if let url = URL(string: post.imageURL ?? "") {
             imageView.load(with: url)
         } else {
             print("Error: URL이 nil입니다.:\(post.imageURL)")

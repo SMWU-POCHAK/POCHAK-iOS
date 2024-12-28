@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 
 class TimelineView: UIView {
+    private var userID: String = ""
     
     private let containerView: UIView = {
         let view = UIView()
@@ -50,10 +51,13 @@ class TimelineView: UIView {
     }
     
     func configure(
+        userID: String,
         followPeriod: String,
-        with timeLineItemList: [TimelineItem]
+        with timeLineList: [String: TimeLine]
     ) {
+        self.userID = userID
         dateRangeLabel.text = followPeriod
+        let timeLineItemList = self.makeTimeLineItem(timeLineList)
         timeLineItemList.forEach { item in
             let itemView = createTimelineItemView(item: item)
             timelineStackView.addArrangedSubview(itemView)
@@ -141,5 +145,35 @@ class TimelineView: UIView {
         }
         
         return containerView
+    }
+    
+    private func makeTimeLineItem(_ timeLineList: [String: TimeLine]) -> [TimelineItem] {
+        var timelineItemList: [TimelineItem] = []
+        for event in timeLineList {
+            let item = TimelineItem(date: event.key,
+                                    icon: event.value.memoriesTypeString.contains("follow") ? .profile : .camera,
+                                    message: makeTimeLineMessage(event: event.value))
+            timelineItemList.append(item)
+        }
+        return timelineItemList
+    }
+    
+    func makeTimeLineMessage(event: TimeLine) -> String {
+        switch event.timeLineMemoryType {
+        case .latestPost:
+            return "@\(event.postOwnerHandle ?? "")님이 최근에 나를 포착했어요."
+        case .firstBonded:
+            return "@\(event.postOwnerHandle ?? "")님이 처음 우리를 함께 포착했어요"
+        case .firstPochak:
+            return "내가 @\(userID)님을 처음 포착했어요."
+        case .firstPochaked:
+            return "@\(userID)님이 나를 처음 포착했어요."
+        case .followed:
+            return "@\(userID)님이 나를 팔로우했어요."
+        case .follow:
+            return "@\(userID)님을 팔로우했어요."
+        case .unknown:
+            return ""
+        }
     }
 }
