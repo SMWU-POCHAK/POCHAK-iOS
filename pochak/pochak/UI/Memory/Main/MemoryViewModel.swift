@@ -42,16 +42,16 @@ class MemoryViewModel {
     private func sortTimeLineEvent(_ memory: MemorySummary) -> [TimelineItem] {
         let follow = TimelineItem(date: memory.followDate,
                                   icon: .profile,
-                                  message: "내가 \(memory.handle)님을 팔로우했어요.")
+                                  message: "내가 @\(memory.handle)님을 팔로우했어요.")
         let followed = TimelineItem(date: memory.followDate,
                                     icon: .profile,
-                                    message: " \(memory.handle)님이 나를 팔로우했어요.")
+                                    message: "@\(memory.handle)님이 나를 팔로우했어요.")
         let firstPochak = TimelineItem(date: memory.firstPochak.date,
                                        icon: .camera,
-                                       message: "내가 \(memory.handle)님을 처음 포착했어요.")
+                                       message: "내가 @\(memory.handle)님을 처음 포착했어요.")
         let firstPochaked = TimelineItem(date: memory.firstPochaked.date,
                                          icon: .camera,
-                                         message: "\(memory.handle)님이 나를 처음 포착했어요.")
+                                         message: "@\(memory.handle)님이 나를 처음 포착했어요.")
         let firstBonded = TimelineItem(date: memory.firstBonded.date,
                                        icon: .camera,
                                        message: "처음 함께 포착됐어요.")
