@@ -70,6 +70,7 @@
 		0844D7F42BF21A80001154AC /* CancelViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0844D7F22BF21A80001154AC /* CancelViewCell.xib */; };
 		084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */; };
 		084AF4C82A5D831100C6454A /* HomeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */; };
+		08524D262D201C4F006C87E1 /* PochakNotificationService.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 08224C0F2CCFBDF7002DA825 /* PochakNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		086BF1FA2CEC99D800735BB4 /* PushNotificationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF1F92CEC99D800735BB4 /* PushNotificationRequest.swift */; };
 		086BF1FC2CEC9A3100735BB4 /* PushNotificationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF1FB2CEC9A3100735BB4 /* PushNotificationResponse.swift */; };
 		086BF1FE2CEC9B1100735BB4 /* PushNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF1FD2CEC9B1100735BB4 /* PushNotificationService.swift */; };
@@ -262,6 +263,13 @@
 			remoteGlobalIDString = 08224C0E2CCFBDF7002DA825;
 			remoteInfo = PochakNotificationService;
 		};
+		08524D272D201C4F006C87E1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA1B0B4F2A49D23A00F86FBC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 08224C0E2CCFBDF7002DA825;
+			remoteInfo = PochakNotificationService;
+		};
 		EA1B0B6E2A49D23B00F86FBC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EA1B0B4F2A49D23A00F86FBC /* Project object */;
@@ -279,6 +287,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		08524D292D201C4F006C87E1 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				08524D262D201C4F006C87E1 /* PochakNotificationService.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		46AE2E7D2D0EFEA0009DFA2A /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -364,7 +383,7 @@
 		086BF2032CEC9D7800735BB4 /* FCMTokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMTokenManager.swift; sourceTree = "<group>"; };
 		0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoPostCollectionViewCell.swift; sourceTree = "<group>"; };
 		0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoPostCollectionViewCell.xib; sourceTree = "<group>"; };
-		08867D5B2D106A1F00FA6FD9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "/Users/suyeon/Downloads/GoogleService-Info.plist"; sourceTree = "<absolute>"; };
+		08867D5B2D106A1F00FA6FD9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "/Users/suyeon/Desktop/Pochak/GoogleService-Info.plist"; sourceTree = "<absolute>"; };
 		0889D1372C5CB69F00206C86 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		089C757F2A517289003AAB94 /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.ttf"; sourceTree = "<group>"; };
 		089C75802A517289003AAB94 /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.ttf"; sourceTree = "<group>"; };
@@ -1434,11 +1453,13 @@
 				46AE2E7D2D0EFEA0009DFA2A /* Embed Frameworks */,
 				08D2B98E2C68C1B800BD7450 /* ShellScript */,
 				465D6E0D2CFE057300847542 /* ShellScript */,
+				08524D292D201C4F006C87E1 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				08224C152CCFBDF8002DA825 /* PBXTargetDependency */,
+				08524D282D201C4F006C87E1 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				082638162CDDEDE000EE1521 /* Views */,
@@ -1890,6 +1911,11 @@
 			isa = PBXTargetDependency;
 			target = 08224C0E2CCFBDF7002DA825 /* PochakNotificationService */;
 			targetProxy = 08224C142CCFBDF8002DA825 /* PBXContainerItemProxy */;
+		};
+		08524D282D201C4F006C87E1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 08224C0E2CCFBDF7002DA825 /* PochakNotificationService */;
+			targetProxy = 08524D272D201C4F006C87E1 /* PBXContainerItemProxy */;
 		};
 		EA1B0B6F2A49D23B00F86FBC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
