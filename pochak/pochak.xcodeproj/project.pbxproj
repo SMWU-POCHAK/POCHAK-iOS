@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0801765E2A74F4B0005E6953 /* UITextView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0801765D2A74F4B0005E6953 /* UITextView+Extension.swift */; };
+		0801765E2A74F4B0005E6953 /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0801765D2A74F4B0005E6953 /* UITextView+.swift */; };
 		0802AE032C31D3E00090FB92 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0802AE022C31D3E00090FB92 /* UIImageView+.swift */; };
 		080FEF012C551C3200951460 /* ReportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080FEF002C551C3200951460 /* ReportType.swift */; };
 		081228C62A69624000DFA094 /* PostLikesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081228C52A69624000DFA094 /* PostLikesViewController.swift */; };
@@ -197,7 +197,7 @@
 		46923F782D071035006C49E5 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 46923F772D071035006C49E5 /* SnapKit */; };
 		46923F7C2D07141C006C49E5 /* MemoriesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46923F7A2D07141C006C49E5 /* MemoriesResponse.swift */; };
 		46923F7F2D071448006C49E5 /* MemoriesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46923F7D2D071448006C49E5 /* MemoriesAPI.swift */; };
-		46923F812D0714FE006C49E5 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46923F802D0714FE006C49E5 /* Date.swift */; };
+		46923F812D0714FE006C49E5 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46923F802D0714FE006C49E5 /* Date+.swift */; };
 		46923F832D071646006C49E5 /* MemoryGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46923F822D071646006C49E5 /* MemoryGalleryViewController.swift */; };
 		46AE2E7E2D0EFFFB009DFA2A /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B4302CFDFE3300950554 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		46AE2E812D0F006E009DFA2A /* MemoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AE2E802D0F006E009DFA2A /* MemoryViewModel.swift */; };
@@ -210,6 +210,7 @@
 		46B0B4312CFDFE3300950554 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B4302CFDFE3300950554 /* RealmSwift */; };
 		46BA13362CBD551600C81729 /* SecretKeyInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46BA13352CBD551600C81729 /* SecretKeyInfo.plist */; };
 		46BBB62E2D1BB1600095B29A /* PochakFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BBB62D2D1BB1600095B29A /* PochakFont.swift */; };
+		46D5E3562D2287AE0096F7B4 /* MemoriesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E3552D2287AE0096F7B4 /* MemoriesService.swift */; };
 		A6D48ED7F8B86CF57C481991 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		EA01079A2A59556800A3AE85 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0107952A59556800A3AE85 /* CommentViewController.swift */; };
 		EA01079B2A59556800A3AE85 /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0107962A59556800A3AE85 /* HomeTabViewController.swift */; };
@@ -310,7 +311,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0801765D2A74F4B0005E6953 /* UITextView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extension.swift"; sourceTree = "<group>"; };
+		0801765D2A74F4B0005E6953 /* UITextView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
 		0802AE022C31D3E00090FB92 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
 		080FEF002C551C3200951460 /* ReportType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportType.swift; sourceTree = "<group>"; };
 		081228C52A69624000DFA094 /* PostLikesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLikesViewController.swift; sourceTree = "<group>"; };
@@ -496,12 +497,13 @@
 		46923F6F2D070FD4006C49E5 /* TimelineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
 		46923F7A2D07141C006C49E5 /* MemoriesResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoriesResponse.swift; sourceTree = "<group>"; };
 		46923F7D2D071448006C49E5 /* MemoriesAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoriesAPI.swift; sourceTree = "<group>"; };
-		46923F802D0714FE006C49E5 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		46923F802D0714FE006C49E5 /* Date+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		46923F822D071646006C49E5 /* MemoryGalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGalleryViewController.swift; sourceTree = "<group>"; };
 		46AE2E802D0F006E009DFA2A /* MemoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryViewModel.swift; sourceTree = "<group>"; };
 		46AE2E822D104A8D009DFA2A /* CarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
 		46BA13352CBD551600C81729 /* SecretKeyInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SecretKeyInfo.plist; sourceTree = "<group>"; };
 		46BBB62D2D1BB1600095B29A /* PochakFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakFont.swift; sourceTree = "<group>"; };
+		46D5E3552D2287AE0096F7B4 /* MemoriesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesService.swift; sourceTree = "<group>"; };
 		EA0107952A59556800A3AE85 /* CommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		EA0107962A59556800A3AE85 /* HomeTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabViewController.swift; sourceTree = "<group>"; };
 		EA0107992A59556800A3AE85 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
@@ -980,8 +982,8 @@
 		08C02EF32BF3942300627C21 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				46923F802D0714FE006C49E5 /* Date.swift */,
-				0801765D2A74F4B0005E6953 /* UITextView+Extension.swift */,
+				46923F802D0714FE006C49E5 /* Date+.swift */,
+				0801765D2A74F4B0005E6953 /* UITextView+.swift */,
 				08C02EF52BF3945000627C21 /* UIFont+.swift */,
 				08C02EF72BF394B800627C21 /* UIAlertController+.swift */,
 				08EB5D242C280CFE00E35C16 /* UIImage+.swift */,
@@ -1361,6 +1363,7 @@
 				376EA12F2CAAAF6900FEFB63 /* ProfileService.swift */,
 				374E462C2CAAC399008AE361 /* AuthenticationService.swift */,
 				086BF1FD2CEC9B1100735BB4 /* PushNotificationService.swift */,
+				46D5E3552D2287AE0096F7B4 /* MemoriesService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1826,7 +1829,7 @@
 				08EB99B72C53EA8500FAC08A /* TaggedUsersTableViewCell.swift in Sources */,
 				3759CF332CAAE4CE00408A4E /* DeleteFollowerResponse.swift in Sources */,
 				EACF0F6E2C3044C000C0016C /* TagSearchTableViewCell.swift in Sources */,
-				46923F812D0714FE006C49E5 /* Date.swift in Sources */,
+				46923F812D0714FE006C49E5 /* Date+.swift in Sources */,
 				08B679632B528D7500F8D585 /* CommentTableViewFooterView.swift in Sources */,
 				EA2CD6442C5F5A0E00644EFE /* HomeAPI.swift in Sources */,
 				0802AE032C31D3E00090FB92 /* UIImageView+.swift in Sources */,
@@ -1925,7 +1928,7 @@
 				0823B0742A5B0E780085002F /* CommentTableViewCell.swift in Sources */,
 				0822A0432CA197E700F87E2C /* CommentAPI.swift in Sources */,
 				46923F7C2D07141C006C49E5 /* MemoriesResponse.swift in Sources */,
-				0801765E2A74F4B0005E6953 /* UITextView+Extension.swift in Sources */,
+				0801765E2A74F4B0005E6953 /* UITextView+.swift in Sources */,
 				46923F742D070FD4006C49E5 /* MemorySummaryView.swift in Sources */,
 				081228C62A69624000DFA094 /* PostLikesViewController.swift in Sources */,
 				EA01079B2A59556800A3AE85 /* HomeTabViewController.swift in Sources */,
@@ -1948,6 +1951,7 @@
 				374E46302CAAC3F6008AE361 /* SignOutResponse.swift in Sources */,
 				EA4EF8D82C2EC5F7009549FF /* UITextField+.swift in Sources */,
 				EAF918512AA468670037C270 /* APIConstants.swift in Sources */,
+				46D5E3562D2287AE0096F7B4 /* MemoriesService.swift in Sources */,
 				0822A0322CA196DF00F87E2C /* RecentSearchModel.swift in Sources */,
 				0822A06D2CA1983C00F87E2C /* CommentPostRequest.swift in Sources */,
 				0822A0692CA1983C00F87E2C /* PostReportRequest.swift in Sources */,
