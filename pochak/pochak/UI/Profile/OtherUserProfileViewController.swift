@@ -85,7 +85,6 @@ final class OtherUserProfileViewController: UIViewController {
         setUpMemoryButton()
         setUpData()
         initializeSingleton()
-        print("OterUserProfileiewcon")
     }
     
     override func viewWillAppear(_ animated: Bool) {

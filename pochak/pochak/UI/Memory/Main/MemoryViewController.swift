@@ -48,7 +48,6 @@ class MemoryViewController: UIViewController {
         super.viewDidLoad()
         title = "@\(viewModel.userID)님과 나의 순간들"
         setupUI()
-        scrollView.delegate = self
         profileStatsView.delegate = self
         pochakMomentsView.delegate = self
         setupBindings()
@@ -107,14 +106,6 @@ class MemoryViewController: UIViewController {
             self.timelineView.configure(userID: memorySummary.handle,
                                         followPeriod: Date.formatDateRange(fromDateString: memorySummary.followDate),
                                         with: memorySummary.timeLine)
-        }
-    }
-}
-
-extension MemoryViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.x != 0 {
-            scrollView.contentOffset.x = 0
         }
     }
 }
