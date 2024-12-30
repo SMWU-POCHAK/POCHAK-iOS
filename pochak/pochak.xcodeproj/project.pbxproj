@@ -193,6 +193,7 @@
 		46B0B4272CFDFC9F00950554 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B4262CFDFC9F00950554 /* Alamofire */; };
 		46B0B4312CFDFE3300950554 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 46B0B4302CFDFE3300950554 /* RealmSwift */; };
 		46BA13362CBD551600C81729 /* SecretKeyInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46BA13352CBD551600C81729 /* SecretKeyInfo.plist */; };
+		46E7195A2D22A012000110D3 /* ZoomControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E719592D22A012000110D3 /* ZoomControlView.swift */; };
 		A6D48ED7F8B86CF57C481991 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		EA01079A2A59556800A3AE85 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0107952A59556800A3AE85 /* CommentViewController.swift */; };
 		EA01079B2A59556800A3AE85 /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0107962A59556800A3AE85 /* HomeTabViewController.swift */; };
@@ -469,6 +470,7 @@
 		37EED79E2CFDFE9100254471 /* Notification+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+.swift"; sourceTree = "<group>"; };
 		37EED7A02D07094F00254471 /* HandleDuplicationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleDuplicationType.swift; sourceTree = "<group>"; };
 		46BA13352CBD551600C81729 /* SecretKeyInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SecretKeyInfo.plist; sourceTree = "<group>"; };
+		46E719592D22A012000110D3 /* ZoomControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomControlView.swift; sourceTree = "<group>"; };
 		EA0107952A59556800A3AE85 /* CommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		EA0107962A59556800A3AE85 /* HomeTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabViewController.swift; sourceTree = "<group>"; };
 		EA0107992A59556800A3AE85 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
@@ -1154,6 +1156,7 @@
 				EA1718292A5912A7009168E6 /* CameraViewController.swift */,
 				EA17182A2A5912A7009168E6 /* UploadViewController.swift */,
 				EA817AB42B3C979D00E741E4 /* cell */,
+				46E719592D22A012000110D3 /* ZoomControlView.swift */,
 			);
 			path = Upload;
 			sourceTree = "<group>";
@@ -1838,6 +1841,7 @@
 				0822A06C2CA1983C00F87E2C /* CommentGetResponse.swift in Sources */,
 				3769D6D02B3C569C00294CD1 /* PochakedPostTabmanViewController.swift in Sources */,
 				374261642C2FEF5F00B67886 /* ProfileMenuViewController.swift in Sources */,
+				46E7195A2D22A012000110D3 /* ZoomControlView.swift in Sources */,
 				3759CF372CAAE79F00408A4E /* FollowingRetrievalAPI.swift in Sources */,
 				EAC582742C3074EA006F44AF /* UIColor+.swift in Sources */,
 				37EED79F2CFDFE9100254471 /* Notification+.swift in Sources */,
