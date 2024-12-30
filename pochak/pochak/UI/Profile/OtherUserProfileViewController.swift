@@ -135,6 +135,7 @@ final class OtherUserProfileViewController: UIViewController {
         guard let userID = receivedHandle else { return }
         let viewModel = MemoryViewModel(userID: userID)
         let summaryViewController = MemoryViewController(viewModel: viewModel)
+        summaryViewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(summaryViewController, animated: true)
     }
     
