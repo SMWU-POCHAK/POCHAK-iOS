@@ -61,9 +61,7 @@ extension UILabel {
             in: textContainer
         )
     }
-}
-
-extension UILabel {
+    
     func applyPochakFont(_ config: PochakFontConfig) {
         self.font = config.font
         let paragraphStyle = NSMutableParagraphStyle()
@@ -84,29 +82,5 @@ extension UILabel {
                                           left: self.layoutMargins.left,
                                           bottom: padding,
                                           right: self.layoutMargins.right)
-    }
-}
-
-extension UITextView {
-    func applyPochakFont(_ config: PochakFontConfig) {
-        self.font = config.font
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = config.lineHeight - config.font.lineHeight
-        paragraphStyle.alignment = self.textAlignment
-        
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: config.font,
-            .paragraphStyle: paragraphStyle
-        ]
-        
-        if let text = self.text {
-            self.attributedText = NSAttributedString(string: text, attributes: attributes)
-        }
-        
-        let padding = (config.lineHeight - config.font.lineHeight) / 2
-        self.textContainerInset = UIEdgeInsets(top: padding,
-                                               left: self.textContainerInset.left,
-                                               bottom: padding,
-                                               right: self.textContainerInset.right)
     }
 }
