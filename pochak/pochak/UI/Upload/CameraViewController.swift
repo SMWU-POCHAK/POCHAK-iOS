@@ -8,6 +8,7 @@
 import UIKit
 import AVFoundation
 import SwiftUI
+import SnapKit
 
 final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     
@@ -16,6 +17,7 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
     private var captureSession: AVCaptureSession!
     private var stillImageOutput: AVCapturePhotoOutput!
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer!
+    private var cameraSwitchTimer: Timer?
     
     private var flashMode: AVCaptureDevice.FlashMode = .off
     private let hapticImpact = UIImpactFeedbackGenerator()
@@ -43,6 +45,7 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
     @IBOutlet weak var previewView: UIView!
     @IBOutlet weak var flashBtnBg: UIButton!
     @IBOutlet weak var flashbtn: UIButton!
+    private let zoomControlView = ZoomControlView()
     private var zoomLabel: UILabel = {
         let label = UILabel()
         label.text = "1x"
@@ -82,6 +85,7 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         super.viewDidLoad()
         
         self.navigationItem.title = "포착하기"
+        zoomControlView.delegate = self
         
         setupZoomLabel()
         setupTransitionView()
@@ -101,6 +105,14 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
     
     // MARK: - UI
     private func setupZoomLabel() {
+        view.addSubview(zoomControlView)
+        zoomControlView.isUserInteractionEnabled = true
+        zoomControlView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalTo(previewView.snp.bottom).inset(9)
+            $0.width.equalTo(128)
+            $0.height.equalTo(40)
+        }
     }
     
     private func updateZoomLabel() {
@@ -212,7 +224,7 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         self.currentPreviewLayer?.frame = self.previewView.bounds
         
         if let currentPreviewLayer = self.currentPreviewLayer {
-            self.previewView.layer.addSublayer(currentPreviewLayer)
+            self.previewView.layer.insertSublayer(currentPreviewLayer, at: 0)
         }
     }
     
@@ -300,24 +312,29 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         }
         
         func update(scale factor: CGFloat) {
-            do {
-                if factor < 1.0 && currentCamera != ultraWideCamera {
-                    switchToCamera(ultraWideCamera)
-                } else if factor >= 1.0 && currentCamera != wideCamera {
-                    switchToCamera(wideCamera)
-                }
-                
-                try currentCamera?.lockForConfiguration()
-                defer { currentCamera?.unlockForConfiguration() }
-                
-                let zoomFactor = (currentCamera == ultraWideCamera) ? factor * 2 : factor
-                currentCamera?.videoZoomFactor = zoomFactor
-                self.currentZoomFactor = factor
-                
-            } catch {
-                print("Error setting zoom: \(error.localizedDescription)")
-            }
-        }
+               do {
+                   if factor < 1.0 && currentCamera != ultraWideCamera {
+                       switchToCamera(ultraWideCamera)
+                   } else if factor >= 1.0 && currentCamera != wideCamera {
+                       switchToCamera(wideCamera)
+                   }
+                   
+                   try currentCamera?.lockForConfiguration()
+                   defer { currentCamera?.unlockForConfiguration() }
+                   
+                   let zoomFactor = (currentCamera == ultraWideCamera) ? factor * 2 : factor
+                   currentCamera?.videoZoomFactor = zoomFactor
+                   self.currentZoomFactor = factor
+                   
+                   // ZoomControlView 업데이트 추가
+                   DispatchQueue.main.async {
+                       self.zoomControlView.updateSelectedZoom(factor: factor)
+                   }
+                   
+               } catch {
+                   print("Error setting zoom: \(error.localizedDescription)")
+               }
+           }
         
         var newScaleFactor = minMaxZoom(gesture.scale * currentZoomFactor)
         
@@ -350,6 +367,7 @@ extension CameraViewController {
     
     private func handleTapGestrueToFocus() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        tapGesture.delegate = self
         previewView.addGestureRecognizer(tapGesture)
     }
     
@@ -403,6 +421,51 @@ extension CameraViewController {
             }) { _ in
                 focusIndicator.removeFromSuperview()
             }
+        }
+    }
+}
+
+
+extension CameraViewController: UIGestureRecognizerDelegate {
+    // 제스처 인식기의 동작 여부를 결정하는 메서드
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        // 터치된 뷰가 ZoomControlView의 내부에 있는지 확인
+        if let touchedView = touch.view {
+            var view = touchedView
+            while let superview = view.superview {
+                if superview is ZoomControlView {
+                    // ZoomControlView 내부의 터치는 제스처 인식기가 처리하지 않음
+                    return false
+                }
+                view = superview
+            }
+        }
+        // 그 외의 영역은 제스처 인식기가 처리
+        return true
+    }
+}
+
+extension CameraViewController: ZoomControlViewDelegate {
+    func didSelectZoomFactor(_ factor: CGFloat) {
+        
+        guard let wideCamera = wideCamera,
+              let ultraWideCamera = ultraWideCamera else { return }
+        do {
+            if factor < 1.0 && currentCamera != ultraWideCamera {
+                switchToCamera(ultraWideCamera)
+            } else if factor >= 1.0 && currentCamera != wideCamera {
+                switchToCamera(wideCamera)
+            }
+           
+            try currentCamera?.lockForConfiguration()
+            let zoomFactor = (currentCamera == ultraWideCamera) ? factor * 2 : factor
+
+            currentCamera?.videoZoomFactor = zoomFactor
+            currentCamera?.unlockForConfiguration()
+            
+            currentZoomFactor = factor // 현재 줌 값 업데이트
+        } catch {
+            print("Error setting zoom factor: \(error.localizedDescription)")
         }
     }
 }
