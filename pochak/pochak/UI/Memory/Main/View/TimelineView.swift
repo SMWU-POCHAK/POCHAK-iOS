@@ -14,7 +14,7 @@ class TimelineView: UIView {
     private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.layer.cornerRadius = 12
+        view.layer.cornerRadius = 25
         return view
     }()
     
@@ -68,6 +68,7 @@ class TimelineView: UIView {
     
     private func setupUI() {
         backgroundColor = .systemGray6
+        layer.cornerRadius = 25
         
         addSubview(containerView)
         containerView.addSubview(titleLabel)
@@ -100,7 +101,7 @@ class TimelineView: UIView {
         let textContainerView = UIView()
         
         let dateLabel = UILabel()
-        dateLabel.text = Date.formatTimelineDate(fromDateString: item.date ?? "")
+        dateLabel.text = Date.formatTimelineDate(fromDateString: item.date)
         dateLabel.applyPochakFont(.captionMedium)
         dateLabel.textColor = .black
         
@@ -113,7 +114,7 @@ class TimelineView: UIView {
         
         let messageLabel = UILabel()
         messageLabel.text = item.message
-        messageLabel.applyPochakFont(.bodyMini)
+        messageLabel.applyPochakFont(.bodyExtraSmall)
         messageLabel.textColor = .black.withAlphaComponent(0.55)
         messageLabel.numberOfLines = 0
         messageLabel.lineBreakMode = .byWordWrapping
@@ -169,7 +170,7 @@ class TimelineView: UIView {
         case .latestPost:
             return "@\(event.postOwnerHandle ?? "")님이 최근에 나를 포착했어요."
         case .firstBonded:
-            return "@\(event.postOwnerHandle ?? "")님이dkwndlrxprtmxmmadmlajifljalfijalfjlafijldasfijlaisfjdlais 처음 우리를 함께 포착했어요"
+            return "@\(userID)님과 내가 @\(event.postOwnerHandle ?? "")님에게 함께 포착됐어요"
         case .firstPochak:
             return "내가 @\(userID)님을 처음 포착했어요."
         case .firstPochaked:

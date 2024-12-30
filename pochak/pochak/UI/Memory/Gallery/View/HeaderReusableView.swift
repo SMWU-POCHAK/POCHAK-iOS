@@ -12,7 +12,7 @@ class HeaderReusableView: UICollectionReusableView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.applyPochakFont(.bodyMedium)
         label.textColor = .black
         return label
     }()

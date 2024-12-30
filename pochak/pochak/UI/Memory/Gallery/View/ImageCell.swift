@@ -21,7 +21,7 @@ class ImageCell: UICollectionViewCell {
     
     private let dateLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Pretendard-Bold", size: 12)
+        label.applyPochakFont(.captionLarge)
         label.textColor = .white
         
         label.layer.shadowColor = UIColor.black.cgColor

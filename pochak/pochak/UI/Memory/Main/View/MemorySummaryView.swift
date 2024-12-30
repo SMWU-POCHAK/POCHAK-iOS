@@ -24,7 +24,7 @@ class MemorySummaryView: UIView {
     private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.layer.cornerRadius = 12
+        view.layer.cornerRadius = 25
         view.clipsToBounds = true
         return view
     }()
@@ -56,7 +56,7 @@ class MemorySummaryView: UIView {
     private let dateRangeLabel: UILabel = {
         let label = UILabel()
         label.text = "2024년 5월 14일 ~ 2024년 10월 5일"
-        label.textColor = .darkGray
+        label.textColor = .black
         label.applyPochakFont(.body3_1)
         return label
     }()
@@ -64,7 +64,7 @@ class MemorySummaryView: UIView {
     private let postCountLabel: UILabel = {
         let label = UILabel()
         label.text = "서로 포착해준지 167일"
-        label.textColor = .darkGray
+        label.textColor = .black
         label.applyPochakFont(.body3_1)
         return label
     }()
@@ -160,7 +160,7 @@ class MemorySummaryView: UIView {
         let titleLabel = UILabel()
         titleLabel.text = type.title
         titleLabel.applyPochakFont(.body3)
-        titleLabel.textColor = .darkGray
+        titleLabel.textColor = .black
         
         let countLabel = UILabel()
         countLabel.text = "\(count)"
