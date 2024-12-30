@@ -15,16 +15,17 @@ protocol ZoomControlViewDelegate: AnyObject {
 class ZoomControlView: UIView {
     weak var delegate: ZoomControlViewDelegate?
     
-    private let zoomLabels: [String] = [".5", "1x", "2", "3"]
     private var zoomFactors: [CGFloat] = [0.5, 1.0, 2.0, 3.0]
     private var buttons: [UIButton] = []
-    private var selectedZoomFactor: String = "1x"
+    private var selectedZoomFactor: CGFloat = 1.0
     private var isExpanded: Bool = false
-    
+    private var selectedBackgroundColor = UIColor(resource: .gray07).withAlphaComponent(0.6)
+    private var unSelectedBackgroundColor = UIColor(resource: .gray05).withAlphaComponent(0.6)
     private lazy var containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+        view.backgroundColor = unSelectedBackgroundColor
         view.layer.cornerRadius = 14
+        view.clipsToBounds = true
         return view
     }()
     
@@ -33,7 +34,7 @@ class ZoomControlView: UIView {
         stack.axis = .horizontal
         stack.spacing = 4
         stack.distribution = .fillEqually
-        stack.alignment = .center
+        stack.alignment = .fill
         return stack
     }()
     
@@ -65,18 +66,20 @@ class ZoomControlView: UIView {
     }
     
     private func setupButtons() {
-        zoomLabels.enumerated().forEach { index, zoomFactor in
+        zoomFactors.enumerated().forEach { index, zoomFactor in
             let button = UIButton()
-            button.setTitle(zoomFactor, for: .normal)
-            button.titleLabel?.font = .systemFont(ofSize: 12)
+            let zoomLabel = zoomFactor >= 1 ? String(format: "%.0f", zoomFactor) : String(format: "%.1f", zoomFactor).replacingOccurrences(of: "0.", with: ".")
+            button.setTitle(zoomFactor == 1.0 ? "\(zoomLabel)x" : zoomLabel, for: .normal)
+            button.titleLabel?.applyPochakFont(.captionMedium)
             button.setTitleColor(.white, for: .normal)
-            button.backgroundColor = zoomFactor == selectedZoomFactor ? .black.withAlphaComponent(0.6) : .black.withAlphaComponent(0.2)
             button.layer.cornerRadius = 14
+            button.backgroundColor = zoomFactor == selectedZoomFactor ? selectedBackgroundColor : .clear
             button.addTarget(self, action: #selector(zoomFactorButtonTapped(_:)), for: .touchUpInside)
             button.tag = index
+            
             buttons.append(button)
             stackView.addArrangedSubview(button)
-            if zoomFactor != "1x" {
+            if zoomFactor != 1.0 {
                 button.alpha = 0
             }
         }
@@ -85,13 +88,13 @@ class ZoomControlView: UIView {
     }
     
     @objc private func zoomFactorButtonTapped(_ sender: UIButton) {
-        guard let zoomFactor = sender.title(for: .normal) else { return }
+        let zoomFactor = zoomFactors[sender.tag]
         
         if isExpanded {
             selectedZoomFactor = zoomFactor
             let zoomFactor = zoomFactors[sender.tag]
             delegate?.didSelectZoomFactor(zoomFactor)
-            updateButtonStates()
+            updateSelectedButtonStates()
             collapseView()
         } else {
             expandView()
@@ -117,14 +120,20 @@ class ZoomControlView: UIView {
         isExpanded = false
         let animation = {
             self.buttons.forEach { button in
-                if button.title(for: .normal) != self.selectedZoomFactor {
-                    button.alpha = 0
-                    button.isHidden = true
+                if let buttonTitle = button.title(for: .normal),
+                   let index = self.zoomFactors.firstIndex(of: self.selectedZoomFactor) {
+                    if button.tag == index {
+                        button.alpha = 1
+                        button.isHidden = false
+                    } else {
+                        button.alpha = 0
+                        button.isHidden = true
+                    }
                 }
             }
             
             self.containerView.snp.updateConstraints { make in
-                make.width.equalTo(28)
+                make.width.height.equalTo(28)
             }
             self.layoutIfNeeded()
         }
@@ -137,54 +146,60 @@ class ZoomControlView: UIView {
     }
     
     func updateSelectedZoom(factor: CGFloat) {
-        let zoomFactorString: String
-        switch factor {
-        case 0.5:
-            zoomFactorString = ".5"
-        case 1.0:
-            zoomFactorString = "1x"
-        case 2.0:
-            zoomFactorString = "2"
-        case 3.0:
-            zoomFactorString = "3"
-        default:
-            if factor < 0.75 {
-                zoomFactorString = ".5"
-            } else if factor < 1.5 {
-                zoomFactorString = "1x"
-            } else if factor < 2.5 {
-                zoomFactorString = "2"
-            } else {
-                zoomFactorString = "3"
-            }
-        }
+        let closestZoomFactor = zoomFactors.min(by: { abs($0 - factor) < abs($1 - factor) }) ?? 1.0
+        selectedZoomFactor = factor
         
-        if zoomFactorString != selectedZoomFactor {
-            selectedZoomFactor = zoomFactorString
-            
-            let isCollapsed = buttons.filter({ !$0.isHidden }).count == 1
-            
-            if isCollapsed {
-                updateButtonStates()
-                buttons.forEach { button in
-                    if button.title(for: .normal) == zoomFactorString {
+        
+        let isCollapsed = buttons.filter({ !$0.isHidden }).count == 1
+        
+        
+        if isCollapsed {
+            buttons.forEach { button in
+                if let index = zoomFactors.firstIndex(of: closestZoomFactor) {
+                    if button.tag == index {
                         button.isHidden = false
                         button.alpha = 1
-                        button.backgroundColor = .black.withAlphaComponent(0.6)
+                        button.backgroundColor = selectedBackgroundColor
                     } else {
                         button.isHidden = true
                         button.alpha = 0
                     }
                 }
+            }
+        }
+        
+        updateGestureButtonStates()
+    }
+    
+    private func updateGestureButtonStates() {
+        let closestZoomFactor = zoomFactors.min(by: { abs($0 - selectedZoomFactor) < abs($1 - selectedZoomFactor) }) ?? 1.0
+        buttons.forEach { button in
+            if button.tag == zoomFactors.firstIndex(of: closestZoomFactor) {
+                button.backgroundColor = selectedBackgroundColor
+                let zoomFactorString = String(format: "%.1f", selectedZoomFactor).replacingOccurrences(of: "0.", with: ".")
+                button.setTitle("\(zoomFactorString)x", for: .normal)
             } else {
-                updateButtonStates()
+                let originalZoomFactor = zoomFactors[button.tag]
+                let zoomLabel = originalZoomFactor < 1.0 ? ".5" : String(format: "%.0f", originalZoomFactor)
+                button.setTitle(zoomLabel, for: .normal)
+                button.backgroundColor = .clear
             }
         }
     }
     
-    private func updateButtonStates() {
+    private func updateSelectedButtonStates() {
+        let closestZoomFactor = zoomFactors.min(by: { abs($0 - selectedZoomFactor) < abs($1 - selectedZoomFactor) }) ?? 1.0
         buttons.forEach { button in
-            button.backgroundColor = button.title(for: .normal) == selectedZoomFactor ? .black.withAlphaComponent(0.6) : .black.withAlphaComponent(0.2)
+            if button.tag == zoomFactors.firstIndex(of: closestZoomFactor) {
+                button.backgroundColor = selectedBackgroundColor
+                let zoomFactorString = String(format: "%.0f", selectedZoomFactor)
+                button.setTitle("\(zoomFactorString)x", for: .normal)
+            } else {
+                let originalZoomFactor = zoomFactors[button.tag]
+                let zoomLabel = originalZoomFactor < 1.0 ? ".5" : String(format: "%.0f", originalZoomFactor)
+                button.setTitle(zoomLabel, for: .normal)
+                button.backgroundColor = .clear
+            }
         }
     }
 }
