@@ -111,7 +111,7 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
             $0.centerX.equalToSuperview()
             $0.bottom.equalTo(previewView.snp.bottom).inset(9)
             $0.width.equalTo(128)
-            $0.height.equalTo(40)
+            $0.height.equalTo(28)
         }
     }
     
