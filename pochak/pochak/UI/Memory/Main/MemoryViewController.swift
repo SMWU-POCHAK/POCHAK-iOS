@@ -38,6 +38,12 @@ class MemoryViewController: UIViewController {
     private let pochakMomentsView = CarouselView()
     private let timelineView = TimelineView()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.hidesBarsOnSwipe = false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "@\(viewModel.userID)님과 나의 순간들"
@@ -47,19 +53,6 @@ class MemoryViewController: UIViewController {
         pochakMomentsView.delegate = self
         setupBindings()
         viewModel.loadMemoriesData()
-    }
-    
-    private func setupNavigationBar() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor(resource: .yellow02)
-        
-        title = "@\(viewModel.userID)님과 나의 순간들"
-        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        navigationItem.backBarButtonItem = backBarButtonItem
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        navigationController?.navigationBar.compactAppearance = appearance
     }
     
     @objc private func handleTap() {
@@ -78,8 +71,9 @@ class MemoryViewController: UIViewController {
         contentStackView.addArrangedSubview(pochakMomentsView)
         contentStackView.addArrangedSubview(timelineView)
         
-        scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
         
         contentStackView.snp.makeConstraints {
@@ -90,6 +84,7 @@ class MemoryViewController: UIViewController {
         }
         
         profileStatsView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(17)
             $0.height.greaterThanOrEqualTo(0)
         }
         
