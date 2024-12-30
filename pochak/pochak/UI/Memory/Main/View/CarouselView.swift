@@ -75,6 +75,11 @@ class CarouselView: UIView {
             self.memoryList.append(memoryList[0])
             self.pageControl.isHidden = false
             self.collectionView.isScrollEnabled = true
+        } else if memoryList.count == 2 {
+              self.memoryList.append(contentsOf: memoryList)
+              self.pageControl.isHidden = false
+              self.collectionView.isScrollEnabled = true
+
         } else {
             self.collectionView.isScrollEnabled = false
         }
