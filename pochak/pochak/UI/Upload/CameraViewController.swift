@@ -101,16 +101,6 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
     
     // MARK: - UI
     private func setupZoomLabel() {
-        view.addSubview(zoomLabel)
-        
-        NSLayoutConstraint.activate([
-            zoomLabel.centerYAnchor.constraint(equalTo: captureBtn.centerYAnchor),
-            zoomLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 70),
-            zoomLabel.widthAnchor.constraint(equalToConstant: 60),
-            zoomLabel.heightAnchor.constraint(equalToConstant: 30)
-        ])
-        
-        updateZoomLabel()
     }
     
     private func updateZoomLabel() {
