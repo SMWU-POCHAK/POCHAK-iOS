@@ -1,5 +1,5 @@
 //
-//  Date.swift
+//  Date+.swift
 //  pochak
 //
 //  Created by Haru on 12/2/24.
@@ -9,7 +9,6 @@ import Foundation
 
 extension Date {
     static func formatDateRange(fromDateString: String) -> String {
-        // Input date string을 Date 객체로 변환
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
         
@@ -17,9 +16,7 @@ extension Date {
             return ""
         }
         
-        let toDate = Date() // 현재 날짜
-        
-        // 원하는 포맷으로 변환
+        let toDate = Date()
         let displayFormatter = DateFormatter()
         displayFormatter.dateFormat = "yyyy년 MM월 dd일"
         displayFormatter.locale = Locale(identifier: "ko_KR")
@@ -29,30 +26,28 @@ extension Date {
         
         return "\(fromDateString) ~ \(toDateString)"
     }
-
+    
     static func formatTimelineDate(fromDateString: String) -> String {
         let dateFormatter = DateFormatter()
-          dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
-          
-          guard let fromDate = dateFormatter.date(from: fromDateString) else {
-              return ""
-          }
-          
-          let toDate = Date()
-          let currentYear = Calendar.current.component(.year, from: toDate) // 현재 연도
-          
-          let displayFormatter = DateFormatter()
-          displayFormatter.locale = Locale(identifier: "ko_KR")
-          
-          let fromYear = Calendar.current.component(.year, from: fromDate)
-          if fromYear == currentYear {
-              // 같은 연도일 경우 (년도 생략)
-              displayFormatter.dateFormat = "M월 d일 (E)"
-          } else {
-              // 다른 연도일 경우 (년도 포함)
-              displayFormatter.dateFormat = "yyyy년 M월 d일 (E)"
-          }
-          let fromDateString = displayFormatter.string(from: fromDate)
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
+        
+        guard let fromDate = dateFormatter.date(from: fromDateString) else {
+            return ""
+        }
+        
+        let toDate = Date()
+        let currentYear = Calendar.current.component(.year, from: toDate) // 현재 연도
+        
+        let displayFormatter = DateFormatter()
+        displayFormatter.locale = Locale(identifier: "ko_KR")
+        
+        let fromYear = Calendar.current.component(.year, from: fromDate)
+        if fromYear == currentYear {
+            displayFormatter.dateFormat = "M월 d일 (E)"
+        } else {
+            displayFormatter.dateFormat = "yyyy년 M월 d일 (E)"
+        }
+        let fromDateString = displayFormatter.string(from: fromDate)
         
         return fromDateString
     }
@@ -85,5 +80,4 @@ extension Date {
         
         return "\(day)일"
     }
-    
 }
