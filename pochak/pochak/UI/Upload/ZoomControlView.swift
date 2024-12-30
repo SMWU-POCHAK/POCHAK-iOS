@@ -15,10 +15,10 @@ protocol ZoomControlViewDelegate: AnyObject {
 class ZoomControlView: UIView {
     weak var delegate: ZoomControlViewDelegate?
     
-    private let speeds: [String] = [".5", "1x", "2", "3"]
+    private let zoomLabels: [String] = [".5", "1x", "2", "3"]
     private var zoomFactors: [CGFloat] = [0.5, 1.0, 2.0, 3.0]
     private var buttons: [UIButton] = []
-    private var selectedSpeed: String = "1x"
+    private var selectedZoomFactor: String = "1x"
     private var isExpanded: Bool = false
     
     private lazy var containerView: UIView = {
@@ -65,18 +65,18 @@ class ZoomControlView: UIView {
     }
     
     private func setupButtons() {
-        speeds.enumerated().forEach { index, speed in
+        zoomLabels.enumerated().forEach { index, zoomFactor in
             let button = UIButton()
-            button.setTitle(speed, for: .normal)
+            button.setTitle(zoomFactor, for: .normal)
             button.titleLabel?.font = .systemFont(ofSize: 12)
             button.setTitleColor(.white, for: .normal)
-            button.backgroundColor = speed == selectedSpeed ? .black.withAlphaComponent(0.6) : .black.withAlphaComponent(0.2)
+            button.backgroundColor = zoomFactor == selectedZoomFactor ? .black.withAlphaComponent(0.6) : .black.withAlphaComponent(0.2)
             button.layer.cornerRadius = 14
-            button.addTarget(self, action: #selector(speedButtonTapped(_:)), for: .touchUpInside)
+            button.addTarget(self, action: #selector(zoomFactorButtonTapped(_:)), for: .touchUpInside)
             button.tag = index
             buttons.append(button)
             stackView.addArrangedSubview(button)
-            if speed != "1x" {
+            if zoomFactor != "1x" {
                 button.alpha = 0
             }
         }
@@ -84,11 +84,11 @@ class ZoomControlView: UIView {
         stackView.isUserInteractionEnabled = true
     }
     
-    @objc private func speedButtonTapped(_ sender: UIButton) {
-        guard let speed = sender.title(for: .normal) else { return }
+    @objc private func zoomFactorButtonTapped(_ sender: UIButton) {
+        guard let zoomFactor = sender.title(for: .normal) else { return }
         
         if isExpanded {
-            selectedSpeed = speed
+            selectedZoomFactor = zoomFactor
             let zoomFactor = zoomFactors[sender.tag]
             delegate?.didSelectZoomFactor(zoomFactor)
             updateButtonStates()
@@ -117,7 +117,7 @@ class ZoomControlView: UIView {
         isExpanded = false
         let animation = {
             self.buttons.forEach { button in
-                if button.title(for: .normal) != self.selectedSpeed {
+                if button.title(for: .normal) != self.selectedZoomFactor {
                     button.alpha = 0
                     button.isHidden = true
                 }
@@ -137,37 +137,37 @@ class ZoomControlView: UIView {
     }
     
     func updateSelectedZoom(factor: CGFloat) {
-        let speedString: String
+        let zoomFactorString: String
         switch factor {
         case 0.5:
-            speedString = ".5"
+            zoomFactorString = ".5"
         case 1.0:
-            speedString = "1x"
+            zoomFactorString = "1x"
         case 2.0:
-            speedString = "2"
+            zoomFactorString = "2"
         case 3.0:
-            speedString = "3"
+            zoomFactorString = "3"
         default:
             if factor < 0.75 {
-                speedString = ".5"
+                zoomFactorString = ".5"
             } else if factor < 1.5 {
-                speedString = "1x"
+                zoomFactorString = "1x"
             } else if factor < 2.5 {
-                speedString = "2"
+                zoomFactorString = "2"
             } else {
-                speedString = "3"
+                zoomFactorString = "3"
             }
         }
         
-        if speedString != selectedSpeed {
-            selectedSpeed = speedString
+        if zoomFactorString != selectedZoomFactor {
+            selectedZoomFactor = zoomFactorString
             
             let isCollapsed = buttons.filter({ !$0.isHidden }).count == 1
             
             if isCollapsed {
                 updateButtonStates()
                 buttons.forEach { button in
-                    if button.title(for: .normal) == speedString {
+                    if button.title(for: .normal) == zoomFactorString {
                         button.isHidden = false
                         button.alpha = 1
                         button.backgroundColor = .black.withAlphaComponent(0.6)
@@ -184,7 +184,7 @@ class ZoomControlView: UIView {
     
     private func updateButtonStates() {
         buttons.forEach { button in
-            button.backgroundColor = button.title(for: .normal) == selectedSpeed ? .black.withAlphaComponent(0.6) : .black.withAlphaComponent(0.2)
+            button.backgroundColor = button.title(for: .normal) == selectedZoomFactor ? .black.withAlphaComponent(0.6) : .black.withAlphaComponent(0.2)
         }
     }
 }
