@@ -12,13 +12,18 @@ final class SignUpViewController: UIViewController {
     // MARK: - Properties
         
     private var backBtnPressed: Bool = false
-    private var handleDuplicationChecked: Bool = false
+    private var handleDuplicationChecked: Bool = false {
+        didSet {
+            configureDoneButton()
+        }
+    }
     private let textViewPlaceHolder = "소개를 입력해주세요."
     private let email = UserDefaultsManager.getData(type: String.self, forKey: .email) ?? "email not found"
     private let socialType = UserDefaultsManager.getData(type: String.self, forKey: .socialType) ?? "socialType not found"
     private let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
     private let socialRefreshToken = UserDefaultsManager.getData(type: String.self, forKey: .socialRefreshToken) ?? "NOTAPPLELOGINUSER"
     private let imagePickerController = UIImagePickerController()
+    private var userSelectedPhoto: UIImage?
     
     // MARK: - Views
     
@@ -31,7 +36,8 @@ final class SignUpViewController: UIViewController {
     private let doneButton: UIButton = {
         let button = UIButton()
         button.setTitle("완료", for: .normal)
-        button.setTitleColor(UIColor(named: "yellow00"), for: .normal)
+        button.setTitleColor(UIColor(named: "gray03"), for: .normal)
+        button.isEnabled = false
         button.titleLabel?.font =  UIFont(name: "Pretendard-Bold", size: 16)
 //        button.addTarget(self, action: #selector(doneButtonDidTap), for: .touchUpInside)
         return button
@@ -62,6 +68,7 @@ final class SignUpViewController: UIViewController {
         tf.translatesAutoresizingMaskIntoConstraints = false
         tf.placeholder = "닉네임을 입력해주세요."
         tf.font = UIFont(name: "Pretendard-Medium", size: 16)
+        tf.addTarget(self, action: #selector(nicknameTextFieldDidChange), for: .editingChanged)
         return tf
     }()
     
@@ -175,7 +182,6 @@ final class SignUpViewController: UIViewController {
         
         selfIntroTextView.text = textViewPlaceHolder
         
-        print(selfIntroTextView.text)
         //setUpViewController()
         //setUpNavigationBar()
     }
@@ -249,6 +255,10 @@ final class SignUpViewController: UIViewController {
         )
     }
     
+    @objc private func nicknameTextFieldDidChange() {
+        configureDoneButton()
+    }
+    
     @objc private func idTextFieldDidChange(_ sender: Any?) {
         handleDuplicationChecked = false
         handleDuplicateCheckButton.isActive = true
@@ -260,6 +270,7 @@ final class SignUpViewController: UIViewController {
             idValidationCheckImageView.isHidden = true
             idRuleLabel.textColor = UIColor(named: "red")
         }
+        configureDoneButton()
     }
     
 //    @objc private func doneButtonDidTap(_ sender: Any) {
@@ -441,6 +452,22 @@ final class SignUpViewController: UIViewController {
         selfIntroTextView.textColor = UIColor(named: "gray03") // PlaceHolder 커스텀
     }
     
+    private func configureDoneButton() {
+        print("=== configuring done button ===")
+        
+        guard let nickname = nicknameTextField.text else { return }
+        guard let intro = selfIntroTextView.text else { return }
+        
+        if !nickname.isEmpty && handleDuplicationChecked && !intro.isEmpty {
+            doneButton.setTitleColor(UIColor(named: "yellow00"), for: .normal)
+            doneButton.isEnabled = true
+        }
+        else {
+            doneButton.setTitleColor(UIColor(named: "gray03"), for: .normal)
+            doneButton.isEnabled = false
+        }
+    }
+    
 //    private func setUpViewController() {
 //        // 프로필 image 레이아웃
 //        profileImg.setImage(UIImage(named: "chooseProfileIcon"), for: .normal)
@@ -510,6 +537,7 @@ extension SignUpViewController: UIImagePickerControllerDelegate, UINavigationCon
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             profileImageButton.setImage(image, for: .normal)
+            userSelectedPhoto = image
         }
         picker.dismiss(animated: true, completion: nil) // 주의점: picker 숨기기 위한 dismiss를 직접 해야함
     }
@@ -528,6 +556,7 @@ extension SignUpViewController: UITextViewDelegate {
         if textView.text == textViewPlaceHolder {
             textView.text = nil
             textView.textColor = .black
+            configureDoneButton()
         }
     }
     
@@ -548,6 +577,7 @@ extension SignUpViewController: UITextViewDelegate {
     
     // 최대 줄 수 3줄 제한
     func textViewDidChange(_ textView: UITextView) {
+        configureDoneButton()
         
         let size = CGSize(width: textView.frame.width, height: .infinity)
         let estimatedSize = textView.sizeThatFits(size)
