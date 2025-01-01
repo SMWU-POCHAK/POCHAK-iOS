@@ -70,6 +70,7 @@
 		0844D7F42BF21A80001154AC /* CancelViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0844D7F22BF21A80001154AC /* CancelViewCell.xib */; };
 		084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */; };
 		084AF4C82A5D831100C6454A /* HomeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */; };
+		0861E0E62D2578C3009E70A0 /* HandleDuplicateCheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0861E0E52D2578C3009E70A0 /* HandleDuplicateCheckButton.swift */; };
 		086BF1FA2CEC99D800735BB4 /* PushNotificationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF1F92CEC99D800735BB4 /* PushNotificationRequest.swift */; };
 		086BF1FC2CEC9A3100735BB4 /* PushNotificationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF1FB2CEC9A3100735BB4 /* PushNotificationResponse.swift */; };
 		086BF1FE2CEC9B1100735BB4 /* PushNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF1FD2CEC9B1100735BB4 /* PushNotificationService.swift */; };
@@ -357,6 +358,7 @@
 		0844D7F22BF21A80001154AC /* CancelViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CancelViewCell.xib; sourceTree = "<group>"; };
 		084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCollectionViewCell.xib; sourceTree = "<group>"; };
+		0861E0E52D2578C3009E70A0 /* HandleDuplicateCheckButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleDuplicateCheckButton.swift; sourceTree = "<group>"; };
 		086BF1F92CEC99D800735BB4 /* PushNotificationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationRequest.swift; sourceTree = "<group>"; };
 		086BF1FB2CEC9A3100735BB4 /* PushNotificationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationResponse.swift; sourceTree = "<group>"; };
 		086BF1FD2CEC9B1100735BB4 /* PushNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationService.swift; sourceTree = "<group>"; };
@@ -979,6 +981,7 @@
 				082638162CDDEDE000EE1521 /* Views */,
 				EAAACDB42A5168280041B1B9 /* Login.storyboard */,
 				373815152A89E6D30032066A /* SocialJoinViewController.swift */,
+				0861E0E52D2578C3009E70A0 /* HandleDuplicateCheckButton.swift */,
 				3766F4122C3A69E5001DD239 /* TermsOfAgreeViewController.swift */,
 				373815192A8A09DA0032066A /* SignUpViewController.swift */,
 				374261762C31C6CD00B67886 /* AppleLogin */,
@@ -1716,6 +1719,7 @@
 				0822A0772CA1986000F87E2C /* CommentService.swift in Sources */,
 				08B693F22C37203400D82DC4 /* TaggedUsersDetailViewController.swift in Sources */,
 				08C02EF12BF37D2F00627C21 /* ReportTableViewCell.swift in Sources */,
+				0861E0E62D2578C3009E70A0 /* HandleDuplicateCheckButton.swift in Sources */,
 				0822A04C2CA197F800F87E2C /* SearchAPI.swift in Sources */,
 				37D311E32B56754D00A1D7C1 /* GetToken.swift in Sources */,
 				0822A0312CA196DF00F87E2C /* RecentSearchRealmManager.swift in Sources */,
