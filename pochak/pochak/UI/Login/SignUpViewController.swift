@@ -314,6 +314,11 @@ final class SignUpViewController: UIViewController {
         navigationController?.interactivePopGestureRecognizer?.delegate = self
 
         self.navigationItem.rightBarButtonItem = barButtonItem
+        
+        // Back 버튼 커스텀 (for action)
+        let backBarButtonItem = UIBarButtonItem(image: UIImage(named: "ChevronLeft")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(backbuttonPressed))
+        backBarButtonItem.imageInsets = UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0)
+        self.navigationItem.leftBarButtonItem = backBarButtonItem
     }
     
     private func addViews() {
