@@ -39,7 +39,7 @@ final class SignUpViewController: UIViewController {
         button.setTitleColor(UIColor(named: "gray03"), for: .normal)
         button.isEnabled = false
         button.titleLabel?.font =  UIFont(name: "Pretendard-Bold", size: 16)
-//        button.addTarget(self, action: #selector(doneButtonDidTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(doneButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -273,66 +273,50 @@ final class SignUpViewController: UIViewController {
         configureDoneButton()
     }
     
-//    @objc private func doneButtonDidTap(_ sender: Any) {
-//        guard let name = nameTextField.text  else { return }
-//        guard let handle = handleTextField.text  else { return }
-//        guard let message = messageTextView.text  else { return }
-//        guard let profileImage = profileImg.currentImage  else { return }
-//        let profileImageData: Data? = profileImg.currentImage?.jpegData(compressionQuality: 0.2)
-//        
-//        if (name == "" || handle == "" || message == textViewPlaceHolder || message == ""
-//            || profileImage == UIImage(named: "chooseProfileIcon")) {
-//            showAlert(alertType: .confirmOnly,
-//                      titleText: "프로필 정보를 모두 입력해주세요.",
-//                      messageText: "",
-//                      cancelButtonText: "",
-//                      confirmButtonText: "확인")
-//            return
-//        } else if !handleDuplicationChecked {
-//            showAlert(alertType: .confirmOnly,
-//                      titleText: "아이디 중복확인을 진행해주세요.",
-//                      messageText: "",
-//                      cancelButtonText: "",
-//                      confirmButtonText: "확인")
-//            return
-//        } else {
-//            let request = SignUpRequest(name: name,
-//                                        email: email,
-//                                        handle: handle,
-//                                        message: message,
-//                                        socialId: socialId,
-//                                        socialType: socialType)
-//            
-//            var files: [(Data, String, String)] = []
-//            if let profileImage = profileImageData {
-//                let fileTuple: (Data, String, String) = (profileImage, "profileImage", "image/jpeg")
-//                files.append(fileTuple)
-//            }
-//            
-//            AuthenticationService.signUp(request: request, files: files) { [weak self] data, failed in
-//                guard let data = data else { return }
-//                
-//                // 새로운 유저 정보 UserDefaults에 저장: id, name, handle, message, isNewMember
-//                UserDefaultsManager.setData(value: data.result.name, key: .name)
-//                UserDefaultsManager.setData(value: data.result.id, key: .memberId)
-//                UserDefaultsManager.setData(value: handle, key: .handle)
-//                UserDefaultsManager.setData(value: message, key: .message)
-//                UserDefaultsManager.setData(value: data.result.isNewMember, key: .isNewMember)
-//                
-//                // 유저 토큰 정보 KeyChainManager에 저장
-//                guard let accountAccessToken = data.result.accessToken else { return }
-//                guard let accountRefreshToken = data.result.refreshToken else { return }
-//                do {
-//                    try KeychainManager.save(account: "accessToken", value: accountAccessToken, isForce: true)
-//                    try KeychainManager.save(account: "refreshToken", value: accountRefreshToken, isForce: true)
-//                } catch {
-//                    print(error)
-//                }
-//                self?.saveRefreshTokenIssuedAt()
-//                self?.toHomeTabPage()
-//            }
-//        }
-//    }
+    @objc private func doneButtonDidTap(_ sender: Any) {
+        guard let nickname = nicknameTextField.text else { return }
+        guard let id = idTextField.text else { return }
+        guard let selfIntro = selfIntroTextView.text else { return }
+        guard let userSelectedPhoto = userSelectedPhoto else { return }
+        let profileImageData: Data? = userSelectedPhoto.jpegData(compressionQuality: 0.2)
+        
+        let request = SignUpRequest(name: nickname,
+                                    email: email,
+                                    handle: id,
+                                    message: selfIntro,
+                                    socialId: socialId,
+                                    socialType: socialType)
+        
+        var files: [(Data, String, String)] = []
+        
+        if let profileImageFile = profileImageData {
+            let fileTuple: (Data, String, String) = (profileImageFile, "profileImage", "image/jpeg")
+            files.append(fileTuple)
+        }
+        
+        AuthenticationService.signUp(request: request, files: files) { [weak self] data, failed in
+            guard let data = data else { return }
+            
+            // 새로운 유저 정보 UserDefaults에 저장: id, name, handle, message, isNewMember
+            UserDefaultsManager.setData(value: data.result.name, key: .name)
+            UserDefaultsManager.setData(value: data.result.id, key: .memberId)
+            UserDefaultsManager.setData(value: id, key: .handle)
+            UserDefaultsManager.setData(value: selfIntro, key: .message)
+            UserDefaultsManager.setData(value: data.result.isNewMember, key: .isNewMember)
+            
+            // 유저 토큰 정보 KeyChainManager에 저장
+            guard let accountAccessToken = data.result.accessToken else { return }
+            guard let accountRefreshToken = data.result.refreshToken else { return }
+            do {
+                try KeychainManager.save(account: "accessToken", value: accountAccessToken, isForce: true)
+                try KeychainManager.save(account: "refreshToken", value: accountRefreshToken, isForce: true)
+            } catch {
+                print(error)
+            }
+            self?.saveRefreshTokenIssuedAt()
+            self?.toHomeTabPage()
+        }
+    }
     
     // MARK: - Layout
     
@@ -455,10 +439,11 @@ final class SignUpViewController: UIViewController {
     private func configureDoneButton() {
         print("=== configuring done button ===")
         
-        guard let nickname = nicknameTextField.text else { return }
-        guard let intro = selfIntroTextView.text else { return }
+        let nickname = nicknameTextField.text!
+        let intro = selfIntroTextView.text!
+        print("intro: \(intro)")
         
-        if !nickname.isEmpty && handleDuplicationChecked && !intro.isEmpty {
+        if !nickname.isEmpty && handleDuplicationChecked && !intro.isEmpty && intro != textViewPlaceHolder && userSelectedPhoto != nil {
             doneButton.setTitleColor(UIColor(named: "yellow00"), for: .normal)
             doneButton.isEnabled = true
         }
@@ -538,6 +523,7 @@ extension SignUpViewController: UIImagePickerControllerDelegate, UINavigationCon
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             profileImageButton.setImage(image, for: .normal)
             userSelectedPhoto = image
+            configureDoneButton()
         }
         picker.dismiss(animated: true, completion: nil) // 주의점: picker 숨기기 위한 dismiss를 직접 해야함
     }
