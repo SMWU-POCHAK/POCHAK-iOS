@@ -172,8 +172,6 @@ final class SignUpViewController: UIViewController {
         
         addViews()
         setupConstraints()
-        
-        selfIntroTextView.text = textViewPlaceHolder
     }
     
     // MARK: - Actions
@@ -426,11 +424,8 @@ final class SignUpViewController: UIViewController {
     }
     
     private func configureDoneButton() {
-        print("=== configuring done button ===")
-        
         let nickname = nicknameTextField.text!
         let intro = selfIntroTextView.text!
-        print("intro: \(intro)")
         
         if !nickname.isEmpty && handleDuplicationChecked && !intro.isEmpty && intro != textViewPlaceHolder && userSelectedPhoto != nil {
             doneButton.setTitleColor(UIColor(named: "yellow00"), for: .normal)
@@ -441,29 +436,6 @@ final class SignUpViewController: UIViewController {
             doneButton.isEnabled = false
         }
     }
-    
-//    private func setUpNavigationBar() {
-//        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-//        
-//        // 네비게이션바 완료 버튼 커스텀
-//        let button = UIButton()
-//        button.setTitle("완료", for: .normal)
-//        button.setTitleColor(UIColor(named: "yellow00"), for: .normal)
-//        button.titleLabel?.font =  UIFont(name: "Pretendard-Bold", size: 16)
-//        button.addTarget(self, action: #selector(doneBtnTapped), for: .touchUpInside)
-//        let barButton = UIBarButtonItem(customView: button)
-//        self.navigationItem.rightBarButtonItem = barButton
-//        
-//        // 네비게이션바 title 커스텀
-//        self.navigationController?.navigationBar.tintColor = .black
-//        self.navigationItem.title = "프로필 설정"
-//        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 20) ?? UIFont.systemFont(ofSize: 20, weight: .bold)]
-//        
-//        // 네비게이션바 Back 버튼 커스텀
-//        let backBarButtonItem = UIBarButtonItem(image: UIImage(named: "ChevronLeft")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(backbuttonPressed))
-//        backBarButtonItem.imageInsets = UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0)
-//        self.navigationItem.leftBarButtonItem = backBarButtonItem
-//    }
     
     private func toHomeTabPage() {
         FCMTokenManager.shared.getPushNotificationPermission()
