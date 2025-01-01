@@ -174,6 +174,10 @@ final class SignUpViewController: UIViewController {
         setupConstraints()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
     // MARK: - Actions
     
     @objc private func handleDuplicateCheckButtonDidTap(_ sender: Any) {
