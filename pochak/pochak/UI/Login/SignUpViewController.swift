@@ -27,12 +27,6 @@ final class SignUpViewController: UIViewController {
     
     // MARK: - Views
     
-//    @IBOutlet weak var profileImg: UIButton!
-//    @IBOutlet weak var nameTextField: UITextField!
-//    @IBOutlet weak var handleTextField: UITextField!
-//    @IBOutlet weak var messageTextView: UITextView!
-//    @IBOutlet weak var checkHandleDuplicationBtn: UIButton!
-    
     private let doneButton: UIButton = {
         let button = UIButton()
         button.setTitle("완료", for: .normal)
@@ -175,15 +169,11 @@ final class SignUpViewController: UIViewController {
         view.backgroundColor = .white
         
         setupNavigation()
-//        setupIntroTextView()
         
         addViews()
         setupConstraints()
         
         selfIntroTextView.text = textViewPlaceHolder
-        
-        //setUpViewController()
-        //setUpNavigationBar()
     }
     
     // MARK: - Actions
@@ -233,12 +223,6 @@ final class SignUpViewController: UIViewController {
     }
     
     // 프로필 사진 설정
-    /*
-     1. 권한 설정: Info.plist > Photo Library Usage 권한 추가
-     2. UIImagePickerController 선언
-     3. @IBAction 정의
-     4. 프로토콜 채택
-     */
     @objc func profileImageButtonDidTap(_ sender: Any) {
         self.imagePickerController.delegate = self
         self.imagePickerController.sourceType = .photoLibrary
@@ -452,28 +436,6 @@ final class SignUpViewController: UIViewController {
             doneButton.isEnabled = false
         }
     }
-    
-//    private func setUpViewController() {
-//        // 프로필 image 레이아웃
-//        profileImg.setImage(UIImage(named: "chooseProfileIcon"), for: .normal)
-//        profileImg.imageView?.contentMode = .scaleAspectFill
-//        profileImg.layer.masksToBounds = true
-//        profileImg.layer.cornerRadius = 58
-//        
-//        // textView 레이아웃 설정
-//        messageTextView.delegate = self
-//        messageTextView.textContainer.lineFragmentPadding = 0 // textView 기본 마진 제거
-//        messageTextView.textContainerInset = .zero // textView 기본 마진 제거
-//        messageTextView.text = textViewPlaceHolder // PlaceHolder 커스텀
-//        messageTextView.textColor = UIColor(named: "gray03") // PlaceHolder 커스텀
-//        
-//        // 중복확인 버튼 기본 이미지 세팅
-//        checkHandleDuplicationBtn.setImage(UIImage(named: "checkHandle"), for: .normal)
-//        
-//        // 핸들 입력 중이면 중복확인 버튼 및 텍스트필드 글자 색 세팅 원래대로 변경
-//        handleTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
-//        handleTextField.delegate = self
-//    }
     
 //    private func setUpNavigationBar() {
 //        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
