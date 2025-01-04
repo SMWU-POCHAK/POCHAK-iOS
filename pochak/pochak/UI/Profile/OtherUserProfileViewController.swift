@@ -53,6 +53,17 @@ final class OtherUserProfileViewController: UIViewController {
     @IBOutlet weak var updateProfileBtn: UIButton!
     @IBOutlet weak var topUIView: UIView!
     
+    private lazy var memoryButton: UIButton = {
+        let button = UIButton()
+        let memoryImage = UIImage(resource: .icMemory)
+        button.setImage(memoryImage, for: .normal)
+        button.addAction(UIAction { _ in
+            self.navigateToMemoryView()
+        }, for: .touchUpInside)
+        button.isHidden = true
+        return button
+    }()
+    
     // MARK: - Lifecycle
     
     // Container View에 데이터 전달(ViewDidLoad보다 먼저 실행)
@@ -71,6 +82,7 @@ final class OtherUserProfileViewController: UIViewController {
         setUpRefreshControl()
         setUpNavigationBar()
         setUpViewController()
+        setUpMemoryButton()
         setUpData()
         initializeSingleton()
     }
@@ -117,6 +129,14 @@ final class OtherUserProfileViewController: UIViewController {
                 print("No handle received")
             }
         }
+    }
+    
+    private func navigateToMemoryView() {
+        guard let userID = receivedHandle else { return }
+        let viewModel = MemoryViewModel(userID: userID)
+        let summaryViewController = MemoryViewController(viewModel: viewModel)
+        summaryViewController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(summaryViewController, animated: true)
     }
     
     @IBAction func updateProfile(_ sender: Any) {
@@ -250,6 +270,16 @@ final class OtherUserProfileViewController: UIViewController {
         navigationItem.rightBarButtonItem = moreButton
     }
     
+    private func setUpMemoryButton() {
+        view.addSubview(memoryButton)
+        
+        memoryButton.snp.makeConstraints { make in
+            make.width.height.equalTo(48)
+            make.trailing.equalTo(profileBackground.snp.trailing)
+            make.bottom.equalTo(profileBackground.snp.bottom).offset(11)
+        }
+    }
+    
     private func setUpViewController() {
         profileBackground.layer.cornerRadius = 58
         profileImage.layer.cornerRadius = 55
@@ -354,7 +384,8 @@ final class OtherUserProfileViewController: UIViewController {
                 /// 팔로우 중인 유저인 경우
                 self.followToggleBtn.setTitle("팔로잉", for: .normal)
                 self.followToggleBtn.backgroundColor = UIColor(named: "gray03")
-                
+                self.profileBackground.backgroundColor = UIColor(resource: .yellow00)
+                self.memoryButton.isHidden = false
             } else {
                 /// 팔로우하고 있지 않은 유저인 경우
                 self.followToggleBtn.setTitle("팔로우", for: .normal)
