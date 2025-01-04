@@ -146,9 +146,8 @@ class ZoomControlView: UIView {
     }
     
     func updateSelectedZoom(factor: CGFloat) {
-        let closestZoomFactor = zoomFactors.min(by: { abs($0 - factor) < abs($1 - factor) }) ?? 1.0
+        let closestZoomFactor = findClosestZoomFactor(to: factor)
         selectedZoomFactor = factor
-        
         
         let isCollapsed = buttons.filter({ !$0.isHidden }).count == 1
         
@@ -172,7 +171,8 @@ class ZoomControlView: UIView {
     }
     
     private func updateGestureButtonStates() {
-        let closestZoomFactor = zoomFactors.min(by: { abs($0 - selectedZoomFactor) < abs($1 - selectedZoomFactor) }) ?? 1.0
+        let closestZoomFactor = findClosestZoomFactor(to: selectedZoomFactor)
+        
         buttons.forEach { button in
             if button.tag == zoomFactors.firstIndex(of: closestZoomFactor) {
                 button.backgroundColor = selectedBackgroundColor
@@ -188,11 +188,12 @@ class ZoomControlView: UIView {
     }
     
     private func updateSelectedButtonStates() {
-        let closestZoomFactor = zoomFactors.min(by: { abs($0 - selectedZoomFactor) < abs($1 - selectedZoomFactor) }) ?? 1.0
+        let closestZoomFactor = findClosestZoomFactor(to: selectedZoomFactor)
+        
         buttons.forEach { button in
             if button.tag == zoomFactors.firstIndex(of: closestZoomFactor) {
                 button.backgroundColor = selectedBackgroundColor
-                let zoomFactorString = String(format: "%.0f", selectedZoomFactor)
+                let zoomFactorString = selectedZoomFactor >= 1 ? String(format: "%.0f", selectedZoomFactor) : String(format: "%.1f", selectedZoomFactor).replacingOccurrences(of: "0.", with: ".")
                 button.setTitle("\(zoomFactorString)x", for: .normal)
             } else {
                 let originalZoomFactor = zoomFactors[button.tag]
@@ -202,4 +203,17 @@ class ZoomControlView: UIView {
             }
         }
     }
+    
+    private func findClosestZoomFactor(to factor: CGFloat) -> CGFloat {
+           switch factor {
+           case ..<zoomFactors[1]:
+               return zoomFactors[0]
+           case zoomFactors[1]..<zoomFactors[2]:
+               return zoomFactors[1]
+           case zoomFactors[2]..<zoomFactors[3]:
+               return zoomFactors[2]
+           default:
+               return zoomFactors[3]
+           }
+       }
 }
