@@ -48,6 +48,7 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
     private let zoomControlView = ZoomControlView()
     private var zoomLabel: UILabel = {
         let label = UILabel()
+        label.applyPochakFont(.captionMedium)
         label.text = "1x"
         label.textColor = .black
         label.textAlignment = .center
