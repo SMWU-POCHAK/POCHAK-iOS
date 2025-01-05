@@ -21,11 +21,7 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
     
     private var flashMode: AVCaptureDevice.FlashMode = .off
     private let hapticImpact = UIImpactFeedbackGenerator()
-    private var currentZoomFactor: CGFloat = 1.0 {
-        didSet {
-            updateZoomLabel()
-        }
-    }
+    private var currentZoomFactor: CGFloat = 1.0
     private var lastScale: CGFloat = 1.0
     private let zoomRate: CGFloat = 0.9
     
@@ -46,15 +42,6 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
     @IBOutlet weak var flashBtnBg: UIButton!
     @IBOutlet weak var flashbtn: UIButton!
     private let zoomControlView = ZoomControlView()
-    private var zoomLabel: UILabel = {
-        let label = UILabel()
-        label.applyPochakFont(.captionMedium)
-        label.text = "1x"
-        label.textColor = .black
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
     private var transitionView: UIView!
     private var currentPreviewLayer: AVCaptureVideoPreviewLayer?
     private var nextPreviewLayer: AVCaptureVideoPreviewLayer?
@@ -113,12 +100,6 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
             $0.bottom.equalTo(previewView.snp.bottom).inset(9)
             $0.width.equalTo(128)
             $0.height.equalTo(28)
-        }
-    }
-    
-    private func updateZoomLabel() {
-        DispatchQueue.main.async {
-            self.zoomLabel.text = String(format: "%.1fx", self.currentZoomFactor)
         }
     }
     
@@ -248,10 +229,6 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
             camera.videoZoomFactor = 1.0
             self.currentZoomFactor = 1.0
             camera.unlockForConfiguration()
-            
-            DispatchQueue.main.async {
-                self.updateZoomLabel()
-            }
         } catch {
             print("Error setting initial zoom: \(error.localizedDescription)")
         }
