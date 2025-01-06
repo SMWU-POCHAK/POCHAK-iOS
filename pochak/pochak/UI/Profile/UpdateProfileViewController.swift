@@ -136,10 +136,46 @@ final class UpdateProfileViewController: UIViewController {
         
         setupUserData()
         
-//        setupKeyboard()
+        setupKeyboard()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     // MARK: - Actions
+    
+    @objc private func keyboardWillShow(_ sender: NSNotification) {
+        // currentTextField : UIResponder.currentResponder로부터 현재 응답을 받고 있는 UITextField
+        guard let keyboardFrame = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        guard let currentTextField = UIResponder.currentResponder as? UITextView else { return }
+
+        let keyboardYTop = keyboardFrame.cgRectValue.origin.y
+        
+        // convertedTextFieldFrame : 현재 선택한 textField의 frame을 해당 텍스트 필드의 superview에서 view cooridnate system으로 변환
+        let convertedTextFieldFrame = view.convert(currentTextField.frame, from : currentTextField.superview)
+        
+        // textFieldYBottom : 텍스트필드 하단의 y값 = 텍스트필드의 y값(=y축 위치) + 텍스트필드의 높이
+        let textFieldYBottom = convertedTextFieldFrame.origin.y + convertedTextFieldFrame.size.height
+        
+        // textField 하단이 키보드 상단보다 높을 때 view의 높이를 조정
+        if textFieldYBottom > keyboardYTop {
+            let textFieldYTop = convertedTextFieldFrame.origin.y
+            let properTextFieldHeight = textFieldYTop - keyboardYTop / 1.3
+            view.frame.origin.y = -properTextFieldHeight
+        }
+    }
+
+    @objc private func keyboardWillHide(_ sender: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
     
     @objc private func profileImageButtonTapped(_ sender: Any) {
         self.imagePickerController.delegate = self
@@ -292,6 +328,11 @@ final class UpdateProfileViewController: UIViewController {
             imageView.load(with: url)
             self.profileImageButton.setImage(imageView.image, for: .normal)
         }
+    }
+    
+    private func setupKeyboard() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     /// 프로필 정보 변경사항이 있을 때만 완료 버튼 활성화
