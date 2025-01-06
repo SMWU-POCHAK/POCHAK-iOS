@@ -59,7 +59,7 @@ final class UpdateProfileViewController: UIViewController {
         tf.translatesAutoresizingMaskIntoConstraints = false
         tf.placeholder = "닉네임을 입력해주세요."
         tf.font = UIFont(name: "Pretendard-Medium", size: 16)
-        //tf.addTarget(self, action: #selector(nicknameTextFieldDidChange), for: .editingChanged)
+        tf.addTarget(self, action: #selector(nicknameTextFieldChanged), for: .editingChanged)
         return tf
     }()
     
@@ -148,6 +148,10 @@ final class UpdateProfileViewController: UIViewController {
         self.imagePickerController.delegate = self
         self.imagePickerController.sourceType = .photoLibrary
         present(self.imagePickerController, animated: true, completion: nil)
+    }
+    
+    @objc private func nicknameTextFieldChanged() {
+        configureDoneButton()
     }
     
 //    @objc private func doneBtnTapped(_ sender: Any) {
@@ -296,6 +300,28 @@ final class UpdateProfileViewController: UIViewController {
             self.profileImageButton.setImage(imageView.image, for: .normal)
         }
     }
+    
+    /// 프로필 정보 변경사항이 있을 때만 완료 버튼 활성화
+    private func configureDoneButton() {
+        print("=== configure done button ===")
+        let nickname = nicknameTextField.text!
+        let intro = selfIntroTextView.text!
+        print("nickname: \(nickname), intro: \(intro)")
+        print("nickname != name: \(nickname != name)")
+        
+        // 변경사항 있을 때
+        if nickname != name || (intro != message && intro != textViewPlaceHolder) || userSelectedPhoto != nil {
+            print("변경 사항 있음")
+            doneButton.setTitleColor(UIColor(named: "yellow00"), for: .normal)
+            doneButton.isEnabled = true
+        }
+        // 없을 때
+        else {
+            print("없음")
+            doneButton.setTitleColor(UIColor(named: "gray03"), for: .normal)
+            doneButton.isEnabled = false
+        }
+    }
 }
 
 // MARK: - Extension: UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, CustomAlertDelegate
@@ -307,6 +333,7 @@ extension UpdateProfileViewController: UIImagePickerControllerDelegate, UINaviga
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             profileImageButton.setImage(image, for: .normal)
             userSelectedPhoto = image
+            configureDoneButton()
         }
         picker.dismiss(animated: true, completion: nil)
     }
@@ -323,6 +350,7 @@ extension UpdateProfileViewController: UITextViewDelegate {
         if textView.text == textViewPlaceHolder {
             textView.text = nil
             textView.textColor = .black
+            configureDoneButton()
         }
     }
     
@@ -343,6 +371,8 @@ extension UpdateProfileViewController: UITextViewDelegate {
     
     // 최대 줄 수 3줄 제한
     func textViewDidChange(_ textView: UITextView) {
+        configureDoneButton()
+        
         guard let text = textView.text else { return }
         
         let maxNumberOfLines = 3
