@@ -30,7 +30,7 @@ final class UpdateProfileViewController: UIViewController {
         button.setTitleColor(UIColor(named: "gray03"), for: .normal)
         button.isEnabled = false
         button.titleLabel?.font =  UIFont(name: "Pretendard-Bold", size: 16)
-//        button.addTarget(self, action: #selector(doneButtonDidTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -154,43 +154,50 @@ final class UpdateProfileViewController: UIViewController {
         configureDoneButton()
     }
     
-//    @objc private func doneBtnTapped(_ sender: Any) {
-//        guard let name = nameTextField.text  else { return }
-//        guard let message = messageTextView.text  else { return }
-//        let profileImage: Data? = profileImg.image?.jpegData(compressionQuality: 0.2)
-//        
-//        let request = ProfileUpdateRequest(name: name, message: message)
-//        var files: [(Data, String, String)] = []
-//        if let profileImage = profileImage {
-//            let fileTuple: (Data, String, String) = (profileImage, "profileImage", "image/jpeg")
-//            files.append(fileTuple)
-//        }
-//        
-//        ProfileService.profileUpdate(handle: handle, files: files, request: request) { [weak self] data, failed in
-//            guard let data = data else {
-//                switch failed {
-//                case .disconnected:
-//                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-//                case .serverError:
-//                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-//                case .unknownError:
-//                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-//                default:
-//                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
-//                }
-//                return
-//            }
-//            
-//            // UserDefaults 정보 업데이트
-//            UserDefaultsManager.setData(value: data.result.name, key: .name)
-//            UserDefaultsManager.setData(value: data.result.handle, key: .handle)
-//            UserDefaultsManager.setData(value: data.result.message, key: .message)
-//            UserDefaultsManager.setData(value: data.result.profileImage, key: .profileImgUrl)
-//            
-//            // 프로필 화면으로 전환
-//            self?.navigationController?.popViewController(animated: true)
-//        }
-//    }
+    @objc private func doneButtonTapped(_ sender: Any) {
+        guard let nickname = nicknameTextField.text else { return }
+        guard let selfIntro = selfIntroTextView.text else { return }
+        
+        // 프로필 이미지 변경 여부에 따라 데이터 값 가져오기
+        var profileImageData: Data?
+        if let userSelectedPhoto = userSelectedPhoto {
+            profileImageData = userSelectedPhoto.jpegData(compressionQuality: 0.2)
+        }
+        else {
+            profileImageData = profileImageButton.imageView?.image?.jpegData(compressionQuality: 0.2)
+        }
+        
+        let request = ProfileUpdateRequest(name: nickname, message: selfIntro)
+        var files: [(Data, String, String)] = []
+        if let profileImageFile = profileImageData {
+            let fileTuple: (Data, String, String) = (profileImageFile, "profileImage", "image/jpeg")
+            files.append(fileTuple)
+        }
+        
+        ProfileService.profileUpdate(handle: handle, files: files, request: request) { [weak self] data, failed in
+            guard let data = data else {
+                switch failed {
+                case .disconnected:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .serverError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .unknownError:
+                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    self?.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
+                }
+                return
+            }
+            
+            // UserDefaults 정보 업데이트
+            UserDefaultsManager.setData(value: data.result.name, key: .name)
+            UserDefaultsManager.setData(value: data.result.handle, key: .handle)
+            UserDefaultsManager.setData(value: data.result.message, key: .message)
+            UserDefaultsManager.setData(value: data.result.profileImage, key: .profileImgUrl)
+            
+            self?.navigationController?.popViewController(animated: true)
+        }
+    }
     
     // MARK: - Layout
     
