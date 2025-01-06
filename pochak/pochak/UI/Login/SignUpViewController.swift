@@ -95,7 +95,7 @@ final class SignUpViewController: UIViewController {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFit
-        view.image = UIImage(named: "CheckIcon")
+        view.image = UIImage(named: "Checkmark")?.withTintColor(UIColor(named: "blue")!)
         view.isHidden = true
         return view
     }()
