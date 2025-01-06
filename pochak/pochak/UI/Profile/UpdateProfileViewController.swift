@@ -81,12 +81,9 @@ final class UpdateProfileViewController: UIViewController {
     private lazy var idTextField: UITextField = {
         let tf = UITextField()
         tf.translatesAutoresizingMaskIntoConstraints = false
-//        tf.placeholder = "아이디를 입력해주세요."
         tf.isUserInteractionEnabled = false
         tf.textColor = UIColor(named: "gray03")
         tf.font = UIFont(name: "Pretendard-Medium", size: 16)
-//        tf.addTarget(self, action: #selector(idTextFieldDidChange), for: .editingChanged)
-//        tf.delegate = self
         return tf
     }()
     
@@ -109,11 +106,11 @@ final class UpdateProfileViewController: UIViewController {
         let view = UITextView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
-        view.textContainer.lineFragmentPadding = 0  // textView 기본 마진 제거
-        view.textContainerInset = .zero  // textView 기본 마진 제거
-        view.text = "소개를 입력해주세요."  // PlaceHolder 커스텀
+        view.textContainer.lineFragmentPadding = 0
+        view.textContainerInset = .zero
+        view.text = "소개를 입력해주세요."
         view.font = UIFont(name: "Pretendard-Medium", size: 16)
-        view.textColor = UIColor(named: "gray03") // PlaceHolder 커스텀
+        view.textColor = UIColor(named: "gray03")
         view.isScrollEnabled = false
         view.delegate = self
         return view
@@ -280,17 +277,7 @@ final class UpdateProfileViewController: UIViewController {
         self.navigationItem.title = "프로필 수정"
         
         let barButtonItem = UIBarButtonItem(customView: doneButton)
-        
-        // left bar button을 추가하면 기존의 스와이프 pop 기능이 해제되므로 다시 세팅
-//        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-//        navigationController?.interactivePopGestureRecognizer?.delegate = self
-
         self.navigationItem.rightBarButtonItem = barButtonItem
-        
-//        // Back 버튼 커스텀 (for action)
-//        let backBarButtonItem = UIBarButtonItem(image: UIImage(named: "ChevronLeft")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(backbuttonPressed))
-//        backBarButtonItem.imageInsets = UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0)
-//        self.navigationItem.leftBarButtonItem = backBarButtonItem
     }
     
     private func setupUserData() {
@@ -299,7 +286,6 @@ final class UpdateProfileViewController: UIViewController {
         self.selfIntroTextView.text = message
         self.selfIntroTextView.textColor = .black
 
-        // load 프로필 이미지
         if let url = URL(string: profileImgUrl) {
             // TODO: 뭔가 비효율적인가??
             let imageView = UIImageView()
@@ -310,28 +296,23 @@ final class UpdateProfileViewController: UIViewController {
     
     /// 프로필 정보 변경사항이 있을 때만 완료 버튼 활성화
     private func configureDoneButton() {
-        print("=== configure done button ===")
         let nickname = nicknameTextField.text!
         let intro = selfIntroTextView.text!
-        print("nickname: \(nickname), intro: \(intro)")
-        print("nickname != name: \(nickname != name)")
         
         // 변경사항 있을 때
         if nickname != name || (intro != message && intro != textViewPlaceHolder) || userSelectedPhoto != nil {
-            print("변경 사항 있음")
             doneButton.setTitleColor(UIColor(named: "yellow00"), for: .normal)
             doneButton.isEnabled = true
         }
         // 없을 때
         else {
-            print("없음")
             doneButton.setTitleColor(UIColor(named: "gray03"), for: .normal)
             doneButton.isEnabled = false
         }
     }
 }
 
-// MARK: - Extension: UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, CustomAlertDelegate
+// MARK: - Extension: UIImagePickerControllerDelegate
 
 extension UpdateProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -350,6 +331,8 @@ extension UpdateProfileViewController: UIImagePickerControllerDelegate, UINaviga
         picker.dismiss(animated: true, completion: nil)
     }
 }
+
+// MARK: - UITextViewDelegate
 
 extension UpdateProfileViewController: UITextViewDelegate {
     
@@ -396,6 +379,8 @@ extension UpdateProfileViewController: UITextViewDelegate {
         }
     }
 }
+
+// MARK: - Extension; CustomAlertDelegate
 
 extension UpdateProfileViewController: CustomAlertDelegate {
     
