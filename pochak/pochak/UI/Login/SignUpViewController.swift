@@ -265,7 +265,7 @@ final class SignUpViewController: UIViewController {
         present(self.imagePickerController, animated: true, completion: nil)
     }
     
-    @objc private func backbuttonPressed(_ sender: Any) {
+    @objc private func backbuttonDidTap(_ sender: Any) {
         backBtnPressed = true
         showAlert(alertType: .confirmAndCancel,
                   titleText: "프로필 설정을 취소하고\n페이지를 나갈까요?",
@@ -352,7 +352,7 @@ final class SignUpViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = barButtonItem
         
         // Back 버튼 커스텀 (for action)
-        let backBarButtonItem = UIBarButtonItem(image: UIImage(named: "ChevronLeft")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(backbuttonPressed))
+        let backBarButtonItem = UIBarButtonItem(image: UIImage(named: "ChevronLeft")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(backbuttonDidTap))
         backBarButtonItem.imageInsets = UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0)
         self.navigationItem.leftBarButtonItem = backBarButtonItem
     }

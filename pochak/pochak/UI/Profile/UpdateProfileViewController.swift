@@ -30,7 +30,7 @@ final class UpdateProfileViewController: UIViewController {
         button.setTitleColor(UIColor(named: "gray03"), for: .normal)
         button.isEnabled = false
         button.titleLabel?.font =  UIFont(name: "Pretendard-Bold", size: 16)
-        button.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(doneButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -39,7 +39,7 @@ final class UpdateProfileViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "PlusIcon"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
-        button.addTarget(self, action: #selector(profileImageButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(profileImageButtonDidTap), for: .touchUpInside)
         button.backgroundColor = UIColor(named: "gray01")
         button.clipsToBounds = true
         button.layer.cornerRadius = 116 / 2
@@ -59,7 +59,7 @@ final class UpdateProfileViewController: UIViewController {
         tf.translatesAutoresizingMaskIntoConstraints = false
         tf.placeholder = "닉네임을 입력해주세요."
         tf.font = UIFont(name: "Pretendard-Medium", size: 16)
-        tf.addTarget(self, action: #selector(nicknameTextFieldChanged), for: .editingChanged)
+        tf.addTarget(self, action: #selector(nicknameTextFieldDidChange), for: .editingChanged)
         return tf
     }()
     
@@ -177,17 +177,17 @@ final class UpdateProfileViewController: UIViewController {
         }
     }
     
-    @objc private func profileImageButtonTapped(_ sender: Any) {
+    @objc private func profileImageButtonDidTap(_ sender: Any) {
         self.imagePickerController.delegate = self
         self.imagePickerController.sourceType = .photoLibrary
         present(self.imagePickerController, animated: true, completion: nil)
     }
     
-    @objc private func nicknameTextFieldChanged() {
+    @objc private func nicknameTextFieldDidChange() {
         configureDoneButton()
     }
     
-    @objc private func doneButtonTapped(_ sender: Any) {
+    @objc private func doneButtonDidTap(_ sender: Any) {
         guard let nickname = nicknameTextField.text else { return }
         guard let selfIntro = selfIntroTextView.text else { return }
         
