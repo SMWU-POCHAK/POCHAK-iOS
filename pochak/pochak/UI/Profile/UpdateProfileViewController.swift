@@ -12,7 +12,7 @@ final class UpdateProfileViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let textViewPlaceHolder = "소개를 입력해주세요.\n(최대 50자, 3줄)"
+    private let textViewPlaceHolder = "소개를 입력해주세요."
     private let name = UserDefaultsManager.getData(type: String.self, forKey: .name) ?? "name not found"
     private let email = UserDefaultsManager.getData(type: String.self, forKey: .email) ?? "email not found"
     private let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId) ?? "socialId not found"
@@ -286,6 +286,7 @@ final class UpdateProfileViewController: UIViewController {
         self.nicknameTextField.text = name
         self.idTextField.text = handle
         self.selfIntroTextView.text = message
+        self.selfIntroTextView.textColor = .black
 
         // load 프로필 이미지
         if let url = URL(string: profileImgUrl) {
