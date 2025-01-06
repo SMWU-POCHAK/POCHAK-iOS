@@ -39,7 +39,7 @@ final class UpdateProfileViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "PlusIcon"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
-        //button.addTarget(self, action: #selector(profileImageButtonDidTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(profileImageButtonTapped), for: .touchUpInside)
         button.backgroundColor = UIColor(named: "gray01")
         button.clipsToBounds = true
         button.layer.cornerRadius = 116 / 2
@@ -144,13 +144,7 @@ final class UpdateProfileViewController: UIViewController {
     
     // MARK: - Actions
     
-    /* < 앨범 사진 선택 >
-    1. 권한 설정: Info.plist > Photo Library Usage 권한 추가
-    2. UIImagePickerController 선언
-    3. @IBAction 정의
-    4. 프로토콜 채택
-     */
-    @IBAction func profileBtnTapped(_ sender: Any) {
+    @objc private func profileImageButtonTapped(_ sender: Any) {
         self.imagePickerController.delegate = self
         self.imagePickerController.sourceType = .photoLibrary
         present(self.imagePickerController, animated: true, completion: nil)
@@ -310,9 +304,10 @@ extension UpdateProfileViewController: UIImagePickerControllerDelegate, UINaviga
     // 선택한 사진 사용
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            //profileImg.image = image
+            profileImageButton.setImage(image, for: .normal)
+            userSelectedPhoto = image
         }
-        picker.dismiss(animated: true, completion: nil) // 주의점: picker 숨기기 위한 dismiss를 직접 해야함
+        picker.dismiss(animated: true, completion: nil)
     }
     
     // 취소
