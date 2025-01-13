@@ -24,6 +24,13 @@ final class HomeTabViewController: UIViewController {
     
     // MARK: - Views
     
+    private let nearbyPochakButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "person.3.fill"), for: .normal)
+        button.tintColor = UIColor(named: "yellow00")
+        return button
+    }()
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     // MARK: - Lifecycle
@@ -61,6 +68,9 @@ final class HomeTabViewController: UIViewController {
         let logoImageView = UIImageView(image: UIImage(named: "logo_full"))
         logoImageView.contentMode = .scaleAspectFit
         self.navigationItem.titleView = logoImageView
+        
+        let rightBarButtonItem = UIBarButtonItem(customView: nearbyPochakButton)
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem
     }
     
     private func setupCollectionView() {
