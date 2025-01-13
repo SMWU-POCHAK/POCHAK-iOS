@@ -68,6 +68,7 @@ final class HomeTabViewController: UIViewController {
     
     @objc private func nearbyPochakButtonDidTap() {
         let nearbyPochakerVC = NearbyPochakerViewController()
+        nearbyPochakerVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(nearbyPochakerVC, animated: true)
     }
     
