@@ -24,10 +24,14 @@ final class HomeTabViewController: UIViewController {
     
     // MARK: - Views
     
-    private let nearbyPochakButton: UIButton = {
+    private lazy var nearbyPochakButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "person.3.fill"), for: .normal)
         button.tintColor = UIColor(named: "yellow00")
+        button.isEnabled = true
+        button.addAction(UIAction { _ in
+            self.nearbyPochakButtonDidTap()
+        }, for: .touchUpInside)
         return button
     }()
     
@@ -60,6 +64,11 @@ final class HomeTabViewController: UIViewController {
         self.currentFetchingPage = 0
         self.postList.removeAll()
         self.setupData()
+    }
+    
+    @objc private func nearbyPochakButtonDidTap() {
+        let nearbyPochakerVC = NearbyPochakerViewController()
+        self.navigationController?.pushViewController(nearbyPochakerVC, animated: true)
     }
     
     // MARK: - Functions
