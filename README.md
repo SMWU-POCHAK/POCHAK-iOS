@@ -27,10 +27,7 @@ POCHAK은 사용자들이 서로의 순간에 참여하고 상호 작용할 수 
     <img width="80%" alt="구조도" src="https://github.com/user-attachments/assets/8122239f-54b7-4709-8ccc-3f3e1dd17cf5">
 </details>
 
-* UIKit (Storyboard)
-* Alamofire
-* Tabman
-* Pageboy
+* UIKit, SnapKit, Alamofire, Tabman, Pageboy
 
 ## Developers
 > 2차 -> 1차 순으로 정렬되어있습니다.
