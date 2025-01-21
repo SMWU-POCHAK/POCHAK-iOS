@@ -15,12 +15,12 @@ enum BluetoothMode: String {
 }
 
 protocol BluetoothSerialDelegate: AnyObject {
-    func serialDidDiscoverPeripheral(peripheral: CBPeripheral, RSSI: NSNumber?)
+    func serialDidDiscoverPeripheral(peripheral: CBPeripheral, advertisementData: [String : Any]?, RSSI: NSNumber?)
     func serialDidConnectPeripheral(peripheral: CBPeripheral)
 }
 
 extension BluetoothSerialDelegate {
-    func serialDidDiscoverPeripheral(peripheral: CBPeripheral, RSSI: NSNumber?) {}
+    func serialDidDiscoverPeripheral(peripheral: CBPeripheral, advertisementData: [String : Any]?, RSSI: NSNumber?) {}
     func serialDidConnectPeripheral(peripheral: CBPeripheral) {}
 }
 
@@ -133,7 +133,7 @@ extension BluetoothSerialManager: CBCentralManagerDelegate {
         print(">> advertisementData, local name: \(advertisementData[CBAdvertisementDataLocalNameKey])")
         print(">> advertisementData, service uuid: \(advertisementData[CBAdvertisementDataServiceUUIDsKey])")
         print("===============================================")
-        delegate?.serialDidDiscoverPeripheral(peripheral: peripheral, RSSI: RSSI)
+        delegate?.serialDidDiscoverPeripheral(peripheral: peripheral, advertisementData: advertisementData, RSSI: RSSI)
     }
 }
 
