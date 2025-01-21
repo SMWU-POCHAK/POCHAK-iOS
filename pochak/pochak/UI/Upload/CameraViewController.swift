@@ -8,6 +8,7 @@
 import UIKit
 import AVFoundation
 import SwiftUI
+import SnapKit
 
 final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     
@@ -16,25 +17,41 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
     private var captureSession: AVCaptureSession!
     private var stillImageOutput: AVCapturePhotoOutput!
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer!
+    private var cameraSwitchTimer: Timer?
     
     private var flashMode: AVCaptureDevice.FlashMode = .off
     private let hapticImpact = UIImpactFeedbackGenerator()
+    private var currentZoomFactor: CGFloat = 1.0
+    private var lastScale: CGFloat = 1.0
+    private let zoomRate: CGFloat = 0.9
     
     @Published var isCameraBusy = false
     @Published var isFlashOn = false
     
+    private var currentCamera: AVCaptureDevice?
+    private var ultraWideCamera: AVCaptureDevice?
+    private var wideCamera: AVCaptureDevice?
+    private var ultraWideInput: AVCaptureDeviceInput?
+    private var wideInput: AVCaptureDeviceInput?
+    
+    
     // MARK: - Views
     
+    @IBOutlet weak var captureBtn: UIButton!
     @IBOutlet weak var previewView: UIView!
     @IBOutlet weak var flashBtnBg: UIButton!
     @IBOutlet weak var flashbtn: UIButton!
+    private let zoomControlView = ZoomControlView()
+    private var transitionView: UIView!
+    private var currentPreviewLayer: AVCaptureVideoPreviewLayer?
+    private var nextPreviewLayer: AVCaptureVideoPreviewLayer?
     
     @IBAction func flashBtn(_ sender: Any) {
         switchFlash()
         print("flash")
     }
     
-    @IBAction func captureBtn(_ sender: Any) {
+    @IBAction func capture(_ sender: Any) {
         if isCameraBusy == false {
             hapticImpact.impactOccurred()
             
@@ -56,6 +73,12 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         super.viewDidLoad()
         
         self.navigationItem.title = "포착하기"
+        zoomControlView.delegate = self
+        
+        setupZoomLabel()
+        setupTransitionView()
+        handlePinchGestureForZoom()
+        handleTapGestrueToFocus()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -66,6 +89,33 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.captureSession.stopRunning()
+    }
+    
+    // MARK: - UI
+    private func setupZoomLabel() {
+        view.addSubview(zoomControlView)
+        zoomControlView.isUserInteractionEnabled = true
+        zoomControlView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalTo(previewView.snp.bottom).inset(9)
+            $0.width.equalTo(128)
+            $0.height.equalTo(28)
+        }
+    }
+    
+    private func setupTransitionView() {
+        transitionView = UIView(frame: previewView.bounds)
+        transitionView.backgroundColor = .clear
+        transitionView.alpha = 0
+        transitionView.translatesAutoresizingMaskIntoConstraints = false
+        previewView.addSubview(transitionView)
+        
+        NSLayoutConstraint.activate([
+            transitionView.topAnchor.constraint(equalTo: previewView.topAnchor),
+            transitionView.leadingAnchor.constraint(equalTo: previewView.leadingAnchor),
+            transitionView.trailingAnchor.constraint(equalTo: previewView.trailingAnchor),
+            transitionView.bottomAnchor.constraint(equalTo: previewView.bottomAnchor)
+        ])
     }
     
     // MARK: - Functions
@@ -111,48 +161,289 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         DispatchQueue.global(qos: .userInitiated).async {
             self.captureSession = AVCaptureSession()
             
-            guard let backCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else {
+            self.wideCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
+            self.ultraWideCamera = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back)
+            
+            guard let wideCamera = self.wideCamera, let ultraWideCamera = self.ultraWideCamera else {
+                print("Error: Required cameras are not available")
                 return
             }
             
             do {
-                let input = try AVCaptureDeviceInput(device: backCamera)
+                self.wideInput = try AVCaptureDeviceInput(device: wideCamera)
+                self.ultraWideInput = try AVCaptureDeviceInput(device: ultraWideCamera)
                 
-                let photoSettings = AVCapturePhotoSettings()
-                photoSettings.isHighResolutionPhotoEnabled = false
-                
-                if backCamera.supportsSessionPreset(.photo) {
-                    self.captureSession.sessionPreset = .photo
+                if self.captureSession.canAddInput(self.wideInput!) {
+                    self.captureSession.addInput(self.wideInput!)
+                    self.currentCamera = wideCamera
                 }
                 
                 self.stillImageOutput = AVCapturePhotoOutput()
-                
-                if self.captureSession.canAddInput(input) && self.captureSession.canAddOutput(self.stillImageOutput) {
-                    self.captureSession.addInput(input)
+                if self.captureSession.canAddOutput(self.stillImageOutput) {
                     self.captureSession.addOutput(self.stillImageOutput)
-                    
-                    // 라이브 프리뷰 설정을 메인 스레드에서 호출
-                    DispatchQueue.main.async {
-                        self.setupLivePreview()
-                    }
-                    // captureSession.startRunning()을 백그라운드 스레드에서 호출
-                    self.captureSession.startRunning()
                 }
-            } catch let error {
-                print("Error Unable to initialize back camera:  \(error.localizedDescription)")
+                
+                if wideCamera.supportsSessionPreset(.photo) {
+                    self.captureSession.sessionPreset = .photo
+                }
+                
+                DispatchQueue.main.async {
+                    self.setupLivePreview()
+                }
+                
+                self.captureSession.startRunning()
+                self.setInitialZoom()
+            } catch {
+                print("Error setting up camera: \(error.localizedDescription)")
             }
         }
     }
     
     private func setupLivePreview() {
-        self.videoPreviewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
-        self.videoPreviewLayer.videoGravity = .resizeAspectFill
-        self.videoPreviewLayer.connection?.videoOrientation = .portrait
+        self.currentPreviewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
+        self.currentPreviewLayer?.videoGravity = .resizeAspectFill
+        self.currentPreviewLayer?.connection?.videoOrientation = .portrait
+        self.currentPreviewLayer?.frame = self.previewView.bounds
         
-        // previewView의 bounds에 맞게 frame 설정
-        self.videoPreviewLayer.frame = self.previewView.bounds
+        if let currentPreviewLayer = self.currentPreviewLayer {
+            self.previewView.layer.insertSublayer(currentPreviewLayer, at: 0)
+        }
+    }
+    
+    private func setupZoom(for device: AVCaptureDevice) {
+        do {
+            try device.lockForConfiguration()
+            device.videoZoomFactor = 1.0
+            device.unlockForConfiguration()
+        } catch {
+            print("Error setting zoom: \(error.localizedDescription)")
+        }
+    }
+    
+    
+    private func setInitialZoom() {
+        guard let camera = self.currentCamera else { return }
         
-        // previewView의 서브레이어로 추가
-        self.previewView.layer.addSublayer(self.videoPreviewLayer)
+        do {
+            try camera.lockForConfiguration()
+            camera.videoZoomFactor = 1.0
+            self.currentZoomFactor = 1.0
+            camera.unlockForConfiguration()
+        } catch {
+            print("Error setting initial zoom: \(error.localizedDescription)")
+        }
+    }
+    
+    private func switchToUltraWideCamera() {
+        guard let ultraWideCamera = self.ultraWideCamera,
+              let currentInput = captureSession.inputs.first as? AVCaptureDeviceInput else { return }
+        
+        captureSession.beginConfiguration()
+        captureSession.removeInput(currentInput)
+        
+        do {
+            let newInput = try AVCaptureDeviceInput(device: ultraWideCamera)
+            if captureSession.canAddInput(newInput) {
+                captureSession.addInput(newInput)
+                currentCamera = ultraWideCamera
+            }
+        } catch {
+            print("Error switching to ultra wide camera: \(error.localizedDescription)")
+        }
+        
+        captureSession.commitConfiguration()
+    }
+    
+    private func switchToCamera(_ newCamera: AVCaptureDevice) {
+        guard let currentInput = captureSession.inputs.first as? AVCaptureDeviceInput,
+              let newInput = (newCamera == wideCamera) ? wideInput : ultraWideInput else { return }
+        
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.2, animations: {
+                self.transitionView.alpha = 0.5
+            })
+        }
+        
+        captureSession.beginConfiguration()
+        captureSession.removeInput(currentInput)
+        
+        if captureSession.canAddInput(newInput) {
+            captureSession.addInput(newInput)
+            currentCamera = newCamera
+        }
+        
+        captureSession.commitConfiguration()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.transitionView.alpha = 0
+            })
+        }
+    }
+    
+    @objc func handlePinchToZoom(_ gesture: UIPinchGestureRecognizer) {
+        guard let wideCamera = self.wideCamera,
+              let ultraWideCamera = self.ultraWideCamera else { return }
+        
+        func minMaxZoom(_ factor: CGFloat) -> CGFloat {
+            return min(max(factor, 0.5), 6.0)
+        }
+        
+        func update(scale factor: CGFloat) {
+               do {
+                   if factor < 1.0 && currentCamera != ultraWideCamera {
+                       switchToCamera(ultraWideCamera)
+                   } else if factor >= 1.0 && currentCamera != wideCamera {
+                       switchToCamera(wideCamera)
+                   }
+                   
+                   try currentCamera?.lockForConfiguration()
+                   defer { currentCamera?.unlockForConfiguration() }
+                   
+                   let zoomFactor = (currentCamera == ultraWideCamera) ? factor * 2 : factor
+                   currentCamera?.videoZoomFactor = zoomFactor
+                   self.currentZoomFactor = factor
+                   
+                   // ZoomControlView 업데이트 추가
+                   DispatchQueue.main.async {
+                       self.zoomControlView.updateSelectedZoom(factor: factor)
+                   }
+                   
+               } catch {
+                   print("Error setting zoom: \(error.localizedDescription)")
+               }
+           }
+        
+        var newScaleFactor = minMaxZoom(gesture.scale * currentZoomFactor)
+        
+        switch gesture.state {
+        case .began:
+            lastScale = currentZoomFactor
+        case .changed:
+            let delta = gesture.scale - 1.0
+            if gesture.scale < 1.0 && currentZoomFactor > 1.0 {
+                let fastZoomRate: CGFloat = 2
+                newScaleFactor = minMaxZoom(lastScale + (delta * zoomRate * fastZoomRate))
+            } else {
+                newScaleFactor = minMaxZoom(lastScale + (delta * zoomRate))
+            }
+            update(scale: newScaleFactor)
+        case .ended:
+            newScaleFactor = currentZoomFactor
+            lastScale = newScaleFactor
+        default:
+            break
+        }
+    }
+}
+
+extension CameraViewController {
+    private func handlePinchGestureForZoom() {
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchToZoom(_:)))
+        view.addGestureRecognizer(pinchGesture)
+    }
+    
+    private func handleTapGestrueToFocus() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        tapGesture.delegate = self
+        previewView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func handleTap(_ gesture: UITapGestureRecognizer) {
+        let touchPoint = gesture.location(in: previewView)
+        focusOnPoint(touchPoint)
+    }
+    
+    private func focusOnPoint(_ point: CGPoint) {
+        guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else { return }
+        
+        do {
+            try device.lockForConfiguration()
+            
+            if device.isFocusPointOfInterestSupported {
+                let focusPoint = CGPoint(x: point.x / previewView.bounds.size.width,
+                                         y: point.y / previewView.bounds.size.height)
+                device.focusPointOfInterest = focusPoint
+                device.focusMode = .autoFocus
+            }
+            
+            if device.isExposurePointOfInterestSupported {
+                let exposurePoint = CGPoint(x: point.x / previewView.bounds.size.width,
+                                            y: point.y / previewView.bounds.size.height)
+                device.exposurePointOfInterest = exposurePoint
+                device.exposureMode = .autoExpose
+            }
+            
+            device.unlockForConfiguration()
+            
+            showFocusIndicator(at: point)
+        } catch {
+            print("Error setting focus: \(error.localizedDescription)")
+        }
+    }
+    
+    private func showFocusIndicator(at point: CGPoint) {
+        let focusIndicator = UIView(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
+        focusIndicator.layer.borderWidth = 1.0
+        focusIndicator.layer.borderColor = UIColor.yellow.cgColor
+        focusIndicator.center = point
+        focusIndicator.alpha = 0.0
+        
+        previewView.addSubview(focusIndicator)
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            focusIndicator.alpha = 1.0
+        }) { _ in
+            UIView.animate(withDuration: 0.3, delay: 0.5, options: [], animations: {
+                focusIndicator.alpha = 0.0
+            }) { _ in
+                focusIndicator.removeFromSuperview()
+            }
+        }
+    }
+}
+
+
+extension CameraViewController: UIGestureRecognizerDelegate {
+    // 제스처 인식기의 동작 여부를 결정하는 메서드
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        // 터치된 뷰가 ZoomControlView의 내부에 있는지 확인
+        if let touchedView = touch.view {
+            var view = touchedView
+            while let superview = view.superview {
+                if superview is ZoomControlView {
+                    // ZoomControlView 내부의 터치는 제스처 인식기가 처리하지 않음
+                    return false
+                }
+                view = superview
+            }
+        }
+        // 그 외의 영역은 제스처 인식기가 처리
+        return true
+    }
+}
+
+extension CameraViewController: ZoomControlViewDelegate {
+    func didSelectZoomFactor(_ factor: CGFloat) {
+        
+        guard let wideCamera = wideCamera,
+              let ultraWideCamera = ultraWideCamera else { return }
+        do {
+            if factor < 1.0 && currentCamera != ultraWideCamera {
+                switchToCamera(ultraWideCamera)
+            } else if factor >= 1.0 && currentCamera != wideCamera {
+                switchToCamera(wideCamera)
+            }
+           
+            try currentCamera?.lockForConfiguration()
+            let zoomFactor = (currentCamera == ultraWideCamera) ? factor * 2 : factor
+
+            currentCamera?.videoZoomFactor = zoomFactor
+            currentCamera?.unlockForConfiguration()
+            
+            currentZoomFactor = factor // 현재 줌 값 업데이트
+        } catch {
+            print("Error setting zoom factor: \(error.localizedDescription)")
+        }
     }
 }
