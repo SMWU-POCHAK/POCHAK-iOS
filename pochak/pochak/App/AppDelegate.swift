@@ -64,6 +64,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 앱 첫 실행 시 keyChain 정보를 삭제
         removeKeychainAtFirstLaunch()
+        
+        // TODO: 백그라운드 작업을 하게 되면 고쳐야될듯?? 동시에 할 수는 없으니까
+        // 앱이 시작될 때 advertising mode 다시 시작
+        BluetoothSerialManager.shared.startAdvertising()
         return true
     }
 
