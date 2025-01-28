@@ -100,7 +100,7 @@ final class BluetoothSerialManager: NSObject {
         peripheralManager.removeAllServices()
         peripheralManager.add(CBMutableService(type: serviceUUID, primary: true))
         peripheralManager.startAdvertising([
-            CBAdvertisementDataLocalNameKey : "su.yeonn_",  // TODO: 추후 사용자 아이디로 변경
+            CBAdvertisementDataLocalNameKey : UserDefaultsManager.getData(type: String.self, forKey: .handle),
             CBAdvertisementDataServiceUUIDsKey: [self.serviceUUID]
         ])
     }
