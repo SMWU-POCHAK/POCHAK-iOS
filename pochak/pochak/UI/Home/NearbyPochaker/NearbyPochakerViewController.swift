@@ -169,7 +169,7 @@ final class NearbyPochakerViewController: UIViewController {
     // MARK: - Functions
     
     private func addPochakerView(handle: String) {
-        let pochakerView = PochakerView(handle: handle)
+        let pochakerView = NearbyPochakerView(handle: handle)
         
         view.addSubview(pochakerView)
         

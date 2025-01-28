@@ -1,5 +1,5 @@
 //
-//  PochakerView.swift
+//  NearbyPochakerView.swift
 //  pochak
 //
 //  Created by Suyeon Hwang on 1/22/25.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class PochakerView: UIView {
+final class NearbyPochakerView: UIView {
     
     // MARK: - Properties
     
