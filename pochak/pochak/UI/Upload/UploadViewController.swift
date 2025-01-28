@@ -14,6 +14,9 @@ final class UploadViewController: UIViewController,UITextFieldDelegate {
     // MARK: - Properties
     
     var receivedImage: UIImage?
+    var isPochakedWithBluetooth: Bool = false
+    var nearbyPochakerHandle: String = ""
+    
     private var searchTextField = UITextField()
     private var cancelButton = UIButton()
     
@@ -54,6 +57,9 @@ final class UploadViewController: UIViewController,UITextFieldDelegate {
         setupSearchTextField()
         setupCollectionView()
         setupTableView()
+        
+        print("[UploadViewController] isPochakedWithBluetooth: \(isPochakedWithBluetooth)")
+        print("[UploadViewController] nearbyPochakerHandle: \(nearbyPochakerHandle)")
     }
     
     // MARK: - Actions

@@ -14,6 +14,9 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
     
     // MARK: - Properties
     
+    var isPochakedWithBluetooth: Bool = false
+    var nearbyPochakerHandle: String = ""
+    
     private var captureSession: AVCaptureSession!
     private var stillImageOutput: AVCapturePhotoOutput!
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer!
@@ -62,6 +65,9 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
             
             print("[Camera]: Photo's taken")
             print("[CameraViewModel]: Photo captured!")
+            
+            print("[CameraViewController] isPochakedWithBluetooth: \(isPochakedWithBluetooth)")
+            print("[CameraViewController] nearbyPochakerHandle: \(nearbyPochakerHandle)")
         } else {
             print("[CameraViewModel]: Camera's busy.")
         }
@@ -79,6 +85,9 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         setupTransitionView()
         handlePinchGestureForZoom()
         handleTapGestrueToFocus()
+        
+        print("[CameraViewController] isPochakedWithBluetooth: \(isPochakedWithBluetooth)")
+        print("[CameraViewController] nearbyPochakerHandle: \(nearbyPochakerHandle)")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -127,6 +136,8 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         
         let uploadViewController = storyboard?.instantiateViewController(withIdentifier: "UploadViewController") as! UploadViewController
         uploadViewController.receivedImage = image
+        uploadViewController.isPochakedWithBluetooth = self.isPochakedWithBluetooth
+        uploadViewController.nearbyPochakerHandle = self.nearbyPochakerHandle
         navigationController?.pushViewController(uploadViewController, animated: true)
     }
     
@@ -161,6 +172,8 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         DispatchQueue.global(qos: .userInitiated).async {
             self.captureSession = AVCaptureSession()
             
+            self.captureSession.beginConfiguration()
+            
             self.wideCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
             self.ultraWideCamera = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back)
             
@@ -190,6 +203,8 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
                 DispatchQueue.main.async {
                     self.setupLivePreview()
                 }
+                
+                self.captureSession.commitConfiguration()
                 
                 self.captureSession.startRunning()
                 self.setInitialZoom()
