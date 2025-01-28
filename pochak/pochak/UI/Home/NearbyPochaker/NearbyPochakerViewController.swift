@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import CoreBluetooth
 
 final class NearbyPochakerViewController: UIViewController {
     
@@ -18,6 +19,26 @@ final class NearbyPochakerViewController: UIViewController {
     private let circle4Radius: CGFloat = 148
     
     // MARK: - Views
+    
+    private let currentUserView: UIView = UIView()
+    
+    private let userProfileImageView: UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        view.image = UIImage(named: "logo_full")
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 60 / 2
+        view.layer.borderColor = UIColor.white.cgColor
+        view.layer.borderWidth = 2
+        return view
+    }()
+    
+    private let userHandleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Pretendard-Regular", size: 13)
+        label.text = "나"
+        return label
+    }()
     
     private lazy var circle1: UIView = {
         let view = UIView()
@@ -67,16 +88,33 @@ final class NearbyPochakerViewController: UIViewController {
         
         addViews()
         setupConstraints()
+        
+        BluetoothSerialManager.shared.delegate = self
+        
+        // TODO: 스캔 시작 포인트 수정해야 함
+        // 뷰컨트롤러에 들어오면 스캔 시작
+        BluetoothSerialManager.shared.setBluetoothModeAndStart(to: .scanningMode)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        BluetoothSerialManager.shared.setBluetoothModeAndStart(to: .advertisingMode)
     }
     
     // MARK: - Layout
     
     private func addViews() {
+        currentUserView.addSubview(userProfileImageView)
+        currentUserView.addSubview(userHandleLabel)
+        
         view.addSubview(circle1)
         view.addSubview(circle2)
         view.addSubview(circle3)
         view.addSubview(circle4)
         view.addSubview(guideLabel)
+        
+        view.addSubview(currentUserView)
     }
     
     private func setupConstraints() {
@@ -104,6 +142,22 @@ final class NearbyPochakerViewController: UIViewController {
             make.width.height.equalTo(circle4Radius)
         }
         
+        currentUserView.snp.makeConstraints { make in
+            make.center.equalTo(circle1.snp.center)
+        }
+        
+        userProfileImageView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.width.height.equalTo(60)
+        }
+        
+        userHandleLabel.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.top.equalTo(userProfileImageView.snp.bottom).offset(3)
+            make.centerX.equalToSuperview()
+        }
+        
         guideLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(70)
@@ -113,4 +167,29 @@ final class NearbyPochakerViewController: UIViewController {
     // MARK: - Actions
     
     // MARK: - Functions
+    
+    private func addPochakerView(handle: String) {
+        let pochakerView = PochakerView(handle: handle)
+        
+        view.addSubview(pochakerView)
+        
+        pochakerView.snp.makeConstraints { make in
+            make.top.equalTo(currentUserView.snp.bottom).offset(13)
+            make.leading.equalTo(currentUserView.snp.trailing).offset(92)
+        }
+    }
+}
+
+// MARK: - Extension; BluetoothSerialDelegate
+
+extension NearbyPochakerViewController: BluetoothSerialDelegate {
+    func serialDidDiscoverPeripheral(peripheral: CBPeripheral, advertisementData: [String : Any], RSSI: NSNumber?) {
+        print("=== serial did discover peripheral ===")
+        addPochakerView(handle: advertisementData[CBAdvertisementDataLocalNameKey] as? String ?? "알수없음")
+//        LocalPushNotificationManager.shared.sendPushNotification(title: "👀 내 주변에 포차커가 있어요!",
+//                                                             body: "지금 눌러서 포착하기",
+//                                                             identifier: "POCHAK_NEARBY")
+//        print("=======================================")
+//        BluetoothSerialManager.shared.stopScan()
+    }
 }

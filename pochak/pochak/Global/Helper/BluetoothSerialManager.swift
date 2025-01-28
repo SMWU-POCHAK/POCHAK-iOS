@@ -71,12 +71,16 @@ final class BluetoothSerialManager: NSObject {
     func startScan() {
         if !centralManager.isScanning {
             print("=== [BluetoothSerialManager] startScan ===")
-            print(">> state: \(centralManager.state)")
-            guard centralManager.state == .poweredOn else { return }  // 5: poweredOn
+            print(">> state: \(centralManager.state)")  // 5: poweredOn
             
-            // withService가 nil 이면 모든 종류의 기기 검색 / 입력하면 특정 serviceUUID를 가진 기기만 검색 -> 특정 service만 검색하도록 함
-            let options = [CBCentralManagerScanOptionAllowDuplicatesKey: false]  // 이미 스캔된 정보면 다시 스캔 안 하는 옵션
-            centralManager.scanForPeripherals(withServices: [serviceUUID], options: options)
+            if centralManager.state == .poweredOn {
+                // withService가 nil 이면 모든 종류의 기기 검색 / 입력하면 특정 serviceUUID를 가진 기기만 검색 -> 포착은 후자의 경우
+                let options = [CBCentralManagerScanOptionAllowDuplicatesKey: false]  // 이미 스캔된 정보면 다시 스캔 안 하도록 false
+                centralManager.scanForPeripherals(withServices: [serviceUUID], options: options)
+            }
+            else {
+                print("![Error] Central Manager cannot scan because state is not poweredOn!")
+            }
             print("==========================================")
         }
         else {
@@ -107,19 +111,21 @@ final class BluetoothSerialManager: NSObject {
 
 extension BluetoothSerialManager: CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        print("[BluetoothSerialManager] centralManagerDidUpdateState:")
         switch central.state {
         case .unknown:
-            print("unknown")
+            print(">> unknown")
         case .resetting:
-            print("resetting")
+            print(">> resetting")
         case .unsupported:
-            print("unsupported")
+            print(">> unsupported")
         case .unauthorized:
-            print("unauthorized")
+            print(">> unauthorized")
         case .poweredOff:
-            print("power Off")
+            print(">> power Off")
         case .poweredOn:
-            print("power on")
+            print(">> power on")
+            if !centralManager.isScanning { startScan() }
         @unknown default:
             fatalError()
         }
@@ -127,13 +133,18 @@ extension BluetoothSerialManager: CBCentralManagerDelegate {
     
     // 기기가 검색될 때마다 호출, 여기서 커스텀한 service만 찾을 수 있도록
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+        let localName = advertisementData[CBAdvertisementDataLocalNameKey] as? String
         print("=== central manager did discover peripheral ===")
         print(">> name: \(peripheral.name ?? "UNKNOWN NAME")")
         print(">> uuid: \(peripheral.identifier.uuidString)")
         print(">> advertisementData, local name: \(advertisementData[CBAdvertisementDataLocalNameKey])")
         print(">> advertisementData, service uuid: \(advertisementData[CBAdvertisementDataServiceUUIDsKey])")
         print("===============================================")
-        delegate?.serialDidDiscoverPeripheral(peripheral: peripheral, advertisementData: advertisementData, RSSI: RSSI)
+        
+        // advertisement data가 제대로 왔을 때에만 delegate 메소드 호출
+        if localName != nil {
+            delegate?.serialDidDiscoverPeripheral(peripheral: peripheral, advertisementData: advertisementData, RSSI: RSSI)
+        }
     }
 }
 
