@@ -170,6 +170,7 @@ final class NearbyPochakerViewController: UIViewController {
     
     private func addPochakerView(handle: String) {
         let pochakerView = NearbyPochakerView(handle: handle)
+        pochakerView.delegate = self
         
         view.addSubview(pochakerView)
         
@@ -191,5 +192,14 @@ extension NearbyPochakerViewController: BluetoothSerialDelegate {
 //                                                             identifier: "POCHAK_NEARBY")
 //        print("=======================================")
 //        BluetoothSerialManager.shared.stopScan()
+    }
+}
+
+// MARK: - Extension; NearbyPochakerViewDelegate
+
+extension NearbyPochakerViewController: NearbyPochakerViewDelegate {
+    func viewDidTap(_ view: NearbyPochakerView) {
+        print("[NearbyPochakerViewDelegate] view was tapped")
+        print(">> handle: \(view.getHandle())")
     }
 }

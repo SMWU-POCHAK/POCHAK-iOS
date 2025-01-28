@@ -8,9 +8,15 @@
 import UIKit
 import SnapKit
 
+protocol NearbyPochakerViewDelegate: AnyObject {
+    func viewDidTap(_ view: NearbyPochakerView)
+}
+
 final class NearbyPochakerView: UIView {
     
     // MARK: - Properties
+    
+    weak var delegate: NearbyPochakerViewDelegate?
     
     // MARK: - Views
     
@@ -27,7 +33,7 @@ final class NearbyPochakerView: UIView {
     
     private let handleLabel: UILabel = {
         let label = UILabel()
-        label.text = "handle"
+        //label.text = "handle"
         label.font = UIFont(name: "Pretendard-Regular", size: 13)
         label.textColor = UIColor(hexCode: "2F2E2D")
         label.setLineHeightByPx(value: 18)
@@ -39,6 +45,9 @@ final class NearbyPochakerView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        self.isUserInteractionEnabled = true
+        
+        addGesture()
         addViews()
         setupConstraints()
     }
@@ -71,5 +80,23 @@ final class NearbyPochakerView: UIView {
             make.leading.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
         }
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func viewDidTap() {
+        delegate?.viewDidTap(self)
+    }
+    
+    // MARK: - Functions
+    
+    private func addGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewDidTap))
+        self.addGestureRecognizer(tapGesture)
+    }
+    
+    func getHandle() -> String {
+        guard let handle = handleLabel.text else { fatalError("[!] Error: handleLabel.text is nil!")}
+        return handle
     }
 }
