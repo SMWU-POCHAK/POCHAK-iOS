@@ -11,6 +11,7 @@ import RealmSwift
 import FirebaseCore
 import FirebaseMessaging
 import UserNotifications
+import BackgroundTasks
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -68,7 +69,67 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // TODO: 백그라운드 작업을 하게 되면 고쳐야될듯?? 동시에 할 수는 없으니까
         // 앱이 시작될 때 advertising mode 다시 시작
         BluetoothSerialManager.shared.setBluetoothModeAndStart(to: .advertisingMode)
+        
+        registerBackgroundTasks()
+        
         return true
+    }
+    
+    
+    /// 앱의 launch sequence가 끝나기 전에 Background Task를 Scheduler에 Info.plist에 등록한 키 값으로 "등록"
+    private func registerBackgroundTasks() {
+        print("[AppDelegate] Background Task 등록!")
+        // 1. Refresh Task 등록
+        let taskIdentifier = ["NearbyPochak"]
+        
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: taskIdentifier[0], using: nil, launchHandler: { task in
+            // 2. 실제로 수행할 Background 동작 구현
+            self.handleBackgroundTask(task: task as! BGAppRefreshTask)
+            print("do backgroundtask")
+        })
+    }
+    
+    /// Background에서 수행할 task를 구현
+    /// - Parameter task: BGTaskScheduler에 등록한 task
+    private func handleBackgroundTask(task: BGAppRefreshTask) {
+        let operationQueue = OperationQueue()
+                
+        scheduleBackgroundTask()  // 다음 백그라운드 작업 예약
+        
+        print("[AppDelegate] Background task 수행 중")
+        
+        let operation = BluetoothRefreshOperation()
+        
+        // Background Task가 갑자기 종료되거나 TimeOut될 때를 대비
+        task.expirationHandler = {
+//            task.setTaskCompleted(success: false)  // task가 완료되었음을 알려줌 (백그라운드 자원 이용 stop)
+            operation.cancel()
+        }
+        
+        operation.completionBlock = {
+            // 백그라운드 작업 스케줄러에게 작업 완료됨 알리기
+            task.setTaskCompleted(success: !operation.isCancelled)
+            BluetoothSerialManager.shared.stopScan()
+            print("[AppDelegate] Background task completed with Success: \(!operation.isCancelled)")
+        }
+        
+        // TODO: background 태스크 수행 - central mode on 하기
+        
+        // 실행 대기열에 추가 -> 비동기로 실행
+        operationQueue.addOperation(operation)
+    }
+    
+    /// 다음 Background task 예약
+    func scheduleBackgroundTask() {
+        let task = BGAppRefreshTaskRequest(identifier: "NearbyPochak")
+        task.earliestBeginDate = Date(timeIntervalSinceNow: 2 * 60)  // 최소 120초 TODO: 변경
+        
+        do {
+            print("[AppDelegate] Background Task submitted!")
+            try BGTaskScheduler.shared.submit(task)  // Background Task 등록!!
+        } catch {
+            print("[!] Error - Could not schedule app refresh")
+        }
     }
 
     private func removeKeychainAtFirstLaunch() {
@@ -214,6 +275,15 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         print("====== Background, 메시지 수신 ======")
         let userInfo = response.notification.request.content.userInfo
         print("userInfo: \(userInfo)")
+                
+        if response.notification.request.identifier == "POCHAK_NEARBY" {
+            print("[AppDelegate] POCHAK_NEARBY 푸시 알림 수신함")
+            guard let rootViewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController else { return }
+            if let tabBarController = rootViewController as? CustomTabBarController {
+                let currentSelectedVC = tabBarController.selectedViewController as? UINavigationController
+                currentSelectedVC?.pushViewController(NearbyPochakerViewController(), animated: true)
+            }
+        }
     }
 }
 

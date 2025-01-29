@@ -136,6 +136,14 @@ extension BluetoothSerialManager: CBCentralManagerDelegate {
     
     // 기기가 검색될 때마다 호출, 여기서 커스텀한 service만 찾을 수 있도록
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+        if UIApplication.shared.applicationState != .active {
+            print("[BluetoothSerialManager] App not in foreground, send push notification")
+            LocalPushNotificationManager.shared.sendPushNotification(title: "👀 내 주변에 포차커가 있어요!",
+                                                                     body: "지금 눌러서 포착하기",
+                                                                     identifier: "POCHAK_NEARBY")
+            BluetoothSerialManager.shared.stopScan()
+        }
+        
         let localName = advertisementData[CBAdvertisementDataLocalNameKey] as? String
         print("[BluetoothSerialManager] central manager did discover peripheral")
         print(">> name: \(peripheral.name ?? "UNKNOWN NAME")")
