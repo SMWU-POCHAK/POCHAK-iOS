@@ -20,7 +20,6 @@ final class FixedTagCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.applyPochakFont(.body3_1)
         label.textColor = UIColor(named: "navy00")
-        label.text = "handle"
         return label
     }()
     

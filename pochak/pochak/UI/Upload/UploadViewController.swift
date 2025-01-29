@@ -387,14 +387,11 @@ extension UploadViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if isPochakedWithBluetooth && indexPath.item == 0 {
-            print("[UploadViewController] 첫번째 아이템, isPochakedWithBluetooth: \(isPochakedWithBluetooth)")
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FixedTagCollectionViewCell.identifier, for: indexPath) as? FixedTagCollectionViewCell else { fatalError("FixedTagCollectionViewCell 셀 타입 캐스팅 실패") }
             cell.configure(with: self.tagId[indexPath.item])
             return cell
         }
         else {
-            //let adjustedIndex = isPochakedWithBluetooth ? indexPath.item - 1 : indexPath.item
-            
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as? TagCollectionViewCell else {
                 fatalError("셀 타입 캐스팅 실패2")
             }
@@ -420,7 +417,6 @@ extension UploadViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        //let adjustedCount = isPochakedWithBluetooth ? tagId.count + 1 : tagId.count
         let totalCellWidth = collectionView.bounds.width - (12 * CGFloat(tagId.count - 1))
         let cellWidth = totalCellWidth / CGFloat(tagId.count)
         let inset = max((collectionView.bounds.width - CGFloat(tagId.count) * cellWidth - CGFloat(12 * (tagId.count - 1))) / 2, 0.0)

@@ -212,11 +212,5 @@ extension NearbyPochakerViewController: NearbyPochakerViewDelegate {
         else {
             print("tabbar is nil")
         }
-        
-//        let cameraTabSb = UIStoryboard(name: "CameraTab", bundle: nil)
-//        guard let cameraVC = cameraTabSb.instantiateViewController(withIdentifier: "CameraViewController") as? CameraViewController
-//        else { return }
-//        cameraVC.isPochakedWithBluetooth = true
-//        self.navigationController?.pushViewController(cameraVC, animated: true)
     }
 }

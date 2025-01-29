@@ -33,7 +33,6 @@ final class NearbyPochakerView: UIView {
     
     private let handleLabel: UILabel = {
         let label = UILabel()
-        //label.text = "handle"
         label.font = UIFont(name: "Pretendard-Regular", size: 13)
         label.textColor = UIColor(hexCode: "2F2E2D")
         label.setLineHeightByPx(value: 18)
