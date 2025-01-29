@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>NearbyPochak</string>
+	</array>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>사용자 주변에 있는 포차커 탐색을 위해 블루투스를 사용합니다.</string>
 	<key>CFBundleURLTypes</key>
