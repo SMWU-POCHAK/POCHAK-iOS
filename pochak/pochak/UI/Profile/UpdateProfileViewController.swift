@@ -24,7 +24,7 @@ final class UpdateProfileViewController: UIViewController {
     
     // MARK: - Views
 
-    private let doneButton: UIButton = {
+    private lazy var doneButton: UIButton = {
         let button = UIButton()
         button.setTitle("완료", for: .normal)
         button.setTitleColor(UIColor(named: "gray03"), for: .normal)
@@ -141,6 +141,7 @@ final class UpdateProfileViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
+        print(#function)
     }
     
     deinit {
@@ -189,13 +190,9 @@ final class UpdateProfileViewController: UIViewController {
     
     @objc private func doneButtonDidTap(_ sender: Any) {
         print("== doneButtonDidTap ==")
-        guard let nickname = nicknameTextField.text else { return }
-        var selfIntro = selfIntroTextView.text!
+        let nickname = nicknameTextField.text
+        let selfIntro = (selfIntroTextView.text == textViewPlaceHolder) ? "" : selfIntroTextView.text!
         print("selfIntro: \(selfIntro)")
-        if selfIntro == textViewPlaceHolder {
-            selfIntro = ""
-        }
-        print("cur selfIntro: \(selfIntro)")
         
         // 프로필 이미지 변경 여부에 따라 데이터 값 가져오기
         var profileImageData: Data?
@@ -206,7 +203,7 @@ final class UpdateProfileViewController: UIViewController {
             profileImageData = profileImageButton.imageView?.image?.jpegData(compressionQuality: 0.2)
         }
         
-        let request = ProfileUpdateRequest(name: nickname, message: selfIntro)
+        let request = ProfileUpdateRequest(name: nickname!, message: selfIntro)
         var files: [(Data, String, String)] = []
         if let profileImageFile = profileImageData {
             let fileTuple: (Data, String, String) = (profileImageFile, "profileImage", "image/jpeg")
@@ -356,6 +353,7 @@ final class UpdateProfileViewController: UIViewController {
         print("nickname: \(nickname)")
         print("isValidChangeInNickname: \(isValidChangeInNickname)")
         print("intro: \(intro)")
+        print("image: \(userSelectedPhoto)")
         
         // 유효한 변경사항 있을 때
         if isValidChangeInNickname || intro != message || userSelectedPhoto != nil {
