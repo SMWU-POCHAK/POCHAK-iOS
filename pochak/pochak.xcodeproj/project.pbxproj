@@ -98,6 +98,7 @@
 		089E27B72C4E8C2D00828F4C /* AlarmType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089E27B62C4E8C2D00828F4C /* AlarmType.swift */; };
 		089E27B92C4E8CB800828F4C /* AlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089E27B82C4E8CB800828F4C /* AlertType.swift */; };
 		089F49DB2D4A50A300D8E2E9 /* FixedTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F49DA2D4A50A300D8E2E9 /* FixedTagCollectionViewCell.swift */; };
+		089F49DD2D4A68CB00D8E2E9 /* BluetoothRefreshOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F49DC2D4A68CB00D8E2E9 /* BluetoothRefreshOperation.swift */; };
 		08B679612B528CB600F8D585 /* CommentTableViewFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08B679602B528CB600F8D585 /* CommentTableViewFooterView.xib */; };
 		08B679632B528D7500F8D585 /* CommentTableViewFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B679622B528D7500F8D585 /* CommentTableViewFooterView.swift */; };
 		08B693F22C37203400D82DC4 /* TaggedUsersDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B693F12C37203400D82DC4 /* TaggedUsersDetailViewController.swift */; };
@@ -405,6 +406,7 @@
 		089E27B62C4E8C2D00828F4C /* AlarmType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmType.swift; sourceTree = "<group>"; };
 		089E27B82C4E8CB800828F4C /* AlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertType.swift; sourceTree = "<group>"; };
 		089F49DA2D4A50A300D8E2E9 /* FixedTagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedTagCollectionViewCell.swift; sourceTree = "<group>"; };
+		089F49DC2D4A68CB00D8E2E9 /* BluetoothRefreshOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothRefreshOperation.swift; sourceTree = "<group>"; };
 		08B679602B528CB600F8D585 /* CommentTableViewFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableViewFooterView.xib; sourceTree = "<group>"; };
 		08B679622B528D7500F8D585 /* CommentTableViewFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewFooterView.swift; sourceTree = "<group>"; };
 		08B693F12C37203400D82DC4 /* TaggedUsersDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggedUsersDetailViewController.swift; sourceTree = "<group>"; };
@@ -891,6 +893,7 @@
 				086BF2032CEC9D7800735BB4 /* FCMTokenManager.swift */,
 				0880087E2D3FDEF100700585 /* BluetoothSerialManager.swift */,
 				083F26DF2D4004E800A11D79 /* LocalPushNotificationManager.swift */,
+				089F49DC2D4A68CB00D8E2E9 /* BluetoothRefreshOperation.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1970,6 +1973,7 @@
 				460CFD5F2D1C6A6A00398C9A /* ImageCell.swift in Sources */,
 				0822A06A2CA1983C00F87E2C /* PostLikeResponse.swift in Sources */,
 				3759CF492CAB178800408A4E /* SignUpRequest.swift in Sources */,
+				089F49DD2D4A68CB00D8E2E9 /* BluetoothRefreshOperation.swift in Sources */,
 				0820B1902A63A18100604DA8 /* ReplyTableViewCell.swift in Sources */,
 				460CFD552D1C48D500398C9A /* MemoryGalleryViewModel.swift in Sources */,
 				374E46392CAAC646008AE361 /* LogOutResponse.swift in Sources */,
