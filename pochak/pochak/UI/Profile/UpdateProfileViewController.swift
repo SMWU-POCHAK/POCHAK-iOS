@@ -325,8 +325,14 @@ final class UpdateProfileViewController: UIViewController {
     private func setupUserData() {
         self.nicknameTextField.text = name
         self.idTextField.text = handle
-        self.selfIntroTextView.text = message
-        self.selfIntroTextView.textColor = .black
+        if message == "" {
+            self.selfIntroTextView.text = textViewPlaceHolder
+            self.selfIntroTextView.textColor = UIColor(named: "gray03")
+        }
+        else {
+            self.selfIntroTextView.text = message
+            self.selfIntroTextView.textColor = .black
+        }
 
         if let url = URL(string: profileImgUrl) {
             // TODO: 뭔가 비효율적인가??
@@ -401,7 +407,7 @@ extension UpdateProfileViewController: UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             textView.text = textViewPlaceHolder
-            textView.textColor =  UIColor(named: "gray03")
+            textView.textColor = UIColor(named: "gray03")
         }
     }
     
