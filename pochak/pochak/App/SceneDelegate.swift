@@ -41,7 +41,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             window?.rootViewController = mainNavigationVC
             window?.makeKeyAndVisible()
-            
         }
     }
 

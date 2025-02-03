@@ -66,7 +66,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 앱 첫 실행 시 keyChain 정보를 삭제
         removeKeychainAtFirstLaunch()
         
-        // TODO: 백그라운드 작업을 하게 되면 고쳐야될듯?? 동시에 할 수는 없으니까
         // 앱이 시작될 때 advertising mode 다시 시작
         BluetoothSerialManager.shared.setBluetoothModeAndStart(to: .advertisingMode)
         
@@ -75,6 +74,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        scheduleBackgroundTask()
+    }
     
     /// 앱의 launch sequence가 끝나기 전에 Background Task를 Scheduler에 Info.plist에 등록한 키 값으로 "등록"
     private func registerBackgroundTasks() {
@@ -93,7 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /// - Parameter task: BGTaskScheduler에 등록한 task
     private func handleBackgroundTask(task: BGAppRefreshTask) {
         let operationQueue = OperationQueue()
-                
+        
         scheduleBackgroundTask()  // 다음 백그라운드 작업 예약
         
         print("[AppDelegate] Background task 수행 중")
@@ -103,7 +105,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Background Task가 갑자기 종료되거나 TimeOut될 때를 대비
         task.expirationHandler = {
 //            task.setTaskCompleted(success: false)  // task가 완료되었음을 알려줌 (백그라운드 자원 이용 stop)
-            operation.cancel()
+//            operation.cancel()
+            // After all operations are cancelled, the completion block below is called to set the task to complete.
+            operationQueue.cancelAllOperations()
         }
         
         operation.completionBlock = {
@@ -113,8 +117,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("[AppDelegate] Background task completed with Success: \(!operation.isCancelled)")
         }
         
-        // TODO: background 태스크 수행 - central mode on 하기
-        
         // 실행 대기열에 추가 -> 비동기로 실행
         operationQueue.addOperation(operation)
     }
@@ -122,13 +124,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /// 다음 Background task 예약
     func scheduleBackgroundTask() {
         let task = BGAppRefreshTaskRequest(identifier: "NearbyPochak")
-        task.earliestBeginDate = Date(timeIntervalSinceNow: 2 * 60)  // 최소 120초 TODO: 변경
+        task.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60)  // 지금부터 15분을 넘지 않는 시간 내에 실행
         
         do {
             print("[AppDelegate] Background Task submitted!")
             try BGTaskScheduler.shared.submit(task)  // Background Task 등록!!
         } catch {
-            print("[!] Error - Could not schedule app refresh")
+            print("[!] Error - Could not schedule app refresh: \(error)")
         }
     }
 
@@ -148,6 +150,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         handleRefreshToken()
     }
+    
+    
     
     private func handleRefreshToken() {
         if !isRefreshTokenValid() {
