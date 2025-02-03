@@ -188,8 +188,14 @@ final class UpdateProfileViewController: UIViewController {
     }
     
     @objc private func doneButtonDidTap(_ sender: Any) {
+        print("== doneButtonDidTap ==")
         guard let nickname = nicknameTextField.text else { return }
-        guard let selfIntro = selfIntroTextView.text else { return }
+        var selfIntro = selfIntroTextView.text!
+        print("selfIntro: \(selfIntro)")
+        if selfIntro == textViewPlaceHolder {
+            selfIntro = ""
+        }
+        print("cur selfIntro: \(selfIntro)")
         
         // 프로필 이미지 변경 여부에 따라 데이터 값 가져오기
         var profileImageData: Data?
@@ -337,16 +343,23 @@ final class UpdateProfileViewController: UIViewController {
     
     /// 프로필 정보 변경사항이 있을 때만 완료 버튼 활성화
     private func configureDoneButton() {
-        let nickname = nicknameTextField.text!
+        print("=== configure done button ===")
+        let nickname = nicknameTextField.text
         let intro = selfIntroTextView.text!
+        let isValidChangeInNickname = (nickname != name && nickname != "") ? true : false
+        print("nickname: \(nickname)")
+        print("isValidChangeInNickname: \(isValidChangeInNickname)")
+        print("intro: \(intro)")
         
-        // 변경사항 있을 때
-        if nickname != name || (intro != message && intro != textViewPlaceHolder) || userSelectedPhoto != nil {
+        // 유효한 변경사항 있을 때
+        if isValidChangeInNickname || intro != message || userSelectedPhoto != nil {
+            print(">> 유효한 변경사항")
             doneButton.setTitleColor(UIColor(named: "yellow00"), for: .normal)
             doneButton.isEnabled = true
         }
         // 없을 때
         else {
+            print(">> 유효하지 않은 변경사항")
             doneButton.setTitleColor(UIColor(named: "gray03"), for: .normal)
             doneButton.isEnabled = false
         }
