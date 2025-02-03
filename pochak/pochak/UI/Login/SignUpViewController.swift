@@ -297,9 +297,7 @@ final class SignUpViewController: UIViewController {
         print("=== done buttone did tap ===")
         guard let nickname = nicknameTextField.text else { return }
         guard let id = idTextField.text else { return }
-        print("set id")
         let selfIntro = (selfIntroTextView.text == textViewPlaceHolder) ? "" : selfIntroTextView.text!
-        print("set selfintro")
         guard let userSelectedPhoto = userSelectedPhoto else { return }
         let profileImageData: Data? = userSelectedPhoto.jpegData(compressionQuality: 0.2)
         
@@ -468,12 +466,10 @@ final class SignUpViewController: UIViewController {
         let isValidNickname = nicknameTextField.text == "" ? false : true
         
         if isValidNickname && handleDuplicationChecked && userSelectedPhoto != nil {
-            print(">> 유효한 변경사항")
             doneButton.setTitleColor(UIColor(named: "yellow00"), for: .normal)
             doneButton.isEnabled = true
         }
         else {
-            print(">> 유효하지 않은 변경사항")
             doneButton.setTitleColor(UIColor(named: "gray03"), for: .normal)
             doneButton.isEnabled = false
         }
@@ -511,7 +507,7 @@ extension SignUpViewController: UIImagePickerControllerDelegate, UINavigationCon
             userSelectedPhoto = image
             configureDoneButton()
         }
-        picker.dismiss(animated: true, completion: nil) // 주의점: picker 숨기기 위한 dismiss를 직접 해야함
+        picker.dismiss(animated: true, completion: nil)
     }
     
     // 사진 선택 취소

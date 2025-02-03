@@ -141,7 +141,6 @@ final class UpdateProfileViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
-        print(#function)
     }
     
     deinit {
@@ -192,7 +191,6 @@ final class UpdateProfileViewController: UIViewController {
         print("== doneButtonDidTap ==")
         let nickname = nicknameTextField.text
         let selfIntro = (selfIntroTextView.text == textViewPlaceHolder) ? "" : selfIntroTextView.text!
-        print("selfIntro: \(selfIntro)")
         
         // 프로필 이미지 변경 여부에 따라 데이터 값 가져오기
         var profileImageData: Data?
@@ -350,10 +348,6 @@ final class UpdateProfileViewController: UIViewController {
         let nickname = nicknameTextField.text
         let intro = selfIntroTextView.text!
         let isValidChangeInNickname = (nickname != name && nickname != "") ? true : false
-        print("nickname: \(nickname)")
-        print("isValidChangeInNickname: \(isValidChangeInNickname)")
-        print("intro: \(intro)")
-        print("image: \(userSelectedPhoto)")
         
         // 유효한 변경사항 있을 때
         if isValidChangeInNickname || intro != message || userSelectedPhoto != nil {
