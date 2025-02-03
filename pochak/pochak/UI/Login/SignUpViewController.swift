@@ -27,7 +27,7 @@ final class SignUpViewController: UIViewController {
     
     // MARK: - Views
     
-    private let doneButton: UIButton = {
+    private lazy var doneButton: UIButton = {
         let button = UIButton()
         button.setTitle("완료", for: .normal)
         button.setTitleColor(UIColor(named: "gray03"), for: .normal)
@@ -294,9 +294,12 @@ final class SignUpViewController: UIViewController {
     }
     
     @objc private func doneButtonDidTap(_ sender: Any) {
+        print("=== done buttone did tap ===")
         guard let nickname = nicknameTextField.text else { return }
         guard let id = idTextField.text else { return }
-        guard let selfIntro = selfIntroTextView.text else { return }
+        print("set id")
+        let selfIntro = (selfIntroTextView.text == textViewPlaceHolder) ? "" : selfIntroTextView.text!
+        print("set selfintro")
         guard let userSelectedPhoto = userSelectedPhoto else { return }
         let profileImageData: Data? = userSelectedPhoto.jpegData(compressionQuality: 0.2)
         
@@ -462,14 +465,15 @@ final class SignUpViewController: UIViewController {
     }
     
     private func configureDoneButton() {
-        let nickname = nicknameTextField.text!
-        let intro = selfIntroTextView.text!
+        let isValidNickname = nicknameTextField.text == "" ? false : true
         
-        if !nickname.isEmpty && handleDuplicationChecked && !intro.isEmpty && intro != textViewPlaceHolder && userSelectedPhoto != nil {
+        if isValidNickname && handleDuplicationChecked && userSelectedPhoto != nil {
+            print(">> 유효한 변경사항")
             doneButton.setTitleColor(UIColor(named: "yellow00"), for: .normal)
             doneButton.isEnabled = true
         }
         else {
+            print(">> 유효하지 않은 변경사항")
             doneButton.setTitleColor(UIColor(named: "gray03"), for: .normal)
             doneButton.isEnabled = false
         }
@@ -524,7 +528,6 @@ extension SignUpViewController: UITextViewDelegate {
         if textView.text == textViewPlaceHolder {
             textView.text = nil
             textView.textColor = .black
-            configureDoneButton()
         }
     }
     
@@ -545,8 +548,6 @@ extension SignUpViewController: UITextViewDelegate {
     
     // 최대 줄 수 3줄 제한
     func textViewDidChange(_ textView: UITextView) {
-        configureDoneButton()
-        
         let size = CGSize(width: textView.frame.width, height: .infinity)
         let estimatedSize = textView.sizeThatFits(size)
                 
