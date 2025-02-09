@@ -187,13 +187,11 @@ final class NearbyPochakerViewController: UIViewController {
         nearbyPochakerViews.append(pochakerView)
         
         if let randomFrame = getRandomCoordinate(for: pochakerView) {
-//            pochakerView.translatesAutoresizingMaskIntoConstraints = false
             print("randomFrame: \(randomFrame)")
             pochakerView.snp.makeConstraints { make in
                 make.top.equalToSuperview().offset(randomFrame.origin.y)
                 make.leading.equalToSuperview().offset(randomFrame.origin.x)
             }
-            //pochakerView.frame.origin = randomFrame.origin
         }
         else {
             print("[!] Error - nearbyPochakerView의 random frame 생성 실패, 기본 위치로 세팅.")
