@@ -13,10 +13,10 @@ final class NearbyPochakerViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let circle1Radius: CGFloat = 656
-    private let circle2Radius: CGFloat = 484
-    private let circle3Radius: CGFloat = 312
-    private let circle4Radius: CGFloat = 148
+    private let circle1Radius: CGFloat = CGFloat(656).adjustedH
+    private let circle2Radius: CGFloat = CGFloat(484).adjustedH
+    private let circle3Radius: CGFloat = CGFloat(312).adjustedH
+    private let circle4Radius: CGFloat = CGFloat(148).adjustedH
     
     // MARK: - Views
     
@@ -27,7 +27,7 @@ final class NearbyPochakerViewController: UIViewController {
         view.contentMode = .scaleAspectFill
         view.image = UIImage(named: "logo_full")
         view.clipsToBounds = true
-        view.layer.cornerRadius = 60 / 2
+        view.layer.cornerRadius = 60.adjusted / 2
         view.layer.borderColor = UIColor.white.cgColor
         view.layer.borderWidth = 2
         return view
@@ -120,7 +120,7 @@ final class NearbyPochakerViewController: UIViewController {
     private func setupConstraints() {
         circle1.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(28)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(28.adjustedH)
             make.width.height.equalTo(circle1Radius)
         }
         
@@ -149,18 +149,18 @@ final class NearbyPochakerViewController: UIViewController {
         userProfileImageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview()
-            make.width.height.equalTo(60)
+            make.width.height.equalTo(60.adjusted)
         }
         
         userHandleLabel.snp.makeConstraints { make in
             make.bottom.equalToSuperview()
-            make.top.equalTo(userProfileImageView.snp.bottom).offset(3)
+            make.top.equalTo(userProfileImageView.snp.bottom).offset(3.adjustedH)
             make.centerX.equalToSuperview()
         }
         
         guideLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(70)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(70.adjustedH)
         }
     }
     
@@ -175,8 +175,8 @@ final class NearbyPochakerViewController: UIViewController {
         view.addSubview(pochakerView)
         
         pochakerView.snp.makeConstraints { make in
-            make.top.equalTo(currentUserView.snp.bottom).offset(13)
-            make.leading.equalTo(currentUserView.snp.trailing).offset(92)
+            make.top.equalTo(currentUserView.snp.bottom).offset(13.adjustedH)
+            make.leading.equalTo(currentUserView.snp.trailing).offset(92.adjusted)
         }
     }
 }
