@@ -141,7 +141,6 @@ extension BluetoothSerialManager: CBCentralManagerDelegate {
             LocalPushNotificationManager.shared.sendPushNotification(title: "👀 내 주변에 포차커가 있어요!",
                                                                      body: "지금 눌러서 포착하기",
                                                                      identifier: "POCHAK_NEARBY")
-            BluetoothSerialManager.shared.stopScan()
         }
         
         let localName = advertisementData[CBAdvertisementDataLocalNameKey] as? String
