@@ -18,6 +18,9 @@ final class NearbyPochakerViewController: UIViewController {
     private let circle3Radius: CGFloat = CGFloat(312).adjustedH
     private let circle4Radius: CGFloat = CGFloat(148).adjustedH
     
+    private var nearbyPochakerHandles: [String] = []
+    private var nearbyPochakerViews: [UIView] = []
+    
     // MARK: - Views
     
     private let currentUserView: UIView = UIView()
@@ -169,15 +172,82 @@ final class NearbyPochakerViewController: UIViewController {
     // MARK: - Functions
     
     private func addPochakerView(handle: String) {
-        let pochakerView = NearbyPochakerView(handle: handle)
-        pochakerView.delegate = self
+        if nearbyPochakerHandles.contains(handle) {
+            return
+        }
         
+        nearbyPochakerHandles.append(handle)
+        
+        let pochakerView = NearbyPochakerView()
+        pochakerView.configure(with: handle)
+        pochakerView.delegate = self
+                
         view.addSubview(pochakerView)
         
-        pochakerView.snp.makeConstraints { make in
-            make.top.equalTo(currentUserView.snp.bottom).offset(13.adjustedH)
-            make.leading.equalTo(currentUserView.snp.trailing).offset(92.adjusted)
+        nearbyPochakerViews.append(pochakerView)
+        
+        if let randomFrame = getRandomCoordinate(for: pochakerView) {
+//            pochakerView.translatesAutoresizingMaskIntoConstraints = false
+            print("randomFrame: \(randomFrame)")
+            pochakerView.snp.makeConstraints { make in
+                make.top.equalToSuperview().offset(randomFrame.origin.y)
+                make.leading.equalToSuperview().offset(randomFrame.origin.x)
+            }
+            //pochakerView.frame.origin = randomFrame.origin
         }
+        else {
+            print("[!] Error - nearbyPochakerView의 random frame 생성 실패, 기본 위치로 세팅.")
+            pochakerView.snp.makeConstraints { make in
+                make.top.equalTo(currentUserView.snp.bottom).offset(13.adjustedH)
+                make.leading.equalTo(currentUserView.snp.trailing).offset(92.adjusted)
+            }
+        }
+    }
+    
+    private func getRandomCoordinate(for view: UIView) -> CGRect? {
+        let screenBounds = UIScreen.main.bounds
+        let screenCenter = CGPoint(x: screenBounds.midX, y: screenBounds.midY)
+        let currentUserViewSize = currentUserView.frame.size
+        
+        view.layoutIfNeeded()
+        let viewSize = view.frame.size
+        
+        for _ in 0..<20 {  // 여러 번 시도하여 적합한 위치 찾기
+            let angle = CGFloat.random(in: 0...(2 * .pi))  // 0도 ~ 360도의 랜덤 각도
+            let minDistance = currentUserViewSize.width / 2 + viewSize.width / 2 + 10  // 중앙과 겹치지 않도록 최소 거리 설정
+            let distance = CGFloat.random(in: minDistance...(screenBounds.width / 2 - viewSize.width / 2))  // 랜덤 거리 설정
+            
+            let newX = screenCenter.x + distance * cos(angle)  // X좌표 계산
+            let newY = screenCenter.y + distance * sin(angle)  // Y좌표 계산
+            
+            let newFrame = CGRect(
+                x: newX - viewSize.width / 2,
+                y: newY - viewSize.height / 2,
+                width: viewSize.width,
+                height: viewSize.height
+            )
+            
+            // 화면을 벗어나지 않는지 체크
+            if screenBounds.contains(newFrame) && isValidPosition(newFrame) {
+                return newFrame
+            }
+        }
+        
+        return nil  // 적절한 위치를 10번 시도에도 찾지 못하면 nil 반환
+    }
+    
+    private func isValidPosition(_ frame: CGRect) -> Bool {
+        if frame.intersects(currentUserView.frame) {
+            return false
+        }
+        
+        for nearbyPochakerView in nearbyPochakerViews {
+            if frame.intersects(nearbyPochakerView.frame) {
+                return false
+            }
+        }
+        
+        return true
     }
 }
 

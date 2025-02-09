@@ -22,10 +22,11 @@ final class NearbyPochakerView: UIView {
     
     private let profileImageView: UIImageView = {
         let view = UIImageView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         view.image = UIImage(named: "pochakIcon")
-        view.layer.cornerRadius = 52 / 2
+        view.layer.cornerRadius = 52.adjusted / 2
         view.layer.borderColor = UIColor.white.cgColor
         view.layer.borderWidth = 1.5
         return view
@@ -33,6 +34,7 @@ final class NearbyPochakerView: UIView {
     
     private let handleLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "Pretendard-Regular", size: 13)
         label.textColor = UIColor(hexCode: "2F2E2D")
         label.setLineHeightByPx(value: 18)
@@ -45,6 +47,7 @@ final class NearbyPochakerView: UIView {
         super.init(frame: frame)
         
         self.isUserInteractionEnabled = true
+        self.translatesAutoresizingMaskIntoConstraints = false
         
         addGesture()
         addViews()
@@ -55,11 +58,11 @@ final class NearbyPochakerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(handle: String) {
-        self.init(frame: .zero)
-        
-        self.handleLabel.text = handle
-    }
+//    convenience init(handle: String) {
+//        self.init(frame: .zero)
+//        
+//        self.handleLabel.text = handle
+//    }
     
     // MARK: - Layout
     
@@ -70,7 +73,7 @@ final class NearbyPochakerView: UIView {
     
     private func setupConstraints() {
         profileImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(52)
+            make.width.height.equalTo(52.adjusted)
             make.top.equalToSuperview()
         }
         
@@ -92,6 +95,10 @@ final class NearbyPochakerView: UIView {
     private func addGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewDidTap))
         self.addGestureRecognizer(tapGesture)
+    }
+    
+    func configure(with handle: String) {
+        self.handleLabel.text = handle
     }
     
     func getHandle() -> String {
