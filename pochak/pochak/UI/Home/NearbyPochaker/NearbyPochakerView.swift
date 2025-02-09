@@ -20,6 +20,15 @@ final class NearbyPochakerView: UIView {
     
     // MARK: - Views
     
+    private let stackView: UIStackView = {
+        let view = UIStackView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.axis = .vertical
+        view.spacing = 0
+        view.alignment = .center
+        return view
+    }()
+    
     private let profileImageView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -67,20 +76,19 @@ final class NearbyPochakerView: UIView {
     // MARK: - Layout
     
     private func addViews() {
-        self.addSubview(profileImageView)
-        self.addSubview(handleLabel)
+        self.addSubview(stackView)
+        
+        stackView.addArrangedSubview(profileImageView)
+        stackView.addArrangedSubview(handleLabel)
     }
     
     private func setupConstraints() {
-        profileImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(52.adjusted)
-            make.top.equalToSuperview()
+        stackView.snp.makeConstraints { make in
+            make.top.leading.trailing.bottom.equalToSuperview()
         }
         
-        handleLabel.snp.makeConstraints { make in
-            make.top.equalTo(profileImageView.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
+        profileImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(52.adjusted)
         }
     }
     
