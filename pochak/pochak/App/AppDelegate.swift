@@ -74,10 +74,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        scheduleBackgroundTask()
-    }
-    
     /// 앱의 launch sequence가 끝나기 전에 Background Task를 Scheduler에 Info.plist에 등록한 키 값으로 "등록"
     private func registerBackgroundTasks() {
         print("[AppDelegate] Background Task 등록!")
@@ -127,13 +123,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         task.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60)  // 지금부터 15분을 넘지 않는 시간 내에 실행
         
         do {
-            print("[AppDelegate] Background Task submitted!")
             try BGTaskScheduler.shared.submit(task)  // Background Task 등록!!
+            print("[AppDelegate] Background Task submitted!")
         } catch {
             print("[!] Error - Could not schedule app refresh: \(error)")
         }
     }
-
+    
     private func removeKeychainAtFirstLaunch() {
         guard UserDefaults.isFirstLaunch() else {
             return
@@ -150,7 +146,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         handleRefreshToken()
     }
-    
     
     
     private func handleRefreshToken() {

@@ -72,7 +72,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
         
         // 앱이 Background 상태에 들어갈 때 BGTaskScheduler에 Task를 submit -> AppDelegate로 옮김
-//        (UIApplication.shared.delegate as? AppDelegate)?.scheduleBackgroundTask()
+        (UIApplication.shared.delegate as? AppDelegate)?.scheduleBackgroundTask()
     }
     
     // Root 화면 전환
