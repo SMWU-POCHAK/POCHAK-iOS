@@ -81,7 +81,7 @@ class TimelineView: UIView {
         
         timelineStackView.snp.makeConstraints {
             $0.top.equalTo(dateRangeLabel.snp.bottom).offset(16)
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(35)
             $0.bottom.equalToSuperview().offset(-16)
         }
         
@@ -92,7 +92,7 @@ class TimelineView: UIView {
         
         dateRangeLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(8)
-            $0.leading.equalToSuperview().offset(16)
+            $0.leading.equalToSuperview().offset(32)
         }
     }
     
