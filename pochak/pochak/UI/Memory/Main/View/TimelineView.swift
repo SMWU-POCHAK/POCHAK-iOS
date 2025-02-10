@@ -86,7 +86,7 @@ class TimelineView: UIView {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().offset(16)
+            $0.top.leading.equalToSuperview().offset(32)
             $0.height.equalTo(24)
         }
         
