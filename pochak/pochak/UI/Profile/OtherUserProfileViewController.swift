@@ -385,12 +385,13 @@ final class OtherUserProfileViewController: UIViewController {
                 self.followToggleBtn.setTitle("팔로잉", for: .normal)
                 self.followToggleBtn.backgroundColor = UIColor(named: "gray03")
                 self.profileBackground.backgroundColor = UIColor(resource: .yellow00)
-                self.memoryButton.isHidden = false
             } else {
                 /// 팔로우하고 있지 않은 유저인 경우
                 self.followToggleBtn.setTitle("팔로우", for: .normal)
                 self.followToggleBtn.backgroundColor = UIColor(named: "yellow00")
             }
+            
+            self.memoryButton.isHidden = responseData.isBonded == false
         }
     }
     
