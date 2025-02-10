@@ -165,7 +165,7 @@ extension PochakedPostTabmanViewController: UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = CGFloat((collectionView.frame.width - 20 * 2 - minimumInterItemSpacing * 2) / 3)
+        let width = floor(CGFloat((collectionView.frame.width - 20 * 2 - minimumInterItemSpacing * 2) / 3))
         return CGSize(width: width, height: width * 4 / 3)
     }
     
