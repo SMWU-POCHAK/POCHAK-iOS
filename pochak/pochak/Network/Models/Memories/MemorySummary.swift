@@ -12,10 +12,11 @@ struct MemorySummary: Codable {
     let memberProfileImage: String
     let handle: String
     let loginMemberProfileImage: String
-    let followedDate: String
-    let followDay, pochakCount, bondedCount, pochakedCount: Int
+    let followDate: String?
+    let followedDate: String?
+    let followDay: Int?
+    let pochakCount, bondedCount, pochakedCount: Int
     let memories: [String: MemoryPost]
-    let followDate: String
     let timeLine: [String: TimeLine]
 }
 

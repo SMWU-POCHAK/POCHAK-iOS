@@ -95,9 +95,12 @@ class MemorySummaryView: UIView {
             myProfileView.load(with: url)
         }
         
-        let followPeriod = Date.formatDateRange(fromDateString: viewModel.followDate)
-        dateRangeLabel.text = followPeriod
-        postCountLabel.text = "서로 포착해준지 \(viewModel.followDay)일"
+        if let followDate = viewModel.followDate {
+            let followPeriod = Date.formatDateRange(fromDateString: followDate)
+            dateRangeLabel.text = followPeriod
+        }
+        
+        postCountLabel.text = "서로 포착해준지 \(viewModel.followDay ?? 0)일"
         setupStatsItems(pochakCount: viewModel.pochakCount,
                         bondedCount: viewModel.bondedCount,
                         pochakedCount: viewModel.pochakedCount)
