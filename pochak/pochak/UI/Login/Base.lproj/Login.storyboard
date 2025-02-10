@@ -13,14 +13,8 @@
         <array key="Pretendard-Bold.ttf">
             <string>Pretendard-Bold</string>
         </array>
-        <array key="Pretendard-Light.ttf">
-            <string>Pretendard-Light</string>
-        </array>
         <array key="Pretendard-Medium.ttf">
             <string>Pretendard-Medium</string>
-        </array>
-        <array key="Pretendard-SemiBold.ttf">
-            <string>Pretendard-SemiBold</string>
         </array>
     </customFonts>
     <scenes>
@@ -33,18 +27,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pochak_logo" translatesAutoresizingMaskIntoConstraints="NO" id="f2y-Aa-VDr">
-                                <rect key="frame" x="132.66666666666666" y="269.66666666666669" width="127.99999999999997" height="99"/>
+                                <rect key="frame" x="132.66666666666666" y="266" width="127.99999999999997" height="99"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="99" id="7UY-IA-yUJ"/>
                                     <constraint firstAttribute="width" constant="128" id="sTK-QQ-uI9"/>
                                 </constraints>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pochak_word_logo" translatesAutoresizingMaskIntoConstraints="NO" id="hzd-tu-vfr">
-                                <rect key="frame" x="81.666666666666686" y="403.66666666666669" width="230" height="45"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="45" id="HSq-6t-vSw"/>
-                                    <constraint firstAttribute="width" constant="230" id="LEy-7z-ccP"/>
-                                </constraints>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wordLogoBig" translatesAutoresizingMaskIntoConstraints="NO" id="hzd-tu-vfr">
+                                <rect key="frame" x="74.666666666666686" y="400" width="244" height="52"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="포착 시작하기" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxO-YY-JlX">
                                 <rect key="frame" x="152.66666666666666" y="650.66666666666663" width="87.666666666666657" height="19.333333333333371"/>
@@ -53,7 +43,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="당신의 순간, 포착" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wV5-nd-x5e">
-                                <rect key="frame" x="115.33333333333333" y="461.66666666666669" width="162.66666666666669" height="28"/>
+                                <rect key="frame" x="115.33333333333333" y="465" width="162.66666666666669" height="28"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -128,7 +118,7 @@
                                     <constraint firstAttribute="height" constant="99" id="ltm-pr-JYT"/>
                                 </constraints>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pochak_word_logo" translatesAutoresizingMaskIntoConstraints="NO" id="UiW-s1-0j2">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wordLogoBig" translatesAutoresizingMaskIntoConstraints="NO" id="UiW-s1-0j2">
                                 <rect key="frame" x="81.666666666666686" y="388" width="230" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="fJb-pn-K1d"/>
@@ -378,7 +368,7 @@
         <image name="apple_login" width="20.666666030883789" height="25.666666030883789"/>
         <image name="google_login" width="28" height="28"/>
         <image name="pochak_logo" width="132" height="103.66666412353516"/>
-        <image name="pochak_word_logo" width="230.66667175292969" height="45.666667938232422"/>
+        <image name="wordLogoBig" width="244" height="52"/>
         <namedColor name="gray01">
             <color red="0.9137254901960784" green="0.92549019607843142" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
