@@ -152,9 +152,11 @@ class MemorySummaryView: UIView {
     private func createStatsItemView(type: MemoryType, count: Int) -> UIView {
         let containerButton = UIButton()
         containerButton.tag = type.hashValue
-        containerButton.addAction(UIAction { _ in
-            self.didSelectMemoryCount(type: type)
-        }, for: .touchUpInside)
+        if count > 0 {
+            containerButton.addAction(UIAction { _ in
+                self.didSelectMemoryCount(type: type)
+            }, for: .touchUpInside)
+        }
 
         
         let titleLabel = UILabel()
