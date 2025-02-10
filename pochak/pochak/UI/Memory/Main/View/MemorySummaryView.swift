@@ -55,7 +55,7 @@ class MemorySummaryView: UIView {
     
     private let dateRangeLabel: UILabel = {
         let label = UILabel()
-        label.text = "2024년 5월 14일 ~ 2024년 10월 5일"
+        label.text = ""
         label.textColor = .black
         label.applyPochakFont(.body3_1)
         return label
@@ -63,7 +63,7 @@ class MemorySummaryView: UIView {
     
     private let postCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "서로 포착해준지 167일"
+        label.text = ""
         label.textColor = .black
         label.applyPochakFont(.body3_1)
         return label
@@ -100,7 +100,8 @@ class MemorySummaryView: UIView {
             dateRangeLabel.text = followPeriod
         }
         
-        postCountLabel.text = "서로 포착해준지 \(viewModel.followDay ?? 0)일"
+        let followDay = viewModel.followDay ?? 0
+        postCountLabel.text = "서로 포착해준지 \(followDay+1)일"
         setupStatsItems(pochakCount: viewModel.pochakCount,
                         bondedCount: viewModel.bondedCount,
                         pochakedCount: viewModel.pochakedCount)
