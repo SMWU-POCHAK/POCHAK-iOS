@@ -84,6 +84,7 @@
 		08867D652D106C3300FA6FD9 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 08867D642D106C3300FA6FD9 /* FirebaseMessaging */; };
 		08867D672D106C4700FA6FD9 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 08867D662D106C4700FA6FD9 /* FirebaseMessaging */; };
 		0889D1382C5CB69F00206C86 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0889D1372C5CB69F00206C86 /* String+.swift */; };
+		088EB7B02D5A45DA0001A5E8 /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 088EB7AF2D5A45DA0001A5E8 /* Color.xcassets */; };
 		089C75882A51728A003AAB94 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C757F2A517289003AAB94 /* Pretendard-Regular.ttf */; };
 		089C75892A51728A003AAB94 /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75802A517289003AAB94 /* Pretendard-Thin.ttf */; };
 		089C758A2A51728A003AAB94 /* Pretendard-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75812A517289003AAB94 /* Pretendard-Black.ttf */; };
@@ -385,6 +386,7 @@
 		0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoPostCollectionViewCell.xib; sourceTree = "<group>"; };
 		08867D5B2D106A1F00FA6FD9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "/Users/suyeon/Downloads/GoogleService-Info.plist"; sourceTree = "<absolute>"; };
 		0889D1372C5CB69F00206C86 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		088EB7AF2D5A45DA0001A5E8 /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		089C757F2A517289003AAB94 /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.ttf"; sourceTree = "<group>"; };
 		089C75802A517289003AAB94 /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.ttf"; sourceTree = "<group>"; };
 		089C75812A517289003AAB94 /* Pretendard-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.ttf"; sourceTree = "<group>"; };
@@ -903,6 +905,7 @@
 			children = (
 				EA1B0B632A49D23B00F86FBC /* Assets.xcassets */,
 				089C757A2A51713C003AAB94 /* Fonts */,
+				088EB7AF2D5A45DA0001A5E8 /* Color.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1704,6 +1707,7 @@
 				EAFB4B872A5147A300E0F2FA /* ProfileTab.storyboard in Resources */,
 				EACF0F6F2C3044C000C0016C /* TagSearchTableViewCell.xib in Resources */,
 				0822A0342CA196DF00F87E2C /* ExploreTab.storyboard in Resources */,
+				088EB7B02D5A45DA0001A5E8 /* Color.xcassets in Resources */,
 				3769D6C82B3C4F0900294CD1 /* FollowingCollectionViewCell.xib in Resources */,
 				0876E23F2C274256008DE88F /* NoPostCollectionViewCell.xib in Resources */,
 				089C75882A51728A003AAB94 /* Pretendard-Regular.ttf in Resources */,
