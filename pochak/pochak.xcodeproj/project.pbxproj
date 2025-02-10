@@ -1450,10 +1450,10 @@
 				EA1B0B532A49D23A00F86FBC /* Sources */,
 				EA1B0B542A49D23A00F86FBC /* Frameworks */,
 				EA1B0B552A49D23A00F86FBC /* Resources */,
+				08524D292D201C4F006C87E1 /* Embed Foundation Extensions */,
 				46AE2E7D2D0EFEA0009DFA2A /* Embed Frameworks */,
 				08D2B98E2C68C1B800BD7450 /* ShellScript */,
 				465D6E0D2CFE057300847542 /* ShellScript */,
-				08524D292D201C4F006C87E1 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
