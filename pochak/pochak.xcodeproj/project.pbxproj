@@ -99,6 +99,7 @@
 		089E27B92C4E8CB800828F4C /* AlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089E27B82C4E8CB800828F4C /* AlertType.swift */; };
 		089F49DB2D4A50A300D8E2E9 /* FixedTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F49DA2D4A50A300D8E2E9 /* FixedTagCollectionViewCell.swift */; };
 		089F49DD2D4A68CB00D8E2E9 /* BluetoothRefreshOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089F49DC2D4A68CB00D8E2E9 /* BluetoothRefreshOperation.swift */; };
+		08AA55232D58E27C00A78865 /* SizeAdjustment+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AA55222D58E27C00A78865 /* SizeAdjustment+.swift */; };
 		08B679612B528CB600F8D585 /* CommentTableViewFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08B679602B528CB600F8D585 /* CommentTableViewFooterView.xib */; };
 		08B679632B528D7500F8D585 /* CommentTableViewFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B679622B528D7500F8D585 /* CommentTableViewFooterView.swift */; };
 		08B693F22C37203400D82DC4 /* TaggedUsersDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B693F12C37203400D82DC4 /* TaggedUsersDetailViewController.swift */; };
@@ -407,6 +408,7 @@
 		089E27B82C4E8CB800828F4C /* AlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertType.swift; sourceTree = "<group>"; };
 		089F49DA2D4A50A300D8E2E9 /* FixedTagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedTagCollectionViewCell.swift; sourceTree = "<group>"; };
 		089F49DC2D4A68CB00D8E2E9 /* BluetoothRefreshOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothRefreshOperation.swift; sourceTree = "<group>"; };
+		08AA55222D58E27C00A78865 /* SizeAdjustment+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SizeAdjustment+.swift"; sourceTree = "<group>"; };
 		08B679602B528CB600F8D585 /* CommentTableViewFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableViewFooterView.xib; sourceTree = "<group>"; };
 		08B679622B528D7500F8D585 /* CommentTableViewFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewFooterView.swift; sourceTree = "<group>"; };
 		08B693F12C37203400D82DC4 /* TaggedUsersDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggedUsersDetailViewController.swift; sourceTree = "<group>"; };
@@ -1016,6 +1018,7 @@
 				08EB99B32C53D76C00FAC08A /* UIScrollView+.swift */,
 				0889D1372C5CB69F00206C86 /* String+.swift */,
 				37EED79E2CFDFE9100254471 /* Notification+.swift */,
+				08AA55222D58E27C00A78865 /* SizeAdjustment+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1981,6 +1984,7 @@
 				374E46252CAABE08008AE361 /* ProfileUpdateResponse.swift in Sources */,
 				0822A04F2CA1980200F87E2C /* FollowAPI.swift in Sources */,
 				EA2CD6392C5F45E300644EFE /* BaseAPI.swift in Sources */,
+				08AA55232D58E27C00A78865 /* SizeAdjustment+.swift in Sources */,
 				3759CF4B2CAB179100408A4E /* SignUpResponse.swift in Sources */,
 				374E46302CAAC3F6008AE361 /* SignOutResponse.swift in Sources */,
 				EA4EF8D82C2EC5F7009549FF /* UITextField+.swift in Sources */,
