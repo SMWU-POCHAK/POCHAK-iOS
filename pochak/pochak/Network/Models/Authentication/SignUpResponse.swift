@@ -14,13 +14,14 @@ struct SignUpResponse: Codable {
     let result: SignUpResult
 }
 
-struct SignUpResult : Codable {
-    var id : Int?
-    var socialId : String?
-    var name : String?
-    var email : String?
-    var socialType : String?
-    var accessToken : String?
-    var refreshToken : String?
-    var isNewMember : Bool?
+struct SignUpResult: Codable {
+    var id: Int?
+    var socialId: String?
+    var profileImage: String?
+    var name: String?
+    var email: String?
+    var socialType: String?
+    var accessToken: String?
+    var refreshToken: String?
+    var isNewMember: Bool?
 }
