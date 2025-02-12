@@ -88,6 +88,7 @@ final class NearbyPochakerViewController: UIViewController {
         view.backgroundColor = .white
         
         self.navigationItem.title = "내 주변 포착"
+        self.view.clipsToBounds = true
         
         addViews()
         setupConstraints()
