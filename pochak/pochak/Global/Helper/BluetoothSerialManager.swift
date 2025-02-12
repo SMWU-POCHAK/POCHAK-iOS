@@ -47,7 +47,6 @@ final class BluetoothSerialManager: NSObject {
         super.init()
         self.centralManager = CBCentralManager(delegate: self, queue: nil)
         self.peripheralManager = CBPeripheralManager(delegate: self, queue: nil)
-//        peripheralManager.add(CBMutableService(type: serviceUUID, primary: true))
         self.currentMode = .scanningMode
     }
     
@@ -69,7 +68,7 @@ final class BluetoothSerialManager: NSObject {
         print("[BluetoothSerialManager] Switched mode to \(currentMode.rawValue)")
     }
     
-    /// 기기 검색 시작, 연결이 가능한 모든 주변기기를 serviceUUID를 통해 검색
+    /// 주변 기기 검색을 시작합니다.  연결이 가능한 모든 주변기기를 serviceUUID를 통해 검색합니다.
     func startScan() {
         if centralManager.state == .poweredOn {
             if !centralManager.isScanning {
@@ -87,11 +86,12 @@ final class BluetoothSerialManager: NSObject {
         }
     }
     
+    /// 주변 기기 탐색을 멈춥니다.
     func stopScan() {
         centralManager.stopScan()
     }
     
-    /// periphalManager에 service를 추가한 후 advertise 시작하는 메소드
+    /// periphalManager에 service를 추가한 후 advertise를 시작합니다.
     func startAdvertising() {
         guard peripheralManager.state == .poweredOn else {
             print("[!] Error: Cannot start advertising, Peripheral manager state is \(peripheralManager.state)")
@@ -105,6 +105,7 @@ final class BluetoothSerialManager: NSObject {
         ])
     }
     
+    /// data advertisement를 멈춥니다.
     func stopAdvertising() {
         peripheralManager.stopAdvertising()
     }

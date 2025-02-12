@@ -68,12 +68,6 @@ final class NearbyPochakerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    convenience init(handle: String) {
-//        self.init(frame: .zero)
-//        
-//        self.handleLabel.text = handle
-//    }
-    
     // MARK: - Layout
     
     private func addViews() {
