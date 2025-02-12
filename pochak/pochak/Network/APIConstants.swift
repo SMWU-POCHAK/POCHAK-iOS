@@ -12,7 +12,8 @@ struct APIConstants{
     static let baseURLv2 = "http://15.165.84.249"
     
     // MARK: - Feature URL
-    // login...
+    
+    static let memberProfileImgBaseURL = "https://storage.googleapis.com/pochak-image-bucket/member/"
     
     // MARK: - Temporary Properties (Token values)
     static let dayeonToken : String = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzE5ODQzOTM3LCJyb2xlIjoiUk9MRV9VU0VSIiwiZXhwIjoyMDMwODgzOTM3fQ.pkZ2cQSTxX3FXT_OLi8jSwxW94vVIYztepxurfFf7gA"
