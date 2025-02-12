@@ -91,6 +91,7 @@ final class NearbyPochakerViewController: UIViewController {
         
         addViews()
         setupConstraints()
+        setupData()
         
         BluetoothSerialManager.shared.delegate = self
         
@@ -171,6 +172,12 @@ final class NearbyPochakerViewController: UIViewController {
     
     // MARK: - Functions
     
+    private func setupData() {
+        if let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle), let url = URL(string: APIConstants.memberProfileImgBaseURL + "\(handle)") {
+            userProfileImageView.load(with: url)
+        }
+    }
+    
     private func addPochakerView(handle: String) {
         if nearbyPochakerHandles.contains(handle) {
             return
@@ -178,8 +185,10 @@ final class NearbyPochakerViewController: UIViewController {
         
         nearbyPochakerHandles.append(handle)
         
+        let profileImgUrl = APIConstants.memberProfileImgBaseURL + "\(handle)"
+        
         let pochakerView = NearbyPochakerView()
-        pochakerView.configure(with: handle)
+        pochakerView.configure(handle: handle, profileImgUrl: profileImgUrl)
         pochakerView.delegate = self
                 
         view.addSubview(pochakerView)

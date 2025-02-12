@@ -105,8 +105,11 @@ final class NearbyPochakerView: UIView {
         self.addGestureRecognizer(tapGesture)
     }
     
-    func configure(with handle: String) {
+    func configure(handle: String, profileImgUrl: String) {
         self.handleLabel.text = handle
+        if let url = URL(string: profileImgUrl) {
+            self.profileImageView.load(with: url)
+        }
     }
     
     func getHandle() -> String {
