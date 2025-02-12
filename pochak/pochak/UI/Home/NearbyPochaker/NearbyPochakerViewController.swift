@@ -223,7 +223,7 @@ final class NearbyPochakerViewController: UIViewController {
         view.layoutIfNeeded()
         let viewSize = view.frame.size
         
-        for _ in 0..<20 {  // 여러 번 시도하여 적합한 위치 찾기
+        for _ in 0..<15 {  // 여러 번 시도하여 적합한 위치 찾기
             let angle = CGFloat.random(in: 0...(2 * .pi))  // 0도 ~ 360도의 랜덤 각도
             let minDistance = currentUserViewSize.width / 2 + viewSize.width / 2 + 10  // 중앙과 겹치지 않도록 최소 거리 설정
             let distance = CGFloat.random(in: minDistance...(screenBounds.width / 2 - viewSize.width / 2))  // 랜덤 거리 설정
@@ -244,7 +244,7 @@ final class NearbyPochakerViewController: UIViewController {
             }
         }
         
-        return nil  // 적절한 위치를 10번 시도에도 찾지 못하면 nil 반환
+        return nil  // 적절한 위치를 15번 시도에도 찾지 못하면 nil 반환
     }
     
     private func isValidPosition(_ frame: CGRect) -> Bool {
