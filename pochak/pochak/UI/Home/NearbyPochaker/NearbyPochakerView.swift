@@ -55,6 +55,7 @@ final class NearbyPochakerView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        self.alpha = 0
         self.isUserInteractionEnabled = true
         self.translatesAutoresizingMaskIntoConstraints = false
         
@@ -115,5 +116,11 @@ final class NearbyPochakerView: UIView {
     func getHandle() -> String {
         guard let handle = handleLabel.text else { fatalError("[!] Error: handleLabel.text is nil!")}
         return handle
+    }
+    
+    func showViewWithAnimation(duration: TimeInterval = 1, delay: TimeInterval = 0) {
+        UIView.animate(withDuration: duration, delay: delay, options: .curveEaseInOut, animations: {
+            self.alpha = 1  // 점점 나타남
+        })
     }
 }

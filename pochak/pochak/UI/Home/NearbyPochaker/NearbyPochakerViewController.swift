@@ -209,6 +209,10 @@ final class NearbyPochakerViewController: UIViewController {
                 make.leading.equalTo(currentUserView.snp.trailing).offset(92.adjusted)
             }
         }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            pochakerView.showViewWithAnimation()
+        }
     }
     
     private func getRandomCoordinate(for view: UIView) -> CGRect? {
