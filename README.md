@@ -27,10 +27,7 @@ POCHAK은 사용자들이 서로의 순간에 참여하고 상호 작용할 수 
     <img width="80%" alt="구조도" src="https://github.com/user-attachments/assets/8122239f-54b7-4709-8ccc-3f3e1dd17cf5">
 </details>
 
-* UIKit (Storyboard)
-* Alamofire
-* Tabman
-* Pageboy
+* UIKit, SnapKit, Alamofire, Tabman, Pageboy
 
 ## Developers
 > 2차 -> 1차 순으로 정렬되어있습니다.
@@ -51,11 +48,13 @@ POCHAK은 사용자들이 서로의 순간에 참여하고 상호 작용할 수 
     <td>
       <ul>
         <li>1차 홈 탭 개발</li>
-        <li>포스트 상세 페이지 개발(좋아요, 댓글, 팔로잉, 게시글 삭제, 신고)</li>
+        <li>포스트 상세 페이지 개발</li>
+        <li>2차 푸시 알림 기능 개발</li>
     </td>
     <td>
       <ul>
         <li>2차 포착하기 카메라 기능 개발</li>
+        <li>2차 추억 페이지 기능 개발</li>
     </td>
     <td>
       <ul>
