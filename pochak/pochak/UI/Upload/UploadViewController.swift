@@ -81,12 +81,19 @@ final class UploadViewController: UIViewController,UITextFieldDelegate {
             
             var taggedUserHandles: [String] = []
             for taggedUserHandle in tagId {
+                if taggedUserHandle == nearbyPochakerHandle {
+                    continue
+                }
                 taggedUserHandles.append(taggedUserHandle)
             }
             
             showProgressBar()
             
-            let request = CameraUploadRequest(caption: captionText, taggedMemberHandleList: taggedUserHandles)
+            let request = CameraUploadRequest(caption: captionText,
+                                              taggedMemberHandleList: taggedUserHandles.isEmpty ? nil : taggedUserHandles,
+                                              pinnedHandle: isPochakedWithBluetooth ? nearbyPochakerHandle : nil)
+
+            print(">> CameraUploadRequest: \(request)")
             
             var files: [(Data, String, String)] = []
             if let postImage = postImage {
