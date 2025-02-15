@@ -40,6 +40,7 @@ extension BaseAPI {
             switch parameters {
             case .query(let request):
                 var params = request?.toDictionary() ?? [:]
+                print("[BaseAPI] params: \(params)")
                 // 배열 타입인 파라미터를 쉼표로 구분된 문자열로 변환
                 for (key, value) in params {
                     if let arrayValue = value as? [String] {
@@ -58,7 +59,7 @@ extension BaseAPI {
             }
         }
             
-        print("==urlRequest = \(urlRequest.description)==")
+        print(">> urlRequest = \(urlRequest.description)")
         return urlRequest
     }
 }
@@ -71,8 +72,14 @@ enum RequestParams {
 extension Encodable {
     func toDictionary() -> [String: Any] {
         guard let data = try? JSONEncoder().encode(self),
-              let jsonData = try? JSONSerialization.jsonObject(with: data),
-              let dictionaryData = jsonData as? [String: Any] else { return [:] }
-        return dictionaryData
+                      let jsonData = try? JSONSerialization.jsonObject(with: data),
+                      let dictionaryData = jsonData as? [String: Any] else { return [:] }
+                
+        return dictionaryData.compactMapValues { value in
+            if case Optional<Any>.none = value {
+                return nil
+            }
+            return value
+        }
     }
 }
