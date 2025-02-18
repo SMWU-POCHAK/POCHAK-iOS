@@ -298,7 +298,6 @@ final class MyProfileTabViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        fetchData()
         self.navigationController?.isNavigationBarHidden = true
     }
     
@@ -603,15 +602,6 @@ final class MyProfileTabViewController: UIViewController {
         contentView.frame = CGRect(x: 0, y: 0, width: scrollView.frame.width, height: newHeight)
     }
 
-//    private func setUpResponseData(_ responseData: ProfileRetrievalResult) {
-//        self.profileImage.contentMode = .scaleAspectFill
-//        self.userName.text = String(responseData.name ?? "")
-//        self.userMessage.text = String(responseData.message ?? "")
-//        self.postCount.text = String(responseData.totalPostNum ?? 0)
-//        self.followerCount.text = String(responseData.followerCount ?? 0)
-//        self.followingCount.text = String(responseData.followingCount ?? 0)
-//    }
-//    
 //    private func setUpUserDefaults(_ responseData: ProfileRetrievalResult) {
 //        UserDefaultsManager.setData(value: responseData.name, key: .name)
 //        UserDefaultsManager.setData(value: responseData.message, key: .message)

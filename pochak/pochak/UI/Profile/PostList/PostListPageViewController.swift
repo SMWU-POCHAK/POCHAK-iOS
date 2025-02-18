@@ -87,7 +87,6 @@ final class PostListPageViewController: UIViewController {
         self.postList = postList
         self.collectionView.reloadData()
         
-        print("✅ collectionView frame: \(collectionView.frame)")
         self.myProfileTabVC.scrollView.updateContentSize()
     }
 }
@@ -109,7 +108,6 @@ extension PostListPageViewController: UICollectionViewDataSource, UICollectionVi
         if indexPath.item == postList.count - 1 {
             myProfileTabVC.updateScrollViewContentSize()
         }
-        print("[PostListPageViewController] collectionview - cell 설정")
         return cell
     }
     
@@ -131,10 +129,6 @@ extension PostListPageViewController: UICollectionViewDataSource, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return PostListPageViewController.minimumInterItemSpacing
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return .init(top: 20, left: 20, bottom: 20, right: 20)
-//    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = CGFloat((collectionView.frame.width - 20 * 2 - PostListPageViewController.minimumInterItemSpacing * 2) / 3)  // 20은 양 끝 간격(inset)
