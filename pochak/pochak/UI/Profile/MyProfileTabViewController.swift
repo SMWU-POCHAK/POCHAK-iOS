@@ -7,9 +7,16 @@
 
 import UIKit
 
+struct MyProfileTabPageInfoModel {
+    var currentPage: Int
+    var isLastPage: Bool
+}
+
 final class MyProfileTabViewController: UIViewController {
     
     // MARK: - Properties
+    
+    var isCurrentlyFetching: Bool = false
     
     private let viewModel = ProfileViewModel()
     private let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
@@ -29,8 +36,8 @@ final class MyProfileTabViewController: UIViewController {
         }
     }
     
-    private var myProfileCurrentPage: Int = 0
-    private var pochakPostCurrentPage: Int = 0
+    private var myProfilePageInfo: MyProfileTabPageInfoModel = .init(currentPage: 0, isLastPage: false)
+    private var pochakPostPageInfo: MyProfileTabPageInfoModel = .init(currentPage: 0, isLastPage: false)
     
     // MARK: - Views
     
@@ -267,11 +274,11 @@ final class MyProfileTabViewController: UIViewController {
         // 스크롤 충돌 방지 설정
         self.vc1.collectionView.panGestureRecognizer.require(toFail: self.scrollView.panGestureRecognizer)
         self.vc2.collectionView.panGestureRecognizer.require(toFail: self.scrollView.panGestureRecognizer)
+                
+        isCurrentlyFetching = true
         
-        print("페이지 개수: \(pageViewController.viewControllers?.count ?? 0)")
-        
-        viewModel.fetchMyProfile(handle: handle, request: .init(page: myProfileCurrentPage), fromCurrentVC: self)
-        viewModel.fetchPochakPosts(handle: handle, request: .init(page: pochakPostCurrentPage), fromCurrentVC: self)
+        viewModel.fetchMyProfile(handle: handle, request: .init(page: myProfilePageInfo.currentPage), fromCurrentVC: self)
+        viewModel.fetchPochakPosts(handle: handle, request: .init(page: pochakPostPageInfo.currentPage), fromCurrentVC: self)
         
         setUpRefreshControl()
         
@@ -337,11 +344,18 @@ final class MyProfileTabViewController: UIViewController {
     }
     
     @objc private func refreshData(_ sender: Any) {
-        self.pochakPostCurrentPage = 0
-        self.myProfileCurrentPage = 0
+        print("=====================")
+        print("REFRESHING  DATA")
+        print("=====================")
+        self.myProfilePageInfo = .init(currentPage: 0, isLastPage: false)
+        self.pochakPostPageInfo = .init(currentPage: 0, isLastPage: false)
         
-        viewModel.fetchMyProfile(handle: handle, request: .init(page: myProfileCurrentPage), fromCurrentVC: self)
-        viewModel.fetchPochakPosts(handle: handle, request: .init(page: pochakPostCurrentPage), fromCurrentVC: self)
+        self.vc1.setPostCollectionViewData([])
+        self.vc2.setPostCollectionViewData([])
+        
+        self.isCurrentlyFetching = true
+        viewModel.fetchMyProfile(handle: handle, request: .init(page: myProfilePageInfo.currentPage), fromCurrentVC: self)
+        viewModel.fetchPochakPosts(handle: handle, request: .init(page: pochakPostPageInfo.currentPage), fromCurrentVC: self)
         
         DispatchQueue.main.async() {
             self.scrollView.refreshControl?.endRefreshing()
@@ -478,7 +492,11 @@ final class MyProfileTabViewController: UIViewController {
     private func bind() {
         viewModel.profileDataDidChange = { [weak self] data in
             guard let data = data else { return }
+            
+            self?.myProfilePageInfo.isLastPage = data.pageInfo.lastPage
+            
             DispatchQueue.main.async {
+                print("[MyProfileTabViewController] bind -- profile data did change")
                 self?.setupData(data)
                 self?.vc1.setPostCollectionViewData(data.postList)
             }
@@ -486,28 +504,39 @@ final class MyProfileTabViewController: UIViewController {
         
         viewModel.pochakPostDataDidChange = { [weak self] data in
             guard let data = data else { return }
+            
+            self?.pochakPostPageInfo.isLastPage = data.pageInfo.lastPage
+            
             DispatchQueue.main.async {
+                print("[MyProfileTabViewController] bind -- pochak posts data did change")
                 self?.vc2.setPostCollectionViewData(data.postList)
             }
         }
     }
     
     private func setupData(_ responseData: ProfileRetrievalResult) {
+        print("[MyProfileTabViewController] setupData")
         self.titleLabel.text = "@\(handle)"
         
         if let url = URL(string: "https://storage.googleapis.com/pochak-image-bucket/member/\(handle)") {  // TODO: 추후 APIConstants 변수로 수정
+            print("[MyProfileTabViewController] setupData -- load image")
             self.profileImageView.load(with: url)
         }
         else {
             self.profileImageView.image = UIImage(named: "pochakIcon")
         }
         
-        self.nicknameLabel.text = responseData.name
-        self.introLabel.text = responseData.message
-        
-        self.postCountNumberLabel.text = String(responseData.totalPostNum ?? 0)
-        self.followerCountNumberLabel.text = String(responseData.followerCount ?? 0)
-        self.followingCountNumberLabel.text = String(responseData.followingCount ?? 0)
+        // 프로필 정보는 페이지 0일 때만 오기 때문에 프로필 정보는 그대로 둠
+        if myProfilePageInfo.currentPage == 0 {
+            self.nicknameLabel.text = responseData.name
+            self.introLabel.text = responseData.message
+            print("[MyProfileTabViewController] response nickname, intro: \(responseData.name), \(responseData.message)")
+            print("[MyProfileTabViewController] nickname, intro: \(self.nicknameLabel.text), \(self.introLabel.text)")
+            
+            self.postCountNumberLabel.text = String(responseData.totalPostNum ?? 0)
+            self.followerCountNumberLabel.text = String(responseData.followerCount ?? 0)
+            self.followingCountNumberLabel.text = String(responseData.followingCount ?? 0)
+        }
         
         //self.vc1.setPostCollectionViewData([])
         //self.vc2.setPostCollectionViewData([])
@@ -668,6 +697,25 @@ extension MyProfileTabViewController: UIPageViewControllerDelegate, UIPageViewCo
 
 extension MyProfileTabViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
+        if scrollView.contentOffset.y > (scrollView.contentSize.height - scrollView.frame.size.height) {
+            switch currentPage {
+            case 0:
+                if !myProfilePageInfo.isLastPage && !isCurrentlyFetching {
+                    print("[!] needs to re-fetch data!!!")
+                    myProfilePageInfo.currentPage += 1
+                    self.isCurrentlyFetching = true
+                    viewModel.fetchMyProfile(handle: handle, request: .init(page: myProfilePageInfo.currentPage), fromCurrentVC: self)
+                }
+            case 1:
+                if !pochakPostPageInfo.isLastPage && !isCurrentlyFetching {
+                    print("[!] needs to re-fetch data!!!")
+                    pochakPostPageInfo.currentPage += 1
+                    self.isCurrentlyFetching = true
+                    viewModel.fetchPochakPosts(handle: handle, request: .init(page: pochakPostPageInfo.currentPage), fromCurrentVC: self)
+                }
+            default:
+                return
+            }
+        }
     }
 }
