@@ -261,7 +261,6 @@ final class MyProfileTabViewController: UIViewController {
         
         addViews()
         setupConstraints()
-        fetchData()
         addFollwerGestureRecognizer()
         addFollowingGestuerRecognizer()
         
@@ -354,7 +353,6 @@ final class MyProfileTabViewController: UIViewController {
     //        (updatePostListTabmanViewHeight(ProfileDataSingleton.shared.firstTabHeight)) :
     //        (updatePostListTabmanViewHeight(ProfileDataSingleton.shared.secondTabHeight))
     //    }
-    //
     
     // MARK: - Layout
     
@@ -519,7 +517,7 @@ final class MyProfileTabViewController: UIViewController {
         scrollView.refreshControl = UIRefreshControl()
         scrollView.refreshControl?.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
     }
-//    
+    
 //    private func setUpViewController() {
 //        self.navigationController?.isNavigationBarHidden = true
 //        profileBackground.layer.cornerRadius = 58
@@ -533,33 +531,6 @@ final class MyProfileTabViewController: UIViewController {
 //        self.navigationItem.backBarButtonItem = backBarButtonItem
 //        NotificationCenter.default.addObserver(self, selector: #selector(totalHeightUpdated), name: .didUpdateTotalHeight, object: nil)
 //    }
-//    
-    private func fetchData() {
-        let request = ProfileRetrievalRequest(page: 0)
-        ProfileService.getProfile(handle: handle, request: request) { data, failed in
-            guard let data = data else {
-                switch failed {
-                case .clientError:
-                    self.present(UIAlertController.networkErrorAlert(title: "유효하지 않은 멤버의 handle입니다."), animated: true)
-                case .disconnected:
-                    self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .serverError:
-                    self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                case .unknownError:
-                    self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                default:
-                    self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
-                }
-                return
-            }
-            
-            // 필요한 데이터 뷰에 반영
-            self.setupData(data.result)
-            
-            // UserDefaultsManager에 데이터 저장 후 관리
-//            self.setUpUserDefaults(data.result)
-        }
-    }
     
 //    private func initializeSingleton() {
 //        ProfileDataSingleton.shared.currentTabIndex = 0
