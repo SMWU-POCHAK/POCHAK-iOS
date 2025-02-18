@@ -92,7 +92,6 @@ final class PostListPageViewController: UIViewController {
         else {
             print("[PostListPageViewController] setPostCollectionViewData, \(type) NOT empty postlist")
             print("[PostListPageViewController] postList count: \(self.postList.count)")
-            print("[PostListPageViewController] BEFORE collectionview cell count: \(self.collectionView.numberOfItems(inSection: 0))")
             let startIndex = self.postList.count
             self.postList.append(contentsOf: postList)
             let endIndex = startIndex + postList.count
@@ -101,7 +100,6 @@ final class PostListPageViewController: UIViewController {
             DispatchQueue.main.async {
                 self.collectionView.performBatchUpdates {
                     self.collectionView.insertItems(at: newIndexPathList)
-                    print("[PostListPageViewController] AFTER collectionview cell count: \(self.collectionView.numberOfItems(inSection: 0))")
                 } completion: { [weak self] _ in
                     self?.myProfileTabVC.updateScrollViewContentSize()
                 }
@@ -117,17 +115,14 @@ final class PostListPageViewController: UIViewController {
 extension PostListPageViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("[PostListPageViewController] \(type) collectionview - item 개수")
         return postList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("[PostListPageViewController] collectionview - cell 설정 -- ")
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PostListCollectionViewCell.identifier, for: indexPath) as? PostListCollectionViewCell else { return UICollectionViewCell() }
         cell.configure(with: postList[indexPath.item].postImage)
         
         if indexPath.item == postList.count - 1 {
-            print("[PostListPageViewController] 이번이 마지막 셀")
             myProfileTabVC.updateScrollViewContentSize()
         }
         return cell

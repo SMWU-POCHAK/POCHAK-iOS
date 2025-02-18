@@ -250,15 +250,6 @@ final class MyProfileTabViewController: UIViewController {
     
     // MARK: - Lifecycle
     
-    //    // Container View에 데이터 전달(ViewDidLoad보다 먼저 실행)
-    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    //        //storyboard에서 설정한 identifier와 동일한 이름
-    //        if segue.identifier == "embedContainer" {
-    //            let postListVC = segue.destination as! PostListViewController
-    //            postListVC.handle = handle
-    //        }
-    //    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -276,18 +267,10 @@ final class MyProfileTabViewController: UIViewController {
         self.vc2.collectionView.panGestureRecognizer.require(toFail: self.scrollView.panGestureRecognizer)
                 
         isCurrentlyFetching = true
-        
         viewModel.fetchMyProfile(handle: handle, request: .init(page: myProfilePageInfo.currentPage), fromCurrentVC: self)
         viewModel.fetchPochakPosts(handle: handle, request: .init(page: pochakPostPageInfo.currentPage), fromCurrentVC: self)
         
         setUpRefreshControl()
-        
-        //        addSubview()
-        //        setUpUIConstraints()
-        //        setUpRefreshControl()
-        //        setUpViewController()
-        //        setUpData()
-        //        initializeSingleton()
     }
     
     override func viewDidLayoutSubviews() {
@@ -361,12 +344,6 @@ final class MyProfileTabViewController: UIViewController {
             self.scrollView.refreshControl?.endRefreshing()
         }
     }
-    
-    //    @objc private func totalHeightUpdated() {
-    //        ProfileDataSingleton.shared.currentTabIndex == 0 ?
-    //        (updatePostListTabmanViewHeight(ProfileDataSingleton.shared.firstTabHeight)) :
-    //        (updatePostListTabmanViewHeight(ProfileDataSingleton.shared.secondTabHeight))
-    //    }
     
     // MARK: - Layout
     
@@ -519,7 +496,6 @@ final class MyProfileTabViewController: UIViewController {
         self.titleLabel.text = "@\(handle)"
         
         if let url = URL(string: "https://storage.googleapis.com/pochak-image-bucket/member/\(handle)") {  // TODO: 추후 APIConstants 변수로 수정
-            print("[MyProfileTabViewController] setupData -- load image")
             self.profileImageView.load(with: url)
         }
         else {
@@ -530,47 +506,18 @@ final class MyProfileTabViewController: UIViewController {
         if myProfilePageInfo.currentPage == 0 {
             self.nicknameLabel.text = responseData.name
             self.introLabel.text = responseData.message
-            print("[MyProfileTabViewController] response nickname, intro: \(responseData.name), \(responseData.message)")
-            print("[MyProfileTabViewController] nickname, intro: \(self.nicknameLabel.text), \(self.introLabel.text)")
             
             self.postCountNumberLabel.text = String(responseData.totalPostNum ?? 0)
             self.followerCountNumberLabel.text = String(responseData.followerCount ?? 0)
             self.followingCountNumberLabel.text = String(responseData.followingCount ?? 0)
         }
-        
-        //self.vc1.setPostCollectionViewData([])
-        //self.vc2.setPostCollectionViewData([])
     }
     
     private func setUpRefreshControl() {
         scrollView.refreshControl = UIRefreshControl()
         scrollView.refreshControl?.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
     }
-    
-//    private func setUpViewController() {
-//        self.navigationController?.isNavigationBarHidden = true
-//        profileBackground.layer.cornerRadius = 58
-//        profileImage.layer.cornerRadius = 55
-//        whiteBackground1.layer.cornerRadius = 8
-//        viewFollowerList()
-//        viewFollowingList()
-//        userHandle.text = "@\(handle)"
-//        let backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
-//        backBarButtonItem.tintColor = .black
-//        self.navigationItem.backBarButtonItem = backBarButtonItem
-//        NotificationCenter.default.addObserver(self, selector: #selector(totalHeightUpdated), name: .didUpdateTotalHeight, object: nil)
-//    }
-    
-//    private func initializeSingleton() {
-//        ProfileDataSingleton.shared.currentTabIndex = 0
-//        ProfileDataSingleton.shared.firstTabHeight = 0.0
-//        ProfileDataSingleton.shared.secondTabHeight = 0.0
-//        ProfileDataSingleton.shared.firstTabIsCurrentlyFetching = false
-//        ProfileDataSingleton.shared.secondTabIsCurrentlyFetching = false
-//        ProfileDataSingleton.shared.firstTabIsLastPage = false
-//        ProfileDataSingleton.shared.secondTabIsLastPage = false
-//    }
-//    
+     
     private func addFollwerGestureRecognizer() {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(followerStackViewDidTap))
         followerCountVStackView.addGestureRecognizer(tapGestureRecognizer)
@@ -601,62 +548,7 @@ final class MyProfileTabViewController: UIViewController {
         scrollView.contentSize = CGSize(width: scrollView.frame.width, height: newHeight)
         contentView.frame = CGRect(x: 0, y: 0, width: scrollView.frame.width, height: newHeight)
     }
-
-//    private func setUpUserDefaults(_ responseData: ProfileRetrievalResult) {
-//        UserDefaultsManager.setData(value: responseData.name, key: .name)
-//        UserDefaultsManager.setData(value: responseData.message, key: .message)
-//        UserDefaultsManager.setData(value: responseData.profileImage, key: .profileImgUrl)
-//    }
-//    
-//    private func updatePostListTabmanViewHeight(_ height: CGFloat) {
-//        postListTabmanView.constraints.forEach { constraint in
-//            if constraint.firstAttribute == .height {
-//                if height >= constraint.constant && constraint.constant != 0 {
-//                    constraint.isActive = false
-//                    
-//                    // 새로운 높이 제약 조건 추가
-//                    postListTabmanView.heightAnchor.constraint(equalToConstant: height).isActive = true
-//                    UIView.animate(withDuration: 0.3, animations: {
-//                        self.contentScrollView.layoutIfNeeded()
-//                    }) { _ in
-//                        // ScrollView의 contentSize 업데이트
-//                        self.contentScrollView.contentSize = CGSize(
-//                            width: self.contentScrollView.frame.width,
-//                            height: self.topUIView.frame.height
-//                        )
-//                    }
-//                } else {
-//                    print("height : \(height)")
-//                    print("constraint.constant : \(constraint.constant)")
-//                    print("no posts yet")
-//                }
-//            }
-//        }
-//    }
-//    
-//    deinit {
-//        NotificationCenter.default.removeObserver(self)
-//    }
 }
-//
-//// MARK: - Extension: CustomAlertDelegate, SecondViewControllerDelegate
-//
-//extension MyProfileTabViewController: UIScrollViewDelegate {
-//    
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if (contentScrollView.contentOffset.y > (contentScrollView.contentSize.height - contentScrollView.frame.size.height)) {
-//            if (ProfileDataSingleton.shared.currentTabIndex == 0 &&
-//                !ProfileDataSingleton.shared.firstTabIsCurrentlyFetching &&
-//                !ProfileDataSingleton.shared.firstTabIsLastPage) {
-//                NotificationCenter.default.post(name: .didHitBottom, object: nil)
-//            } else if (ProfileDataSingleton.shared.currentTabIndex == 1 &&
-//                       !ProfileDataSingleton.shared.secondTabIsCurrentlyFetching &&
-//                       !ProfileDataSingleton.shared.secondTabIsLastPage) {
-//                NotificationCenter.default.post(name: .didHitBottom, object: nil)
-//            }
-//        }
-//    }
-//}
 
 // MARK: - Extension: UIPageViewController
 
@@ -701,14 +593,14 @@ extension MyProfileTabViewController: UIScrollViewDelegate {
             switch currentPage {
             case 0:
                 if !myProfilePageInfo.isLastPage && !isCurrentlyFetching {
-                    print("[!] needs to re-fetch data!!!")
+                    print("[!] MyProfileTabViewController - NEEDS TO RE-FETCH DATA")
                     myProfilePageInfo.currentPage += 1
                     self.isCurrentlyFetching = true
                     viewModel.fetchMyProfile(handle: handle, request: .init(page: myProfilePageInfo.currentPage), fromCurrentVC: self)
                 }
             case 1:
                 if !pochakPostPageInfo.isLastPage && !isCurrentlyFetching {
-                    print("[!] needs to re-fetch data!!!")
+                    print("[!] MyProfileTabViewController - NEEDS TO RE-FETCH DATA")
                     pochakPostPageInfo.currentPage += 1
                     self.isCurrentlyFetching = true
                     viewModel.fetchPochakPosts(handle: handle, request: .init(page: pochakPostPageInfo.currentPage), fromCurrentVC: self)
