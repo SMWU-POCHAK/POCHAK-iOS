@@ -27,13 +27,13 @@ final class PostListPageViewController: UIViewController {
     
     // MARK: - Views
     
-    lazy var collectionView: UICollectionView = {
+    lazy var collectionView: AutoSizingCollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         flowLayout.minimumLineSpacing = PostListPageViewController.minimumLineSpacing
         flowLayout.minimumInteritemSpacing = PostListPageViewController.minimumInterItemSpacing
         
-        let view = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        let view = AutoSizingCollectionView(frame: .zero, collectionViewLayout: flowLayout)
         view.isScrollEnabled = true
         view.showsHorizontalScrollIndicator = false
         view.showsVerticalScrollIndicator = false
@@ -65,14 +65,6 @@ final class PostListPageViewController: UIViewController {
         setupConstraints()
     }
     
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        
-//        self.collectionView.layoutIfNeeded()
-//        self.view.layoutIfNeeded()
-//        self.myProfileTabVC.scrollView.updateContentSize()
-//    }
-    
     // MARK: - Layout
     
     private func addViews() {
@@ -98,13 +90,6 @@ final class PostListPageViewController: UIViewController {
         print("✅ collectionView frame: \(collectionView.frame)")
         self.myProfileTabVC.scrollView.updateContentSize()
     }
-    
-//    func updateCollectionViewHeight() {
-//        collectionView.snp.updateConstraints { make in
-//            make.height.equalTo(collectionView.collectionViewLayout.collectionViewContentSize.height)
-//        }
-//        collectionView.layoutIfNeeded()
-//    }
 }
 
 // MARK: - Extension; UICollectionView
@@ -112,17 +97,16 @@ final class PostListPageViewController: UIViewController {
 extension PostListPageViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return noPost ? 1 : postList.count
         print("[PostListPageViewController] collectionview - item 개수")
-        return 20
+        return postList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         print("[PostListPageViewController] collectionview - cell 설정 -- ")
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PostListCollectionViewCell.identifier, for: indexPath) as? PostListCollectionViewCell else { return UICollectionViewCell() }
-        //cell.configure(with: <#T##String#>)
+        cell.configure(with: postList[indexPath.item].postImage)
         
-        if indexPath.item == 19 {
+        if indexPath.item == postList.count - 1 {
             myProfileTabVC.updateScrollViewContentSize()
         }
         print("[PostListPageViewController] collectionview - cell 설정")
@@ -130,14 +114,10 @@ extension PostListPageViewController: UICollectionViewDataSource, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        if !noPost {
-//            let exploreTabSb = UIStoryboard(name: "ExploreTab", bundle: nil)
-//            guard let postVC = exploreTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
-//            else { return }
-//            
-//            postVC.receivedPostId = postList[indexPath.item].postId
-//            self.navigationController?.pushViewController(postVC, animated: true)
-//        }
+        let exploreTabSb = UIStoryboard(name: "ExploreTab", bundle: nil)
+        guard let postVC = exploreTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController else { return }
+        postVC.receivedPostId = postList[indexPath.item].postId
+        self.myProfileTabVC.navigationController?.pushViewController(postVC, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
