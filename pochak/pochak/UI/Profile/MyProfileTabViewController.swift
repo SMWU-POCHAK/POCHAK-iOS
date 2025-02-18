@@ -11,6 +11,7 @@ final class MyProfileTabViewController: UIViewController {
     
     // MARK: - Properties
     
+    private let viewModel = ProfileViewModel()
     private let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
     private let handle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
     private let underlineViewWidth: CGFloat = UIScreen.main.bounds.width / 2
@@ -27,6 +28,9 @@ final class MyProfileTabViewController: UIViewController {
             )
         }
     }
+    
+    private var myProfileCurrentPage: Int = 0
+    private var pochakPostCurrentPage: Int = 0
     
     // MARK: - Views
     
@@ -253,6 +257,8 @@ final class MyProfileTabViewController: UIViewController {
         
         view.backgroundColor = .white
         
+        bind()
+        
         addViews()
         setupConstraints()
         fetchData()
@@ -264,6 +270,9 @@ final class MyProfileTabViewController: UIViewController {
         self.vc2.collectionView.panGestureRecognizer.require(toFail: self.scrollView.panGestureRecognizer)
         
         print("페이지 개수: \(pageViewController.viewControllers?.count ?? 0)")
+        
+        viewModel.fetchMyProfile(handle: handle, request: .init(page: myProfileCurrentPage), fromCurrentVC: self)
+        viewModel.fetchPochakPosts(handle: handle, request: .init(page: pochakPostCurrentPage), fromCurrentVC: self)
         
         //        addSubview()
         //        setUpUIConstraints()
@@ -462,6 +471,23 @@ final class MyProfileTabViewController: UIViewController {
     
     // MARK: - Functions
     
+    private func bind() {
+        viewModel.profileDataDidChange = { [weak self] data in
+            guard let data = data else { return }
+            DispatchQueue.main.async {
+                self?.setupData(data)
+                self?.vc1.setPostCollectionViewData(data.postList)
+            }
+        }
+        
+        viewModel.pochakPostDataDidChange = { [weak self] data in
+            guard let data = data else { return }
+            DispatchQueue.main.async {
+                self?.vc2.setPostCollectionViewData(data.postList)
+            }
+        }
+    }
+    
     private func setupData(_ responseData: ProfileRetrievalResult) {
         self.titleLabel.text = "@\(handle)"
         
@@ -479,8 +505,8 @@ final class MyProfileTabViewController: UIViewController {
         self.followerCountNumberLabel.text = String(responseData.followerCount ?? 0)
         self.followingCountNumberLabel.text = String(responseData.followingCount ?? 0)
         
-        self.vc1.setPostCollectionViewData([])
-        self.vc2.setPostCollectionViewData([])
+        //self.vc1.setPostCollectionViewData([])
+        //self.vc2.setPostCollectionViewData([])
     }
     
 //    private func setUpRefreshControl() {
