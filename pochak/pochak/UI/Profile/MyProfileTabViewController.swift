@@ -251,7 +251,7 @@ final class MyProfileTabViewController: UIViewController {
     //            postListVC.handle = handle
     //        }
     //    }
-    //
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -273,6 +273,8 @@ final class MyProfileTabViewController: UIViewController {
         
         viewModel.fetchMyProfile(handle: handle, request: .init(page: myProfileCurrentPage), fromCurrentVC: self)
         viewModel.fetchPochakPosts(handle: handle, request: .init(page: pochakPostCurrentPage), fromCurrentVC: self)
+        
+        setUpRefreshControl()
         
         //        addSubview()
         //        setUpUIConstraints()
@@ -296,7 +298,7 @@ final class MyProfileTabViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchData()
+//        fetchData()
         self.navigationController?.isNavigationBarHidden = true
     }
     
@@ -336,13 +338,18 @@ final class MyProfileTabViewController: UIViewController {
         changeSelectedSegmentLinePosition()
     }
     
-    //    @objc private func refreshData(_ sender: Any) {
-    //        setUpData()
-    //        DispatchQueue.main.async() {
-    //            self.contentScrollView.refreshControl?.endRefreshing()
-    //        }
-    //    }
-    //
+    @objc private func refreshData(_ sender: Any) {
+        self.pochakPostCurrentPage = 0
+        self.myProfileCurrentPage = 0
+        
+        viewModel.fetchMyProfile(handle: handle, request: .init(page: myProfileCurrentPage), fromCurrentVC: self)
+        viewModel.fetchPochakPosts(handle: handle, request: .init(page: pochakPostCurrentPage), fromCurrentVC: self)
+        
+        DispatchQueue.main.async() {
+            self.scrollView.refreshControl?.endRefreshing()
+        }
+    }
+    
     //    @objc private func totalHeightUpdated() {
     //        ProfileDataSingleton.shared.currentTabIndex == 0 ?
     //        (updatePostListTabmanViewHeight(ProfileDataSingleton.shared.firstTabHeight)) :
@@ -509,10 +516,10 @@ final class MyProfileTabViewController: UIViewController {
         //self.vc2.setPostCollectionViewData([])
     }
     
-//    private func setUpRefreshControl() {
-//        contentScrollView.refreshControl = UIRefreshControl()
-//        contentScrollView.refreshControl?.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
-//    }
+    private func setUpRefreshControl() {
+        scrollView.refreshControl = UIRefreshControl()
+        scrollView.refreshControl?.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+    }
 //    
 //    private func setUpViewController() {
 //        self.navigationController?.isNavigationBarHidden = true
