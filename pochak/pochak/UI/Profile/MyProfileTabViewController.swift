@@ -67,7 +67,8 @@ final class MyProfileTabViewController: UIViewController {
         let button = UIButton()
         
         var config = UIButton.Configuration.plain()
-        config.image = UIImage(named: "settingIcon")
+        config.image = UIImage(named: "settingIcon")?.withRenderingMode(.alwaysTemplate)
+        config.baseForegroundColor = UIColor(named: "navy00")
         
         button.configuration = config
         
