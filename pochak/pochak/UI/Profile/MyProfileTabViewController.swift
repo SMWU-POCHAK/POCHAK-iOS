@@ -39,6 +39,20 @@ final class MyProfileTabViewController: UIViewController {
     private var myProfilePageInfo: MyProfileTabPageInfoModel = .init(currentPage: 0, isLastPage: false)
     private var pochakPostPageInfo: MyProfileTabPageInfoModel = .init(currentPage: 0, isLastPage: false)
     
+    private var showStickyViews: Bool = false {
+        willSet(newValue) {
+            if newValue {  // sticky view가 보일 예정
+                stickySegmentControl.selectedSegmentIndex = currentPage
+                changeSelectedSegmentLinePosition()
+            }
+            else {  // sticky view가 사라질 예정
+                segmentControl.selectedSegmentIndex = currentPage
+                changeSelectedSegmentLinePosition()
+            }
+        }
+    }
+    private var hasScrolled = false  // 초기 상태 체크하는 변수 - 뷰가 로딩되는 과정에서 scrollViewDidScroll이 호출되기 때문에 showStickyViews 값이 의도대로 바뀌지 않음
+    
     // MARK: - Views
     
     lazy var scrollView: UIScrollView = {
@@ -235,6 +249,51 @@ final class MyProfileTabViewController: UIViewController {
         return view
     }()
     
+    private let stickySegmentContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.isHidden = true
+        return view
+    }()
+    
+    private let stickySegmentControl: UISegmentedControl = {
+        let segment = UISegmentedControl()
+        segment.insertSegment(withTitle: "POCHAKED", at: 0, animated: true)
+        segment.insertSegment(withTitle: "POCHAK", at: 1, animated: true)
+        segment.selectedSegmentIndex = 0
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        
+        segment.setTitleTextAttributes([
+            NSAttributedString.Key.foregroundColor: UIColor(hexCode: "CECCC8"),  // TODO: 추후 색상명으로 수정
+            NSAttributedString.Key.font: UIFont.Pretendard(size: 16, family: .Bold),
+            NSAttributedString.Key.paragraphStyle: paragraphStyle],
+                                       for: .normal)
+        segment.setTitleTextAttributes([
+            NSAttributedString.Key.foregroundColor: UIColor(named: "navy00"),
+            NSAttributedString.Key.font: UIFont.Pretendard(size: 16, family: .Bold),
+            NSAttributedString.Key.paragraphStyle: paragraphStyle],
+                                       for: .selected)
+        
+        segment.selectedSegmentTintColor = .clear
+        segment.setBackgroundImage(UIImage(), for: .normal, barMetrics: .default)
+        segment.setBackgroundImage(UIImage(), for: .selected, barMetrics: .default)
+        segment.setBackgroundImage(UIImage(), for: .highlighted, barMetrics: .default)
+        segment.setDividerImage(UIImage(), forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
+        
+        segment.addTarget(self, action: #selector(segmentIndexDidChange(_:)), for: .valueChanged)
+        segment.isHidden = true
+        return segment
+    }()
+    
+    private let stickySegmentUnderLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(named: "yellow00")
+        view.isHidden = true
+        return view
+    }()
+    
     private lazy var vc1 = PostListPageViewController(type: .POCHAKED, parentVC: self)
     private lazy var vc2 = PostListPageViewController(type: .POCHAK, parentVC: self)
     
@@ -272,6 +331,8 @@ final class MyProfileTabViewController: UIViewController {
         viewModel.fetchPochakPosts(handle: handle, request: .init(page: pochakPostPageInfo.currentPage), fromCurrentVC: self)
         
         setUpRefreshControl()
+        
+        scrollView.contentOffset = CGPoint(x: 0, y: -scrollView.contentInset.top)
     }
     
     override func viewDidLayoutSubviews() {
@@ -284,6 +345,17 @@ final class MyProfileTabViewController: UIViewController {
         print("contentView.frame: \(contentView.frame)")
         
         updateScrollViewContentSize()
+        
+        // 스크롤이 시작되기 전, 처음 한번만 호출되도록 설정
+        if !hasScrolled {
+            hasScrolled = true
+            // 초기 상태에서 scrollView의 contentOffset을 설정하여 불필요한 호출을 방지
+            scrollView.contentOffset = CGPoint(x: 0, y: -scrollView.contentInset.top)
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -355,6 +427,10 @@ final class MyProfileTabViewController: UIViewController {
         
         view.addSubview(scrollView)
         
+        view.addSubview(stickySegmentContainerView)
+        stickySegmentContainerView.addSubview(stickySegmentControl)
+        stickySegmentContainerView.addSubview(stickySegmentUnderLineView)
+        
         scrollView.addSubview(contentView)
         
         contentView.addSubview(profileView)
@@ -404,6 +480,24 @@ final class MyProfileTabViewController: UIViewController {
             make.trailing.equalToSuperview()
             make.top.equalTo(headerView.snp.bottom)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+        }
+        
+        stickySegmentContainerView.snp.makeConstraints { make in
+            make.top.equalTo(headerView.snp.bottom)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalTo(31)
+        }
+        stickySegmentControl.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview()
+            make.top.equalToSuperview()
+        }
+        stickySegmentUnderLineView.snp.makeConstraints { make in
+            make.top.equalTo(stickySegmentControl.snp.bottom).offset(8)
+            make.height.equalTo(4)
+            make.width.equalTo(underlineViewWidth)
+            make.leading.equalTo(stickySegmentControl.snp.leading)
+            make.bottom.equalToSuperview()
         }
         
         profileView.snp.makeConstraints { make in
@@ -531,10 +625,15 @@ final class MyProfileTabViewController: UIViewController {
     
     /// segment 변경이 있을 경우 밑의 under line의 위치 변경해주는 메소드
     private func changeSelectedSegmentLinePosition() {
-        lazy var leadingValue: CGFloat = CGFloat(segmentControl.selectedSegmentIndex) * underlineViewWidth
+        lazy var leadingValue: CGFloat = (showStickyViews ? CGFloat(stickySegmentControl.selectedSegmentIndex) : CGFloat(segmentControl.selectedSegmentIndex)) * underlineViewWidth
         UIView.animate(withDuration: 0.3, animations: {
-            self.segmentUnderLineView.snp.updateConstraints { $0.leading.equalTo(self.segmentControl.snp.leading).offset(leadingValue)
-            }
+            //if self.showStickyViews {
+                self.stickySegmentUnderLineView.snp.updateConstraints { $0.leading.equalTo(self.stickySegmentControl.snp.leading).offset(leadingValue) }
+            //}
+            //else {
+                self.segmentUnderLineView.snp.updateConstraints { $0.leading.equalTo(self.segmentControl.snp.leading).offset(leadingValue)
+                }
+            //}
             self.view.layoutIfNeeded()
         })
     }
@@ -581,6 +680,9 @@ extension MyProfileTabViewController: UIPageViewControllerDelegate, UIPageViewCo
         else { return }
         
         self.currentPage = index
+//        if showStickyViews {
+            self.stickySegmentControl.selectedSegmentIndex = index
+//        }
         self.segmentControl.selectedSegmentIndex = index
         changeSelectedSegmentLinePosition()
     }
@@ -590,6 +692,20 @@ extension MyProfileTabViewController: UIPageViewControllerDelegate, UIPageViewCo
 
 extension MyProfileTabViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // 초기 offset이 설정된 후에만 처리하도록 조건 추가
+        if !hasScrolled && scrollView.contentOffset.y == 0 {
+            return // 초기 설정이 끝난 후 스크롤이 시작되었을 때만 처리
+        }
+
+        let shouldCurrentlyShowStickyViews = scrollView.contentOffset.y >= segmentContainerView.frame.minY
+        if shouldCurrentlyShowStickyViews != showStickyViews {  //  불필요한 변경 방지
+            showStickyViews = shouldCurrentlyShowStickyViews
+            print("showStickyViews: \(showStickyViews)")
+            stickySegmentContainerView.isHidden = !showStickyViews
+            stickySegmentControl.isHidden = !showStickyViews
+            stickySegmentUnderLineView.isHidden = !showStickyViews
+        }
+        
         if scrollView.contentOffset.y > (scrollView.contentSize.height - scrollView.frame.size.height) {
             switch currentPage {
             case 0:
