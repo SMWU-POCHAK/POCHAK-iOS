@@ -34,7 +34,7 @@ final class PostListPageViewController: UIViewController {
         flowLayout.minimumInteritemSpacing = PostListPageViewController.minimumInterItemSpacing
         
         let view = AutoSizingCollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        view.isScrollEnabled = true
+        view.isScrollEnabled = false
         view.showsHorizontalScrollIndicator = false
         view.showsVerticalScrollIndicator = false
         view.alwaysBounceVertical = true
@@ -87,10 +87,8 @@ final class PostListPageViewController: UIViewController {
         if postList.isEmpty {  // 화면 refresh 한다는 의미
             print("[PostListPageViewController] setPostCollectionViewData, empty postlist")
             self.postList = []
-            //DispatchQueue.main.async {
-                self.collectionView.reloadData()
-                self.myProfileTabVC.isCurrentlyFetching = false
-            //}
+            self.collectionView.reloadData()
+            self.myProfileTabVC.isCurrentlyFetching = false
         }
         else {
             print("[PostListPageViewController] setPostCollectionViewData, \(type) NOT empty postlist")
@@ -100,15 +98,13 @@ final class PostListPageViewController: UIViewController {
             let newIndexPathList = (startIndex ..< endIndex).map { IndexPath(item: $0, section: 0) }
             print("[PostListPageViewController] newIndexPathList: \(newIndexPathList)")
             
-            //DispatchQueue.main.async {
-                self.collectionView.performBatchUpdates {
-                    self.postList.append(contentsOf: postList)
-                    self.collectionView.insertItems(at: newIndexPathList)
-                } completion: { [weak self] _ in
-                    self?.myProfileTabVC.updateScrollViewContentSize()
-                    self?.myProfileTabVC.isCurrentlyFetching = false
-                }
-            //}
+            self.collectionView.performBatchUpdates {
+                self.postList.append(contentsOf: postList)
+                self.collectionView.insertItems(at: newIndexPathList)
+            } completion: { [weak self] _ in
+                self?.myProfileTabVC.updateScrollViewContentSize()
+                self?.myProfileTabVC.isCurrentlyFetching = false
+            }
         }
     }
 }

@@ -40,7 +40,7 @@ final class MyProfileTabViewController: UIViewController {
     private var pochakPostPageInfo: MyProfileTabPageInfoModel = .init(currentPage: 0, isLastPage: false)
     
     private var showStickyViews: Bool = false {
-        willSet(newValue) {
+        willSet(newValue) {  // sticky와 non-sticky 간의 일관성 유지를 위해 필요
             if newValue {  // sticky view가 보일 예정
                 stickySegmentControl.selectedSegmentIndex = currentPage
                 changeSelectedSegmentLinePosition()
@@ -321,10 +321,6 @@ final class MyProfileTabViewController: UIViewController {
         setupConstraints()
         addFollwerGestureRecognizer()
         addFollowingGestuerRecognizer()
-        
-        // 스크롤 충돌 방지 설정
-        self.vc1.collectionView.panGestureRecognizer.require(toFail: self.scrollView.panGestureRecognizer)
-        self.vc2.collectionView.panGestureRecognizer.require(toFail: self.scrollView.panGestureRecognizer)
                 
         isCurrentlyFetching = true
         viewModel.fetchMyProfile(handle: handle, request: .init(page: myProfilePageInfo.currentPage), fromCurrentVC: self)
@@ -352,10 +348,6 @@ final class MyProfileTabViewController: UIViewController {
             // 초기 상태에서 scrollView의 contentOffset을 설정하여 불필요한 호출을 방지
             scrollView.contentOffset = CGPoint(x: 0, y: -scrollView.contentInset.top)
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -567,11 +559,8 @@ final class MyProfileTabViewController: UIViewController {
             
             self?.myProfilePageInfo.isLastPage = data.pageInfo.lastPage
             
-            //DispatchQueue.main.async {
-                print("[MyProfileTabViewController] bind -- profile data did change")
-                self?.setupData(data)
-                self?.vc1.setPostCollectionViewData(data.postList)
-            //}
+            self?.setupData(data)
+            self?.vc1.setPostCollectionViewData(data.postList)
         }
         
         viewModel.pochakPostDataDidChange = { [weak self] data in
@@ -579,10 +568,7 @@ final class MyProfileTabViewController: UIViewController {
             
             self?.pochakPostPageInfo.isLastPage = data.pageInfo.lastPage
             
-            //DispatchQueue.main.async {
-                print("[MyProfileTabViewController] bind -- pochak posts data did change")
-                self?.vc2.setPostCollectionViewData(data.postList)
-            //}
+            self?.vc2.setPostCollectionViewData(data.postList)
         }
     }
     
@@ -627,21 +613,14 @@ final class MyProfileTabViewController: UIViewController {
     private func changeSelectedSegmentLinePosition() {
         lazy var leadingValue: CGFloat = (showStickyViews ? CGFloat(stickySegmentControl.selectedSegmentIndex) : CGFloat(segmentControl.selectedSegmentIndex)) * underlineViewWidth
         UIView.animate(withDuration: 0.3, animations: {
-            //if self.showStickyViews {
-                self.stickySegmentUnderLineView.snp.updateConstraints { $0.leading.equalTo(self.stickySegmentControl.snp.leading).offset(leadingValue) }
-            //}
-            //else {
-                self.segmentUnderLineView.snp.updateConstraints { $0.leading.equalTo(self.segmentControl.snp.leading).offset(leadingValue)
-                }
-            //}
+            self.stickySegmentUnderLineView.snp.updateConstraints { $0.leading.equalTo(self.stickySegmentControl.snp.leading).offset(leadingValue) }
+            self.segmentUnderLineView.snp.updateConstraints { $0.leading.equalTo(self.segmentControl.snp.leading).offset(leadingValue) }
             self.view.layoutIfNeeded()
         })
     }
     
     func updateScrollViewContentSize() {
         print("[MyProfileTabViewController] updateScrollViewContentSize =============")
-        print(">> self.pageViewController: \(self.pageViewController)")
-        print(">> self.pageViewController.viewControllers: \(self.pageViewController.viewControllers)")
         print(">> currentPage: \(currentPage)")
         let vc = self.pageViewControllerList[currentPage] as? PostListPageViewController
         let newHeight = (vc?.collectionView.collectionViewLayout.collectionViewContentSize.height)! + 20 * 2 + profileView.frame.height + segmentContainerView.frame.height
@@ -680,9 +659,7 @@ extension MyProfileTabViewController: UIPageViewControllerDelegate, UIPageViewCo
         else { return }
         
         self.currentPage = index
-//        if showStickyViews {
-            self.stickySegmentControl.selectedSegmentIndex = index
-//        }
+        self.stickySegmentControl.selectedSegmentIndex = index
         self.segmentControl.selectedSegmentIndex = index
         changeSelectedSegmentLinePosition()
     }
