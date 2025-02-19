@@ -472,11 +472,11 @@ final class MyProfileTabViewController: UIViewController {
             
             self?.myProfilePageInfo.isLastPage = data.pageInfo.lastPage
             
-            DispatchQueue.main.async {
+            //DispatchQueue.main.async {
                 print("[MyProfileTabViewController] bind -- profile data did change")
                 self?.setupData(data)
                 self?.vc1.setPostCollectionViewData(data.postList)
-            }
+            //}
         }
         
         viewModel.pochakPostDataDidChange = { [weak self] data in
@@ -484,10 +484,10 @@ final class MyProfileTabViewController: UIViewController {
             
             self?.pochakPostPageInfo.isLastPage = data.pageInfo.lastPage
             
-            DispatchQueue.main.async {
+            //DispatchQueue.main.async {
                 print("[MyProfileTabViewController] bind -- pochak posts data did change")
                 self?.vc2.setPostCollectionViewData(data.postList)
-            }
+            //}
         }
     }
     
@@ -598,6 +598,7 @@ extension MyProfileTabViewController: UIScrollViewDelegate {
                     self.isCurrentlyFetching = true
                     viewModel.fetchMyProfile(handle: handle, request: .init(page: myProfilePageInfo.currentPage), fromCurrentVC: self)
                 }
+                return
             case 1:
                 if !pochakPostPageInfo.isLastPage && !isCurrentlyFetching {
                     print("[!] MyProfileTabViewController - NEEDS TO RE-FETCH DATA")
@@ -605,6 +606,7 @@ extension MyProfileTabViewController: UIScrollViewDelegate {
                     self.isCurrentlyFetching = true
                     viewModel.fetchPochakPosts(handle: handle, request: .init(page: pochakPostPageInfo.currentPage), fromCurrentVC: self)
                 }
+                return
             default:
                 return
             }

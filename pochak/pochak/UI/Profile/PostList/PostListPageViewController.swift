@@ -87,25 +87,28 @@ final class PostListPageViewController: UIViewController {
         if postList.isEmpty {  // 화면 refresh 한다는 의미
             print("[PostListPageViewController] setPostCollectionViewData, empty postlist")
             self.postList = []
-            self.collectionView.reloadData()
+            //DispatchQueue.main.async {
+                self.collectionView.reloadData()
+                self.myProfileTabVC.isCurrentlyFetching = false
+            //}
         }
         else {
             print("[PostListPageViewController] setPostCollectionViewData, \(type) NOT empty postlist")
             print("[PostListPageViewController] postList count: \(self.postList.count)")
             let startIndex = self.postList.count
-            self.postList.append(contentsOf: postList)
             let endIndex = startIndex + postList.count
             let newIndexPathList = (startIndex ..< endIndex).map { IndexPath(item: $0, section: 0) }
+            print("[PostListPageViewController] newIndexPathList: \(newIndexPathList)")
             
-            DispatchQueue.main.async {
+            //DispatchQueue.main.async {
                 self.collectionView.performBatchUpdates {
+                    self.postList.append(contentsOf: postList)
                     self.collectionView.insertItems(at: newIndexPathList)
                 } completion: { [weak self] _ in
                     self?.myProfileTabVC.updateScrollViewContentSize()
+                    self?.myProfileTabVC.isCurrentlyFetching = false
                 }
-            }
-            
-            self.myProfileTabVC.isCurrentlyFetching = false
+            //}
         }
     }
 }
