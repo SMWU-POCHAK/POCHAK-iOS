@@ -18,6 +18,7 @@ final class PostListCollectionViewCell: UICollectionViewCell {
     private let imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
+        view.backgroundColor = UIColor(hexCode: "CECCC8")
         return view
     }()
     
@@ -27,7 +28,6 @@ final class PostListCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         self.backgroundColor = .black
-        contentView.backgroundColor = .blue
         
         addViews()
         setupConstraints()
