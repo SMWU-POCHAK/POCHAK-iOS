@@ -105,6 +105,10 @@
 		08D98C472AFEE8B300E9A097 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		08D98C4A2AFEE8D700E9A097 /* LikedUsersDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D98C492AFEE8D700E9A097 /* LikedUsersDataModel.swift */; };
 		08E8DCDC2C38118000EC78C2 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E8DCDB2C38118000EC78C2 /* UILabel+.swift */; };
+		08EA169F2D61FE50009FBCC4 /* PostListPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EA169E2D61FE50009FBCC4 /* PostListPageViewController.swift */; };
+		08EA16A12D62013A009FBCC4 /* PostListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EA16A02D62013A009FBCC4 /* PostListCollectionViewCell.swift */; };
+		08EA16A32D620A12009FBCC4 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EA16A22D620A12009FBCC4 /* ProfileViewModel.swift */; };
+		08EA16A52D622537009FBCC4 /* AutoSizingCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EA16A42D622537009FBCC4 /* AutoSizingCollectionView.swift */; };
 		08EB5D252C280CFE00E35C16 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB5D242C280CFE00E35C16 /* UIImage+.swift */; };
 		08EB99B42C53D76C00FAC08A /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB99B32C53D76C00FAC08A /* UIScrollView+.swift */; };
 		08EB99B72C53EA8500FAC08A /* TaggedUsersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB99B52C53EA8500FAC08A /* TaggedUsersTableViewCell.swift */; };
@@ -407,6 +411,10 @@
 		08C9151B2C6461B10044A9A8 /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
 		08D98C492AFEE8D700E9A097 /* LikedUsersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedUsersDataModel.swift; sourceTree = "<group>"; };
 		08E8DCDB2C38118000EC78C2 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
+		08EA169E2D61FE50009FBCC4 /* PostListPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListPageViewController.swift; sourceTree = "<group>"; };
+		08EA16A02D62013A009FBCC4 /* PostListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListCollectionViewCell.swift; sourceTree = "<group>"; };
+		08EA16A22D620A12009FBCC4 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		08EA16A42D622537009FBCC4 /* AutoSizingCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoSizingCollectionView.swift; sourceTree = "<group>"; };
 		08EB5D242C280CFE00E35C16 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		08EB99B32C53D76C00FAC08A /* UIScrollView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
 		08EB99B52C53EA8500FAC08A /* TaggedUsersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggedUsersTableViewCell.swift; sourceTree = "<group>"; };
@@ -1100,6 +1108,8 @@
 				3766F4042C370A5D001DD239 /* BlockList */,
 				3769D6CC2B3C560200294CD1 /* PostList */,
 				3769D6CB2B3C55E500294CD1 /* FollowList */,
+				08EA16A22D620A12009FBCC4 /* ProfileViewModel.swift */,
+				08EA16A42D622537009FBCC4 /* AutoSizingCollectionView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1133,6 +1143,7 @@
 				3769D6CD2B3C563A00294CD1 /* PostListViewController.swift */,
 				3769D6CF2B3C569C00294CD1 /* PochakedPostTabmanViewController.swift */,
 				3769D6D12B3C56F100294CD1 /* PochakPostTabmanViewController.swift */,
+				08EA169E2D61FE50009FBCC4 /* PostListPageViewController.swift */,
 			);
 			path = PostList;
 			sourceTree = "<group>";
@@ -1164,6 +1175,7 @@
 			children = (
 				3769D6D32B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift */,
 				3769D6D42B3C59F900294CD1 /* ProfilePostCollectionViewCell.xib */,
+				08EA16A02D62013A009FBCC4 /* PostListCollectionViewCell.swift */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -1882,6 +1894,7 @@
 				371D33782B4E83E90084FF6A /* UserDefaultsManager.swift in Sources */,
 				3742617A2C31C6F900B67886 /* AppleLoginDataModel.swift in Sources */,
 				37EED79D2CFDDC3800254471 /* ProfileDataSingleton.swift in Sources */,
+				08EA16A52D622537009FBCC4 /* AutoSizingCollectionView.swift in Sources */,
 				373815162A89E6D30032066A /* SocialJoinViewController.swift in Sources */,
 				EA96D0542C8F192000D80562 /* TagApproveRequest.swift in Sources */,
 				3766F40A2C370CF5001DD239 /* BlockedUserViewController.swift in Sources */,
@@ -1943,6 +1956,7 @@
 				460CFD5F2D1C6A6A00398C9A /* ImageCell.swift in Sources */,
 				0822A06A2CA1983C00F87E2C /* PostLikeResponse.swift in Sources */,
 				3759CF492CAB178800408A4E /* SignUpRequest.swift in Sources */,
+				08EA16A12D62013A009FBCC4 /* PostListCollectionViewCell.swift in Sources */,
 				0820B1902A63A18100604DA8 /* ReplyTableViewCell.swift in Sources */,
 				460CFD552D1C48D500398C9A /* MemoryGalleryViewModel.swift in Sources */,
 				374E46392CAAC646008AE361 /* LogOutResponse.swift in Sources */,
@@ -1978,8 +1992,10 @@
 				0822A07A2CA1986000F87E2C /* ExploreService.swift in Sources */,
 				08FD3A392B357E6400574880 /* LikedUsersDataService.swift in Sources */,
 				081228CA2A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift in Sources */,
+				08EA16A32D620A12009FBCC4 /* ProfileViewModel.swift in Sources */,
 				374E463F2CAAC931008AE361 /* UnblockAPI.swift in Sources */,
 				0822A06C2CA1983C00F87E2C /* CommentGetResponse.swift in Sources */,
+				08EA169F2D61FE50009FBCC4 /* PostListPageViewController.swift in Sources */,
 				460CFD592D1C4B5200398C9A /* MemorySummary.swift in Sources */,
 				3769D6D02B3C569C00294CD1 /* PochakedPostTabmanViewController.swift in Sources */,
 				374261642C2FEF5F00B67886 /* ProfileMenuViewController.swift in Sources */,
