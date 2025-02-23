@@ -150,11 +150,28 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
     }
     
     private func switchFlash() {
-        isFlashOn.toggle()
-        flashMode = isFlashOn == true ? .on : .off
-        
-        let buttonImageName = isFlashOn ? "flashActiveBg" : "flashBg"
-        flashBtnBg.setImage(UIImage(named: buttonImageName), for: .normal)
+        guard let currentCamera = self.currentCamera else {
+            print("Error: No current camera device found")
+            return
+        }
+        do {
+            try currentCamera.lockForConfiguration()
+            
+            if currentCamera.hasTorch {
+                isFlashOn.toggle()
+                flashMode = isFlashOn ? .on : .off
+                currentCamera.torchMode = isFlashOn ? .on : .off
+            } else {
+                print("Flash is not available on this device")
+            }
+            
+            currentCamera.unlockForConfiguration()
+            
+            let buttonImageName = isFlashOn ? "flashActiveBg" : "flashBg"
+            flashBtnBg.setImage(UIImage(named: buttonImageName), for: .normal)
+        } catch {
+            print("Error setting flash: \(error.localizedDescription)")
+        }
     }
     
     private func setUpCamera() {
