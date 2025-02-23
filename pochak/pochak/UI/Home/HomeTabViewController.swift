@@ -58,7 +58,7 @@ final class HomeTabViewController: UIViewController {
     // MARK: - Functions
     
     private func setupNavigationBar() {
-        let logoImageView = UIImageView(image: UIImage(named: "logo_full"))
+        let logoImageView = UIImageView(image: UIImage(named: "wordLogoSmall"))
         logoImageView.contentMode = .scaleAspectFit
         self.navigationItem.titleView = logoImageView
     }
@@ -184,7 +184,7 @@ extension HomeTabViewController: UICollectionViewDataSource, UICollectionViewDel
             return CGSize(width: width, height: height)
         }
         else {
-            let width = CGFloat((collectionView.frame.width - 20 * 2 - minimumInterItemSpacing * 2) / 3)  // 20은 양 끝 간격
+            let width = floor(CGFloat((collectionView.frame.width - 20 * 2 - minimumInterItemSpacing * 2) / 3))  // 20은 양 끝 간격
             return CGSize(width: width, height: width * 4 / 3)  // 3:4 비율로
         }
     }
