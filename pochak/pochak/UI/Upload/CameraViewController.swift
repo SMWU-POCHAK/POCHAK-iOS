@@ -191,17 +191,33 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         DispatchQueue.global(qos: .userInitiated).async {
             self.captureSession = AVCaptureSession()
             
-            self.wideCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
-            self.ultraWideCamera = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back)
+            if let wide = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
+                self.wideCamera = wide
+            } else if let dual = AVCaptureDevice.default(.builtInDualCamera, for: .video, position: .back) {
+                self.wideCamera = dual
+            } else if let telephoto = AVCaptureDevice.default(.builtInTelephotoCamera, for: .video, position: .back) {
+                self.wideCamera = telephoto
+            } else {
+                print("Error: No suitable back camera available")
+                return
+            }
             
-            guard let wideCamera = self.wideCamera, let ultraWideCamera = self.ultraWideCamera else {
-                print("Error: Required cameras are not available")
+            if let ultraWide = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) {
+                self.ultraWideCamera = ultraWide
+                do {
+                    self.ultraWideInput = try AVCaptureDeviceInput(device: ultraWide)
+                } catch {
+                    print("Error setting up ultra wide camera: \(error.localizedDescription)")
+                }
+            }
+            
+            guard let wideCamera = self.wideCamera else {
+                print("Error: No camera available")
                 return
             }
             
             do {
                 self.wideInput = try AVCaptureDeviceInput(device: wideCamera)
-                self.ultraWideInput = try AVCaptureDeviceInput(device: ultraWideCamera)
                 
                 if self.captureSession.canAddInput(self.wideInput!) {
                     self.captureSession.addInput(self.wideInput!)
@@ -249,7 +265,6 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
             print("Error setting zoom: \(error.localizedDescription)")
         }
     }
-    
     
     private func setInitialZoom() {
         guard let camera = self.currentCamera else { return }
@@ -312,37 +327,38 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
     }
     
     @objc func handlePinchToZoom(_ gesture: UIPinchGestureRecognizer) {
-        guard let wideCamera = self.wideCamera,
-              let ultraWideCamera = self.ultraWideCamera else { return }
+        guard let wideCamera = self.wideCamera else { return }
         
         func minMaxZoom(_ factor: CGFloat) -> CGFloat {
-            return min(max(factor, 0.5), 6.0)
+            let minZoom: CGFloat = ultraWideCamera != nil ? 0.5 : 1.0
+            return min(max(factor, minZoom), 6.0)
         }
         
         func update(scale factor: CGFloat) {
-               do {
-                   if factor < 1.0 && currentCamera != ultraWideCamera {
-                       switchToCamera(ultraWideCamera)
-                   } else if factor >= 1.0 && currentCamera != wideCamera {
-                       switchToCamera(wideCamera)
-                   }
-                   
-                   try currentCamera?.lockForConfiguration()
-                   defer { currentCamera?.unlockForConfiguration() }
-                   
-                   let zoomFactor = (currentCamera == ultraWideCamera) ? factor * 2 : factor
-                   currentCamera?.videoZoomFactor = zoomFactor
-                   self.currentZoomFactor = factor
-                   
-                   // ZoomControlView 업데이트 추가
-                   DispatchQueue.main.async {
-                       self.zoomControlView.updateSelectedZoom(factor: factor)
-                   }
-                   
-               } catch {
-                   print("Error setting zoom: \(error.localizedDescription)")
-               }
-           }
+            do {
+                if let ultraWideCamera = self.ultraWideCamera {
+                    if factor < 1.0 && currentCamera != ultraWideCamera {
+                        switchToCamera(ultraWideCamera)
+                    } else if factor >= 1.0 && currentCamera != wideCamera {
+                        switchToCamera(wideCamera)
+                    }
+                }
+                
+                try currentCamera?.lockForConfiguration()
+                defer { currentCamera?.unlockForConfiguration() }
+                
+                let zoomFactor = (currentCamera == ultraWideCamera) ? factor * 2 : factor
+                currentCamera?.videoZoomFactor = zoomFactor
+                self.currentZoomFactor = factor
+                
+                DispatchQueue.main.async {
+                    self.zoomControlView.updateSelectedZoom(factor: factor)
+                }
+                
+            } catch {
+                print("Error setting zoom: \(error.localizedDescription)")
+            }
+        }
         
         var newScaleFactor = minMaxZoom(gesture.scale * currentZoomFactor)
         
@@ -433,45 +449,41 @@ extension CameraViewController {
     }
 }
 
-
 extension CameraViewController: UIGestureRecognizerDelegate {
-    // 제스처 인식기의 동작 여부를 결정하는 메서드
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        // 터치된 뷰가 ZoomControlView의 내부에 있는지 확인
         if let touchedView = touch.view {
             var view = touchedView
             while let superview = view.superview {
                 if superview is ZoomControlView {
-                    // ZoomControlView 내부의 터치는 제스처 인식기가 처리하지 않음
                     return false
                 }
                 view = superview
             }
         }
-        // 그 외의 영역은 제스처 인식기가 처리
         return true
     }
 }
 
 extension CameraViewController: ZoomControlViewDelegate {
     func didSelectZoomFactor(_ factor: CGFloat) {
+        guard let wideCamera = wideCamera else { return }
         
-        guard let wideCamera = wideCamera,
-              let ultraWideCamera = ultraWideCamera else { return }
         do {
-            if factor < 1.0 && currentCamera != ultraWideCamera {
-                switchToCamera(ultraWideCamera)
-            } else if factor >= 1.0 && currentCamera != wideCamera {
-                switchToCamera(wideCamera)
+            if let ultraWideCamera = self.ultraWideCamera {
+                if factor < 1.0 && currentCamera != ultraWideCamera {
+                    switchToCamera(ultraWideCamera)
+                } else if factor >= 1.0 && currentCamera != wideCamera {
+                    switchToCamera(wideCamera)
+                }
             }
-           
+            
             try currentCamera?.lockForConfiguration()
             let zoomFactor = (currentCamera == ultraWideCamera) ? factor * 2 : factor
-
+            
             currentCamera?.videoZoomFactor = zoomFactor
             currentCamera?.unlockForConfiguration()
             
-            currentZoomFactor = factor // 현재 줌 값 업데이트
+            currentZoomFactor = factor
         } catch {
             print("Error setting zoom factor: \(error.localizedDescription)")
         }
