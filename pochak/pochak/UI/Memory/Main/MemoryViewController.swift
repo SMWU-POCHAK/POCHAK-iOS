@@ -110,7 +110,7 @@ class MemoryViewController: UIViewController {
                 self.pochakMomentsView.isHidden = true
             }
             self.timelineView.configure(userID: memorySummary.handle,
-                                        followPeriod: Date.formatDateRange(fromDateString: memorySummary.followDate ?? ""),
+                                        followPeriod: Date.formatDateRange(fromDateString: memorySummary.bondedDate ?? ""),
                                         with: memorySummary.timeLine)
         }
     }

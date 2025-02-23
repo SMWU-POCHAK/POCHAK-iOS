@@ -95,7 +95,7 @@ class MemorySummaryView: UIView {
             myProfileView.load(with: url)
         }
         
-        if let followDate = viewModel.followDate {
+        if let followDate = viewModel.bondedDate {
             let followPeriod = Date.formatDateRange(fromDateString: followDate)
             dateRangeLabel.text = followPeriod
         }
