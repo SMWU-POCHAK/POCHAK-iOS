@@ -58,7 +58,7 @@ final class HomeTabViewController: UIViewController {
     // MARK: - Functions
     
     private func setupNavigationBar() {
-        let logoImageView = UIImageView(image: UIImage(named: "logo_full"))
+        let logoImageView = UIImageView(image: UIImage(named: "wordLogoSmall"))
         logoImageView.contentMode = .scaleAspectFit
         self.navigationItem.titleView = logoImageView
     }
