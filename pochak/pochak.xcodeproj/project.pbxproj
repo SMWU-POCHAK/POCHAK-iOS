@@ -70,6 +70,7 @@
 		0844D7F42BF21A80001154AC /* CancelViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0844D7F22BF21A80001154AC /* CancelViewCell.xib */; };
 		084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */; };
 		084AF4C82A5D831100C6454A /* HomeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */; };
+		08524D262D201C4F006C87E1 /* PochakNotificationService.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 08224C0F2CCFBDF7002DA825 /* PochakNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0861E0E62D2578C3009E70A0 /* HandleDuplicateCheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0861E0E52D2578C3009E70A0 /* HandleDuplicateCheckButton.swift */; };
 		0861E0E82D259365009E70A0 /* UIResponder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0861E0E72D259365009E70A0 /* UIResponder+.swift */; };
 		086BF1FA2CEC99D800735BB4 /* PushNotificationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF1F92CEC99D800735BB4 /* PushNotificationRequest.swift */; };
@@ -284,6 +285,13 @@
 			remoteGlobalIDString = 08224C0E2CCFBDF7002DA825;
 			remoteInfo = PochakNotificationService;
 		};
+		08524D272D201C4F006C87E1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA1B0B4F2A49D23A00F86FBC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 08224C0E2CCFBDF7002DA825;
+			remoteInfo = PochakNotificationService;
+		};
 		EA1B0B6E2A49D23B00F86FBC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EA1B0B4F2A49D23A00F86FBC /* Project object */;
@@ -301,7 +309,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		46AE2E7F2D0EFFFB009DFA2A /* Embed Frameworks */ = {
+		08524D292D201C4F006C87E1 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				08524D262D201C4F006C87E1 /* PochakNotificationService.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		46AE2E7D2D0EFEA0009DFA2A /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
@@ -368,6 +387,7 @@
 		0822A07C2CA19A9A00F87E2C /* UICommentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICommentModel.swift; sourceTree = "<group>"; };
 		0823B0722A5B0E780085002F /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		0823B0732A5B0E780085002F /* CommentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
+		082797312D5CDEC3002B1E1F /* PochakNotificationService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PochakNotificationService.entitlements; sourceTree = "<group>"; };
 		083249752C2956A000A77C03 /* CustomAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomAlertViewController.storyboard; sourceTree = "<group>"; };
 		083249772C295E4000A77C03 /* CustomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewController.swift; sourceTree = "<group>"; };
 		0844649B2BF0F25900949850 /* PostMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMenuViewController.swift; sourceTree = "<group>"; };
@@ -640,6 +660,7 @@
 		08224C102CCFBDF7002DA825 /* PochakNotificationService */ = {
 			isa = PBXGroup;
 			children = (
+				082797312D5CDEC3002B1E1F /* PochakNotificationService.entitlements */,
 				08224C112CCFBDF8002DA825 /* NotificationService.swift */,
 				08224C132CCFBDF8002DA825 /* Info.plist */,
 			);
@@ -1568,7 +1589,8 @@
 				EA1B0B532A49D23A00F86FBC /* Sources */,
 				EA1B0B542A49D23A00F86FBC /* Frameworks */,
 				EA1B0B552A49D23A00F86FBC /* Resources */,
-				46AE2E7F2D0EFFFB009DFA2A /* Embed Frameworks */,
+				08524D292D201C4F006C87E1 /* Embed Foundation Extensions */,
+				46AE2E7D2D0EFEA0009DFA2A /* Embed Frameworks */,
 				08D2B98E2C68C1B800BD7450 /* ShellScript */,
 				465D6E0D2CFE057300847542 /* ShellScript */,
 			);
@@ -1576,6 +1598,7 @@
 			);
 			dependencies = (
 				08224C152CCFBDF8002DA825 /* PBXTargetDependency */,
+				08524D282D201C4F006C87E1 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				082638162CDDEDE000EE1521 /* Views */,
@@ -2051,6 +2074,11 @@
 			target = 08224C0E2CCFBDF7002DA825 /* PochakNotificationService */;
 			targetProxy = 08224C142CCFBDF8002DA825 /* PBXContainerItemProxy */;
 		};
+		08524D282D201C4F006C87E1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 08224C0E2CCFBDF7002DA825 /* PochakNotificationService */;
+			targetProxy = 08524D272D201C4F006C87E1 /* PBXContainerItemProxy */;
+		};
 		EA1B0B6F2A49D23B00F86FBC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EA1B0B562A49D23A00F86FBC /* pochak */;
@@ -2087,6 +2115,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_ENTITLEMENTS = PochakNotificationService/PochakNotificationService.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2285AK4JY4;
@@ -2118,6 +2147,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_ENTITLEMENTS = PochakNotificationService/PochakNotificationService.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2285AK4JY4;

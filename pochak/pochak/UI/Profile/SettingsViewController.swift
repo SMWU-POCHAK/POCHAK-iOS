@@ -39,7 +39,7 @@ final class SettingsViewController: UIViewController {
         safariVC.transitioningDelegate = self
         safariVC.modalPresentationStyle = .pageSheet
         present(safariVC, animated: true, completion: nil)
-
+        
     }
     
     @IBAction func openPrivacyPolicy(_ sender: Any) {
@@ -168,16 +168,6 @@ extension SettingsViewController: CustomAlertDelegate {
             AuthenticationService.signOut { data, failed in
                 guard let data = data else { return }
                 print(data.message)
-            }
-
-            PushNotificationService.deleteFCMToken { data, failed in
-                guard let data = data else {
-                    print("=== SettingsVC, delete FCM token failed ===")
-                    print(">> \(failed!.localizedDescription)")
-                    return
-                }
-                print("=== Settings, delete FCM token succeeded ===")
-                print("== data: \(data)")
             }
             
             deleteUserData()
