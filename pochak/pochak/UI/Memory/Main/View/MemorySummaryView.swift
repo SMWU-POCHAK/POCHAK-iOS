@@ -131,8 +131,9 @@ class MemorySummaryView: UIView {
         containerView.addSubview(dateRangeLabel)
         containerView.addSubview(postCountLabel)
         containerView.addSubview(statsStackView)
-        addSubview(friendProfileView)
-        addSubview(myProfileView)
+        addSubview(profileImageGroupView)
+        profileImageGroupView.addSubview(friendProfileView)
+        profileImageGroupView.addSubview(myProfileView)
         
         setupConstraints()
     }
@@ -188,22 +189,29 @@ class MemorySummaryView: UIView {
     }
     
     private func setupConstraints() {
+        profileImageGroupView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(148)
+            $0.height.equalTo(84)
+        }
+        
         friendProfileView.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().offset(102)
+            $0.leading.equalToSuperview()
             $0.width.height.equalTo(84)
         }
         
-        myProfileView.snp.makeConstraints { make in
-            make.centerY.equalTo(friendProfileView.snp.centerY)
-            make.left.equalTo(friendProfileView.snp.right).offset(-20)
-            make.width.height.equalTo(84)
+        myProfileView.snp.makeConstraints {
+            $0.centerY.equalTo(friendProfileView.snp.centerY)
+            $0.left.equalTo(friendProfileView.snp.right).offset(-20)
+            $0.width.height.equalTo(84)
         }
         
-        containerView.snp.makeConstraints { make in
-            make.top.equalTo(friendProfileView.snp.bottom).offset(-26)
-            make.height.equalTo(152)
-            make.width.equalToSuperview()
+        containerView.snp.makeConstraints {
+            $0.top.equalTo(profileImageGroupView.snp.bottom).offset(-26)
+            $0.height.equalTo(152)
+            $0.width.equalToSuperview()
         }
         
         dateRangeLabel.snp.makeConstraints {
@@ -211,16 +219,16 @@ class MemorySummaryView: UIView {
             $0.centerX.equalToSuperview()
         }
         
-        postCountLabel.snp.makeConstraints { make in
-            make.top.equalTo(dateRangeLabel.snp.bottom).offset(5)
-            make.centerX.equalToSuperview()
+        postCountLabel.snp.makeConstraints {
+            $0.top.equalTo(dateRangeLabel.snp.bottom).offset(5)
+            $0.centerX.equalToSuperview()
         }
         
-        statsStackView.snp.makeConstraints { make in
-            make.top.equalTo(postCountLabel.snp.bottom).offset(12)
-            make.centerX.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(55)
-            make.height.equalTo(42)
+        statsStackView.snp.makeConstraints {
+            $0.top.equalTo(postCountLabel.snp.bottom).offset(12)
+            $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(55)
+            $0.height.equalTo(42)
         }
     }
     
