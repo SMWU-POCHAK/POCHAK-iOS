@@ -40,9 +40,11 @@ class ProfileViewModel {
                 switch failed {
                 case .clientError:
                     if isMyProfile {
+                        print(">> isMyProfile is TRUE")
                         fromCurrentVC.present(UIAlertController.networkErrorAlert(title: "유효하지 않은 멤버의 handle입니다."), animated: true)
                     }
                     else {
+                        print(">> isMyProfile is FALSE")
                         (fromCurrentVC as? OtherUserProfileViewController)?.searchBlockedUser = true
                         (fromCurrentVC as? OtherUserProfileViewController)?.showAlert(alertType: .confirmOnly,
                                        titleText: "차단한 유저의 프로필입니다.",
@@ -68,15 +70,26 @@ class ProfileViewModel {
     
     /// ProfileService를 통해 handle 멤버가 포착한 게시글을 조회하는 메소드입니다.
     /// - Parameters:
+    ///   - isMyProfile: 조회하는 프로필이 내 프로필인지의 bool 변수
     ///   - handle: 조회하려는 멤버의 handle
     ///   - request: 요청 데이터를 담은 ProfileRetrievalRequest
     ///   - fromCurrentVC: 현재 해당 요청을 보내는 뷰컨트롤러
-    func fetchPochakPosts(handle: String, request: ProfileRetrievalRequest, fromCurrentVC: UIViewController) {
+    func fetchPochakPosts(isMyProfile: Bool, handle: String, request: ProfileRetrievalRequest, fromCurrentVC: UIViewController) {
         ProfileService.getProfilePochakPosts(handle: handle, request: request) { data, failed in
             guard let data = data else {
                 switch failed {
                 case .clientError:
-                    fromCurrentVC.present(UIAlertController.networkErrorAlert(title: "유효하지 않은 멤버의 handle입니다."), animated: true)
+                    if isMyProfile {
+                        fromCurrentVC.present(UIAlertController.networkErrorAlert(title: "유효하지 않은 멤버의 handle입니다."), animated: true)
+                    }
+                    else {
+                        (fromCurrentVC as? OtherUserProfileViewController)?.searchBlockedUser = true
+                        (fromCurrentVC as? OtherUserProfileViewController)?.showAlert(alertType: .confirmOnly,
+                                       titleText: "차단한 유저의 프로필입니다.",
+                                       messageText: "차단해제를 원하시면\n설정 탭의 차단관리 페이지를 확인해주세요.",
+                                       cancelButtonText: "",
+                                       confirmButtonText: "확인")
+                    }
                 case .disconnected:
                     fromCurrentVC.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
                 case .serverError:

@@ -324,7 +324,7 @@ final class MyProfileTabViewController: UIViewController {
                 
         isCurrentlyFetching = true
         viewModel.fetchProfile(isMyProfile: true, handle: handle, request: .init(page: myProfilePageInfo.currentPage), fromCurrentVC: self)
-        viewModel.fetchPochakPosts(handle: handle, request: .init(page: pochakPostPageInfo.currentPage), fromCurrentVC: self)
+        viewModel.fetchPochakPosts(isMyProfile: true, handle: handle, request: .init(page: pochakPostPageInfo.currentPage), fromCurrentVC: self)
         
         setUpRefreshControl()
         
@@ -403,7 +403,7 @@ final class MyProfileTabViewController: UIViewController {
         
         self.isCurrentlyFetching = true
         viewModel.fetchProfile(isMyProfile: true, handle: handle, request: .init(page: myProfilePageInfo.currentPage), fromCurrentVC: self)
-        viewModel.fetchPochakPosts(handle: handle, request: .init(page: pochakPostPageInfo.currentPage), fromCurrentVC: self)
+        viewModel.fetchPochakPosts(isMyProfile: true, handle: handle, request: .init(page: pochakPostPageInfo.currentPage), fromCurrentVC: self)
         
         DispatchQueue.main.async() {
             self.scrollView.refreshControl?.endRefreshing()
@@ -698,7 +698,7 @@ extension MyProfileTabViewController: UIScrollViewDelegate {
                     print("[!] MyProfileTabViewController - NEEDS TO RE-FETCH DATA")
                     pochakPostPageInfo.currentPage += 1
                     self.isCurrentlyFetching = true
-                    viewModel.fetchPochakPosts(handle: handle, request: .init(page: pochakPostPageInfo.currentPage), fromCurrentVC: self)
+                    viewModel.fetchPochakPosts(isMyProfile: true, handle: handle, request: .init(page: pochakPostPageInfo.currentPage), fromCurrentVC: self)
                 }
                 return
             default:
