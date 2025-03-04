@@ -61,6 +61,11 @@ final class OtherUserProfileViewController: UIViewController {
     
     // MARK: - Views
     
+    lazy var moreButtonBarItem: UIBarButtonItem = {
+        let barButton = UIBarButtonItem(image: UIImage(named: "moreButtonIcon"), style: .plain, target: self, action: #selector(moreButtonDidTap))
+        return barButton
+    }()
+        
     lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
         view.showsVerticalScrollIndicator = false
@@ -95,6 +100,24 @@ final class OtherUserProfileViewController: UIViewController {
         button.addAction(UIAction { _ in
             self.navigateToMemoryView()
         }, for: .touchUpInside)
+        button.isHidden = true
+        return button
+    }()
+    
+    private let profileEditButton: UIButton = {
+        let button = UIButton()
+        
+        var config = UIButton.Configuration.filled()
+        config.image = UIImage(named: "pencilIcon")
+        config.contentInsets = .init(top: 5, leading: 5, bottom: 5, trailing: 5)
+        config.baseBackgroundColor = UIColor(named: "yellow00")
+        config.cornerStyle = .capsule
+        
+        button.configuration = config
+        button.layer.cornerRadius = 25 / 2
+        button.clipsToBounds = true
+        button.addTarget(self, action: #selector(editProfileButtonDidTap), for: .touchUpInside)
+        
         button.isHidden = true
         return button
     }()
@@ -347,7 +370,6 @@ final class OtherUserProfileViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func moreButtonDidTap() {
-        print("more button did tap")
         guard let profileMenuVC = self.profileTabSb.instantiateViewController(withIdentifier: "profileMenuVC")
                 as? ProfileMenuViewController else { return }
         let sheet = profileMenuVC.sheetPresentationController
@@ -373,6 +395,11 @@ final class OtherUserProfileViewController: UIViewController {
         self.navigationController?.pushViewController(summaryViewController, animated: true)
     }
     
+    @objc private func editProfileButtonDidTap(_ sender: Any) {
+        guard let updateProfileVC = profileTabSb.instantiateViewController(withIdentifier: "UpdateProfileVC") as? UpdateProfileViewController else { return }
+        self.navigationController?.pushViewController(updateProfileVC, animated: true)
+    }
+    
     @objc private func followerStackViewDidTap() {
         guard let followListVC = profileTabSb.instantiateViewController(withIdentifier: "FollowListVC") as? FollowListViewController else { return }
         followListVC.index = 0
@@ -388,7 +415,6 @@ final class OtherUserProfileViewController: UIViewController {
     }
     
     @objc private func followButtonDidTap() {
-        print("[OtherUserProfileViewController] 팔로우 버튼 선택")
         if isFollowing {
             showAlert(alertType: .confirmAndCancel,
                       titleText: "팔로우를 취소할까요?",
@@ -461,6 +487,7 @@ final class OtherUserProfileViewController: UIViewController {
         
         profileView.addSubview(profileImageView)
         profileView.addSubview(memoryButton)
+        profileView.addSubview(profileEditButton)
         profileView.addSubview(nicknameLabel)
         profileView.addSubview(introLabel)
         
@@ -495,12 +522,6 @@ final class OtherUserProfileViewController: UIViewController {
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
         
-        // FIXME: 추후 삭제해야 함
-//        contentView.snp.makeConstraints { make in
-//            make.leading.trailing.top.bottom.equalToSuperview()
-//            make.width.equalTo(scrollView.frameLayoutGuide)
-//        }
-        
         stickySegmentContainerView.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             make.leading.equalToSuperview()
@@ -534,6 +555,11 @@ final class OtherUserProfileViewController: UIViewController {
             make.trailing.equalTo(profileImageView.snp.trailing)
             make.bottom.equalTo(profileImageView.snp.bottom).offset(11)
         }
+        profileEditButton.snp.makeConstraints { make in
+            make.bottom.equalTo(profileImageView.snp.bottom)
+            make.trailing.equalTo(profileImageView.snp.trailing).inset(11)
+            make.width.height.equalTo(25)
+        }
         
         nicknameLabel.snp.makeConstraints { make in
             make.leading.equalTo(profileImageView.snp.trailing).offset(20)
@@ -549,14 +575,13 @@ final class OtherUserProfileViewController: UIViewController {
         infoHStackView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(profileImageView.snp.bottom).offset(28)
-//            make.bottom.equalToSuperview().inset(46)
         }
         
         followButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
             make.top.equalTo(infoHStackView.snp.bottom).offset(16)
             make.height.equalTo(40)
-            make.bottom.equalToSuperview().inset(46)
+            make.bottom.equalToSuperview().inset(22)
         }
         
         segmentContainerView.snp.makeConstraints { make in
@@ -636,10 +661,19 @@ final class OtherUserProfileViewController: UIViewController {
                 
                 if isFollow == true {
                     self.memoryButton.isHidden = false
+                    self.profileImageView.layer.borderColor = UIColor(named: "yellow00")?.cgColor
                 }
                 else {
                     self.profileImageView.layer.borderColor = UIColor(hexCode: "CECCC8").cgColor
                 }
+            }
+            else {  // 내 프로필 조회한 경우
+                self.followButton.isHidden = true
+                self.memoryButton.isHidden = true
+                self.moreButtonBarItem.isHidden = true
+                self.profileEditButton.isHidden = false
+                
+                self.profileImageView.layer.borderColor = UIColor(named: "yellow00")?.cgColor
             }
         }
     }
@@ -679,10 +713,6 @@ final class OtherUserProfileViewController: UIViewController {
     }
     
     private func setUpNavigationBar() {
-        let moreButtonBarItem: UIBarButtonItem = {
-            let barButton = UIBarButtonItem(image: UIImage(named: "moreButtonIcon"), style: .plain, target: self, action: #selector(moreButtonDidTap))
-            return barButton
-        }()
         navigationItem.title = "@" + (receivedHandle ?? "handle not found")
         navigationItem.rightBarButtonItem = moreButtonBarItem
     }
