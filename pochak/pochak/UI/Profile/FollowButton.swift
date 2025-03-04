@@ -37,12 +37,10 @@ final class FollowButton: UIButton {
         let buttonStateHandler: UIButton.ConfigurationUpdateHandler = { button in
             switch self.isFollowing {
             case true:
-                self.isEnabled = true
                 button.configuration?.background.backgroundColor = UIColor(hexCode: "CECCC8")
                 button.configuration?.attributedTitle = AttributedString("팔로잉")
                 button.configuration?.attributedTitle?.setAttributes(AttributeContainer([NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: font]))
             case false:
-                self.isEnabled = false
                 button.configuration?.background.backgroundColor = UIColor(named: "yellow00")
                 button.configuration?.attributedTitle = AttributedString("팔로우")
                 button.configuration?.attributedTitle?.setAttributes(AttributeContainer([NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: font]))
