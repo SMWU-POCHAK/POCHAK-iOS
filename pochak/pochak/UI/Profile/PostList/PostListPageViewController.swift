@@ -18,7 +18,8 @@ final class PostListPageViewController: UIViewController {
     // MARK: - Properties
     
     let type: PostListType
-    let myProfileTabVC: MyProfileTabViewController
+    let myProfileTabVC: UIViewController
+    let isMyProfile: Bool
     
     static private let minimumLineSpacing: CGFloat = 9
     static private let minimumInterItemSpacing: CGFloat = 8
@@ -47,8 +48,9 @@ final class PostListPageViewController: UIViewController {
     
     // MARK: - Init
     
-    init(type: PostListType, parentVC: MyProfileTabViewController) {
+    init(type: PostListType, parentVC: UIViewController, isMyProfile: Bool) {
         self.type = type
+        self.isMyProfile = isMyProfile
         self.myProfileTabVC = parentVC
 
         super.init(nibName: nil, bundle: nil)
@@ -88,7 +90,12 @@ final class PostListPageViewController: UIViewController {
             print("[PostListPageViewController] setPostCollectionViewData, empty postlist")
             self.postList = []
             self.collectionView.reloadData()
-            self.myProfileTabVC.isCurrentlyFetching = false
+            if isMyProfile {
+                (self.myProfileTabVC as? MyProfileTabViewController)?.isCurrentlyFetching = false
+            }
+            else {
+                (self.myProfileTabVC as? OtherUserProfileViewController)?.isCurrentlyFetching = false
+            }
         }
         else {
             print("[PostListPageViewController] setPostCollectionViewData, \(type) NOT empty postlist")
@@ -101,9 +108,15 @@ final class PostListPageViewController: UIViewController {
             self.collectionView.performBatchUpdates {
                 self.postList.append(contentsOf: postList)
                 self.collectionView.insertItems(at: newIndexPathList)
-            } completion: { [weak self] _ in
-                self?.myProfileTabVC.updateScrollViewContentSize()
-                self?.myProfileTabVC.isCurrentlyFetching = false
+            } completion: { _ in /*[weak self] _ in*/
+                if self.isMyProfile {
+                    (self.myProfileTabVC as? MyProfileTabViewController)?.updateScrollViewContentSize()
+                    (self.myProfileTabVC as? MyProfileTabViewController)?.isCurrentlyFetching = false
+                }
+                else {
+                    (self.myProfileTabVC as? OtherUserProfileViewController)?.updateScrollViewContentSize()
+                    (self.myProfileTabVC as? OtherUserProfileViewController)?.isCurrentlyFetching = false
+                }
             }
         }
     }
@@ -122,7 +135,12 @@ extension PostListPageViewController: UICollectionViewDataSource, UICollectionVi
         cell.configure(with: postList[indexPath.item].postImage)
         
         if indexPath.item == postList.count - 1 {
-            myProfileTabVC.updateScrollViewContentSize()
+            if self.isMyProfile {
+                (self.myProfileTabVC as? MyProfileTabViewController)?.updateScrollViewContentSize()
+            }
+            else {
+                (self.myProfileTabVC as? OtherUserProfileViewController)?.updateScrollViewContentSize()
+            }
         }
         return cell
     }
@@ -135,7 +153,12 @@ extension PostListPageViewController: UICollectionViewDataSource, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        myProfileTabVC.updateScrollViewContentSize()
+        if self.isMyProfile {
+            (self.myProfileTabVC as? MyProfileTabViewController)?.updateScrollViewContentSize()
+        }
+        else {
+            (self.myProfileTabVC as? OtherUserProfileViewController)?.updateScrollViewContentSize()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout: UICollectionViewLayout, minimumLineSpacingForSectionAt: Int) -> CGFloat {
