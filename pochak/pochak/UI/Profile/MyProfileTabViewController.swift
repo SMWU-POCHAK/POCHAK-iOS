@@ -294,8 +294,8 @@ final class MyProfileTabViewController: UIViewController {
         return view
     }()
     
-    private lazy var vc1 = PostListPageViewController(type: .POCHAKED, parentVC: self)
-    private lazy var vc2 = PostListPageViewController(type: .POCHAK, parentVC: self)
+    private lazy var vc1 = PostListPageViewController(type: .POCHAKED, parentVC: self, isMyProfile: true)
+    private lazy var vc2 = PostListPageViewController(type: .POCHAK, parentVC: self, isMyProfile: true)
     
     private lazy var pageViewController: UIPageViewController = {
         pageViewControllerList = [vc1, vc2]
@@ -323,7 +323,7 @@ final class MyProfileTabViewController: UIViewController {
         addFollowingGestuerRecognizer()
                 
         isCurrentlyFetching = true
-        viewModel.fetchMyProfile(handle: handle, request: .init(page: myProfilePageInfo.currentPage), fromCurrentVC: self)
+        viewModel.fetchProfile(isMyProfile: true, handle: handle, request: .init(page: myProfilePageInfo.currentPage), fromCurrentVC: self)
         viewModel.fetchPochakPosts(handle: handle, request: .init(page: pochakPostPageInfo.currentPage), fromCurrentVC: self)
         
         setUpRefreshControl()
@@ -402,7 +402,7 @@ final class MyProfileTabViewController: UIViewController {
         self.vc2.setPostCollectionViewData([])
         
         self.isCurrentlyFetching = true
-        viewModel.fetchMyProfile(handle: handle, request: .init(page: myProfilePageInfo.currentPage), fromCurrentVC: self)
+        viewModel.fetchProfile(isMyProfile: true, handle: handle, request: .init(page: myProfilePageInfo.currentPage), fromCurrentVC: self)
         viewModel.fetchPochakPosts(handle: handle, request: .init(page: pochakPostPageInfo.currentPage), fromCurrentVC: self)
         
         DispatchQueue.main.async() {
@@ -690,7 +690,7 @@ extension MyProfileTabViewController: UIScrollViewDelegate {
                     print("[!] MyProfileTabViewController - NEEDS TO RE-FETCH DATA")
                     myProfilePageInfo.currentPage += 1
                     self.isCurrentlyFetching = true
-                    viewModel.fetchMyProfile(handle: handle, request: .init(page: myProfilePageInfo.currentPage), fromCurrentVC: self)
+                    viewModel.fetchProfile(isMyProfile: true, handle: handle, request: .init(page: myProfilePageInfo.currentPage), fromCurrentVC: self)
                 }
                 return
             case 1:
