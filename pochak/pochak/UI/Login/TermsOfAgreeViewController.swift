@@ -44,7 +44,7 @@ final class TermsOfAgreeViewController: UIViewController, UIViewControllerTransi
     private let pochakLetterLogoImageView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.image = UIImage(named: "logo_full")
+        view.image = UIImage(named: "wordLogoSmall")
         return view
     }()
     
