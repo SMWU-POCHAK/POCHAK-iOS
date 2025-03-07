@@ -368,7 +368,7 @@ final class MyProfileTabViewController: UIViewController {
     }
     
     @objc private func editProfileButtonDidTap(_ sender: Any) {
-        guard let updateProfileVC = profileTabSb.instantiateViewController(withIdentifier: "UpdateProfileVC") as? UpdateProfileViewController else { return }
+        let updateProfileVC =  UpdateProfileViewController()
         self.navigationController?.pushViewController(updateProfileVC, animated: true)
     }
     
