@@ -101,10 +101,16 @@ class MemoryViewController: UIViewController {
         viewModel.onMemorySummaryUpdated = { [weak self] memorySummary in
             guard let self = self else { return }
             self.profileStatsView.configure(with: memorySummary)
-            // memories에서 postImage가 nil이 아닌 항목만 필터링
-            self.pochakMomentsView.configure(memoryList: viewModel.converGalleryPostList(memoryList: memorySummary.memories))
+            
+            let memoryCount = memorySummary.bondedCount + memorySummary.pochakCount + memorySummary.pochakedCount
+            
+            if memoryCount > 0 {
+                self.pochakMomentsView.configure(memoryList: viewModel.converGalleryPostList(memoryList: memorySummary.memories))
+            } else {
+                self.pochakMomentsView.isHidden = true
+            }
             self.timelineView.configure(userID: memorySummary.handle,
-                                        followPeriod: Date.formatDateRange(fromDateString: memorySummary.followDate),
+                                        followPeriod: Date.formatDateRange(fromDateString: memorySummary.bondedDate ?? ""),
                                         with: memorySummary.timeLine)
         }
     }

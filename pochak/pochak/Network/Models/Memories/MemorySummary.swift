@@ -12,11 +12,22 @@ struct MemorySummary: Codable {
     let memberProfileImage: String
     let handle: String
     let loginMemberProfileImage: String
-    let followedDate: String
-    let followDay, pochakCount, bondedCount, pochakedCount: Int
+    let followDay: Int?
+    let pochakCount, bondedCount, pochakedCount: Int
     let memories: [String: MemoryPost]
-    let followDate: String
     let timeLine: [String: TimeLine]
+    let bondedDate: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case memberProfileImage
+        case handle
+        case loginMemberProfileImage
+        case followDay
+        case pochakCount, bondedCount, pochakedCount
+        case memories
+        case timeLine
+        case bondedDate = "f4fDate"
+    }
 }
 
 struct TimeLine: Codable {
