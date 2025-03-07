@@ -620,12 +620,13 @@ final class MyProfileTabViewController: UIViewController {
     }
     
     func updateScrollViewContentSize() {
-        print("[MyProfileTabViewController] updateScrollViewContentSize =============")
+        print("[OtherUserProfileViewController] updateScrollViewContentSize =============")
         print(">> currentPage: \(currentPage)")
         let vc = self.pageViewControllerList[currentPage] as? PostListPageViewController
-        let newHeight = (vc?.collectionView.collectionViewLayout.collectionViewContentSize.height)! + 20 * 2 + profileView.frame.height + segmentContainerView.frame.height
+        let newHeight = contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height + (vc?.collectionView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height ?? 0) + 20 * 2
         scrollView.contentSize = CGSize(width: scrollView.frame.width, height: newHeight)
         contentView.frame = CGRect(x: 0, y: 0, width: scrollView.frame.width, height: newHeight)
+        print(">> Updated scrollView.contentSize: \(scrollView.contentSize)")
     }
 }
 
