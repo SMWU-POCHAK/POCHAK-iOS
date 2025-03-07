@@ -19,10 +19,7 @@ final class OtherUserProfileViewController: UIViewController {
     var isCurrentlyFetching: Bool = false
     
     var receivedHandle: String?
-//    var receivedFollowerCount: Int = 0
-//    var receivedFollowingCount: Int = 0
     private var isFollowing: Bool = false
-    //private let socialId = UserDefaultsManager.getData(type: String.self, forKey: .socialId)
     var searchBlockedUser: Bool = false
     
     private let viewModel = ProfileViewModel()
@@ -652,24 +649,18 @@ final class OtherUserProfileViewController: UIViewController {
             self.postCountNumberLabel.text = String(responseData.totalPostNum ?? 0)
             self.followerCountNumberLabel.text = String(responseData.followerCount ?? 0)
             self.followingCountNumberLabel.text = String(responseData.followingCount ?? 0)
-            
-            print(">> isFollow: \(responseData.isFollow)")
+                        
+            self.memoryButton.isHidden = responseData.isBonded == false
             
             if let isFollow = responseData.isFollow {
                 self.isFollowing = isFollow
                 self.followButton.isFollowing = isFollow
                 
-                if isFollow == true {
-                    self.memoryButton.isHidden = false
-                    self.profileImageView.layer.borderColor = UIColor(named: "yellow00")?.cgColor
-                }
-                else {
-                    self.profileImageView.layer.borderColor = UIColor(hexCode: "CECCC8").cgColor
-                }
+                self.profileImageView.layer.borderColor = isFollow ? UIColor(named: "yellow00")?.cgColor : UIColor(hexCode: "CECCC8").cgColor
             }
             else {  // 내 프로필 조회한 경우
                 self.followButton.isHidden = true
-                self.memoryButton.isHidden = true
+                //self.memoryButton.isHidden = true
                 self.moreButtonBarItem.isHidden = true
                 self.profileEditButton.isHidden = false
                 
@@ -717,71 +708,6 @@ final class OtherUserProfileViewController: UIViewController {
         navigationItem.rightBarButtonItem = moreButtonBarItem
     }
     
-    private func setUpMemoryButton() {
-        view.addSubview(memoryButton)
-        
-        memoryButton.snp.makeConstraints { make in
-            make.width.height.equalTo(48)
-            make.trailing.equalTo(profileBackground.snp.trailing)
-            make.bottom.equalTo(profileBackground.snp.bottom).offset(11)
-        }
-    }
-    
-    private func setUpViewController() {
-        profileBackground.layer.cornerRadius = 58
-        profileImage.layer.cornerRadius = 55
-        profileImage.contentMode = .scaleAspectFill
-        whiteBackground.layer.cornerRadius = 8
-        followToggleBtn.layer.cornerRadius = 8
-        viewFollowerList()
-        viewFollowingList()
-        updateProfileBtn.layer.isHidden = true
-        contentScrollView.delegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(totalHeightUpdated), name: .didUpdateTotalHeight, object: nil)
-    }
-    
-    private func setUpData() {
-        let request = ProfileRetrievalRequest(page: 0)
-        if let handle = receivedHandle {
-            ProfileService.getProfile(handle: handle, request: request) { data, failed in
-                guard let data = data else {
-                    switch failed {
-                    case .clientError:
-                        self.navigationItem.title = ""
-                        self.searchBlockedUser = true
-                        self.showAlert(alertType: .confirmOnly,
-                                       titleText: "차단한 유저의 프로필입니다.",
-                                       messageText: "차단해제를 원하시면\n설정 탭의 차단관리 페이지를 확인해주세요.",
-                                       cancelButtonText: "",
-                                       confirmButtonText: "확인")
-                    case .disconnected:
-                        self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                    case .serverError:
-                        self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                    case .unknownError:
-                        self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                    default:
-                        self.present(UIAlertController.networkErrorAlert(title: "요청에 실패하였습니다."), animated: true)
-                    }
-                    return
-                }
-                
-                // 프로필 이미지 로드
-                if let url = URL(string: data.result.profileImage ?? "") {
-                    self.profileImage.load(with: url)
-                }
-                
-                // 필요한 데이터 뷰에 반영
-                self.setUpResponseData(data.result)
-                
-                // 팔로우 버튼 설정
-                self.setUpFollowBtn(data.result)
-            }
-        } else {
-            print("No handle received")
-        }
-    }
-    
     private func initializeSingleton() {
         ProfileDataSingleton.shared.currentTabIndex = 0
         ProfileDataSingleton.shared.firstTabHeight = 0.0
@@ -790,86 +716,6 @@ final class OtherUserProfileViewController: UIViewController {
         ProfileDataSingleton.shared.secondTabIsCurrentlyFetching = false
         ProfileDataSingleton.shared.firstTabIsLastPage = false
         ProfileDataSingleton.shared.secondTabIsLastPage = false
-    }
-    
-    private func viewFollowerList() { //  UITapGestureRecognizer 사용
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewFollowerTapped))
-        followerList.addGestureRecognizer(tapGestureRecognizer)
-    }
-    
-    private func viewFollowingList() { //  UITapGestureRecognizer 사용
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewFollowingTapped))
-        followingList.addGestureRecognizer(tapGestureRecognizer)
-    }
-    
-    private func setUpResponseData(_ responseData: ProfileRetrievalResult) {
-        self.userName.text = String(responseData.name ?? "")
-        self.userMessage.text = String(responseData.message ?? "")
-        self.postCount.text = String(responseData.totalPostNum ?? 0)
-        self.followerCount.text = String(responseData.followerCount ?? 0)
-        self.followingCount.text = String(responseData.followingCount ?? 0)
-        self.receivedFollowerCount = responseData.followerCount ?? 0
-        self.receivedFollowingCount = responseData.followingCount ?? 0
-        self.receivedIsFollow = responseData.isFollow
-    }
-    
-    private func setUpFollowBtn(_ responseData: ProfileRetrievalResult) {
-        let currentHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle)
-        if currentHandle == self.receivedHandle {
-            /// 내 프로필 조회한 경우
-            self.followToggleBtn.layer.isHidden = true
-            self.updateProfileBtn.layer.isHidden = false
-            self.postListTabmanView.topAnchor.constraint(equalTo: self.whiteBackground.bottomAnchor, constant: 5).isActive = true
-            self.moreButton.isHidden = true
-            
-        } else {
-            self.followToggleBtn.setTitleColor(UIColor.white, for: .normal)
-            self.followToggleBtn.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 16)
-            self.followToggleBtn.layer.cornerRadius = 5
-            
-            if responseData.isFollow == true {
-                /// 팔로우 중인 유저인 경우
-                self.followToggleBtn.setTitle("팔로잉", for: .normal)
-                self.followToggleBtn.backgroundColor = UIColor(named: "gray03")
-                self.profileBackground.backgroundColor = UIColor(resource: .yellow00)
-            } else {
-                /// 팔로우하고 있지 않은 유저인 경우
-                self.followToggleBtn.setTitle("팔로우", for: .normal)
-                self.followToggleBtn.backgroundColor = UIColor(named: "yellow00")
-            }
-            
-            self.memoryButton.isHidden = responseData.isBonded == false
-        }
-    }
-    
-    private func updatePostListTabmanViewHeight(_ height: CGFloat) {
-        postListTabmanView.constraints.forEach { constraint in
-            if constraint.firstAttribute == .height {
-                if height >= constraint.constant && constraint.constant != 0 {
-                    constraint.isActive = false
-                    
-                    // 새로운 높이 제약 조건 추가
-                    postListTabmanView.heightAnchor.constraint(equalToConstant: height).isActive = true
-                    UIView.animate(withDuration: 0.3, animations: {
-                        self.contentScrollView.layoutIfNeeded()
-                    }) { _ in
-                        // ScrollView의 contentSize 업데이트
-                        self.contentScrollView.contentSize = CGSize(
-                            width: self.contentScrollView.frame.width,
-                            height: self.topUIView.frame.height
-                        )
-                    }
-                } else {
-                    print("height : \(height)")
-                    print("constraint.constant : \(constraint.constant)")
-                    print("no posts yet")
-                }
-            }
-        }
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
 }
 
