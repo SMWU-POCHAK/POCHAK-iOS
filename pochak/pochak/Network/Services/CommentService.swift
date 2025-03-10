@@ -19,7 +19,7 @@ struct CommentService {
         page: Int,
         completion: @escaping (_ succeed: CommentGetResponse?, _ failed: NetworkError?) -> Void) {
             
-            NetworkService.shared.request(CommentAPI.getComments(postId: postId, page: page)) { response in
+            NetworkService.shared.request(CommentAPI.getComments(postId: postId, request: CommentGetRequest(page: page, sort: "createdDate,asc"))) { response in
                 switch response {
                 case .success(let data):
                     completion(data, nil)
