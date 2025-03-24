@@ -20,6 +20,7 @@ class UserDefaultsManager {
         case message
         case profileImgUrl
         case refreshTokenIssuedAt
+        case rejectedUpdateBefore
     }
     
     static func setData<T>(value: T, key: UserDefaultsKeys) {
