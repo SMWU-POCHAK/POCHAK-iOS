@@ -275,6 +275,14 @@ extension NearbyPochakerViewController: BluetoothSerialDelegate {
 //        print("=======================================")
 //        BluetoothSerialManager.shared.stopScan()
     }
+    
+    func stateIsNotPoweredOn() {
+        showAlert(alertType: .confirmOnly,
+                  titleText: "서비스 이용을 위해\n블루투스 기능이 필요합니다.",
+                  messageText: "",
+                  cancelButtonText: "",
+                  confirmButtonText: "설정으로 이동하기")
+    }
 }
 
 // MARK: - Extension; NearbyPochakerViewDelegate
@@ -293,6 +301,30 @@ extension NearbyPochakerViewController: NearbyPochakerViewDelegate {
         }
         else {
             print("tabbar is nil")
+        }
+    }
+}
+
+// MARK: - Extension: CustomAlertDelegate
+
+extension NearbyPochakerViewController: CustomAlertDelegate {
+    func cancel() {
+    }
+    
+    func confirmAction() {
+        print("confirmed")
+        
+//        // ios 버전 18.3 이상에서만 디폴트 설정 앱 열기 가능
+//        if #available(iOS 18.3, *) {
+//            // Create the URL that links to the Settings app for default app selection.
+//            if let url = URL(string: UIApplication.openDefaultApplicationsSettingsURLString) {
+//                // Ask the system to open that URL.
+//                await UIApplication.shared.open(url)
+//            }
+//        }
+        
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
 }

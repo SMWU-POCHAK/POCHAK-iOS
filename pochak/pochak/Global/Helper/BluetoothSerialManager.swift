@@ -17,11 +17,13 @@ enum BluetoothMode: String {
 protocol BluetoothSerialDelegate: AnyObject {
     func serialDidDiscoverPeripheral(peripheral: CBPeripheral, advertisementData: [String : Any], RSSI: NSNumber?)
     func serialDidConnectPeripheral(peripheral: CBPeripheral)
+    func stateIsNotPoweredOn()
 }
 
 extension BluetoothSerialDelegate {
     func serialDidDiscoverPeripheral(peripheral: CBPeripheral, advertisementData: [String : Any], RSSI: NSNumber?) {}
     func serialDidConnectPeripheral(peripheral: CBPeripheral) {}
+    func stateIsNotPoweredOn() {}
 }
 
 final class BluetoothSerialManager: NSObject {
@@ -82,6 +84,7 @@ final class BluetoothSerialManager: NSObject {
             }
         }
         else {
+            delegate?.stateIsNotPoweredOn()
             print("![Error] Central Manager cannot scan because state is not poweredOn! current state: \(centralManager.state)")
         }
     }
