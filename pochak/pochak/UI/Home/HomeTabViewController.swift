@@ -26,8 +26,7 @@ final class HomeTabViewController: UIViewController {
     
     private lazy var nearbyPochakButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "person.3.fill"), for: .normal)
-        button.tintColor = UIColor(named: "yellow00")
+        button.setImage(UIImage(named: "NearbyPochakIcon"), for: .normal)
         button.isEnabled = true
         button.addAction(UIAction { _ in
             self.nearbyPochakButtonDidTap()
