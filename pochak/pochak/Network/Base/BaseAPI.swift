@@ -17,11 +17,7 @@ protocol BaseAPI: URLRequestConvertible {
 }
 
 extension BaseAPI {
-    #if DEBUG
-    var baseURL: String { "http://34.47.76.204/api" }
-    #else
     var baseURL: String { "http://34.47.86.230/api" }
-    #endif
     var method: HTTPMethod { .get }
     var path: String { "" }
     var parameters: RequestParams? { nil }
