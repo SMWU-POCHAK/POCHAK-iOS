@@ -105,13 +105,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let splitCurrentProjectVersionByDot = currentProjectVersion.split(separator: ".").map { $0 }
             print("[Version Update] marketing version: \(splitMarketingVersionByDot)")
             print("[Version Update] current version: \(splitCurrentProjectVersionByDot)")
+            do {
+                print(">> [Version Update] Refresh token is...")
+                try print(KeychainManager.load(account: "refreshToken"))
+            } catch {
+                print("[!] Error - failed to load refresh token")
+            }
 
             if splitCurrentProjectVersionByDot.count > 0 && splitMarketingVersionByDot.count > 0 {
                 // 현재 기기의 Major, Minor 버전이 앱스토어의 Major, Minor 버전보다 낮다면 Alert
                 if splitCurrentProjectVersionByDot[0] < splitMarketingVersionByDot[0] {
+                    UserDefaultsManager.setData(value: false, key: .rejectedUpdateBefore)
                     self.showUpdateAlert(isForcedToUpdate: true)
                 }
                 else if splitCurrentProjectVersionByDot[1] < splitMarketingVersionByDot[1] {
+                    UserDefaultsManager.setData(value: false, key: .rejectedUpdateBefore)
                     self.showUpdateAlert(isForcedToUpdate: true)
                 }
                 // Patch의 버전이 다르면
