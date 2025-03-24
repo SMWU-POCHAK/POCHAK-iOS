@@ -29,10 +29,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             print(access)
             
             let tabBarController = CustomTabBarController()
-        
+            
             window?.rootViewController = tabBarController
             window?.makeKeyAndVisible()
-            
         } else {
             // 로그인 안된 상태
             print("New User")
@@ -41,8 +40,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             window?.rootViewController = mainNavigationVC
             window?.makeKeyAndVisible()
-            
         }
+        
+        self.checkAndUpdateIfNeeded()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -65,6 +65,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
+        print("=== scene will enter foreground ===")
+        //self.checkAndUpdateIfNeeded()
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
@@ -84,4 +86,74 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let url = URLContexts.first?.url else { return }
             let _ = GIDSignIn.sharedInstance.handle(url)
         }
+    
+    // 업데이트가 필요한지 확인 후 업데이트 alert을 띄우는 메소드
+    func checkAndUpdateIfNeeded() {
+        print("=== check and update if needed ===")
+        let latestVersion = AppStoreUpdateManager.shared.getLatestVersion()
+        
+        DispatchQueue.main.async {
+            guard let marketingVersion = latestVersion else {
+                print("[!] Error - Failed to find AppStore marketing version.")
+                return
+            }
+
+            // 현재 기기의 버전
+            let currentProjectVersion = AppStoreUpdateManager.currentAppVersion ?? ""
+
+            let splitMarketingVersionByDot = marketingVersion.split(separator: ".").map { $0 }
+            let splitCurrentProjectVersionByDot = currentProjectVersion.split(separator: ".").map { $0 }
+            print("[Version Update] marketing version: \(splitMarketingVersionByDot)")
+            print("[Version Update] current version: \(splitCurrentProjectVersionByDot)")
+
+            if splitCurrentProjectVersionByDot.count > 0 && splitMarketingVersionByDot.count > 0 {
+                // 현재 기기의 Major, Minor 버전이 앱스토어의 Major, Minor 버전보다 낮다면 Alert
+                if splitCurrentProjectVersionByDot[0] < splitMarketingVersionByDot[0] {
+                    self.showUpdateAlert(isForcedToUpdate: true)
+                }
+                else if splitCurrentProjectVersionByDot[1] < splitMarketingVersionByDot[1] {
+                    self.showUpdateAlert(isForcedToUpdate: true)
+                }
+                // Patch의 버전이 다르면
+                else if splitCurrentProjectVersionByDot[2] < splitMarketingVersionByDot[2]{
+                    print(">> [Version Update] Patch version is different.")
+                    let rejectedUpdateBefore = UserDefaultsManager.getData(type: Bool.self, forKey: .rejectedUpdateBefore)
+                    if !(rejectedUpdateBefore ?? false) {
+                        print(">> [Version Update] Has not rejected update, show alert.")
+                        self.showUpdateAlert(isForcedToUpdate: false)
+                    }
+                }
+            }
+        }
+    }
+    
+    /// 업데이트 알림을 띄우는 메소드입니다.
+    /// - Parameter isForcedToUpdate: 강제 업데이트할지의 여부
+    func showUpdateAlert(isForcedToUpdate: Bool) {
+        print(">> [Version Update] App is not in its latest version.")
+        let alert = UIAlertController(
+            title: "새로운 버전 업데이트",
+            message: "안정적인 서비스 사용을 위해\n최신 버전으로 업데이트 해주세요.",
+            preferredStyle: .alert
+        )
+        
+        if isForcedToUpdate {
+            let updateAction = UIAlertAction(title: "업데이트 하러가기", style: .default) { _ in
+                AppStoreUpdateManager.shared.openAppStore()
+            }
+            alert.addAction(updateAction)
+        }
+        else {
+            let updateAction = UIAlertAction(title: "업데이트", style: .default) { _ in
+                UserDefaultsManager.setData(value: false, key: .rejectedUpdateBefore)
+                AppStoreUpdateManager.shared.openAppStore()
+            }
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel) { _ in
+                UserDefaultsManager.setData(value: true, key: .rejectedUpdateBefore)  // 다음 번에 앱 실행했을 때 또 업데이트 알림을 띄우지 않기 위해
+            }
+            alert.addAction(updateAction)
+            alert.addAction(cancelAction)
+        }
+        window?.rootViewController?.present(alert, animated: true, completion: nil)
+    }
 }
