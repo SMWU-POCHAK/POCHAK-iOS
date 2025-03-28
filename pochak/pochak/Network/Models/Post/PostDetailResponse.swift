@@ -13,6 +13,7 @@ struct PostDetailResponse: Codable {
 }
 
 struct PostDetailResponseResult: Codable {
+    let allowedDate: String
     let ownerHandle: String
     let ownerProfileImage: String
     let tagList: [TaggedMember]
