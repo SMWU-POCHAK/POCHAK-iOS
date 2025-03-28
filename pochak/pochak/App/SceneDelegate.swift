@@ -87,9 +87,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let _ = GIDSignIn.sharedInstance.handle(url)
         }
     
-    // 업데이트가 필요한지 확인 후 업데이트 alert을 띄우는 메소드
+    /// 앱 업데이트가 필요한지 확인 후 업데이트 alert창을 띄우는 메소드입니다.
+    /// 업데이트 규칙은; major, minor 버전이 낮으면 강제 update, patch 버전이 낮으면 선택 update
     func checkAndUpdateIfNeeded() {
-        print("=== check and update if needed ===")
         let latestVersion = AppStoreUpdateManager.shared.getLatestVersion()
         
         DispatchQueue.main.async {
@@ -105,24 +105,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let splitCurrentProjectVersionByDot = currentProjectVersion.split(separator: ".").map { $0 }
             print("[Version Update] marketing version: \(splitMarketingVersionByDot)")
             print("[Version Update] current version: \(splitCurrentProjectVersionByDot)")
-            do {
-                print(">> [Version Update] Refresh token is...")
-                try print(KeychainManager.load(account: "refreshToken"))
-            } catch {
-                print("[!] Error - failed to load refresh token")
-            }
 
             if splitCurrentProjectVersionByDot.count > 0 && splitMarketingVersionByDot.count > 0 {
-                // 현재 기기의 Major, Minor 버전이 앱스토어의 Major, Minor 버전보다 낮다면 Alert
-                if splitCurrentProjectVersionByDot[0] < splitMarketingVersionByDot[0] {
+                if splitCurrentProjectVersionByDot[0] < splitMarketingVersionByDot[0] ||
+                    splitCurrentProjectVersionByDot[1] < splitMarketingVersionByDot[1] {
                     UserDefaultsManager.setData(value: false, key: .rejectedUpdateBefore)
                     self.showUpdateAlert(isForcedToUpdate: true)
                 }
-                else if splitCurrentProjectVersionByDot[1] < splitMarketingVersionByDot[1] {
-                    UserDefaultsManager.setData(value: false, key: .rejectedUpdateBefore)
-                    self.showUpdateAlert(isForcedToUpdate: true)
-                }
-                // Patch의 버전이 다르면
                 else if splitCurrentProjectVersionByDot[2] < splitMarketingVersionByDot[2]{
                     print(">> [Version Update] Patch version is different.")
                     let rejectedUpdateBefore = UserDefaultsManager.getData(type: Bool.self, forKey: .rejectedUpdateBefore)
