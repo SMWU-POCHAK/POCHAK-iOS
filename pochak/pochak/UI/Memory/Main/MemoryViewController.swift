@@ -119,8 +119,7 @@ class MemoryViewController: UIViewController {
 extension MemoryViewController: CarouselViewDelegate {
     func didSelectMemoryPost(postID: Int) {
         let exploreTabSb = UIStoryboard(name: "ExploreTab", bundle: nil)
-        guard let postVC = exploreTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
-        else { return }
+        let postVC = PostViewController()
         
         postVC.receivedPostId = postID
         self.navigationController?.pushViewController(postVC, animated: true)

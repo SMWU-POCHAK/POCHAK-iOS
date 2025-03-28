@@ -168,8 +168,7 @@ extension PochakPostTabmanViewController: UICollectionViewDelegate, UICollection
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let exploreTabSb = UIStoryboard(name: "ExploreTab", bundle: nil)
-        guard let postVC = exploreTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
-            else { return }
+        let postVC = PostViewController()
         postVC.receivedPostId = imageArray[indexPath.item].postId
         self.navigationController?.pushViewController(postVC, animated: true)
     }
