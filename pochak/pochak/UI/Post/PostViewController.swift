@@ -21,28 +21,15 @@ final class PostViewController: UIViewController {
     private var postDataResult: PostDetailResponseResult?
         
     private var deletePostResponse: PostDeleteResponse!
-        
+    
+    private let viewModel = PostDetailViewModel()
+    
     // MARK: - Views
     
-//    @IBOutlet weak var profileImageView: UIImageView!
-//    @IBOutlet weak var scrollView: UIScrollView!
-//    @IBOutlet weak var likeButton: UIButton!
-//    @IBOutlet weak var commentButton: UIButton!
-//    @IBOutlet weak var followingButton: UIButton!
-//    @IBOutlet weak var postImageView: UIImageView!
-    @IBOutlet weak var postOwnerHandleLabel: UILabel!
-    @IBOutlet weak var postContentLabel: UILabel!
-//    @IBOutlet weak var taggedUsersLabel: UILabel!
-//    @IBOutlet weak var pochakUserLabel: UILabel!
-    
-//    @IBOutlet weak var borderLineView: UIView!
-    @IBOutlet weak var commentUserHandleLabel: UILabel!
-    @IBOutlet weak var commentContentLabel: UILabel!
-//    @IBOutlet weak var moreCommentButton: UIButton!
-    
-    private let scrollView: UIScrollView = {
+    private lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
         view.showsVerticalScrollIndicator = false
+        view.delegate = self
         return view
     }()
     
@@ -212,6 +199,8 @@ final class PostViewController: UIViewController {
         
         view.backgroundColor = .white
         
+        bind()
+        
         setupNavigationBar()
         self.navigationController?.isNavigationBarHidden = false
         
@@ -225,10 +214,13 @@ final class PostViewController: UIViewController {
         나중에 홈에서도 id 이렇게 전달해서 쓰면 될 것 같습니다 ㅎㅎ */
         if let data = receivedPostId {
             print("Received Data: \(data)")
+            viewModel.fetchPostDetail(postId: data, fromCurrentVC: self)
         } else {
             print("No data received.")
         }
         
+        addGestureRecognizers()
+        setUpRefreshControl()
 //        loadPostDetailData()
     }
     
@@ -274,7 +266,7 @@ final class PostViewController: UIViewController {
                 self?.present(UIAlertController.networkErrorAlert(title: "좋아요에 실패하였습니다."), animated: true)
                 return
             }
-            self?.loadPostDetailData()
+            self?.viewModel.fetchPostDetail(postId: (self?.receivedPostId)!, fromCurrentVC: self!)
         }
     }
     
@@ -282,12 +274,12 @@ final class PostViewController: UIViewController {
     @objc func moveToOthersProfile(sender: UITapGestureRecognizer) {
         guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
         
-        if sender.view == profileImageView || sender.view == pochakUserLabel || sender.view == postOwnerHandleLabel {
-            otherUserProfileVC.receivedHandle = postDataResult?.ownerHandle
+        if sender.view == profileImageView || sender.view == pochakUserLabel || sender.view == contentUserLabel {
+            otherUserProfileVC.receivedHandle = viewModel.getPostDetailOwnerHandle()
         }
         
-        else if sender.view == commentUserHandleLabel {
-            otherUserProfileVC.receivedHandle = commentUserHandleLabel.text
+        else if sender.view == recentCommentHandleLabel {
+            otherUserProfileVC.receivedHandle = recentCommentHandleLabel.text
         }
         
         self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
@@ -295,7 +287,7 @@ final class PostViewController: UIViewController {
     
     @objc func showTaggedUsersVC() {
         let taggedUserDetailVC = postStoryBoard.instantiateViewController(withIdentifier: "TaggedUsersDetailVC") as! TaggedUsersDetailViewController
-        taggedUserDetailVC.tagList = postDataResult?.tagList
+        taggedUserDetailVC.tagList = viewModel.getPostDetailTaggedUsers()
         
         taggedUserDetailVC.goToOtherProfileVC = { (handle: String) in
             self.dismiss(animated: true)
@@ -350,7 +342,7 @@ final class PostViewController: UIViewController {
     }
     
     @objc func refreshPostDetail() {
-        loadPostDetailData()
+        self.viewModel.fetchPostDetail(postId: receivedPostId!, fromCurrentVC: self)
     }
     
     // MARK: - Functions
@@ -469,6 +461,15 @@ final class PostViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = barButton
     }
     
+    private func bind() {
+        viewModel.postDetailDataDidChange = { [weak self] data in
+            guard let data = data else { return }
+            print("== viewmodel ==")
+            print(data)
+            self?.setupData(data)
+        }
+    }
+    
     /// ui 요소들 속성 초기화
     private func initUI() {
         scrollView.updateContentSize()
@@ -481,21 +482,21 @@ final class PostViewController: UIViewController {
         
         profileImageView.layer.cornerRadius = 25
         
-        // 다른 프로필로 이동하는 제스쳐 등록
-        profileImageView.isUserInteractionEnabled = true
-        profileImageView.addGestureRecognizer(setGestureRecognizer())
-        
-        postOwnerHandleLabel.isUserInteractionEnabled = true
-        postOwnerHandleLabel.addGestureRecognizer(setGestureRecognizer())
-        
-        pochakUserLabel.isUserInteractionEnabled = true
-        pochakUserLabel.addGestureRecognizer(setGestureRecognizer())
-        
-        commentUserHandleLabel.isUserInteractionEnabled = true
-        commentUserHandleLabel.addGestureRecognizer(setGestureRecognizer())
-        
-        // 태그된 유저 띄우기 위한 제스쳐
-        taggedUsersLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showTaggedUsersVC)))
+//        // 다른 프로필로 이동하는 제스쳐 등록
+//        profileImageView.isUserInteractionEnabled = true
+//        profileImageView.addGestureRecognizer(setGestureRecognizer())
+//        
+//        contentUserLabel.isUserInteractionEnabled = true
+//        contentUserLabel.addGestureRecognizer(setGestureRecognizer())
+//        
+//        pochakUserLabel.isUserInteractionEnabled = true
+//        pochakUserLabel.addGestureRecognizer(setGestureRecognizer())
+//        
+//        recentCommentHandleLabel.isUserInteractionEnabled = true
+//        recentCommentHandleLabel.addGestureRecognizer(setGestureRecognizer())
+//        
+//        // 태그된 유저 띄우기 위한 제스쳐
+//        taggedUsersLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showTaggedUsersVC)))
         
 //        followingButton.setTitleColor(UIColor.white, for: [.normal, .selected])
 //        followingButton.setTitle("팔로우", for: .normal)
@@ -503,89 +504,80 @@ final class PostViewController: UIViewController {
 //        followingButton.layer.cornerRadius = 4.97
     }
     
-    private func setupData() {
-        if let url = URL(string: postDataResult!.postImage) {
+    private func setupData(_ data: PostDetailResponseResult) {
+        if let url = URL(string: data.postImage) {
             postImageView.load(with: url)
         }
         
-        if let profileUrl = URL(string: postDataResult!.ownerProfileImage) {
+        if let profileUrl = URL(string: data.ownerProfileImage) {
             profileImageView.load(with: profileUrl)
         }
         
-        self.navigationItem.title = postDataResult!.ownerHandle + " 님의 게시물"
+        self.navigationItem.title = data.ownerHandle + " 님의 게시물"
         
-        // 태그된 사용자, 포착한 사용자
-        self.taggedUsersLabel.text = ""
-        
-        for taggedUser in postDataResult!.tagList {
-            if(taggedUser.handle == postDataResult?.tagList.last?.handle) {
-                self.taggedUsersLabel.text! += taggedUser.handle + " 님"
+        var taggedUserList: String = ""
+        for taggedUser in data.tagList {
+            if(taggedUser.handle == data.tagList.last?.handle) {
+                taggedUserList += taggedUser.handle + " 님"
             }
             else {
-                self.taggedUsersLabel.text! += taggedUser.handle + " 님 • "
+                taggedUserList += taggedUser.handle + " 님 • "
             }
         }
+        self.taggedUsersLabel.text = taggedUserList
         
-        if let ownerHandle = postDataResult?.ownerHandle {
-            self.pochakUserLabel.text = ownerHandle + "님이 포착"
-            self.postOwnerHandleLabel.text = ownerHandle
-        }
-        
-        // 포스트 내용
-        if let caption = postDataResult?.caption {
-            self.postContentLabel.text = caption
-        }
+        self.pochakUserLabel.text = data.ownerHandle + "님이 포착"
+        self.contentUserLabel.text = data.ownerHandle
+        self.pochakedTimeLabel.text = data.allowedDate.getTimeIntervalOfDateAndNow() + " 전"
+        self.contentLabel.text = data.caption
         
         // 댓글 미리보기 -> 있으면 보여주기
-        if let recentComment = postDataResult?.recentComment {
+        if let recentComment = data.recentComment {
             self.hideCommentViews(isHidden: false)
-            self.setCommentViewContents()
+            self.setCommentViewContents(with: recentComment)
         }
         else {
             self.hideCommentViews(isHidden: true)
         }
         
-        if let isLike = postDataResult?.isLike {
-            self.likeButton.isSelected = isLike
-        }
+        self.likeButton.isSelected = data.isLike
         
-//        // 팔로잉 버튼
-//        if let isFollow = postDataResult?.isFollow {
-//            self.followingButton.isHidden = false
-//            self.followingButton.isSelected = isFollow
-//            self.followingButton.backgroundColor = isFollow ? UIColor(named: "gray03") : UIColor(named: "yellow00")
-//        }
-//        else {
-//            self.followingButton.isHidden = true
-//        }
+        // 팔로잉 버튼
+        if let isFollow = data.isFollow {
+            self.followButton.isHidden = false
+            self.followButton.isFollowing = isFollow
+        }
+        else {
+            self.followButton.isHidden = true
+        }
     }
     
-    /// 게시글 상세 데이터 조회하기
-    func loadPostDetailData() {
-        PostService.getPostDetail(postId: receivedPostId!) { [weak self] data, failed in
-            guard let data = data else {
-                // 에러가 난 경우, alert 창 present
-                switch failed {
-                case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
-                                  animated: true)
-                default:
-                    self?.present(UIAlertController.networkErrorAlert(title: "게시글 조회에 실패하였습니다."), animated: true)
-                }
-                return
-            }
-            
-            print("=== PostDetail, loadPostDetailData succeeded ===")
-            print("== data: \(data)")
-            
-            self?.postDataResult = data.result
-            self?.setupData()
-        }
+    private func addGestureRecognizers() {
+        profileImageView.isUserInteractionEnabled = true
+        profileImageView.addGestureRecognizer(setGestureRecognizer())
+        
+        contentUserLabel.isUserInteractionEnabled = true
+        contentUserLabel.addGestureRecognizer(setGestureRecognizer())
+        
+        pochakUserLabel.isUserInteractionEnabled = true
+        pochakUserLabel.addGestureRecognizer(setGestureRecognizer())
+        
+        recentCommentHandleLabel.isUserInteractionEnabled = true
+        recentCommentHandleLabel.addGestureRecognizer(setGestureRecognizer())
+        
+        // 태그된 유저 띄우기 위한 제스쳐
+        taggedUsersLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showTaggedUsersVC)))
     }
     
     private func setGestureRecognizer() -> UITapGestureRecognizer {
         let moveToOthersProfile = UITapGestureRecognizer(target: self, action: #selector(moveToOthersProfile))
         return moveToOthersProfile
+    }
+    
+    private func setUpRefreshControl() {
+        scrollView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshPostDetail), for: .valueChanged)
+        refreshControl.tintColor = UIColor(named: "navy02")
     }
     
     private func showCommentVC() {
@@ -610,8 +602,8 @@ final class PostViewController: UIViewController {
     /// 댓글이 없을 때는 댓글 관련 뷰를 보여주면 안되므로 + 댓글 버튼의 이미지는 비활성 이미지로
     private func hideCommentViews(isHidden: Bool) {
         borderLineView.isHidden = isHidden
-        commentUserHandleLabel.isHidden = isHidden
-        commentContentLabel.isHidden = isHidden
+        recentCommentHandleLabel.isHidden = isHidden
+        recentCommentCommentLabel.isHidden = isHidden
         moreCommentButton.isHidden = isHidden
         moreCommentButton.isUserInteractionEnabled = !isHidden
         
@@ -619,20 +611,20 @@ final class PostViewController: UIViewController {
         commentButton.isSelected = isHidden ? false : true
     }
     
-    private func setCommentViewContents() {
-        commentUserHandleLabel.text = postDataResult?.recentComment?.handle
-        commentContentLabel.text = postDataResult?.recentComment?.content
+    private func setCommentViewContents(with data: RecentComment) {
+        recentCommentHandleLabel.text = data.handle
+        recentCommentCommentLabel.text = data.content
     }
     
     private func postFollowRequest() {
-        UserService.postFollowRequest(handle: postDataResult!.ownerHandle) { [weak self] data, failed in
+        UserService.postFollowRequest(handle: postDataResult!.ownerHandle) { data, failed in
             guard let data = data else {
                 switch failed {
                 case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), 
+                    self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
                                   animated: true)
                 default:
-                    self?.present(UIAlertController.networkErrorAlert(title: "팔로우 요청에 실패하였습니다."), animated: true)
+                    self.present(UIAlertController.networkErrorAlert(title: "팔로우 요청에 실패하였습니다."), animated: true)
                 }
                 return
             }
@@ -641,10 +633,10 @@ final class PostViewController: UIViewController {
             print("== data: \(data)")
             
             if(!data.isSuccess) {
-                self?.present(UIAlertController.networkErrorAlert(title: "팔로우 요청에 실패하였습니다."), animated: true)
+                self.present(UIAlertController.networkErrorAlert(title: "팔로우 요청에 실패하였습니다."), animated: true)
                 return
             }
-            self?.loadPostDetailData()
+            self.viewModel.fetchPostDetail(postId: self.receivedPostId!, fromCurrentVC: self)
         }
     }
 }
