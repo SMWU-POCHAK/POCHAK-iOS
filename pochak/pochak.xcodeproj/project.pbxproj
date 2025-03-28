@@ -80,6 +80,7 @@
 		086BF2042CEC9D7800735BB4 /* FCMTokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF2032CEC9D7800735BB4 /* FCMTokenManager.swift */; };
 		0876E23E2C274256008DE88F /* NoPostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */; };
 		0876E23F2C274256008DE88F /* NoPostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */; };
+		0885BEE82D96BF9B00FE82F3 /* PostDetailFollowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0885BEE72D96BF9B00FE82F3 /* PostDetailFollowButton.swift */; };
 		08867D5C2D106A1F00FA6FD9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08867D5B2D106A1F00FA6FD9 /* GoogleService-Info.plist */; };
 		08867D5F2D106C3300FA6FD9 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 08867D5E2D106C3300FA6FD9 /* FirebaseAnalytics */; };
 		08867D612D106C3300FA6FD9 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 08867D602D106C3300FA6FD9 /* FirebaseCore */; };
@@ -408,6 +409,7 @@
 		086BF2032CEC9D7800735BB4 /* FCMTokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMTokenManager.swift; sourceTree = "<group>"; };
 		0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoPostCollectionViewCell.swift; sourceTree = "<group>"; };
 		0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoPostCollectionViewCell.xib; sourceTree = "<group>"; };
+		0885BEE72D96BF9B00FE82F3 /* PostDetailFollowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailFollowButton.swift; sourceTree = "<group>"; };
 		08867D5B2D106A1F00FA6FD9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "/Users/suyeon/Desktop/Pochak/GoogleService-Info.plist"; sourceTree = "<absolute>"; };
 		0889D1372C5CB69F00206C86 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		088EB7AF2D5A45DA0001A5E8 /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
@@ -813,6 +815,7 @@
 				EA0107992A59556800A3AE85 /* PostViewController.swift */,
 				081228C72A699B1100DFA094 /* Likes */,
 				0823B0772A5D6C290085002F /* Comment */,
+				0885BEE72D96BF9B00FE82F3 /* PostDetailFollowButton.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -1864,6 +1867,7 @@
 				46923F832D071646006C49E5 /* MemoryGalleryViewController.swift in Sources */,
 				08EB99B72C53EA8500FAC08A /* TaggedUsersTableViewCell.swift in Sources */,
 				3759CF332CAAE4CE00408A4E /* DeleteFollowerResponse.swift in Sources */,
+				0885BEE82D96BF9B00FE82F3 /* PostDetailFollowButton.swift in Sources */,
 				EACF0F6E2C3044C000C0016C /* TagSearchTableViewCell.swift in Sources */,
 				0861E0E82D259365009E70A0 /* UIResponder+.swift in Sources */,
 				46923F812D0714FE006C49E5 /* Date+.swift in Sources */,
