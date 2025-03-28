@@ -24,31 +24,201 @@ final class PostViewController: UIViewController {
         
     // MARK: - Views
     
-    @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var likeButton: UIButton!
-    @IBOutlet weak var commentButton: UIButton!
-    @IBOutlet weak var followingButton: UIButton!
-    @IBOutlet weak var postImageView: UIImageView!
+//    @IBOutlet weak var profileImageView: UIImageView!
+//    @IBOutlet weak var scrollView: UIScrollView!
+//    @IBOutlet weak var likeButton: UIButton!
+//    @IBOutlet weak var commentButton: UIButton!
+//    @IBOutlet weak var followingButton: UIButton!
+//    @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var postOwnerHandleLabel: UILabel!
     @IBOutlet weak var postContentLabel: UILabel!
-    @IBOutlet weak var taggedUsersLabel: UILabel!
-    @IBOutlet weak var pochakUserLabel: UILabel!
+//    @IBOutlet weak var taggedUsersLabel: UILabel!
+//    @IBOutlet weak var pochakUserLabel: UILabel!
     
-    @IBOutlet weak var borderLineView: UIView!
+//    @IBOutlet weak var borderLineView: UIView!
     @IBOutlet weak var commentUserHandleLabel: UILabel!
     @IBOutlet weak var commentContentLabel: UILabel!
-    @IBOutlet weak var moreCommentButton: UIButton!
+//    @IBOutlet weak var moreCommentButton: UIButton!
+    
+    private let scrollView: UIScrollView = {
+        let view = UIScrollView()
+        view.showsVerticalScrollIndicator = false
+        return view
+    }()
+    
+    private let contentView = UIView()
+    
+    private let profileImageView: UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        view.isUserInteractionEnabled = true
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 50 / 2
+        view.backgroundColor = .lightGray
+        return view
+    }()
+    
+    private let usersStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.spacing = 4
+        view.alignment = .leading
+        return view
+    }()
+    
+    private let taggedUsersLabel: UILabel = {
+        let label = UILabel()
+        label.text = "_5jizzi 님"
+        label.font = UIFont.Pretendard(size: 16, family: .Bold)
+        label.setLineHeightByPx(value: 22)
+        label.isUserInteractionEnabled = true
+        return label
+    }()
+    
+    private let usersStackView2: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = 7
+        return view
+    }()
+    
+    private let pochakUserLabel: UILabel = {
+        let label = UILabel()
+        label.applyPochakFont(.bodyExtraSmall)
+        label.isUserInteractionEnabled = true
+        label.text = "su.yeonn_님이 포착"
+        label.font = UIFont.Pretendard(size: 13, family: .Regular)
+        label.setLineHeightByPx(value: 18)
+        return label
+    }()
+    
+    private let pochakedTimeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "43분 전"
+        label.textColor = UIColor(named: "gray04")
+        label.font = UIFont.Pretendard(size: 13, family: .Regular)
+        label.setLineHeightByPx(value: 18)
+        return label
+    }()
+    
+    private let followButton: PostDetailFollowButton = {
+        let button = PostDetailFollowButton()
+        button.isFollowing = false
+        return button
+    }()
+    
+    private let postImageView: UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFit
+        view.backgroundColor = .brown
+        return view
+    }()
+    
+    private let contentStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = 12
+        view.alignment = .top
+        return view
+    }()
+    
+    private let contentUserLabel: UILabel = {
+        let label = UILabel()
+        label.text = "su.yeonn_"
+        label.font = UIFont.Pretendard(size: 14, family: .Bold)
+        label.isUserInteractionEnabled = true
+        return label
+    }()
+    
+    private let contentLabel: UILabel = {
+        let label = UILabel()
+        label.text = "광합성 중\nㅎㅎㅎ~"
+        label.numberOfLines = 0
+        label.font = UIFont.Pretendard(size: 14, family: .Regular)
+        return label
+    }()
+    
+    private let likeAndCmtStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = 0
+        return view
+    }()
+    
+    private let likeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "LikeIcon"), for: .normal)
+        button.setImage(UIImage(named: "LikeFilledIcon"), for: .selected)
+        button.isSelected = false
+        return button
+    }()
+    
+    private let commentButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "CommentIcon"), for: .normal)
+        button.setImage(UIImage(named: "CommentFilledIcon"), for: .selected)
+        button.isSelected = false
+        return button
+    }()
+    
+    private let borderLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(named: "gray01")
+        return view
+    }()
+    
+    private let recentCommentStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = 12
+        view.alignment = .top
+        return view
+    }()
+    
+    private let recentCommentHandleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "bbaek"
+        label.setLineHeightByPx(value: 20)
+        label.font = UIFont.Pretendard(size: 14, family: .Bold)
+        
+        return label
+    }()
+    
+    private let recentCommentCommentLabel: UILabel = {
+        let label = UILabel()
+        label.text = "오 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ 엄청나게 긴 댓글 과연 잘리는지?"
+        label.font = UIFont.Pretendard(size: 14, family: .Regular)
+//        label.setLineHeightByPx(value: 20)
+        label.lineBreakMode = .byTruncatingTail
+        return label
+    }()
+    
+    private let moreCommentButton: UIButton = {
+        let button = UIButton()
+        
+        var config = UIButton.Configuration.plain()
+        config.attributedTitle = AttributedString("더보기")
+        config.attributedTitle?.setAttributes(AttributeContainer([NSAttributedString.Key.font : UIFont.Pretendard(), NSAttributedString.Key.foregroundColor : UIColor(named: "gray05")]))
+        config.contentInsets = .zero
+        
+        button.configuration = config
+        return button
+    }()
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .white
+        
         setupNavigationBar()
         self.navigationController?.isNavigationBarHidden = false
         
-        initUI()
+        addViews()
+        setupConstraints()
+        
+//        initUI()
         
         /*postId 전달 - 실시간인기포스트에서 전달하는 postId 입니다
         전달되는 id 없으면 위에서 설정된 id로 될거에요..
@@ -59,7 +229,7 @@ final class PostViewController: UIViewController {
             print("No data received.")
         }
         
-        loadPostDetailData()
+//        loadPostDetailData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -185,6 +355,114 @@ final class PostViewController: UIViewController {
     
     // MARK: - Functions
     
+    private func addViews() {
+        view.addSubview(scrollView)
+        
+        scrollView.addSubview(contentView)
+        
+        contentView.addSubview(profileImageView)
+        contentView.addSubview(usersStackView)
+        contentView.addSubview(followButton)
+        
+        [taggedUsersLabel, usersStackView2].forEach {
+            usersStackView.addArrangedSubview($0)
+        }
+        
+        [pochakUserLabel, pochakedTimeLabel].forEach {
+            usersStackView2.addArrangedSubview($0)
+        }
+        
+        contentView.addSubview(postImageView)
+        
+        contentView.addSubview(contentStackView)
+        [contentUserLabel, contentLabel].forEach {
+            contentStackView.addArrangedSubview($0)
+        }
+        
+        contentView.addSubview(likeAndCmtStackView)
+        [likeButton, commentButton].forEach {
+            likeAndCmtStackView.addArrangedSubview($0)
+        }
+        
+        contentView.addSubview(borderLineView)
+        
+        contentView.addSubview(recentCommentStackView)
+        [recentCommentHandleLabel, recentCommentCommentLabel].forEach {
+            recentCommentStackView.addArrangedSubview($0)
+        }
+        
+        contentView.addSubview(moreCommentButton)
+    }
+    
+    private func setupConstraints() {
+        scrollView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        contentView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView.contentLayoutGuide)
+            make.width.equalTo(scrollView.frameLayoutGuide)
+        }
+        
+        profileImageView.snp.makeConstraints { make in
+            make.height.width.equalTo(50)
+            make.leading.equalToSuperview().inset(20)
+            make.top.equalToSuperview().inset(17)
+        }
+        
+        usersStackView.snp.makeConstraints { make in
+            make.leading.equalTo(profileImageView.snp.trailing).offset(12)
+            make.centerY.equalTo(profileImageView.snp.centerY)
+        }
+        
+        followButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(20)
+            make.centerY.equalTo(profileImageView.snp.centerY)
+        }
+        
+        postImageView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.top.equalTo(profileImageView.snp.bottom).offset(14)
+            make.height.equalTo(postImageView.snp.width).multipliedBy(4.0 / 3.0)
+        }
+        
+        contentStackView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(20)
+            make.top.equalTo(postImageView.snp.bottom).offset(22)
+        }
+        
+        [likeButton, commentButton].forEach { button in
+            button.snp.makeConstraints { make in
+                make.height.equalTo(48)
+                make.width.equalTo(button.snp.height).multipliedBy(1)
+            }
+        }
+        
+        likeAndCmtStackView.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(9)
+            make.top.equalTo(postImageView.snp.bottom).offset(8)
+        }
+        
+        borderLineView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.top.equalTo(contentStackView.snp.bottom).offset(24)
+            make.height.equalTo(1)
+        }
+        
+        recentCommentStackView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(20)
+            make.top.equalTo(borderLineView.snp.bottom).offset(10)
+            make.bottom.equalToSuperview().inset(34)
+        }
+        
+        moreCommentButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(20)
+            make.top.equalTo(recentCommentStackView.snp.top)
+            make.leading.greaterThanOrEqualTo(recentCommentStackView.snp.trailing).offset(11)
+        }
+    }
+    
     private func setupNavigationBar() {
         // bar button item 추가 (신고하기 메뉴 등)
         let barButton = UIBarButtonItem(image: UIImage(named: "MoreIcon"), style: .plain, target: self, action: #selector(moreActionButtonDidTap))
@@ -219,10 +497,10 @@ final class PostViewController: UIViewController {
         // 태그된 유저 띄우기 위한 제스쳐
         taggedUsersLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showTaggedUsersVC)))
         
-        followingButton.setTitleColor(UIColor.white, for: [.normal, .selected])
-        followingButton.setTitle("팔로우", for: .normal)
-        followingButton.setTitle("팔로잉", for: .selected)
-        followingButton.layer.cornerRadius = 4.97
+//        followingButton.setTitleColor(UIColor.white, for: [.normal, .selected])
+//        followingButton.setTitle("팔로우", for: .normal)
+//        followingButton.setTitle("팔로잉", for: .selected)
+//        followingButton.layer.cornerRadius = 4.97
     }
     
     private func setupData() {
@@ -271,15 +549,15 @@ final class PostViewController: UIViewController {
             self.likeButton.isSelected = isLike
         }
         
-        // 팔로잉 버튼
-        if let isFollow = postDataResult?.isFollow {
-            self.followingButton.isHidden = false
-            self.followingButton.isSelected = isFollow
-            self.followingButton.backgroundColor = isFollow ? UIColor(named: "gray03") : UIColor(named: "yellow00")
-        }
-        else {
-            self.followingButton.isHidden = true
-        }
+//        // 팔로잉 버튼
+//        if let isFollow = postDataResult?.isFollow {
+//            self.followingButton.isHidden = false
+//            self.followingButton.isSelected = isFollow
+//            self.followingButton.backgroundColor = isFollow ? UIColor(named: "gray03") : UIColor(named: "yellow00")
+//        }
+//        else {
+//            self.followingButton.isHidden = true
+//        }
     }
     
     /// 게시글 상세 데이터 조회하기
