@@ -12,12 +12,10 @@ final class PostViewController: UIViewController {
     // MARK: - Properties
     
     var receivedPostId: Int?
-    //var postOwnerHandle: String = ""  // 게시글 주인 핸들 저장
     
     private let postStoryBoard = UIStoryboard(name: "ExploreTab", bundle: nil)
     private let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
     private let refreshControl = UIRefreshControl()
-    private var deletePostResponse: PostDeleteResponse!
     private let viewModel = PostDetailViewModel()
     
     // MARK: - Views
@@ -51,7 +49,7 @@ final class PostViewController: UIViewController {
     
     private let taggedUsersLabel: UILabel = {
         let label = UILabel()
-        label.text = "_5jizzi 님"
+        label.text = "pochak"
         label.font = UIFont.Pretendard(size: 16, family: .Bold)
         label.setLineHeightByPx(value: 22)
         label.isUserInteractionEnabled = true
@@ -69,7 +67,7 @@ final class PostViewController: UIViewController {
         let label = UILabel()
         label.applyPochakFont(.bodyExtraSmall)
         label.isUserInteractionEnabled = true
-        label.text = "su.yeonn_님이 포착"
+        label.text = "pochak"
         label.font = UIFont.Pretendard(size: 13, family: .Regular)
         label.setLineHeightByPx(value: 18)
         return label
@@ -77,7 +75,7 @@ final class PostViewController: UIViewController {
     
     private let pochakedTimeLabel: UILabel = {
         let label = UILabel()
-        label.text = "43분 전"
+        label.text = "pochaked"
         label.textColor = UIColor(named: "gray04")
         label.font = UIFont.Pretendard(size: 13, family: .Regular)
         label.setLineHeightByPx(value: 18)
@@ -108,7 +106,7 @@ final class PostViewController: UIViewController {
     
     private let contentUserLabel: UILabel = {
         let label = UILabel()
-        label.text = "su.yeonn_"
+        label.text = "pochak"
         label.font = UIFont.Pretendard(size: 14, family: .Bold)
         label.isUserInteractionEnabled = true
         return label
@@ -116,7 +114,7 @@ final class PostViewController: UIViewController {
     
     private let contentLabel: UILabel = {
         let label = UILabel()
-        label.text = "광합성 중\nㅎㅎㅎ~"
+        label.text = "pochak"
         label.numberOfLines = 0
         label.font = UIFont.Pretendard(size: 14, family: .Regular)
         return label
@@ -163,7 +161,7 @@ final class PostViewController: UIViewController {
     
     private let recentCommentHandleLabel: UILabel = {
         let label = UILabel()
-        label.text = "bbaek"
+        label.text = "pochak"
         label.setLineHeightByPx(value: 20)
         label.font = UIFont.Pretendard(size: 14, family: .Bold)
         
@@ -172,7 +170,7 @@ final class PostViewController: UIViewController {
     
     private let recentCommentCommentLabel: UILabel = {
         let label = UILabel()
-        label.text = "오 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ 엄청나게 긴 댓글 과연 잘리는지?"
+        label.text = "hello"
         label.font = UIFont.Pretendard(size: 14, family: .Regular)
 //        label.setLineHeightByPx(value: 20)
         label.lineBreakMode = .byTruncatingTail
@@ -316,7 +314,7 @@ final class PostViewController: UIViewController {
         showCommentVC()
     }
     
-    @objc func refreshPostDetail() {
+    @objc private func refreshPostDetail() {
         self.viewModel.fetchPostDetail(postId: receivedPostId!, fromCurrentVC: self)
     }
     
@@ -469,40 +467,6 @@ final class PostViewController: UIViewController {
             // 필요 이상으로 서버 통신하는 것 같아서 그냥 followButton 상태 toggle하는 것으로 바꿈..
             self?.followButton.isFollowing.toggle()
         }
-    }
-    
-    /// ui 요소들 속성 초기화
-    private func initUI() {
-        scrollView.updateContentSize()
-        
-        scrollView.delegate = self
-        scrollView.refreshControl = refreshControl
-        
-        refreshControl.addTarget(self, action: #selector(refreshPostDetail), for: .valueChanged)
-        refreshControl.tintColor = UIColor(named: "navy02")
-        
-        profileImageView.layer.cornerRadius = 25
-        
-//        // 다른 프로필로 이동하는 제스쳐 등록
-//        profileImageView.isUserInteractionEnabled = true
-//        profileImageView.addGestureRecognizer(setGestureRecognizer())
-//        
-//        contentUserLabel.isUserInteractionEnabled = true
-//        contentUserLabel.addGestureRecognizer(setGestureRecognizer())
-//        
-//        pochakUserLabel.isUserInteractionEnabled = true
-//        pochakUserLabel.addGestureRecognizer(setGestureRecognizer())
-//        
-//        recentCommentHandleLabel.isUserInteractionEnabled = true
-//        recentCommentHandleLabel.addGestureRecognizer(setGestureRecognizer())
-//        
-//        // 태그된 유저 띄우기 위한 제스쳐
-//        taggedUsersLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showTaggedUsersVC)))
-        
-//        followingButton.setTitleColor(UIColor.white, for: [.normal, .selected])
-//        followingButton.setTitle("팔로우", for: .normal)
-//        followingButton.setTitle("팔로잉", for: .selected)
-//        followingButton.layer.cornerRadius = 4.97
     }
     
     private func setupData(_ data: PostDetailResponseResult) {
