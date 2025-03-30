@@ -248,8 +248,7 @@ final class PostViewController: UIViewController {
         viewModel.postLikeRequest(postId: receivedPostId!, fromCurrentVC: self)
     }
     
-    // 프로필 이미지나 아이디 클릭 시 해당 사용자 프로필로 이동
-    @objc func moveToOthersProfile(sender: UITapGestureRecognizer) {
+    @objc private func moveToOthersProfile(sender: UITapGestureRecognizer) {
         guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
         
         if sender.view == profileImageView || sender.view == pochakUserLabel || sender.view == contentUserLabel {
@@ -263,7 +262,7 @@ final class PostViewController: UIViewController {
         self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
     }
     
-    @objc func showTaggedUsersVC() {
+    @objc private func showTaggedUsersVC() {
         let taggedUserDetailVC = postStoryBoard.instantiateViewController(withIdentifier: "TaggedUsersDetailVC") as! TaggedUsersDetailViewController
         taggedUserDetailVC.tagList = viewModel.getPostDetailTaggedUsers()
         
@@ -282,22 +281,22 @@ final class PostViewController: UIViewController {
         present(taggedUserDetailVC, animated: true)
     }
     
-    @objc func moreActionButtonDidTap() {
+    @objc private func moreActionButtonDidTap() {
         let postMenuVC = postStoryBoard.instantiateViewController(withIdentifier: "PostMenuVC") as! PostMenuViewController
         postMenuVC.setPostData(postId: receivedPostId!, 
-                               postOwner: postDataResult!.ownerHandle,
-                               taggedMemberList: postDataResult!.tagList.map({ $0.handle }))
+                               postOwner: viewModel.getPostDetailOwnerHandle()!,
+                               taggedMemberList: viewModel.getPostDetailTaggedUsers()!.map({ $0.handle }))
         let sheet = postMenuVC.sheetPresentationController
         
         /* 메뉴 개수에 맞도록 sheet 높이 설정 */
         let label = UILabel()
-        label.font = UIFont(name: "Pretendard-Bold", size: 20)
+        label.font = UIFont.Pretendard(size: 20, family: .Bold)
         label.text = "더보기"
         label.sizeToFit()
         
         let currentLogInUser = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
         
-        let cellCount = (postDataResult?.ownerHandle == currentLogInUser || postDataResult!.tagList.contains(where: { $0.handle == currentLogInUser })) ? 3 : 2
+        let cellCount = (viewModel.getPostDetailOwnerHandle()! == currentLogInUser || viewModel.getPostDetailTaggedUsers()!.contains(where: { $0.handle == currentLogInUser })) ? 3 : 2
         let height = label.frame.height + CGFloat(36 + 16 + 48 * cellCount)
         let fraction = UISheetPresentationController.Detent.custom { context in
             height
