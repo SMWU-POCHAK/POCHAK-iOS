@@ -137,6 +137,7 @@ final class PostViewController: UIViewController {
         button.setImage(UIImage(named: "LikeIcon"), for: .normal)
         button.setImage(UIImage(named: "LikeFilledIcon"), for: .selected)
         button.isSelected = false
+        button.addTarget(self, action: #selector(likeButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -221,7 +222,6 @@ final class PostViewController: UIViewController {
         
         addGestureRecognizers()
         setUpRefreshControl()
-//        loadPostDetailData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -245,29 +245,8 @@ final class PostViewController: UIViewController {
         }
     }
 
-    @IBAction func likeBtnTapped(_ sender: Any) {
-        PostService.postLikePost(postId: receivedPostId!) { [weak self] data, failed in
-            guard let data = data else {
-                // 에러가 난 경우, alert 창 present
-                switch failed {
-                case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), 
-                                  animated: true)
-                default:
-                    self?.present(UIAlertController.networkErrorAlert(title: "좋아요에 실패하였습니다."), animated: true)
-                }
-                return
-            }
-            
-            print("=== PostDetail, likeBtnTapped succeeded ===")
-            print("== data: \(data)")
-            
-            if(!data.isSuccess) {
-                self?.present(UIAlertController.networkErrorAlert(title: "좋아요에 실패하였습니다."), animated: true)
-                return
-            }
-            self?.viewModel.fetchPostDetail(postId: (self?.receivedPostId)!, fromCurrentVC: self!)
-        }
+    @objc private func likeButtonDidTap(_ sender: Any) {
+        viewModel.postLikeRequest(postId: receivedPostId!, fromCurrentVC: self)
     }
     
     // 프로필 이미지나 아이디 클릭 시 해당 사용자 프로필로 이동
@@ -467,6 +446,18 @@ final class PostViewController: UIViewController {
             print("== viewmodel ==")
             print(data)
             self?.setupData(data)
+        }
+        
+        viewModel.likeResponseDataDidChange = { [weak self] data in
+            guard let data = data else { return }
+            print("=== PostDetail, likeBtnTapped succeeded ===")
+            print("== data: \(data)")
+            if(!data.isSuccess) {
+                self?.present(UIAlertController.networkErrorAlert(title: "좋아요에 실패하였습니다."), animated: true)
+                return
+            }
+            self?.likeButton.isSelected.toggle()
+            //self?.viewModel.fetchPostDetail(postId: (self?.receivedPostId)!, fromCurrentVC: self!)  // 필요 이상으로 서버 통신하는 것 같아서 그냥 likeButton 상태 toggle하는 것으로 바꿈..
         }
     }
     

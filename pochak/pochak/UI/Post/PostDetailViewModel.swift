@@ -17,7 +17,14 @@ class PostDetailViewModel {
         }
     }
     
+    private var likeResponseData: PostLikeResponse? {
+        didSet {
+            likeResponseDataDidChange?(likeResponseData)
+        }
+    }
+    
     var postDetailDataDidChange: ((PostDetailResponseResult?) -> Void)?
+    var likeResponseDataDidChange: ((PostLikeResponse?) -> Void)?
     
     // MARK: - Functions
     
@@ -49,5 +56,24 @@ class PostDetailViewModel {
     
     func getPostDetailTaggedUsers() -> [TaggedMember]? {
         return postDetailData?.tagList
+    }
+    
+    /// 게시물 좋아요, 좋아요 취소를 요청하는 메소드입니다.
+    /// - Parameters:
+    ///   - postId: 게시물 아이디
+    ///   - fromCurrentVC: 요청을 보내는 뷰컨트롤러
+    func postLikeRequest(postId: Int, fromCurrentVC: UIViewController) {
+        PostService.postLikePost(postId: postId) { data, failed in
+            guard let data = data else {
+                switch failed {
+                case .disconnected:
+                    fromCurrentVC.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    fromCurrentVC.present(UIAlertController.networkErrorAlert(title: "좋아요에 실패하였습니다."), animated: true)
+                }
+                return
+            }
+            self.likeResponseData = data
+        }
     }
 }
