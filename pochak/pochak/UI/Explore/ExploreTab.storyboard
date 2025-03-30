@@ -21,46 +21,6 @@
         </array>
     </customFonts>
     <scenes>
-        <!--Tagged Users Detail View Controller-->
-        <scene sceneID="qD1-LR-vaw">
-            <objects>
-                <viewController storyboardIdentifier="TaggedUsersDetailVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="z5k-WS-O5g" customClass="TaggedUsersDetailViewController" customModule="pochak" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="VTm-VQ-a8V">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="태그" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kuy-zn-KqB">
-                                <rect key="frame" x="172" y="86" width="31.333333333333343" height="21"/>
-                                <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="18"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="rcL-dg-6O5">
-                                <rect key="frame" x="0.0" y="107" width="375" height="671"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <color key="separatorColor" name="gray01"/>
-                                <inset key="separatorInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
-                            </tableView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="h0S-vr-8bT"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="h0S-vr-8bT" firstAttribute="trailing" secondItem="rcL-dg-6O5" secondAttribute="trailing" id="CxW-o2-mfG"/>
-                            <constraint firstItem="rcL-dg-6O5" firstAttribute="leading" secondItem="h0S-vr-8bT" secondAttribute="leading" id="OP5-ya-qid"/>
-                            <constraint firstItem="Kuy-zn-KqB" firstAttribute="centerX" secondItem="h0S-vr-8bT" secondAttribute="centerX" id="ddZ-mZ-iuz"/>
-                            <constraint firstItem="Kuy-zn-KqB" firstAttribute="top" secondItem="h0S-vr-8bT" secondAttribute="top" constant="36" id="qwK-8j-QlC"/>
-                            <constraint firstItem="rcL-dg-6O5" firstAttribute="top" secondItem="Kuy-zn-KqB" secondAttribute="bottom" id="wr8-Cy-yp4"/>
-                            <constraint firstItem="h0S-vr-8bT" firstAttribute="bottom" secondItem="rcL-dg-6O5" secondAttribute="bottom" id="zmQ-c6-2K3"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="tableView" destination="rcL-dg-6O5" id="dpn-OA-Gnh"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iCP-fV-Mjj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1971" y="1382"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="d62-hJ-VQo">
             <objects>
