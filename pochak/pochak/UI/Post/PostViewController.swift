@@ -17,11 +17,7 @@ final class PostViewController: UIViewController {
     private let postStoryBoard = UIStoryboard(name: "ExploreTab", bundle: nil)
     private let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
     private let refreshControl = UIRefreshControl()
-        
-    private var postDataResult: PostDetailResponseResult?
-        
     private var deletePostResponse: PostDeleteResponse!
-    
     private let viewModel = PostDetailViewModel()
     
     // MARK: - Views
@@ -147,6 +143,7 @@ final class PostViewController: UIViewController {
         button.setImage(UIImage(named: "CommentIcon"), for: .normal)
         button.setImage(UIImage(named: "CommentFilledIcon"), for: .selected)
         button.isSelected = false
+        button.addTarget(self, action: #selector(commentButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -191,6 +188,7 @@ final class PostViewController: UIViewController {
         config.contentInsets = .zero
         
         button.configuration = config
+        button.addTarget(self, action: #selector(moreCommentButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -309,12 +307,12 @@ final class PostViewController: UIViewController {
     }
     
     /// 댓글 버튼을 눌렀을 때
-    @IBAction func commentButtonDidTap(_ sender: Any) {
+    @objc private func commentButtonDidTap(_ sender: Any) {
         showCommentVC()
     }
     
     /// 더보기 버튼을 눌렀을 때
-    @IBAction func moreCommentButtonDidTap(_ sender: Any) {
+    @objc private func moreCommentButtonDidTap(_ sender: Any) {
         showCommentVC()
     }
     
@@ -588,8 +586,8 @@ final class PostViewController: UIViewController {
         
         commentVC.modalPresentationStyle = .pageSheet
         commentVC.postId = receivedPostId
-        commentVC.postOwnerHandle = postDataResult?.ownerHandle
-        commentVC.taggedUserList = postDataResult!.tagList.map({ taggedUser in
+        commentVC.postOwnerHandle = viewModel.getPostDetailOwnerHandle()
+        commentVC.taggedUserList = viewModel.getPostDetailTaggedUsers()!.map({ taggedUser in
             taggedUser.handle
         })
         commentVC.postVC = self
