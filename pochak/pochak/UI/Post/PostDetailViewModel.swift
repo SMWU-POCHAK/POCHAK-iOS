@@ -29,9 +29,16 @@ class PostDetailViewModel {
         }
     }
     
+    private var deletePostResponseData: PostDeleteResponse? {
+        didSet {
+            deletePostResponseDataDidChange?(deletePostResponseData)
+        }
+    }
+    
     var postDetailDataDidChange: ((PostDetailResponseResult?) -> Void)?
     var likeResponseDataDidChange: ((PostLikeResponse?) -> Void)?
     var followResponseDataDidChange: ((FollowResponse?) -> Void)?
+    var deletePostResponseDataDidChange: ((PostDeleteResponse?) -> Void)?
     
     // MARK: - Functions
     
@@ -101,6 +108,26 @@ class PostDetailViewModel {
                 return
             }
             self.followResponseData = data
+        }
+    }
+    
+    /// 게시물 삭제를 요청하는 메소드입니다.
+    /// - Parameters:
+    ///   - postId: 삭제하고자 하는 게시물의 아이디
+    ///   - fromCurrentVC: 요청을 보내는 뷰컨트롤러
+    func deletePost(postId: Int, fromCurrentVC: UIViewController) {
+        PostService.deletePostDetail(postId: postId) { data, failed in
+            guard let data = data else {
+                switch failed {
+                case .disconnected:
+                    fromCurrentVC.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
+                                  animated: true)
+                default:
+                    fromCurrentVC.present(UIAlertController.networkErrorAlert(title: "게시글 삭제에 실패하였습니다."), animated: true)
+                }
+                return
+            }
+            self.deletePostResponseData = data
         }
     }
 }

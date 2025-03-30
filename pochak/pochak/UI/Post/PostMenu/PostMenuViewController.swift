@@ -16,6 +16,8 @@ final class PostMenuViewController: UIViewController {
     private var taggedMemberList: [String] = []
     private var currentUserIsOwner = false
     
+    private let viewModel = PostDetailViewModel()
+    
     // MARK: - Views
 
     @IBOutlet weak var menuTableView: UITableView!
@@ -36,6 +38,7 @@ final class PostMenuViewController: UIViewController {
             currentUserIsOwner = true
         }
         
+        bind()
         setupTableView()
     }
     
@@ -52,6 +55,15 @@ final class PostMenuViewController: UIViewController {
         self.postId = postId
         self.postOwner = postOwner
         self.taggedMemberList = taggedMemberList
+    }
+    
+    private func bind() {
+        viewModel.deletePostResponseDataDidChange = { [weak self] data in
+            guard let data = data else { return }
+            print("=== PostMenu, delete confirm action succeeded ===")
+            print("== data: \(data)")
+            self?.goBackToHome()
+        }
     }
     
     private func setupTableView() {
@@ -154,27 +166,10 @@ extension PostMenuViewController: UITableViewDelegate, UITableViewDataSource {
 extension PostMenuViewController: CustomAlertDelegate {
     
     func confirmAction() {
-        PostService.deletePostDetail(postId: postId!) { [weak self] data, failed in
-            guard let data = data else {
-                // 에러가 난 경우, alert 창 present
-                switch failed {
-                case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), 
-                                  animated: true)
-                default:
-                    self?.present(UIAlertController.networkErrorAlert(title: "게시글 삭제에 실패하였습니다."), animated: true)
-                }
-                return
-            }
-            
-            print("=== PostMenu, delete confirm action succeeded ===")
-            print("== data: \(data)")
-            
-            self?.goBackToHome()
-        }
+        viewModel.deletePost(postId: postId!, fromCurrentVC: self)
     }
     
     func cancel() {
-        
+        print("삭제 취소")
     }
 }
