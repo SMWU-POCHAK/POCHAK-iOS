@@ -259,7 +259,7 @@ final class PostViewController: UIViewController {
     }
     
     @objc private func showTaggedUsersVC() {
-        let taggedUserDetailVC = postStoryBoard.instantiateViewController(withIdentifier: "TaggedUsersDetailVC") as! TaggedUsersDetailViewController
+        let taggedUserDetailVC = TaggedUsersDetailViewController()
         taggedUserDetailVC.tagList = viewModel.getPostDetailTaggedUsers()
         
         taggedUserDetailVC.goToOtherProfileVC = { (handle: String) in
