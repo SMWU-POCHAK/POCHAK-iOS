@@ -12,6 +12,7 @@ final class ReportViewController: UIViewController {
     // MARK: - Properties
 
     private var postId: Int?
+    private let viewModel = PostDetailViewModel()
 
     // MARK: - Views
     
@@ -23,10 +24,29 @@ final class ReportViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        bind()
         setTableView()
     }
     
     // MARK: - Functions
+    
+    private func bind() {
+        viewModel.reportPostResponseDataDidChange = { [weak self] data in
+            guard let data = data else { return }
+            print("=== Report vc, report cell selected succeeded ===")
+            print("== data: \(data)")
+            
+            if data.isSuccess == true {
+                self?.showAlert(alertType: .confirmOnly,
+                                titleText: "신고가 완료되었습니다.",
+                                messageText: "신고해주셔서 감사합니다.\n빠른 시일 내에 해결하겠습니다.",
+                                confirmButtonText: "확인")
+            }
+            else {
+                self?.present(UIAlertController.networkErrorAlert(title: "게시글 신고에 실패하였습니다."), animated: true)
+            }
+        }
+    }
     
     private func setTableView() {
         reportTableView.delegate = self
@@ -76,33 +96,7 @@ extension ReportViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! ReportTableViewCell
-        
-        PostService.postReportPost(reportRequest: PostReportRequest(postId: postId!, reportType: cell.reportType!.rawValue)) { [weak self] data, failed in
-            guard let data = data else {
-                // 에러가 난 경우, alert 창 present
-                switch failed {
-                case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), 
-                                  animated: true)
-                default:
-                    self?.present(UIAlertController.networkErrorAlert(title: "게시글 신고에 실패하였습니다."), animated: true)
-                }
-                return
-            }
-            
-            print("=== Report vc, report cell selected succeeded ===")
-            print("== data: \(data)")
-            
-            if data.isSuccess == true {
-                self?.showAlert(alertType: .confirmOnly,
-                                titleText: "신고가 완료되었습니다.",
-                                messageText: "신고해주셔서 감사합니다.\n빠른 시일 내에 해결하겠습니다.",
-                                confirmButtonText: "확인")
-            }
-            else {
-                self?.present(UIAlertController.networkErrorAlert(title: "게시글 신고에 실패하였습니다."), animated: true)
-            }
-        }
+        viewModel.reportPost(reportRequest: PostReportRequest(postId: postId!, reportType: cell.reportType!.rawValue), fromCurrentVC: self)
     }
 }
 

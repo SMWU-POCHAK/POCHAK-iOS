@@ -35,10 +35,17 @@ class PostDetailViewModel {
         }
     }
     
+    private var reportPostResponseData: PostReportResponse? {
+        didSet {
+            reportPostResponseDataDidChange?(reportPostResponseData)
+        }
+    }
+    
     var postDetailDataDidChange: ((PostDetailResponseResult?) -> Void)?
     var likeResponseDataDidChange: ((PostLikeResponse?) -> Void)?
     var followResponseDataDidChange: ((FollowResponse?) -> Void)?
     var deletePostResponseDataDidChange: ((PostDeleteResponse?) -> Void)?
+    var reportPostResponseDataDidChange: ((PostReportResponse?) -> Void)?
     
     // MARK: - Functions
     
@@ -128,6 +135,25 @@ class PostDetailViewModel {
                 return
             }
             self.deletePostResponseData = data
+        }
+    }
+    
+    /// 특정 게시물을 신고하는 메소드입니다.
+    /// - Parameters:
+    ///   - reportRequest: 신고하려는 게시물 아이디, 신고사유를 담은 PostReportRequest
+    ///   - fromCurrentVC: 요청을 보내는 뷰컨트롤러
+    func reportPost(reportRequest: PostReportRequest, fromCurrentVC: UIViewController) {
+        PostService.postReportPost(reportRequest: reportRequest) { data, failed in
+            guard let data = data else {
+                switch failed {
+                case .disconnected:
+                    fromCurrentVC.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    fromCurrentVC.present(UIAlertController.networkErrorAlert(title: "게시글 신고에 실패하였습니다."), animated: true)
+                }
+                return
+            }
+            self.reportPostResponseData = data
         }
     }
 }
