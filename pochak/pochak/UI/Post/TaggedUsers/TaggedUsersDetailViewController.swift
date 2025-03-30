@@ -15,25 +15,63 @@ final class TaggedUsersDetailViewController: UIViewController {
     var goToOtherProfileVC: ((String) -> Void)?
 
     // MARK: - Views
+        
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "태그"
+        label.applyPochakFont(.body0)
+        return label
+    }()
     
-    @IBOutlet weak var tableView: UITableView!
+    private lazy var tableView: UITableView = {
+        let view = UITableView()
+        view.delegate = self
+        view.delegate = self
+        view.separatorColor = UIColor(named: "gray01")
+        view.separatorInset = .init(top: 0, left: 20, bottom: 0, right: 20)
+        view.allowsMultipleSelection = false
+        view.allowsSelection = true
+        view.rowHeight = 70
+        return view
+    }()
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .white
+        
+        addViews()
+        setupConstraints()
         setTableView()
     }
         
     // MARK: - Funtions
     
+    private func addViews() {
+        view.addSubview(titleLabel)
+        view.addSubview(tableView)
+    }
+    
+    private func setupConstraints() {
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(38)
+            make.centerX.equalToSuperview()
+        }
+        
+        tableView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(titleLabel.snp.bottom)
+        }
+    }
+    
     private func setTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.register(UINib(nibName: TaggedUsersTableViewCell.identifier, bundle: nil),
-                           forCellReuseIdentifier: TaggedUsersTableViewCell.identifier)
+        tableView.register(TaggedUsersTableViewCell.self, forCellReuseIdentifier: TaggedUsersTableViewCell.identifier)
     }
 }
 
