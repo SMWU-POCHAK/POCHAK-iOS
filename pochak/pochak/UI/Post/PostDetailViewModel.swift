@@ -23,8 +23,15 @@ class PostDetailViewModel {
         }
     }
     
+    private var followResponseData: FollowResponse? {
+        didSet {
+            followResponseDataDidChange?(followResponseData)
+        }
+    }
+    
     var postDetailDataDidChange: ((PostDetailResponseResult?) -> Void)?
     var likeResponseDataDidChange: ((PostLikeResponse?) -> Void)?
+    var followResponseDataDidChange: ((FollowResponse?) -> Void)?
     
     // MARK: - Functions
     
@@ -74,6 +81,26 @@ class PostDetailViewModel {
                 return
             }
             self.likeResponseData = data
+        }
+    }
+    
+    /// 특정 유저 팔로우를 요청하는 메소드입니다.
+    /// - Parameters:
+    ///   - handle: 팔로우하고자 하는 유저의 핸들
+    ///   - fromCurrentVC: 요청을 보내는 뷰컨트롤러
+    func requestUserFollow(handle: String, fromCurrentVC: UIViewController) {
+        UserService.postFollowRequest(handle: handle) { data, failed in
+            guard let data = data else {
+                switch failed {
+                case .disconnected:
+                    fromCurrentVC.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
+                                  animated: true)
+                default:
+                    fromCurrentVC.present(UIAlertController.networkErrorAlert(title: "팔로우 요청에 실패하였습니다."), animated: true)
+                }
+                return
+            }
+            self.followResponseData = data
         }
     }
 }

@@ -91,6 +91,7 @@ final class PostViewController: UIViewController {
     private let followButton: PostDetailFollowButton = {
         let button = PostDetailFollowButton()
         button.isFollowing = false
+        button.addTarget(self, action: #selector(followingButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -231,17 +232,15 @@ final class PostViewController: UIViewController {
     
     // MARK: - Actions
     
-    @IBAction func followingBtnTapped(_ sender: Any) {
-        if let isFollow = postDataResult?.isFollow! {
-            if isFollow {
-                showAlert(alertType: .confirmAndCancel,
-                          titleText: "팔로우를 취소할까요?",
-                          cancelButtonText: "취소",
-                          confirmButtonText: "확인")
-            }
-            else {
-                postFollowRequest()
-            }
+    @objc private func followingButtonDidTap(_ sender: Any) {
+        if followButton.isFollowing {
+            showAlert(alertType: .confirmAndCancel,
+                      titleText: "팔로우를 취소할까요?",
+                      cancelButtonText: "취소",
+                      confirmButtonText: "확인")
+        }
+        else {
+            viewModel.requestUserFollow(handle: viewModel.getPostDetailOwnerHandle()!, fromCurrentVC: self)
         }
     }
 
@@ -459,6 +458,20 @@ final class PostViewController: UIViewController {
             self?.likeButton.isSelected.toggle()
             //self?.viewModel.fetchPostDetail(postId: (self?.receivedPostId)!, fromCurrentVC: self!)  // 필요 이상으로 서버 통신하는 것 같아서 그냥 likeButton 상태 toggle하는 것으로 바꿈..
         }
+        
+        viewModel.followResponseDataDidChange = { [weak self] data in
+            guard let data = data else { return }
+            print("=== PostDetail, followButtonDidTap succeeded ===")
+            print("== data: \(data)")
+
+            if(!data.isSuccess) {
+                self?.present(UIAlertController.networkErrorAlert(title: "팔로우 요청에 실패하였습니다."), animated: true)
+                return
+            }
+//            self.viewModel.fetchPostDetail(postId: self.receivedPostId!, fromCurrentVC: self)
+            // 필요 이상으로 서버 통신하는 것 같아서 그냥 followButton 상태 toggle하는 것으로 바꿈..
+            self?.followButton.isFollowing.toggle()
+        }
     }
     
     /// ui 요소들 속성 초기화
@@ -606,30 +619,6 @@ final class PostViewController: UIViewController {
         recentCommentHandleLabel.text = data.handle
         recentCommentCommentLabel.text = data.content
     }
-    
-    private func postFollowRequest() {
-        UserService.postFollowRequest(handle: postDataResult!.ownerHandle) { data, failed in
-            guard let data = data else {
-                switch failed {
-                case .disconnected:
-                    self.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
-                                  animated: true)
-                default:
-                    self.present(UIAlertController.networkErrorAlert(title: "팔로우 요청에 실패하였습니다."), animated: true)
-                }
-                return
-            }
-            
-            print("=== PostDetail, postFollowRequest succeeded ===")
-            print("== data: \(data)")
-            
-            if(!data.isSuccess) {
-                self.present(UIAlertController.networkErrorAlert(title: "팔로우 요청에 실패하였습니다."), animated: true)
-                return
-            }
-            self.viewModel.fetchPostDetail(postId: self.receivedPostId!, fromCurrentVC: self)
-        }
-    }
 }
 
 // MARK: - Extension: UIScrollView
@@ -652,7 +641,7 @@ extension PostViewController: UIGestureRecognizerDelegate {
 
 extension PostViewController: CustomAlertDelegate {
     func confirmAction() {
-        postFollowRequest()
+        viewModel.requestUserFollow(handle: viewModel.getPostDetailOwnerHandle()!, fromCurrentVC: self)
     }
     
     func cancel() {
