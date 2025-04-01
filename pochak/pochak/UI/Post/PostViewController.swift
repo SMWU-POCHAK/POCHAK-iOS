@@ -278,7 +278,7 @@ final class PostViewController: UIViewController {
     }
     
     @objc private func moreActionButtonDidTap() {
-        let postMenuVC = postStoryBoard.instantiateViewController(withIdentifier: "PostMenuVC") as! PostMenuViewController
+        let postMenuVC = PostMenuViewController()
         postMenuVC.setPostData(postId: receivedPostId!, 
                                postOwner: viewModel.getPostDetailOwnerHandle()!,
                                taggedMemberList: viewModel.getPostDetailTaggedUsers()!.map({ $0.handle }))
