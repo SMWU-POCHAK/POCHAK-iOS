@@ -286,14 +286,14 @@ final class PostViewController: UIViewController {
         
         /* 메뉴 개수에 맞도록 sheet 높이 설정 */
         let label = UILabel()
-        label.font = UIFont.Pretendard(size: 20, family: .Bold)
+        label.applyPochakFont(.body0)
         label.text = "더보기"
         label.sizeToFit()
         
         let currentLogInUser = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
         
         let cellCount = (viewModel.getPostDetailOwnerHandle()! == currentLogInUser || viewModel.getPostDetailTaggedUsers()!.contains(where: { $0.handle == currentLogInUser })) ? 3 : 2
-        let height = label.frame.height + CGFloat(36 + 16 + 48 * cellCount)
+        let height = label.frame.height + CGFloat(38 + 16 + 48 * cellCount)
         let fraction = UISheetPresentationController.Detent.custom { context in
             height
         }
