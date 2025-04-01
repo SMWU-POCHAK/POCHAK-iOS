@@ -172,7 +172,8 @@ final class PostViewController: UIViewController {
         let label = UILabel()
         label.text = "hello"
         label.font = UIFont.Pretendard(size: 14, family: .Regular)
-//        label.setLineHeightByPx(value: 20)
+        label.numberOfLines = 1
+        label.setLineHeightByPx(value: 20)
         label.lineBreakMode = .byTruncatingTail
         return label
     }()
@@ -183,7 +184,7 @@ final class PostViewController: UIViewController {
         var config = UIButton.Configuration.plain()
         config.attributedTitle = AttributedString("더보기")
         config.attributedTitle?.setAttributes(AttributeContainer([NSAttributedString.Key.font : UIFont.Pretendard(), NSAttributedString.Key.foregroundColor : UIColor(named: "gray05")]))
-        config.contentInsets = .zero
+        config.contentInsets = .init(top: 3, leading: 0, bottom: 3, trailing: 0)
         
         button.configuration = config
         button.addTarget(self, action: #selector(moreCommentButtonDidTap), for: .touchUpInside)
@@ -405,6 +406,7 @@ final class PostViewController: UIViewController {
         }
         
         likeAndCmtStackView.snp.makeConstraints { make in
+            make.leading.equalTo(contentStackView.snp.trailing).offset(12)
             make.trailing.equalToSuperview().inset(9)
             make.top.equalTo(postImageView.snp.bottom).offset(8)
         }
@@ -423,9 +425,10 @@ final class PostViewController: UIViewController {
         
         moreCommentButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(20)
-            make.top.equalTo(recentCommentStackView.snp.top)
+            make.centerY.equalTo(recentCommentStackView.snp.centerY)
             make.leading.greaterThanOrEqualTo(recentCommentStackView.snp.trailing).offset(11)
         }
+        moreCommentButton.setContentCompressionResistancePriority(.init(751), for: .horizontal)
     }
     
     private func setupNavigationBar() {
