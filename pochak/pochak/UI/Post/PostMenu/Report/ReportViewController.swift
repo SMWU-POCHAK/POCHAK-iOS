@@ -51,8 +51,7 @@ final class ReportViewController: UIViewController {
     private func setTableView() {
         reportTableView.delegate = self
         reportTableView.dataSource = self
-        reportTableView.register(UINib(nibName: ReportTableViewCell.identifier, bundle: nil),
-                                 forCellReuseIdentifier: ReportTableViewCell.identifier)
+        reportTableView.register(ReportTableViewCell.self, forCellReuseIdentifier: ReportTableViewCell.identifier)
     }
     
     /// 게시글 신고 후 홈으로 돌아가기
