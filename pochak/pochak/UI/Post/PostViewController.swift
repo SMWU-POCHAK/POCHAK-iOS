@@ -53,6 +53,7 @@ final class PostViewController: UIViewController {
         label.font = UIFont.Pretendard(size: 16, family: .Bold)
         label.setLineHeightByPx(value: 22)
         label.isUserInteractionEnabled = true
+        label.lineBreakMode = .byTruncatingTail
         return label
     }()
     
@@ -380,6 +381,7 @@ final class PostViewController: UIViewController {
         usersStackView.snp.makeConstraints { make in
             make.leading.equalTo(profileImageView.snp.trailing).offset(12)
             make.centerY.equalTo(profileImageView.snp.centerY)
+            make.trailing.lessThanOrEqualTo(followButton.snp.leading).offset(-25)
         }
         
         followButton.snp.makeConstraints { make in
