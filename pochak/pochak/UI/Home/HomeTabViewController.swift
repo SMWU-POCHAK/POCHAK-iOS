@@ -100,33 +100,36 @@ final class HomeTabViewController: UIViewController {
             print("=== Home, setup data succeeded ===")
             print("== data: \(data)")
             
-            self?.isLastPage = data.result.pageInfo.lastPage
+            guard let self = self else { return }
+            
+            self.isLastPage = data.result.pageInfo.lastPage
 
             let newPosts = data.result.postList
-            let startIndex = self?.postList.count
-            let endIndex = startIndex! + newPosts.count
-            let newIndexPathList = (startIndex! ..< endIndex).map { IndexPath(item: $0, section: 0) }
+            let startIndex = self.postList.count
+            let endIndex = startIndex + newPosts.count
+            let newIndexPathList = (startIndex ..< endIndex).map { IndexPath(item: $0, section: 0) }
 
-            self?.postList.append(contentsOf: newPosts)
+            self.postList.append(contentsOf: newPosts)
 
-            if self?.postList.count == 0 {
-                self?.noPost = true
+            if self.postList.count == 0 {
+                self.noPost = true
             }
             else {
-                self?.noPost = false
+                self.noPost = false
             }
 
-            print("== 보여주는 게시글 개수: \(self?.postList.count) ==")
+            print("== 보여주는 게시글 개수: \(self.postList.count) ==")
             DispatchQueue.main.async {
-                if self?.currentFetchingPage == 0 {
-                    self?.collectionView.reloadData()
+                if self.currentFetchingPage == 0 {
+                    self.collectionView.reloadData()
                 }
-                else {
-                    self?.collectionView.insertItems(at: newIndexPathList)
+                else if !newIndexPathList.isEmpty {
+                    self.collectionView.insertItems(at: newIndexPathList)
                 }
 
-                self?.isCurrentlyFetching = false
-                self?.currentFetchingPage += 1;
+                self.isCurrentlyFetching = false
+                self.currentFetchingPage += 1
+                self.refreshControl.endRefreshing()
             }
         }
     }
