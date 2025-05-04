@@ -21,7 +21,6 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
     
     // MARK: - Views
     
-    @IBOutlet weak var seeChildCommentsBtn: UIButton!
     /*
      // Only override draw() if you perform custom drawing.
      // An empty implementation adversely affects performance during animation.
@@ -30,9 +29,46 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
      }
      */
     
+    private let lineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(named: "gray05")
+        return view
+    }()
+    
+    private let getChildCommentsButton: UIButton = {
+        let button = UIButton()
+        
+        var config = UIButton.Configuration.plain()
+        config.attributedTitle = AttributedString("이전 답글 보기")
+        
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 16
+
+        config.attributedTitle?.setAttributes(AttributeContainer([NSAttributedString.Key.font: UIFont.Pretendard(size: 12, family: .Medium),
+                                                                  NSAttributedString.Key.foregroundColor: UIColor(named: "gray05"),
+                                                                  NSAttributedString.Key.paragraphStyle: style]))
+        
+        button.configuration = config
+        button.addTarget(self, action: #selector(getChildCommentsButtonDidTap(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    // MARK: - Init
+    
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        
+        addViews()
+        setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Actions
     
-    @IBAction func seeChildCommentsBtnDidTap(_ sender: UIButton) {
+    @objc private func getChildCommentsButtonDidTap(_ sender: UIButton) {
         print("---대댓글 보기 버튼 눌림---")
         // 이 액션 함수를 호출한 버튼이 테이블 뷰의 어디에 위치했는지 알아내기
         let point = sender.convert(CGPoint.zero, to: commentVC.tableView) // sender의 좌표계 상의 점을 테이블뷰의 bounds로 변환한 것
@@ -47,6 +83,25 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
     }
     
     // MARK: - Functions
+    
+    private func addViews() {
+        contentView.addSubview(lineView)
+        contentView.addSubview(getChildCommentsButton)
+    }
+    
+    private func setupConstraints() {
+        lineView.snp.makeConstraints { make in
+            make.height.equalTo(1)
+            make.leading.equalToSuperview().inset(75)
+            make.width.equalTo(35)
+            make.centerY.equalToSuperview()
+        }
+        
+        getChildCommentsButton.snp.makeConstraints { make in
+            make.centerY.equalTo(lineView.snp.centerY)
+            make.leading.equalTo(lineView.snp.trailing).offset(3)
+        }
+    }
     
     // section은 대댓글을 조회하고자 하는 댓글의 섹션 번호
     private func loadChildCommentData(_ section: Int) {

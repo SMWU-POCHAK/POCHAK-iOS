@@ -24,48 +24,75 @@ final class ReplyTableViewCell: UITableViewCell {
     
     // MARK: - Views
     
-    @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var userHandleLabel: UILabel!
-    @IBOutlet weak var timePassedLabel: UILabel!
-    @IBOutlet weak var replyLabel: UILabel!
+    private let profileImageView: UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 36 / 2
+        return view
+    }()
+    
+    private let userHandleLabel: UILabel = {
+        let label = UILabel()
+        label.applyPochakFont(.body3_1)
+        return label
+    }()
+    
+    private let timePassedLabel: UILabel = {
+        let label = UILabel()
+        label.applyPochakFont(.body4)
+        label.textColor = UIColor(named: "gray04")
+        return label
+    }()
+    
+    private let contentLabel: UILabel = {
+        let label = UILabel()
+        label.applyPochakFont(.body3)
+        label.numberOfLines = 0
+        return label
+    }()
     
     // MARK: - Init
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        // 이미지뷰 반만큼 radius 적용 -> 동그랗게
-        profileImageView.layer.cornerRadius = 36 / 2
+        addViews()
+        setupConstraints()
         
         profileImageView.addGestureRecognizer(setGestureRecognizer())
         userHandleLabel.addGestureRecognizer(setGestureRecognizer())
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
+
+//    override func setSelected(_ selected: Bool, animated: Bool) {
+//        super.setSelected(selected, animated: animated)
+//        
+//        // Configure the view for the selected state
+//    }
     
     // MARK: - Actions
     
-    @IBAction func postChildCmmtBtnDidTap(_ sender: UIButton) {
-        // 현재 대댓글 등록 중임을 comment view controller에 알려야 함
-        commentVC.isPostingChildComment = true
-        commentVC.parentCommentId = self.parentCommentId
-        
-        let indexPath = tableView.indexPath(for: self)
-        // 답글을 다려는 셀을 맨 위로 이동
-        tableView.scrollToRow(at: indexPath!, at: .top, animated: true)
-        
-        // fade in, fade out 으로 색상 변경 
-        let oldColor = self.backgroundColor
-        UIView.animate(withDuration: 0.8, 
-                       animations: { self.backgroundColor = UIColor(named: "navy03") },
-                       completion: { _ in UIView.animate(withDuration: 0.5) { self.backgroundColor = oldColor }
-        })
-        editingCommentTextField.becomeFirstResponder()
-    }
+//    @IBAction func postChildCmmtBtnDidTap(_ sender: UIButton) {
+//        // 현재 대댓글 등록 중임을 comment view controller에 알려야 함
+//        commentVC.isPostingChildComment = true
+//        commentVC.parentCommentId = self.parentCommentId
+//        
+//        let indexPath = tableView.indexPath(for: self)
+//        // 답글을 다려는 셀을 맨 위로 이동
+//        tableView.scrollToRow(at: indexPath!, at: .top, animated: true)
+//        
+//        // fade in, fade out 으로 색상 변경 
+//        let oldColor = self.backgroundColor
+//        UIView.animate(withDuration: 0.8, 
+//                       animations: { self.backgroundColor = UIColor(named: "navy03") },
+//                       completion: { _ in UIView.animate(withDuration: 0.5) { self.backgroundColor = oldColor }
+//        })
+//        editingCommentTextField.becomeFirstResponder()
+//    }
     
     @objc private func moveToOthersProfile(sender: UITapGestureRecognizer) {
         let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
@@ -79,6 +106,38 @@ final class ReplyTableViewCell: UITableViewCell {
     
     // MARK: - Functions
     
+    private func addViews() {
+        contentView.addSubview(profileImageView)
+        contentView.addSubview(userHandleLabel)
+        contentView.addSubview(timePassedLabel)
+        contentView.addSubview(contentLabel)
+    }
+    
+    private func setupConstraints() {
+        profileImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(36)
+            make.leading.equalToSuperview().inset(72)
+            make.top.equalToSuperview().inset(13)
+        }
+        
+        userHandleLabel.snp.makeConstraints { make in
+            make.leading.equalTo(profileImageView.snp.trailing).offset(12)
+            make.top.equalTo(profileImageView.snp.top)
+        }
+        
+        timePassedLabel.snp.makeConstraints { make in
+            make.leading.equalTo(userHandleLabel.snp.trailing).offset(5)
+            make.centerY.equalTo(userHandleLabel.snp.centerY)
+        }
+        
+        contentLabel.snp.makeConstraints { make in
+            make.leading.equalTo(userHandleLabel.snp.leading)
+            make.top.equalTo(userHandleLabel.snp.bottom).offset(7)
+            make.trailing.equalToSuperview().inset(25)
+            make.bottom.equalToSuperview().inset(13)
+        }
+    }
+    
     func setupData(_ commentData: UICommentData) {
         // 부모 댓글 아이디 저장
         parentCommentId = commentData.parentId
@@ -91,7 +150,7 @@ final class ReplyTableViewCell: UITableViewCell {
         // 유저 핸들
         userHandleLabel.text = commentData.handle
         
-        replyLabel.text = commentData.content
+        contentLabel.text = commentData.content
         
         // comment.uploadedTime 값: 2023-12-27T19:03:32.701
         self.timePassedLabel.text = commentData.createdDate.getTimeIntervalOfDateAndNow()
