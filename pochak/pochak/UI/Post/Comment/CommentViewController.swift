@@ -52,6 +52,7 @@ final class CommentViewController: UIViewController {
         view.estimatedRowHeight = 90
         
         view.allowsMultipleSelection = false
+        view.allowsSelectionDuringEditing = false
         
         // 키보드 내릴 수 있게
         view.keyboardDismissMode = .onDrag
@@ -128,6 +129,7 @@ final class CommentViewController: UIViewController {
         addViews()
         setupConstraints()
         setupTextField()
+        addTapGestureTableView()
         
         /* Keyboard 보여지고 숨겨질 때 발생되는 이벤트 등록 */
         NotificationCenter.default.addObserver(  // 키보드 보여질 때
@@ -147,6 +149,10 @@ final class CommentViewController: UIViewController {
     }
     
     // MARK: - Actions
+    
+    @objc private func tableViewDidTap() {
+        self.textField.endEditing(true)
+    }
     
     //    @IBAction func postNewCommentBtnTapped(_ sender: UIButton) {
     //        let commentContent = commentTextField.text ?? ""
@@ -261,6 +267,12 @@ final class CommentViewController: UIViewController {
         self.textField.rightView = uploadButton
     }
     
+    private func addTapGestureTableView() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewDidTap))
+        tapGesture.cancelsTouchesInView = false
+        self.tableView.addGestureRecognizer(tapGesture)
+    }
+    
     func loadCommentData() {
         print("postid: \(postId)")
         
@@ -369,32 +381,36 @@ final class CommentViewController: UIViewController {
     
     // 키보드 보여질 때
     @objc private func keyboardWillShow(_ notification: Notification) {
-        //        guard let userInfo = notification.userInfo as NSDictionary?,
-        //              let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
-        //            return
-        //        }
-        //
-        //        // 홈 버튼 없는 아이폰들은 다 빼줘야함. (키보드 높이 - ....?)
-        //        let finalHeight = keyboardFrame.size.height - self.view.safeAreaInsets.bottom
-        //
-        //        let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
-        //
-        //        // 키보드 올라오는 애니메이션이랑 동일하게 텍스트뷰 올라가게 만들기.
-        //        UIView.animate(withDuration: animationDuration) {
-        //            self.CommentInputViewBottomConstraint.constant = finalHeight
-        //            self.view.layoutIfNeeded()
-        //        }
+        guard let userInfo = notification.userInfo as NSDictionary?,
+              let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+
+        // 홈 버튼 없는 아이폰들은 다 빼줘야함. (키보드 높이 - ....?)
+        let finalHeight = keyboardFrame.size.height - self.view.safeAreaInsets.bottom
+
+        let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
+
+        // 키보드 올라오는 애니메이션이랑 동일하게 텍스트뷰 올라가게 만들기.
+        UIView.animate(withDuration: animationDuration) {
+            self.commentInputView.snp.updateConstraints { make in
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(finalHeight)
+            }
+            //self.CommentInputViewBottomConstraint.constant = finalHeight
+            self.view.layoutIfNeeded()
+        }
     }
     
     // 키보드 숨겨질 때 -> 원래 상태로
     @objc private func keyboardWillHide(_ notification: NSNotification) {
-        //        let animationDuration = notification.userInfo![ UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
-        //
-        //        UIView.animate(withDuration: animationDuration) {
-        //            self.CommentInputViewBottomConstraint.constant = 0
-        //            self.view.layoutIfNeeded()
-        //        }
-        //    }
+        let animationDuration = notification.userInfo![ UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
+
+        UIView.animate(withDuration: animationDuration) {
+            self.commentInputView.snp.updateConstraints { make in
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            }
+            self.view.layoutIfNeeded()
+        }
     }
 }
     
