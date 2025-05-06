@@ -250,7 +250,7 @@ final class CommentViewController: UIViewController {
             make.width.height.equalTo(40)
         }
         textField.snp.makeConstraints { make in
-            make.leading.equalTo(userProfileImageView.snp.trailing).offset(23)
+            make.leading.equalTo(userProfileImageView.snp.trailing).offset(9)
             make.centerY.equalToSuperview()
             make.trailing.equalToSuperview().inset(12)
             make.height.equalTo(36)
