@@ -130,19 +130,7 @@ final class CommentViewController: UIViewController {
         setupConstraints()
         setupTextField()
         addTapGestureTableView()
-        
-        /* Keyboard 보여지고 숨겨질 때 발생되는 이벤트 등록 */
-        NotificationCenter.default.addObserver(  // 키보드 보여질 때
-            self,
-            selector: #selector(keyboardWillShow),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil)
-        
-        NotificationCenter.default.addObserver(  // 키보드 숨겨질 때
-            self,
-            selector: #selector(keyboardWillHide),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil)
+        addKeyboardObserver()
         
         // 댓글 데이터 조회
         loadCommentData()
@@ -152,6 +140,40 @@ final class CommentViewController: UIViewController {
     
     @objc private func tableViewDidTap() {
         self.textField.endEditing(true)
+    }
+    
+    // 키보드 보여질 때
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as NSDictionary?,
+              let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+
+        // 홈 버튼 없는 아이폰들은 다 빼줘야함. (키보드 높이 - ....?)
+        let finalHeight = keyboardFrame.size.height - self.view.safeAreaInsets.bottom
+
+        let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
+
+        // 키보드 올라오는 애니메이션이랑 동일하게 텍스트뷰 올라가게 만들기.
+        UIView.animate(withDuration: animationDuration) {
+            self.commentInputView.snp.updateConstraints { make in
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(finalHeight)
+            }
+            //self.CommentInputViewBottomConstraint.constant = finalHeight
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    // 키보드 숨겨질 때 -> 원래 상태로
+    @objc private func keyboardWillHide(_ notification: NSNotification) {
+        let animationDuration = notification.userInfo![ UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
+
+        UIView.animate(withDuration: animationDuration) {
+            self.commentInputView.snp.updateConstraints { make in
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            }
+            self.view.layoutIfNeeded()
+        }
     }
     
     //    @IBAction func postNewCommentBtnTapped(_ sender: UIButton) {
@@ -273,6 +295,21 @@ final class CommentViewController: UIViewController {
         self.tableView.addGestureRecognizer(tapGesture)
     }
     
+    /// 키보드 관련된 이벤트 등록
+    private func addKeyboardObserver() {
+        NotificationCenter.default.addObserver(  // 키보드 보여질 때
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil)
+        
+        NotificationCenter.default.addObserver(  // 키보드 숨겨질 때
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil)
+    }
+    
     func loadCommentData() {
         print("postid: \(postId)")
         
@@ -376,40 +413,6 @@ final class CommentViewController: UIViewController {
                                                         isParent: false,
                                                         parentId: parentData.commentId))
             }
-        }
-    }
-    
-    // 키보드 보여질 때
-    @objc private func keyboardWillShow(_ notification: Notification) {
-        guard let userInfo = notification.userInfo as NSDictionary?,
-              let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
-            return
-        }
-
-        // 홈 버튼 없는 아이폰들은 다 빼줘야함. (키보드 높이 - ....?)
-        let finalHeight = keyboardFrame.size.height - self.view.safeAreaInsets.bottom
-
-        let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
-
-        // 키보드 올라오는 애니메이션이랑 동일하게 텍스트뷰 올라가게 만들기.
-        UIView.animate(withDuration: animationDuration) {
-            self.commentInputView.snp.updateConstraints { make in
-                make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(finalHeight)
-            }
-            //self.CommentInputViewBottomConstraint.constant = finalHeight
-            self.view.layoutIfNeeded()
-        }
-    }
-    
-    // 키보드 숨겨질 때 -> 원래 상태로
-    @objc private func keyboardWillHide(_ notification: NSNotification) {
-        let animationDuration = notification.userInfo![ UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
-
-        UIView.animate(withDuration: animationDuration) {
-            self.commentInputView.snp.updateConstraints { make in
-                make.bottom.equalTo(self.view.safeAreaLayoutGuide)
-            }
-            self.view.layoutIfNeeded()
         }
     }
 }
