@@ -254,6 +254,16 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         if let currentPreviewLayer = self.currentPreviewLayer {
             self.previewView.layer.insertSublayer(currentPreviewLayer, at: 0)
         }
+        
+        updateZoomControlVisibility()
+    }
+    
+    private func updateZoomControlVisibility() {
+        if ultraWideCamera == nil {
+            zoomControlView.isHidden = true
+        } else {
+            zoomControlView.isHidden = false
+        }
     }
     
     private func setupZoom(for device: AVCaptureDevice) {
