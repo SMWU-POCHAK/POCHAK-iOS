@@ -18,7 +18,7 @@ final class PostListCollectionViewCell: UICollectionViewCell {
     private let imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
-        view.backgroundColor = UIColor(hexCode: "CECCC8")
+        view.backgroundColor = UIColor(named: "warmGray02")  // TODO: warmGray02가 CECCC8맞는지 확인 필요
         return view
     }()
     

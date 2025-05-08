@@ -223,7 +223,7 @@ final class MyProfileTabViewController: UIViewController {
         paragraphStyle.alignment = .center
         
         segment.setTitleTextAttributes([
-            NSAttributedString.Key.foregroundColor: UIColor(hexCode: "CECCC8"),  // TODO: 추후 색상명으로 수정
+            NSAttributedString.Key.foregroundColor: UIColor(named: "warmGray02"),  // TODO: warmGray02가 CECCC8맞는지 확인 필요
             NSAttributedString.Key.font: UIFont.Pretendard(size: 16, family: .Bold),
             NSAttributedString.Key.paragraphStyle: paragraphStyle],
                                        for: .normal)
@@ -266,7 +266,7 @@ final class MyProfileTabViewController: UIViewController {
         paragraphStyle.alignment = .center
         
         segment.setTitleTextAttributes([
-            NSAttributedString.Key.foregroundColor: UIColor(hexCode: "CECCC8"),  // TODO: 추후 색상명으로 수정
+            NSAttributedString.Key.foregroundColor: UIColor(named: "warmGray02"),  // TODO: warmGray02가 CECCC8맞는지 확인 필요
             NSAttributedString.Key.font: UIFont.Pretendard(size: 16, family: .Bold),
             NSAttributedString.Key.paragraphStyle: paragraphStyle],
                                        for: .normal)

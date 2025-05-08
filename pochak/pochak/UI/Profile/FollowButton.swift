@@ -53,7 +53,7 @@ final class FollowButton: UIButton {
         let buttonStateHandler: UIButton.ConfigurationUpdateHandler = { button in
             switch self.isFollowing {
             case true:
-                button.configuration?.background.backgroundColor = UIColor(hexCode: "CECCC8")
+                button.configuration?.background.backgroundColor = UIColor(named: "warmGray02")  // TODO: warmGray02가 CECCC8맞는지 확인 필요
                 button.configuration?.attributedTitle = AttributedString("팔로잉")
                 button.configuration?.attributedTitle?.setAttributes(AttributeContainer([NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: font]))
             case false:
