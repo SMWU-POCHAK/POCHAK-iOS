@@ -709,16 +709,6 @@ final class OtherUserProfileViewController: UIViewController {
         navigationItem.title = "@" + (receivedHandle ?? "handle not found")
         navigationItem.rightBarButtonItem = moreButtonBarItem
     }
-    
-    private func initializeSingleton() {
-        ProfileDataSingleton.shared.currentTabIndex = 0
-        ProfileDataSingleton.shared.firstTabHeight = 0.0
-        ProfileDataSingleton.shared.secondTabHeight = 0.0
-        ProfileDataSingleton.shared.firstTabIsCurrentlyFetching = false
-        ProfileDataSingleton.shared.secondTabIsCurrentlyFetching = false
-        ProfileDataSingleton.shared.firstTabIsLastPage = false
-        ProfileDataSingleton.shared.secondTabIsLastPage = false
-    }
 }
 
 // MARK: - Extension: CustomAlertDelegate, SecondViewControllerDelegate
