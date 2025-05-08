@@ -22,7 +22,7 @@ class CustomTabBarController: UITabBarController {
         let exploreTabViewController = UIStoryboard(name: "ExploreTab", bundle: nil).instantiateViewController(withIdentifier: "ExploreTabViewController")
         let cameraTabViewController = UIStoryboard(name: "CameraTab", bundle: nil).instantiateViewController(withIdentifier: "CameraViewController")
         let alarmTabViewController = UIStoryboard(name: "AlarmTab", bundle: nil).instantiateViewController(withIdentifier: "AlarmViewController")
-        let myProfileViewController = UIStoryboard(name: "ProfileTab", bundle: nil).instantiateViewController(withIdentifier: "MyProfileTabVC")
+        let myProfileViewController = MyProfileTabViewController()
         
         let homeNavController = UINavigationController(rootViewController: homeTabViewController)
         let exploreNavController = UINavigationController(rootViewController: exploreTabViewController)
