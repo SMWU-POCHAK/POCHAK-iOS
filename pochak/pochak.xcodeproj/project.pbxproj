@@ -175,11 +175,6 @@
 		3769D6C42B3C3A1600294CD1 /* FollowerCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3769D6C22B3C3A1600294CD1 /* FollowerCollectionViewCell.xib */; };
 		3769D6C72B3C4F0900294CD1 /* FollowingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6C52B3C4F0900294CD1 /* FollowingCollectionViewCell.swift */; };
 		3769D6C82B3C4F0900294CD1 /* FollowingCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3769D6C62B3C4F0900294CD1 /* FollowingCollectionViewCell.xib */; };
-		3769D6CE2B3C563A00294CD1 /* PostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6CD2B3C563A00294CD1 /* PostListViewController.swift */; };
-		3769D6D02B3C569C00294CD1 /* PochakedPostTabmanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6CF2B3C569C00294CD1 /* PochakedPostTabmanViewController.swift */; };
-		3769D6D22B3C56F100294CD1 /* PochakPostTabmanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6D12B3C56F100294CD1 /* PochakPostTabmanViewController.swift */; };
-		3769D6D52B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769D6D32B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift */; };
-		3769D6D62B3C59F900294CD1 /* ProfilePostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3769D6D42B3C59F900294CD1 /* ProfilePostCollectionViewCell.xib */; };
 		376EA1292CAAADCF00FEFB63 /* ProfileRetrievalAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376EA1282CAAADCF00FEFB63 /* ProfileRetrievalAPI.swift */; };
 		376EA12C2CAAAE5600FEFB63 /* ProfileRetrievalResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376EA12B2CAAAE5600FEFB63 /* ProfileRetrievalResponse.swift */; };
 		376EA12E2CAAAE6800FEFB63 /* ProfileRetrievalRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376EA12D2CAAAE6800FEFB63 /* ProfileRetrievalRequest.swift */; };
@@ -191,7 +186,6 @@
 		37BBFDF12C2EB43D003D8DA5 /* Pretendard-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75852A51728A003AAB94 /* Pretendard-ExtraBold.ttf */; };
 		37D311E32B56754D00A1D7C1 /* GetToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311E22B56754D00A1D7C1 /* GetToken.swift */; };
 		37D311E52B567AE000A1D7C1 /* OtherUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */; };
-		37EED79D2CFDDC3800254471 /* ProfileDataSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EED79C2CFDDC1F00254471 /* ProfileDataSingleton.swift */; };
 		37EED79F2CFDFE9100254471 /* Notification+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EED79E2CFDFE9100254471 /* Notification+.swift */; };
 		37EED7A12D07094F00254471 /* HandleDuplicationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EED7A02D07094F00254471 /* HandleDuplicationType.swift */; };
 		460CFD552D1C48D500398C9A /* MemoryGalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460CFD542D1C48D500398C9A /* MemoryGalleryViewModel.swift */; };
@@ -505,11 +499,6 @@
 		3769D6C22B3C3A1600294CD1 /* FollowerCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FollowerCollectionViewCell.xib; sourceTree = "<group>"; };
 		3769D6C52B3C4F0900294CD1 /* FollowingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingCollectionViewCell.swift; sourceTree = "<group>"; };
 		3769D6C62B3C4F0900294CD1 /* FollowingCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FollowingCollectionViewCell.xib; sourceTree = "<group>"; };
-		3769D6CD2B3C563A00294CD1 /* PostListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListViewController.swift; sourceTree = "<group>"; };
-		3769D6CF2B3C569C00294CD1 /* PochakedPostTabmanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakedPostTabmanViewController.swift; sourceTree = "<group>"; };
-		3769D6D12B3C56F100294CD1 /* PochakPostTabmanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PochakPostTabmanViewController.swift; sourceTree = "<group>"; };
-		3769D6D32B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePostCollectionViewCell.swift; sourceTree = "<group>"; };
-		3769D6D42B3C59F900294CD1 /* ProfilePostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfilePostCollectionViewCell.xib; sourceTree = "<group>"; };
 		376EA1282CAAADCF00FEFB63 /* ProfileRetrievalAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRetrievalAPI.swift; sourceTree = "<group>"; };
 		376EA12B2CAAAE5600FEFB63 /* ProfileRetrievalResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRetrievalResponse.swift; sourceTree = "<group>"; };
 		376EA12D2CAAAE6800FEFB63 /* ProfileRetrievalRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRetrievalRequest.swift; sourceTree = "<group>"; };
@@ -520,7 +509,6 @@
 		37A284C02B52FC910023EB9D /* UpdateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewController.swift; sourceTree = "<group>"; };
 		37D311E22B56754D00A1D7C1 /* GetToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToken.swift; sourceTree = "<group>"; };
 		37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherUserProfileViewController.swift; sourceTree = "<group>"; };
-		37EED79C2CFDDC1F00254471 /* ProfileDataSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataSingleton.swift; sourceTree = "<group>"; };
 		37EED79E2CFDFE9100254471 /* Notification+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+.swift"; sourceTree = "<group>"; };
 		37EED7A02D07094F00254471 /* HandleDuplicationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleDuplicationType.swift; sourceTree = "<group>"; };
 		460CFD542D1C48D500398C9A /* MemoryGalleryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGalleryViewModel.swift; sourceTree = "<group>"; };
@@ -1130,7 +1118,6 @@
 		3769D6B72B3C342900294CD1 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				37EED79C2CFDDC1F00254471 /* ProfileDataSingleton.swift */,
 				EAFB4B862A5147A300E0F2FA /* ProfileTab.storyboard */,
 				3769D6B82B3C345800294CD1 /* MyProfileTabViewController.swift */,
 				37D311E42B567AE000A1D7C1 /* OtherUserProfileViewController.swift */,
@@ -1173,9 +1160,6 @@
 			isa = PBXGroup;
 			children = (
 				37F1487A2C62382300D9B117 /* cell */,
-				3769D6CD2B3C563A00294CD1 /* PostListViewController.swift */,
-				3769D6CF2B3C569C00294CD1 /* PochakedPostTabmanViewController.swift */,
-				3769D6D12B3C56F100294CD1 /* PochakPostTabmanViewController.swift */,
 				08EA169E2D61FE50009FBCC4 /* PostListPageViewController.swift */,
 			);
 			path = PostList;
@@ -1206,8 +1190,6 @@
 		37F1487A2C62382300D9B117 /* cell */ = {
 			isa = PBXGroup;
 			children = (
-				3769D6D32B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift */,
-				3769D6D42B3C59F900294CD1 /* ProfilePostCollectionViewCell.xib */,
 				08EA16A02D62013A009FBCC4 /* PostListCollectionViewCell.swift */,
 			);
 			path = cell;
@@ -1778,7 +1760,6 @@
 				089C758C2A51728A003AAB94 /* Pretendard-Medium.ttf in Resources */,
 				089C75902A51728A003AAB94 /* Pretendard-ExtraLight.ttf in Resources */,
 				08B679612B528CB600F8D585 /* CommentTableViewFooterView.xib in Resources */,
-				3769D6D62B3C59F900294CD1 /* ProfilePostCollectionViewCell.xib in Resources */,
 				EABD20662A6CF5CC007543E9 /* TagCollectionViewCell.xib in Resources */,
 				08867D5C2D106A1F00FA6FD9 /* GoogleService-Info.plist in Resources */,
 				089C758B2A51728A003AAB94 /* Pretendard-SemiBold.ttf in Resources */,
@@ -1868,7 +1849,6 @@
 				3759CF392CAAE7E900408A4E /* FollowListRequest.swift in Sources */,
 				0822A02D2CA196DF00F87E2C /* PostCollectionViewCell.swift in Sources */,
 				EA2CD63F2C5F585400644EFE /* HTTPHeaderType.swift in Sources */,
-				3769D6CE2B3C563A00294CD1 /* PostListViewController.swift in Sources */,
 				0822A0542CA1983100F87E2C /* ExploreResponse.swift in Sources */,
 				374E46492CAACE53008AE361 /* BlockListResponse.swift in Sources */,
 				374E46352CAAC445008AE361 /* SignOutAPI.swift in Sources */,
@@ -1931,7 +1911,6 @@
 				EA2CD63B2C5F463700644EFE /* NetworkService.swift in Sources */,
 				371D33782B4E83E90084FF6A /* UserDefaultsManager.swift in Sources */,
 				3742617A2C31C6F900B67886 /* AppleLoginDataModel.swift in Sources */,
-				37EED79D2CFDDC3800254471 /* ProfileDataSingleton.swift in Sources */,
 				08EA16A52D622537009FBCC4 /* AutoSizingCollectionView.swift in Sources */,
 				373815162A89E6D30032066A /* SocialJoinViewController.swift in Sources */,
 				EA96D0542C8F192000D80562 /* TagApproveRequest.swift in Sources */,
@@ -1959,7 +1938,6 @@
 				379A6A3E2B5FA07D0087FAAC /* NavigationController.swift in Sources */,
 				0822A0462CA197E700F87E2C /* CommentPostAPI.swift in Sources */,
 				374E46372CAAC602008AE361 /* LogOutAPI.swift in Sources */,
-				3769D6D52B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift in Sources */,
 				376EA12E2CAAAE6800FEFB63 /* ProfileRetrievalRequest.swift in Sources */,
 				EA96D0562C8F192B00D80562 /* TagApproveResponse.swift in Sources */,
 				374E461F2CAABAF3008AE361 /* PochakPostRetrievalAPI.swift in Sources */,
@@ -2036,7 +2014,6 @@
 				0822A06C2CA1983C00F87E2C /* CommentGetResponse.swift in Sources */,
 				08EA169F2D61FE50009FBCC4 /* PostListPageViewController.swift in Sources */,
 				460CFD592D1C4B5200398C9A /* MemorySummary.swift in Sources */,
-				3769D6D02B3C569C00294CD1 /* PochakedPostTabmanViewController.swift in Sources */,
 				374261642C2FEF5F00B67886 /* ProfileMenuViewController.swift in Sources */,
 				46E7195A2D22A012000110D3 /* ZoomControlView.swift in Sources */,
 				3759CF372CAAE79F00408A4E /* FollowingRetrievalAPI.swift in Sources */,
@@ -2052,7 +2029,6 @@
 				EA1B0B5D2A49D23A00F86FBC /* SceneDelegate.swift in Sources */,
 				086BF2042CEC9D7800735BB4 /* FCMTokenManager.swift in Sources */,
 				3747E9722BF3827500364BED /* SettingsViewController.swift in Sources */,
-				3769D6D22B3C56F100294CD1 /* PochakPostTabmanViewController.swift in Sources */,
 				371D337A2B4E8D1F0084FF6A /* KeychainManager.swift in Sources */,
 				37EED7A12D07094F00254471 /* HandleDuplicationType.swift in Sources */,
 				EAF918542AA4692E0037C270 /* NetworkResult.swift in Sources */,
