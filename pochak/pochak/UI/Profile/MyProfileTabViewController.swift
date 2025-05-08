@@ -576,7 +576,7 @@ final class MyProfileTabViewController: UIViewController {
         print("[MyProfileTabViewController] setupData")
         self.titleLabel.text = "@\(handle)"
         
-        if let url = URL(string: "https://storage.googleapis.com/pochak-image-bucket/member/\(handle)") {  // TODO: 추후 APIConstants 변수로 수정
+        if let url = URL(string: "\(APIConstants.memberProfileImgBaseURL)\(handle)") {
             self.profileImageView.load(with: url)
         }
         else {
