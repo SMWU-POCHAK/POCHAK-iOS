@@ -138,7 +138,7 @@ final class CommentViewController: UIViewController {
     func loadCommentData() {
         print("postid: \(postId)")
         
-        CommentService.getComments(postId: postId ?? 0, page: 0) { [weak self] data, failed in
+        CommentService.getComments(postId: postId ?? 0, page: 0, sort: .createDateAsc) { [weak self] data, failed in
             guard let data = data else {
                 // 에러가 난 경우, alert 창 present
                 switch failed {
