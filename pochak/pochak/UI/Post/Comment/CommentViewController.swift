@@ -8,6 +8,11 @@
 import UIKit
 import Kingfisher
 
+struct CommentVCPageInfo {
+    var isLastPage: Bool
+    var currentFetchingPage: Int
+}
+
 final class CommentViewController: UIViewController {
 
     // MARK: - Properties
@@ -25,6 +30,7 @@ final class CommentViewController: UIViewController {
     var parentCommentId: Int?
     
     public var childCommentCntList = [Int]()  // 섹션 당 셀 개수 따로 저장해둘 리스트 필요함 (부모 댓글의 자식 댓글 개수 저장)
+    public var childCommentPageInfo: [CommentVCPageInfo] = []  // 각 부모댓글의 자식댓글들의 page에 대한 정보를 담는 배열
     public var parentAndChildCommentList: [ParentCommentData]?  // 부모댓글 + 자식댓글 있는 list
     public var uiCommentList = [UICommentData]()  // 셀에 뿌릴 때 사용할 실제 데이터들
     
@@ -132,7 +138,7 @@ final class CommentViewController: UIViewController {
     func loadCommentData() {
         print("postid: \(postId)")
         
-        CommentService.getComments(postId: postId ?? 0, page: 0) { [weak self] data, failed in
+        CommentService.getComments(postId: postId ?? 0, page: 0, sort: .createDateAsc) { [weak self] data, failed in
             guard let data = data else {
                 // 에러가 난 경우, alert 창 present
                 switch failed {
@@ -153,6 +159,7 @@ final class CommentViewController: UIViewController {
                 self?.profileImageUrl = data.result.loginMemberProfileImage
                 self?.noComment = true
                 self?.uiCommentList.removeAll()
+                self?.childCommentPageInfo.removeAll()
                 
                 // 댓글 존재할 때만
                 if(self?.parentAndChildCommentList?.count != 0) {
@@ -179,6 +186,10 @@ final class CommentViewController: UIViewController {
                                                                      isParent: false,
                                                                      parentId: parentData.commentId))
                         }
+                        
+                        // 각 부모댓글의 자식댓글에 대한 page 정보 세팅
+                        self?.childCommentPageInfo.append((CommentVCPageInfo(isLastPage: parentData.childCommentPageInfo.lastPage,
+                                                                             currentFetchingPage: 0)))
                     }
                 }
                 print("=== loading comment data ===")

@@ -121,8 +121,7 @@ extension FollowingListTabmanViewController: UICollectionViewDelegate, UICollect
     
     // 유저 클릭 시 해당 프로필로 이동
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let otherUserProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "OtherUserProfileVC")
-                as? OtherUserProfileViewController else { return }
+        let otherUserProfileVC = OtherUserProfileViewController()
         self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
         guard let cell: FollowingCollectionViewCell = self.followingCollectionView.cellForItem(at: indexPath)
                 as? FollowingCollectionViewCell else { return }

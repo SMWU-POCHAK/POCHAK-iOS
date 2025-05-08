@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 enum CommentAPI {
-    case getComments(postId: Int, page: Int)
+    case getComments(postId: Int, request: CommentGetRequest)
 }
 
 extension CommentAPI: BaseAPI {
@@ -30,7 +30,7 @@ extension CommentAPI: BaseAPI {
     
     var parameters: RequestParams? {
         switch self {
-        case .getComments(_, let page): return .query(["page": page])
+        case .getComments(_, let request): return .query(request)
         }
     }
 }
