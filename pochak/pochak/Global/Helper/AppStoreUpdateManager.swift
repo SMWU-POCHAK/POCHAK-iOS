@@ -15,8 +15,13 @@ final class AppStoreUpdateManager {
     /// 현재 기기에 설치된 앱의 버전
     static let currentAppVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
     static let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
-    static let appleID = "6502332418"
-    static let appStoreOpenUrlString = "itms-apps://itunes.apple.com/app/apple-store/6502332418"
+    static let appStoreOpenBaseUrlString = "itms-apps://itunes.apple.com/app/apple-store"
+    static let appleID: String = {
+        guard let appleID = Bundle.main.infoDictionary?["AppleID"] as? String else {
+            fatalError("[! Error] - appleID not found in Info.plist")
+        }
+        return appleID
+    }()
     
     /// 현재 앱스토어에 올라가있는 최신 버전 정보을 확인하는 메소드입니다.
     /// - Returns: 최신 버전
@@ -33,7 +38,7 @@ final class AppStoreUpdateManager {
     
     /// AppStore로 이동하는 메소드입니다.
     func openAppStore() {
-        guard let url = URL(string: AppStoreUpdateManager.appStoreOpenUrlString) else { return }
+        guard let url = URL(string: "\(AppStoreUpdateManager.appStoreOpenBaseUrlString)/\(AppStoreUpdateManager.appleID)") else { return }
         if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
