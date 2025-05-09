@@ -1,0 +1,54 @@
+//
+//  CommentViewModel.swift
+//  pochak
+//
+//  Created by Suyeon Hwang on 5/7/25.
+//
+
+import UIKit
+
+final class CommentViewModel {
+    
+    // MARK: - Properties
+    
+    private var commentData: CommentDataResult? {
+        didSet {
+            commentDataDidChange?(commentData)
+        }
+    }
+    
+    var commentDataDidChange: ((CommentDataResult?) -> Void)?
+    
+    // MARK: - Functions
+    
+    /// CommentService를 통해 postId 게시물의 page번째 페이지 댓글을 조회하는 메소드입니다.
+    /// - Parameters:
+    ///   - postId: 조회하고자 하는 댓글리스트가 속한 게시물 아이디
+    ///   - page: 조회하고자 하는 댓글 리스트 페이지
+    ///   - fromCurrentVC: 현재 요청을 보내는 뷰컨트롤러
+    func fetchCommentData(postId: Int, page: Int, fromCurrentVC: UIViewController) {
+        CommentService.getComments(postId: postId, page: page) { [weak self] data, failed in
+            guard let data = data else {
+                switch failed {
+                case .disconnected:
+                    fromCurrentVC.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .serverError:
+                    fromCurrentVC.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    fromCurrentVC.present(UIAlertController.networkErrorAlert(title: "댓글 조회에 실패하였습니다."), animated: true)
+                }
+                return
+            }
+            
+            if !data.isSuccess {
+                fromCurrentVC.present(UIAlertController.networkErrorAlert(title: "댓글 조회에 실패하였습니다."), animated: true)
+                return
+            }
+            
+            print("=== [CommentViewModel] fetchCommentData succeeded ===")
+            print("== data: \(data)")
+            
+            self?.commentData = data.result
+        }
+    }
+}
