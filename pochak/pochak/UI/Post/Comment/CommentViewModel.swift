@@ -17,7 +17,14 @@ final class CommentViewModel {
         }
     }
     
+    private var uploadCommentResponseData: CommentPostResponse? {
+        didSet {
+            uploadCommentResponseDataDidChange?(uploadCommentResponseData)
+        }
+    }
+    
     var commentDataDidChange: ((CommentDataResult?) -> Void)?
+    var uploadCommentResponseDataDidChange: ((CommentPostResponse?) -> Void)?
     
     // MARK: - Functions
     
@@ -49,6 +56,39 @@ final class CommentViewModel {
             print("== data: \(data)")
             
             self?.commentData = data.result
+        }
+    }
+    
+    /// CommentService를 통해 postId 게시물에 댓글 혹은 대댓글을 업로드하는 메소드입니다.
+    /// - Parameters:
+    ///   - postId: 댓글 혹은 대댓글을 달고자 하는 게시물의 postId
+    ///   - content: 댓글 혹은 대댓글 내용
+    ///   - parentCommentId: 대댓글인 경우 부모댓글 id, 댓글인 경우에는 nil값을 전달합니다
+    ///   - fromCurrentVC: 현재 요청을 보내는 뷰컨트롤러
+    func uploadNewComment(postId: Int, content: String, parentCommentId: Int?, fromCurrentVC: UIViewController) {
+        CommentService.postNewComment(postId: postId, content: content, parentCommentId: parentCommentId) { [weak self] data, failed in
+            guard let data = data else {
+                switch failed {
+                case .disconnected:
+                    fromCurrentVC.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .serverError:
+                    fromCurrentVC.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    fromCurrentVC.present(UIAlertController.networkErrorAlert(title: "댓글 등록에 실패하였습니다."), animated: true)
+                }
+                return
+            }
+
+            print("=== [CommentViewModel] uploadNewComment succeeded ===")
+            print("== data: \(data)")
+
+            // 만약 실패한 경우 실패했다고 알림창
+            if !data.isSuccess {
+                fromCurrentVC.present(UIAlertController.networkErrorAlert(title: "댓글 등록에 실패하였습니다."), animated: true)
+                return
+            }
+            
+            self?.uploadCommentResponseData = data
         }
     }
 }

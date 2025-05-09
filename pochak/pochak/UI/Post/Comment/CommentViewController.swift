@@ -117,6 +117,7 @@ final class CommentViewController: UIViewController {
         config.background.cornerRadius = 18
         
         button.configuration = config
+        button.addTarget(self, action: #selector(uploadCommentButtonDidTap), for: .touchUpInside)
         
         return button
     }()
@@ -182,55 +183,29 @@ final class CommentViewController: UIViewController {
         }
     }
     
-    //    @IBAction func postNewCommentBtnTapped(_ sender: UIButton) {
-    //        let commentContent = commentTextField.text ?? ""
-    //
-    //        // 대댓글인지 댓글인지 확인해야 함
-    //        print(commentContent)
-    //
-    //        // 댓글 내용이 있는 경우에만 POST 요청
-    //        if commentContent != "" {
-    //            // 임시로 parentCommentSK는 nil로 지정
-    //
-    //            CommentService.postNewComment(postId: postId!, content: commentContent, parentCommentId: self.isPostingChildComment ? self.parentCommentId : nil) { [weak self] data, failed in
-    //                guard let data = data else {
-    //                    // 에러가 난 경우, alert 창 present
-    //                    switch failed {
-    //                    case .disconnected:
-    //                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-    //                    default:
-    //                        self?.present(UIAlertController.networkErrorAlert(title: "댓글 등록에 실패하였습니다."), animated: true)
-    //                    }
-    //                    return
-    //                }
-    //
-    //                print("=== CommentView, postNewCommentBtnTapped succeeded ===")
-    //                print("== data: \(data)")
-    //
-    //                // 만약 실패한 경우 실패했다고 알림창
-    //                if data.isSuccess == false {
-    //                    self?.present(UIAlertController.networkErrorAlert(title: "댓글 등록에 실패하였습니다."), animated: true)
-    //                    return
-    //                }
-    //                else {
-    //                    print("=== 새 댓글 등록, 데이터 업데이트 ===")
-    //                    self?.loadCommentData()
-    //                }
-    //            }
-    //        }
-    //        else {
-    //            print("textview is empty")
-    //        }
-    //
-    //        // 댓글창 비우기
-    //        commentTextField.text = ""
-    //
-    //        // 키보드 내리기
-    //        commentTextField.endEditing(true)
-    //
-    //        // 댓글 종류 초기화
-    //        self.isPostingChildComment = false
-    //    }
+    @objc private func uploadCommentButtonDidTap() {
+        let commentContent = textField.text ?? ""
+        guard let postId = postId else { return }
+
+        // 대댓글인지 댓글인지 확인해야 함
+        print(commentContent)
+
+        if commentContent != "" {
+            viewModel.uploadNewComment(postId: postId, content: commentContent, parentCommentId: self.isPostingChildComment ? self.parentCommentId : nil, fromCurrentVC: self)
+        }
+        else {
+            print("textview is empty")
+        }
+
+        // 댓글창 비우기
+        textField.text = ""
+
+        // 키보드 내리기
+        textField.endEditing(true)
+
+        // 댓글 종류 초기화
+        self.isPostingChildComment = false
+    }
     
     // MARK: - Functions
     
@@ -243,6 +218,12 @@ final class CommentViewController: UIViewController {
         viewModel.commentDataDidChange = { [weak self] data in
             guard let data = data else { return }
             self?.setupData(data)
+        }
+        
+        viewModel.uploadCommentResponseDataDidChange = { [weak self] data in
+            guard let self = self else { return }
+            print("=== 새 댓글 등록, 데이터 업데이트 ===")
+            self.viewModel.fetchCommentData(postId: postId!, page: 0, fromCurrentVC: self)
         }
     }
     
