@@ -31,7 +31,7 @@ final class CommentViewController: UIViewController {
     private var profileImageUrl: String = ""
     private var noComment: Bool = true
     
-    private let viewModel = CommentViewModel()
+    let viewModel = CommentViewModel()
     
     // MARK: - Views
     

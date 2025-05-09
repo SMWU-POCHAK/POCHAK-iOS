@@ -26,6 +26,7 @@ final class CommentTableViewCell: UITableViewCell {
     
     let seeChildCommentBtn = UIButton()
     
+    private let viewModel = CommentViewModel()
     private let currentUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
 
     // MARK: - Views
@@ -110,6 +111,7 @@ final class CommentTableViewCell: UITableViewCell {
         
         contentView.backgroundColor = .white
         
+        bind()
         addViews()
         setupConstraints()
         
@@ -151,32 +153,10 @@ final class CommentTableViewCell: UITableViewCell {
     }
     
     @objc private func deleteButtonDidTap() {
+        print(#function)
         // FIXME: 페이징 처리랑 같이...
-//        CommentService.deleteComment(postId: postId, commentId: commentId) { [weak self] data, failed in
-//            guard let data = data else {
-//                // 에러가 난 경우, alert 창 present
-//                switch failed {
-//                case .disconnected:
-//                    self?.commentVC?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
-//                                             animated: true)
-//                default:
-//                    self?.commentVC?.present(UIAlertController.networkErrorAlert(title: "댓글 삭제에 실패하였습니다."),
-//                                             animated: true)
-//                }
-//                return
-//            }
-//            
-//            print("=== CommentTableViewCell, deleteButtonDidTap succeeded ===")
-//            print("== data: \(data)")
-//            
-//            if data.isSuccess == true {
-//                self?.commentVC?.loadCommentData()
-//            }
-//            else {
-//                self?.commentVC?.present(UIAlertController.networkErrorAlert(title: "댓글 삭제에 실패하였습니다."), 
-//                                         animated: true)
-//            }
-//        }
+        guard let commentVC = self.commentVC else { return }
+        self.viewModel.deleteComment(postId: postId, commentId: commentId, fromCurrentVC: commentVC)
     }
     
     @objc private func moveToOthersProfile(sender: UITapGestureRecognizer) {
@@ -197,6 +177,16 @@ final class CommentTableViewCell: UITableViewCell {
     }
     
     // MARK: - Functions
+    
+    private func bind() {
+        print(#function)
+        self.viewModel.deleteCommentResponseDataDidChange = { [weak self] data in
+            print("======= delete comment 핸들러 ========")
+            guard let self = self else { return }
+            print("======= delete comment response ========")
+            self.commentVC?.viewModel.fetchCommentData(postId: postId, page: 0, fromCurrentVC: self.commentVC!)
+        }
+    }
     
     private func addViews() {
         contentView.addSubview(profileImageView)

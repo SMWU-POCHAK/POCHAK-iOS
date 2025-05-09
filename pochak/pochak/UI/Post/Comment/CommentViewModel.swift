@@ -22,9 +22,16 @@ final class CommentViewModel {
             uploadCommentResponseDataDidChange?(uploadCommentResponseData)
         }
     }
+        
+    private var deleteCommentResponseData: CommentDeleteResponse? {
+        didSet {
+            deleteCommentResponseDataDidChange?(deleteCommentResponseData)
+        }
+    }
     
     var commentDataDidChange: ((CommentDataResult?) -> Void)?
     var uploadCommentResponseDataDidChange: ((CommentPostResponse?) -> Void)?
+    var deleteCommentResponseDataDidChange: ((CommentDeleteResponse?) -> Void)?
     
     // MARK: - Functions
     
@@ -89,6 +96,37 @@ final class CommentViewModel {
             }
             
             self?.uploadCommentResponseData = data
+        }
+    }
+    
+    /// CommentService를 사용해 댓글을 삭제하는 메소드입니다.
+    /// - Parameters:
+    ///   - postId: 삭제하려는 댓글이 달린 게시물의 postId
+    ///   - commentId: 댓글의 commentId
+    ///   - fromCurrentVC: 현재 요청을 보내는 뷰컨트롤러
+    func deleteComment(postId: Int, commentId: Int, fromCurrentVC: UIViewController) {
+        CommentService.deleteComment(postId: postId, commentId: commentId) { [weak self] data, failed in
+            guard let data = data else {
+                // 에러가 난 경우, alert 창 present
+                switch failed {
+                case .disconnected:
+                    fromCurrentVC.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                case .serverError:
+                    fromCurrentVC.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
+                default:
+                    fromCurrentVC.present(UIAlertController.networkErrorAlert(title: "댓글 삭제에 실패하였습니다."), animated: true)
+                }
+                return
+            }
+
+            print("=== [CommentViewModel] deleteComment succeeded ===")
+            print("== data: \(data)")
+
+            if !data.isSuccess {
+                fromCurrentVC.present(UIAlertController.networkErrorAlert(title: "댓글 삭제에 실패하였습니다."), animated: true)
+            }
+
+            self?.deleteCommentResponseData = data
         }
     }
 }
