@@ -181,9 +181,7 @@ final class CommentTableViewCell: UITableViewCell {
     private func bind() {
         print(#function)
         self.viewModel.deleteCommentResponseDataDidChange = { [weak self] data in
-            print("======= delete comment 핸들러 ========")
             guard let self = self else { return }
-            print("======= delete comment response ========")
             self.commentVC?.viewModel.fetchCommentData(postId: postId, page: 0, fromCurrentVC: self.commentVC!)
         }
     }
