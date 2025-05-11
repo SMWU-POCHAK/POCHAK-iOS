@@ -82,7 +82,8 @@ class ZoomControlView: UIView {
         
         containerView.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
-            make.width.height.equalTo(28)
+            make.height.equalTo(28)
+            make.width.equalTo(28)
         }
         
         stackView.snp.makeConstraints { make in
@@ -129,16 +130,31 @@ class ZoomControlView: UIView {
         }
     }
     
+    private func updateContainerWidth(expanded: Bool) {
+        let buttonWidth: CGFloat = 28
+        let spacing: CGFloat = 4
+        
+        let width: CGFloat
+        if expanded {
+            width = CGFloat(zoomFactors.count) * buttonWidth + CGFloat(zoomFactors.count - 1) * spacing
+        } else {
+            width = buttonWidth
+        }
+        
+        containerView.snp.updateConstraints { make in
+            make.width.equalTo(width)
+        }
+    }
+    
     private func expandView() {
         isExpanded = true
+        
+        updateContainerWidth(expanded: true)
+        
         UIView.animate(withDuration: 0.3, animations: {
             self.buttons.forEach { button in
                 button.isHidden = false
                 button.alpha = 1
-            }
-            
-            self.containerView.snp.updateConstraints { make in
-                make.width.equalTo(124)
             }
             self.layoutIfNeeded()
         })
@@ -146,6 +162,9 @@ class ZoomControlView: UIView {
     
     private func collapseView(animated: Bool = true) {
         isExpanded = false
+        
+        updateContainerWidth(expanded: false)
+        
         let animation = {
             self.buttons.forEach { button in
                 if let buttonTitle = button.title(for: .normal),
@@ -158,10 +177,6 @@ class ZoomControlView: UIView {
                         button.isHidden = true
                     }
                 }
-            }
-            
-            self.containerView.snp.updateConstraints { make in
-                make.width.height.equalTo(28)
             }
             self.layoutIfNeeded()
         }
