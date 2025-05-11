@@ -79,6 +79,13 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         setupTransitionView()
         handlePinchGestureForZoom()
         handleTapGestrueToFocus()
+        
+        checkUltraWideCameraAvailability()
+    }
+    
+    private func checkUltraWideCameraAvailability() {
+        let hasUltraWide = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) != nil
+        zoomControlView.setUltraWideCameraAvailability(false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -94,6 +101,10 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 self?.captureSession?.startRunning()
             }
+        }
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.checkUltraWideCameraAvailability()
         }
     }
     
@@ -235,6 +246,8 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
                 
                 DispatchQueue.main.async {
                     self.setupLivePreview()
+
+                    self.checkUltraWideCameraAvailability()
                 }
                 
                 self.captureSession.startRunning()
@@ -253,16 +266,6 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         
         if let currentPreviewLayer = self.currentPreviewLayer {
             self.previewView.layer.insertSublayer(currentPreviewLayer, at: 0)
-        }
-        
-        updateZoomControlVisibility()
-    }
-    
-    private func updateZoomControlVisibility() {
-        if ultraWideCamera == nil {
-            zoomControlView.isHidden = true
-        } else {
-            zoomControlView.isHidden = false
         }
     }
     
@@ -284,6 +287,10 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
             camera.videoZoomFactor = 1.0
             self.currentZoomFactor = 1.0
             camera.unlockForConfiguration()
+            
+            DispatchQueue.main.async {
+                self.checkUltraWideCameraAvailability()
+            }
         } catch {
             print("Error setting initial zoom: \(error.localizedDescription)")
         }
@@ -357,7 +364,8 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
                 try currentCamera?.lockForConfiguration()
                 defer { currentCamera?.unlockForConfiguration() }
                 
-                let zoomFactor = (currentCamera == ultraWideCamera) ? factor * 2 : factor
+                let zoomFactor: CGFloat = (currentCamera == ultraWideCamera) ? factor * 2 : factor
+                
                 currentCamera?.videoZoomFactor = zoomFactor
                 self.currentZoomFactor = factor
                 

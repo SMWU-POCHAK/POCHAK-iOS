@@ -15,7 +15,8 @@ protocol ZoomControlViewDelegate: AnyObject {
 class ZoomControlView: UIView {
     weak var delegate: ZoomControlViewDelegate?
     
-    private var zoomFactors: [CGFloat] = [0.5, 1.0, 2.0, 3.0]
+    private var zoomFactors: [CGFloat] = [1.0, 2.0, 3.0]
+    private var hasUltraWideCamera: Bool = false
     private var buttons: [UIButton] = []
     private var selectedZoomFactor: CGFloat = 1.0
     private var isExpanded: Bool = false
@@ -46,6 +47,33 @@ class ZoomControlView: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView()
+    }
+    
+    func setUltraWideCameraAvailability(_ available: Bool) {
+        if hasUltraWideCamera == available {
+            return
+        }
+        
+        hasUltraWideCamera = available
+        
+        if hasUltraWideCamera && !zoomFactors.contains(0.5) {
+            zoomFactors.insert(0.5, at: 0)
+        } else if !hasUltraWideCamera {
+            zoomFactors.removeAll { $0 < 1.0 }
+        }
+        
+        if !hasUltraWideCamera && selectedZoomFactor < 1.0 {
+            selectedZoomFactor = 1.0
+        }
+        
+        buttons.forEach { $0.removeFromSuperview() }
+        buttons.removeAll()
+        stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        
+        updateContainerWidth(expanded: false)
+        
+        setupButtons()
+        collapseView(animated: false)
     }
     
     private func setupView() {
@@ -205,15 +233,18 @@ class ZoomControlView: UIView {
     }
     
     private func findClosestZoomFactor(to factor: CGFloat) -> CGFloat {
-           switch factor {
-           case ..<zoomFactors[1]:
-               return zoomFactors[0]
-           case zoomFactors[1]..<zoomFactors[2]:
-               return zoomFactors[1]
-           case zoomFactors[2]..<zoomFactors[3]:
-               return zoomFactors[2]
-           default:
-               return zoomFactors[3]
-           }
-       }
+        guard zoomFactors.count > 1 else { return zoomFactors.first ?? 1.0 }
+        
+        if hasUltraWideCamera && factor < zoomFactors[1] {
+            return zoomFactors[0] // 0.5x
+        }
+        
+        for i in 1..<zoomFactors.count {
+            if factor < zoomFactors[i] {
+                return zoomFactors[i-1]
+            }
+        }
+        
+        return zoomFactors.last ?? 1.0
+    }
 }
