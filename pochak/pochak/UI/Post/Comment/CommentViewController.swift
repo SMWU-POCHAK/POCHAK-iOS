@@ -349,19 +349,9 @@ final class CommentViewController: UIViewController {
         self.initUI()
         
         self.titleLabel.text = (self.postOwnerHandle ?? "사용자") + " 님의 게시물 댓글"
-        // 키보드 내리기
-        commentTextField.endEditing(true)
-        
-        // 댓글 종류 초기화
-        self.isPostingChildComment = false
     }
     
     // MARK: - Functions
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-        self.commentTextField.endEditing(true)
-    }
     
     func loadCommentData() {
         print("postid: \(postId)")
