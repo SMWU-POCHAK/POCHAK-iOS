@@ -97,7 +97,7 @@ final class ReplyTableViewCell: UITableViewCell {
     @objc private func moveToOthersProfile(sender: UITapGestureRecognizer) {
         let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
         
-        guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
+        let otherUserProfileVC = OtherUserProfileViewController()
         otherUserProfileVC.receivedHandle = userHandleLabel.text
         print("post vc의 nav controller: \(self.postVC?.navigationController)")
         self.commentVC?.dismiss(animated: true)

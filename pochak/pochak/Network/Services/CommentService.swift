@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum CommentSortType: String {
+    case createDateAsc = "createdDate,asc"
+    case createDateDesc = "createdDate,desc"
+}
+
 struct CommentService {
     
     /// 게시글의 댓글을 조회합니다.
@@ -17,9 +22,10 @@ struct CommentService {
     static func getComments(
         postId: Int,
         page: Int,
+        sort: CommentSortType,
         completion: @escaping (_ succeed: CommentGetResponse?, _ failed: NetworkError?) -> Void) {
             
-            NetworkService.shared.request(CommentAPI.getComments(postId: postId, page: page)) { response in
+            NetworkService.shared.request(CommentAPI.getComments(postId: postId, request: CommentGetRequest(page: page, sort: sort.rawValue))) { response in
                 switch response {
                 case .success(let data):
                     completion(data, nil)
