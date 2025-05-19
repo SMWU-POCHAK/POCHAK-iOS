@@ -88,6 +88,7 @@
 		08867D672D106C4700FA6FD9 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 08867D662D106C4700FA6FD9 /* FirebaseMessaging */; };
 		0889D1382C5CB69F00206C86 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0889D1372C5CB69F00206C86 /* String+.swift */; };
 		088EB7B02D5A45DA0001A5E8 /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 088EB7AF2D5A45DA0001A5E8 /* Color.xcassets */; };
+		089A67A62DCA7E63007E8DD0 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089A67A52DCA7E63007E8DD0 /* CommentViewModel.swift */; };
 		089C75882A51728A003AAB94 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C757F2A517289003AAB94 /* Pretendard-Regular.ttf */; };
 		089C75892A51728A003AAB94 /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75802A517289003AAB94 /* Pretendard-Thin.ttf */; };
 		089C758A2A51728A003AAB94 /* Pretendard-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75812A517289003AAB94 /* Pretendard-Black.ttf */; };
@@ -411,6 +412,7 @@
 		08867D5B2D106A1F00FA6FD9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "/Users/suyeon/Desktop/Pochak/GoogleService-Info.plist"; sourceTree = "<absolute>"; };
 		0889D1372C5CB69F00206C86 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		088EB7AF2D5A45DA0001A5E8 /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
+		089A67A52DCA7E63007E8DD0 /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
 		089C757F2A517289003AAB94 /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.ttf"; sourceTree = "<group>"; };
 		089C75802A517289003AAB94 /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.ttf"; sourceTree = "<group>"; };
 		089C75812A517289003AAB94 /* Pretendard-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.ttf"; sourceTree = "<group>"; };
@@ -822,6 +824,7 @@
 			children = (
 				0822A07C2CA19A9A00F87E2C /* UICommentModel.swift */,
 				EA0107952A59556800A3AE85 /* CommentViewController.swift */,
+				089A67A52DCA7E63007E8DD0 /* CommentViewModel.swift */,
 				0823B0782A5D6DA40085002F /* cell */,
 			);
 			path = Comment;
@@ -1942,6 +1945,7 @@
 				EA817AB62B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				379A6A3E2B5FA07D0087FAAC /* NavigationController.swift in Sources */,
 				0822A0462CA197E700F87E2C /* CommentPostAPI.swift in Sources */,
+				089A67A62DCA7E63007E8DD0 /* CommentViewModel.swift in Sources */,
 				374E46372CAAC602008AE361 /* LogOutAPI.swift in Sources */,
 				3769D6D52B3C59F900294CD1 /* ProfilePostCollectionViewCell.swift in Sources */,
 				376EA12E2CAAAE6800FEFB63 /* ProfileRetrievalRequest.swift in Sources */,
