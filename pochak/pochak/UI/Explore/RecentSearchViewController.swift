@@ -57,6 +57,12 @@ final class RecentSearchViewController: UIViewController, UITextFieldDelegate {
         setupResultViewLayout()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
     // MARK: - Actions
     
     @objc func deleteAllTapped() {
