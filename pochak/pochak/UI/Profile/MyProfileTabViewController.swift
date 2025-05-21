@@ -126,7 +126,7 @@ final class MyProfileTabViewController: UIViewController {
     
     private let introLabel: UILabel = {
         let label = UILabel()
-        label.applyPochakFont(.body3)
+        label.applyPochakFont(.bodyMediumSmall)
         label.numberOfLines = 3
         label.textAlignment = .left
         return label
@@ -159,7 +159,7 @@ final class MyProfileTabViewController: UIViewController {
     
     private let postCountNumberLabel: UILabel = {
         let label = UILabel()
-        label.applyPochakFont(.body3)
+        label.applyPochakFont(.bodyMediumSmall)
         return label
     }()
     
@@ -181,7 +181,7 @@ final class MyProfileTabViewController: UIViewController {
     
     private let followerCountNumberLabel: UILabel = {
         let label = UILabel()
-        label.applyPochakFont(.body3)
+        label.applyPochakFont(.bodyMediumSmall)
         return label
     }()
     
@@ -203,7 +203,7 @@ final class MyProfileTabViewController: UIViewController {
     
     private let followingCountNumberLabel: UILabel = {
         let label = UILabel()
-        label.applyPochakFont(.body3)
+        label.applyPochakFont(.bodyMediumSmall)
         return label
     }()
     

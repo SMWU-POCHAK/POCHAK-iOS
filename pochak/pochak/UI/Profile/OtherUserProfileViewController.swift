@@ -128,7 +128,7 @@ final class OtherUserProfileViewController: UIViewController {
     
     private let introLabel: UILabel = {
         let label = UILabel()
-        label.applyPochakFont(.body3)
+        label.applyPochakFont(.bodyMediumSmall)
         label.numberOfLines = 3
         label.textAlignment = .left
         label.text = "hello"
@@ -162,7 +162,7 @@ final class OtherUserProfileViewController: UIViewController {
     
     private let postCountNumberLabel: UILabel = {
         let label = UILabel()
-        label.applyPochakFont(.body3)
+        label.applyPochakFont(.bodyMediumSmall)
         label.text = "100"
         return label
     }()
@@ -186,7 +186,7 @@ final class OtherUserProfileViewController: UIViewController {
     private let followerCountNumberLabel: UILabel = {
         let label = UILabel()
         label.text = "150"
-        label.applyPochakFont(.body3)
+        label.applyPochakFont(.bodyMediumSmall)
         return label
     }()
     
@@ -208,7 +208,7 @@ final class OtherUserProfileViewController: UIViewController {
     
     private let followingCountNumberLabel: UILabel = {
         let label = UILabel()
-        label.applyPochakFont(.body3)
+        label.applyPochakFont(.bodyMediumSmall)
         label.text = "200"
         return label
     }()
