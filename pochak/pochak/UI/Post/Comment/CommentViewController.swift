@@ -233,7 +233,6 @@ final class CommentViewController: UIViewController {
         
         viewModel.uploadCommentResponseDataDidChange = { [weak self] data in
             guard let self = self else { return }
-            print("=== 새 댓글 등록, 데이터 업데이트 ===")
             self.commentPageInfo.currentFetchingPage = 0
             self.commentPageInfo.isFetchingFirstPage = true
             self.viewModel.fetchCommentData(postId: postId!, page: 0, fromCurrentVC: self)
@@ -319,9 +318,6 @@ final class CommentViewController: UIViewController {
     
     // fetchedMoreComments는 0페이지 다음을 조회했는지 여부를 담은 bool 변수
     func setupData(_ data: CommentDataResult, fetchedMoreComments: Bool) {
-        print("[CommentVC] \(#function) - data.parentCommentList: \(data.parentCommentList)")
-        print("[CommentVC] \(#function) - parentAndChildCommentList: \(parentAndChildCommentList.count)")
-        print("[CommentVC] \(#function) - fetchedMoreComments: \(fetchedMoreComments)")
         // page = 0 조회했을 때 - 댓글입력창의 프로필 이미지 세팅, 지금껏 쌓아온 uiCommentList 모두 초기화해야 함
         if !fetchedMoreComments {
             self.profileImageUrl = data.loginMemberProfileImage
@@ -330,7 +326,7 @@ final class CommentViewController: UIViewController {
             self.uiCommentList.removeAll()
         }
         self.parentAndChildCommentList.append(contentsOf: data.parentCommentList)  // 데이터로 넘어온 부모 댓글(+자식댓글)리스트
-        print("[CommentVC] \(#function) - AFTER parentAndChildCommentList: \(parentAndChildCommentList.count)")
+        
         // 댓글 존재할 때만
         if self.parentAndChildCommentList.count != 0 {
             self.noComment = false
@@ -358,88 +354,13 @@ final class CommentViewController: UIViewController {
                 }
             }
         }
-        print("=== loading comment data ===")
-        print(self.uiCommentList)
         
-        print("=== init ui ===")
         self.initUI()
         
         self.titleLabel.text = (self.postOwnerHandle ?? "사용자") + " 님의 게시물 댓글"
     }
     
     // MARK: - Functions
-    
-//    func loadCommentData() {
-//        print("postid: \(postId)")
-//        
-//        CommentService.getComments(postId: postId ?? 0, page: 0, sort: .createDateAsc) { [weak self] data, failed in
-//            guard let data = data else {
-//                // 에러가 난 경우, alert 창 present
-//                switch failed {
-//                case .disconnected:
-//                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), 
-//                                  animated: true)
-//                default:
-//                    self?.present(UIAlertController.networkErrorAlert(title: "댓글 조회에 실패하였습니다."), animated: true)
-//                }
-//                return
-//            }
-//            
-//            print("=== CommentView, load comment data succeeded ===")
-//            print("== data: \(data)")
-//            
-//            if data.isSuccess == true {
-//                self?.parentAndChildCommentList = data.result.parentCommentList  // 데이터로 넘어온 부모 댓글(+자식댓글)리스트
-//                self?.profileImageUrl = data.result.loginMemberProfileImage
-//                self?.noComment = true
-//                self?.uiCommentList.removeAll()
-//                self?.childCommentPageInfo.removeAll()
-//                
-//                // 댓글 존재할 때만
-//                if(self?.parentAndChildCommentList?.count != 0) {
-//                    self?.noComment = false
-//                    // 부모 댓글 자체를 부모 댓글인지의 여부가 있는 UICommentData형으로 만들어서 추가
-//                    for parentData in self?.parentAndChildCommentList ?? [] {
-//                        self?.uiCommentList.append(UICommentData(commentId: parentData.commentId,
-//                                                                 profileImage: parentData.profileImage,
-//                                                                 handle: parentData.handle,
-//                                                                 createdDate: parentData.createdDate,
-//                                                                 content: parentData.content,
-//                                                                 isParent: true,
-//                                                                 parentId: nil))
-//                        // childCommentCntList[몇번째 부모] = 해당 부모의 자식 댓글 개수
-//                        self?.childCommentCntList.append(parentData.childCommentList.count)
-//                        
-//                        // 부모 댓글의 자식 댓글을 리스트에 추가
-//                        for childData in parentData.childCommentList {
-//                            self?.uiCommentList.append(UICommentData(commentId: childData.commentId,
-//                                                                     profileImage: childData.profileImage,
-//                                                                     handle: childData.handle,
-//                                                                     createdDate: childData.createdDate,
-//                                                                     content: childData.content,
-//                                                                     isParent: false,
-//                                                                     parentId: parentData.commentId))
-//                        }
-//                        
-//                        // 각 부모댓글의 자식댓글에 대한 page 정보 세팅
-//                        self?.childCommentPageInfo.append((CommentVCPageInfo(isLastPage: parentData.childCommentPageInfo.lastPage,
-//                                                                             currentFetchingPage: 0)))
-//                    }
-//                }
-//                print("=== loading comment data ===")
-//                print(self?.uiCommentList)
-//                
-//                print("=== init ui ===")
-//                self?.initUI()
-//                
-//                // title 내용 설정
-//                self?.titleLabel.text = (self?.postOwnerHandle ?? "사용자") + " 님의 게시물 댓글"
-//            }
-//            else {
-//                self?.present(UIAlertController.networkErrorAlert(title: "댓글 조회에 실패했습니다."), animated: true)
-//            }
-//        }
-//    }
     
     private func initUI() {
         if let url = URL(string: profileImageUrl) {
@@ -452,7 +373,6 @@ final class CommentViewController: UIViewController {
         else {
             noCommentView.isHidden = true
         }
-        print("[CommentVC] \(#function) - initUI, parentAndChildCOmmentLIst: \(self.parentAndChildCommentList)")
         self.tableView.reloadData()
         self.isCurrentlyFetching = false
     }
@@ -511,10 +431,7 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
         
-        var finalIndex = section + indexPath.row + childCommentsSoFar
-//        print("=== finalIndex: \(finalIndex)")
-//        print("=== 현재 셀에 그리는 데이터 ===")
-//        print(cellData[finalIndex])
+        let finalIndex = section + indexPath.row + childCommentsSoFar
         
         // 부모 댓글인 경우
         if cellData[finalIndex].isParent {
@@ -550,20 +467,15 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
         footerView.commentVC = self
         footerView.postId = self.postId
         
-        //if let cellData = self.parentAndChildCommentList {
-            // 현재 부모댓글의 자식 댓글들이 last page가 아니면 footer 추가
-            if !self.parentAndChildCommentList[section].childCommentPageInfo.lastPage {
-                //footerView.backgroundColor = .blue
-                footerView.curCommentId = self.parentAndChildCommentList[section].commentId
-                return footerView
-            }
-            else {
-                return UIView()
-            }
-//        }
-//        else {
-//            return UIView()
-//        }
+        // 현재 부모댓글의 자식 댓글들이 last page가 아니면 footer 추가
+        if !self.parentAndChildCommentList[section].childCommentPageInfo.lastPage {
+            //footerView.backgroundColor = .blue
+            footerView.curCommentId = self.parentAndChildCommentList[section].commentId
+            return footerView
+        }
+        else {
+            return UIView()
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -577,12 +489,9 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
     
     // 이상한 여백 제거?
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        if let cellData = self.parentAndChildCommentList {
-            // 자식 댓글이 마지막 페이지이면 여백 없애기
-            if self.parentAndChildCommentList[section].childCommentPageInfo.lastPage {
-                return .leastNonzeroMagnitude
-            }
-//        }
+        if self.parentAndChildCommentList[section].childCommentPageInfo.lastPage {
+            return .leastNonzeroMagnitude
+        }
         return UITableView.automaticDimension
     }
     
@@ -598,8 +507,6 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         if scrollView.contentOffset.y > (scrollView.contentSize.height - scrollView.frame.size.height) {
-            print()
-            print("[CommentVC] - \(#function) - 어느정도 스크롤하게 됨")
             if !commentPageInfo.isLastPage && !isCurrentlyFetching {
                 print("[!] CommentViewController - NEEDS TO RE-FETCH DATA")
                 self.commentPageInfo.currentFetchingPage += 1
