@@ -13,7 +13,7 @@ struct CommentGetResponse: Codable {
 }
 
 struct CommentDataResult: Codable {
-    let parentCommentPageInfo: ParentCommentPageInfo?
+    let parentCommentPageInfo: ParentCommentPageInfo
     var parentCommentList: [ParentCommentData]  // 대댓글을 추가로 페이징 조회했을 때 변경하기 위해서
     let loginMemberProfileImage: String
 }

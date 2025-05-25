@@ -146,17 +146,17 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
                     }
                 }
                 // 대댓글 마지막 페이지 bool값 갱신 -> footer 생성에 관여함
-                self.commentVC.parentAndChildCommentList?[section].childCommentPageInfo.lastPage = data.result.childCommentPageInfo.lastPage
+                self.commentVC.parentAndChildCommentList[section].childCommentPageInfo.lastPage = data.result.childCommentPageInfo.lastPage
                 
                 // 대댓글 리스트에 새로 받아온 대댓글 추가하기
                 print("===========================")
                 print(">> currentFetchingPage: \(currentFetchingPage)")
                 if currentFetchingPage == 0 {
-                    self.commentVC.parentAndChildCommentList?[section].childCommentList.removeAll()
+                    self.commentVC.parentAndChildCommentList[section].childCommentList.removeAll()
                     print(">> 현재 page = 0")
-                    print(self.commentVC.parentAndChildCommentList?[section].childCommentList)
+                    print(self.commentVC.parentAndChildCommentList[section].childCommentList)
                 }
-                self.commentVC.parentAndChildCommentList?[section].childCommentList.append(contentsOf: data.result.childCommentList)
+                self.commentVC.parentAndChildCommentList[section].childCommentList.append(contentsOf: data.result.childCommentList)
                 
                 // 여기서 다시 되길...
                 self.commentVC.toUICommentData()

@@ -41,7 +41,7 @@ final class CommentViewModel {
     ///   - page: 조회하고자 하는 댓글 리스트 페이지
     ///   - fromCurrentVC: 현재 요청을 보내는 뷰컨트롤러
     func fetchCommentData(postId: Int, page: Int, fromCurrentVC: UIViewController) {
-        CommentService.getComments(postId: postId, page: page) { [weak self] data, failed in
+        CommentService.getComments(postId: postId, page: page, sort: .createDateAsc) { [weak self] data, failed in
             guard let data = data else {
                 switch failed {
                 case .disconnected:
