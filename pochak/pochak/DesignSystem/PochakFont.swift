@@ -59,7 +59,7 @@ enum PochakFontConfig {
     
     var font: UIFont {
         switch self {
-        case .body0, .body3, .body3_1:
+        case .body0, .body3_1:
             return .Pretendard(size: size, family: .Bold)
         case .body4:
             return .Pretendard(size: size, family: .Medium)
@@ -75,7 +75,7 @@ enum PochakFontConfig {
             return .Pretendard(size: size, family: .Bold)
         case .bodySmall:
             return .Pretendard(size: size, family: .Medium)
-        case .bodyMediumSmall, .bodyExtraSmall:
+        case .body3, .bodyMediumSmall, .bodyExtraSmall:
             return .Pretendard(size: size, family: .Regular)
         case .captionLarge:
             return .Pretendard(size: size, family: .Bold)
@@ -93,7 +93,7 @@ enum PochakFontConfig {
         case .body0:
             return 24
         case .body3:
-            return 18
+            return 20
         case .body3_1:
             return 16.8
         case .body4:
