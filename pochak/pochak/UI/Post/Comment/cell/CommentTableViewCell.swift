@@ -153,7 +153,6 @@ final class CommentTableViewCell: UITableViewCell {
     }
     
     @objc private func deleteButtonDidTap() {
-        print(#function)
         // FIXME: 페이징 처리랑 같이...
         guard let commentVC = self.commentVC else { return }
         self.viewModel.deleteComment(postId: postId, commentId: commentId, fromCurrentVC: commentVC)
@@ -179,9 +178,11 @@ final class CommentTableViewCell: UITableViewCell {
     // MARK: - Functions
     
     private func bind() {
-        print(#function)
         self.viewModel.deleteCommentResponseDataDidChange = { [weak self] data in
             guard let self = self else { return }
+            self.commentVC?.commentPageInfo.currentFetchingPage = 0
+            self.commentVC?.commentPageInfo.currentFetchingPage = 0
+            self.commentVC?.commentPageInfo.isFetchingFirstPage = true
             self.commentVC?.viewModel.fetchCommentData(postId: postId, page: 0, fromCurrentVC: self.commentVC!)
         }
     }
