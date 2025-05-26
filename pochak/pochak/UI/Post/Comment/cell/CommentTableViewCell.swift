@@ -20,6 +20,8 @@ final class CommentTableViewCell: UITableViewCell {
     var taggedUserList: [String]?
     var postOwnerHandle: String?
     
+    var childCommentButtonDidTapClosure: (() -> Void)?
+    
     // comment view controller에서 받는 댓글 입력창
     var editingCommentTextField: UITextField!
     var tableView: UITableView!
@@ -130,6 +132,7 @@ final class CommentTableViewCell: UITableViewCell {
     
     @objc private func childCommentButtonDidTap(_ sender: UIButton) {
         // 부모 댓글을 단다는 것을 comment vc에 알려야 함
+        childCommentButtonDidTapClosure?()
         commentVC?.isPostingChildComment = true
         commentVC?.parentCommentId = self.commentId
         
@@ -137,17 +140,12 @@ final class CommentTableViewCell: UITableViewCell {
         // 답글을 다려는 셀을 맨 위로 이동
         tableView.scrollToRow(at: indexPath!, at: .top, animated: true)
         
-        // fade in, fade out 으로 색상 변경 
-        let oldColor = self.backgroundColor
-        UIView.animate(withDuration: 0.9, 
-                       animations: { self.backgroundColor = UIColor(named: "navy03") },
-                       completion: { _ in UIView.animate(withDuration: 0.5) { self.backgroundColor = oldColor } }
-        )
+        // 부모댓글 셀 색상 변경
+        self.contentView.backgroundColor = UIColor(hexCode: "FFF1D8")
         editingCommentTextField.becomeFirstResponder()
     }
     
     @objc private func deleteButtonDidTap() {
-        // FIXME: 페이징 처리랑 같이...
         guard let commentVC = self.commentVC else { return }
         self.viewModel.deleteComment(postId: postId, commentId: commentId, fromCurrentVC: commentVC)
     }

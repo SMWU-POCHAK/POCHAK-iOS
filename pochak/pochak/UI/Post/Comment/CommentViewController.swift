@@ -40,6 +40,7 @@ final class CommentViewController: UIViewController {
     private var noComment: Bool = true
     private var hasScrolled: Bool = false
     private var isCurrentlyFetching: Bool = false
+    private var selectedCommentCellIndexPath: IndexPath = .init(row: 0, section: 0)
     
     let viewModel = CommentViewModel()
     
@@ -156,7 +157,10 @@ final class CommentViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func tableViewDidTap() {
+        print("==== \(#function) ====")
+        self.isPostingChildComment = false  // 다른 곳을 터치해서 입력창을 내렸을 때 답글 달기 상태 취소
         self.textField.endEditing(true)
+        self.tableView.cellForRow(at: selectedCommentCellIndexPath)?.contentView.backgroundColor = .white
     }
     
     // 키보드 보여질 때
@@ -219,8 +223,11 @@ final class CommentViewController: UIViewController {
     // MARK: - Functions
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("======= \(#function) ========")
+        self.isPostingChildComment = false
         self.view.endEditing(true)
         self.textField.endEditing(true)
+        self.tableView.cellForRow(at: selectedCommentCellIndexPath)?.contentView.backgroundColor = .white
     }
     
     private func bind() {
@@ -444,6 +451,9 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
             cell.taggedUserList = self.taggedUserList
             cell.postOwnerHandle = self.postOwnerHandle
             cell.setupData(cellData[finalIndex])
+            cell.childCommentButtonDidTapClosure = { [weak self] in
+                self?.selectedCommentCellIndexPath = indexPath
+            }
             return cell
         }
         // 자식 댓글인 경우
