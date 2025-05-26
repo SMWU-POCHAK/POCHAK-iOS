@@ -70,24 +70,6 @@ final class ReplyTableViewCell: UITableViewCell {
     
     // MARK: - Actions
     
-//    @IBAction func postChildCmmtBtnDidTap(_ sender: UIButton) {
-//        // 현재 대댓글 등록 중임을 comment view controller에 알려야 함
-//        commentVC.isPostingChildComment = true
-//        commentVC.parentCommentId = self.parentCommentId
-//        
-//        let indexPath = tableView.indexPath(for: self)
-//        // 답글을 다려는 셀을 맨 위로 이동
-//        tableView.scrollToRow(at: indexPath!, at: .top, animated: true)
-//        
-//        // fade in, fade out 으로 색상 변경 
-//        let oldColor = self.backgroundColor
-//        UIView.animate(withDuration: 0.8, 
-//                       animations: { self.backgroundColor = UIColor(named: "navy03") },
-//                       completion: { _ in UIView.animate(withDuration: 0.5) { self.backgroundColor = oldColor }
-//        })
-//        editingCommentTextField.becomeFirstResponder()
-//    }
-    
     @objc private func moveToOthersProfile(sender: UITapGestureRecognizer) {
         let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
         
