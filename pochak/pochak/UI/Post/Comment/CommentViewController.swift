@@ -27,7 +27,11 @@ final class CommentViewController: UIViewController {
     weak var postVC: PostViewController?
     
     // 댓글 셀에서 받을 정보
-    var isPostingChildComment: Bool = false
+    var isPostingChildComment: Bool = false {
+        didSet {
+            configureCommentWritingStatusView()
+        }
+    }
     var parentCommentId: Int?
     
     var commentPageInfo: CommentVCPageInfo = .init(isLastPage: false, isFetchingFirstPage: true, currentFetchingPage: 0)  // 부모댓글 페이징 정보
@@ -41,6 +45,7 @@ final class CommentViewController: UIViewController {
     private var hasScrolled: Bool = false
     private var isCurrentlyFetching: Bool = false
     private var selectedCommentCellIndexPath: IndexPath = .init(row: 0, section: 0)
+    private let commentWritingStatusViewHeight: CGFloat = 21
     
     let viewModel = CommentViewModel()
     
@@ -172,6 +177,9 @@ final class CommentViewController: UIViewController {
         addTapGestureTableView()
         addKeyboardObserver()
         
+        commentWritingStatusView.isHidden = true
+        configureCommentWritingStatusView()
+        
         // 댓글 데이터 조회
         guard let postId = postId else { return }
         isCurrentlyFetching = true
@@ -222,6 +230,7 @@ final class CommentViewController: UIViewController {
     
     @objc private func stopChildCommentModeButtonDidTap() {
         print("[CommentVC] 답글 남기기 취소")
+        self.isPostingChildComment = false
     }
     
     @objc private func uploadCommentButtonDidTap() {
@@ -332,7 +341,7 @@ final class CommentViewController: UIViewController {
             make.bottom.equalToSuperview().inset(8)
             make.width.height.equalTo(40)
         }
-        // TODO: 입력창 뷰들 제약조건 설정하기
+        
         inputInnerView.snp.makeConstraints { make in
             make.leading.equalTo(userProfileImageView.snp.trailing).offset(9)
             make.trailing.equalToSuperview().inset(12)
@@ -341,6 +350,7 @@ final class CommentViewController: UIViewController {
         
         commentWritingStatusView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(commentWritingStatusViewHeight)
         }
         commentWritingStatusLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(12)
@@ -431,6 +441,13 @@ final class CommentViewController: UIViewController {
         self.initUI()
         
         self.titleLabel.text = (self.postOwnerHandle ?? "사용자") + " 님의 게시물 댓글"
+    }
+    
+    func configureCommentWritingStatusView() {
+        self.commentWritingStatusView.isHidden = !isPostingChildComment
+        self.commentWritingStatusView.snp.updateConstraints { make in
+            make.height.equalTo(isPostingChildComment ? commentWritingStatusViewHeight : 0)
+        }
     }
     
     // MARK: - Functions
