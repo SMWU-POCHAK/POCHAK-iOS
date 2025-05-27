@@ -25,6 +25,21 @@ struct ProfileRetrievalResult : Codable {
     var isFollow: Bool?
     var pageInfo : ProfilePageInfo
     var postList : [ProfilePostList]
+    var isBonded: Bool?
+    
+    enum CodingKeys: String, CodingKey {
+        case handle
+        case profileImage
+        case name
+        case message
+        case totalPostNum
+        case followerCount
+        case followingCount
+        case isFollow
+        case pageInfo
+        case postList
+        case isBonded = "isF4F"
+    }
 }
 
 struct ProfilePageInfo : Codable {

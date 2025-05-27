@@ -57,6 +57,12 @@ final class RecentSearchViewController: UIViewController, UITextFieldDelegate {
         setupResultViewLayout()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
     // MARK: - Actions
     
     @objc func deleteAllTapped() {
@@ -346,7 +352,7 @@ extension RecentSearchViewController: UITableViewDelegate, UITableViewDataSource
         loadRealm()
         
         let storyboard = UIStoryboard(name: "ProfileTab", bundle: nil)
-        let profileTabVC = storyboard.instantiateViewController(withIdentifier: "OtherUserProfileVC") as! OtherUserProfileViewController
+        let profileTabVC = OtherUserProfileViewController()
         
         profileTabVC.receivedHandle = handle
         self.navigationController?.pushViewController(profileTabVC, animated: true)

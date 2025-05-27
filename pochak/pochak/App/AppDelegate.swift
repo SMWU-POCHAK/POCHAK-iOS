@@ -150,25 +150,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Functions
     
     func fetchFCMToken() {
-        /// Firebase Meesaging delegate 설정
         Messaging.messaging().delegate = self
-        
-        /// FCM 발급받은 토큰 가져오기
-        Messaging.messaging().token { token, error in
-            if let error = error {
-                print("Error fetching FCM registration token: \(error)")
+        Messaging.messaging().token { [weak self] token, error in
+            if let token = token {
+                self?.sendFCMTokenToServer(token: token)
+            } else {
+                print("FCM 토큰 가져오기 오류: \(error?.localizedDescription ?? "Unknown error")")
             }
-            else if let token = token {
-                print("FCM registration token: \(token)")
-                PushNotificationService.postFCMToken(request: PushNotificationRequest(token: token)) { [weak self] data, failed in
-                    guard let data = data else {
-                        self?.handleError(failed!)
-                        return
-                    }
-                    print("=== AppDelegate, post fcm token succeeded ===")
-                    print("== data: \(data)")
-                }
+        }
+    }
+    
+    private func sendFCMTokenToServer(token: String) {
+        PushNotificationService.postFCMToken(request: PushNotificationRequest(token: token)) { data, failed in
+            guard let data = data else {
+                print("FCM 토큰 서버 전송 실패: \(failed!.localizedDescription)")
+                return
             }
+            print("=== FCM 토큰 서버 전송 성공 ===")
+            print("== data: \(data)")
         }
     }
     
@@ -214,28 +213,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 }
 
 // MARK: - Extension: MessagingDelegate (for Firebase Messaging)
-
 extension AppDelegate: MessagingDelegate {
-    
-    /// FCM토큰이 변경되었을 때를 감지, 새로운 토큰으로 갱신해서 저장
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        print("Firebase registration token did receive: \(String(describing: fcmToken))")
-
-        let dataDict: [String: String] = ["token": fcmToken ?? ""]
-        NotificationCenter.default.post(
-            name: Notification.Name("FCMToken"),
-            object: nil,
-            userInfo: dataDict
-        )
-        // TODO: If necessary send token to application server.
-        // Note: This callback is fired at each app startup and whenever a new token is generated.
-        PushNotificationService.postFCMToken(request: PushNotificationRequest(token: fcmToken ?? "")) { [weak self] data, failed in
-            guard let data = data else {
-                self?.handleError(failed!)
-                return
-            }
-            print("=== AppDelegate, post fcm token succeeded ===")
-            print("== data: \(data)")
+        if let fcmToken = fcmToken {
+            sendFCMTokenToServer(token: fcmToken)
         }
     }
 }

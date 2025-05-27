@@ -195,7 +195,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
 
         case .follow:
             let storyboard = UIStoryboard(name: "ProfileTab", bundle: nil)
-            guard let profileTabVC = storyboard.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
+            let profileTabVC = OtherUserProfileViewController()
             
             profileTabVC.receivedHandle = alarmList[indexPath.row].memberHandle
             self.navigationController?.pushViewController(profileTabVC, animated: true)
