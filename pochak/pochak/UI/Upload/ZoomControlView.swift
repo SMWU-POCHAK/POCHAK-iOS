@@ -15,7 +15,8 @@ protocol ZoomControlViewDelegate: AnyObject {
 class ZoomControlView: UIView {
     weak var delegate: ZoomControlViewDelegate?
     
-    private var zoomFactors: [CGFloat] = [0.5, 1.0, 2.0, 3.0]
+    private var zoomFactors: [CGFloat] = [1.0, 2.0, 3.0]
+    private var hasUltraWideCamera: Bool = false
     private var buttons: [UIButton] = []
     private var selectedZoomFactor: CGFloat = 1.0
     private var isExpanded: Bool = false
@@ -48,13 +49,41 @@ class ZoomControlView: UIView {
         setupView()
     }
     
+    func setUltraWideCameraAvailability(_ available: Bool) {
+        if hasUltraWideCamera == available {
+            return
+        }
+        
+        hasUltraWideCamera = available
+        
+        if hasUltraWideCamera && !zoomFactors.contains(0.5) {
+            zoomFactors.insert(0.5, at: 0)
+        } else if !hasUltraWideCamera {
+            zoomFactors.removeAll { $0 < 1.0 }
+        }
+        
+        if !hasUltraWideCamera && selectedZoomFactor < 1.0 {
+            selectedZoomFactor = 1.0
+        }
+        
+        buttons.forEach { $0.removeFromSuperview() }
+        buttons.removeAll()
+        stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        
+        updateContainerWidth(expanded: false)
+        
+        setupButtons()
+        collapseView(animated: false)
+    }
+    
     private func setupView() {
         addSubview(containerView)
         containerView.addSubview(stackView)
         
         containerView.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
-            make.width.height.equalTo(28)
+            make.height.equalTo(28)
+            make.width.equalTo(28)
         }
         
         stackView.snp.makeConstraints { make in
@@ -101,16 +130,31 @@ class ZoomControlView: UIView {
         }
     }
     
+    private func updateContainerWidth(expanded: Bool) {
+        let buttonWidth: CGFloat = 28
+        let spacing: CGFloat = 4
+        
+        let width: CGFloat
+        if expanded {
+            width = CGFloat(zoomFactors.count) * buttonWidth + CGFloat(zoomFactors.count - 1) * spacing
+        } else {
+            width = buttonWidth
+        }
+        
+        containerView.snp.updateConstraints { make in
+            make.width.equalTo(width)
+        }
+    }
+    
     private func expandView() {
         isExpanded = true
+        
+        updateContainerWidth(expanded: true)
+        
         UIView.animate(withDuration: 0.3, animations: {
             self.buttons.forEach { button in
                 button.isHidden = false
                 button.alpha = 1
-            }
-            
-            self.containerView.snp.updateConstraints { make in
-                make.width.equalTo(124)
             }
             self.layoutIfNeeded()
         })
@@ -118,6 +162,9 @@ class ZoomControlView: UIView {
     
     private func collapseView(animated: Bool = true) {
         isExpanded = false
+        
+        updateContainerWidth(expanded: false)
+        
         let animation = {
             self.buttons.forEach { button in
                 if let buttonTitle = button.title(for: .normal),
@@ -130,10 +177,6 @@ class ZoomControlView: UIView {
                         button.isHidden = true
                     }
                 }
-            }
-            
-            self.containerView.snp.updateConstraints { make in
-                make.width.height.equalTo(28)
             }
             self.layoutIfNeeded()
         }
@@ -205,15 +248,18 @@ class ZoomControlView: UIView {
     }
     
     private func findClosestZoomFactor(to factor: CGFloat) -> CGFloat {
-           switch factor {
-           case ..<zoomFactors[1]:
-               return zoomFactors[0]
-           case zoomFactors[1]..<zoomFactors[2]:
-               return zoomFactors[1]
-           case zoomFactors[2]..<zoomFactors[3]:
-               return zoomFactors[2]
-           default:
-               return zoomFactors[3]
-           }
-       }
+        guard zoomFactors.count > 1 else { return zoomFactors.first ?? 1.0 }
+        
+        if hasUltraWideCamera && factor < zoomFactors[1] {
+            return zoomFactors[0] // 0.5x
+        }
+        
+        for i in 1..<zoomFactors.count {
+            if factor < zoomFactors[i] {
+                return zoomFactors[i-1]
+            }
+        }
+        
+        return zoomFactors.last ?? 1.0
+    }
 }
