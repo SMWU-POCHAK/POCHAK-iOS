@@ -103,6 +103,35 @@ final class CommentViewController: UIViewController {
         return view
     }()
     
+    private let inputInnerView: UIView = {
+        let view = UIView()
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 15
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor(named: "gray03")?.cgColor
+        return view
+    }()
+    
+    private let commentWritingStatusView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(named: "yellow01")
+        return view
+    }()
+    
+    private let commentWritingStatusLabel: UILabel = {
+        let label = UILabel()
+        label.text = "@Float2_y님에게 답글 남기는 중"
+        label.font = .Pretendard(size: 10, family: .Regular)
+        return label
+    }()
+    
+    private let stopChildCommentModeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "ExtraSmallXIcon"), for: .normal)
+        button.addTarget(self, action: #selector(stopChildCommentModeButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+    
     private let textField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "이 게시물에 댓글을 달아보세요."
@@ -110,10 +139,6 @@ final class CommentViewController: UIViewController {
         tf.borderStyle = .none
         tf.contentHorizontalAlignment = .left
         tf.contentVerticalAlignment = .center
-        tf.rightViewMode = .always
-        tf.layer.cornerRadius = 15
-        tf.layer.borderWidth = 1.2
-        tf.layer.borderColor = UIColor(named: "gray03")?.cgColor
         tf.font = UIFont.Pretendard(size: 14, family: .Regular)
         return tf
     }()
@@ -144,7 +169,6 @@ final class CommentViewController: UIViewController {
         
         addViews()
         setupConstraints()
-        setupTextField()
         addTapGestureTableView()
         addKeyboardObserver()
         
@@ -194,6 +218,10 @@ final class CommentViewController: UIViewController {
             }
             self.view.layoutIfNeeded()
         }
+    }
+    
+    @objc private func stopChildCommentModeButtonDidTap() {
+        print("[CommentVC] 답글 남기기 취소")
     }
     
     @objc private func uploadCommentButtonDidTap() {
@@ -252,9 +280,15 @@ final class CommentViewController: UIViewController {
         view.addSubview(noCommentView)
         noCommentView.addSubview(noCommentImageView)
         noCommentView.addSubview(noCommentLabel)
+        
         view.addSubview(commentInputView)
         commentInputView.addSubview(userProfileImageView)
-        commentInputView.addSubview(textField)
+        commentInputView.addSubview(inputInnerView)
+        inputInnerView.addSubview(commentWritingStatusView)
+        inputInnerView.addSubview(textField)
+        inputInnerView.addSubview(uploadButton)
+        commentWritingStatusView.addSubview(commentWritingStatusLabel)
+        commentWritingStatusView.addSubview(stopChildCommentModeButton)
     }
     
     private func setupConstraints() {
@@ -280,6 +314,14 @@ final class CommentViewController: UIViewController {
             make.leading.trailing.equalToSuperview()
         }
         
+        // - commentInputView
+        // -- user profile image view
+        // -- inputInnerView
+        // --- commentwritingstatus view
+        // ---- comment writing status label
+        // ---- x button
+        // --- textfield
+        // --- upload button
         commentInputView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
             make.top.equalTo(tableView.snp.bottom)
@@ -287,19 +329,43 @@ final class CommentViewController: UIViewController {
         }
         userProfileImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(20)
-            make.top.bottom.equalToSuperview().inset(8)
+            make.bottom.equalToSuperview().inset(8)
             make.width.height.equalTo(40)
         }
-        textField.snp.makeConstraints { make in
+        // TODO: 입력창 뷰들 제약조건 설정하기
+        inputInnerView.snp.makeConstraints { make in
             make.leading.equalTo(userProfileImageView.snp.trailing).offset(9)
-            make.centerY.equalToSuperview()
             make.trailing.equalToSuperview().inset(12)
-            make.height.equalTo(36)
+            make.top.bottom.equalToSuperview().inset(10)
         }
-    }
-    
-    private func setupTextField() {
-        self.textField.rightView = uploadButton
+        
+        commentWritingStatusView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+        }
+        commentWritingStatusLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(12)
+            make.top.equalToSuperview().inset(5)
+            make.bottom.equalToSuperview().inset(4)
+        }
+        stopChildCommentModeButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(13)
+            make.centerY.equalTo(commentWritingStatusLabel.snp.centerY)
+        }
+        
+        textField.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(11)
+            make.bottom.equalToSuperview().inset(9)
+            make.height.equalTo(22)
+            make.trailing.equalTo(uploadButton.snp.leading).offset(-9)
+        }
+        uploadButton.snp.makeConstraints { make in
+            make.top.equalTo(commentWritingStatusView.snp.bottom).offset(7)
+            make.bottom.equalToSuperview().inset(7)
+            make.width.equalTo(36)
+            make.height.equalTo(24)
+            make.trailing.equalToSuperview().inset(7)
+        }
+        uploadButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     }
     
     private func addTapGestureTableView() {
