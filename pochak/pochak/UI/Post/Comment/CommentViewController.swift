@@ -231,6 +231,7 @@ final class CommentViewController: UIViewController {
     @objc private func stopChildCommentModeButtonDidTap() {
         print("[CommentVC] 답글 남기기 취소")
         self.isPostingChildComment = false
+        self.tableView.cellForRow(at: selectedCommentCellIndexPath)?.contentView.backgroundColor = .white
     }
     
     @objc private func uploadCommentButtonDidTap() {
@@ -255,6 +256,7 @@ final class CommentViewController: UIViewController {
 
         // 댓글 종류 초기화
         self.isPostingChildComment = false
+        self.tableView.cellForRow(at: selectedCommentCellIndexPath)?.contentView.backgroundColor = .white
     }
     
     // MARK: - Functions
