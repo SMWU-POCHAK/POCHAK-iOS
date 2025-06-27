@@ -32,6 +32,7 @@ final class CommentDeleteConfirmView: UIView {
                                                                                  NSAttributedString.Key.font: UIFont(name: "Pretendard-Bold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .bold)]))
         config.contentInsets = .zero
         button.configuration = config
+        button.isUserInteractionEnabled = true
         button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -50,6 +51,14 @@ final class CommentDeleteConfirmView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let view = super.hitTest(point, with: event)
+        print("💡 터치된 뷰: \(String(describing: view))")
+        print("버튼 인터랙션: \(cancelButton.isUserInteractionEnabled)")
+        print("버튼 enabled: \(cancelButton.isEnabled)")
+        return view
     }
     
     // MARK: - Layout
