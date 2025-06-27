@@ -47,6 +47,7 @@ final class CommentViewController: UIViewController {
     private var selectedCommentCellIndexPath: IndexPath = .init(row: 0, section: 0)
     private let commentWritingStatusViewHeight: CGFloat = 21
     
+    private var commentDeleteWorkItem: DispatchWorkItem?
     let viewModel = CommentViewModel()
     
     // MARK: - Views
@@ -163,6 +164,12 @@ final class CommentViewController: UIViewController {
         return button
     }()
     
+    private let commentDeleteConfirmView: CommentDeleteConfirmView = {
+        let view = CommentDeleteConfirmView()
+        view.isHidden = true
+        return view
+    }()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -176,6 +183,7 @@ final class CommentViewController: UIViewController {
         setupConstraints()
         addTapGestureTableView()
         addKeyboardObserver()
+        setCommentDeleteClosure()
         
         commentWritingStatusView.isHidden = true
         configureCommentWritingStatusView()
@@ -283,6 +291,14 @@ final class CommentViewController: UIViewController {
             self.commentPageInfo.isFetchingFirstPage = true
             self.viewModel.fetchCommentData(postId: postId!, page: 0, fromCurrentVC: self)
         }
+        
+        self.viewModel.deleteCommentResponseDataDidChange = { [weak self] data in
+            guard let self = self else { return }
+            self.commentPageInfo.currentFetchingPage = 0
+            self.commentPageInfo.currentFetchingPage = 0
+            self.commentPageInfo.isFetchingFirstPage = true
+            self.viewModel.fetchCommentData(postId: postId!, page: 0, fromCurrentVC: self)
+        }
     }
     
     private func addViews() {
@@ -300,6 +316,8 @@ final class CommentViewController: UIViewController {
         inputInnerView.addSubview(uploadButton)
         commentWritingStatusView.addSubview(commentWritingStatusLabel)
         commentWritingStatusView.addSubview(stopChildCommentModeButton)
+        
+        view.addSubview(commentDeleteConfirmView)
     }
     
     private func setupConstraints() {
@@ -378,6 +396,11 @@ final class CommentViewController: UIViewController {
             make.trailing.equalToSuperview().inset(7)
         }
         uploadButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        
+        commentDeleteConfirmView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.bottom.equalTo(commentInputView.snp.top).offset(-18)
+        }
     }
     
     private func addTapGestureTableView() {
@@ -399,6 +422,13 @@ final class CommentViewController: UIViewController {
             selector: #selector(keyboardWillHide),
             name: UIResponder.keyboardWillHideNotification,
             object: nil)
+    }
+    
+    private func setCommentDeleteClosure() {
+        commentDeleteConfirmView.cancelButtonAction = { [weak self] in
+            self?.commentDeleteWorkItem?.cancel()
+            self?.commentDeleteConfirmView.isHidden = true
+        }
     }
     
     // fetchedMoreComments는 0페이지 다음을 조회했는지 여부를 담은 bool 변수
@@ -535,6 +565,7 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
             cell.postId = self.postId
             cell.taggedUserList = self.taggedUserList
             cell.postOwnerHandle = self.postOwnerHandle
+            cell.delegate = self
             cell.setupData(cellData[finalIndex])
             cell.childCommentButtonDidTapClosure = { [weak self] in
                 self?.selectedCommentCellIndexPath = indexPath
@@ -610,5 +641,24 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
                 viewModel.fetchCommentData(postId: self.postId!, page: commentPageInfo.currentFetchingPage, fromCurrentVC: self)
             }
         }
+    }
+}
+
+// MARK: - Extension; CommentTableViewCellDelete Delegate
+
+extension CommentViewController: CommentTableViewCellDeleteDelegate {
+    
+    func didTapDeleteButton(postId: Int, commentId: Int) {
+        print("=== commentvc에서 위임받음 ===")
+        self.commentDeleteConfirmView.isHidden = false
+        
+        // 5초 후 실제로 댓글 삭제 & 컨펌 창 hidden 처리
+        commentDeleteWorkItem = DispatchWorkItem { [weak self] in
+            guard let self = self else { return }
+            self.commentDeleteConfirmView.isHidden = true
+            self.viewModel.deleteComment(postId: postId, commentId: commentId, fromCurrentVC: self)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: commentDeleteWorkItem!)
+        print("[CommentViewController] 5초 dispatch queue is set")
     }
 }
