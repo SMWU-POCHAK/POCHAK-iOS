@@ -114,9 +114,9 @@ final class ReplyTableViewCell: UITableViewCell {
         }
     }
     
-    func setupData(_ commentData: UICommentData) {
+    func setupData(data commentData: ChildCommentModel, parent parentId: Int) {
         // 부모 댓글 아이디 저장
-        parentCommentId = commentData.parentId
+        parentCommentId = parentId
         
         // 프로필 이미지
         if let url = URL(string: commentData.profileImage) {

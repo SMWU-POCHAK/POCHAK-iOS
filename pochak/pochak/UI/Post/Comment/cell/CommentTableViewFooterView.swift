@@ -17,7 +17,7 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
     var postId: Int!
     var curCommentId: Int!
     
-    private var currentFetchingPage: Int = 0
+//    private var currentFetchingPage: Int = 0
     
     // MARK: - Views
     
@@ -107,11 +107,12 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
     private func loadChildCommentData(_ section: Int) {
         print("=== load child comment data ===")
 //        currentFetchingPage += 1
-        var currentFetchingPage = self.commentVC.childCommentPageInfo[section].currentFetchingPage
+
+        var currentChildCommentFetchingPage = self.commentVC.commentModel.commentDataModelList[section].childCommentPageModel.currentFetchingPage
         print("=====================")
-        print("before getting child comment, page: \(currentFetchingPage)")
+        print("about to getting child comment, page: \(currentChildCommentFetchingPage)")
         print("=====================")
-        CommentService.getChildComments(postId: postId, commentId: curCommentId, page: currentFetchingPage) { [weak self] data, failed in
+        CommentService.getChildComments(postId: postId, commentId: curCommentId, page: currentChildCommentFetchingPage) { [weak self] data, failed in
             guard let data = data else {
                 // 에러가 난 경우, alert 창 present
                 switch failed {
@@ -129,34 +130,36 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
             print("== data: \(data)")
             
             if data.isSuccess == true {
-//                childCommentDataList = self.childCommentDataResponse?.result.childCommentList
-                
-//                data.result.childCommentList.map({ data in
-//                    self.childCommentDataList.append(data)
-//                })
-                
-                self.commentVC.childCommentCntList[section] += data.result.childCommentList.count
-                print("\(section)번째 부모의 자식 댓글 개수: \(self.commentVC.childCommentCntList[section])")
-                
                 // 제대로 된 자리에 대댓글 리스트를 삽입하기 위해서 지금까지 있는 대댓글 개수 세야 함
                 var childCommentsSoFar = 0
                 if(section != 0) {
                     for index in 0...section - 1 {
-                        childCommentsSoFar += self.commentVC.childCommentCntList[index]
+                        childCommentsSoFar += self.commentVC.commentModel.commentDataModelList[section].childCommentCnt
                     }
                 }
                 // 대댓글 마지막 페이지 bool값 갱신 -> footer 생성에 관여함
-                self.commentVC.parentAndChildCommentList[section].childCommentPageInfo.lastPage = data.result.childCommentPageInfo.lastPage
+                self.commentVC.commentModel.commentDataModelList[section].childCommentPageModel.isLastPage = data.result.childCommentPageInfo.lastPage
+                self.commentVC.commentModel.commentDataModelList[section].childCommentPageModel.currentFetchingPage += 1
                 
                 // 대댓글 리스트에 새로 받아온 대댓글 추가하기
                 print("===========================")
-                print(">> currentFetchingPage: \(currentFetchingPage)")
-                if currentFetchingPage == 0 {
-                    self.commentVC.parentAndChildCommentList[section].childCommentList.removeAll()
+//                print(">> currentFetchingPage: \(currentFetchingPage)")
+                // 1. 현재 0번째 페이지 가져왔을 경우 현재 자식 댓글 리스트를 removeAll, childCnt도 0으로 세팅한 후
+                if self.commentVC.commentModel.commentDataModelList[section].childCommentPageModel.currentFetchingPage - 1 == 0 {
+                    self.commentVC.commentModel.commentDataModelList[section].childCommentModelList.removeAll()
+                    self.commentVC.commentModel.commentDataModelList[section].childCommentCnt = 0
                     print(">> 현재 page = 0")
-                    print(self.commentVC.parentAndChildCommentList[section].childCommentList)
                 }
-                self.commentVC.parentAndChildCommentList[section].childCommentList.append(contentsOf: data.result.childCommentList)
+                self.commentVC.commentModel.commentDataModelList[section].childCommentCnt += data.result.childCommentList.count
+                print("\(section)번째 부모의 자식 댓글 개수: \(self.commentVC.commentModel.commentDataModelList[section].childCommentCnt)")
+                // 2. 지금 가져온 자식 댓글을 추가
+                self.commentVC.commentModel.commentDataModelList[section].childCommentModelList.append(contentsOf: data.result.childCommentList.map({ data in
+                    ChildCommentModel(commentId: data.commentId,
+                                      profileImage: data.profileImage,
+                                      handle: data.handle,
+                                      createdDate: data.createdDate,
+                                      content: data.content)
+                }))
                 
                 // 여기서 다시 되길...
                 self.commentVC.toUICommentData()
@@ -168,7 +171,6 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
             else {
                 self.commentVC.present(UIAlertController.networkErrorAlert(title: "대댓글 더 불러오기를 실패하였습니다."), animated: true)
             }
-            self.commentVC.childCommentPageInfo[section].currentFetchingPage += 1
         }
     }
 }

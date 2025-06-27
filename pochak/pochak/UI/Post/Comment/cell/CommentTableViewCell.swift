@@ -180,10 +180,10 @@ final class CommentTableViewCell: UITableViewCell {
     private func bind() {
         self.viewModel.deleteCommentResponseDataDidChange = { [weak self] data in
             guard let self = self else { return }
-            self.commentVC?.commentPageInfo.currentFetchingPage = 0
-            self.commentVC?.commentPageInfo.currentFetchingPage = 0
-            self.commentVC?.commentPageInfo.isFetchingFirstPage = true
-            self.commentVC?.viewModel.fetchCommentData(postId: postId, page: 0, fromCurrentVC: self.commentVC!)
+            guard let commentVC = self.commentVC else { return }
+            commentVC.commentModel.commentPageModel.currentFetchingPage = 0
+            commentVC.commentModel.commentPageModel.isFetchingFirstPage = true
+            commentVC.viewModel.fetchCommentData(postId: postId, page: 0, fromCurrentVC: self.commentVC!)
         }
     }
     
@@ -228,7 +228,7 @@ final class CommentTableViewCell: UITableViewCell {
         }
     }
     
-    func setupData(_ comment: UICommentData) {
+    func setupData(_ comment: CommentDataModel) {
         // 현재 댓글 아이디 저장
         self.commentId = comment.commentId
         

@@ -11,9 +11,9 @@ final class CommentViewModel {
     
     // MARK: - Properties
     
-    private var commentData: CommentDataResult? {
+    private var commentModel: CommentModel? {
         didSet {
-            commentDataDidChange?(commentData)
+            commentDataDidChange?(commentModel)
         }
     }
     
@@ -29,7 +29,7 @@ final class CommentViewModel {
         }
     }
     
-    var commentDataDidChange: ((CommentDataResult?) -> Void)?
+    var commentDataDidChange: ((CommentModel?) -> Void)?
     var uploadCommentResponseDataDidChange: ((CommentPostResponse?) -> Void)?
     var deleteCommentResponseDataDidChange: ((CommentDeleteResponse?) -> Void)?
     
@@ -62,7 +62,7 @@ final class CommentViewModel {
             print("=== [CommentViewModel] fetchCommentData succeeded ===")
             print("== data: \(data)")
             
-            self?.commentData = data.result
+            self?.commentModel = CommentGetResponse.convertCommentGetResponseToModel(data)
         }
     }
     
