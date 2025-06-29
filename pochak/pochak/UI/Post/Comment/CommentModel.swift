@@ -6,7 +6,7 @@
 //
 
 struct CommentModel {
-    let loginMemberProfileiimage: String
+    let loginMemberProfileImage: String
     var commentDataModelList: [CommentDataModel]
     var commentPageModel: PageModel
 }

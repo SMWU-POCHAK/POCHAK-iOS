@@ -77,7 +77,7 @@ extension CommentGetResponse {
             )
         }
 
-        return CommentModel(loginMemberProfileiimage: DTO.result.loginMemberProfileImage,
+        return CommentModel(loginMemberProfileImage: DTO.result.loginMemberProfileImage,
                             commentDataModelList: commentDataModelList,
                             commentPageModel: commentPageModel)
     }
