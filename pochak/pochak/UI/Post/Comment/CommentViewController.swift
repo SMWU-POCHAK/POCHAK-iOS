@@ -447,7 +447,7 @@ final class CommentViewController: UIViewController {
             
             // page = 0이 아닐 때
             else {
-                self.commentModel.commentPageModel = fetchedModel.commentPageModel
+                self.commentModel.commentPageModel.isLastPage = fetchedModel.commentPageModel.isLastPage
                 // 부모 댓글을 부모 댓글인지의 여부를 담는 변수가 있는 UICommentData형으로 만들어서 추가
                 for newCommentIndex in 0..<fetchedModel.commentDataModelList.count {
                     var parentData = fetchedModel.commentDataModelList[newCommentIndex]
@@ -481,7 +481,6 @@ final class CommentViewController: UIViewController {
     
     private func initUI() {
         if let url = URL(string: profileImageUrl) {
-            print("init UI --- profileImageURL: \(profileImageUrl)")
             userProfileImageView.load(with: url)
         }
         
@@ -592,10 +591,10 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         if scrollView.contentOffset.y > (scrollView.contentSize.height - scrollView.frame.size.height) {
+//            print(">>> isLastPage: \(self.commentModel.commentPageModel.isLastPage)")
+//            print(">>> isCurrentlyFetching: \(self.isCurrentlyFetching)")
             if !self.commentModel.commentPageModel.isLastPage && !isCurrentlyFetching {
                 print("[!] CommentViewController - NEEDS TO RE-FETCH DATA")
-                print(">>> isLastPage: \(self.commentModel.commentPageModel.isLastPage)")
-                print(">>> isCurrentlyFetching: \(self.isCurrentlyFetching)")
                 self.commentModel.commentPageModel.currentFetchingPage += 1
                 self.commentModel.commentPageModel.isFetchingFirstPage = false
                 self.isCurrentlyFetching = true
