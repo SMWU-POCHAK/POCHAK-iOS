@@ -14,7 +14,6 @@
 		081228CA2A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081228C82A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift */; };
 		081228CB2A699B5A00DFA094 /* LikedPeopleListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 081228C92A699B5A00DFA094 /* LikedPeopleListTableViewCell.xib */; };
 		0820B1902A63A18100604DA8 /* ReplyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0820B18E2A63A18100604DA8 /* ReplyTableViewCell.swift */; };
-		0820B1912A63A18100604DA8 /* ReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0820B18F2A63A18100604DA8 /* ReplyTableViewCell.xib */; };
 		08224C122CCFBDF8002DA825 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08224C112CCFBDF8002DA825 /* NotificationService.swift */; };
 		0822A02D2CA196DF00F87E2C /* PostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0822A0232CA196DF00F87E2C /* PostCollectionViewCell.swift */; };
 		0822A02E2CA196DF00F87E2C /* PostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0822A0242CA196DF00F87E2C /* PostCollectionViewCell.xib */; };
@@ -56,9 +55,7 @@
 		0822A0792CA1986000F87E2C /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0822A0752CA1986000F87E2C /* SearchService.swift */; };
 		0822A07A2CA1986000F87E2C /* ExploreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0822A0762CA1986000F87E2C /* ExploreService.swift */; };
 		0822A07B2CA1992B00F87E2C /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C9151B2C6461B10044A9A8 /* PostService.swift */; };
-		0822A07D2CA19A9A00F87E2C /* UICommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0822A07C2CA19A9A00F87E2C /* UICommentModel.swift */; };
 		0823B0742A5B0E780085002F /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823B0722A5B0E780085002F /* CommentTableViewCell.swift */; };
-		0823B0752A5B0E780085002F /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0823B0732A5B0E780085002F /* CommentTableViewCell.xib */; };
 		083249762C2956A000A77C03 /* CustomAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 083249752C2956A000A77C03 /* CustomAlertViewController.storyboard */; };
 		083249782C295E4000A77C03 /* CustomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083249772C295E4000A77C03 /* CustomAlertViewController.swift */; };
 		0844649C2BF0F25900949850 /* PostMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0844649B2BF0F25900949850 /* PostMenuViewController.swift */; };
@@ -71,6 +68,7 @@
 		084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */; };
 		084AF4C82A5D831100C6454A /* HomeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */; };
 		08524D262D201C4F006C87E1 /* PochakNotificationService.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 08224C0F2CCFBDF7002DA825 /* PochakNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		085AFD7A2E004B7200BA6077 /* CommentDeleteConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085AFD792E004B7200BA6077 /* CommentDeleteConfirmView.swift */; };
 		0861E0E62D2578C3009E70A0 /* HandleDuplicateCheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0861E0E52D2578C3009E70A0 /* HandleDuplicateCheckButton.swift */; };
 		0861E0E82D259365009E70A0 /* UIResponder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0861E0E72D259365009E70A0 /* UIResponder+.swift */; };
 		086BF1FA2CEC99D800735BB4 /* PushNotificationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF1F92CEC99D800735BB4 /* PushNotificationRequest.swift */; };
@@ -90,8 +88,8 @@
 		0889D1382C5CB69F00206C86 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0889D1372C5CB69F00206C86 /* String+.swift */; };
 		088DDFAA2D70D7AC003B0B35 /* FollowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088DDFA92D70D7AC003B0B35 /* FollowButton.swift */; };
 		088EB7B02D5A45DA0001A5E8 /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 088EB7AF2D5A45DA0001A5E8 /* Color.xcassets */; };
-		089A67A62DCA7E63007E8DD0 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089A67A52DCA7E63007E8DD0 /* CommentViewModel.swift */; };
 		0895CC172D7F233A00E18FE0 /* CommentGetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0895CC162D7F233A00E18FE0 /* CommentGetRequest.swift */; };
+		089A67A62DCA7E63007E8DD0 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089A67A52DCA7E63007E8DD0 /* CommentViewModel.swift */; };
 		089C75882A51728A003AAB94 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C757F2A517289003AAB94 /* Pretendard-Regular.ttf */; };
 		089C75892A51728A003AAB94 /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75802A517289003AAB94 /* Pretendard-Thin.ttf */; };
 		089C758A2A51728A003AAB94 /* Pretendard-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75812A517289003AAB94 /* Pretendard-Black.ttf */; };
@@ -102,7 +100,7 @@
 		089C75902A51728A003AAB94 /* Pretendard-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C75872A51728A003AAB94 /* Pretendard-ExtraLight.ttf */; };
 		089E27B72C4E8C2D00828F4C /* AlarmType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089E27B62C4E8C2D00828F4C /* AlarmType.swift */; };
 		089E27B92C4E8CB800828F4C /* AlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089E27B82C4E8CB800828F4C /* AlertType.swift */; };
-		08B679612B528CB600F8D585 /* CommentTableViewFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08B679602B528CB600F8D585 /* CommentTableViewFooterView.xib */; };
+		08AF9F502E0EADDE00143508 /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AF9F4F2E0EADDE00143508 /* CommentModel.swift */; };
 		08B679632B528D7500F8D585 /* CommentTableViewFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B679622B528D7500F8D585 /* CommentTableViewFooterView.swift */; };
 		08B693F22C37203400D82DC4 /* TaggedUsersDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B693F12C37203400D82DC4 /* TaggedUsersDetailViewController.swift */; };
 		08C02EEA2BF3798F00627C21 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C02EE82BF3798F00627C21 /* ReportViewController.swift */; };
@@ -343,7 +341,6 @@
 		081228C82A699B5A00DFA094 /* LikedPeopleListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedPeopleListTableViewCell.swift; sourceTree = "<group>"; };
 		081228C92A699B5A00DFA094 /* LikedPeopleListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LikedPeopleListTableViewCell.xib; sourceTree = "<group>"; };
 		0820B18E2A63A18100604DA8 /* ReplyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyTableViewCell.swift; sourceTree = "<group>"; };
-		0820B18F2A63A18100604DA8 /* ReplyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReplyTableViewCell.xib; sourceTree = "<group>"; };
 		08224C0F2CCFBDF7002DA825 /* PochakNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PochakNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		08224C112CCFBDF8002DA825 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		08224C132CCFBDF8002DA825 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -386,9 +383,7 @@
 		0822A0742CA1986000F87E2C /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		0822A0752CA1986000F87E2C /* SearchService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		0822A0762CA1986000F87E2C /* ExploreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreService.swift; sourceTree = "<group>"; };
-		0822A07C2CA19A9A00F87E2C /* UICommentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICommentModel.swift; sourceTree = "<group>"; };
 		0823B0722A5B0E780085002F /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
-		0823B0732A5B0E780085002F /* CommentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
 		082797312D5CDEC3002B1E1F /* PochakNotificationService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PochakNotificationService.entitlements; sourceTree = "<group>"; };
 		083249752C2956A000A77C03 /* CustomAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomAlertViewController.storyboard; sourceTree = "<group>"; };
 		083249772C295E4000A77C03 /* CustomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewController.swift; sourceTree = "<group>"; };
@@ -401,6 +396,7 @@
 		0844D7F22BF21A80001154AC /* CancelViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CancelViewCell.xib; sourceTree = "<group>"; };
 		084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCollectionViewCell.xib; sourceTree = "<group>"; };
+		085AFD792E004B7200BA6077 /* CommentDeleteConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDeleteConfirmView.swift; sourceTree = "<group>"; };
 		0861E0E52D2578C3009E70A0 /* HandleDuplicateCheckButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleDuplicateCheckButton.swift; sourceTree = "<group>"; };
 		0861E0E72D259365009E70A0 /* UIResponder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+.swift"; sourceTree = "<group>"; };
 		086BF1F92CEC99D800735BB4 /* PushNotificationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationRequest.swift; sourceTree = "<group>"; };
@@ -415,8 +411,8 @@
 		0889D1372C5CB69F00206C86 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		088DDFA92D70D7AC003B0B35 /* FollowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowButton.swift; sourceTree = "<group>"; };
 		088EB7AF2D5A45DA0001A5E8 /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
-		089A67A52DCA7E63007E8DD0 /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
 		0895CC162D7F233A00E18FE0 /* CommentGetRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentGetRequest.swift; sourceTree = "<group>"; };
+		089A67A52DCA7E63007E8DD0 /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
 		089C757F2A517289003AAB94 /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.ttf"; sourceTree = "<group>"; };
 		089C75802A517289003AAB94 /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.ttf"; sourceTree = "<group>"; };
 		089C75812A517289003AAB94 /* Pretendard-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.ttf"; sourceTree = "<group>"; };
@@ -428,7 +424,7 @@
 		089C75872A51728A003AAB94 /* Pretendard-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.ttf"; sourceTree = "<group>"; };
 		089E27B62C4E8C2D00828F4C /* AlarmType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmType.swift; sourceTree = "<group>"; };
 		089E27B82C4E8CB800828F4C /* AlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertType.swift; sourceTree = "<group>"; };
-		08B679602B528CB600F8D585 /* CommentTableViewFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableViewFooterView.xib; sourceTree = "<group>"; };
+		08AF9F4F2E0EADDE00143508 /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
 		08B679622B528D7500F8D585 /* CommentTableViewFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewFooterView.swift; sourceTree = "<group>"; };
 		08B693F12C37203400D82DC4 /* TaggedUsersDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggedUsersDetailViewController.swift; sourceTree = "<group>"; };
 		08C02EE82BF3798F00627C21 /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
@@ -825,10 +821,11 @@
 		0823B0772A5D6C290085002F /* Comment */ = {
 			isa = PBXGroup;
 			children = (
-				0822A07C2CA19A9A00F87E2C /* UICommentModel.swift */,
 				EA0107952A59556800A3AE85 /* CommentViewController.swift */,
 				089A67A52DCA7E63007E8DD0 /* CommentViewModel.swift */,
 				0823B0782A5D6DA40085002F /* cell */,
+				085AFD792E004B7200BA6077 /* CommentDeleteConfirmView.swift */,
+				08AF9F4F2E0EADDE00143508 /* CommentModel.swift */,
 			);
 			path = Comment;
 			sourceTree = "<group>";
@@ -836,11 +833,8 @@
 		0823B0782A5D6DA40085002F /* cell */ = {
 			isa = PBXGroup;
 			children = (
-				0823B0732A5B0E780085002F /* CommentTableViewCell.xib */,
 				0823B0722A5B0E780085002F /* CommentTableViewCell.swift */,
 				0820B18E2A63A18100604DA8 /* ReplyTableViewCell.swift */,
-				0820B18F2A63A18100604DA8 /* ReplyTableViewCell.xib */,
-				08B679602B528CB600F8D585 /* CommentTableViewFooterView.xib */,
 				08B679622B528D7500F8D585 /* CommentTableViewFooterView.swift */,
 			);
 			path = cell;
@@ -1735,7 +1729,6 @@
 				EA7EE1D92BF38921009486CC /* PochakAlarmTableViewCell.xib in Resources */,
 				0844D7F42BF21A80001154AC /* CancelViewCell.xib in Resources */,
 				089C758D2A51728A003AAB94 /* Pretendard-Bold.ttf in Resources */,
-				0820B1912A63A18100604DA8 /* ReplyTableViewCell.xib in Resources */,
 				089C758F2A51728A003AAB94 /* Pretendard-Light.ttf in Resources */,
 				37BBFDF12C2EB43D003D8DA5 /* Pretendard-ExtraBold.ttf in Resources */,
 				081228CB2A699B5A00DFA094 /* LikedPeopleListTableViewCell.xib in Resources */,
@@ -1763,12 +1756,10 @@
 				0844D7EC2BF218A5001154AC /* ReportViewCell.xib in Resources */,
 				EA1B0B642A49D23B00F86FBC /* Assets.xcassets in Resources */,
 				08EB99B82C53EA8500FAC08A /* TaggedUsersTableViewCell.xib in Resources */,
-				0823B0752A5B0E780085002F /* CommentTableViewCell.xib in Resources */,
 				089C758A2A51728A003AAB94 /* Pretendard-Black.ttf in Resources */,
 				084AF4C82A5D831100C6454A /* HomeCollectionViewCell.xib in Resources */,
 				089C758C2A51728A003AAB94 /* Pretendard-Medium.ttf in Resources */,
 				089C75902A51728A003AAB94 /* Pretendard-ExtraLight.ttf in Resources */,
-				08B679612B528CB600F8D585 /* CommentTableViewFooterView.xib in Resources */,
 				EABD20662A6CF5CC007543E9 /* TagCollectionViewCell.xib in Resources */,
 				08867D5C2D106A1F00FA6FD9 /* GoogleService-Info.plist in Resources */,
 				089C758B2A51728A003AAB94 /* Pretendard-SemiBold.ttf in Resources */,
@@ -1903,6 +1894,7 @@
 				3759CF2F2CAAE42600408A4E /* DeleteFollowerAPI.swift in Sources */,
 				EA96D04C2C8F10C700D80562 /* TagPreviewResponse.swift in Sources */,
 				0822A06B2CA1983C00F87E2C /* ChildCommentGetResponse.swift in Sources */,
+				08AF9F502E0EADDE00143508 /* CommentModel.swift in Sources */,
 				0822A0352CA196DF00F87E2C /* ExploreTabViewController.swift in Sources */,
 				37D311E52B567AE000A1D7C1 /* OtherUserProfileViewController.swift in Sources */,
 				0822A0452CA197E700F87E2C /* ChildCommentGetAPI.swift in Sources */,
@@ -1995,6 +1987,7 @@
 				374E46302CAAC3F6008AE361 /* SignOutResponse.swift in Sources */,
 				EA4EF8D82C2EC5F7009549FF /* UITextField+.swift in Sources */,
 				EAF918512AA468670037C270 /* APIConstants.swift in Sources */,
+				085AFD7A2E004B7200BA6077 /* CommentDeleteConfirmView.swift in Sources */,
 				46D5E3562D2287AE0096F7B4 /* MemoriesService.swift in Sources */,
 				0822A0322CA196DF00F87E2C /* RecentSearchModel.swift in Sources */,
 				0822A06D2CA1983C00F87E2C /* CommentPostRequest.swift in Sources */,
@@ -2044,7 +2037,6 @@
 				371D337A2B4E8D1F0084FF6A /* KeychainManager.swift in Sources */,
 				37EED7A12D07094F00254471 /* HandleDuplicationType.swift in Sources */,
 				EAF918542AA4692E0037C270 /* NetworkResult.swift in Sources */,
-				0822A07D2CA19A9A00F87E2C /* UICommentModel.swift in Sources */,
 				3759CF3F2CAB145500408A4E /* CheckDuplicateHandleAPI.swift in Sources */,
 				374E462B2CAABF7B008AE361 /* ProfileUpdateRequest.swift in Sources */,
 				EA7E146D2C8EA119001DA769 /* AlarmListResponse.swift in Sources */,
