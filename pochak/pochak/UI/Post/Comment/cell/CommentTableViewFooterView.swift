@@ -161,12 +161,7 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
                                       content: data.content)
                 }))
                 
-                // 여기서 다시 되길...
-//                self.commentVC.toUICommentData()
-                
                 self.commentVC.tableView.reloadSections(IndexSet(integer: section), with: .automatic)
-//                print("==uicommentlist==")
-//                print(self.commentVC.uiCommentList)
             }
             else {
                 self.commentVC.present(UIAlertController.networkErrorAlert(title: "대댓글 더 불러오기를 실패하였습니다."), animated: true)

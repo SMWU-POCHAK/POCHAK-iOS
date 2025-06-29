@@ -153,14 +153,9 @@ final class CommentTableViewCell: UITableViewCell {
     @objc private func deleteButtonDidTap() {
         print("[CommmentTableVIewCell] deleteButtonDidTap")
         delegate?.didTapDeleteButton(postId: postId, commentId: commentId)
-//        guard let commentVC = self.commentVC else { return }
-//        // TODO: 여기서 바로 delete하지 않고 commentvc에게 알리고 commentvc에서 삭제 처리하기 (삭제 컨펌뷰 보여주고)
-//        self.viewModel.deleteComment(postId: postId, commentId: commentId, fromCurrentVC: commentVC)
     }
     
-    @objc private func moveToOthersProfile(sender: UITapGestureRecognizer) {
-        let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
-        
+    @objc private func moveToOthersProfile(sender: UITapGestureRecognizer) {        
         let otherUserProfileVC = OtherUserProfileViewController()
         
         // 댓글 작성자가 현재 유저라면
