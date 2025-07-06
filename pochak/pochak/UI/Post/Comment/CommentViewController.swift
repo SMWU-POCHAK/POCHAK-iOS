@@ -197,7 +197,6 @@ final class CommentViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func tableViewDidTap() {
-        print("==== \(#function) ====")
         self.isPostingChildComment = false  // 다른 곳을 터치해서 입력창을 내렸을 때 답글 달기 상태 취소
         self.textField.endEditing(true)
         self.tableView.cellForRow(at: selectedCommentCellIndexPath)?.contentView.backgroundColor = .white
@@ -224,7 +223,6 @@ final class CommentViewController: UIViewController {
         }
     }
     
-    // 키보드 숨겨질 때 -> 원래 상태로
     @objc private func keyboardWillHide(_ notification: NSNotification) {
         let animationDuration = notification.userInfo![ UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
 
@@ -237,7 +235,6 @@ final class CommentViewController: UIViewController {
     }
     
     @objc private func stopChildCommentModeButtonDidTap() {
-        print("[CommentVC] 답글 남기기 취소")
         self.isPostingChildComment = false
         self.tableView.cellForRow(at: selectedCommentCellIndexPath)?.contentView.backgroundColor = .white
     }
@@ -245,9 +242,6 @@ final class CommentViewController: UIViewController {
     @objc private func uploadCommentButtonDidTap() {
         let commentContent = textField.text ?? ""
         guard let postId = postId else { return }
-
-        // 대댓글인지 댓글인지 확인해야 함
-        print(commentContent)
 
         if commentContent != "" {
             viewModel.uploadNewComment(postId: postId, content: commentContent, parentCommentId: self.isPostingChildComment ? self.parentCommentId : nil, fromCurrentVC: self)
@@ -270,7 +264,6 @@ final class CommentViewController: UIViewController {
     // MARK: - Functions
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("======= \(#function) ========")
         self.isPostingChildComment = false
         self.view.endEditing(true)
         self.textField.endEditing(true)
@@ -591,8 +584,6 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         if scrollView.contentOffset.y > (scrollView.contentSize.height - scrollView.frame.size.height) {
-//            print(">>> isLastPage: \(self.commentModel.commentPageModel.isLastPage)")
-//            print(">>> isCurrentlyFetching: \(self.isCurrentlyFetching)")
             if !self.commentModel.commentPageModel.isLastPage && !isCurrentlyFetching {
                 print("[!] CommentViewController - NEEDS TO RE-FETCH DATA")
                 self.commentModel.commentPageModel.currentFetchingPage += 1
@@ -609,7 +600,6 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
 extension CommentViewController: CommentTableViewCellDeleteDelegate {
     
     func didTapDeleteButton(postId: Int, commentId: Int) {
-        print("=== commentvc에서 위임받음 ===")
         self.commentDeleteConfirmView.isHidden = false
         
         // 5초 후 실제로 댓글 삭제 & 컨펌 창 hidden 처리

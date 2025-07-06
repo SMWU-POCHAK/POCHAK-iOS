@@ -53,14 +53,6 @@ final class CommentDeleteConfirmView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        let view = super.hitTest(point, with: event)
-        print("💡 터치된 뷰: \(String(describing: view))")
-        print("버튼 인터랙션: \(cancelButton.isUserInteractionEnabled)")
-        print("버튼 enabled: \(cancelButton.isEnabled)")
-        return view
-    }
-    
     // MARK: - Layout
     
     private func setupView() {
@@ -90,7 +82,6 @@ final class CommentDeleteConfirmView: UIView {
     // MARK: - Actions
     
     @objc private func cancelButtonTapped() {
-        print("\(#function) -- 삭제 취소")
         cancelButtonAction?()
     }
 }

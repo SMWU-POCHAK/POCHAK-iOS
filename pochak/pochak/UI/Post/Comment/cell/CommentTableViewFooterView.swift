@@ -16,9 +16,7 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
     var commentVC: CommentViewController!
     var postId: Int!
     var curCommentId: Int!
-    
-//    private var currentFetchingPage: Int = 0
-    
+        
     // MARK: - Views
     
     /*
@@ -69,7 +67,6 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
     // MARK: - Actions
     
     @objc private func getChildCommentsButtonDidTap(_ sender: UIButton) {
-        print("---대댓글 보기 버튼 눌림---")
         // 이 액션 함수를 호출한 버튼이 테이블 뷰의 어디에 위치했는지 알아내기
         let point = sender.convert(CGPoint.zero, to: commentVC.tableView) // sender의 좌표계 상의 점을 테이블뷰의 bounds로 변환한 것
         
@@ -143,7 +140,6 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
                 
                 // 대댓글 리스트에 새로 받아온 대댓글 추가하기
                 print("===========================")
-//                print(">> currentFetchingPage: \(currentFetchingPage)")
                 // 1. 현재 0번째 페이지 가져왔을 경우 현재 자식 댓글 리스트를 removeAll, childCnt도 0으로 세팅한 후
                 if self.commentVC.commentModel.commentDataModelList[section].childCommentPageModel.currentFetchingPage - 1 == 0 {
                     self.commentVC.commentModel.commentDataModelList[section].childCommentModelList.removeAll()
