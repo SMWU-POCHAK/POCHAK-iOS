@@ -13,7 +13,6 @@ final class ReplyTableViewCell: UITableViewCell {
     
     static let identifier = "ReplyTableViewCell"
     
-    private let loggedinUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
     var parentCommentId: Int!
     
     // comment view controller에서 받는 댓글 입력창

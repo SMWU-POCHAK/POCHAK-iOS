@@ -19,14 +19,6 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
         
     // MARK: - Views
     
-    /*
-     // Only override draw() if you perform custom drawing.
-     // An empty implementation adversely affects performance during animation.
-     override func draw(_ rect: CGRect) {
-     // Drawing code
-     }
-     */
-    
     private let lineView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: "gray05")
@@ -73,7 +65,6 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
         // point를 가지고 테이블뷰의 indexPath를 찾기, 찾지 못하면 바로 리턴
         guard let indexPath = commentVC.tableView.indexPathForRow(at: point) else { return } // 매개변수로 받은 point와 연관된 행 및 섹션을 나타내는 indexPath를 반환,point가 테이블뷰의 bounds의 범위에서 벗어난다면 nil
 
-        //tableView.deleteRows(at: [indexPath], with: .automatic) //4
         print("더 보려는 댓글의 섹션: \(indexPath.section)")
         loadChildCommentData(indexPath.section)
         print("---대댓글 보기 버튼 삭제---")
@@ -103,7 +94,6 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
     // section은 대댓글을 조회하고자 하는 댓글의 섹션 번호
     private func loadChildCommentData(_ section: Int) {
         print("=== load child comment data ===")
-//        currentFetchingPage += 1
 
         var currentChildCommentFetchingPage = self.commentVC.commentModel.commentDataModelList[section].childCommentPageModel.currentFetchingPage
         print("=====================")

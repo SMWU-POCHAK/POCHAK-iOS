@@ -348,7 +348,6 @@ final class CommentViewController: UIViewController {
         // --- upload button
         commentInputView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
-//            make.top.equalTo(tableView.snp.bottom)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
         userProfileImageView.snp.makeConstraints { make in
@@ -406,13 +405,13 @@ final class CommentViewController: UIViewController {
     
     /// 키보드 관련된 이벤트 등록
     private func addKeyboardObserver() {
-        NotificationCenter.default.addObserver(  // 키보드 보여질 때
+        NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillShow),
             name: UIResponder.keyboardWillShowNotification,
             object: nil)
         
-        NotificationCenter.default.addObserver(  // 키보드 숨겨질 때
+        NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillHide),
             name: UIResponder.keyboardWillHideNotification,
