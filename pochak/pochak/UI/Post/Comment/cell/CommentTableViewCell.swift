@@ -25,13 +25,13 @@ final class CommentTableViewCell: UITableViewCell {
     var taggedUserList: [String]?
     var postOwnerHandle: String?
     
-    var childCommentButtonDidTapClosure: (() -> Void)?
+    private var commentUserHandle: String?
+    
+    var childCommentButtonDidTapClosure: ((String, Int) -> Void)?
     
     // comment view controller에서 받는 댓글 입력창
     var editingCommentTextField: UITextField!
     var tableView: UITableView!
-    
-    let seeChildCommentBtn = UIButton()
     
     private let viewModel = CommentViewModel()
     private let currentUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
@@ -137,9 +137,7 @@ final class CommentTableViewCell: UITableViewCell {
     
     @objc private func childCommentButtonDidTap(_ sender: UIButton) {
         // 부모 댓글을 단다는 것을 comment vc에 알려야 함
-        childCommentButtonDidTapClosure?()
-        commentVC?.isPostingChildComment = true
-        commentVC?.parentCommentId = self.commentId
+        childCommentButtonDidTapClosure?(self.commentUserHandle!, self.commentId)
         
         let indexPath = tableView.indexPath(for: self)
         // 답글을 다려는 셀을 맨 위로 이동
@@ -226,6 +224,7 @@ final class CommentTableViewCell: UITableViewCell {
     func setupData(_ comment: CommentDataModel) {
         // 현재 댓글 아이디 저장
         self.commentId = comment.commentId
+        self.commentUserHandle = comment.handle
         
         // 프로필 이미지
         if let url = URL(string: comment.profileImage) {

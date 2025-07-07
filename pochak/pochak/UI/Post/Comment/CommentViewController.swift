@@ -518,8 +518,11 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
             cell.postOwnerHandle = self.postOwnerHandle
             cell.delegate = self
             cell.setupData(self.commentModel.commentDataModelList[section])
-            cell.childCommentButtonDidTapClosure = { [weak self] in
+            cell.childCommentButtonDidTapClosure = { [weak self] (commentUserHandle, commentId) in
                 self?.selectedCommentCellIndexPath = indexPath
+                self?.isPostingChildComment = true
+                self?.parentCommentId = commentId
+                self?.commentWritingStatusLabel.text = "@\(commentUserHandle)님에게 답글 남기는 중"
             }
             return cell
         }
