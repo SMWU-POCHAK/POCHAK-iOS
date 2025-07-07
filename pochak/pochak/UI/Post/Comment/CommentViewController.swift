@@ -270,6 +270,12 @@ final class CommentViewController: UIViewController {
         self.tableView.cellForRow(at: selectedCommentCellIndexPath)?.contentView.backgroundColor = .white
     }
     
+    /// 댓글 조회를 page=0부터 다시하는 경우
+    private func initializeCommentPageStatus() {
+        self.commentModel.commentPageModel.currentFetchingPage = 0
+        self.commentModel.commentPageModel.isFetchingFirstPage = true
+    }
+    
     private func bind() {
         viewModel.commentDataDidChange = { [weak self] data in
             guard let data = data else { return }
@@ -279,15 +285,13 @@ final class CommentViewController: UIViewController {
         
         viewModel.uploadCommentResponseDataDidChange = { [weak self] data in
             guard let self = self else { return }
-            self.commentModel.commentPageModel.currentFetchingPage = 0
-            self.commentModel.commentPageModel.isFetchingFirstPage = true
+            self.initializeCommentPageStatus()
             self.viewModel.fetchCommentData(postId: postId!, page: 0, fromCurrentVC: self)
         }
         
         viewModel.deleteCommentResponseDataDidChange = { [weak self] data in
             guard let self = self else { return }
-            self.commentModel.commentPageModel.currentFetchingPage = 0
-            self.commentModel.commentPageModel.isFetchingFirstPage = true
+            self.initializeCommentPageStatus()
             self.viewModel.fetchCommentData(postId: postId!, page: 0, fromCurrentVC: self)
         }
     }
