@@ -202,7 +202,6 @@ final class CommentViewController: UIViewController {
         self.tableView.cellForRow(at: selectedCommentCellIndexPath)?.contentView.backgroundColor = .white
     }
     
-    // 키보드 보여질 때
     @objc private func keyboardWillShow(_ notification: Notification) {
         guard let userInfo = notification.userInfo as NSDictionary?,
               let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
@@ -336,6 +335,7 @@ final class CommentViewController: UIViewController {
         tableView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(commentInputView.snp.top)
         }
         
         // - commentInputView
@@ -348,7 +348,7 @@ final class CommentViewController: UIViewController {
         // --- upload button
         commentInputView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
-            make.top.equalTo(tableView.snp.bottom)
+//            make.top.equalTo(tableView.snp.bottom)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
         userProfileImageView.snp.makeConstraints { make in
