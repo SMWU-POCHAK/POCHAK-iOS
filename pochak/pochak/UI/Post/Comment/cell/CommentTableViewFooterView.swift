@@ -51,8 +51,11 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
     // section은 대댓글을 조회하고자 하는 댓글의 섹션 번호
     private func loadChildCommentData(_ section: Int) {
         print("=== load child comment data ===")
-        currentFetchingPage += 1
-        
+//        currentFetchingPage += 1
+        var currentFetchingPage = self.commentVC.childCommentPageInfo[section].currentFetchingPage
+        print("=====================")
+        print("before getting child comment, page: \(currentFetchingPage)")
+        print("=====================")
         CommentService.getChildComments(postId: postId, commentId: curCommentId, page: currentFetchingPage) { [weak self] data, failed in
             guard let data = data else {
                 // 에러가 난 경우, alert 창 present
@@ -65,6 +68,8 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
                 return
             }
             
+            guard let self = self else { return }
+            
             print("=== CommentTableViewFooterView, loadChildCommentData succeeded ===")
             print("== data: \(data)")
             
@@ -75,32 +80,40 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
 //                    self.childCommentDataList.append(data)
 //                })
                 
-                self?.commentVC.childCommentCntList[section] += data.result.childCommentList.count
-                print("\(section)번째 부모의 자식 댓글 개수: \(self?.commentVC.childCommentCntList[section])")
+                self.commentVC.childCommentCntList[section] += data.result.childCommentList.count
+                print("\(section)번째 부모의 자식 댓글 개수: \(self.commentVC.childCommentCntList[section])")
                 
                 // 제대로 된 자리에 대댓글 리스트를 삽입하기 위해서 지금까지 있는 대댓글 개수 세야 함
                 var childCommentsSoFar = 0
                 if(section != 0) {
                     for index in 0...section - 1 {
-                        childCommentsSoFar += self!.commentVC.childCommentCntList[index]
+                        childCommentsSoFar += self.commentVC.childCommentCntList[index]
                     }
                 }
                 // 대댓글 마지막 페이지 bool값 갱신 -> footer 생성에 관여함
-                self?.commentVC.parentAndChildCommentList?[section].childCommentPageInfo.lastPage =                 data.result.childCommentPageInfo.lastPage
+                self.commentVC.parentAndChildCommentList?[section].childCommentPageInfo.lastPage = data.result.childCommentPageInfo.lastPage
                 
                 // 대댓글 리스트에 새로 받아온 대댓글 추가하기
-                self?.commentVC.parentAndChildCommentList?[section].childCommentList.append(contentsOf: data.result.childCommentList)
+                print("===========================")
+                print(">> currentFetchingPage: \(currentFetchingPage)")
+                if currentFetchingPage == 0 {
+                    self.commentVC.parentAndChildCommentList?[section].childCommentList.removeAll()
+                    print(">> 현재 page = 0")
+                    print(self.commentVC.parentAndChildCommentList?[section].childCommentList)
+                }
+                self.commentVC.parentAndChildCommentList?[section].childCommentList.append(contentsOf: data.result.childCommentList)
                 
                 // 여기서 다시 되길...
-                self?.commentVC.toUICommentData()
+                self.commentVC.toUICommentData()
                 
-                self?.commentVC.tableView.reloadSections(IndexSet(integer: section), with: .fade)
+                self.commentVC.tableView.reloadSections(IndexSet(integer: section), with: .automatic)
                 print("==uicommentlist==")
-                print(self?.commentVC.uiCommentList)
+                print(self.commentVC.uiCommentList)
             }
             else {
-                self?.commentVC.present(UIAlertController.networkErrorAlert(title: "대댓글 더 불러오기를 실패하였습니다."), animated: true)
+                self.commentVC.present(UIAlertController.networkErrorAlert(title: "대댓글 더 불러오기를 실패하였습니다."), animated: true)
             }
+            self.commentVC.childCommentPageInfo[section].currentFetchingPage += 1
         }
     }
 }

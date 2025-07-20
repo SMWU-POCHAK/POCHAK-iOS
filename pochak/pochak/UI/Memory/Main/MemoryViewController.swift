@@ -40,8 +40,7 @@ class MemoryViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = false
-        self.navigationController?.hidesBarsOnSwipe = false
+        self.navigationController?.navigationBar.backgroundColor = .clear
     }
     
     override func viewDidLoad() {
@@ -52,6 +51,11 @@ class MemoryViewController: UIViewController {
         pochakMomentsView.delegate = self
         setupBindings()
         viewModel.loadMemoriesData()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.navigationController?.navigationBar.backgroundColor = .white
     }
     
     @objc private func handleTap() {

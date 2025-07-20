@@ -246,8 +246,9 @@ final class PostViewController: UIViewController {
         viewModel.postLikeRequest(postId: receivedPostId!, fromCurrentVC: self)
     }
     
-    @objc private func moveToOthersProfile(sender: UITapGestureRecognizer) {
-        guard let otherUserProfileVC = profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
+    // 프로필 이미지나 아이디 클릭 시 해당 사용자 프로필로 이동
+    @objc func moveToOthersProfile(sender: UITapGestureRecognizer) {
+        let otherUserProfileVC = OtherUserProfileViewController()
         
         if sender.view == profileImageView || sender.view == pochakUserLabel || sender.view == contentUserLabel {
             otherUserProfileVC.receivedHandle = viewModel.getPostDetailOwnerHandle()
@@ -266,7 +267,7 @@ final class PostViewController: UIViewController {
         
         taggedUserDetailVC.goToOtherProfileVC = { (handle: String) in
             self.dismiss(animated: true)
-            guard let otherUserProfileVC = self.profileTabSb.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
+            let otherUserProfileVC = OtherUserProfileViewController()
             otherUserProfileVC.receivedHandle = handle
             self.navigationController?.pushViewController(otherUserProfileVC, animated: true)
         }
