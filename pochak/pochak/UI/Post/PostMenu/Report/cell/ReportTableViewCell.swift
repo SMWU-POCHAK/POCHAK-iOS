@@ -63,14 +63,14 @@ final class ReportTableViewCell: UITableViewCell {
     
     private func setupConstraints() {
         reportReasonLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(20)
+            make.leading.equalToSuperview().inset(20.adjusted)
             make.centerY.equalToSuperview()
         }
         
         arrowImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(24)
-            make.top.bottom.equalToSuperview().inset(12)
-            make.trailing.equalToSuperview().inset(12)
+            make.width.height.equalTo(24.adjusted)
+            make.top.bottom.equalToSuperview().inset(12.adjustedH)
+            make.trailing.equalToSuperview().inset(12.adjusted)
         }
     }
 }

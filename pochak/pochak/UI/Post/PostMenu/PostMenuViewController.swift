@@ -32,8 +32,8 @@ final class PostMenuViewController: UIViewController {
         view.delegate = self
         view.dataSource = self
         view.separatorColor = UIColor(named: "gray01")
-        view.separatorInset = .init(top: 0, left: 20, bottom: 0, right: 20)
-        view.rowHeight = 48
+        view.separatorInset = .init(top: 0, left: 20.adjusted, bottom: 0, right: 20.adjusted)
+        view.rowHeight = 48.adjustedH
         view.allowsMultipleSelection = false
         view.allowsSelection = true
         
@@ -97,7 +97,7 @@ final class PostMenuViewController: UIViewController {
     
     private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(38)
+            make.top.equalToSuperview().inset(38.adjustedH)
             make.centerX.equalToSuperview()
         }
         
@@ -156,7 +156,7 @@ extension PostMenuViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 48
+        return 48.adjustedH
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

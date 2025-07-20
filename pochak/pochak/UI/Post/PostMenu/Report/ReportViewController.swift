@@ -90,7 +90,7 @@ extension ReportViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 48
+        return 48.adjustedH
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

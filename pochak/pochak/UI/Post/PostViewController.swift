@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class PostViewController: UIViewController {
     
@@ -34,7 +35,7 @@ final class PostViewController: UIViewController {
         view.contentMode = .scaleAspectFill
         view.isUserInteractionEnabled = true
         view.clipsToBounds = true
-        view.layer.cornerRadius = 50 / 2
+        view.layer.cornerRadius = 50.adjusted / 2
         view.backgroundColor = .lightGray
         return view
     }()
@@ -42,7 +43,7 @@ final class PostViewController: UIViewController {
     private let usersStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
-        view.spacing = 4
+        view.spacing = 4.adjustedH
         view.alignment = .leading
         return view
     }()
@@ -100,7 +101,7 @@ final class PostViewController: UIViewController {
     private let contentStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
-        view.spacing = 12
+        view.spacing = 12.adjusted
         view.alignment = .top
         return view
     }()
@@ -155,7 +156,7 @@ final class PostViewController: UIViewController {
     private let recentCommentStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
-        view.spacing = 12
+        view.spacing = 12.adjusted
         view.alignment = .top
         return view
     }()
@@ -185,7 +186,7 @@ final class PostViewController: UIViewController {
         var config = UIButton.Configuration.plain()
         config.attributedTitle = AttributedString("더보기")
         config.attributedTitle?.setAttributes(AttributeContainer([NSAttributedString.Key.font : UIFont.Pretendard(), NSAttributedString.Key.foregroundColor : UIColor(named: "gray05")]))
-        config.contentInsets = .init(top: 3, leading: 0, bottom: 3, trailing: 0)
+        config.contentInsets = .init(top: 3.adjusted, leading: 0, bottom: 3.adjusted, trailing: 0)
         
         button.configuration = config
         button.addTarget(self, action: #selector(moreCommentButtonDidTap), for: .touchUpInside)
@@ -296,7 +297,8 @@ final class PostViewController: UIViewController {
         let currentLogInUser = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
         
         let cellCount = (viewModel.getPostDetailOwnerHandle()! == currentLogInUser || viewModel.getPostDetailTaggedUsers()!.contains(where: { $0.handle == currentLogInUser })) ? 3 : 2
-        let height = label.frame.height + CGFloat(38 + 16 + 48 * cellCount)
+        let adjustHeight: CGFloat = 38.adjustedH + 16.adjustedH + 48.adjusted * Double(cellCount)
+        let height = label.frame.height + adjustHeight
         let fraction = UISheetPresentationController.Detent.custom { context in
             height
         }
@@ -374,62 +376,62 @@ final class PostViewController: UIViewController {
         }
         
         profileImageView.snp.makeConstraints { make in
-            make.height.width.equalTo(50)
-            make.leading.equalToSuperview().inset(20)
-            make.top.equalToSuperview().inset(17)
+            make.height.width.equalTo(50.adjusted)
+            make.leading.equalToSuperview().inset(20.adjusted)
+            make.top.equalToSuperview().inset(17.adjustedH)
         }
         
         usersStackView.snp.makeConstraints { make in
-            make.leading.equalTo(profileImageView.snp.trailing).offset(12)
+            make.leading.equalTo(profileImageView.snp.trailing).offset(12.adjusted)
             make.centerY.equalTo(profileImageView.snp.centerY)
-            make.trailing.lessThanOrEqualTo(followButton.snp.leading).offset(-25)
+            make.trailing.lessThanOrEqualTo(followButton.snp.leading).offset(-25.adjusted)
         }
         
         followButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(20)
+            make.trailing.equalToSuperview().inset(20.adjusted)
             make.centerY.equalTo(profileImageView.snp.centerY)
         }
         
         postImageView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.top.equalTo(profileImageView.snp.bottom).offset(14)
+            make.leading.trailing.equalToSuperview().inset(20.adjusted)
+            make.top.equalTo(profileImageView.snp.bottom).offset(14.adjustedH)
             make.height.equalTo(postImageView.snp.width).multipliedBy(4.0 / 3.0)
         }
         
         contentStackView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(20)
-            make.top.equalTo(postImageView.snp.bottom).offset(22)
+            make.leading.equalToSuperview().inset(20.adjusted)
+            make.top.equalTo(postImageView.snp.bottom).offset(22.adjustedH)
         }
         
         [likeButton, commentButton].forEach { button in
             button.snp.makeConstraints { make in
-                make.height.equalTo(48)
-                make.width.equalTo(button.snp.height).multipliedBy(1)
+                make.width.equalTo(48.adjusted)
+                make.height.equalTo(button.snp.width).multipliedBy(1)
             }
         }
         
         likeAndCmtStackView.snp.makeConstraints { make in
-            make.leading.equalTo(contentStackView.snp.trailing).offset(12)
-            make.trailing.equalToSuperview().inset(9)
-            make.top.equalTo(postImageView.snp.bottom).offset(8)
+            make.leading.equalTo(contentStackView.snp.trailing).offset(12.adjusted)
+            make.trailing.equalToSuperview().inset(9.adjusted)
+            make.top.equalTo(postImageView.snp.bottom).offset(8.adjustedH)
         }
         
         borderLineView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.top.equalTo(contentStackView.snp.bottom).offset(24)
+            make.leading.trailing.equalToSuperview().inset(20.adjusted)
+            make.top.equalTo(contentStackView.snp.bottom).offset(24.adjustedH)
             make.height.equalTo(1)
         }
         
         recentCommentStackView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(20)
-            make.top.equalTo(borderLineView.snp.bottom).offset(10)
-            make.bottom.equalToSuperview().inset(34)
+            make.leading.equalToSuperview().inset(20.adjusted)
+            make.top.equalTo(borderLineView.snp.bottom).offset(10.adjustedH)
+            make.bottom.equalToSuperview().inset(34.adjustedH)
         }
         
         moreCommentButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(20)
+            make.trailing.equalToSuperview().inset(20.adjusted)
             make.centerY.equalTo(recentCommentStackView.snp.centerY)
-            make.leading.greaterThanOrEqualTo(recentCommentStackView.snp.trailing).offset(11)
+            make.leading.greaterThanOrEqualTo(recentCommentStackView.snp.trailing).offset(11.adjusted)
         }
         moreCommentButton.setContentCompressionResistancePriority(.init(751), for: .horizontal)
     }

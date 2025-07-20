@@ -29,7 +29,7 @@ final class PostDetailFollowButton: UIButton {
         config.attributedTitle?.setAttributes(AttributeContainer([NSAttributedString.Key.font : font,
                                                                   NSAttributedString.Key.foregroundColor: UIColor.white]))
         config.background.cornerRadius = 5
-        config.contentInsets = .init(top: 8, leading: 14, bottom: 8, trailing: 14)
+        config.contentInsets = .init(top: 8.adjustedH, leading: 14.adjusted, bottom: 8.adjustedH, trailing: 14.adjusted)
         config.baseBackgroundColor = UIColor(named: "yellow00")
 
         self.configuration = config

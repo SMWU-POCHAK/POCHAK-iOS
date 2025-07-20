@@ -18,7 +18,7 @@ final class ReportViewCell: UITableViewCell {
     private let stackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
-        view.spacing = 12
+        view.spacing = 12.adjusted
         view.alignment = .center
         return view
     }()
@@ -68,12 +68,12 @@ final class ReportViewCell: UITableViewCell {
     
     private func setupConstraints() {
         stackView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(20)
-            make.top.bottom.equalToSuperview().inset(12)
+            make.leading.equalToSuperview().inset(20.adjusted)
+            make.top.bottom.equalToSuperview().inset(12.adjustedH)
         }
         
         iconImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(24)
+            make.width.height.equalTo(24.adjusted)
         }
     }
 }

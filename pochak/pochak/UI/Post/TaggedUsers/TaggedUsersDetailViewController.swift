@@ -28,10 +28,10 @@ final class TaggedUsersDetailViewController: UIViewController {
         view.delegate = self
         view.delegate = self
         view.separatorColor = UIColor(named: "gray01")
-        view.separatorInset = .init(top: 0, left: 20, bottom: 0, right: 20)
+        view.separatorInset = .init(top: 0, left: 20.adjusted, bottom: 0, right: 20.adjusted)
         view.allowsMultipleSelection = false
         view.allowsSelection = true
-        view.rowHeight = 70
+        view.rowHeight = 70.adjustedH
         return view
     }()
     
@@ -56,7 +56,7 @@ final class TaggedUsersDetailViewController: UIViewController {
     
     private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(38)
+            make.top.equalToSuperview().inset(38.adjustedH)
             make.centerX.equalToSuperview()
         }
         

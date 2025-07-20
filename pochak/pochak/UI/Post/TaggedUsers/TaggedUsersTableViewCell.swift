@@ -19,14 +19,14 @@ final class TaggedUsersTableViewCell: UITableViewCell {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
-        view.layer.cornerRadius = 40 / 2
+        view.layer.cornerRadius = 40.adjusted / 2
         return view
     }()
     
     private let stackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
-        view.spacing = 2
+        view.spacing = 2.adjustedH
         view.alignment = .leading
         view.distribution = .fill
         return view
@@ -79,16 +79,16 @@ final class TaggedUsersTableViewCell: UITableViewCell {
     
     private func setupConstraints() {
         profileImageView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(20)
-            make.top.bottom.equalToSuperview().inset(15)
+            make.leading.equalToSuperview().inset(20.adjusted)
+            make.top.bottom.equalToSuperview().inset(15.adjustedH)
             make.centerY.equalToSuperview()
             make.width.equalTo(profileImageView.snp.height).multipliedBy(1)
         }
         
         stackView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.leading.equalTo(profileImageView.snp.trailing).offset(12)
-            make.trailing.equalToSuperview().inset(20)
+            make.leading.equalTo(profileImageView.snp.trailing).offset(12.adjusted)
+            make.trailing.equalToSuperview().inset(20.adjusted)
         }
     }
     
