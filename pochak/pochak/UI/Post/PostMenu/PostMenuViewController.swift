@@ -16,9 +16,32 @@ final class PostMenuViewController: UIViewController {
     private var taggedMemberList: [String] = []
     private var currentUserIsOwner = false
     
+    private let viewModel = PostDetailViewModel()
+    
     // MARK: - Views
-
-    @IBOutlet weak var menuTableView: UITableView!
+    
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "더보기"
+        label.applyPochakFont(.body0)
+        return label
+    }()
+    
+    private lazy var tableView: UITableView = {
+        let view = UITableView()
+        view.delegate = self
+        view.dataSource = self
+        view.separatorColor = UIColor(named: "gray01")
+        view.separatorInset = .init(top: 0, left: 20.adjusted, bottom: 0, right: 20.adjusted)
+        view.rowHeight = 48.adjustedH
+        view.allowsMultipleSelection = false
+        view.allowsSelection = true
+        
+        view.register(ReportViewCell.self, forCellReuseIdentifier: ReportViewCell.identifier)
+        view.register(DeleteViewCell.self, forCellReuseIdentifier: DeleteViewCell.identifier)
+        view.register(CancelViewCell.self, forCellReuseIdentifier: CancelViewCell.identifier)
+        return view
+    }()
     
     // MARK: - Lifecycle
     
@@ -27,22 +50,26 @@ final class PostMenuViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        view.backgroundColor = .white
+        
         print("게시글 추가 메뉴 \(postId)")
         
         // 게시물 작성자(포착한 사람, 포착 태그당한 사람)와 현재 로그인된 유저가 같으면 삭제 메뉴 추가
         let currentLogInUser = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
-        print("postOwnerr: \(postOwner)")
+        print("postOwner: \(postOwner)")
         if(currentLogInUser == postOwner || taggedMemberList.contains(currentLogInUser)) {
             currentUserIsOwner = true
         }
         
-        setupTableView()
+        bind()
+        addViews()
+        setupConstraints()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let selectedIndexPath = menuTableView.indexPathForSelectedRow {
-            menuTableView.deselectRow(at: selectedIndexPath, animated: animated)
+        if let selectedIndexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: selectedIndexPath, animated: animated)
         }
     }
     
@@ -54,16 +81,31 @@ final class PostMenuViewController: UIViewController {
         self.taggedMemberList = taggedMemberList
     }
     
-    private func setupTableView() {
-        menuTableView.delegate = self
-        menuTableView.dataSource = self
+    private func bind() {
+        viewModel.deletePostResponseDataDidChange = { [weak self] data in
+            guard let data = data else { return }
+            print("=== PostMenu, delete confirm action succeeded ===")
+            print("== data: \(data)")
+            self?.goBackToHome()
+        }
+    }
+    
+    private func addViews() {
+        view.addSubview(titleLabel)
+        view.addSubview(tableView)
+    }
+    
+    private func setupConstraints() {
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(38.adjustedH)
+            make.centerX.equalToSuperview()
+        }
         
-        menuTableView.register(UINib(nibName: ReportViewCell.identifier, bundle: nil), 
-                               forCellReuseIdentifier: ReportViewCell.identifier)
-        menuTableView.register(UINib(nibName: DeleteViewCell.identifier, bundle: nil), 
-                               forCellReuseIdentifier: DeleteViewCell.identifier)
-        menuTableView.register(UINib(nibName: CancelViewCell.identifier, bundle: nil), 
-                               forCellReuseIdentifier: CancelViewCell.identifier)
+        tableView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(titleLabel.snp.bottom)
+        }
     }
     
     /// 게시글 삭제 혹은 신고 후 홈으로 돌아가기
@@ -97,24 +139,24 @@ extension PostMenuViewController: UITableViewDelegate, UITableViewDataSource {
         var cell = UITableViewCell()
         // 로직 처리가 좀 이상한듯 한데..;;;
         if indexPath.row == 0 {
-            cell = (tableView.dequeueReusableCell(withIdentifier: ReportViewCell.identifier, for: indexPath) as?                        ReportViewCell) ?? UITableViewCell()
+            cell = (tableView.dequeueReusableCell(withIdentifier: ReportViewCell.identifier, for: indexPath) as? ReportViewCell) ?? UITableViewCell()
         }
         else if indexPath.row == 1 {
             if currentUserIsOwner {
-                cell = tableView.dequeueReusableCell(withIdentifier: DeleteViewCell.identifier, for: indexPath) as?                        DeleteViewCell ?? UITableViewCell()
+                cell = tableView.dequeueReusableCell(withIdentifier: DeleteViewCell.identifier, for: indexPath) as? DeleteViewCell ?? UITableViewCell()
             }
             else {
-                cell = tableView.dequeueReusableCell(withIdentifier: CancelViewCell.identifier, for: indexPath) as?                        CancelViewCell ?? UITableViewCell()
+                cell = tableView.dequeueReusableCell(withIdentifier: CancelViewCell.identifier, for: indexPath) as? CancelViewCell ?? UITableViewCell()
             }
         }
         else {
-            cell = tableView.dequeueReusableCell(withIdentifier: CancelViewCell.identifier, for: indexPath) as?                        CancelViewCell ?? UITableViewCell()
+            cell = tableView.dequeueReusableCell(withIdentifier: CancelViewCell.identifier, for: indexPath) as? CancelViewCell ?? UITableViewCell()
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 48
+        return 48.adjustedH
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -154,27 +196,10 @@ extension PostMenuViewController: UITableViewDelegate, UITableViewDataSource {
 extension PostMenuViewController: CustomAlertDelegate {
     
     func confirmAction() {
-        PostService.deletePostDetail(postId: postId!) { [weak self] data, failed in
-            guard let data = data else {
-                // 에러가 난 경우, alert 창 present
-                switch failed {
-                case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), 
-                                  animated: true)
-                default:
-                    self?.present(UIAlertController.networkErrorAlert(title: "게시글 삭제에 실패하였습니다."), animated: true)
-                }
-                return
-            }
-            
-            print("=== PostMenu, delete confirm action succeeded ===")
-            print("== data: \(data)")
-            
-            self?.goBackToHome()
-        }
+        viewModel.deletePost(postId: postId!, fromCurrentVC: self)
     }
     
     func cancel() {
-        
+        print("삭제 취소")
     }
 }

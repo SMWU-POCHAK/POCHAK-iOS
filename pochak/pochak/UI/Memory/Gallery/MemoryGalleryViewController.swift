@@ -165,8 +165,7 @@ extension MemoryGalleryViewController: UICollectionViewDelegate, UICollectionVie
         let selectedPost = section.posts[indexPath.item]
         
         let exploreTabSb = UIStoryboard(name: "ExploreTab", bundle: nil)
-        guard let postVC = exploreTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController
-        else { return }
+        let postVC = PostViewController()
         
         postVC.receivedPostId = selectedPost.id
         self.navigationController?.pushViewController(postVC, animated: true)
