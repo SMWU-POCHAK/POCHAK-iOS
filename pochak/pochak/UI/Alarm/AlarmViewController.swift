@@ -202,7 +202,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             
         case .ownerComment, .taggedComment, .commentReply, .ownerLike, .taggedLike:
             let exploreTabSb = UIStoryboard(name: "ExploreTab", bundle: nil)
-            guard let postVC = exploreTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController else { return }
+            let postVC = PostViewController()
             
             postVC.receivedPostId = alarmList[indexPath.row].postId
             self.navigationController?.pushViewController(postVC, animated: true)

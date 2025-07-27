@@ -15,15 +15,49 @@ final class TaggedUsersTableViewCell: UITableViewCell {
     
     // MARK: - Views
     
-    @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var handleLabel: UILabel!
-    @IBOutlet weak var nameLabel: UILabel!
+    private let profileImageView: UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 40.adjusted / 2
+        return view
+    }()
+    
+    private let stackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.spacing = 2.adjustedH
+        view.alignment = .leading
+        view.distribution = .fill
+        return view
+    }()
+    
+    private let handleLabel: UILabel = {
+        let label = UILabel()
+        label.applyPochakFont(.body3_1)
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    private let nicknameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .Pretendard(family: .Regular)
+        label.setLineHeightByPx(value: 20)
+        label.numberOfLines = 1
+        return label
+    }()
     
     // MARK: - Init
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        addViews()
+        setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -34,11 +68,35 @@ final class TaggedUsersTableViewCell: UITableViewCell {
     
     // MARK: - Functions
     
+    private func addViews() {
+        contentView.addSubview(profileImageView)
+        contentView.addSubview(stackView)
+        
+        [handleLabel, nicknameLabel].forEach {
+            stackView.addArrangedSubview($0)
+        }
+    }
+    
+    private func setupConstraints() {
+        profileImageView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(20.adjusted)
+            make.centerY.equalToSuperview()
+            make.height.equalTo(40.adjusted)
+            make.width.equalTo(profileImageView.snp.height).multipliedBy(1)
+        }
+        
+        stackView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview().inset(15.adjustedH)
+            make.leading.equalTo(profileImageView.snp.trailing).offset(12.adjusted)
+            make.trailing.equalToSuperview().inset(20.adjusted)
+        }
+    }
+    
     func configure(tagData: TaggedMember) {
         if let profileImageURL = URL(string: tagData.profileImage) {
             profileImageView.load(with: profileImageURL)
         }
         handleLabel.text = tagData.handle
-        nameLabel.text = tagData.name
+        nicknameLabel.text = tagData.name
     }
 }
