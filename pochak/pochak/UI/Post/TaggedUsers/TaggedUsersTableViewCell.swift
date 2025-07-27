@@ -80,13 +80,13 @@ final class TaggedUsersTableViewCell: UITableViewCell {
     private func setupConstraints() {
         profileImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(20.adjusted)
-            make.top.bottom.equalToSuperview().inset(15.adjustedH)
             make.centerY.equalToSuperview()
+            make.height.equalTo(40.adjusted)
             make.width.equalTo(profileImageView.snp.height).multipliedBy(1)
         }
         
         stackView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
+            make.top.bottom.equalToSuperview().inset(15.adjustedH)
             make.leading.equalTo(profileImageView.snp.trailing).offset(12.adjusted)
             make.trailing.equalToSuperview().inset(20.adjusted)
         }

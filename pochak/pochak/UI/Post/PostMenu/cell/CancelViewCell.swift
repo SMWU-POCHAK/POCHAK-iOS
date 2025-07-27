@@ -73,7 +73,7 @@ final class CancelViewCell: UITableViewCell {
         }
         
         iconImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(24.adjusted)
+            make.width.equalTo(iconImageView.snp.height).multipliedBy(1)
         }
     }
 }
