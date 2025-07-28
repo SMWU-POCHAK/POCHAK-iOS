@@ -27,7 +27,7 @@ final class ReplyTableViewCell: UITableViewCell {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
-        view.layer.cornerRadius = 36 / 2
+        view.layer.cornerRadius = 36.adjusted / 2
         return view
     }()
     
@@ -90,26 +90,26 @@ final class ReplyTableViewCell: UITableViewCell {
     
     private func setupConstraints() {
         profileImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(36)
+            make.width.height.equalTo(36.adjusted)
             make.leading.equalToSuperview().inset(72)
-            make.top.equalToSuperview().inset(13)
+            make.top.equalToSuperview().inset(13.adjustedH)
         }
         
         userHandleLabel.snp.makeConstraints { make in
-            make.leading.equalTo(profileImageView.snp.trailing).offset(12)
+            make.leading.equalTo(profileImageView.snp.trailing).offset(12.adjusted)
             make.top.equalTo(profileImageView.snp.top)
         }
         
         timePassedLabel.snp.makeConstraints { make in
-            make.leading.equalTo(userHandleLabel.snp.trailing).offset(5)
+            make.leading.equalTo(userHandleLabel.snp.trailing).offset(5.adjusted)
             make.centerY.equalTo(userHandleLabel.snp.centerY)
         }
         
         contentLabel.snp.makeConstraints { make in
             make.leading.equalTo(userHandleLabel.snp.leading)
-            make.top.equalTo(userHandleLabel.snp.bottom).offset(7)
-            make.trailing.equalToSuperview().inset(25)
-            make.bottom.equalToSuperview().inset(13)
+            make.top.equalTo(userHandleLabel.snp.bottom).offset(7.adjustedH)
+            make.trailing.equalToSuperview().inset(25.adjusted)
+            make.bottom.equalToSuperview().inset(13.adjustedH)
         }
     }
     

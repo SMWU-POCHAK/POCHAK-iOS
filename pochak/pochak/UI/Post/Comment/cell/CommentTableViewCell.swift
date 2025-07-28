@@ -42,7 +42,7 @@ final class CommentTableViewCell: UITableViewCell {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
-        view.layer.cornerRadius = 40 / 2
+        view.layer.cornerRadius = 40.adjusted / 2
         return view
     }()
     
@@ -69,7 +69,7 @@ final class CommentTableViewCell: UITableViewCell {
     private let buttonStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
-        view.spacing = 16
+        view.spacing = 16.adjusted
         view.alignment = .fill
         view.distribution = .fillProportionally
         return view
@@ -82,7 +82,7 @@ final class CommentTableViewCell: UITableViewCell {
         config.attributedTitle = AttributedString("답글 달기")
         
         let style = NSMutableParagraphStyle()
-        style.lineSpacing = 16
+        style.lineSpacing = 16.adjustedH
 
         config.attributedTitle?.setAttributes(AttributeContainer([NSAttributedString.Key.font: UIFont.Pretendard(size: 12, family: .Medium),
                                                                   NSAttributedString.Key.foregroundColor: UIColor(named: "gray05"),
@@ -100,7 +100,7 @@ final class CommentTableViewCell: UITableViewCell {
         config.attributedTitle = AttributedString("삭제")
         
         let style = NSMutableParagraphStyle()
-        style.lineSpacing = 16
+        style.lineSpacing = 16.adjustedH
 
         config.attributedTitle?.setAttributes(AttributeContainer([NSAttributedString.Key.font: UIFont.Pretendard(size: 12, family: .Medium),
                                                                   NSAttributedString.Key.foregroundColor: UIColor(named: "gray05"),
@@ -194,30 +194,31 @@ final class CommentTableViewCell: UITableViewCell {
     
     private func setupConstraints() {
         profileImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(40)
-            make.leading.top.equalToSuperview().inset(20)
+            make.width.height.equalTo(40.adjusted)
+            make.leading.equalToSuperview().inset(20.adjusted)
+            make.top.equalToSuperview().inset(20.adjustedH)
         }
         
         commentUserHandleLabel.snp.makeConstraints { make in
-            make.leading.equalTo(profileImageView.snp.trailing).offset(12)
+            make.leading.equalTo(profileImageView.snp.trailing).offset(12.adjusted)
             make.top.equalTo(profileImageView.snp.top)
         }
         
         timePassedLabel.snp.makeConstraints { make in
-            make.leading.equalTo(commentUserHandleLabel.snp.trailing).offset(8)
+            make.leading.equalTo(commentUserHandleLabel.snp.trailing).offset(8.adjusted)
             make.centerY.equalTo(commentUserHandleLabel.snp.centerY)
         }
         
         contentLabel.snp.makeConstraints { make in
             make.leading.equalTo(commentUserHandleLabel.snp.leading)
-            make.top.equalTo(commentUserHandleLabel.snp.bottom).offset(8)
-            make.trailing.equalToSuperview().inset(20)
+            make.top.equalTo(commentUserHandleLabel.snp.bottom).offset(8.adjustedH)
+            make.trailing.equalToSuperview().inset(20.adjusted)
         }
         
         buttonStackView.snp.makeConstraints { make in
-            make.top.equalTo(contentLabel.snp.bottom).offset(8)
+            make.top.equalTo(contentLabel.snp.bottom).offset(8.adjustedH)
             make.leading.equalTo(contentLabel.snp.leading)
-            make.bottom.equalToSuperview().inset(13)
+            make.bottom.equalToSuperview().inset(13.adjustedH)
         }
     }
     

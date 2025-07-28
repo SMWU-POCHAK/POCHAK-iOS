@@ -57,7 +57,7 @@ final class CommentDeleteConfirmView: UIView {
     
     private func setupView() {
         self.clipsToBounds = true
-        self.layer.cornerRadius = 12
+        self.layer.cornerRadius = 12.adjusted
     }
     
     private func addViews() {
@@ -67,15 +67,15 @@ final class CommentDeleteConfirmView: UIView {
     
     private func setupConstraints() {
         informationLabel.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(14)
-            make.leading.equalToSuperview().inset(17)
-            make.trailing.lessThanOrEqualTo(cancelButton.snp.leading).offset(-24)
+            make.top.bottom.equalToSuperview().inset(14.adjustedH)
+            make.leading.equalToSuperview().inset(17.adjusted)
+            make.trailing.lessThanOrEqualTo(cancelButton.snp.leading).offset(-24.adjusted)
         }
         
         cancelButton.snp.makeConstraints { make in
-            make.centerX.equalTo(informationLabel.snp.centerX)
+//            make.centerX.equalTo(informationLabel.snp.centerX)
             make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().inset(33)
+            make.trailing.equalToSuperview().inset(33.adjusted)
         }
     }
     

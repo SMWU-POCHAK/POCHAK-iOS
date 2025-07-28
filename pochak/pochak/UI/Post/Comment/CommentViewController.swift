@@ -45,7 +45,7 @@ final class CommentViewController: UIViewController {
     private var hasScrolled: Bool = false
     private var isCurrentlyFetching: Bool = false
     private var selectedCommentCellIndexPath: IndexPath = .init(row: 0, section: 0)
-    private let commentWritingStatusViewHeight: CGFloat = 21
+    private let commentWritingStatusViewHeight: CGFloat = 21.adjustedH
     
     private var commentDeleteWorkItem: DispatchWorkItem?
     let viewModel = CommentViewModel()
@@ -68,7 +68,7 @@ final class CommentViewController: UIViewController {
         
         // tableView가 자동으로 셀 컨텐츠 내용 계산해서 높이 맞추도록
         view.rowHeight = UITableView.automaticDimension
-        view.estimatedRowHeight = 90
+        view.estimatedRowHeight = 90.adjustedH
         
         view.allowsMultipleSelection = false
         view.allowsSelectionDuringEditing = false
@@ -105,14 +105,14 @@ final class CommentViewController: UIViewController {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
-        view.layer.cornerRadius = 40 / 2
+        view.layer.cornerRadius = 40.adjusted / 2
         return view
     }()
     
     private let inputInnerView: UIView = {
         let view = UIView()
         view.clipsToBounds = true
-        view.layer.cornerRadius = 15
+        view.layer.cornerRadius = 15.adjusted
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor(named: "gray03")?.cgColor
         return view
@@ -155,8 +155,8 @@ final class CommentViewController: UIViewController {
         var config = UIButton.Configuration.filled()
         config.image = UIImage(named: "CommentUploadIcon")
         config.baseBackgroundColor = UIColor(named: "yellow00")
-        config.contentInsets = .init(top: 4, leading: 10, bottom: 4, trailing: 10)
-        config.background.cornerRadius = 18
+        config.contentInsets = .init(top: 4.adjustedH, leading: 10.adjusted, bottom: 4.adjustedH, trailing: 10.adjusted)
+        config.background.cornerRadius = 18.adjusted
         
         button.configuration = config
         button.addTarget(self, action: #selector(uploadCommentButtonDidTap), for: .touchUpInside)
@@ -316,7 +316,7 @@ final class CommentViewController: UIViewController {
     
     private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(38)
+            make.top.equalToSuperview().inset(38.adjustedH)
             make.centerX.equalToSuperview()
         }
         
@@ -329,11 +329,11 @@ final class CommentViewController: UIViewController {
         }
         noCommentLabel.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
-            make.top.equalTo(noCommentImageView.snp.bottom).offset(24)
+            make.top.equalTo(noCommentImageView.snp.bottom).offset(24.adjustedH)
         }
         
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(10)
+            make.top.equalTo(titleLabel.snp.bottom).offset(10.adjustedH)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(commentInputView.snp.top)
         }
@@ -347,53 +347,57 @@ final class CommentViewController: UIViewController {
         // --- textfield
         // --- upload button
         commentInputView.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
         userProfileImageView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(20)
-            make.bottom.equalToSuperview().inset(8)
-            make.width.height.equalTo(40)
+            make.leading.equalToSuperview().inset(20.adjusted)
+            make.bottom.equalToSuperview().inset(8.adjustedH)
+            make.width.height.equalTo(40.adjusted)
         }
         
         inputInnerView.snp.makeConstraints { make in
-            make.leading.equalTo(userProfileImageView.snp.trailing).offset(9)
-            make.trailing.equalToSuperview().inset(12)
-            make.top.bottom.equalToSuperview().inset(10)
+            make.leading.equalTo(userProfileImageView.snp.trailing).offset(9.adjusted)
+            make.trailing.equalToSuperview().inset(12.adjusted)
+            make.top.bottom.equalToSuperview().inset(10.adjustedH)
         }
         
         commentWritingStatusView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
+            make.top.leading.trailing.equalToSuperview()  // superview = inputInnerView
             make.height.equalTo(commentWritingStatusViewHeight)
+            make.top.equalTo(commentWritingStatusView.snp.bottom).offset(7.adjusted)
         }
         commentWritingStatusLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(12)
-            make.top.equalToSuperview().inset(5)
-            make.bottom.equalToSuperview().inset(4)
+            make.leading.equalToSuperview().inset(12.adjusted)
+//            make.top.equalToSuperview().inset(5.adjustedH)
+//            make.bottom.equalToSuperview().inset(4.adjustedH)
+            make.centerY.equalToSuperview()
         }
         stopChildCommentModeButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(13)
+            make.trailing.equalToSuperview().inset(13.adjusted)
             make.centerY.equalTo(commentWritingStatusLabel.snp.centerY)
         }
         
         textField.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(11)
-            make.bottom.equalToSuperview().inset(9)
-            make.height.equalTo(22)
-            make.trailing.equalTo(uploadButton.snp.leading).offset(-9)
+            make.leading.equalToSuperview().inset(11.adjusted)
+            make.top.equalTo(commentWritingStatusView.snp.bottom).offset(7.adjustedH)
+            make.bottom.equalToSuperview().inset(9.adjustedH)
+            make.height.equalTo(22.adjustedH)
+            make.trailing.equalTo(uploadButton.snp.leading).offset(-9.adjusted)
         }
         uploadButton.snp.makeConstraints { make in
-            make.top.equalTo(commentWritingStatusView.snp.bottom).offset(7)
-            make.bottom.equalToSuperview().inset(7)
-            make.width.equalTo(36)
-            make.height.equalTo(24)
-            make.trailing.equalToSuperview().inset(7)
+//            make.top.equalTo(commentWritingStatusView.snp.bottom).offset(7.adjusted)
+//            make.bottom.equalTo(textField.snp.bottom)
+            make.centerY.equalTo(textField.snp.centerY)
+            make.width.equalTo(36.adjusted)
+            make.height.equalTo(24.adjusted)  // adjustedH로 하는게 맞는데 그렇게 하면 버튼 안 이미지와 버튼의 inset이 너무 작아져서 버튼의 비율 유지에 의미를 둠
+            make.trailing.equalToSuperview().inset(7.adjusted)
         }
         uploadButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         commentDeleteConfirmView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.bottom.equalTo(commentInputView.snp.top).offset(-18)
+            make.leading.trailing.equalToSuperview().inset(20.adjusted)
+            make.bottom.equalTo(commentInputView.snp.top).offset(-18.adjustedH)
         }
     }
     
@@ -565,10 +569,10 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
         return UIView()
     }
     
-    // TableView의 rowHeight속성에 AutometicDimension을 통해 테이블의 row가 유동적이라는 것을 선언
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
+//    // TableView의 rowHeight속성에 AutometicDimension을 통해 테이블의 row가 유동적이라는 것을 선언
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
     
     // 이상한 여백 제거?
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

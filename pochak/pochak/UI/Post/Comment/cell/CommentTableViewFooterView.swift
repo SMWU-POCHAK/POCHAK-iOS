@@ -32,7 +32,7 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
         config.attributedTitle = AttributedString("이전 답글 보기")
         
         let style = NSMutableParagraphStyle()
-        style.lineSpacing = 16
+        style.lineSpacing = 16.adjustedH
 
         config.attributedTitle?.setAttributes(AttributeContainer([NSAttributedString.Key.font: UIFont.Pretendard(size: 12, family: .Medium),
                                                                   NSAttributedString.Key.foregroundColor: UIColor(named: "gray05"),
@@ -80,14 +80,14 @@ final class CommentTableViewFooterView: UITableViewHeaderFooterView {
     private func setupConstraints() {
         lineView.snp.makeConstraints { make in
             make.height.equalTo(1)
-            make.leading.equalToSuperview().inset(75)
-            make.width.equalTo(35)
+            make.leading.equalToSuperview().inset(75.adjusted)
+            make.width.equalTo(35.adjusted)
             make.centerY.equalToSuperview()
         }
         
         getChildCommentsButton.snp.makeConstraints { make in
             make.centerY.equalTo(lineView.snp.centerY)
-            make.leading.equalTo(lineView.snp.trailing).offset(3)
+            make.leading.equalTo(lineView.snp.trailing).offset(3.adjusted)
         }
     }
     
