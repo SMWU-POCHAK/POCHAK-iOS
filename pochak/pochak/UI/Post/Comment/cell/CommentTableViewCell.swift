@@ -7,12 +7,17 @@
 
 import UIKit
 
+protocol CommentTableViewCellDeleteDelegate: AnyObject {
+    func didTapDeleteButton(postId: Int, commentId: Int)
+}
+
 final class CommentTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
     static let identifier = "CommentTableViewCell"
     
+    weak var delegate: CommentTableViewCellDeleteDelegate?
     weak var postVC: PostViewController?
     weak var commentVC: CommentViewController?
     var commentId: Int!
@@ -20,33 +25,102 @@ final class CommentTableViewCell: UITableViewCell {
     var taggedUserList: [String]?
     var postOwnerHandle: String?
     
+    private var commentUserHandle: String?
+    
+    var childCommentButtonDidTapClosure: ((String, Int) -> Void)?
+    
     // comment view controller에서 받는 댓글 입력창
     var editingCommentTextField: UITextField!
     var tableView: UITableView!
     
-    let seeChildCommentBtn = UIButton()
-    
+    private let viewModel = CommentViewModel()
     private let currentUserHandle = UserDefaultsManager.getData(type: String.self, forKey: .handle) ?? ""
 
     // MARK: - Views
     
-    @IBOutlet weak var commentLabel: UILabel!
-    @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var commentUserHandleLabel: UILabel!
-    @IBOutlet weak var timePassedLabel: UILabel!
-    @IBOutlet weak var childCommentBtn: UIButton!
-    @IBOutlet weak var deleteButton: UIButton!
+    private let profileImageView: UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 40.adjusted / 2
+        return view
+    }()
+    
+    private let commentUserHandleLabel: UILabel = {
+        let label = UILabel()
+        label.applyPochakFont(.body3_1)
+        return label
+    }()
+    
+    private let timePassedLabel: UILabel = {
+        let label = UILabel()
+        label.applyPochakFont(.body4)
+        label.textColor = UIColor(named: "gray04")
+        return label
+    }()
+    
+    private let contentLabel: UILabel = {
+        let label = UILabel()
+        label.applyPochakFont(.body3)
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private let buttonStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = 16.adjusted
+        view.alignment = .fill
+        view.distribution = .fillProportionally
+        return view
+    }()
+    
+    private let childCommentButton: UIButton = {
+        let button = UIButton()
+        
+        var config = UIButton.Configuration.plain()
+        config.attributedTitle = AttributedString("답글 달기")
+        
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 16.adjustedH
+
+        config.attributedTitle?.setAttributes(AttributeContainer([NSAttributedString.Key.font: UIFont.Pretendard(size: 12, family: .Medium),
+                                                                  NSAttributedString.Key.foregroundColor: UIColor(named: "gray05"),
+                                                                  NSAttributedString.Key.paragraphStyle: style]))
+        config.contentInsets = .zero
+        button.configuration = config
+        button.addTarget(self, action: #selector(childCommentButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+    
+    private let deleteButton: UIButton = {
+        let button = UIButton()
+        
+        var config = UIButton.Configuration.plain()
+        config.attributedTitle = AttributedString("삭제")
+        
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 16.adjustedH
+
+        config.attributedTitle?.setAttributes(AttributeContainer([NSAttributedString.Key.font: UIFont.Pretendard(size: 12, family: .Medium),
+                                                                  NSAttributedString.Key.foregroundColor: UIColor(named: "gray05"),
+                                                                  NSAttributedString.Key.paragraphStyle: style]))
+        config.contentInsets = .zero
+        button.configuration = config
+        button.addTarget(self, action: #selector(deleteButtonDidTap), for: .touchUpInside)
+        return button
+    }()
     
     // MARK: - Init
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        // 크기 반만큼 radius
-        profileImageView.layer.cornerRadius = 40 / 2
+        contentView.backgroundColor = .white
         
-        // TODO: 사용자 프로필로 이동..
-        // label이 터치 인식할 수 있도록 gesture recognizer 추가
+        bind()
+        addViews()
+        setupConstraints()
         
         profileImageView.isUserInteractionEnabled = true
         profileImageView.addGestureRecognizer(setGestureRecognizer())
@@ -54,64 +128,32 @@ final class CommentTableViewCell: UITableViewCell {
         commentUserHandleLabel.isUserInteractionEnabled = true
         commentUserHandleLabel.addGestureRecognizer(setGestureRecognizer())
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Actions
     
-    @IBAction func postChildCmmtBtnDidTap(_ sender: UIButton) {
+    @objc private func childCommentButtonDidTap(_ sender: UIButton) {
         // 부모 댓글을 단다는 것을 comment vc에 알려야 함
-        commentVC?.isPostingChildComment = true
-        commentVC?.parentCommentId = self.commentId
+        childCommentButtonDidTapClosure?(self.commentUserHandle!, self.commentId)
         
         let indexPath = tableView.indexPath(for: self)
         // 답글을 다려는 셀을 맨 위로 이동
         tableView.scrollToRow(at: indexPath!, at: .top, animated: true)
         
-        // fade in, fade out 으로 색상 변경 
-        let oldColor = self.backgroundColor
-        UIView.animate(withDuration: 0.9, 
-                       animations: { self.backgroundColor = UIColor(named: "navy03") },
-                       completion: { _ in UIView.animate(withDuration: 0.5) { self.backgroundColor = oldColor } }
-        )
+        // 부모댓글 셀 색상 변경
+        self.contentView.backgroundColor = UIColor(hexCode: "FFF1D8")
         editingCommentTextField.becomeFirstResponder()
     }
     
-    @IBAction func deleteButtonDidTap() {
-        CommentService.deleteComment(postId: postId, commentId: commentId) { [weak self] data, failed in
-            guard let data = data else {
-                // 에러가 난 경우, alert 창 present
-                switch failed {
-                case .disconnected:
-                    self?.commentVC?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
-                                             animated: true)
-                default:
-                    self?.commentVC?.present(UIAlertController.networkErrorAlert(title: "댓글 삭제에 실패하였습니다."),
-                                             animated: true)
-                }
-                return
-            }
-            
-            print("=== CommentTableViewCell, deleteButtonDidTap succeeded ===")
-            print("== data: \(data)")
-            
-            if data.isSuccess == true {
-                self?.commentVC?.loadCommentData()
-            }
-            else {
-                self?.commentVC?.present(UIAlertController.networkErrorAlert(title: "댓글 삭제에 실패하였습니다."), 
-                                         animated: true)
-            }
-        }
+    @objc private func deleteButtonDidTap() {
+        print("[CommmentTableVIewCell] deleteButtonDidTap")
+        delegate?.didTapDeleteButton(postId: postId, commentId: commentId)
     }
     
-    @objc private func moveToOthersProfile(sender: UITapGestureRecognizer) {
-        let profileTabSb = UIStoryboard(name: "ProfileTab", bundle: nil)
-        
+    @objc private func moveToOthersProfile(sender: UITapGestureRecognizer) {        
         let otherUserProfileVC = OtherUserProfileViewController()
         
         // 댓글 작성자가 현재 유저라면
@@ -128,9 +170,62 @@ final class CommentTableViewCell: UITableViewCell {
     
     // MARK: - Functions
     
-    func setupData(_ comment: UICommentData) {
+    private func bind() {
+        self.viewModel.deleteCommentResponseDataDidChange = { [weak self] data in
+            guard let self = self else { return }
+            guard let commentVC = self.commentVC else { return }
+            commentVC.commentModel.commentPageModel.currentFetchingPage = 0
+            commentVC.commentModel.commentPageModel.isFetchingFirstPage = true
+            commentVC.viewModel.fetchCommentData(postId: postId, page: 0, fromCurrentVC: self.commentVC!)
+        }
+    }
+    
+    private func addViews() {
+        contentView.addSubview(profileImageView)
+        contentView.addSubview(commentUserHandleLabel)
+        contentView.addSubview(timePassedLabel)
+        contentView.addSubview(contentLabel)
+        contentView.addSubview(buttonStackView)
+        
+        [childCommentButton, deleteButton].forEach {
+            buttonStackView.addArrangedSubview($0)
+        }
+    }
+    
+    private func setupConstraints() {
+        profileImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(40.adjusted)
+            make.leading.equalToSuperview().inset(20.adjusted)
+            make.top.equalToSuperview().inset(20.adjustedH)
+        }
+        
+        commentUserHandleLabel.snp.makeConstraints { make in
+            make.leading.equalTo(profileImageView.snp.trailing).offset(12.adjusted)
+            make.top.equalTo(profileImageView.snp.top)
+        }
+        
+        timePassedLabel.snp.makeConstraints { make in
+            make.leading.equalTo(commentUserHandleLabel.snp.trailing).offset(8.adjusted)
+            make.centerY.equalTo(commentUserHandleLabel.snp.centerY)
+        }
+        
+        contentLabel.snp.makeConstraints { make in
+            make.leading.equalTo(commentUserHandleLabel.snp.leading)
+            make.top.equalTo(commentUserHandleLabel.snp.bottom).offset(8.adjustedH)
+            make.trailing.equalToSuperview().inset(20.adjusted)
+        }
+        
+        buttonStackView.snp.makeConstraints { make in
+            make.top.equalTo(contentLabel.snp.bottom).offset(8.adjustedH)
+            make.leading.equalTo(contentLabel.snp.leading)
+            make.bottom.equalToSuperview().inset(13.adjustedH)
+        }
+    }
+    
+    func setupData(_ comment: CommentDataModel) {
         // 현재 댓글 아이디 저장
         self.commentId = comment.commentId
+        self.commentUserHandle = comment.handle
         
         // 프로필 이미지
         if let url = URL(string: comment.profileImage) {
@@ -138,7 +233,7 @@ final class CommentTableViewCell: UITableViewCell {
         }
         
         self.commentUserHandleLabel.text = comment.handle
-        self.commentLabel.text = comment.content
+        self.contentLabel.text = comment.content
         
         /* 게시글의 주인(찍은 사람 + 찍힌 사람들) 혹은 댓글을 작성한 사람이 아닌 경우 삭제 버튼 hide */
         print("댓글 핸들: \(comment.handle), 로그인 유저 핸들: \(currentUserHandle)")

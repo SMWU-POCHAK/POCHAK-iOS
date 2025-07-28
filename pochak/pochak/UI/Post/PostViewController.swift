@@ -554,7 +554,7 @@ final class PostViewController: UIViewController {
     }
     
     private func showCommentVC() {
-        let commentVC = postStoryBoard.instantiateViewController(withIdentifier: "CommentVC") as! CommentViewController
+        let commentVC = CommentViewController()
         
         commentVC.modalPresentationStyle = .pageSheet
         commentVC.postId = receivedPostId
