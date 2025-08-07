@@ -70,8 +70,6 @@ final class CommentTableViewCell: UITableViewCell {
         let view = UIStackView()
         view.axis = .horizontal
         view.spacing = 16.adjusted
-        view.alignment = .fill
-        view.distribution = .fillProportionally
         return view
     }()
     
@@ -80,13 +78,9 @@ final class CommentTableViewCell: UITableViewCell {
         
         var config = UIButton.Configuration.plain()
         config.attributedTitle = AttributedString("답글 달기")
-        
-        let style = NSMutableParagraphStyle()
-        style.lineSpacing = 16.adjustedH
 
         config.attributedTitle?.setAttributes(AttributeContainer([NSAttributedString.Key.font: UIFont.Pretendard(size: 12, family: .Medium),
-                                                                  NSAttributedString.Key.foregroundColor: UIColor(named: "gray05"),
-                                                                  NSAttributedString.Key.paragraphStyle: style]))
+                                                                  NSAttributedString.Key.foregroundColor: UIColor(named: "gray05")]))
         config.contentInsets = .zero
         button.configuration = config
         button.addTarget(self, action: #selector(childCommentButtonDidTap), for: .touchUpInside)
@@ -99,12 +93,8 @@ final class CommentTableViewCell: UITableViewCell {
         var config = UIButton.Configuration.plain()
         config.attributedTitle = AttributedString("삭제")
         
-        let style = NSMutableParagraphStyle()
-        style.lineSpacing = 16.adjustedH
-
         config.attributedTitle?.setAttributes(AttributeContainer([NSAttributedString.Key.font: UIFont.Pretendard(size: 12, family: .Medium),
-                                                                  NSAttributedString.Key.foregroundColor: UIColor(named: "gray05"),
-                                                                  NSAttributedString.Key.paragraphStyle: style]))
+                                                                  NSAttributedString.Key.foregroundColor: UIColor(named: "gray05")]))
         config.contentInsets = .zero
         button.configuration = config
         button.addTarget(self, action: #selector(deleteButtonDidTap), for: .touchUpInside)
