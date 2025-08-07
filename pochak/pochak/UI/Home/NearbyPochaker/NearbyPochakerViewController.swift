@@ -78,7 +78,7 @@ final class NearbyPochakerViewController: UIViewController {
     private let guideLabel: UILabel = {
         let label = UILabel()
         label.text = "내 주변 포착 친구를 찾고, 포착하세요!"
-        label.font = UIFont(name: "Pretendard-Semibold", size: 16)
+        label.font = .Pretendard(size: 16, family: .SemiBold)
         return label
     }()
     

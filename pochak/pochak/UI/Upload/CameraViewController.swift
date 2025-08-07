@@ -93,7 +93,7 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
     
     private func checkUltraWideCameraAvailability() {
         let hasUltraWide = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) != nil
-        zoomControlView.setUltraWideCameraAvailability(hasUltraWide)p
+        zoomControlView.setUltraWideCameraAvailability(hasUltraWide)
     }
     
     override func viewDidAppear(_ animated: Bool) {
