@@ -8,8 +8,14 @@
 import UIKit
 import Kingfisher
 
-final class CommentViewController: UIViewController {
+struct CommentVCPageInfo {
+    var isLastPage: Bool
+    var isFetchingFirstPage: Bool
+    var currentFetchingPage: Int
+}
 
+final class CommentViewController: UIViewController {
+    
     // MARK: - Properties
     
     let textViewPlaceHolder = "이 게시물에 댓글을 달아보세요"
@@ -21,180 +27,457 @@ final class CommentViewController: UIViewController {
     weak var postVC: PostViewController?
     
     // 댓글 셀에서 받을 정보
-    var isPostingChildComment: Bool = false
+    var isPostingChildComment: Bool = false {
+        didSet {
+            configureCommentWritingStatusView()
+        }
+    }
     var parentCommentId: Int?
     
-    public var childCommentCntList = [Int]()  // 섹션 당 셀 개수 따로 저장해둘 리스트 필요함 (부모 댓글의 자식 댓글 개수 저장)
-    public var parentAndChildCommentList: [ParentCommentData]?  // 부모댓글 + 자식댓글 있는 list
-    public var uiCommentList = [UICommentData]()  // 셀에 뿌릴 때 사용할 실제 데이터들
+    var commentModel: CommentModel = .init(loginMemberProfileImage: "\(APIConstants.memberProfileImgBaseURL)\(UserDefaultsManager.getData(type: String.self, forKey: .handle))",
+                                           commentDataModelList: [],
+                                           commentPageModel: .init(isLastPage: false,
+                                                                   isFetchingFirstPage: true,
+                                                                   currentFetchingPage: 0))
     
     private var profileImageUrl: String = ""
     private var noComment: Bool = true
+    private var hasScrolled: Bool = false
+    private var isCurrentlyFetching: Bool = false
+    private var selectedCommentCellIndexPath: IndexPath = .init(row: 0, section: 0)
+    private let commentWritingStatusViewHeight: CGFloat = 21.adjustedH
+    
+    private var commentDeleteWorkItem: DispatchWorkItem?
+    let viewModel = CommentViewModel()
     
     // MARK: - Views
-
-    @IBOutlet weak var CommentInputViewBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var commentView: UIView!
-    @IBOutlet weak var commentTextField: UITextField!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var userProfileImageView: UIImageView!
     
-    @IBOutlet weak var noCommentView: UIView!
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "POCHAK 님의 게시물 댓글"
+        label.applyPochakFont(.body0)
+        return label
+    }()
+    
+    lazy var tableView: UITableView = {
+        let view = UITableView(frame: .zero, style: .grouped)
+        view.backgroundColor = .white
+        view.delegate = self
+        view.dataSource = self
+        view.separatorStyle = .none  // cell 간 구분선 스타일
+        
+        // tableView가 자동으로 셀 컨텐츠 내용 계산해서 높이 맞추도록
+        view.rowHeight = UITableView.automaticDimension
+        view.estimatedRowHeight = 90.adjustedH
+        
+        view.allowsMultipleSelection = false
+        view.allowsSelectionDuringEditing = false
+        
+        // 키보드 내릴 수 있게
+        view.keyboardDismissMode = .onDrag
+        
+        view.register(CommentTableViewCell.self, forCellReuseIdentifier: CommentTableViewCell.identifier)
+        view.register(ReplyTableViewCell.self, forCellReuseIdentifier: ReplyTableViewCell.identifier)
+        view.register(CommentTableViewFooterView.self, forHeaderFooterViewReuseIdentifier: CommentTableViewFooterView.identifier)
+        return view
+    }()
+    
+    private let noCommentView: UIView = UIView()
+    
+    private let noCommentImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "NoCommentIcon")
+        view.contentMode = .scaleAspectFit
+        return view
+    }()
+    
+    private let noCommentLabel: UILabel = {
+        let label = UILabel()
+        label.text = "게시물 댓글이 없습니다."
+        label.applyPochakFont(.body3)
+        label.textColor = UIColor(named: "gray04")
+        return label
+    }()
+    
+    private let commentInputView: UIView = UIView()
+    
+    private let userProfileImageView: UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 40.adjusted / 2
+        return view
+    }()
+    
+    private let inputInnerView: UIView = {
+        let view = UIView()
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 15.adjusted
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor(named: "gray03")?.cgColor
+        return view
+    }()
+    
+    private let commentWritingStatusView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(named: "yellow01")
+        return view
+    }()
+    
+    private let commentWritingStatusLabel: UILabel = {
+        let label = UILabel()
+        label.text = "@Float2_y님에게 답글 남기는 중"
+        label.font = .Pretendard(size: 10, family: .Regular)
+        return label
+    }()
+    
+    private let stopChildCommentModeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "ExtraSmallXIcon"), for: .normal)
+        button.addTarget(self, action: #selector(stopChildCommentModeButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+    
+    private let textField: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "이 게시물에 댓글을 달아보세요."
+        tf.clearButtonMode = .never
+        tf.borderStyle = .none
+        tf.contentHorizontalAlignment = .left
+        tf.contentVerticalAlignment = .center
+        tf.font = UIFont.Pretendard(size: 14, family: .Regular)
+        return tf
+    }()
+    
+    private let uploadButton: UIButton = {
+        let button = UIButton()
+        
+        var config = UIButton.Configuration.filled()
+        config.image = UIImage(named: "CommentUploadIcon")
+        config.baseBackgroundColor = UIColor(named: "yellow00")
+        config.contentInsets = .init(top: 4.adjustedH, leading: 10.adjusted, bottom: 4.adjustedH, trailing: 10.adjusted)
+        config.background.cornerRadius = 18.adjusted
+        
+        button.configuration = config
+        button.addTarget(self, action: #selector(uploadCommentButtonDidTap), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    private let commentDeleteConfirmView: CommentDeleteConfirmView = {
+        let view = CommentDeleteConfirmView()
+        view.isHidden = true
+        return view
+    }()
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 테이블 뷰 세팅
-        setUpTableView()
+        view.backgroundColor = .white
         
-        /* Keyboard 보여지고 숨겨질 때 발생되는 이벤트 등록 */
-        NotificationCenter.default.addObserver(  // 키보드 보여질 때
-            self,
-            selector: #selector(keyboardWillShow),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil)
+        bind()
         
-        NotificationCenter.default.addObserver(  // 키보드 숨겨질 때
-            self,
-            selector: #selector(keyboardWillHide),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil)
+        addViews()
+        setupConstraints()
+        addTapGestureTableView()
+        addKeyboardObserver()
+        setCommentDeleteClosure()
         
-        // 사용자 프로필 사진 크기 반만큼 radius
-        userProfileImageView.layer.cornerRadius = 40 / 2
+        commentWritingStatusView.isHidden = true
+        configureCommentWritingStatusView()
         
         // 댓글 데이터 조회
-        loadCommentData()
+        guard let postId = postId else { return }
+        isCurrentlyFetching = true
+        viewModel.fetchCommentData(postId: postId, page: self.commentModel.commentPageModel.currentFetchingPage, fromCurrentVC: self)
     }
     
     // MARK: - Actions
     
-    @IBAction func postNewCommentBtnTapped(_ sender: UIButton) {
-        let commentContent = commentTextField.text ?? ""
-        
-        // 대댓글인지 댓글인지 확인해야 함
-        print(commentContent)
-        
-        // 댓글 내용이 있는 경우에만 POST 요청
-        if commentContent != "" {
-            // 임시로 parentCommentSK는 nil로 지정
-            
-            CommentService.postNewComment(postId: postId!, content: commentContent, parentCommentId: self.isPostingChildComment ? self.parentCommentId : nil) { [weak self] data, failed in
-                guard let data = data else {
-                    // 에러가 난 경우, alert 창 present
-                    switch failed {
-                    case .disconnected:
-                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), animated: true)
-                    default:
-                        self?.present(UIAlertController.networkErrorAlert(title: "댓글 등록에 실패하였습니다."), animated: true)
-                    }
-                    return
-                }
-                
-                print("=== CommentView, postNewCommentBtnTapped succeeded ===")
-                print("== data: \(data)")
-                
-                // 만약 실패한 경우 실패했다고 알림창
-                if data.isSuccess == false {
-                    self?.present(UIAlertController.networkErrorAlert(title: "댓글 등록에 실패하였습니다."), animated: true)
-                    return
-                }
-                else {
-                    print("=== 새 댓글 등록, 데이터 업데이트 ===")
-                    self?.loadCommentData()
-                }
+    @objc private func tableViewDidTap() {
+        self.isPostingChildComment = false  // 다른 곳을 터치해서 입력창을 내렸을 때 답글 달기 상태 취소
+        self.textField.endEditing(true)
+        self.tableView.cellForRow(at: selectedCommentCellIndexPath)?.contentView.backgroundColor = .white
+    }
+    
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as NSDictionary?,
+              let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+
+        // 홈 버튼 없는 아이폰들은 다 빼줘야함. (키보드 높이 - ....?)
+        let finalHeight = keyboardFrame.size.height - self.view.safeAreaInsets.bottom
+
+        let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
+
+        // 키보드 올라오는 애니메이션이랑 동일하게 텍스트뷰 올라가게 만들기.
+        UIView.animate(withDuration: animationDuration) {
+            self.commentInputView.snp.updateConstraints { make in
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(finalHeight)
             }
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    @objc private func keyboardWillHide(_ notification: NSNotification) {
+        let animationDuration = notification.userInfo![ UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
+
+        UIView.animate(withDuration: animationDuration) {
+            self.commentInputView.snp.updateConstraints { make in
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            }
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    @objc private func stopChildCommentModeButtonDidTap() {
+        self.isPostingChildComment = false
+        self.tableView.cellForRow(at: selectedCommentCellIndexPath)?.contentView.backgroundColor = .white
+    }
+    
+    @objc private func uploadCommentButtonDidTap() {
+        let commentContent = textField.text ?? ""
+        guard let postId = postId else { return }
+
+        if commentContent != "" {
+            viewModel.uploadNewComment(postId: postId, content: commentContent, parentCommentId: self.isPostingChildComment ? self.parentCommentId : nil, fromCurrentVC: self)
         }
         else {
             print("textview is empty")
         }
-        
+
         // 댓글창 비우기
-        commentTextField.text = ""
-        
+        textField.text = ""
+
         // 키보드 내리기
-        commentTextField.endEditing(true)
-        
+        textField.endEditing(true)
+
         // 댓글 종류 초기화
         self.isPostingChildComment = false
+        self.tableView.cellForRow(at: selectedCommentCellIndexPath)?.contentView.backgroundColor = .white
     }
     
     // MARK: - Functions
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.isPostingChildComment = false
         self.view.endEditing(true)
-        self.commentTextField.endEditing(true)
+        self.textField.endEditing(true)
+        self.tableView.cellForRow(at: selectedCommentCellIndexPath)?.contentView.backgroundColor = .white
     }
     
-    func loadCommentData() {
-        print("postid: \(postId)")
+    /// 댓글 조회를 page=0부터 다시하는 경우
+    private func initializeCommentPageStatus() {
+        self.commentModel.commentPageModel.currentFetchingPage = 0
+        self.commentModel.commentPageModel.isFetchingFirstPage = true
+    }
+    
+    private func bind() {
+        viewModel.commentDataDidChange = { [weak self] data in
+            guard let data = data else { return }
+            guard let self = self else { return }
+            self.setupData(data, fetchedMoreComments: !self.commentModel.commentPageModel.isFetchingFirstPage)
+        }
         
-        CommentService.getComments(postId: postId ?? 0, page: 0) { [weak self] data, failed in
-            guard let data = data else {
-                // 에러가 난 경우, alert 창 present
-                switch failed {
-                case .disconnected:
-                    self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription), 
-                                  animated: true)
-                default:
-                    self?.present(UIAlertController.networkErrorAlert(title: "댓글 조회에 실패하였습니다."), animated: true)
-                }
-                return
-            }
-            
-            print("=== CommentView, load comment data succeeded ===")
-            print("== data: \(data)")
-            
-            if data.isSuccess == true {
-                self?.parentAndChildCommentList = data.result.parentCommentList  // 데이터로 넘어온 부모 댓글(+자식댓글)리스트
-                self?.profileImageUrl = data.result.loginMemberProfileImage
-                self?.noComment = true
-                self?.uiCommentList.removeAll()
-                
-                // 댓글 존재할 때만
-                if(self?.parentAndChildCommentList?.count != 0) {
-                    self?.noComment = false
-                    // 부모 댓글 자체를 부모 댓글인지의 여부가 있는 UICommentData형으로 만들어서 추가
-                    for parentData in self?.parentAndChildCommentList ?? [] {
-                        self?.uiCommentList.append(UICommentData(commentId: parentData.commentId,
-                                                                 profileImage: parentData.profileImage,
-                                                                 handle: parentData.handle,
-                                                                 createdDate: parentData.createdDate,
-                                                                 content: parentData.content,
-                                                                 isParent: true,
-                                                                 parentId: nil))
-                        // childCommentCntList[몇번째 부모] = 해당 부모의 자식 댓글 개수
-                        self?.childCommentCntList.append(parentData.childCommentList.count)
-                        
-                        // 부모 댓글의 자식 댓글을 리스트에 추가
-                        for childData in parentData.childCommentList {
-                            self?.uiCommentList.append(UICommentData(commentId: childData.commentId,
-                                                                     profileImage: childData.profileImage,
-                                                                     handle: childData.handle,
-                                                                     createdDate: childData.createdDate,
-                                                                     content: childData.content,
-                                                                     isParent: false,
-                                                                     parentId: parentData.commentId))
-                        }
-                    }
-                }
-                print("=== loading comment data ===")
-                print(self?.uiCommentList)
-                
-                print("=== init ui ===")
-                self?.initUI()
-                
-                // title 내용 설정
-                self?.titleLabel.text = (self?.postOwnerHandle ?? "사용자") + " 님의 게시물 댓글"
-            }
-            else {
-                self?.present(UIAlertController.networkErrorAlert(title: "댓글 조회에 실패했습니다."), animated: true)
-            }
+        viewModel.uploadCommentResponseDataDidChange = { [weak self] data in
+            guard let self = self else { return }
+            self.initializeCommentPageStatus()
+            self.viewModel.fetchCommentData(postId: postId!, page: 0, fromCurrentVC: self)
+        }
+        
+        viewModel.deleteCommentResponseDataDidChange = { [weak self] data in
+            guard let self = self else { return }
+            self.initializeCommentPageStatus()
+            self.viewModel.fetchCommentData(postId: postId!, page: 0, fromCurrentVC: self)
         }
     }
+    
+    private func addViews() {
+        view.addSubview(titleLabel)
+        view.addSubview(tableView)
+        view.addSubview(noCommentView)
+        noCommentView.addSubview(noCommentImageView)
+        noCommentView.addSubview(noCommentLabel)
+        
+        view.addSubview(commentInputView)
+        commentInputView.addSubview(userProfileImageView)
+        commentInputView.addSubview(inputInnerView)
+        inputInnerView.addSubview(commentWritingStatusView)
+        inputInnerView.addSubview(textField)
+        inputInnerView.addSubview(uploadButton)
+        commentWritingStatusView.addSubview(commentWritingStatusLabel)
+        commentWritingStatusView.addSubview(stopChildCommentModeButton)
+        
+        view.addSubview(commentDeleteConfirmView)
+    }
+    
+    private func setupConstraints() {
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(38.adjustedH)
+            make.centerX.equalToSuperview()
+        }
+        
+        noCommentView.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+        }
+        noCommentImageView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.centerX.equalToSuperview()
+        }
+        noCommentLabel.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.top.equalTo(noCommentImageView.snp.bottom).offset(24.adjustedH)
+        }
+        
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(10.adjustedH)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(commentInputView.snp.top)
+        }
+        
+        // - commentInputView
+        // -- user profile image view
+        // -- inputInnerView
+        // --- commentwritingstatus view
+        // ---- comment writing status label
+        // ---- x button
+        // --- textfield
+        // --- upload button
+        commentInputView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
+        userProfileImageView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(20.adjusted)
+            make.bottom.equalToSuperview().inset(8.adjustedH)
+            make.width.height.equalTo(40.adjusted)
+        }
+        
+        inputInnerView.snp.makeConstraints { make in
+            make.leading.equalTo(userProfileImageView.snp.trailing).offset(9.adjusted)
+            make.trailing.equalToSuperview().inset(12.adjusted)
+            make.top.bottom.equalToSuperview().inset(10.adjustedH)
+        }
+        
+        commentWritingStatusView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()  // superview = inputInnerView
+            make.height.equalTo(commentWritingStatusViewHeight)
+            make.top.equalTo(commentWritingStatusView.snp.bottom).offset(7.adjusted)
+        }
+        commentWritingStatusLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(12.adjusted)
+//            make.top.equalToSuperview().inset(5.adjustedH)
+//            make.bottom.equalToSuperview().inset(4.adjustedH)
+            make.centerY.equalToSuperview()
+        }
+        stopChildCommentModeButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(13.adjusted)
+            make.centerY.equalTo(commentWritingStatusLabel.snp.centerY)
+        }
+        
+        textField.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(11.adjusted)
+            make.top.equalTo(commentWritingStatusView.snp.bottom).offset(7.adjustedH)
+            make.bottom.equalToSuperview().inset(9.adjustedH)
+            make.height.equalTo(22.adjustedH)
+            make.trailing.equalTo(uploadButton.snp.leading).offset(-9.adjusted)
+        }
+        uploadButton.snp.makeConstraints { make in
+//            make.top.equalTo(commentWritingStatusView.snp.bottom).offset(7.adjusted)
+//            make.bottom.equalTo(textField.snp.bottom)
+            make.centerY.equalTo(textField.snp.centerY)
+            make.width.equalTo(36.adjusted)
+            make.height.equalTo(24.adjusted)  // adjustedH로 하는게 맞는데 그렇게 하면 버튼 안 이미지와 버튼의 inset이 너무 작아져서 버튼의 비율 유지에 의미를 둠
+            make.trailing.equalToSuperview().inset(7.adjusted)
+        }
+        uploadButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        
+        commentDeleteConfirmView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(20.adjusted)
+            make.bottom.equalTo(commentInputView.snp.top).offset(-18.adjustedH)
+        }
+    }
+    
+    private func addTapGestureTableView() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewDidTap))
+        tapGesture.cancelsTouchesInView = false
+        self.tableView.addGestureRecognizer(tapGesture)
+    }
+    
+    /// 키보드 관련된 이벤트 등록
+    private func addKeyboardObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil)
+    }
+    
+    private func setCommentDeleteClosure() {
+        commentDeleteConfirmView.cancelButtonAction = { [weak self] in
+            self?.commentDeleteWorkItem?.cancel()
+            self?.commentDeleteConfirmView.isHidden = true
+        }
+    }
+    
+    // fetchedMoreComments는 0페이지 다음을 조회했는지 여부를 담은 bool 변수
+    func setupData(_ fetchedModel: CommentModel, fetchedMoreComments: Bool) {
+        self.profileImageUrl = fetchedModel.loginMemberProfileImage
+        
+        if !fetchedMoreComments && fetchedModel.commentDataModelList.isEmpty {
+            self.noComment = true
+        }
+        
+        // 댓글 있음 + 0번째 페이지 조회 or not
+        if !fetchedModel.commentDataModelList.isEmpty {
+            // page = 0 조회했을 때는 fetchedModel을 commentModel에 저장 (초기화)
+            if !fetchedMoreComments {
+                self.noComment = false
+                self.commentModel = fetchedModel
+            }
+            
+            // page = 0이 아닐 때
+            else {
+                self.commentModel.commentPageModel.isLastPage = fetchedModel.commentPageModel.isLastPage
+                // 부모 댓글을 부모 댓글인지의 여부를 담는 변수가 있는 UICommentData형으로 만들어서 추가
+                for newCommentIndex in 0..<fetchedModel.commentDataModelList.count {
+                    var parentData = fetchedModel.commentDataModelList[newCommentIndex]
+                    self.commentModel.commentDataModelList.append(parentData)
+                    parentData.childCommentCnt += parentData.childCommentModelList.count
+                    
+                    // 부모 댓글의 자식 댓글을 commentmodel 리스트에 추가
+                    for childData in parentData.childCommentModelList {
+                        parentData.childCommentModelList.append(childData)
+                    }
+                }
+            }
+        }
+        else {
+            self.noComment = true
+        }
+        
+        self.initUI()
+        
+        self.titleLabel.text = (self.postOwnerHandle ?? "사용자") + " 님의 게시물 댓글"
+    }
+    
+    func configureCommentWritingStatusView() {
+        self.commentWritingStatusView.isHidden = !isPostingChildComment
+        self.commentWritingStatusView.snp.updateConstraints { make in
+            make.height.equalTo(isPostingChildComment ? commentWritingStatusViewHeight : 0)
+        }
+    }
+    
+    // MARK: - Functions
     
     private func initUI() {
         if let url = URL(string: profileImageUrl) {
@@ -208,147 +491,58 @@ final class CommentViewController: UIViewController {
             noCommentView.isHidden = true
         }
         self.tableView.reloadData()
-    }
-    
-    private func setUpTableView() {
-        // tableView의 프로토콜
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.separatorStyle = .none  // cell 간 구분선 스타일
-        
-        // tableView가 자동으로 셀 컨텐츠 내용 계산해서 높이 맞추도록
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 90
-        
-        tableView.allowsMultipleSelection = false
-        
-        // 키보드 내릴 수 있게
-        tableView.keyboardDismissMode = .onDrag
-        
-        // nib은 CommentTableViewCell << 이 파일임
-        let commentNib = UINib(nibName: CommentTableViewCell.identifier, bundle: nil)
-        tableView.register(commentNib, forCellReuseIdentifier: CommentTableViewCell.identifier)
-        
-        // 테이블뷰에 ReplyTableViewCell 등록
-        let replyNib = UINib(nibName: ReplyTableViewCell.identifier, bundle: nil)
-        tableView.register(replyNib, forCellReuseIdentifier: ReplyTableViewCell.identifier)
-        
-        // 테이블뷰에 footer view nib 등록
-        tableView.register(UINib(nibName: CommentTableViewFooterView.identifier, bundle: nil),
-                           forHeaderFooterViewReuseIdentifier: CommentTableViewFooterView.identifier)
-    }
-    
-    public func toUICommentData() {
-        self.uiCommentList.removeAll()
-        
-        for parentData in self.parentAndChildCommentList ?? [] {
-            self.uiCommentList.append(UICommentData(commentId: parentData.commentId, 
-                                                    profileImage: parentData.profileImage,
-                                                    handle: parentData.handle,
-                                                    createdDate: parentData.createdDate,
-                                                    content: parentData.content,
-                                                    isParent: true, 
-                                                    parentId: nil))
-            
-            // 부모 댓글의 자식 댓글을 리스트에 추가
-            for childData in parentData.childCommentList {
-                self.uiCommentList.append(UICommentData(commentId: childData.commentId, 
-                                                        profileImage: childData.profileImage,
-                                                        handle: childData.handle,
-                                                        createdDate: childData.createdDate,
-                                                        content: childData.content,
-                                                        isParent: false,
-                                                        parentId: parentData.commentId))
-            }
-        }
-    }
-    
-    // 키보드 보여질 때
-    @objc private func keyboardWillShow(_ notification: Notification) {
-        guard let userInfo = notification.userInfo as NSDictionary?,
-              let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
-            return
-        }
-        
-        // 홈 버튼 없는 아이폰들은 다 빼줘야함. (키보드 높이 - ....?)
-        let finalHeight = keyboardFrame.size.height - self.view.safeAreaInsets.bottom
-        
-        let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
-        
-        // 키보드 올라오는 애니메이션이랑 동일하게 텍스트뷰 올라가게 만들기.
-        UIView.animate(withDuration: animationDuration) {
-            self.CommentInputViewBottomConstraint.constant = finalHeight
-            self.view.layoutIfNeeded()
-        }
-    }
-
-    // 키보드 숨겨질 때 -> 원래 상태로
-    @objc private func keyboardWillHide(_ notification: NSNotification) {
-        let animationDuration = notification.userInfo![ UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
-                
-        UIView.animate(withDuration: animationDuration) {
-            self.CommentInputViewBottomConstraint.constant = 0
-            self.view.layoutIfNeeded()
-        }
+        self.isCurrentlyFetching = false
     }
 }
-
+    
 // MARK: - Extension: UITableView
 
 extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
     
-    // 마지막 섹션은 인디케이터로 해야하는디.. 일단 부모 댓글의 개수만큼 섹션 생성
+    // 섹션의 개수 = 부모 댓글 개수
     func numberOfSections(in tableView: UITableView) -> Int {
-        return noComment ? 0 : parentAndChildCommentList!.count
+        return noComment ? 0 : commentModel.commentDataModelList.count
     }
     
-    // 한 섹션에 몇 개의 셀을 넣을지 -> 각 부모댓글의 자식댓글 개수 + 1(부모댓글 자신)
+    // 한 섹션 당 셀의 개수 = 1(부모댓글 자기 자신) + 그 부모댓글의 자식댓글 개수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return noComment ? 0 : parentAndChildCommentList![section].childCommentList.count + 1
+        return noComment ? 0 : commentModel.commentDataModelList[section].childCommentCnt + 1
     }
     
-    // 어떤 셀을 보여줄지
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = indexPath.section
         let row = indexPath.row
         
-        let cellData = self.uiCommentList
-        
-        // 셀을 그리기 위해 인덱스를 계산 해야 함
-        var childCommentsSoFar = 0
-        if(section != 0) {
-            for index in 0...section - 1 {
-                childCommentsSoFar += self.parentAndChildCommentList![index].childCommentList.count
-            }
-        }
-            
-        var finalIndex = section + indexPath.row + childCommentsSoFar
-        print("=== finalIndex: \(finalIndex)")
-        print("=== 현재 셀에 그리는 데이터 ===")
-        print(cellData[finalIndex])
-        
         // 부모 댓글인 경우
-        if cellData[finalIndex].isParent {
+        if row == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CommentTableViewCell.identifier, for: indexPath) as? CommentTableViewCell else { return UITableViewCell() }
-            cell.editingCommentTextField = self.commentTextField
+            cell.editingCommentTextField = self.textField
             cell.tableView = self.tableView
             cell.commentVC = self
             cell.postVC = self.postVC
             cell.postId = self.postId
             cell.taggedUserList = self.taggedUserList
             cell.postOwnerHandle = self.postOwnerHandle
-            cell.setupData(cellData[finalIndex])
+            cell.delegate = self
+            cell.setupData(self.commentModel.commentDataModelList[section])
+            cell.childCommentButtonDidTapClosure = { [weak self] (commentUserHandle, commentId) in
+                self?.selectedCommentCellIndexPath = indexPath
+                self?.isPostingChildComment = true
+                self?.parentCommentId = commentId
+                self?.commentWritingStatusLabel.text = "@\(commentUserHandle)님에게 답글 남기는 중"
+            }
             return cell
         }
         // 자식 댓글인 경우
         else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ReplyTableViewCell.identifier, for: indexPath)
                     as? ReplyTableViewCell else { return UITableViewCell() }
-            cell.editingCommentTextField = self.commentTextField
+            cell.editingCommentTextField = self.textField
             cell.tableView = self.tableView
             cell.commentVC = self
             cell.postVC = self.postVC
-            cell.setupData(cellData[finalIndex])
+            cell.setupData(data: self.commentModel.commentDataModelList[section].childCommentModelList[row - 1],
+                           parent: self.commentModel.commentDataModelList[section].commentId)
             return cell
         }
     }
@@ -360,35 +554,30 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
         // footer에게 CommentViewController 전달
         footerView.commentVC = self
         footerView.postId = self.postId
-
-        if let cellData = self.parentAndChildCommentList {
-            // 현재 부모댓글의 자식 댓글들이 last page가 아니면 footer 추가
-            if !cellData[section].childCommentPageInfo.lastPage {
-                //footerView.backgroundColor = .blue
-                footerView.curCommentId = cellData[section].commentId
-                return footerView
-            }
-            else {
-                return nil
-            }
+        
+        // 현재 부모댓글의 자식 댓글들이 last page가 아니면 footer 추가
+        if !self.commentModel.commentDataModelList[section].childCommentPageModel.isLastPage {
+            footerView.curCommentId = self.commentModel.commentDataModelList[section].commentId
+            return footerView
         }
         else {
-            return nil
+            return UIView()
         }
     }
     
-    // TableView의 rowHeight속성에 AutometicDimension을 통해 테이블의 row가 유동적이라는 것을 선언
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UIView()
     }
+    
+//    // TableView의 rowHeight속성에 AutometicDimension을 통해 테이블의 row가 유동적이라는 것을 선언
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
     
     // 이상한 여백 제거?
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if let cellData = self.parentAndChildCommentList {
-            // 자식 댓글이 마지막 페이지이면 여백 없애기
-            if cellData[section].childCommentPageInfo.lastPage {
-                return .leastNonzeroMagnitude
-            }
+        if self.commentModel.commentDataModelList[section].childCommentPageModel.isLastPage {
+            return .leastNonzeroMagnitude
         }
         return UITableView.automaticDimension
     }
@@ -396,5 +585,40 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
     // grouped 스타일 테이블뷰이기 때문에 자동 생성되는 헤더 높이를 0으로
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return .leastNonzeroMagnitude
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // 초기 offset이 설정된 후에만 처리하도록 조건 추가
+        if !hasScrolled && scrollView.contentOffset.y == 0 {
+            return // 초기 설정이 끝난 후 스크롤이 시작되었을 때만 처리
+        }
+        
+        if scrollView.contentOffset.y > (scrollView.contentSize.height - scrollView.frame.size.height) {
+            if !self.commentModel.commentPageModel.isLastPage && !isCurrentlyFetching {
+                print("[!] CommentViewController - NEEDS TO RE-FETCH DATA")
+                self.commentModel.commentPageModel.currentFetchingPage += 1
+                self.commentModel.commentPageModel.isFetchingFirstPage = false
+                self.isCurrentlyFetching = true
+                viewModel.fetchCommentData(postId: self.postId!, page: self.commentModel.commentPageModel.currentFetchingPage, fromCurrentVC: self)
+            }
+        }
+    }
+}
+
+// MARK: - Extension; CommentTableViewCellDelete Delegate
+
+extension CommentViewController: CommentTableViewCellDeleteDelegate {
+    
+    func didTapDeleteButton(postId: Int, commentId: Int) {
+        self.commentDeleteConfirmView.isHidden = false
+        
+        // 5초 후 실제로 댓글 삭제 & 컨펌 창 hidden 처리
+        commentDeleteWorkItem = DispatchWorkItem { [weak self] in
+            guard let self = self else { return }
+            self.commentDeleteConfirmView.isHidden = true
+            self.viewModel.deleteComment(postId: postId, commentId: commentId, fromCurrentVC: self)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: commentDeleteWorkItem!)
+        print("[CommentViewController] 5초 dispatch queue is set")
     }
 }

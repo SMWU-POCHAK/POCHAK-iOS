@@ -11,6 +11,7 @@ enum PochakFontConfig {
     case body0
     case body3
     case body3_1
+    case body4
     
     case displayLarge
     case displayMedium
@@ -19,6 +20,7 @@ enum PochakFontConfig {
     case headlineMedium
     case bodyLarge
     case bodyMedium
+    case bodyMediumSmall
     case bodySmall
     case bodyExtraSmall
     case bodyMini
@@ -31,10 +33,10 @@ enum PochakFontConfig {
         switch self {
         case .body0:
             return 18
-        case .body3:
-            return 13
-        case .body3_1:
+        case .body3, .body3_1:
             return 14
+        case .body4:
+            return 13
         case .displayLarge:
             return 26
         case .displayMedium, .displaySmall:
@@ -45,7 +47,7 @@ enum PochakFontConfig {
             return 18
         case .bodyMedium, .bodySmall:
             return 16
-        case .bodyExtraSmall, .bodyMini:
+        case .bodyMediumSmall, .bodyExtraSmall, .bodyMini:
             return 14
         case .captionLarge, .captionMedium:
             return 12
@@ -57,30 +59,32 @@ enum PochakFontConfig {
     
     var font: UIFont {
         switch self {
-        case .body0, .body3, .body3_1:
-            return UIFont.systemFont(ofSize: size, weight: .bold)
+        case .body0, .body3_1:
+            return .Pretendard(size: size, family: .Bold)
+        case .body4:
+            return .Pretendard(size: size, family: .Medium)
         case .displayLarge, .displayMedium:
-            return UIFont.systemFont(ofSize: size, weight: .bold)
+            return .Pretendard(size: size, family: .Bold)
         case .displaySmall:
-            return UIFont.systemFont(ofSize: size, weight: .medium)
+            return .Pretendard(size: size, family: .Medium)
         case .headlineLarge:
-            return UIFont.systemFont(ofSize: size, weight: .bold)
+            return .Pretendard(size: size, family: .Bold)
         case .headlineMedium:
-            return UIFont.systemFont(ofSize: size, weight: .medium)
+            return .Pretendard(size: size, family: .Medium)
         case .bodyLarge, .bodyMedium, .bodyMini:
-            return UIFont.systemFont(ofSize: size, weight: .bold)
+            return .Pretendard(size: size, family: .Bold)
         case .bodySmall:
-            return UIFont.systemFont(ofSize: size, weight: .medium)
-        case .bodyExtraSmall:
-            return UIFont.systemFont(ofSize: size, weight: .regular)
+            return .Pretendard(size: size, family: .Medium)
+        case .body3, .bodyMediumSmall, .bodyExtraSmall:
+            return .Pretendard(size: size, family: .Regular)
         case .captionLarge:
-            return UIFont.systemFont(ofSize: size, weight: .bold)
+            return .Pretendard(size: size, family: .Bold)
         case .captionMedium:
-            return UIFont.systemFont(ofSize: size, weight: .medium)
+            return .Pretendard(size: size, family: .Medium)
         case .captionSmall:
             return UIFont.italicSystemFont(ofSize: size)
         case .captionExtraSmall:
-            return UIFont.systemFont(ofSize: size, weight: .regular)
+            return .Pretendard(size: size, family: .Regular)
         }
     }
     
@@ -89,9 +93,11 @@ enum PochakFontConfig {
         case .body0:
             return 24
         case .body3:
-            return 18
+            return 20
         case .body3_1:
             return 16.8
+        case .body4:
+            return 18
         case .displayLarge:
             return 30
         case .displayMedium, .displaySmall:
@@ -104,7 +110,7 @@ enum PochakFontConfig {
             return 24
         case .bodyMedium, .bodySmall:
             return 22
-        case .bodyExtraSmall, .bodyMini:
+        case .bodyMediumSmall, .bodyExtraSmall, .bodyMini:
             return 20
         case .captionLarge, .captionMedium:
             return 16

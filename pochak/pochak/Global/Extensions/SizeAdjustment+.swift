@@ -22,6 +22,7 @@ extension CGFloat {
         return self * ratio
     }
     
+    /// Height에 대해 resize
     var adjustedH: CGFloat {
         let ratio: CGFloat = UIScreen.main.bounds.height / 844
         return self * ratio

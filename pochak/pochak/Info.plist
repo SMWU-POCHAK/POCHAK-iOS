@@ -8,6 +8,10 @@
 	</array>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>사용자 주변에 있는 포차커 탐색을 위해 블루투스를 사용합니다.</string>
+	<key>AppleID</key>
+	<string>6502332418</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<string>NO</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

@@ -195,14 +195,14 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
 
         case .follow:
             let storyboard = UIStoryboard(name: "ProfileTab", bundle: nil)
-            guard let profileTabVC = storyboard.instantiateViewController(withIdentifier: "OtherUserProfileVC") as? OtherUserProfileViewController else { return }
+            let profileTabVC = OtherUserProfileViewController()
             
             profileTabVC.receivedHandle = alarmList[indexPath.row].memberHandle
             self.navigationController?.pushViewController(profileTabVC, animated: true)
             
         case .ownerComment, .taggedComment, .commentReply, .ownerLike, .taggedLike:
             let exploreTabSb = UIStoryboard(name: "ExploreTab", bundle: nil)
-            guard let postVC = exploreTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController else { return }
+            let postVC = PostViewController()
             
             postVC.receivedPostId = alarmList[indexPath.row].postId
             self.navigationController?.pushViewController(postVC, animated: true)
