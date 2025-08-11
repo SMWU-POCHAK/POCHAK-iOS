@@ -84,13 +84,10 @@ class OnboardingViewController: UIPageViewController {
     // MARK: - Actions
     
     @objc private func didTapSkipButton() {
-        print("====== didTapSkipButton =======")
         onboardingDelegate?.didFinishOnboarding(self)
     }
     
     @objc private func didTapNextButton() {
-        print("====== didTapNextButton =======")
-        
         let nextPage = pageControl.currentPage + 1
         
         if nextPage == pages.count {
@@ -101,7 +98,6 @@ class OnboardingViewController: UIPageViewController {
     }
     
     @objc private func didChangePageControl(_ sender: UIPageControl) {
-        print("====== didChangePageControl =======")
         updatePageControl()
     }
     

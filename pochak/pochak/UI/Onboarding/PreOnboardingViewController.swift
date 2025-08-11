@@ -65,8 +65,6 @@ class PreOnboardingViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func didTapStartButton() {
-//        let onboardingViewController = OnboardingViewController()
-//        navigationController?.pushViewController(onboardingViewController, animated: true)
         preOnboardingDelegate?.didTapStartButton(self)
     }
     

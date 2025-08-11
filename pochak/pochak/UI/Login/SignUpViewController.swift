@@ -483,24 +483,17 @@ final class SignUpViewController: UIViewController {
     
     /// 온보딩 완료여부 확인 후 안 했으면 온보딩 시작
     private func showPreOnboarding() {
-        print("======= showPreOnboarding =======")
         let preOnboardingVC = PreOnboardingViewController()
         preOnboardingVC.preOnboardingDelegate = self
         preOnboardingVC.modalPresentationStyle = .fullScreen
         self.present(preOnboardingVC, animated: true)
-//        self.navigationController?.pushViewController(preOnboardingVC, animated: true)
-        print("========= showPreOnboarding done ========")
     }
     
     private func showOnboarding() {
-        print("======= showOnboarding =======")
-
         let onboardingVC = OnboardingViewController()
         onboardingVC.onboardingDelegate = self
         onboardingVC.modalPresentationStyle = .fullScreen
         self.present(onboardingVC, animated: false)
-//        self.navigationController?.pushViewController(onboardingVC, animated: true)
-        print("========= showOnboarding done ========")
     }
     
     private func toHomeTabPage() {
