@@ -335,16 +335,8 @@ final class SignUpViewController: UIViewController {
                 print(error)
             }
             self?.saveRefreshTokenIssuedAt()
-            
-            // 온보딩 완료 여부 확인 후 온보딩 시작
-            let isOnboardingCompleted = UserDefaultsManager.getData(type: Bool.self, forKey: .isOnboardingCompleted) ?? false
-            print("isOnboardingCompleted:\(isOnboardingCompleted)")
-            if !isOnboardingCompleted {
-                self?.showPreOnboarding()
-            }
-            else {
-                self?.toHomeTabPage()
-            }
+            self?.showPreOnboarding()
+//            self?.toHomeTabPage()
         }
     }
     
@@ -492,7 +484,6 @@ final class SignUpViewController: UIViewController {
     /// 온보딩 완료여부 확인 후 안 했으면 온보딩 시작
     private func showPreOnboarding() {
         print("======= showPreOnboarding =======")
-        UserDefaultsManager.setData(value: true, key: .isOnboardingCompleted)
         let preOnboardingVC = PreOnboardingViewController()
         preOnboardingVC.preOnboardingDelegate = self
         preOnboardingVC.modalPresentationStyle = .fullScreen
@@ -507,7 +498,7 @@ final class SignUpViewController: UIViewController {
         let onboardingVC = OnboardingViewController()
         onboardingVC.onboardingDelegate = self
         onboardingVC.modalPresentationStyle = .fullScreen
-        self.present(onboardingVC, animated: true)
+        self.present(onboardingVC, animated: false)
 //        self.navigationController?.pushViewController(onboardingVC, animated: true)
         print("========= showOnboarding done ========")
     }
@@ -646,7 +637,7 @@ extension SignUpViewController: UIGestureRecognizerDelegate { }
 
 extension SignUpViewController: PreOnboardingDelegate {
     func didTapStartButton(_ preOnboardingVC: PreOnboardingViewController) {
-        preOnboardingVC.dismiss(animated: true)
+        preOnboardingVC.dismiss(animated: false)
         self.showOnboarding()
     }
 }
