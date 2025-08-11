@@ -8,9 +8,15 @@
 import UIKit
 import SnapKit
 
+protocol PreOnboardingDelegate: AnyObject {
+    func didTapStartButton(_ preOnboardingVC: PreOnboardingViewController)
+}
+
 class PreOnboardingViewController: UIViewController {
 
     // MARK: - Properties
+    
+    weak var preOnboardingDelegate: PreOnboardingDelegate?
     
     // MARK: - Views
     
@@ -59,8 +65,9 @@ class PreOnboardingViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func didTapStartButton() {
-        let onboardingViewController = OnboardingViewController()
-        navigationController?.pushViewController(onboardingViewController, animated: true)
+//        let onboardingViewController = OnboardingViewController()
+//        navigationController?.pushViewController(onboardingViewController, animated: true)
+        preOnboardingDelegate?.didTapStartButton(self)
     }
     
     // MARK: - Functions

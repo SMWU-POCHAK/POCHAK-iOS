@@ -335,7 +335,16 @@ final class SignUpViewController: UIViewController {
                 print(error)
             }
             self?.saveRefreshTokenIssuedAt()
-            self?.toHomeTabPage()
+            
+            // 온보딩 완료 여부 확인 후 온보딩 시작
+            let isOnboardingCompleted = UserDefaultsManager.getData(type: Bool.self, forKey: .isOnboardingCompleted) ?? false
+            print("isOnboardingCompleted:\(isOnboardingCompleted)")
+            if !isOnboardingCompleted {
+                self?.showPreOnboarding()
+            }
+            else {
+                self?.toHomeTabPage()
+            }
         }
     }
     
@@ -480,6 +489,29 @@ final class SignUpViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    /// 온보딩 완료여부 확인 후 안 했으면 온보딩 시작
+    private func showPreOnboarding() {
+        print("======= showPreOnboarding =======")
+        UserDefaultsManager.setData(value: true, key: .isOnboardingCompleted)
+        let preOnboardingVC = PreOnboardingViewController()
+        preOnboardingVC.preOnboardingDelegate = self
+        preOnboardingVC.modalPresentationStyle = .fullScreen
+        self.present(preOnboardingVC, animated: true)
+//        self.navigationController?.pushViewController(preOnboardingVC, animated: true)
+        print("========= showPreOnboarding done ========")
+    }
+    
+    private func showOnboarding() {
+        print("======= showOnboarding =======")
+
+        let onboardingVC = OnboardingViewController()
+        onboardingVC.onboardingDelegate = self
+        onboardingVC.modalPresentationStyle = .fullScreen
+        self.present(onboardingVC, animated: true)
+//        self.navigationController?.pushViewController(onboardingVC, animated: true)
+        print("========= showOnboarding done ========")
+    }
+    
     private func toHomeTabPage() {
         FCMTokenManager.shared.getPushNotificationPermission()
         
@@ -609,3 +641,21 @@ extension SignUpViewController: CustomAlertDelegate {
 // MARK: - Extension: UIGestureRecognizerDelegate
 
 extension SignUpViewController: UIGestureRecognizerDelegate { }
+
+// MARK: - Extension: PreOnboardingDelegate
+
+extension SignUpViewController: PreOnboardingDelegate {
+    func didTapStartButton(_ preOnboardingVC: PreOnboardingViewController) {
+        preOnboardingVC.dismiss(animated: true)
+        self.showOnboarding()
+    }
+}
+
+// MARK: - Extension: OnboardingDelegate
+
+extension SignUpViewController: OnboardingViewControllerDelegate {
+    func didFinishOnboarding(_ onboardingVC: OnboardingViewController) {
+        onboardingVC.dismiss(animated: true)
+        self.toHomeTabPage()
+    }
+}

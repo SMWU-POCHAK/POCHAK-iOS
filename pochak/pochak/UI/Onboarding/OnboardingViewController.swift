@@ -8,9 +8,15 @@
 import UIKit
 import SnapKit
 
+protocol OnboardingViewControllerDelegate: AnyObject {
+    func didFinishOnboarding(_ onboardingVC: OnboardingViewController)
+}
+
 class OnboardingViewController: UIPageViewController {
     
     // MARK: - Properties
+    
+    weak var onboardingDelegate: OnboardingViewControllerDelegate?
     
     private var pages: [UIViewController] = []
     private var currentPage: Int = 0
@@ -79,11 +85,17 @@ class OnboardingViewController: UIPageViewController {
     
     @objc private func didTapSkipButton() {
         print("====== didTapSkipButton =======")
+        onboardingDelegate?.didFinishOnboarding(self)
     }
     
     @objc private func didTapNextButton() {
         print("====== didTapNextButton =======")
+        
         let nextPage = pageControl.currentPage + 1
+        
+        if nextPage == pages.count {
+            onboardingDelegate?.didFinishOnboarding(self)
+        }
         pageControl.currentPage = nextPage
         updatePageControl()
     }
