@@ -168,6 +168,22 @@ class OnboardingViewController: UIPageViewController {
         // 그러므로, currentPage가 크면 오른쪽 방향, 작으면 왼쪽 방향으로 움직이게 설정해 줌
         let direction: UIPageViewController.NavigationDirection = (pageControl.currentPage > currentIndex) ? .forward : .reverse
         pageViewController.setViewControllers([pages[pageControl.currentPage]], direction: direction, animated: true)
+        
+        // 마지막 페이지인 경우 '다음'을 '시작하기'로 변경
+        if pageControl.currentPage == pages.count - 1 {
+            changeNextButtonTitle(to: "시작하기")
+        }
+        else {
+            changeNextButtonTitle(to: "다음")
+        }
+    }
+    
+    private func changeNextButtonTitle(to title: String) {
+        let font = UIFont(name: "Pretendard-Bold", size: 16)
+        nextButton.configuration?.attributedTitle = AttributedString(title)
+        nextButton.configuration?.attributedTitle?.setAttributes(AttributeContainer([NSAttributedString.Key.font : font,
+                                                                  NSAttributedString.Key.foregroundColor: UIColor(named: "yellow00")]))
+        nextButton.configuration?.contentInsets = .zero
     }
 
 }
@@ -195,5 +211,6 @@ extension OnboardingViewController: UIPageViewControllerDataSource, UIPageViewCo
               let currentIndex = pages.firstIndex(of: viewControllers[0]) else { return }
 
         pageControl.currentPage = currentIndex
+        updatePageControl()
     }
 }
