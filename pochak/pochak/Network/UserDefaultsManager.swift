@@ -21,6 +21,7 @@ class UserDefaultsManager {
         case profileImgUrl
         case refreshTokenIssuedAt
         case rejectedUpdateBefore
+        case isOnboardingCompleted
     }
     
     static func setData<T>(value: T, key: UserDefaultsKeys) {
