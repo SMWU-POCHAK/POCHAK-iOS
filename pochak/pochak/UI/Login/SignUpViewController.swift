@@ -294,6 +294,7 @@ final class SignUpViewController: UIViewController {
     }
     
     @objc private func doneButtonDidTap(_ sender: Any) {
+        LoadingIndicator.showLoading(color: UIColor(named: "yellow00")!)
         print("=== done buttone did tap ===")
         guard let nickname = nicknameTextField.text else { return }
         guard let id = idTextField.text else { return }
@@ -498,6 +499,7 @@ final class SignUpViewController: UIViewController {
     
     private func toHomeTabPage() {
         FCMTokenManager.shared.getPushNotificationPermission()
+        LoadingIndicator.hideLoading()
         
         let tabBarController = CustomTabBarController()
         let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate

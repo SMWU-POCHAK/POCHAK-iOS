@@ -62,6 +62,7 @@
 		0844D7F32BF21A80001154AC /* CancelViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0844D7F12BF21A80001154AC /* CancelViewCell.swift */; };
 		084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */; };
 		084AF4C82A5D831100C6454A /* HomeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */; };
+		084CBB8A2E4B6A280059729B /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084CBB892E4B6A280059729B /* LoadingIndicator.swift */; };
 		08524D262D201C4F006C87E1 /* PochakNotificationService.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 08224C0F2CCFBDF7002DA825 /* PochakNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		085AFD7A2E004B7200BA6077 /* CommentDeleteConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085AFD792E004B7200BA6077 /* CommentDeleteConfirmView.swift */; };
 		0861E0E62D2578C3009E70A0 /* HandleDuplicateCheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0861E0E52D2578C3009E70A0 /* HandleDuplicateCheckButton.swift */; };
@@ -386,6 +387,7 @@
 		0844D7F12BF21A80001154AC /* CancelViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelViewCell.swift; sourceTree = "<group>"; };
 		084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCollectionViewCell.xib; sourceTree = "<group>"; };
+		084CBB892E4B6A280059729B /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		085AFD792E004B7200BA6077 /* CommentDeleteConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDeleteConfirmView.swift; sourceTree = "<group>"; };
 		0861E0E52D2578C3009E70A0 /* HandleDuplicateCheckButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleDuplicateCheckButton.swift; sourceTree = "<group>"; };
 		0861E0E72D259365009E70A0 /* UIResponder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+.swift"; sourceTree = "<group>"; };
@@ -885,6 +887,7 @@
 			children = (
 				086BF2032CEC9D7800735BB4 /* FCMTokenManager.swift */,
 				0870EE9E2D86FE8000D6C43F /* AppStoreUpdateManager.swift */,
+				084CBB892E4B6A280059729B /* LoadingIndicator.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1810,6 +1813,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				084CBB8A2E4B6A280059729B /* LoadingIndicator.swift in Sources */,
 				EA7EE1D82BF38921009486CC /* PochakAlarmTableViewCell.swift in Sources */,
 				376EA1302CAAAF6900FEFB63 /* ProfileService.swift in Sources */,
 				EA01079E2A59556800A3AE85 /* PostViewController.swift in Sources */,
