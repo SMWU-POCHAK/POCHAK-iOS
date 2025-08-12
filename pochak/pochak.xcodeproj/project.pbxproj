@@ -64,6 +64,7 @@
 		0844D7F32BF21A80001154AC /* CancelViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0844D7F12BF21A80001154AC /* CancelViewCell.swift */; };
 		084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */; };
 		084AF4C82A5D831100C6454A /* HomeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */; };
+		084CBB8A2E4B6A280059729B /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084CBB892E4B6A280059729B /* LoadingIndicator.swift */; };
 		08524D262D201C4F006C87E1 /* PochakNotificationService.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 08224C0F2CCFBDF7002DA825 /* PochakNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		085AFD7A2E004B7200BA6077 /* CommentDeleteConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085AFD792E004B7200BA6077 /* CommentDeleteConfirmView.swift */; };
 		0861E0E62D2578C3009E70A0 /* HandleDuplicateCheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0861E0E52D2578C3009E70A0 /* HandleDuplicateCheckButton.swift */; };
@@ -73,10 +74,13 @@
 		086BF1FE2CEC9B1100735BB4 /* PushNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF1FD2CEC9B1100735BB4 /* PushNotificationService.swift */; };
 		086BF2012CEC9B7600735BB4 /* FCMTokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF2002CEC9B7600735BB4 /* FCMTokenAPI.swift */; };
 		086BF2042CEC9D7800735BB4 /* FCMTokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086BF2032CEC9D7800735BB4 /* FCMTokenManager.swift */; };
+		086E3D032E3E4D8B00F3DD44 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086E3D022E3E4D8B00F3DD44 /* OnboardingViewController.swift */; };
+		086E3D072E3E4F7D00F3DD44 /* PreOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086E3D062E3E4F7C00F3DD44 /* PreOnboardingViewController.swift */; };
 		0870EE9F2D86FE8000D6C43F /* AppStoreUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0870EE9E2D86FE8000D6C43F /* AppStoreUpdateManager.swift */; };
 		0876E23E2C274256008DE88F /* NoPostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */; };
 		0876E23F2C274256008DE88F /* NoPostCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */; };
 		0880087F2D3FDEF100700585 /* BluetoothSerialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0880087E2D3FDEF100700585 /* BluetoothSerialManager.swift */; };
+		08809AF32E3F8F5100A21E0B /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08809AF22E3F8F5100A21E0B /* OnboardingPageViewController.swift */; };
 		0885BEE82D96BF9B00FE82F3 /* PostDetailFollowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0885BEE72D96BF9B00FE82F3 /* PostDetailFollowButton.swift */; };
 		0885BEF02D9714AE00FE82F3 /* PostDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0885BEEF2D9714AE00FE82F3 /* PostDetailViewModel.swift */; };
 		08867D5C2D106A1F00FA6FD9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08867D5B2D106A1F00FA6FD9 /* GoogleService-Info.plist */; };
@@ -391,6 +395,7 @@
 		0844D7F12BF21A80001154AC /* CancelViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelViewCell.swift; sourceTree = "<group>"; };
 		084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCollectionViewCell.xib; sourceTree = "<group>"; };
+		084CBB892E4B6A280059729B /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		085AFD792E004B7200BA6077 /* CommentDeleteConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDeleteConfirmView.swift; sourceTree = "<group>"; };
 		0861E0E52D2578C3009E70A0 /* HandleDuplicateCheckButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleDuplicateCheckButton.swift; sourceTree = "<group>"; };
 		0861E0E72D259365009E70A0 /* UIResponder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+.swift"; sourceTree = "<group>"; };
@@ -399,10 +404,13 @@
 		086BF1FD2CEC9B1100735BB4 /* PushNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationService.swift; sourceTree = "<group>"; };
 		086BF2002CEC9B7600735BB4 /* FCMTokenAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMTokenAPI.swift; sourceTree = "<group>"; };
 		086BF2032CEC9D7800735BB4 /* FCMTokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMTokenManager.swift; sourceTree = "<group>"; };
+		086E3D022E3E4D8B00F3DD44 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		086E3D062E3E4F7C00F3DD44 /* PreOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreOnboardingViewController.swift; sourceTree = "<group>"; };
 		0870EE9E2D86FE8000D6C43F /* AppStoreUpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreUpdateManager.swift; sourceTree = "<group>"; };
 		0876E23C2C274256008DE88F /* NoPostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoPostCollectionViewCell.swift; sourceTree = "<group>"; };
 		0876E23D2C274256008DE88F /* NoPostCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoPostCollectionViewCell.xib; sourceTree = "<group>"; };
 		0880087E2D3FDEF100700585 /* BluetoothSerialManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothSerialManager.swift; sourceTree = "<group>"; };
+		08809AF22E3F8F5100A21E0B /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		0885BEE72D96BF9B00FE82F3 /* PostDetailFollowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailFollowButton.swift; sourceTree = "<group>"; };
 		0885BEEF2D9714AE00FE82F3 /* PostDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewModel.swift; sourceTree = "<group>"; };
 		08867D5B2D106A1F00FA6FD9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "/Users/suyeon/Desktop/Pochak/GoogleService-Info.plist"; sourceTree = "<absolute>"; };
@@ -895,8 +903,19 @@
 				083F26DF2D4004E800A11D79 /* LocalPushNotificationManager.swift */,
 				089F49DC2D4A68CB00D8E2E9 /* BluetoothRefreshOperation.swift */,
 				0870EE9E2D86FE8000D6C43F /* AppStoreUpdateManager.swift */,
+				084CBB892E4B6A280059729B /* LoadingIndicator.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		086E3D012E3E4D0100F3DD44 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				086E3D022E3E4D8B00F3DD44 /* OnboardingViewController.swift */,
+				086E3D062E3E4F7C00F3DD44 /* PreOnboardingViewController.swift */,
+				08809AF22E3F8F5100A21E0B /* OnboardingPageViewController.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		089C757A2A51713C003AAB94 /* Fonts */ = {
@@ -958,6 +977,7 @@
 		089E27BD2C4E8DB300828F4C /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				086E3D012E3E4D0100F3DD44 /* Onboarding */,
 				46923F702D070FD4006C49E5 /* Memory */,
 				0822A0212CA196DF00F87E2C /* Explore */,
 				373815142A89E6BE0032066A /* Login */,
@@ -1819,6 +1839,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				084CBB8A2E4B6A280059729B /* LoadingIndicator.swift in Sources */,
 				EA7EE1D82BF38921009486CC /* PochakAlarmTableViewCell.swift in Sources */,
 				376EA1302CAAAF6900FEFB63 /* ProfileService.swift in Sources */,
 				EA01079E2A59556800A3AE85 /* PostViewController.swift in Sources */,
@@ -1862,6 +1883,7 @@
 				EA01079A2A59556800A3AE85 /* CommentViewController.swift in Sources */,
 				0822A0772CA1986000F87E2C /* CommentService.swift in Sources */,
 				08B693F22C37203400D82DC4 /* TaggedUsersDetailViewController.swift in Sources */,
+				086E3D072E3E4F7D00F3DD44 /* PreOnboardingViewController.swift in Sources */,
 				08C02EF12BF37D2F00627C21 /* ReportTableViewCell.swift in Sources */,
 				0861E0E62D2578C3009E70A0 /* HandleDuplicateCheckButton.swift in Sources */,
 				0822A04C2CA197F800F87E2C /* SearchAPI.swift in Sources */,
@@ -1964,6 +1986,7 @@
 				0822A06A2CA1983C00F87E2C /* PostLikeResponse.swift in Sources */,
 				3759CF492CAB178800408A4E /* SignUpRequest.swift in Sources */,
 				089F49DD2D4A68CB00D8E2E9 /* BluetoothRefreshOperation.swift in Sources */,
+				08809AF32E3F8F5100A21E0B /* OnboardingPageViewController.swift in Sources */,
 				08EA16A12D62013A009FBCC4 /* PostListCollectionViewCell.swift in Sources */,
 				0820B1902A63A18100604DA8 /* ReplyTableViewCell.swift in Sources */,
 				460CFD552D1C48D500398C9A /* MemoryGalleryViewModel.swift in Sources */,
@@ -1974,6 +1997,7 @@
 				EA2CD6392C5F45E300644EFE /* BaseAPI.swift in Sources */,
 				08AA55232D58E27C00A78865 /* SizeAdjustment+.swift in Sources */,
 				3759CF4B2CAB179100408A4E /* SignUpResponse.swift in Sources */,
+				086E3D032E3E4D8B00F3DD44 /* OnboardingViewController.swift in Sources */,
 				374E46302CAAC3F6008AE361 /* SignOutResponse.swift in Sources */,
 				EA4EF8D82C2EC5F7009549FF /* UITextField+.swift in Sources */,
 				EAF918512AA468670037C270 /* APIConstants.swift in Sources */,
