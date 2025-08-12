@@ -108,8 +108,7 @@ final class NearbyPochakerView: UIView {
     }
     
     func getHandle() -> String {
-        guard let handle = handleLabel.text else { fatalError("[!] Error: handleLabel.text is nil!")}
-        return handle
+        return handleLabel.text ?? "포차커"
     }
     
     func showViewWithAnimation(duration: TimeInterval = 1, delay: TimeInterval = 0) {
