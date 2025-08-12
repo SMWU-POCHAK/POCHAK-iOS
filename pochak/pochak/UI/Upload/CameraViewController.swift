@@ -14,6 +14,9 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
     
     // MARK: - Properties
     
+    var isPochakedWithBluetooth: Bool = false
+    var nearbyPochakerHandle: String = ""
+    
     private var captureSession: AVCaptureSession!
     private var stillImageOutput: AVCapturePhotoOutput!
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer!
@@ -62,6 +65,9 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
             
             print("[Camera]: Photo's taken")
             print("[CameraViewModel]: Photo captured!")
+            
+            print("[CameraViewController] isPochakedWithBluetooth: \(isPochakedWithBluetooth)")
+            print("[CameraViewController] nearbyPochakerHandle: \(nearbyPochakerHandle)")
         } else {
             print("[CameraViewModel]: Camera's busy.")
         }
@@ -80,6 +86,8 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         handlePinchGestureForZoom()
         handleTapGestrueToFocus()
         
+        print("[CameraViewController] isPochakedWithBluetooth: \(isPochakedWithBluetooth)")
+        print("[CameraViewController] nearbyPochakerHandle: \(nearbyPochakerHandle)")
         checkUltraWideCameraAvailability()
     }
     
@@ -151,6 +159,8 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
         
         let uploadViewController = storyboard?.instantiateViewController(withIdentifier: "UploadViewController") as! UploadViewController
         uploadViewController.receivedImage = image
+        uploadViewController.isPochakedWithBluetooth = self.isPochakedWithBluetooth
+        uploadViewController.nearbyPochakerHandle = self.nearbyPochakerHandle
         navigationController?.pushViewController(uploadViewController, animated: true)
     }
     
@@ -249,6 +259,8 @@ final class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegat
 
                     self.checkUltraWideCameraAvailability()
                 }
+                
+                self.captureSession.commitConfiguration()
                 
                 self.captureSession.startRunning()
                 self.setInitialZoom()

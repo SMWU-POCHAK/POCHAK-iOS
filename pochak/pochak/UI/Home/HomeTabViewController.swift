@@ -24,6 +24,16 @@ final class HomeTabViewController: UIViewController {
     
     // MARK: - Views
     
+    private lazy var nearbyPochakButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "NearbyPochakIcon"), for: .normal)
+        button.isEnabled = true
+        button.addAction(UIAction { _ in
+            self.nearbyPochakButtonDidTap()
+        }, for: .touchUpInside)
+        return button
+    }()
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     // MARK: - Lifecycle
@@ -55,12 +65,21 @@ final class HomeTabViewController: UIViewController {
         self.setupData()
     }
     
+    @objc private func nearbyPochakButtonDidTap() {
+        let nearbyPochakerVC = NearbyPochakerViewController()
+        nearbyPochakerVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(nearbyPochakerVC, animated: true)
+    }
+    
     // MARK: - Functions
     
     private func setupNavigationBar() {
         let logoImageView = UIImageView(image: UIImage(named: "wordLogoSmall"))
         logoImageView.contentMode = .scaleAspectFit
         self.navigationItem.titleView = logoImageView
+        
+        let rightBarButtonItem = UIBarButtonItem(customView: nearbyPochakButton)
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem
     }
     
     private func setupCollectionView() {

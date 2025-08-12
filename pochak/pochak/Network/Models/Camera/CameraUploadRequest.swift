@@ -9,5 +9,6 @@ import Foundation
 
 struct CameraUploadRequest: Codable {
     var caption: String
-    var taggedMemberHandleList: [String]
+    var taggedMemberHandleList: [String]?
+    var pinnedHandle: String?
 }

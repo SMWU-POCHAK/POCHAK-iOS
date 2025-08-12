@@ -11,7 +11,7 @@ struct CameraService {
     /// 카메라탭 게시물 업로드 함수
     /// - Parameters:
     ///   - files: 업로드할 이미지
-    ///   - request: 캡션, 태그 핸들을 담은 구조체
+    ///   - request: 캡션, 태그 핸들, 고정 태그 핸들(선택) 을 담은 구조체
     ///   - completion: 통신 후 핸들러 (뷰컨트롤러에 있음)
     static func postUpload(
         files: [(Data, String, String)],

@@ -14,6 +14,9 @@ final class UploadViewController: UIViewController,UITextFieldDelegate {
     // MARK: - Properties
     
     var receivedImage: UIImage?
+    var isPochakedWithBluetooth: Bool = false
+    var nearbyPochakerHandle: String = ""
+    
     private var searchTextField = UITextField()
     private var cancelButton = UIButton()
     
@@ -54,6 +57,9 @@ final class UploadViewController: UIViewController,UITextFieldDelegate {
         setupSearchTextField()
         setupCollectionView()
         setupTableView()
+        
+        print("[UploadViewController] isPochakedWithBluetooth: \(isPochakedWithBluetooth)")
+        print("[UploadViewController] nearbyPochakerHandle: \(nearbyPochakerHandle)")
     }
     
     // MARK: - Actions
@@ -75,12 +81,19 @@ final class UploadViewController: UIViewController,UITextFieldDelegate {
             
             var taggedUserHandles: [String] = []
             for taggedUserHandle in tagId {
+                if taggedUserHandle == nearbyPochakerHandle {
+                    continue
+                }
                 taggedUserHandles.append(taggedUserHandle)
             }
             
             showProgressBar()
             
-            let request = CameraUploadRequest(caption: captionText, taggedMemberHandleList: taggedUserHandles)
+            let request = CameraUploadRequest(caption: captionText,
+                                              taggedMemberHandleList: taggedUserHandles.isEmpty ? nil : taggedUserHandles,
+                                              pinnedHandle: isPochakedWithBluetooth ? nearbyPochakerHandle : nil)
+
+            print(">> CameraUploadRequest: \(request)")
             
             var files: [(Data, String, String)] = []
             if let postImage = postImage {
@@ -227,12 +240,17 @@ final class UploadViewController: UIViewController,UITextFieldDelegate {
     }
     
     private func setupCollectionView() {
+        if isPochakedWithBluetooth {
+            self.tagId.append(nearbyPochakerHandle)
+        }
+        
         collectionView.delegate = self
         collectionView.dataSource = self
         
         collectionView.register(UINib(
             nibName: TagCollectionViewCell.identifier,
             bundle: nil),forCellWithReuseIdentifier: TagCollectionViewCell.identifier)
+        collectionView.register(FixedTagCollectionViewCell.self, forCellWithReuseIdentifier: FixedTagCollectionViewCell.identifier)
     }
     
     private func setupTableView() {
@@ -375,19 +393,26 @@ extension UploadViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as? TagCollectionViewCell else {
-            fatalError("셀 타입 캐스팅 실패2")
+        if isPochakedWithBluetooth && indexPath.item == 0 {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FixedTagCollectionViewCell.identifier, for: indexPath) as? FixedTagCollectionViewCell else { fatalError("FixedTagCollectionViewCell 셀 타입 캐스팅 실패") }
+            cell.configure(with: self.tagId[indexPath.item])
+            return cell
         }
-        cell.tagIdLabel.text = self.tagId[indexPath.item]
-        cell.deleteButtonAction = { [weak self] in
-            guard let self = self else { return }
-            
-            self.tagId.remove(at: indexPath.item)
-            collectionView.reloadData()
-            
-            updateUploadButton()
+        else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as? TagCollectionViewCell else {
+                fatalError("셀 타입 캐스팅 실패2")
+            }
+            cell.tagIdLabel.text = self.tagId[indexPath.item]
+            cell.deleteButtonAction = { [weak self] in
+                guard let self = self else { return }
+                
+                self.tagId.remove(at: indexPath.item)
+                collectionView.reloadData()
+                
+                updateUploadButton()
+            }
+            return cell
         }
-        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
