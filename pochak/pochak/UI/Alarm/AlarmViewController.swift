@@ -144,6 +144,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             
             let userSentAlarmHandle = alarm.memberHandle ?? ""
             let comment = alarm.commentContent ?? ""
+            let time = alarm.createdDate.getTimeIntervalOfDateAndNow()
             
             let text: String
             switch alarmType {
@@ -157,31 +158,34 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
                 text = ""
             }
             
-            configureCell(cell, with: alarm, text: text)
+            configureCell(cell, with: alarm, comment: text, time: time)
             return cell
 
         case .follow:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: OtherTableViewCell.identifier, for: indexPath) as? OtherTableViewCell else {
                 fatalError("셀 타입 캐스팅 실패")
             }
+            let time = alarm.createdDate.getTimeIntervalOfDateAndNow()
             let text = "\(alarm.memberHandle ?? "") 님이 회원님을 팔로우하였습니다."
-            configureCell(cell, with: alarm, text: text)
+            configureCell(cell, with: alarm, comment: text, time: time)
             return cell
 
         case .ownerLike:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: OtherTableViewCell.identifier, for: indexPath) as? OtherTableViewCell else {
                 fatalError("셀 타입 캐스팅 실패")
             }
+            let time = alarm.createdDate.getTimeIntervalOfDateAndNow()
             let text = "내 게시물에 \(alarm.memberHandle ?? "") 님이 좋아요를 눌렀습니다."
-            configureCell(cell, with: alarm, text: text)
+            configureCell(cell, with: alarm, comment: text, time: time)
             return cell
 
         case .taggedLike:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: OtherTableViewCell.identifier, for: indexPath) as? OtherTableViewCell else {
                 fatalError("셀 타입 캐스팅 실패")
             }
+            let time = alarm.createdDate.getTimeIntervalOfDateAndNow()
             let text = "내가 포착된 게시물에 \(alarm.memberHandle ?? "") 님이 좋아요를 눌렀습니다."
-            configureCell(cell, with: alarm, text: text)
+            configureCell(cell, with: alarm, comment: text, time: time)
             return cell
         }
     }
@@ -213,8 +217,9 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
         return 72
     }
     
-    func configureCell(_ cell: OtherTableViewCell, with alarm: AlarmElementList, text: String) {
-        cell.comment.text = text
+    func configureCell(_ cell: OtherTableViewCell, with alarm: AlarmElementList, comment: String, time: String) {
+        cell.comment.text = comment
+        cell.timeLabel.text = "\(time) 전"
         if let url = URL(string: alarm.memberProfileImage ?? "") {
             cell.img.load(with: url)
             cell.img.contentMode = .scaleAspectFill
@@ -230,6 +235,12 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             cell.img.load(with: url)
             cell.img.contentMode = .scaleAspectFill
         }
+        
+        if let url = URL(string: alarm.postImage ?? "") {
+            cell.previewImageView.load(with: url)
+        }
+        
+        cell.timeLabel.text = "\(alarm.createdDate.getTimeIntervalOfDateAndNow()) 전"
         
         cell.previewBtnClickAction = {
             guard let tagId = alarm.tagId else {
