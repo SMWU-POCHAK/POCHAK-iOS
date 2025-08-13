@@ -30,6 +30,7 @@ struct AlarmElementList: Codable {
     let alarmId: Int
     let alarmType: AlarmType
     let isChecked: Bool
+    let createdDate: String
     let tagId: Int?
     let ownerId : Int?
     let ownerHandle: String?
