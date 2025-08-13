@@ -17,7 +17,8 @@ final class OtherTableViewCell: UITableViewCell {
 
     @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var comment: UILabel!
-    @IBOutlet weak var lineView: UIView!
+    @IBOutlet weak var timeLabel: UILabel!
+//    @IBOutlet weak var lineView: UIView!
     
     // MARK: - Lifecycle
 
@@ -31,7 +32,8 @@ final class OtherTableViewCell: UITableViewCell {
     // MARK: - Functions
 
     private func setupAttribute(){
-        img.layer.cornerRadius = 48/2
+        img.layer.cornerRadius = 44/2
+        timeLabel.applyPochakFont(.bodyExtraSmall)
 //        comment.lineBreakMode = .byCharWrapping
 //        comment.lineBreakStrategy = .hangulWordPriority
         self.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
@@ -44,25 +46,25 @@ final class OtherTableViewCell: UITableViewCell {
             let row = indexPath.row
             let numberOfRows = tableView.numberOfRows(inSection: indexPath.section)
             
-            switch row {
-            case 0 where numberOfRows == 1:
-                // 아이템이 하나인 경우
-                self.lineView.isHidden = true // separator를 보이지 않도록
-                
-            case 0:
-                // 첫 번째 셀
-                self.lineView.isHidden = false
-                print("첫번째")
-                
-            case numberOfRows - 1:
-                // 마지막 셀
-                self.lineView.isHidden = true // separator를 보이지 않도록
-                print("마지막")
-                
-            default:
-                // 그 외의 경우
-                self.lineView.isHidden = false
-            }
+//            switch row {
+//            case 0 where numberOfRows == 1:
+//                // 아이템이 하나인 경우
+//                self.lineView.isHidden = true // separator를 보이지 않도록
+//                
+//            case 0:
+//                // 첫 번째 셀
+//                self.lineView.isHidden = false
+//                print("첫번째")
+//                
+//            case numberOfRows - 1:
+//                // 마지막 셀
+//                self.lineView.isHidden = true // separator를 보이지 않도록
+//                print("마지막")
+//                
+//            default:
+//                // 그 외의 경우
+//                self.lineView.isHidden = false
+//            }
         }
     }
 }
