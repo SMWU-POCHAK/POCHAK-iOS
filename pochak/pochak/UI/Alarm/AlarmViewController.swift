@@ -101,7 +101,6 @@ final class AlarmViewController: UIViewController, UISheetPresentationController
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.separatorStyle = .none
         tableView.register(UINib(nibName: OtherTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: OtherTableViewCell.identifier)
         tableView.register(UINib(nibName: PochakAlarmTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: PochakAlarmTableViewCell.identifier)
         tableView.register(UINib(nibName: MomentAlarmTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: MomentAlarmTableViewCell.identifier)
@@ -199,9 +198,25 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let alarmType = self.alarmList[indexPath.row].alarmType
+        let alarm = self.alarmList[indexPath.row]
         
-        switch alarmType {
+        // 확인하지 않은 알람인 경우 확인api 요청
+        if !alarm.isChecked {
+            AlarmService.postCheckAlarm(alarmId: alarm.alarmId) { [weak self] data, failed in
+                guard let data = data else {
+                    switch failed {
+                    case .disconnected:
+                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
+                                      animated: true)
+                    default:
+                        self?.present(UIAlertController.networkErrorAlert(title: "알림 확인에 실패하였습니다."), animated: true)
+                    }
+                    return
+                }
+            }
+        }
+        
+        switch alarm.alarmType {
         case .tagApproval, .momentPost:
             self.tableView.deselectRow(at: indexPath, animated: false)
 
@@ -231,6 +246,13 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
         if let url = URL(string: alarm.memberProfileImage ?? "") {
             cell.img.load(with: url)
             cell.img.contentMode = .scaleAspectFill
+        }
+        
+        if !alarm.isChecked {
+            cell.contentView.backgroundColor = UIColor(hexCode: "FFF1D8", alpha: 0.7)
+        }
+        else {
+            cell.contentView.backgroundColor = .white
         }
     }
 
@@ -271,6 +293,13 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
                 sheet.prefersGrabberVisible = true
             }
             self.present(previewAlarmVC, animated: true)
+        }
+        
+        if !alarm.isChecked {
+            cell.contentView.backgroundColor = UIColor(hexCode: "FFF1D8", alpha: 0.7)
+        }
+        else {
+            cell.contentView.backgroundColor = .white
         }
     }
     
@@ -314,6 +343,13 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
                 sheet.prefersGrabberVisible = true
             }
             self.present(previewAlarmVC, animated: true)
+        }
+        
+        if !alarm.isChecked {
+            cell.contentView.backgroundColor = UIColor(hexCode: "FFF1D8", alpha: 0.7)
+        }
+        else {
+            cell.contentView.backgroundColor = .white
         }
     }
 }
