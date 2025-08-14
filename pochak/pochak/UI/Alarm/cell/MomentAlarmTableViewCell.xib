@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -57,29 +56,18 @@
                             <constraint firstAttribute="width" constant="35" id="wjp-hf-bkc"/>
                         </constraints>
                     </imageView>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JcT-NS-qaE">
-                        <rect key="frame" x="20" y="75" width="280" height="1"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="1" id="D3C-ue-CV0"/>
-                        </constraints>
-                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="YN0-L0-Ko2" firstAttribute="top" secondItem="2bQ-4i-XNF" secondAttribute="top" id="4k4-9C-pFB"/>
                     <constraint firstItem="2IZ-l8-Fnt" firstAttribute="leading" secondItem="YN0-L0-Ko2" secondAttribute="trailing" constant="12" id="9PA-dv-eLc"/>
                     <constraint firstItem="2bQ-4i-XNF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="MVQ-NC-rW1"/>
                     <constraint firstItem="YN0-L0-Ko2" firstAttribute="bottom" secondItem="2bQ-4i-XNF" secondAttribute="bottom" id="O5H-ur-1wT"/>
-                    <constraint firstAttribute="trailing" secondItem="JcT-NS-qaE" secondAttribute="trailing" constant="20" id="OSN-9m-0n3"/>
                     <constraint firstItem="2bQ-4i-XNF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="PyF-s8-R3B"/>
                     <constraint firstItem="2IZ-l8-Fnt" firstAttribute="centerY" secondItem="YN0-L0-Ko2" secondAttribute="centerY" id="UE7-q0-ZUc"/>
                     <constraint firstAttribute="bottom" secondItem="cAp-GL-Zoz" secondAttribute="bottom" constant="15" id="ejX-a3-hej"/>
                     <constraint firstAttribute="bottom" secondItem="2bQ-4i-XNF" secondAttribute="bottom" constant="16" id="g9R-MZ-HH2"/>
                     <constraint firstAttribute="trailing" secondItem="cAp-GL-Zoz" secondAttribute="trailing" constant="20" id="hZ0-vn-37M"/>
-                    <constraint firstItem="JcT-NS-qaE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="lc9-qT-GXU"/>
-                    <constraint firstAttribute="bottom" secondItem="JcT-NS-qaE" secondAttribute="bottom" id="oDo-no-Kq6"/>
                     <constraint firstItem="cAp-GL-Zoz" firstAttribute="leading" secondItem="2IZ-l8-Fnt" secondAttribute="trailing" constant="5" id="otQ-gP-dix"/>
-                    <constraint firstItem="JcT-NS-qaE" firstAttribute="top" secondItem="cAp-GL-Zoz" secondAttribute="bottom" constant="14" id="r52-Zf-ZSO"/>
                     <constraint firstItem="cAp-GL-Zoz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="r5x-8p-IfF"/>
                     <constraint firstItem="cAp-GL-Zoz" firstAttribute="centerY" secondItem="2IZ-l8-Fnt" secondAttribute="centerY" id="tNa-Sj-V6s"/>
                     <constraint firstItem="YN0-L0-Ko2" firstAttribute="leading" secondItem="2bQ-4i-XNF" secondAttribute="trailing" constant="-18" id="whR-nQ-DI7"/>
@@ -100,8 +88,5 @@
         <namedColor name="gray04">
             <color red="0.63529411764705879" green="0.66666666666666663" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>
