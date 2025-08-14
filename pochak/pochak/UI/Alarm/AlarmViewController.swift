@@ -104,6 +104,7 @@ final class AlarmViewController: UIViewController, UISheetPresentationController
         tableView.separatorStyle = .none
         tableView.register(UINib(nibName: OtherTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: OtherTableViewCell.identifier)
         tableView.register(UINib(nibName: PochakAlarmTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: PochakAlarmTableViewCell.identifier)
+        tableView.register(UINib(nibName: MomentAlarmTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: MomentAlarmTableViewCell.identifier)
     }
     
     private func setRefreshControl() {
@@ -187,6 +188,13 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             let text = "내가 포착된 게시물에 \(alarm.memberHandle ?? "") 님이 좋아요를 눌렀습니다."
             configureCell(cell, with: alarm, comment: text, time: time)
             return cell
+            
+        case .momentPost:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: MomentAlarmTableViewCell.identifier, for: indexPath) as? MomentAlarmTableViewCell else {
+                fatalError("셀 타입 캐스팅 실패")
+            }
+            configureMomentAlarmCell(cell, with: alarm)
+            return cell
         }
     }
     
@@ -194,7 +202,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
         let alarmType = self.alarmList[indexPath.row].alarmType
         
         switch alarmType {
-        case .tagApproval:
+        case .tagApproval, .momentPost:
             self.tableView.deselectRow(at: indexPath, animated: false)
 
         case .follow:
@@ -234,6 +242,49 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
         if let url = URL(string: alarm.ownerProfileImage ?? "") {
             cell.img.load(with: url)
             cell.img.contentMode = .scaleAspectFill
+        }
+        
+        if let url = URL(string: alarm.postImage ?? "") {
+            cell.previewImageView.load(with: url)
+        }
+        
+        cell.timeLabel.text = "\(alarm.createdDate.getTimeIntervalOfDateAndNow()) 전"
+        
+        cell.previewBtnClickAction = {
+            guard let tagId = alarm.tagId else {
+                print("tagId is nil")
+                return
+            }
+            
+            let previewAlarmVC = UIStoryboard(name: "AlarmTab", bundle: nil).instantiateViewController(withIdentifier: "PreviewAlarmVC") as! PreviewAlarmViewController
+            previewAlarmVC.tagId = tagId
+            previewAlarmVC.alarmId = alarm.alarmId
+            previewAlarmVC.modalPresentationStyle = .pageSheet
+            
+            if let sheet = previewAlarmVC.sheetPresentationController {
+                sheet.detents = [
+                    .custom { _ in
+                        return previewAlarmVC.postImageView.frame.maxY + 13
+                    }
+                ]
+                sheet.delegate = self
+                sheet.prefersGrabberVisible = true
+            }
+            self.present(previewAlarmVC, animated: true)
+        }
+    }
+    
+    func configureMomentAlarmCell(_ cell: MomentAlarmTableViewCell, with alarm: AlarmElementList) {
+        if let user1 = alarm.ownerHandle, let user2 = alarm.memberHandle {
+            cell.alarmContentLabel.text = "\(user1) 님과 \(user2)님이 서로를 순간 포착했습니다."
+        }
+        
+        if let url = URL(string: alarm.ownerProfileImage ?? "") {
+            cell.userImageView1.load(with: url)
+        }
+        
+        if let url = URL(string: alarm.memberProfileImage ?? "") {
+            cell.userImageView2.load(with: url)
         }
         
         if let url = URL(string: alarm.postImage ?? "") {
