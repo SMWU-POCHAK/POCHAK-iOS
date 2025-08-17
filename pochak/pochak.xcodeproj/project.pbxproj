@@ -65,6 +65,8 @@
 		084AF4C72A5D831100C6454A /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */; };
 		084AF4C82A5D831100C6454A /* HomeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */; };
 		084CBB8A2E4B6A280059729B /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084CBB892E4B6A280059729B /* LoadingIndicator.swift */; };
+		084CBBA12E4B73830059729B /* MomentAlarmTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 084CBBA02E4B73830059729B /* MomentAlarmTableViewCell.xib */; };
+		084CBBA22E4B73830059729B /* MomentAlarmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084CBB9F2E4B73830059729B /* MomentAlarmTableViewCell.swift */; };
 		08524D262D201C4F006C87E1 /* PochakNotificationService.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 08224C0F2CCFBDF7002DA825 /* PochakNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		085AFD7A2E004B7200BA6077 /* CommentDeleteConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085AFD792E004B7200BA6077 /* CommentDeleteConfirmView.swift */; };
 		0861E0E62D2578C3009E70A0 /* HandleDuplicateCheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0861E0E52D2578C3009E70A0 /* HandleDuplicateCheckButton.swift */; };
@@ -92,6 +94,9 @@
 		0889D1382C5CB69F00206C86 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0889D1372C5CB69F00206C86 /* String+.swift */; };
 		088DDFAA2D70D7AC003B0B35 /* FollowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088DDFA92D70D7AC003B0B35 /* FollowButton.swift */; };
 		088EB7B02D5A45DA0001A5E8 /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 088EB7AF2D5A45DA0001A5E8 /* Color.xcassets */; };
+		08954F5F2E4DF77900DCA652 /* CheckAlarmAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08954F5E2E4DF77900DCA652 /* CheckAlarmAPI.swift */; };
+		08954F612E4DF7AA00DCA652 /* CheckAlarmResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08954F602E4DF7AA00DCA652 /* CheckAlarmResponse.swift */; };
+		08954F632E4DF95D00DCA652 /* CheckAlarmRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08954F622E4DF95D00DCA652 /* CheckAlarmRequest.swift */; };
 		0895CC172D7F233A00E18FE0 /* CommentGetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0895CC162D7F233A00E18FE0 /* CommentGetRequest.swift */; };
 		089A67A62DCA7E63007E8DD0 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089A67A52DCA7E63007E8DD0 /* CommentViewModel.swift */; };
 		089C75882A51728A003AAB94 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 089C757F2A517289003AAB94 /* Pretendard-Regular.ttf */; };
@@ -396,6 +401,8 @@
 		084AF4C52A5D831100C6454A /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		084AF4C62A5D831100C6454A /* HomeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCollectionViewCell.xib; sourceTree = "<group>"; };
 		084CBB892E4B6A280059729B /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
+		084CBB9F2E4B73830059729B /* MomentAlarmTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentAlarmTableViewCell.swift; sourceTree = "<group>"; };
+		084CBBA02E4B73830059729B /* MomentAlarmTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MomentAlarmTableViewCell.xib; sourceTree = "<group>"; };
 		085AFD792E004B7200BA6077 /* CommentDeleteConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDeleteConfirmView.swift; sourceTree = "<group>"; };
 		0861E0E52D2578C3009E70A0 /* HandleDuplicateCheckButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleDuplicateCheckButton.swift; sourceTree = "<group>"; };
 		0861E0E72D259365009E70A0 /* UIResponder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+.swift"; sourceTree = "<group>"; };
@@ -417,6 +424,9 @@
 		0889D1372C5CB69F00206C86 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		088DDFA92D70D7AC003B0B35 /* FollowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowButton.swift; sourceTree = "<group>"; };
 		088EB7AF2D5A45DA0001A5E8 /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
+		08954F5E2E4DF77900DCA652 /* CheckAlarmAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAlarmAPI.swift; sourceTree = "<group>"; };
+		08954F602E4DF7AA00DCA652 /* CheckAlarmResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAlarmResponse.swift; sourceTree = "<group>"; };
+		08954F622E4DF95D00DCA652 /* CheckAlarmRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAlarmRequest.swift; sourceTree = "<group>"; };
 		0895CC162D7F233A00E18FE0 /* CommentGetRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentGetRequest.swift; sourceTree = "<group>"; };
 		089A67A52DCA7E63007E8DD0 /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
 		089C757F2A517289003AAB94 /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.ttf"; sourceTree = "<group>"; };
@@ -1303,6 +1313,8 @@
 				EA0107AD2A5EC23900A3AE85 /* OtherTableViewCell.xib */,
 				EA7EE1D62BF38921009486CC /* PochakAlarmTableViewCell.swift */,
 				EA7EE1D72BF38921009486CC /* PochakAlarmTableViewCell.xib */,
+				084CBB9F2E4B73830059729B /* MomentAlarmTableViewCell.swift */,
+				084CBBA02E4B73830059729B /* MomentAlarmTableViewCell.xib */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -1515,6 +1527,7 @@
 				EA7E146E2C8EA15C001DA769 /* AlarmListAPI.swift */,
 				EA96D04F2C8F15E000D80562 /* TagPreviewAPI.swift */,
 				EA96D0512C8F186900D80562 /* TagApproveAPI.swift */,
+				08954F5E2E4DF77900DCA652 /* CheckAlarmAPI.swift */,
 			);
 			path = Alarm;
 			sourceTree = "<group>";
@@ -1527,6 +1540,8 @@
 				EA96D04B2C8F10C700D80562 /* TagPreviewResponse.swift */,
 				EA96D0532C8F192000D80562 /* TagApproveRequest.swift */,
 				EA96D0552C8F192B00D80562 /* TagApproveResponse.swift */,
+				08954F602E4DF7AA00DCA652 /* CheckAlarmResponse.swift */,
+				08954F622E4DF95D00DCA652 /* CheckAlarmRequest.swift */,
 			);
 			path = Alarm;
 			sourceTree = "<group>";
@@ -1751,6 +1766,7 @@
 				0822A02E2CA196DF00F87E2C /* PostCollectionViewCell.xib in Resources */,
 				46BA13362CBD551600C81729 /* SecretKeyInfo.plist in Resources */,
 				EA99B63C2A5143A800EBA2AD /* CameraTab.storyboard in Resources */,
+				084CBBA12E4B73830059729B /* MomentAlarmTableViewCell.xib in Resources */,
 				EAFB4B842A51478600E0F2FA /* HomeTab.storyboard in Resources */,
 				EA1B0B672A49D23B00F86FBC /* LaunchScreen.storyboard in Resources */,
 				EA0107AF2A5EC23900A3AE85 /* OtherTableViewCell.xib in Resources */,
@@ -1872,6 +1888,7 @@
 				EA2CD6442C5F5A0E00644EFE /* HomeAPI.swift in Sources */,
 				0802AE032C31D3E00090FB92 /* UIImageView+.swift in Sources */,
 				46923F722D070FD4006C49E5 /* MemoryViewController.swift in Sources */,
+				084CBBA22E4B73830059729B /* MomentAlarmTableViewCell.swift in Sources */,
 				3769D6C72B3C4F0900294CD1 /* FollowingCollectionViewCell.swift in Sources */,
 				08E8DCDC2C38118000EC78C2 /* UILabel+.swift in Sources */,
 				374E462D2CAAC399008AE361 /* AuthenticationService.swift in Sources */,
@@ -1920,7 +1937,6 @@
 				371D33782B4E83E90084FF6A /* UserDefaultsManager.swift in Sources */,
 				3742617A2C31C6F900B67886 /* AppleLoginDataModel.swift in Sources */,
 				08D8E4E22D357D4C005F6789 /* NearbyPochakerViewController.swift in Sources */,
-				37EED79D2CFDDC3800254471 /* ProfileDataSingleton.swift in Sources */,
 				08EA16A52D622537009FBCC4 /* AutoSizingCollectionView.swift in Sources */,
 				373815162A89E6D30032066A /* SocialJoinViewController.swift in Sources */,
 				EA96D0542C8F192000D80562 /* TagApproveRequest.swift in Sources */,
@@ -1946,8 +1962,11 @@
 				0822A0782CA1986000F87E2C /* UserService.swift in Sources */,
 				EA7E14712C8EA26D001DA769 /* AlarmListRequest.swift in Sources */,
 				EA817AB62B3C984000E741E4 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
+				08954F612E4DF7AA00DCA652 /* CheckAlarmResponse.swift in Sources */,
+				08954F632E4DF95D00DCA652 /* CheckAlarmRequest.swift in Sources */,
 				379A6A3E2B5FA07D0087FAAC /* NavigationController.swift in Sources */,
 				0822A0462CA197E700F87E2C /* CommentPostAPI.swift in Sources */,
+				08954F5F2E4DF77900DCA652 /* CheckAlarmAPI.swift in Sources */,
 				089A67A62DCA7E63007E8DD0 /* CommentViewModel.swift in Sources */,
 				374E46372CAAC602008AE361 /* LogOutAPI.swift in Sources */,
 				376EA12E2CAAAE6800FEFB63 /* ProfileRetrievalRequest.swift in Sources */,
