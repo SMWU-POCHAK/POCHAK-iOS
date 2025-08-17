@@ -76,6 +76,8 @@ final class AlarmViewController: UIViewController, UISheetPresentationController
                 }
                 self.isCurrentlyFetching = false
                 self.currentFetchingPage += 1;
+                
+                self.tableView.refreshControl?.endRefreshing()
             }
         }
     }
@@ -89,10 +91,13 @@ final class AlarmViewController: UIViewController, UISheetPresentationController
     @objc private func refreshData(_ sender: Any) {
         currentFetchingPage = 0
         alarmList = []
+//        loadAlarmData()
+//        DispatchQueue.main.async {
+//            self.tableView.refreshControl?.endRefreshing()
+//        }
+        tableView.reloadData()
+        
         loadAlarmData()
-        DispatchQueue.main.async {
-            self.tableView.refreshControl?.endRefreshing()
-        }
     }
     
     // MARK: - Functions
@@ -101,9 +106,9 @@ final class AlarmViewController: UIViewController, UISheetPresentationController
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.separatorStyle = .none
         tableView.register(UINib(nibName: OtherTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: OtherTableViewCell.identifier)
         tableView.register(UINib(nibName: PochakAlarmTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: PochakAlarmTableViewCell.identifier)
+        tableView.register(UINib(nibName: MomentAlarmTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: MomentAlarmTableViewCell.identifier)
     }
     
     private func setRefreshControl() {
@@ -144,6 +149,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             
             let userSentAlarmHandle = alarm.memberHandle ?? ""
             let comment = alarm.commentContent ?? ""
+            let time = alarm.createdDate.getTimeIntervalOfDateAndNow()
             
             let text: String
             switch alarmType {
@@ -157,39 +163,65 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
                 text = ""
             }
             
-            configureCell(cell, with: alarm, text: text)
+            configureCell(cell, with: alarm, comment: text, time: time)
             return cell
 
         case .follow:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: OtherTableViewCell.identifier, for: indexPath) as? OtherTableViewCell else {
                 fatalError("셀 타입 캐스팅 실패")
             }
+            let time = alarm.createdDate.getTimeIntervalOfDateAndNow()
             let text = "\(alarm.memberHandle ?? "") 님이 회원님을 팔로우하였습니다."
-            configureCell(cell, with: alarm, text: text)
+            configureCell(cell, with: alarm, comment: text, time: time)
             return cell
 
         case .ownerLike:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: OtherTableViewCell.identifier, for: indexPath) as? OtherTableViewCell else {
                 fatalError("셀 타입 캐스팅 실패")
             }
+            let time = alarm.createdDate.getTimeIntervalOfDateAndNow()
             let text = "내 게시물에 \(alarm.memberHandle ?? "") 님이 좋아요를 눌렀습니다."
-            configureCell(cell, with: alarm, text: text)
+            configureCell(cell, with: alarm, comment: text, time: time)
             return cell
 
         case .taggedLike:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: OtherTableViewCell.identifier, for: indexPath) as? OtherTableViewCell else {
                 fatalError("셀 타입 캐스팅 실패")
             }
+            let time = alarm.createdDate.getTimeIntervalOfDateAndNow()
             let text = "내가 포착된 게시물에 \(alarm.memberHandle ?? "") 님이 좋아요를 눌렀습니다."
-            configureCell(cell, with: alarm, text: text)
+            configureCell(cell, with: alarm, comment: text, time: time)
+            return cell
+            
+        case .momentPost:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: MomentAlarmTableViewCell.identifier, for: indexPath) as? MomentAlarmTableViewCell else {
+                fatalError("셀 타입 캐스팅 실패")
+            }
+            configureMomentAlarmCell(cell, with: alarm)
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let alarmType = self.alarmList[indexPath.row].alarmType
+        let alarm = self.alarmList[indexPath.row]
         
-        switch alarmType {
+        // 확인하지 않은 알람인 경우 확인api 요청
+        if !alarm.isChecked {
+            AlarmService.postCheckAlarm(alarmId: alarm.alarmId) { [weak self] data, failed in
+                guard let data = data else {
+                    switch failed {
+                    case .disconnected:
+                        self?.present(UIAlertController.networkErrorAlert(title: failed!.localizedDescription),
+                                      animated: true)
+                    default:
+                        self?.present(UIAlertController.networkErrorAlert(title: "알림 확인에 실패하였습니다."), animated: true)
+                    }
+                    return
+                }
+            }
+        }
+        
+        switch alarm.alarmType {
         case .tagApproval:
             self.tableView.deselectRow(at: indexPath, animated: false)
 
@@ -200,8 +232,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             profileTabVC.receivedHandle = alarmList[indexPath.row].memberHandle
             self.navigationController?.pushViewController(profileTabVC, animated: true)
             
-        case .ownerComment, .taggedComment, .commentReply, .ownerLike, .taggedLike:
-            let exploreTabSb = UIStoryboard(name: "ExploreTab", bundle: nil)
+        case .ownerComment, .taggedComment, .commentReply, .ownerLike, .taggedLike, .momentPost:
             let postVC = PostViewController()
             
             postVC.receivedPostId = alarmList[indexPath.row].postId
@@ -213,11 +244,19 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
         return 72
     }
     
-    func configureCell(_ cell: OtherTableViewCell, with alarm: AlarmElementList, text: String) {
-        cell.comment.text = text
+    func configureCell(_ cell: OtherTableViewCell, with alarm: AlarmElementList, comment: String, time: String) {
+        cell.comment.text = comment
+        cell.timeLabel.text = "\(time) 전"
         if let url = URL(string: alarm.memberProfileImage ?? "") {
             cell.img.load(with: url)
             cell.img.contentMode = .scaleAspectFill
+        }
+        
+        if !alarm.isChecked {
+            cell.contentView.backgroundColor = UIColor(hexCode: "FFF1D8", alpha: 0.7)
+        }
+        else {
+            cell.contentView.backgroundColor = .white
         }
     }
 
@@ -230,6 +269,12 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             cell.img.load(with: url)
             cell.img.contentMode = .scaleAspectFill
         }
+        
+        if let url = URL(string: alarm.postImage ?? "") {
+            cell.previewImageView.load(with: url)
+        }
+        
+        cell.timeLabel.text = "\(alarm.createdDate.getTimeIntervalOfDateAndNow()) 전"
         
         cell.previewBtnClickAction = {
             guard let tagId = alarm.tagId else {
@@ -252,6 +297,63 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
                 sheet.prefersGrabberVisible = true
             }
             self.present(previewAlarmVC, animated: true)
+        }
+        
+        if !alarm.isChecked {
+            cell.contentView.backgroundColor = UIColor(hexCode: "FFF1D8", alpha: 0.7)
+        }
+        else {
+            cell.contentView.backgroundColor = .white
+        }
+    }
+    
+    func configureMomentAlarmCell(_ cell: MomentAlarmTableViewCell, with alarm: AlarmElementList) {
+        if let user1 = alarm.ownerHandle, let user2 = alarm.memberHandle {
+            cell.alarmContentLabel.text = "\(user1) 님과 \(user2)님이 서로를 순간 포착했습니다."
+        }
+        
+        if let url = URL(string: alarm.ownerProfileImage ?? "") {
+            cell.userImageView1.load(with: url)
+        }
+        
+        if let url = URL(string: alarm.memberProfileImage ?? "") {
+            cell.userImageView2.load(with: url)
+        }
+        
+        if let url = URL(string: alarm.postImage ?? "") {
+            cell.previewImageView.load(with: url)
+        }
+        
+        cell.timeLabel.text = "\(alarm.createdDate.getTimeIntervalOfDateAndNow()) 전"
+        
+        cell.previewBtnClickAction = {
+            guard let tagId = alarm.tagId else {
+                print("tagId is nil")
+                return
+            }
+            
+            let previewAlarmVC = UIStoryboard(name: "AlarmTab", bundle: nil).instantiateViewController(withIdentifier: "PreviewAlarmVC") as! PreviewAlarmViewController
+            previewAlarmVC.tagId = tagId
+            previewAlarmVC.alarmId = alarm.alarmId
+            previewAlarmVC.modalPresentationStyle = .pageSheet
+            
+            if let sheet = previewAlarmVC.sheetPresentationController {
+                sheet.detents = [
+                    .custom { _ in
+                        return previewAlarmVC.postImageView.frame.maxY + 13
+                    }
+                ]
+                sheet.delegate = self
+                sheet.prefersGrabberVisible = true
+            }
+            self.present(previewAlarmVC, animated: true)
+        }
+        
+        if !alarm.isChecked {
+            cell.contentView.backgroundColor = UIColor(hexCode: "FFF1D8", alpha: 0.7)
+        }
+        else {
+            cell.contentView.backgroundColor = .white
         }
     }
 }

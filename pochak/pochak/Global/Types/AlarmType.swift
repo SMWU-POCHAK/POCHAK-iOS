@@ -13,4 +13,5 @@ enum AlarmType: String, Codable {
     case follow = "FOLLOW"
     case ownerLike = "OWNER_LIKE"
     case taggedLike = "TAGGED_LIKE"
+    case momentPost = "MOMENT_POST"
 }

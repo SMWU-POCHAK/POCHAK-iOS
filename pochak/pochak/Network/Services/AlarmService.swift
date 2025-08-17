@@ -68,5 +68,24 @@ struct AlarmService {
                 }
             }
         }
+    
+    /// 알람 읽기(확인)
+    /// - Parameters:
+    ///   - alarmId: 알람 아이디
+    ///   - completion: 핸들러
+    static func postCheckAlarm(
+        alarmId: Int,
+        completion: @escaping (_ succeed: CheckAlarmResponse?, _ failed: NetworkError?) -> Void) {
+            NetworkService.shared.request(CheckAlarmAPI.postCheckAlarm(alarmId: alarmId)) { response in
+                switch response {
+                case .success(let data):
+                    completion(data, nil)
+                case .failure(let error):
+                    print("=== postCheckAlarm service error ===")
+                    print(error.localizedDescription)
+                    completion(nil, error)
+                }
+            }
+        }
 }
     

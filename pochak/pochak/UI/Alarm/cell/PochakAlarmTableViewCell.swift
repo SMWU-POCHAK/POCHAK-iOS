@@ -18,8 +18,10 @@ final class PochakAlarmTableViewCell: UITableViewCell {
 
     @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var comment: UILabel!
-    @IBOutlet weak var previewBtn: UIButton!
-    @IBOutlet weak var lineView: UIView!
+    @IBOutlet weak var timeLabel: UILabel!
+//    @IBOutlet weak var previewBtn: UIButton!
+    @IBOutlet weak var previewImageView: UIImageView!
+//    @IBOutlet weak var lineView: UIView!
     
     // MARK: - Lifecycle
 
@@ -28,11 +30,12 @@ final class PochakAlarmTableViewCell: UITableViewCell {
         
         setupAttribute()
         configureCellAppearance()
+        addPreviewGesture()
     }
     
     // MARK: - Actions
 
-    @IBAction func previewBtnAction(_ sender: Any) {
+    @objc private func previewImageViewDidTap(_ sender: Any) {
         print("버튼 클릭")
         previewBtnClickAction?()
     }
@@ -40,10 +43,13 @@ final class PochakAlarmTableViewCell: UITableViewCell {
     // MARK: - Functions
 
     private func setupAttribute() {
-        img.layer.cornerRadius = 48/2
+        img.layer.cornerRadius = 44/2
+        timeLabel.applyPochakFont(.bodyExtraSmall)
+        previewImageView.clipsToBounds = true
+        previewImageView.layer.cornerRadius = 3
 //        comment.lineBreakMode = .byCharWrapping
 //        comment.lineBreakStrategy = .hangulWordPriority
-        previewBtn.layer.masksToBounds = true
+//        previewBtn.layer.masksToBounds = true
     }
     
     ///첫 번째 셀과 마지막 셀의 외형을 설정
@@ -53,25 +59,30 @@ final class PochakAlarmTableViewCell: UITableViewCell {
             let row = indexPath.row
             let numberOfRows = tableView.numberOfRows(inSection: indexPath.section)
             
-            switch row {
-            case 0 where numberOfRows == 1:
-                // 아이템이 하나인 경우
-                self.lineView.isHidden = true // separator를 보이지 않도록
-                
-            case 0:
-                // 첫 번째 셀
-                self.lineView.isHidden = false
-                print("첫번째")
-                
-            case numberOfRows - 1:
-                // 마지막 셀
-                self.lineView.isHidden = true // separator를 보이지 않도록
-                print("마지막")
-                
-            default:
-                // 그 외의 경우
-                self.lineView.isHidden = false
-            }
+//            switch row {
+//            case 0 where numberOfRows == 1:
+//                // 아이템이 하나인 경우
+//                self.lineView.isHidden = true // separator를 보이지 않도록
+//                
+//            case 0:
+//                // 첫 번째 셀
+//                self.lineView.isHidden = false
+//                print("첫번째")
+//                
+//            case numberOfRows - 1:
+//                // 마지막 셀
+//                self.lineView.isHidden = true // separator를 보이지 않도록
+//                print("마지막")
+//                
+//            default:
+//                // 그 외의 경우
+//                self.lineView.isHidden = false
+//            }
         }
+    }
+    
+    private func addPreviewGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(previewImageViewDidTap(_:)))
+        previewImageView.addGestureRecognizer(tapGesture)
     }
 }
