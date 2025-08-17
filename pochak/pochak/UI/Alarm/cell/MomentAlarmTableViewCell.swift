@@ -50,7 +50,6 @@ class MomentAlarmTableViewCell: UITableViewCell {
     private func setupAttribute() {
         userImageView1.layer.cornerRadius = 44 / 2
         userImageView2.layer.cornerRadius = 44 / 2
-        timeLabel.applyPochakFont(.bodyExtraSmall)
         previewImageView.clipsToBounds = true
         previewImageView.layer.cornerRadius = 3
     }
