@@ -130,7 +130,6 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // FIXME: alarmList에 접근할 때 Index out of range 에러 -> alarmList의 내용이 저장되기 전에 접근하게 됨(alarmList에 원소가 없을 때)
         let alarm = self.alarmList[indexPath.row]
         let alarmType = alarm.alarmType
 
@@ -223,7 +222,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         switch alarm.alarmType {
-        case .tagApproval, .momentPost:
+        case .tagApproval:
             self.tableView.deselectRow(at: indexPath, animated: false)
 
         case .follow:
@@ -233,8 +232,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             profileTabVC.receivedHandle = alarmList[indexPath.row].memberHandle
             self.navigationController?.pushViewController(profileTabVC, animated: true)
             
-        case .ownerComment, .taggedComment, .commentReply, .ownerLike, .taggedLike:
-            let exploreTabSb = UIStoryboard(name: "ExploreTab", bundle: nil)
+        case .ownerComment, .taggedComment, .commentReply, .ownerLike, .taggedLike, .momentPost:
             let postVC = PostViewController()
             
             postVC.receivedPostId = alarmList[indexPath.row].postId
