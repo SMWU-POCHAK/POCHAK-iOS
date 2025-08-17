@@ -146,8 +146,7 @@ extension PostListPageViewController: UICollectionViewDataSource, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let exploreTabSb = UIStoryboard(name: "ExploreTab", bundle: nil)
-        guard let postVC = exploreTabSb.instantiateViewController(withIdentifier: "PostVC") as? PostViewController else { return }
+        let postVC = PostViewController()
         postVC.receivedPostId = postList[indexPath.item].postId
         self.myProfileTabVC.navigationController?.pushViewController(postVC, animated: true)
     }
