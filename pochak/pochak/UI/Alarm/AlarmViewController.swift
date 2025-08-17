@@ -76,6 +76,8 @@ final class AlarmViewController: UIViewController, UISheetPresentationController
                 }
                 self.isCurrentlyFetching = false
                 self.currentFetchingPage += 1;
+                
+                self.tableView.refreshControl?.endRefreshing()
             }
         }
     }
@@ -89,10 +91,13 @@ final class AlarmViewController: UIViewController, UISheetPresentationController
     @objc private func refreshData(_ sender: Any) {
         currentFetchingPage = 0
         alarmList = []
+//        loadAlarmData()
+//        DispatchQueue.main.async {
+//            self.tableView.refreshControl?.endRefreshing()
+//        }
+        tableView.reloadData()
+        
         loadAlarmData()
-        DispatchQueue.main.async {
-            self.tableView.refreshControl?.endRefreshing()
-        }
     }
     
     // MARK: - Functions
@@ -125,6 +130,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // FIXME: alarmList에 접근할 때 Index out of range 에러 -> alarmList의 내용이 저장되기 전에 접근하게 됨(alarmList에 원소가 없을 때)
         let alarm = self.alarmList[indexPath.row]
         let alarmType = alarm.alarmType
 
