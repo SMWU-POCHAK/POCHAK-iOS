@@ -234,6 +234,9 @@ final class CommentTableViewCell: UITableViewCell {
             print("이 유저는 댓글 삭제가 가능함")
             deleteButton.isHidden = false
         }
+        else {
+            deleteButton.isHidden = true
+        }
         
         // comment.uploadedTime 값: 2023-12-27T19:03:32.701
         // 시간 계산
